@@ -5,10 +5,11 @@ IF(HAVE_WINDESKTOP_X86 OR HAVE_WINDESKTOP_X64)
 PROJECT(Example.MultiboxPeopleDetection)
 
 FILE(GLOB_RECURSE SRC_Example_MultiboxPeopleDetection RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.cs")
+LIST(APPEND SRC_Example_MultiboxPeopleDetection ${CMAKE_CURRENT_SOURCE_DIR}/../../CommonAssemblyInfo.cs)
+LIST(APPEND SRC_Example_MultiboxPeopleDetection ${CMAKE_CURRENT_SOURCE_DIR}/Properties/CommonAssemblyInfo.cs)
 
 SET(SRC_Example_MultiboxPeopleDetection_ALL)
 LIST(APPEND SRC_Example_MultiboxPeopleDetection_ALL ${SRC_Example_MultiboxPeopleDetection})
-LIST(APPEND SRC_Example_MultiboxPeopleDetection_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../CommonAssemblyInfo.cs)
 LIST(APPEND SRC_Example_MultiboxPeopleDetection_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.TF.Models/DownloadableModels.cs)
 LIST(APPEND SRC_Example_MultiboxPeopleDetection_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.TF.Models/ImageIO.cs)
 LIST(APPEND SRC_Example_MultiboxPeopleDetection_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.TF.Models/Multibox.cs)
