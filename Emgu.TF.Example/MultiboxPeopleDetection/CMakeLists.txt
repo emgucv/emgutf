@@ -5,8 +5,6 @@ IF(HAVE_WINDESKTOP_X86 OR HAVE_WINDESKTOP_X64)
 PROJECT(Example.MultiboxPeopleDetection)
 
 FILE(GLOB_RECURSE SRC_Example_MultiboxPeopleDetection RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.cs")
-LIST(APPEND SRC_Example_MultiboxPeopleDetection ${CMAKE_CURRENT_SOURCE_DIR}/../../CommonAssemblyInfo.cs)
-LIST(APPEND SRC_Example_MultiboxPeopleDetection ${CMAKE_CURRENT_SOURCE_DIR}/Properties/CommonAssemblyInfo.cs)
 
 SET(SRC_Example_MultiboxPeopleDetection_ALL)
 LIST(APPEND SRC_Example_MultiboxPeopleDetection_ALL ${SRC_Example_MultiboxPeopleDetection})
@@ -42,8 +40,10 @@ INSTALL(FILES
   ${SRC_Example_MultiboxPeopleDetection}
   ${CMAKE_CURRENT_SOURCE_DIR}/MultiboxPeopleDetection.csproj
   ${CMAKE_CURRENT_SOURCE_DIR}/App.config
-  ${CMAKE_CURRENT_SOURCE_DIR}/Properties/AssemblyInfo.cs
   DESTINATION Emgu.TF.Example/MultiboxPeopleDetection COMPONENT emgutf_example_source)
+INSTALL(FILES
+  ${CMAKE_CURRENT_SOURCE_DIR}/Properties/AssemblyInfo.cs
+  DESTINATION Emgu.TF.Example/MultiboxPeopleDetection/Properties COMPONENT emgutf_example_source)
 INSTALL(FILES 
   ${EXAMPLE_PEOPLE_DETECTION_DATA_FILES}
   DESTINATION tensorflow/tensorflow/examples/multibox_detector/data COMPONENT emgutf_example_source)
