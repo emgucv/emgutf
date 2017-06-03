@@ -1,0 +1,3 @@
+cd tensorflow
+..\packages\Google.Protobuf.Tools.3.2.0\tools\windows_x86\protoc.exe  --csharp_out=..\Protobuf --csharp_opt=file_extension=.g.cs tensorflow\core\framework\op_def.proto tensorflow\core\framework\tensor.proto tensorflow\core\framework\types.proto tensorflow\core\framework\attr_value.proto tensorflow\core\framework\tensor_shape.proto  tensorflow\core\framework\resource_handle.proto
+cd ..

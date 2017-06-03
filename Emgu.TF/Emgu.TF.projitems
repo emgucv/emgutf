@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>d47d776e-9970-4552-bc8a-24cadcbea009</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Emgu.TF</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)*.cs" />
+  </ItemGroup>
+  <PropertyGroup>
+    <TFBinaryDir>$(MSBuildThisFileDirectory)..\lib</TFBinaryDir>
+    <EmguTFDir>$(MSBuildThisFileDirectory)</EmguTFDir>
+  </PropertyGroup>
+  <Choose>
+    <!-- Windows 10 UWP (64bit) -->
+    <When Condition="'$(TargetPlatformIdentifier)'=='UAP' AND '$(Platform)'=='x64'">
+      <PropertyGroup>
+        <EmguLinkTarget>Windows 10 UWP (64bit)</EmguLinkTarget>
+        <EmguErrorMessage Condition="!Exists('$(EmguNativeFile)')"> This package do not support $(EmguLinkTarget).</EmguErrorMessage>
+      </PropertyGroup>
+    </When>
+    <!-- Windows 10 UWP (32bit) -->
+    <When Condition="'$(TargetPlatformIdentifier)'=='UAP' AND '$(Platform)'=='x86'">
+      <PropertyGroup>
+        <EmguLinkTarget>Windows 10 UWP (32bit)</EmguLinkTarget>
+        <EmguErrorMessage Condition="!Exists('$(EmguNativeFile)')"> This package do not support $(EmguLinkTarget).</EmguErrorMessage>
+      </PropertyGroup>
+    </When>
+    <!-- Windows 10 UWP (ARM) -->
+    <When Condition="'$(TargetPlatformIdentifier)'=='UAP' AND '$(Platform)'=='ARM'">
+      <PropertyGroup>
+        <EmguLinkTarget>Windows 10 UWP (ARM)</EmguLinkTarget>
+        <EmguErrorMessage>This package do not support $(EmguLinkTarget). </EmguErrorMessage>
+      </PropertyGroup>
+    </When>
+    <!-- Windows store 8.1 (64bit) -->
+    <When Condition="'$(TargetPlatformVersion)'=='8.1' AND '$(Platform)'=='x64' AND  '$(IsTargetingWindowsPhonePlatform)'!='True' AND '$(ProjectTypeGuids)'!='{76F1466A-8B6D-4E39-A767-685A06062A39};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}'">
+      <PropertyGroup>
+        <EmguLinkTarget>Windows Store 8.1 (64bit)</EmguLinkTarget>
+        <EmguErrorMessage>This package do not support $(EmguLinkTarget).</EmguErrorMessage>
+      </PropertyGroup>
+    </When>
+    <!-- Windows store 8.1 (32bit) -->
+    <When Condition="'$(TargetPlatformVersion)'=='8.1' AND '$(Platform)'=='x86' AND  '$(IsTargetingWindowsPhonePlatform)'!='True' AND '$(ProjectTypeGuids)'!='{76F1466A-8B6D-4E39-A767-685A06062A39};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}'">
+      <PropertyGroup>
+        <EmguLinkTarget>Windows Store 8.1 (32bit)</EmguLinkTarget>
+        <EmguErrorMessage>This package do not support $(EmguLinkTarget).</EmguErrorMessage>
+      </PropertyGroup>
+    </When>
+    <!-- Windows phone 8.1 (ARM) -->
+    <When Condition="('$(TargetFrameworkVersion)'=='v8.1' OR '$(TargetPlatformVersion)'=='8.1') AND ('$(TargetFrameworkIdentifier)'=='WindowsPhone' OR '$(TargetPlatformIdentifier)'=='WindowsPhoneApp' OR '$(ProjectTypeGuids)'=='{76F1466A-8B6D-4E39-A767-685A06062A39};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}')AND '$(Platform)'=='ARM'">
+      <PropertyGroup>
+        <EmguLinkTarget>Windows Phone 8.1 (ARM)</EmguLinkTarget>
+        <EmguErrorMessage>This package do not support $(EmguLinkTarget).</EmguErrorMessage>
+      </PropertyGroup>
+    </When>
+    <!-- Windows phone 8.1 (x86) -->
+    <When Condition="('$(TargetFrameworkVersion)'=='v8.1' OR '$(TargetPlatformVersion)'=='8.1') AND ('$(TargetFrameworkIdentifier)'=='WindowsPhone' OR '$(TargetPlatformIdentifier)'=='WindowsPhoneApp' OR '$(ProjectTypeGuids)'=='{76F1466A-8B6D-4E39-A767-685A06062A39};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}') AND '$(Platform)'=='x86'">
+      <PropertyGroup>
+        <EmguLinkTarget>Windows Phone 8.1 (x86)</EmguLinkTarget>
+        <EmguErrorMessage>This package do not support $(EmguLinkTarget).</EmguErrorMessage>
+      </PropertyGroup>
+    </When>
+    <!-- IOS -->
+    <!-- IOS library project -->
+    <When Condition="(('$(TargetFrameworkIdentifier)'=='Xamarin.iOS' OR '$(ProjectTypeGuids)'=='{8FFB629D-F513-41CE-95D2-7ECE97B6EEEC};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}' OR '$(Platform)'=='iPhone' OR '$(Platform)'=='iPhoneSimulator') AND '$(OutputType)' != 'Exe')">
+      <PropertyGroup>
+        <EmguLinkTarget>Xamarin iOS Native Binding Library</EmguLinkTarget>
+        <EmguNativeFile>$(MSBuildThisFileDirectory)..\lib\ios\libtfextern.a</EmguNativeFile>
+        <EmguErrorMessage Condition="!Exists('$(EmguNativeFile)')"> This package do not contain necessary binary for $(EmguLinkTarget). Emgu TF for iOS Commercial License is required. Missing $(EmguNativeFile) </EmguErrorMessage>
+        <EmguDeployMessage Condition="Exists('$(EmguNativeFile)')">$(EmguDeployMessage)ios </EmguDeployMessage>
+        <EmguLinkWithFile>$(MSBuildThisFileDirectory)ios\libtfextern.linkwith.cs</EmguLinkWithFile>
+        <EmguErrorMessage Condition="!Exists('$(EmguLinkWithFile)')"> This package do not contain necessary file for $(EmguLinkTarget). Emgu TF for iOS Commercial License is required. Missing $(EmguLinkWithFile) </EmguErrorMessage>
+      </PropertyGroup>
+      <ItemGroup>
+        <ObjcBindingNativeLibrary Include="$(EmguNativeFile)" Condition="Exists('$(EmguNativeFile)')" />
+      </ItemGroup>
+      <ItemGroup>
+        <Compile Include="$(EmguLinkWithFile)" Condition="Exists('$(EmguLinkWithFile)')">
+          <DependentUpon>libtfextern.a</DependentUpon>
+        </Compile>
+      </ItemGroup>
+    </When>
+    <!-- Xamarin.Mac application -->
+    <When Condition="'$(TargetFrameworkIdentifier)'=='Xamarin.Mac'">
+      <PropertyGroup>
+        <EmguLinkTarget>Xamarin.Mac</EmguLinkTarget>
+        <EmguNativeFile>$(MSBuildThisFileDirectory)..\lib\osx\libtfextern.dylib</EmguNativeFile>
+        <EmguErrorMessage Condition="!Exists('$(EmguNativeFile)')"> This package do not contain necessary binary for $(EmguLinkTarget). Emgu TF for Mac Commercial License is required. Missing $(EmguNativeFile) </EmguErrorMessage>
+        <EmguDeployMessage Condition="Exists('$(EmguNativeFile)')">$(EmguDeployMessage)mac </EmguDeployMessage>
+      </PropertyGroup>
+      <ItemGroup>
+        <NativeReference Include="$(EmguNativeFile)">
+          <Kind>Dynamic</Kind>
+          <SmartLink>False</SmartLink>
+        </NativeReference>
+      </ItemGroup>
+    </When>
+    <!-- IOS application (Note: do not work for Xamarin iOS for Visual Studio) -->
+    <When Condition="(('$(TargetFrameworkIdentifier)'=='Xamarin.iOS' OR '$(ProjectTypeGuids)'=='{8FFB629D-F513-41CE-95D2-7ECE97B6EEEC};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}' OR '$(Platform)'=='iPhone' OR '$(Platform)'=='iPhoneSimulator') AND '$(OutputType)' == 'Exe')">
+      <PropertyGroup>
+        <EmguErrorMessage Condition="'$(BuildingInsideVisualStudio)'=='True' AND '$(OS)'=='Windows_NT'"> Direct reference of Emgu TF for Xamarin iOS is only available with Xamarin Studio or Visual Studio on Mac. When using Emgu TF in Visual Studio with Xamarin iOS plug in, please add the Emgu.TF.iOS.World reference instead.</EmguErrorMessage>
+        <EmguLinkTarget>Xamarin iOS App</EmguLinkTarget>
+        <EmguNativeFile>$(MSBuildThisFileDirectory)..\lib\ios\libtfextern.a</EmguNativeFile>
+        <EmguErrorMessage Condition="!Exists('$(EmguNativeFile)')"> This package do not contain necessary binary for $(EmguLinkTarget). Emgu TF for iOS Commercial License is required. Missing $(EmguNativeFile) </EmguErrorMessage>
+        <MtouchExtraArgs>$(MtouchExtraArgs) -cxx -gcc_flags "-L$(MSBuildThisFileDirectory)..\lib\ios\ -ltfextern -framework Foundation -framework Accelerate -framework CoreFoundation -framework CoreGraphics -framework AssetsLibrary -framework AVFoundation -framework CoreImage -framework CoreMedia -framework CoreVideo -framework QuartzCore -framework ImageIO -force_load $(MSBuildThisFileDirectory)..\lib\ios\libtfextern.a"</MtouchExtraArgs>
+        <EmguDeployMessage Condition="Exists('$(EmguNativeFile)')">$(EmguDeployMessage)ios </EmguDeployMessage>
+      </PropertyGroup>
+    </When>
+    <!-- Android -->
+    <When Condition="('$(AndroidSupportedAbis)'!='') OR '$(ProjectTypeGuids)'=='{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}'">
+      <PropertyGroup>
+        <EmguLinkTarget Condition="('$(AndroidApplication)'=='True' OR '$(AndroidApplication)'=='true')">Xamarin Android App</EmguLinkTarget>
+        <EmguLinkTarget Condition="!('$(AndroidApplication)'=='True' OR '$(AndroidApplication)'=='true')">Xamarin Android Library</EmguLinkTarget>
+        <EmguNativeArmeabi>$(TFBinaryDir)\android\armeabi\libtfextern.so</EmguNativeArmeabi>
+        <EmguBuildAndroidArmeabi Condition="$(AndroidSupportedAbis.Contains('armeabi%3')) OR $(AndroidSupportedAbis.Contains('armeabi,')) OR $(AndroidSupportedAbis.Contains('armeabi;')) OR $(AndroidSupportedAbis.EndsWith('armeabi')) OR ('$(AndroidSupportedAbis)'=='' AND '$(Platform)'=='AnyCPU') OR ('$(Platform)'=='armeabi')">True</EmguBuildAndroidArmeabi>
+        <EmguErrorMessage Condition="'$(EmguBuildAndroidArmeabi)'=='True' AND !Exists('$(EmguNativeArmeabi)')">This package do not contain necessary binary for $(EmguLinkTarget). Emgu TF for Android Commercial License is required. Armeabi is targeted, but file $(EmguNativeArmeabi) is missing.</EmguErrorMessage>
+        <EmguDeployMessage Condition="'$(EmguBuildAndroidArmeabi)'=='True' AND Exists('$(EmguNativeArmeabi)')">$(EmguDeployMessage)armeabi </EmguDeployMessage>
+        <EmguNativeArmeabiv7a>$(TFBinaryDir)\android\armeabi-v7a\libtfextern.so</EmguNativeArmeabiv7a>
+        <EmguBuildAndroidArmeabiv7a Condition="$(AndroidSupportedAbis.Contains('armeabi-v7a%3')) OR $(AndroidSupportedAbis.Contains('armeabi-v7a,')) OR $(AndroidSupportedAbis.Contains('armeabi-v7a;')) OR $(AndroidSupportedAbis.EndsWith('armeabi-v7a')) OR ('$(AndroidSupportedAbis)'=='' AND '$(Platform)'=='AnyCPU') OR ('$(Platform)'=='armeabi-v7a')">True</EmguBuildAndroidArmeabiv7a>
+        <EmguErrorMessage Condition="'$(EmguBuildAndroidArmeabiv7a)'=='True' AND !Exists('$(EmguNativeArmeabiv7a)')">This package do not contain necessary binary for $(EmguLinkTarget). Emgu TF for Android Commercial License is required. Armeabi-v7a is targeted, but file $(EmguNativeArmeabiv7a) is missing.</EmguErrorMessage>
+        <EmguDeployMessage Condition="'$(EmguBuildAndroidArmeabiv7a)'=='True' AND Exists('$(EmguNativeArmeabiv7a)')">$(EmguDeployMessage)armeabi-v7a </EmguDeployMessage>
+        <EmguNativeArm64v8a>$(TFBinaryDir)\android\arm64-v8a\libtfextern.so</EmguNativeArm64v8a>
+        <EmguBuildAndroidArm64v8a Condition="$(AndroidSupportedAbis.Contains('arm64-v8a%3')) OR $(AndroidSupportedAbis.Contains('arm64-v8a,')) OR $(AndroidSupportedAbis.EndsWith('arm64-v8a;')) OR $(AndroidSupportedAbis.EndsWith('arm64-v8a')) OR ('$(AndroidSupportedAbis)'=='' AND '$(Platform)'=='AnyCPU')  OR ('$(Platform)'=='arm64-v8a')">True</EmguBuildAndroidArm64v8a>
+        <EmguErrorMessage Condition="'$(EmguBuildAndroidArm64v8a)'=='True' AND !Exists('$(EmguNativeArm64v8a)')">This package do not contain necessary binary for $(EmguLinkTarget). Emgu TF for Android Commercial License is required. Arm64-v8a is targeted, but file $(EmguNativeArm64v8a) is missing.</EmguErrorMessage>
+        <EmguDeployMessage Condition="'$(EmguBuildAndroidArm64v8a)'=='True' AND Exists('$(EmguNativeArm64v8a)')">$(EmguDeployMessage)arm64-v8a </EmguDeployMessage>
+        <EmguNativex86>$(TFBinaryDir)\android\x86\libtfextern.so</EmguNativex86>
+        <EmguBuildAndroidx86 Condition="$(AndroidSupportedAbis.Contains('x86%3')) OR $(AndroidSupportedAbis.Contains('x86,')) OR $(AndroidSupportedAbis.Contains('x86;')) OR $(AndroidSupportedAbis.EndsWith('x86')) OR ('$(AndroidSupportedAbis)'=='' AND '$(Platform)'=='AnyCPU') OR ('$(Platform)'=='x86')">True</EmguBuildAndroidx86>
+        <EmguErrorMessage Condition="'$(EmguBuildAndroidx86)'=='True' AND !Exists('$(EmguNativex86)')">This package do not contain necessary binary for $(EmguLinkTarget). Emgu TF for Android Commercial License is required. x86 is targeted, but file $(EmguNativex86) is missing.</EmguErrorMessage>
+        <EmguDeployMessage Condition="'$(EmguBuildAndroidx86)'=='True' AND Exists('$(EmguNativex86)')">$(EmguDeployMessage)x86 </EmguDeployMessage>
+        <EmguNativex8664>$(TFBinaryDir)\android\x86_64\libtfextern.so</EmguNativex8664>
+        <EmguBuildAndroidx8664 Condition="$(AndroidSupportedAbis.Contains('x86_64%3')) OR $(AndroidSupportedAbis.Contains('x86_64,')) OR $(AndroidSupportedAbis.Contains('x86_64;')) OR $(AndroidSupportedAbis.EndsWith('x86_64')) OR ('$(AndroidSupportedAbis)'=='' AND '$(Platform)'=='AnyCPU') OR ('$(Platform)'=='x86_64')">True</EmguBuildAndroidx8664>
+        <EmguErrorMessage Condition="'$(EmguBuildAndroidx8664)'=='True' AND !Exists('$(EmguNativex8664)')">This package do not contain necessary binary for $(EmguLinkTarget). Emgu TF for Android Commercial License is required. x86_64 is targeted, but file $(EmguNativex8664) is missing.</EmguErrorMessage>
+        <EmguDeployMessage Condition="'$(EmguBuildAndroidx8664)'=='True' AND Exists('$(EmguNativex8664)')">$(EmguDeployMessage)x86_64 </EmguDeployMessage>
+      </PropertyGroup>
+      <!-- armeabi -->
+      <ItemGroup Condition="'$(EmguBuildAndroidArmeabi)'=='True' AND Exists('$(EmguNativeArmeabi)')">
+        <EmbeddedNativeLibrary Condition="'$(EmguLinkTarget)'=='Xamarin Android Library'" Include="$(EmguNativeArmeabi)">
+          <Link>lib\armeabi\libtfextern.so</Link>
+        </EmbeddedNativeLibrary>
+        <AndroidNativeLibrary Condition="'$(EmguLinkTarget)'=='Xamarin Android App'" Include="$(EmguNativeArmeabi)">
+          <Link>lib\armeabi\libtfextern.so</Link>
+        </AndroidNativeLibrary>
+      </ItemGroup>
+      <!-- armeabi-v7a -->
+      <ItemGroup Condition="'$(EmguBuildAndroidArmeabiv7a)'=='True' AND Exists('$(EmguNativeArmeabiv7a)')">
+        <EmbeddedNativeLibrary Condition="'$(EmguLinkTarget)'=='Xamarin Android Library'" Include="$(EmguNativeArmeabiv7a)">
+          <Link>lib\armeabi-v7a\libtfextern.so</Link>
+        </EmbeddedNativeLibrary>
+        <AndroidNativeLibrary Condition="'$(EmguLinkTarget)'=='Xamarin Android App'" Include="$(EmguNativeArmeabiv7a)">
+          <Link>lib\armeabi-v7a\libtfextern.so</Link>
+        </AndroidNativeLibrary>
+      </ItemGroup>
+      <!-- arm64-v8a -->
+      <ItemGroup Condition="'$(EmguBuildAndroidArm64v8a)'=='True' AND Exists('$(EmguNativeArm64v8a)')">
+        <EmbeddedNativeLibrary Condition="'$(EmguLinkTarget)'=='Xamarin Android Library'" Include="$(EmguNativeArm64v8a)">
+          <Link>lib\arm64-v8a\libtfextern.so</Link>
+        </EmbeddedNativeLibrary>
+        <AndroidNativeLibrary Condition="'$(EmguLinkTarget)'=='Xamarin Android App'" Include="$(EmguNativeArm64v8a)">
+          <Link>lib\arm64-v8a\libtfextern.so</Link>
+        </AndroidNativeLibrary>
+      </ItemGroup>
+      <!-- x86 -->
+      <ItemGroup Condition="'$(EmguBuildAndroidx86)'=='True' AND Exists('$(EmguNativex86)')">
+        <EmbeddedNativeLibrary Condition="'$(EmguLinkTarget)'=='Xamarin Android Library'" Include="$(EmguNativex86)">
+          <Link>lib\x86\libtfextern.so</Link>
+        </EmbeddedNativeLibrary>
+        <AndroidNativeLibrary Condition="'$(EmguLinkTarget)'=='Xamarin Android App'" Include="$(EmguNativex86)">
+          <Link>lib\x86\libtfextern.so</Link>
+        </AndroidNativeLibrary>
+      </ItemGroup>
+      <!-- x86_64 -->
+      <ItemGroup Condition="'$(EmguBuildAndroidx8664)'=='True' AND Exists('$(EmguNativex8664)')">
+        <EmbeddedNativeLibrary Condition="'$(EmguLinkTarget)'=='Xamarin Android Library'" Include="$(EmguNativex8664)">
+          <Link>lib\x86_64\libtfextern.so</Link>
+        </EmbeddedNativeLibrary>
+        <AndroidNativeLibrary Condition="'$(EmguLinkTarget)'=='Xamarin Android App'" Include="$(EmguNativex8664)">
+          <Link>lib\x86_64\libtfextern.so</Link>
+        </AndroidNativeLibrary>
+      </ItemGroup>
+    </When>
+    <!-- Windows Form Application -->
+    <When Condition="'$(EmguLinkTarget)'=='' AND ('$(TargetFrameworkVersion)'=='v2.0' OR '$(TargetFrameworkVersion)'=='v3.0' OR '$(TargetFrameworkVersion)'=='v3.5' OR '$(TargetFrameworkVersion)'=='v4.0' OR '$(TargetFrameworkVersion)'=='v4.5' OR '$(TargetFrameworkVersion)'=='v4.5.1' OR '$(TargetFrameworkVersion)'=='v4.5.2' OR '$(TargetFrameworkVersion)'=='v4.6' OR '$(TargetFrameworkVersion)'=='v4.6.1')">
+      <PropertyGroup>
+        <EmguLinkTarget>WindowsForms</EmguLinkTarget>
+        <EmguBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguBuildX64>
+        <EmguNativeFileX64>$(EmguTFDir)..\lib\x64\tfextern.dll</EmguNativeFileX64>
+        <EmguErrorMessage Condition="'$(EmguBuildX64)'=='True' AND !Exists('$(EmguNativeFileX64)')">This package do not contain necessary binary for $(EmguLinkTarget). X64 is targeted, but file $(EmguNativeFileX64) is missing.</EmguErrorMessage>
+        <EmguDeployMessage Condition="'$(EmguBuildX64)'=='True' AND Exists('$(EmguNativeFileX64)')">$(EmguDeployMessage)x64 </EmguDeployMessage>
+      </PropertyGroup>
+      <ItemGroup Condition="'$(EmguBuildX64)'=='True' AND Exists('$(EmguNativeFileX64)')">
+        <Content Include="$(EmguTFDir)..\lib\x64\*.dll">
+          <Link>x64\%(RecursiveDir)%(Filename)%(Extension)</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+      </ItemGroup>
+    </When>
+    <!-- DotNetCore Application -->
+    <When Condition="'$(EmguLinkTarget)'=='' AND ('$(TargetFramework)'=='netstandard1.4')">
+      <PropertyGroup>
+        <EmguLinkTarget>DotNetCore</EmguLinkTarget>
+      </PropertyGroup>
+    </When>
+  </Choose>
+  <Target Name="EmguPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(EmguLinkTarget)'==''" Text="Emgu TF is not able to detect the project type, please use the pre-compiled Emgu.TF.World dll or send a bug report to support@emgu.com" />
+    <Message Condition="'$(EmguLinkTarget)'!=''" Text="Emgu TF shared project compiling against $(EmguLinkTarget)" Importance="High" />
+    <Error Text="'$(EmguErrorMessage)'" Condition="'$(EmguErrorMessage)'!=''" />
+    <Message Text="Compiling with $(EmguDeployMessage)binary" Condition="'$(EmguDeployMessage)'!=''" Importance="High" />
+    <Message Text="No native binary is deployed by the Emgu.TF shared project." Condition="'$(EmguDeployMessage)'==''" Importance="High" />
+  </Target>
+</Project>

@@ -1,0 +1,31 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinForms.OSX", "..\..\Emgu.TF.Example\XamarinForms\XamarinForms.OSX\XamarinForms.OSX.csproj", "{9A4F19B0-5674-40BF-AF24-1EADEF629E4A}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF", "..\..\Emgu.TF\Emgu.TF.shproj", "{D47D776E-9970-4552-BC8A-24CADCBEA009}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Util", "..\..\Emgu.TF.Util\Emgu.TF.Util.shproj", "{98561642-5EC3-4244-BAF9-6876D9BA5527}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "XamarinForms", "..\..\Emgu.TF.Example\XamarinForms\XamarinForms\XamarinForms.shproj", "{26BDB58D-52D9-4AD1-9205-BE5792781A98}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Models", "..\..\Emgu.TF.Models\Emgu.TF.Models.shproj", "{752279F0-17EF-4EC8-857C-8F5F897AF0E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.World.Unified", "..\..\Emgu.TF.World\Emgu.TF.World.Unified.csproj", "{64306FF5-1E98-4D18-9CA7-666CD2D0F642}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9A4F19B0-5674-40BF-AF24-1EADEF629E4A}.Debug|x86.ActiveCfg = Debug|x86
+		{9A4F19B0-5674-40BF-AF24-1EADEF629E4A}.Debug|x86.Build.0 = Debug|x86
+		{9A4F19B0-5674-40BF-AF24-1EADEF629E4A}.Release|x86.ActiveCfg = Release|x86
+		{9A4F19B0-5674-40BF-AF24-1EADEF629E4A}.Release|x86.Build.0 = Release|x86
+		{64306FF5-1E98-4D18-9CA7-666CD2D0F642}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{64306FF5-1E98-4D18-9CA7-666CD2D0F642}.Debug|x86.Build.0 = Debug|Any CPU
+		{64306FF5-1E98-4D18-9CA7-666CD2D0F642}.Release|x86.ActiveCfg = Release|Any CPU
+		{64306FF5-1E98-4D18-9CA7-666CD2D0F642}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

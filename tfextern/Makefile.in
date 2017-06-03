@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+
+TFEXTERN_SRCS := \
+tensorflow/c/c_api.cc \
+tensorflow/tfextern/tfextern.cc
+
+TFEXTERN_OBJS := $(addprefix $(OBJDIR), $(TFEXTERN_SRCS:.cc=.o))
+
+TFEXTERN_LIB_NAME := libtfextern.a
+TFEXTERN_LIB_PATH := $(LIBDIR)$(TFEXTERN_LIB_NAME)
+
+$(TFEXTERN_LIB_PATH): $(TFEXTERN_OBJS)
+	@mkdir -p $(dir $@)
+	$(AR) $(ARFLAGS) $(TFEXTERN_LIB_PATH) $(TFEXTERN_OBJS)
+
+tfextern: $(TFEXTERN_LIB_PATH)

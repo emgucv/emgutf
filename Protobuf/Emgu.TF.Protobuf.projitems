@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>88fed2cb-ee86-4b5e-85a0-9f5fdf42111f</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Emgu.TF.Protobuf</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+
+    <Compile Include="$(MSBuildThisFileDirectory)*.cs" />
+   
+  </ItemGroup>
+</Project>

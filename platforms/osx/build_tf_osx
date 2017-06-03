@@ -1,0 +1,11 @@
+#!/bin/sh
+cd ../..
+cp tfextern/tfextern.cmake tensorflow/tensorflow/contrib/cmake
+cd tensorflow/tensorflow/contrib/cmake
+git checkout CMakeLists.txt
+echo include\(tfextern.cmake\) >> CMakeLists.txt
+cmake . -DCMAKE_BUILD_TYPE=Release -Dtensorflow_BUILD_PYTHON_BINDINGS:BOOL=OFF -Dtensorflow_BUILD_CC_EXAMPLE:BOOL=OFF -DCMAKE_OSX_ARCHITECTURES="x86_64"
+make tfextern
+#mkdir -p ../../../../lib/osx
+#cp libtfextern.dylib ../../../../lib/osx
+cd ../../../..

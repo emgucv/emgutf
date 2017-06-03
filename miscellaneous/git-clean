@@ -1,0 +1,6 @@
+#!/bin/sh
+cd ..
+cd tensorflow
+git clean -d -fx ""
+cd ..
+git clean -d -fx ""
