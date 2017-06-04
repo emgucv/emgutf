@@ -28,6 +28,16 @@ IF (HAVE_ANDROID OR HAVE_IOS OR HAVE_OSX)
     PATTERN "Debug" EXCLUDE
     PATTERN "Release" EXCLUDE  
     )
+	
+  INSTALL(FILES
+    "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/examples/multibox_detector/data/surfers.jpg"
+    DESTINATION tensorflow/tensorflow/examples/multibox_detector/data 
+	COMPONENT emgutf_example_source)
+	
+  INSTALL(FILES
+    "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/examples/label_image/data/grace_hopper.jpg"
+    DESTINATION tensorflow/tensorflow/examples/label_image/data 
+	COMPONENT emgutf_example_source)
 ENDIF()
 
 IF(HAVE_ANDROID)

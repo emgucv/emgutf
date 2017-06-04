@@ -150,6 +150,9 @@
     <Content Include="..\..\..\tensorflow\tensorflow\examples\multibox_detector\data\surfers.jpg">
       <Link>surfers.jpg</Link>
     </Content>
+	<Content Include="..\..\..\tensorflow\tensorflow\examples\label_image\data\grace_hopper.jpg">
+      <Link>grace_hopper.jpg</Link>
+    </Content>
   </ItemGroup>
   <Import Project="..\..\..\Emgu.TF.Util\Emgu.TF.Util.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.TF.Util\Emgu.TF.Util.projitems')" />
   <Import Project="..\..\..\Emgu.TF.Models\Emgu.TF.Models.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.TF.Models\Emgu.TF.Models.projitems')" />
