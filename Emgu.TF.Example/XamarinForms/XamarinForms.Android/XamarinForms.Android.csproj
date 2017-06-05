@@ -184,6 +184,12 @@
       <Link>Assets\grace_hopper.jpg</Link>
     </AndroidAsset>
   </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="xamarin.mobile">
+      <Visible>False</Visible>
+      <Version>0.7.7</Version>
+    </XamarinComponentReference>
+  </ItemGroup>
   <Import Project="..\XamarinForms\XamarinForms.projitems" Label="Shared" Condition="Exists('..\XamarinForms\XamarinForms.projitems')" />
   <Import Project="..\..\..\Emgu.TF\Emgu.TF.projitems" Label="Shared" />
   <Import Project="..\..\..\Emgu.TF.Util\Emgu.TF.Util.projitems" Label="Shared" />
