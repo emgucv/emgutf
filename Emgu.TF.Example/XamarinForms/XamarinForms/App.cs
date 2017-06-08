@@ -51,7 +51,7 @@ namespace Emgu.TF.XamarinForms
                () =>
                {
                    MainPage.Navigation.PushAsync(new AboutPage());
-                   //page.DisplayAlert("Emgu CV Examples", "App version: ...", "Ok");
+                   //page.DisplayAlert("Emgu TF Examples", "App version: ...", "Ok");
                }
             );
             page.ToolbarItems.Add(aboutItem);

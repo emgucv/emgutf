@@ -27,7 +27,7 @@ namespace Emgu.TF.XamarinForms
 <body>
 <H3> Emgu TF Examples </H3>
 <H1> Tensorflow version: {0} </H1>
-<a href=http://www.emgu.com>Visit our website</a> <br/><br/>
+<a href=http://www.emgu.com/wiki/index.php/Emgu_TF >Visit our website</a> <br/><br/>
 <a href=mailto:support@emgu.com>Email Support</a> <br/><br/>"
                      + @"
 </body>
