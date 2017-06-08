@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+      <PropertyGroup>
+        <EmguLinkTarget>WindowsForms</EmguLinkTarget>
+        <EmguBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguBuildX64>
+        <EmguNativeFileX64>$(MSBuildThisFileDirectory)\x64\tfextern.dll</EmguNativeFileX64>
+        <EmguErrorMessage Condition="'$(EmguBuildX64)'=='True' AND !Exists('$(EmguNativeFileX64)')">This package do not contain necessary binary for $(EmguLinkTarget). X64 is targeted, but file $(EmguNativeFileX64) is missing.</EmguErrorMessage>
+        <EmguDeployMessage Condition="'$(EmguBuildX64)'=='True' AND Exists('$(EmguNativeFileX64)')">$(EmguDeployMessage)x64 </EmguDeployMessage>
+      </PropertyGroup>
+      <ItemGroup Condition="'$(EmguBuildX64)'=='True' AND Exists('$(EmguNativeFileX64)')">
+        <Content Include="$(MSBuildThisFileDirectory)\x64\*.dll">
+          <Link>x64\%(RecursiveDir)%(Filename)%(Extension)</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+      </ItemGroup>
+	  
+	    <Target Name="EmguPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(EmguLinkTarget)'==''" Text="Emgu TF is not able to detect the project type, please use the pre-compiled Emgu.TF.World dll or send a bug report to support@emgu.com" />
+    <Message Condition="'$(EmguLinkTarget)'!=''" Text="Emgu TF shared project compiling against $(EmguLinkTarget)" Importance="High" />
+    <Error Text="'$(EmguErrorMessage)'" Condition="'$(EmguErrorMessage)'!=''" />
+    <Message Text="Compiling with $(EmguDeployMessage)binary" Condition="'$(EmguDeployMessage)'!=''" Importance="High" />
+    <Message Text="No native binary is deployed by the Emgu.TF shared project." Condition="'$(EmguDeployMessage)'==''" Importance="High" />
+  </Target>
+</Project>

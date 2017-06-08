@@ -137,6 +137,11 @@ namespace Emgu.TF
                 if (Emgu.TF.Util.Platform.OperationSystem == Emgu.TF.Util.TypeEnum.OS.Windows)
                 {
                     subfolder = IntPtr.Size == 8 ? "x64" : "x86";
+
+                    if ("x86".Equals(subfolder))
+                    {
+                        throw new Exception("Emgu TF is only compatible with 64bit mode in Windows (not compatible with 32bit x86 mode)");
+                    }
                 }
 #endif
 

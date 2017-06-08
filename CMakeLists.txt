@@ -269,7 +269,7 @@ SET(EMGU_TF_EXAMPLE_BUILD ON CACHE BOOL "Build Emgu TF Example")
 INCLUDE(Today)
 TODAY() #set the variable CURRENT_YEAR
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CommonAssemblyInfo.cs.in ${CMAKE_CURRENT_SOURCE_DIR}/CommonAssemblyInfo.cs)
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.World/Package.nuspec.in)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Package.nuspec)
 
 # ----------------------------------------------------------------------------
 #  Generate readme file for Emgu TF project
@@ -295,6 +295,7 @@ ADD_SUBDIRECTORY(Emgu.TF.Example)
 #ADD_SUBDIRECTORY(Emgu.TF.Test)
 ADD_SUBDIRECTORY(Emgu.TF.World)
 ADD_SUBDIRECTORY(Emgu.TF.Models)
+ADD_SUBDIRECTORY(platforms)
 
 IF(HAVE_ANDROID)
   INSTALL(
