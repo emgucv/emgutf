@@ -3,6 +3,7 @@ cd ../..
 #cp -rf tfextern tensorflow/tensorflow/
 cp tfextern/tfextern* tensorflow/tensorflow/core
 cp platforms/ios/c_api.cc tensorflow/tensorflow/core
+cp tensorflow/cc/framework/ops.cc tensorflow/tensorflow/core
 
 cd tensorflow/
 tensorflow/contrib/makefile/build_all_ios.sh 

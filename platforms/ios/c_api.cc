@@ -20,7 +20,7 @@ limitations under the License.
 #include <memory>
 #include <vector>
 
-#ifndef __ANDROID__
+#if !( defined( __ANDROID__) || defined(TARGET_OS_IPHONE) )
 #include "tensorflow/cc/framework/gradients.h"
 #include "tensorflow/cc/framework/ops.h"
 #include "tensorflow/cc/framework/scope_internal.h"
@@ -2062,6 +2062,11 @@ void TF_AddGradients(TF_Graph* g, TF_Output* y, int ny, TF_Output* x, int nx,
 #ifdef __ANDROID__
   status->status = tensorflow::errors::Unimplemented(
       "Adding gradients is not supported in Android. File a bug at "
+      "https://github.com/tensorflow/tensorflow/issues if this feature is "
+      "important to you");
+#elif TARGET_OS_IPHONE
+  status->status = tensorflow::errors::Unimplemented(
+      "Adding gradients is not supported in iOS. File a bug at "
       "https://github.com/tensorflow/tensorflow/issues if this feature is "
       "important to you");
 #else
