@@ -41,39 +41,47 @@ namespace Emgu.TF.XamarinForms
 
             OnImagesLoaded += async (sender, image) =>
             {
-                GetLabel().Text = "Please wait...";
+                SetMessage( "Please wait..." );
                 SetImage();
 
                 Task<Tuple<string, string, long>> t = new Task<Tuple<string, string, long>>(
                     () =>
                     {
-                        Inception inceptionGraph = new Inception();
-                        
-
-                        Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
-                        //MultiboxGraph.Result detectResult = graph.Detect(imageTensor);
-                        float[] probability = inceptionGraph.Recognize(imageTensor);
-                        String resStr = String.Empty;
-                        if (probability != null)
+                        try
                         {
-                            String[] labels = inceptionGraph.Labels;
-                            float maxVal = 0;
-                            int maxIdx = 0;
-                            for (int i = 0; i < probability.Length; i++)
+                            SetMessage("Please wait while we download the Inception Model from internet.");
+                            Inception inceptionGraph = new Inception();
+                            SetMessage("Please wait...");
+
+                            Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
+                            //MultiboxGraph.Result detectResult = graph.Detect(imageTensor);
+                            float[] probability = inceptionGraph.Recognize(imageTensor);
+                            String resStr = String.Empty;
+                            if (probability != null)
                             {
-                                if (probability[i] > maxVal)
+                                String[] labels = inceptionGraph.Labels;
+                                float maxVal = 0;
+                                int maxIdx = 0;
+                                for (int i = 0; i < probability.Length; i++)
                                 {
-                                    maxVal = probability[i];
-                                    maxIdx = i;
+                                    if (probability[i] > maxVal)
+                                    {
+                                        maxVal = probability[i];
+                                        maxIdx = i;
+                                    }
                                 }
+                                resStr = String.Format("Object is {0} with {1}% probability.", labels[maxIdx], maxVal * 100);
                             }
-                            resStr = String.Format("Object is {0} with {1}% probability.", labels[maxIdx], maxVal * 100);
-                        }
-                        return new Tuple<string, string, long>(image[0], resStr, 0);
+                            return new Tuple<string, string, long>(image[0], resStr, 0);
 
-                        //SetImage(t.Result.Item1);
-                        //GetLabel().Text = String.Format("Detected {0} in {1} milliseconds.", t.Result.Item2, t.Result.Item3);
-
+                            //SetImage(t.Result.Item1);
+                            //GetLabel().Text = String.Format("Detected {0} in {1} milliseconds.", t.Result.Item2, t.Result.Item3);
+                    } catch (Exception e)
+                    {
+                            String msg = e.Message.Replace(Environment.NewLine, " ");
+                        SetMessage(msg);
+                        return new Tuple<string, string, long>(null, msg, 0);
+                    }
                     });
                 t.Start();
 

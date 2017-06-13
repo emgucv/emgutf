@@ -154,6 +154,16 @@ namespace Emgu.TF.XamarinForms
             return this.MessageLabel;
         }
 
+        public void SetMessage(String message)
+        {
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(
+                () =>
+            {
+                this.MessageLabel.Text = message;
+            }
+            );
+        }
+
         public Button GetButton()
         {
             //return null;
