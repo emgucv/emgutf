@@ -41,7 +41,7 @@ namespace Emgu.TF.XamarinForms
 
             OnImagesLoaded += async (sender, image) =>
             {
-                SetMessage( "Please wait..." );
+                SetMessage("Please wait...");
                 SetImage();
 
                 Task<Tuple<string, string, long>> t = new Task<Tuple<string, string, long>>(
@@ -76,27 +76,28 @@ namespace Emgu.TF.XamarinForms
 
                             //SetImage(t.Result.Item1);
                             //GetLabel().Text = String.Format("Detected {0} in {1} milliseconds.", t.Result.Item2, t.Result.Item3);
-                    } catch (Exception e)
-                    {
-                            String msg = e.Message.Replace(Environment.NewLine, " ");
-                        SetMessage(msg);
-                        return new Tuple<string, string, long>(null, msg, 0);
-                    }
+                        }
+                        catch (Exception e)
+                        {
+                            String msg = e.Message.Replace(System.Environment.NewLine, " ");
+                            SetMessage(msg);
+                            return new Tuple<string, string, long>(null, msg, 0);
+                        }
                     });
                 t.Start();
 
 #if !(__UNIFIED__)
-             var result = await t;
-            SetImage(t.Result.Item1);
-            GetLabel().Text =  t.Result.Item2;
+                var result = await t;
+                SetImage(t.Result.Item1);
+                GetLabel().Text = t.Result.Item2;
 #endif
             };
-      }
+        }
 
-      private void OnButtonClicked(Object sender, EventArgs args)
-      {
-         LoadImages(new string[] { "grace_hopper.jpg" });
-      }
+        private void OnButtonClicked(Object sender, EventArgs args)
+        {
+            LoadImages(new string[] { "grace_hopper.jpg" });
+        }
 
-   }
+    }
 }

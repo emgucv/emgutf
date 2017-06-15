@@ -4,11 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using Emgu.TF.Util;
 using Xamarin.Forms;
 
 #if __ANDROID__ || __IOS__
-using Xamarin.Media;
+using Plugin.Media;
 #endif
 
 namespace Emgu.TF.XamarinForms
@@ -21,105 +20,77 @@ namespace Emgu.TF.XamarinForms
             InitializeComponent();
         }
 
-#if __ANDROID__ || __IOS__
-        private MediaPicker _mediaPicker;
-#endif
-
-#if __ANDROID__
-        public const int PickImageRequestCode = 1000;
-#endif
 
         public virtual async void LoadImages(String[] imageNames, String[] labels = null)
         {
 #if (__UNIFIED__ && !__IOS__) //NETFX or Xamarin Mac
-
+            //use default images
             InvokeOnImagesLoaded(imageNames);
 #else
-            if (_mediaPicker == null)
-            {
-#if __ANDROID__
-                _mediaPicker = new MediaPicker(Forms.Context);
-#else
-            _mediaPicker = new MediaPicker();
-#endif
-            }
-
+            
             String[] mats = new String[imageNames.Length];
             for (int i = 0; i < mats.Length; i++)
             {
                 String pickImgString = "Use Image from";
                 if (labels != null && labels.Length > i)
                     pickImgString = labels[i];
-                var action = await (_mediaPicker.IsCameraAvailable ?
-                   DisplayActionSheet(pickImgString, "Cancel", null, "Default", "Photo Library", "Camera")
-                   : DisplayActionSheet(pickImgString, "Cancel", null, "Default", "Photo Library"));
+                bool haveCameraOption =
+                    (CrossMedia.Current.IsCameraAvailable && CrossMedia.Current.IsTakePhotoSupported);
+                bool havePickImgOption =
+                    CrossMedia.Current.IsPickVideoSupported;
+
+                String action;
+                if (haveCameraOption & havePickImgOption)
+                {
+                    action = await DisplayActionSheet(pickImgString, "Cancel", null, "Default", "Photo Library",
+                        "Camera");
+                } else if (havePickImgOption)
+                {
+                    action = await DisplayActionSheet(pickImgString, "Cancel", null, "Default", "Photo Library");
+                }
+                else
+                {
+                    action = "Default";
+                }
+                
 
                 if (action.Equals("Default"))
                 {
 #if __ANDROID__
-
                     FileInfo fi = Emgu.TF.Util.AndroidFileAsset.WritePermanantFileAsset(Forms.Context, imageNames[i], "tmp",
                         Emgu.TF.Util.AndroidFileAsset.OverwriteMethod.AlwaysOverwrite);
 
                     mats[i] = fi.FullName;
 
 #else
-            mats[i] = imageNames[i];
+                    mats[i] = imageNames[i];
             
 #endif
 
                 }
                 else if (action.Equals("Photo Library"))
                 {
-#if __ANDROID__
-                    Android.Content.Intent intent = _mediaPicker.GetPickPhotoUI();
-                    Android.App.Activity activity = Forms.Context as Android.App.Activity;
-                    activity.StartActivityForResult(intent, PickImageRequestCode);
-                    //once the image was picked, the MainActivity.OnActivityResult function will handle the remaining work flow
-                    Task t = new Task(() =>
-                      { _waitHandle.WaitOne(); });
-                    t.Start();
-                    await t;
-                    if (MatHandle == null) //Cancelled
+                    var photoResult = await CrossMedia.Current.PickPhotoAsync();
+                    if (photoResult == null) //cancelled
                         return;
-                    mats[i] = MatHandle;
-#else
-            var file = await _mediaPicker.PickPhotoAsync();
-            mats[i] = file.Path;       
-#endif
+                    mats[i] = photoResult.Path;
                 }
                 else if (action.Equals("Camera"))
                 {
-#if __ANDROID__
-                    Android.Content.Intent intent = _mediaPicker.GetTakePhotoUI(new StoreCameraMediaOptions());
-                    Android.App.Activity activity = Forms.Context as Android.App.Activity;
-                    activity.StartActivityForResult(intent, PickImageRequestCode);
-                    //once the image was picked, the MainActivity.OnActivityResult function will handle the remaining work flow
-                    Task t = new Task(() =>
-                       { _waitHandle.WaitOne(); });
-                    t.Start();
-                    await t;
-                    if (MatHandle == null) //Cancelled
+                    var mediaOptions = new Plugin.Media.Abstractions.StoreCameraMediaOptions
+                    {
+                        Directory = "Emgu",
+                        Name = $"{DateTime.UtcNow}.jpg"
+                    };
+                    var takePhotoResult = await CrossMedia.Current.TakePhotoAsync(mediaOptions);
+                    if (takePhotoResult == null) //cancelled
                         return;
-                    mats[i] = MatHandle;
-#else
-            var file = await _mediaPicker.TakePhotoAsync(new StoreCameraMediaOptions());
-                    mats[i] = file.Path;
-#endif
+                    mats[i] = takePhotoResult.Path;
                 }
             }
             InvokeOnImagesLoaded(mats);
 #endif
         }
-
-#if __ANDROID__
-        private readonly System.Threading.EventWaitHandle _waitHandle = new System.Threading.AutoResetEvent(false);
-        public void Continute()
-        {
-            _waitHandle.Set();
-        }
-        public String MatHandle;
-#endif
 
         public void InvokeOnImagesLoaded(string[] images)
         {
