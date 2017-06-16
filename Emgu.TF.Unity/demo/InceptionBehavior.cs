@@ -29,6 +29,32 @@ public class InceptionBehavior : MonoBehaviour
 
     public Text DisplayText;
 
+    private Inception _inceptionGraph;
+    private String[] _inceptionLabels;
+
+    private void RecognizeAndUpdateText(Texture2D texture)
+    {
+        Tensor imageTensor = ImageIO.ReadTensorFromTexture2D(texture, 224, 224, 128.0f, 1.0f, true);
+        float[] probability = _inceptionGraph.Recognize(imageTensor);
+
+        //String resStr = String.Empty;
+        if (probability != null)
+        {
+
+            float maxVal = 0;
+            int maxIdx = 0;
+            for (int i = 0; i < probability.Length; i++)
+            {
+                if (probability[i] > maxVal)
+                {
+                    maxVal = probability[i];
+                    maxIdx = i;
+                }
+            }
+            DisplayText.text = String.Format("Object is {0} with {1}% probability.", _inceptionLabels[maxIdx], maxVal * 100);
+        }
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -45,45 +71,19 @@ public class InceptionBehavior : MonoBehaviour
             return false;
         };
 
+        TfInvoke.CheckLibraryLoaded();
+
         WebCamDevice[] devices = WebCamTexture.devices;
         cameraCount = devices.Length;
-
+        _inceptionGraph = new Inception();
+        _inceptionLabels = _inceptionGraph.Labels;
         if (cameraCount == 0)
         {
             _liveCameraView = false;
-            Texture2D texture = Resources.Load<Texture2D>("grace_hopper");
-            Tensor imageTensor = ImageIO.ReadTensorFromTexture2D(texture, 224, 224, 128.0f, 1.0f, true);
+            Texture2D texture = Resources.Load<Texture2D>("space_shuttle");
 
-            byte[] raw = ImageIO.EncodeJpeg(imageTensor, 1.0f, 128.0f);
-            System.IO.File.WriteAllBytes("out.jpg", raw);
-
-            Inception inceptionGraph = new Inception();
-            float[] probability = inceptionGraph.Recognize(imageTensor);
-
-            String resStr = String.Empty;
-            if (probability != null)
-            {
-                String[] labels = inceptionGraph.Labels;
-                float maxVal = 0;
-                int maxIdx = 0;
-                for (int i = 0; i < probability.Length; i++)
-                {
-                    if (probability[i] > maxVal)
-                    {
-                        maxVal = probability[i];
-                        maxIdx = i;
-                    }
-                }
-                DisplayText.text = String.Format("Object is {0} with {1}% probability.", labels[maxIdx], maxVal * 100);
-            }
-            /*
-            MultiboxGraph multiboxGraph = new MultiboxGraph();
-            MultiboxGraph.Result results = multiboxGraph.Detect(imageTensor);
-
-            Texture2D drawableTexture = new Texture2D(texture.width, texture.height, TextureFormat.ARGB32, false);
-            drawableTexture.SetPixels(texture.GetPixels());
-            MultiboxGraph.DrawResults(drawableTexture, results, 0.002f);
-            */
+            RecognizeAndUpdateText(texture);
+            
 
             this.GetComponent<GUITexture>().texture = texture;
             this.GetComponent<GUITexture>().pixelInset = new Rect(-texture.width / 2, -texture.height / 2, texture.width, texture.height);
@@ -97,7 +97,7 @@ public class InceptionBehavior : MonoBehaviour
             baseRotation = transform.rotation;
             webcamTexture.Play();
             //data = new Color32[webcamTexture.width * webcamTexture.height];
-            TfInvoke.CheckLibraryLoaded();
+            
         }
     }
 
@@ -147,8 +147,10 @@ public class InceptionBehavior : MonoBehaviour
                         -webcamTexture.height / 2, webcamTexture.width, webcamTexture.height);
                     _textureResized = true;
                 }
-
+                
                 transform.rotation = baseRotation * Quaternion.AngleAxis(webcamTexture.videoRotationAngle, Vector3.up);
+
+                RecognizeAndUpdateText(resultTexture);
 
                 this.GetComponent<GUITexture>().texture = resultTexture;
                 //count++;

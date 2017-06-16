@@ -19,6 +19,7 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
 {
     private WebCamTexture webcamTexture;
     private Texture2D resultTexture;
+    private Texture2D drawableTexture;
     private Color32[] data;
     private byte[] bytes;
     private WebCamDevice[] devices;
@@ -26,6 +27,8 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
     private bool _textureResized = false;
     private Quaternion baseRotation;
     bool _liveCameraView = false;
+
+    private MultiboxGraph _multiboxGraph;
 
     // Use this for initialization
     void Start()
@@ -43,6 +46,8 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
             return false;
         };
 
+        TfInvoke.CheckLibraryLoaded();
+
         WebCamDevice[] devices = WebCamTexture.devices;
         int cameraCount = devices.Length;
 
@@ -52,15 +57,15 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
             Texture2D texture = Resources.Load<Texture2D>("surfers");
             Tensor imageTensor = ImageIO.ReadTensorFromTexture2D(texture, 224, 224, 128.0f, 1.0f / 128.0f, true);
 
-            byte[] raw = ImageIO.EncodeJpeg(imageTensor, 128.0f, 128.0f);
-            System.IO.File.WriteAllBytes("surfers_out.jpg", raw);
+            //byte[] raw = ImageIO.EncodeJpeg(imageTensor, 128.0f, 128.0f);
+            //System.IO.File.WriteAllBytes("surfers_out.jpg", raw);
 
-            MultiboxGraph multiboxGraph = new MultiboxGraph();
-            MultiboxGraph.Result results = multiboxGraph.Detect(imageTensor);
+            _multiboxGraph = new MultiboxGraph();
+            MultiboxGraph.Result results = _multiboxGraph.Detect(imageTensor);
             
-            Texture2D drawableTexture = new Texture2D(texture.width, texture.height, TextureFormat.ARGB32, false);
+            drawableTexture = new Texture2D(texture.width, texture.height, TextureFormat.ARGB32, false);
             drawableTexture.SetPixels(texture.GetPixels());
-            MultiboxGraph.DrawResults(drawableTexture, results, 0.02f);
+            MultiboxGraph.DrawResults(drawableTexture, results, 0.1f);
             
             this.GetComponent<GUITexture>().texture = drawableTexture;
             this.GetComponent<GUITexture>().pixelInset = new Rect(-texture.width/2, -texture.height/2, texture.width, texture.height);
@@ -69,11 +74,11 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
         {
             _liveCameraView = true;
             webcamTexture = new WebCamTexture(devices[0].name);
-
+            _multiboxGraph = new MultiboxGraph();
             baseRotation = transform.rotation;
             webcamTexture.Play();
             //data = new Color32[webcamTexture.width * webcamTexture.height];
-            TfInvoke.CheckLibraryLoaded();
+            
         }
     }
 
@@ -126,7 +131,17 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
 
                 transform.rotation = baseRotation * Quaternion.AngleAxis(webcamTexture.videoRotationAngle, Vector3.up);
 
-                this.GetComponent<GUITexture>().texture = resultTexture;
+                
+                Tensor imageTensor = ImageIO.ReadTensorFromTexture2D(resultTexture, 224, 224, 128.0f, 1.0f / 128.0f, true);
+                MultiboxGraph.Result results = _multiboxGraph.Detect(imageTensor);
+
+                if (drawableTexture == null || drawableTexture.width != resultTexture.width ||
+                    drawableTexture.height != resultTexture.height)
+                    drawableTexture = new Texture2D(resultTexture.width, resultTexture.height, TextureFormat.ARGB32, false);
+                drawableTexture.SetPixels(resultTexture.GetPixels());
+                MultiboxGraph.DrawResults(drawableTexture, results, 0.1f);
+
+                this.GetComponent<GUITexture>().texture = drawableTexture;
                 //count++;
 
             }

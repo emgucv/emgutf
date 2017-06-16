@@ -2,7 +2,6 @@ rm -rf Assets/Emgu.TF/Emgu.TF.Demo
 mkdir Assets\Emgu.TF\Emgu.TF.Demo
 mkdir Assets\Emgu.TF\Emgu.TF.Demo\Resources
 
-cp ../tensorflow/tensorflow/examples/label_image/data/grace_hopper.jpg Assets/Emgu.TF/Emgu.TF.Demo/Resources
 cp ../tensorflow/tensorflow/examples/multibox_detector/data/surfers.jpg Assets/Emgu.TF/Emgu.TF.Demo/Resources
 
 
