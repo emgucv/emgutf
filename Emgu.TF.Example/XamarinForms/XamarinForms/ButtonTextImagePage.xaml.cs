@@ -18,11 +18,16 @@ namespace Emgu.TF.XamarinForms
         public ButtonTextImagePage()
         {
             InitializeComponent();
+
         }
 
 
         public virtual async void LoadImages(String[] imageNames, String[] labels = null)
         {
+#if __ANDROID__ || __IOS__			
+			await CrossMedia.Current.Initialize();
+#endif			
+
 #if (__UNIFIED__ && !__IOS__) //NETFX or Xamarin Mac
             //use default images
             InvokeOnImagesLoaded(imageNames);
