@@ -25,7 +25,8 @@ public class InceptionBehavior : MonoBehaviour
     public int cameraCount = 0;
     private bool _textureResized = false;
     private Quaternion baseRotation;
-    bool _liveCameraView = false;
+    private bool _liveCameraView = false;
+    private bool _staticViewRendered = false;
 
     public Text DisplayText;
 
@@ -71,23 +72,16 @@ public class InceptionBehavior : MonoBehaviour
             return false;
         };
 
+        
         TfInvoke.CheckLibraryLoaded();
+        DisplayText.text = String.Format("Loading inception model, please wait...");
 
         WebCamDevice[] devices = WebCamTexture.devices;
         cameraCount = devices.Length;
-        _inceptionGraph = new Inception();
-        _inceptionLabels = _inceptionGraph.Labels;
+
         if (cameraCount == 0)
         {
             _liveCameraView = false;
-            Texture2D texture = Resources.Load<Texture2D>("space_shuttle");
-
-            RecognizeAndUpdateText(texture);
-            
-
-            this.GetComponent<GUITexture>().texture = texture;
-            this.GetComponent<GUITexture>().pixelInset = new Rect(-texture.width / 2, -texture.height / 2, texture.width, texture.height);
-            //this.GetComponent<GUIText>().pixelOffset = new Vector2();
         }
         else
         {
@@ -97,14 +91,40 @@ public class InceptionBehavior : MonoBehaviour
             baseRotation = transform.rotation;
             webcamTexture.Play();
             //data = new Color32[webcamTexture.width * webcamTexture.height];
-            
         }
     }
 
+    private bool _loadingModel = false;
 
     // Update is called once per frame
     void Update()
     {
+        if (_inceptionGraph == null)
+        {
+            if (_loadingModel)
+                return;
+            _loadingModel = true;
+            DisplayText.text = String.Format("Loading Inception Model, please wait...");
+            System.Threading.ThreadPool.QueueUserWorkItem(
+                (o) =>
+                {
+                    try
+                    {
+                        _inceptionGraph = new Inception();
+                        _inceptionLabels = _inceptionGraph.Labels;
+                    }
+                    catch (Exception e)
+                    {
+                        //DisplayText.text = e.Message;
+                        Console.WriteLine(e);
+                        return;
+                        //throw;
+                    }
+
+                    _loadingModel = false;
+                });
+        }
+        
         if (_liveCameraView)
         {
             if (webcamTexture != null && webcamTexture.didUpdateThisFrame)
@@ -147,7 +167,7 @@ public class InceptionBehavior : MonoBehaviour
                         -webcamTexture.height / 2, webcamTexture.width, webcamTexture.height);
                     _textureResized = true;
                 }
-                
+
                 transform.rotation = baseRotation * Quaternion.AngleAxis(webcamTexture.videoRotationAngle, Vector3.up);
 
                 RecognizeAndUpdateText(resultTexture);
@@ -155,6 +175,19 @@ public class InceptionBehavior : MonoBehaviour
                 this.GetComponent<GUITexture>().texture = resultTexture;
                 //count++;
 
+            }
+        }
+        else
+        {
+            if (!_staticViewRendered)
+            {
+                Texture2D texture = Resources.Load<Texture2D>("space_shuttle");
+
+                RecognizeAndUpdateText(texture);
+                
+                this.GetComponent<GUITexture>().texture = texture;
+                this.GetComponent<GUITexture>().pixelInset = new Rect(-texture.width / 2, -texture.height / 2, texture.width, texture.height);
+                _staticViewRendered = true;
             }
         }
     }

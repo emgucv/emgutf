@@ -269,11 +269,46 @@ SET(EMGU_TF_EXAMPLE_BUILD ON CACHE BOOL "Build Emgu TF Example")
 INCLUDE(Today)
 TODAY() #set the variable CURRENT_YEAR
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CommonAssemblyInfo.cs.in ${CMAKE_CURRENT_SOURCE_DIR}/CommonAssemblyInfo.cs)
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Package.nuspec)
+
 
 # ----------------------------------------------------------------------------
 #  Generate readme file for Emgu TF project
 # ----------------------------------------------------------------------------
+MACRO(CHECK_LICENSE_TYPE)
+	MESSAGE("LICENSE FILE: ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.License.txt")
+    IF (WIN32)
+        EXECUTE_PROCESS(COMMAND "findstr" "gpl" "Emgu.TF.License.txt" WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE TMP)
+	ELSE()	
+	    EXECUTE_PROCESS(COMMAND "grep" "gpl" "Emgu.TF.License.txt" WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE TMP)
+	ENDIF()
+	
+	STRING(STRIP "${TMP}" TMP)
+	STRING(LENGTH "${TMP}" GPL_LICENSE_LENGTH)
+	SET (LICENSE_TYPE "OpenSource")
+	SET (EMGUTF_LICENSE_URL "https://www.gnu.org/licenses/gpl-3.0.txt")
+	IF(${GPL_LICENSE_LENGTH} EQUAL 0)
+		SET(LICENSE_TYPE "Commercial")
+		SET (EMGUTF_LICENSE_URL "http://www.emgu.com/wiki/files/Emgu.TF.Commercial.License.1.0.pdf")
+	ENDIF()
+	
+	MESSAGE(STATUS "LICENSE_TYPE: ${LICENSE_TYPE}")
+ENDMACRO()
+CHECK_LICENSE_TYPE()
+
+SET(EMGUTF_NUGET_FILE_LIST "")
+IF(HAVE_WINDESKTOP_X64)
+	SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
+	<file src=\"..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />")
+ENDIF()
+IF(HAVE_WINDESKTOP_X64)
+	SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
+	<file src=\"Emgu.TF.targets\" target=\"build\" />
+    <file src=\"..\\..\\lib\\Emgu.TF.World.dll\" target=\"lib\\net35\" />
+	<file src=\"..\\..\\lib\\Emgu.TF.World.XML\" target=\"lib\\net35\" />")
+ENDIF()
+
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Package.nuspec)
+
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/README.txt.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF/README.txt)
 INSTALL(FILES "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF/README.txt" DESTINATION "." COMPONENT emgutf_binary)
 

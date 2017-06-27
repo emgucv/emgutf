@@ -2,21 +2,22 @@
 <package >
   <metadata>
     <id>Emgu.TF</id>
+	<title>Emgu TF</title>
     <version>${CPACK_PACKAGE_VERSION}</version>
     <authors>Emgu Corporation</authors>
     <owners>Emgu Corporation</owners>
-    <licenseUrl>https://www.gnu.org/licenses/gpl-3.0.txt</licenseUrl>
+    <licenseUrl>${EMGUTF_LICENSE_URL}</licenseUrl>
     <projectUrl>http://www.emgu.com/wiki/index.php/Emgu_TF</projectUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+	<iconUrl>http://www.emgu.com/wiki/files/EmguTFLogo.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+	<summary>Emgu TF is a cross platform .Net wrapper for the Google Tensorflow library.</summary>
     <description>Emgu TF is a cross platform .Net wrapper for the Google Tensorflow library. Allows Tensorflow functions to be called from .NET compatible languages such as C#, VB, VC++, IronPython.</description>
-    <releaseNotes>Initial release</releaseNotes>
+    <releaseNotes>This is the ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}.0 release of Emgu TF. For online documentation please visit
+http://www.emgu.com/wiki/files/emfutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}/document/Index.html</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags>tensorflow emgu emgutf ai</tags>
   </metadata>
   <files>
-    <file src="..\..\lib\x64\*.dll" target="build\x64" />
-	<file src="Emgu.TF.targets" target="build" />
-    <file src="..\..\lib\Emgu.TF.World.dll" target="lib" />
-	<file src="..\..\lib\Emgu.TF.World.XML" target="lib" />
+  ${EMGUTF_NUGET_FILE_LIST}
   </files>
 </package>

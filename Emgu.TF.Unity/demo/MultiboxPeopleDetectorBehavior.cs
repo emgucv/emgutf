@@ -14,6 +14,8 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using Emgu.TF;
 using Emgu.TF.Models;
+using UnityEditor.VersionControl;
+using UnityEngine.UI;
 
 public class MultiboxPeopleDetectorBehavior : MonoBehaviour
 {
@@ -26,9 +28,12 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
     public int cameraCount = 0;
     private bool _textureResized = false;
     private Quaternion baseRotation;
-    bool _liveCameraView = false;
-
+    private bool _liveCameraView = false;
+    private bool _staticViewRendered = false;
     private MultiboxGraph _multiboxGraph;
+
+    public Text DisplayText;
+
 
     // Use this for initialization
     void Start()
@@ -47,6 +52,7 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
         };
 
         TfInvoke.CheckLibraryLoaded();
+        
 
         WebCamDevice[] devices = WebCamTexture.devices;
         int cameraCount = devices.Length;
@@ -54,38 +60,51 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
         if (cameraCount == 0)
         {
             _liveCameraView = false;
-            Texture2D texture = Resources.Load<Texture2D>("surfers");
-            Tensor imageTensor = ImageIO.ReadTensorFromTexture2D(texture, 224, 224, 128.0f, 1.0f / 128.0f, true);
 
-            //byte[] raw = ImageIO.EncodeJpeg(imageTensor, 128.0f, 128.0f);
-            //System.IO.File.WriteAllBytes("surfers_out.jpg", raw);
-
-            _multiboxGraph = new MultiboxGraph();
-            MultiboxGraph.Result results = _multiboxGraph.Detect(imageTensor);
-            
-            drawableTexture = new Texture2D(texture.width, texture.height, TextureFormat.ARGB32, false);
-            drawableTexture.SetPixels(texture.GetPixels());
-            MultiboxGraph.DrawResults(drawableTexture, results, 0.1f);
-            
-            this.GetComponent<GUITexture>().texture = drawableTexture;
-            this.GetComponent<GUITexture>().pixelInset = new Rect(-texture.width/2, -texture.height/2, texture.width, texture.height);
         }
         else
         {
             _liveCameraView = true;
             webcamTexture = new WebCamTexture(devices[0].name);
-            _multiboxGraph = new MultiboxGraph();
+            
             baseRotation = transform.rotation;
             webcamTexture.Play();
-            //data = new Color32[webcamTexture.width * webcamTexture.height];
+            
             
         }
     }
 
+    private bool _loadingModel = false;
 
     // Update is called once per frame
     void Update()
     {
+        if (_multiboxGraph == null)
+        {
+            if (_loadingModel)
+                return;
+            _loadingModel = true;
+            DisplayText.text = String.Format("Loading Multibox model, please wait...");
+            System.Threading.ThreadPool.QueueUserWorkItem(
+                (o) =>
+                {
+                    try
+                    {
+                        _multiboxGraph = new MultiboxGraph();
+                    }
+                    catch (Exception e)
+                    {
+                        //DisplayText.text = e.Message;
+                        Console.WriteLine(e);
+                        return;
+                        //throw;
+                    }
+  
+                    _loadingModel = false;
+                });
+        }
+
+        DisplayText.text = String.Empty;
         if (_liveCameraView)
         {
             if (webcamTexture != null && webcamTexture.didUpdateThisFrame)
@@ -139,12 +158,33 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
                     drawableTexture.height != resultTexture.height)
                     drawableTexture = new Texture2D(resultTexture.width, resultTexture.height, TextureFormat.ARGB32, false);
                 drawableTexture.SetPixels(resultTexture.GetPixels());
-                MultiboxGraph.DrawResults(drawableTexture, results, 0.1f);
+                MultiboxGraph.DrawResults(drawableTexture, results, 0.2f);
 
                 this.GetComponent<GUITexture>().texture = drawableTexture;
                 //count++;
 
             }
+        }
+        else if (!_staticViewRendered)
+        {
+            Texture2D texture = Resources.Load<Texture2D>("surfers");
+            Tensor imageTensor = ImageIO.ReadTensorFromTexture2D(texture, 224, 224, 128.0f, 1.0f / 128.0f, true);
+
+            //byte[] raw = ImageIO.EncodeJpeg(imageTensor, 128.0f, 128.0f);
+            //System.IO.File.WriteAllBytes("surfers_out.jpg", raw);
+
+            
+            MultiboxGraph.Result results = _multiboxGraph.Detect(imageTensor);
+
+            drawableTexture = new Texture2D(texture.width, texture.height, TextureFormat.ARGB32, false);
+            drawableTexture.SetPixels(texture.GetPixels());
+            MultiboxGraph.DrawResults(drawableTexture, results, 0.1f);
+
+            this.GetComponent<GUITexture>().texture = drawableTexture;
+            this.GetComponent<GUITexture>().pixelInset = new Rect(-texture.width / 2, -texture.height / 2, texture.width, texture.height);
+
+            DisplayText.text = String.Empty;
+            _staticViewRendered = true;
         }
     }
 }
