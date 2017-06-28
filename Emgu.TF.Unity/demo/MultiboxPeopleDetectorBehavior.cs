@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using Emgu.TF;
 using Emgu.TF.Models;
-using UnityEditor.VersionControl;
+//using UnityEditor.VersionControl;
 using UnityEngine.UI;
 
 public class MultiboxPeopleDetectorBehavior : MonoBehaviour
@@ -167,13 +167,16 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
         }
         else if (!_staticViewRendered)
         {
+			if (_multiboxGraph == null)
+				return;
+			
             Texture2D texture = Resources.Load<Texture2D>("surfers");
             Tensor imageTensor = ImageIO.ReadTensorFromTexture2D(texture, 224, 224, 128.0f, 1.0f / 128.0f, true);
 
             //byte[] raw = ImageIO.EncodeJpeg(imageTensor, 128.0f, 128.0f);
             //System.IO.File.WriteAllBytes("surfers_out.jpg", raw);
 
-            
+
             MultiboxGraph.Result results = _multiboxGraph.Detect(imageTensor);
 
             drawableTexture = new Texture2D(texture.width, texture.height, TextureFormat.ARGB32, false);
