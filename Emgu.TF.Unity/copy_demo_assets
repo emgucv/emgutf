@@ -1,6 +1,6 @@
 rm -rf Assets/Emgu.TF/Emgu.TF.Demo
-mkdir Assets/Emgu.TF/Emgu.TF.Demo
-mkdir Assets/Emgu.TF/Emgu.TF.Demo/Resources
+#mkdir Assets/Emgu.TF/Emgu.TF.Demo
+mkdir -p Assets/Emgu.TF/Emgu.TF.Demo/Resources
 
 cp ../tensorflow/tensorflow/examples/multibox_detector/data/surfers.jpg Assets/Emgu.TF/Emgu.TF.Demo/Resources
 
