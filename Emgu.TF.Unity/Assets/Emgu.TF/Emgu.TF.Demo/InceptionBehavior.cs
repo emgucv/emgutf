@@ -35,8 +35,8 @@ public class InceptionBehavior : MonoBehaviour
 
     private void RecognizeAndUpdateText(Texture2D texture)
     {
-		//if (_inceptionGraph == null)
-		//	return;
+		if (_inceptionGraph == null)
+			return;
         Tensor imageTensor = ImageIO.ReadTensorFromTexture2D(texture, 224, 224, 128.0f, 1.0f, true);
         float[] probability = _inceptionGraph.Recognize(imageTensor);
 
@@ -125,6 +125,7 @@ public class InceptionBehavior : MonoBehaviour
 
                     _loadingModel = false;
                 });
+			return;
         }
         
         if (_liveCameraView)
@@ -183,6 +184,8 @@ public class InceptionBehavior : MonoBehaviour
         {
             if (!_staticViewRendered)
             {
+				if (_inceptionGraph == null)
+					return;
                 Texture2D texture = Resources.Load<Texture2D>("space_shuttle");
 
                 RecognizeAndUpdateText(texture);
