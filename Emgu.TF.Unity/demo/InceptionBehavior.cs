@@ -30,11 +30,13 @@ public class InceptionBehavior : MonoBehaviour
 
     public Text DisplayText;
 
-    private Inception _inceptionGraph;
+	private Inception _inceptionGraph = null;
     private String[] _inceptionLabels;
 
     private void RecognizeAndUpdateText(Texture2D texture)
     {
+		//if (_inceptionGraph == null)
+		//	return;
         Tensor imageTensor = ImageIO.ReadTensorFromTexture2D(texture, 224, 224, 128.0f, 1.0f, true);
         float[] probability = _inceptionGraph.Recognize(imageTensor);
 
