@@ -10,6 +10,9 @@ SET OS_MODE=
 IF "%1%"=="64" SET OS_MODE= Win64
 IF "%1%"=="ARM" SET OS_MODE= ARM
 
+IF "%2%"=="gpu" SET GPU_MODE= -Dtensorflow_ENABLE_GPU=ON ^
+-DCUDNN_HOME="%CUDA_PATH%" 
+
 SET PROGRAMFILES_DIR_X86=%programfiles(x86)%
 if NOT EXIST "%PROGRAMFILES_DIR_X86%" SET PROGRAMFILES_DIR_X86=%programfiles%
 SET PROGRAMFILES_DIR=%programfiles%
@@ -46,6 +49,7 @@ REM IF "%2%"=="gpu" GOTO SET_BUILD_TYPE
 REM IF NOT "%3%"=="WindowsStore10" GOTO SET_BUILD_TYPE
 
 
+
 :SET_BUILD_TYPE
 IF %DEVENV%=="%MSBUILD35%" SET BUILD_TYPE=/property:Configuration=Release
 IF %DEVENV%=="%MSBUILD40%" SET BUILD_TYPE=/property:Configuration=Release
@@ -67,6 +71,9 @@ IF %DEVENV%==%VS2013% SET CMAKE_CONF="Visual Studio 12%OS_MODE%"
 IF %DEVENV%==%VS2015% SET CMAKE_CONF="Visual Studio 14%OS_MODE%"
 IF %DEVENV%==%VS2017% SET CMAKE_CONF="Visual Studio 15%OS_MODE%"
 
+
+
+
 REM BUILD TENSORFLOW
 cp tfextern\tfextern.cmake tensorflow\tensorflow\contrib\cmake
 cd tensorflow\tensorflow\contrib\cmake
@@ -76,7 +83,7 @@ mkdir build
 cd build
 %CMAKE% .. ^
 -DCMAKE_BUILD_TYPE=Release ^
--G %CMAKE_CONF% ^
+-G %CMAKE_CONF% %GPU_MODE%^
 -DSWIG_EXECUTABLE=C:/tools/swigwin-3.0.12/swig.exe ^
 -DPYTHON_EXECUTABLE="C:/Program Files/Anaconda3/python.exe" ^
 -DPYTHON_LIBRARIES="C:/Program Files/Anaconda3/libs/python35.lib" ^

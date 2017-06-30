@@ -55,9 +55,9 @@ namespace Tensorflow {
   }
   #region Messages
   /// <summary>
-  ///  Protocol buffer representing the value for an attr used to configure an Op.
-  ///  Comment indicates the corresponding attr type.  Only the field matching the
-  ///  attr type may be filled.
+  /// Protocol buffer representing the value for an attr used to configure an Op.
+  /// Comment indicates the corresponding attr type.  Only the field matching the
+  /// attr type may be filled.
   /// </summary>
   public sealed partial class AttrValue : pb::IMessage<AttrValue> {
     private static readonly pb::MessageParser<AttrValue> _parser = new pb::MessageParser<AttrValue>(() => new AttrValue());
@@ -126,7 +126,7 @@ namespace Tensorflow {
     /// <summary>Field number for the "s" field.</summary>
     public const int SFieldNumber = 2;
     /// <summary>
-    ///  "string"
+    /// "string"
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pb::ByteString S {
@@ -140,7 +140,7 @@ namespace Tensorflow {
     /// <summary>Field number for the "i" field.</summary>
     public const int IFieldNumber = 3;
     /// <summary>
-    ///  "int"
+    /// "int"
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public long I {
@@ -154,7 +154,7 @@ namespace Tensorflow {
     /// <summary>Field number for the "f" field.</summary>
     public const int FFieldNumber = 4;
     /// <summary>
-    ///  "float"
+    /// "float"
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public float F {
@@ -168,7 +168,7 @@ namespace Tensorflow {
     /// <summary>Field number for the "b" field.</summary>
     public const int BFieldNumber = 5;
     /// <summary>
-    ///  "bool"
+    /// "bool"
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool B {
@@ -182,7 +182,7 @@ namespace Tensorflow {
     /// <summary>Field number for the "type" field.</summary>
     public const int TypeFieldNumber = 6;
     /// <summary>
-    ///  "type"
+    /// "type"
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Tensorflow.DataType Type {
@@ -196,7 +196,7 @@ namespace Tensorflow {
     /// <summary>Field number for the "shape" field.</summary>
     public const int ShapeFieldNumber = 7;
     /// <summary>
-    ///  "shape"
+    /// "shape"
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Tensorflow.TensorShapeProto Shape {
@@ -210,7 +210,7 @@ namespace Tensorflow {
     /// <summary>Field number for the "tensor" field.</summary>
     public const int TensorFieldNumber = 8;
     /// <summary>
-    ///  "tensor"
+    /// "tensor"
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Tensorflow.TensorProto Tensor {
@@ -224,7 +224,7 @@ namespace Tensorflow {
     /// <summary>Field number for the "list" field.</summary>
     public const int ListFieldNumber = 1;
     /// <summary>
-    ///  any "list(...)"
+    /// any "list(...)"
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Tensorflow.AttrValue.Types.ListValue List {
@@ -238,10 +238,10 @@ namespace Tensorflow {
     /// <summary>Field number for the "func" field.</summary>
     public const int FuncFieldNumber = 10;
     /// <summary>
-    ///  "func" represents a function. func.name is a function's name or
-    ///  a primitive op's name. func.attr.first is the name of an attr
-    ///  defined for that function. func.attr.second is the value for
-    ///  that attr in the instantiation.
+    /// "func" represents a function. func.name is a function's name or
+    /// a primitive op's name. func.attr.first is the name of an attr
+    /// defined for that function. func.attr.second is the value for
+    /// that attr in the instantiation.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Tensorflow.NameAttrList Func {
@@ -255,13 +255,13 @@ namespace Tensorflow {
     /// <summary>Field number for the "placeholder" field.</summary>
     public const int PlaceholderFieldNumber = 9;
     /// <summary>
-    ///  This is a placeholder only used in nodes defined inside a
-    ///  function.  It indicates the attr value will be supplied when
-    ///  the function is instantiated.  For example, let us suppose a
-    ///  node "N" in function "FN". "N" has an attr "A" with value
-    ///  placeholder = "foo". When FN is instantiated with attr "foo"
-    ///  set to "bar", the instantiated node N's attr A will have been
-    ///  given the value "bar".
+    /// This is a placeholder only used in nodes defined inside a
+    /// function.  It indicates the attr value will be supplied when
+    /// the function is instantiated.  For example, let us suppose a
+    /// node "N" in function "FN". "N" has an attr "A" with value
+    /// placeholder = "foo". When FN is instantiated with attr "foo"
+    /// set to "bar", the instantiated node N's attr A will have been
+    /// given the value "bar".
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Placeholder {
@@ -546,7 +546,7 @@ namespace Tensorflow {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static partial class Types {
       /// <summary>
-      ///  LINT.IfChange
+      /// LINT.IfChange
       /// </summary>
       public sealed partial class ListValue : pb::IMessage<ListValue> {
         private static readonly pb::MessageParser<ListValue> _parser = new pb::MessageParser<ListValue>(() => new ListValue());
@@ -593,7 +593,7 @@ namespace Tensorflow {
             = pb::FieldCodec.ForBytes(18);
         private readonly pbc::RepeatedField<pb::ByteString> s_ = new pbc::RepeatedField<pb::ByteString>();
         /// <summary>
-        ///  "list(string)"
+        /// "list(string)"
         /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public pbc::RepeatedField<pb::ByteString> S {
@@ -606,7 +606,7 @@ namespace Tensorflow {
             = pb::FieldCodec.ForInt64(26);
         private readonly pbc::RepeatedField<long> i_ = new pbc::RepeatedField<long>();
         /// <summary>
-        ///  "list(int)"
+        /// "list(int)"
         /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public pbc::RepeatedField<long> I {
@@ -619,7 +619,7 @@ namespace Tensorflow {
             = pb::FieldCodec.ForFloat(34);
         private readonly pbc::RepeatedField<float> f_ = new pbc::RepeatedField<float>();
         /// <summary>
-        ///  "list(float)"
+        /// "list(float)"
         /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public pbc::RepeatedField<float> F {
@@ -632,7 +632,7 @@ namespace Tensorflow {
             = pb::FieldCodec.ForBool(42);
         private readonly pbc::RepeatedField<bool> b_ = new pbc::RepeatedField<bool>();
         /// <summary>
-        ///  "list(bool)"
+        /// "list(bool)"
         /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public pbc::RepeatedField<bool> B {
@@ -645,7 +645,7 @@ namespace Tensorflow {
             = pb::FieldCodec.ForEnum(50, x => (int) x, x => (global::Tensorflow.DataType) x);
         private readonly pbc::RepeatedField<global::Tensorflow.DataType> type_ = new pbc::RepeatedField<global::Tensorflow.DataType>();
         /// <summary>
-        ///  "list(type)"
+        /// "list(type)"
         /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public pbc::RepeatedField<global::Tensorflow.DataType> Type {
@@ -658,7 +658,7 @@ namespace Tensorflow {
             = pb::FieldCodec.ForMessage(58, global::Tensorflow.TensorShapeProto.Parser);
         private readonly pbc::RepeatedField<global::Tensorflow.TensorShapeProto> shape_ = new pbc::RepeatedField<global::Tensorflow.TensorShapeProto>();
         /// <summary>
-        ///  "list(shape)"
+        /// "list(shape)"
         /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public pbc::RepeatedField<global::Tensorflow.TensorShapeProto> Shape {
@@ -671,7 +671,7 @@ namespace Tensorflow {
             = pb::FieldCodec.ForMessage(66, global::Tensorflow.TensorProto.Parser);
         private readonly pbc::RepeatedField<global::Tensorflow.TensorProto> tensor_ = new pbc::RepeatedField<global::Tensorflow.TensorProto>();
         /// <summary>
-        ///  "list(tensor)"
+        /// "list(tensor)"
         /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public pbc::RepeatedField<global::Tensorflow.TensorProto> Tensor {
@@ -684,7 +684,7 @@ namespace Tensorflow {
             = pb::FieldCodec.ForMessage(74, global::Tensorflow.NameAttrList.Parser);
         private readonly pbc::RepeatedField<global::Tensorflow.NameAttrList> func_ = new pbc::RepeatedField<global::Tensorflow.NameAttrList>();
         /// <summary>
-        ///  "list(attr)"
+        /// "list(attr)"
         /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public pbc::RepeatedField<global::Tensorflow.NameAttrList> Func {
@@ -831,8 +831,8 @@ namespace Tensorflow {
   }
 
   /// <summary>
-  ///  A list of attr names and their values. The whole list is attached
-  ///  with a string name.  E.g., MatMul[T=float].
+  /// A list of attr names and their values. The whole list is attached
+  /// with a string name.  E.g., MatMul[T=float].
   /// </summary>
   public sealed partial class NameAttrList : pb::IMessage<NameAttrList> {
     private static readonly pb::MessageParser<NameAttrList> _parser = new pb::MessageParser<NameAttrList>(() => new NameAttrList());

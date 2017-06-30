@@ -39,7 +39,7 @@ namespace Tensorflow {
   }
   #region Messages
   /// <summary>
-  ///  Dimensions of a tensor.
+  /// Dimensions of a tensor.
   /// </summary>
   public sealed partial class TensorShapeProto : pb::IMessage<TensorShapeProto> {
     private static readonly pb::MessageParser<TensorShapeProto> _parser = new pb::MessageParser<TensorShapeProto>(() => new TensorShapeProto());
@@ -80,19 +80,19 @@ namespace Tensorflow {
         = pb::FieldCodec.ForMessage(18, global::Tensorflow.TensorShapeProto.Types.Dim.Parser);
     private readonly pbc::RepeatedField<global::Tensorflow.TensorShapeProto.Types.Dim> dim_ = new pbc::RepeatedField<global::Tensorflow.TensorShapeProto.Types.Dim>();
     /// <summary>
-    ///  Dimensions of the tensor, such as {"input", 30}, {"output", 40}
-    ///  for a 30 x 40 2D tensor.  If an entry has size -1, this
-    ///  corresponds to a dimension of unknown size. The names are
-    ///  optional.
+    /// Dimensions of the tensor, such as {"input", 30}, {"output", 40}
+    /// for a 30 x 40 2D tensor.  If an entry has size -1, this
+    /// corresponds to a dimension of unknown size. The names are
+    /// optional.
     ///
-    ///  The order of entries in "dim" matters: It indicates the layout of the
-    ///  values in the tensor in-memory representation.
+    /// The order of entries in "dim" matters: It indicates the layout of the
+    /// values in the tensor in-memory representation.
     ///
-    ///  The first entry in "dim" is the outermost dimension used to layout the
-    ///  values, the last entry is the innermost dimension.  This matches the
-    ///  in-memory layout of RowMajor Eigen tensors.
+    /// The first entry in "dim" is the outermost dimension used to layout the
+    /// values, the last entry is the innermost dimension.  This matches the
+    /// in-memory layout of RowMajor Eigen tensors.
     ///
-    ///  If "dim.size()" > 0, "unknown_rank" must be false.
+    /// If "dim.size()" > 0, "unknown_rank" must be false.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<global::Tensorflow.TensorShapeProto.Types.Dim> Dim {
@@ -103,9 +103,9 @@ namespace Tensorflow {
     public const int UnknownRankFieldNumber = 3;
     private bool unknownRank_;
     /// <summary>
-    ///  If true, the number of dimensions in the shape is unknown.
+    /// If true, the number of dimensions in the shape is unknown.
     ///
-    ///  If true, "dim.size()" must be 0.
+    /// If true, "dim.size()" must be 0.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool UnknownRank {
@@ -201,7 +201,7 @@ namespace Tensorflow {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static partial class Types {
       /// <summary>
-      ///  One dimension of the tensor.
+      /// One dimension of the tensor.
       /// </summary>
       public sealed partial class Dim : pb::IMessage<Dim> {
         private static readonly pb::MessageParser<Dim> _parser = new pb::MessageParser<Dim>(() => new Dim());
@@ -240,11 +240,11 @@ namespace Tensorflow {
         public const int SizeFieldNumber = 1;
         private long size_;
         /// <summary>
-        ///  Size of the tensor in that dimension.
-        ///  This value must be >= -1, but values of -1 are reserved for "unknown"
-        ///  shapes (values of -1 mean "unknown" dimension).  Certain wrappers
-        ///  that work with TensorShapeProto may fail at runtime when deserializing
-        ///  a TensorShapeProto containing a dim value of -1.
+        /// Size of the tensor in that dimension.
+        /// This value must be >= -1, but values of -1 are reserved for "unknown"
+        /// shapes (values of -1 mean "unknown" dimension).  Certain wrappers
+        /// that work with TensorShapeProto may fail at runtime when deserializing
+        /// a TensorShapeProto containing a dim value of -1.
         /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public long Size {
@@ -258,7 +258,7 @@ namespace Tensorflow {
         public const int NameFieldNumber = 2;
         private string name_ = "";
         /// <summary>
-        ///  Optional name of the tensor dimension.
+        /// Optional name of the tensor dimension.
         /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public string Name {

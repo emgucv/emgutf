@@ -1,4 +1,5 @@
 #include "tensorflow/c/c_api.h"
+#include "tensorflow/core/util/port.h"
 
 #ifndef  TFAPI_EXPORTS
 #define TFAPI_EXPORTS
@@ -137,3 +138,5 @@ TFAPI(int) tfeStringEncodedSize(int len);
 TFAPI(int) tfeStringEncode(const char* src, int src_len, char* dst, int dst_len, TF_Status* status);
 TFAPI(int) tfeStringDecode(const char* src, int src_len, const char** dst, size_t* dst_len, TF_Status* status);
 TFAPI(void) tfeMemcpy(void* dst, void* src, int length);
+
+TFAPI(bool) tfeIsGoogleCudaEnabled();

@@ -470,5 +470,16 @@ namespace Emgu.TF
 
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         internal static extern void tfeMemcpy(IntPtr dst, IntPtr src, int length);
+
+        /// <summary>
+        /// Returns true if GOOGLE_CUDA is defined.
+        /// </summary>
+        public static bool IsGoogleCudaEnabled
+        {
+            get { return tfeIsGoogleCudaEnabled(); }
+        }
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [return:MarshalAs(TfInvoke.BoolMarshalType)]
+        private static extern bool tfeIsGoogleCudaEnabled();
     }
 }

@@ -48,7 +48,7 @@ namespace Tensorflow {
   }
   #region Messages
   /// <summary>
-  ///  Protocol buffer representing a tensor.
+  /// Protocol buffer representing a tensor.
   /// </summary>
   public sealed partial class TensorProto : pb::IMessage<TensorProto> {
     private static readonly pb::MessageParser<TensorProto> _parser = new pb::MessageParser<TensorProto>(() => new TensorProto());
@@ -110,7 +110,7 @@ namespace Tensorflow {
     public const int TensorShapeFieldNumber = 2;
     private global::Tensorflow.TensorShapeProto tensorShape_;
     /// <summary>
-    ///  Shape of the tensor.  TODO(touts): sort out the 0-rank issues.
+    /// Shape of the tensor.  TODO(touts): sort out the 0-rank issues.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Tensorflow.TensorShapeProto TensorShape {
@@ -124,11 +124,11 @@ namespace Tensorflow {
     public const int VersionNumberFieldNumber = 3;
     private int versionNumber_;
     /// <summary>
-    ///  Version number.
+    /// Version number.
     ///
-    ///  In version 0, if the "repeated xxx" representations contain only one
-    ///  element, that element is repeated to fill the shape.  This makes it easy
-    ///  to represent a constant Tensor with a single value.
+    /// In version 0, if the "repeated xxx" representations contain only one
+    /// element, that element is repeated to fill the shape.  This makes it easy
+    /// to represent a constant Tensor with a single value.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int VersionNumber {
@@ -142,11 +142,11 @@ namespace Tensorflow {
     public const int TensorContentFieldNumber = 4;
     private pb::ByteString tensorContent_ = pb::ByteString.Empty;
     /// <summary>
-    ///  Serialized raw tensor content from either Tensor::AsProtoTensorContent or
-    ///  memcpy in tensorflow::grpc::EncodeTensorToByteBuffer. This representation
-    ///  can be used for all tensor types. The purpose of this representation is to
-    ///  reduce serialization overhead during RPC call by avoiding serialization of
-    ///  many repeated small items.
+    /// Serialized raw tensor content from either Tensor::AsProtoTensorContent or
+    /// memcpy in tensorflow::grpc::EncodeTensorToByteBuffer. This representation
+    /// can be used for all tensor types. The purpose of this representation is to
+    /// reduce serialization overhead during RPC call by avoiding serialization of
+    /// many repeated small items.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pb::ByteString TensorContent {
@@ -162,8 +162,8 @@ namespace Tensorflow {
         = pb::FieldCodec.ForInt32(106);
     private readonly pbc::RepeatedField<int> halfVal_ = new pbc::RepeatedField<int>();
     /// <summary>
-    ///  DT_HALF. Note that since protobuf has no int16 type, we'll have some
-    ///  pointless zero padding for each value here.
+    /// DT_HALF. Note that since protobuf has no int16 type, we'll have some
+    /// pointless zero padding for each value here.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<int> HalfVal {
@@ -176,7 +176,7 @@ namespace Tensorflow {
         = pb::FieldCodec.ForFloat(42);
     private readonly pbc::RepeatedField<float> floatVal_ = new pbc::RepeatedField<float>();
     /// <summary>
-    ///  DT_FLOAT.
+    /// DT_FLOAT.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<float> FloatVal {
@@ -189,7 +189,7 @@ namespace Tensorflow {
         = pb::FieldCodec.ForDouble(50);
     private readonly pbc::RepeatedField<double> doubleVal_ = new pbc::RepeatedField<double>();
     /// <summary>
-    ///  DT_DOUBLE.
+    /// DT_DOUBLE.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<double> DoubleVal {
@@ -202,7 +202,7 @@ namespace Tensorflow {
         = pb::FieldCodec.ForInt32(58);
     private readonly pbc::RepeatedField<int> intVal_ = new pbc::RepeatedField<int>();
     /// <summary>
-    ///  DT_INT32, DT_INT16, DT_INT8, DT_UINT8.
+    /// DT_INT32, DT_INT16, DT_INT8, DT_UINT8.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<int> IntVal {
@@ -215,7 +215,7 @@ namespace Tensorflow {
         = pb::FieldCodec.ForBytes(66);
     private readonly pbc::RepeatedField<pb::ByteString> stringVal_ = new pbc::RepeatedField<pb::ByteString>();
     /// <summary>
-    ///  DT_STRING
+    /// DT_STRING
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<pb::ByteString> StringVal {
@@ -228,8 +228,8 @@ namespace Tensorflow {
         = pb::FieldCodec.ForFloat(74);
     private readonly pbc::RepeatedField<float> scomplexVal_ = new pbc::RepeatedField<float>();
     /// <summary>
-    ///  DT_COMPLEX64. scomplex_val(2*i) and scomplex_val(2*i+1) are real
-    ///  and imaginary parts of i-th single precision complex.
+    /// DT_COMPLEX64. scomplex_val(2*i) and scomplex_val(2*i+1) are real
+    /// and imaginary parts of i-th single precision complex.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<float> ScomplexVal {
@@ -242,7 +242,7 @@ namespace Tensorflow {
         = pb::FieldCodec.ForInt64(82);
     private readonly pbc::RepeatedField<long> int64Val_ = new pbc::RepeatedField<long>();
     /// <summary>
-    ///  DT_INT64
+    /// DT_INT64
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<long> Int64Val {
@@ -255,7 +255,7 @@ namespace Tensorflow {
         = pb::FieldCodec.ForBool(90);
     private readonly pbc::RepeatedField<bool> boolVal_ = new pbc::RepeatedField<bool>();
     /// <summary>
-    ///  DT_BOOL
+    /// DT_BOOL
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<bool> BoolVal {
@@ -268,8 +268,8 @@ namespace Tensorflow {
         = pb::FieldCodec.ForDouble(98);
     private readonly pbc::RepeatedField<double> dcomplexVal_ = new pbc::RepeatedField<double>();
     /// <summary>
-    ///  DT_COMPLEX128. dcomplex_val(2*i) and dcomplex_val(2*i+1) are real
-    ///  and imaginary parts of i-th double precision complex.
+    /// DT_COMPLEX128. dcomplex_val(2*i) and dcomplex_val(2*i+1) are real
+    /// and imaginary parts of i-th double precision complex.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<double> DcomplexVal {
@@ -282,7 +282,7 @@ namespace Tensorflow {
         = pb::FieldCodec.ForMessage(114, global::Tensorflow.ResourceHandle.Parser);
     private readonly pbc::RepeatedField<global::Tensorflow.ResourceHandle> resourceHandleVal_ = new pbc::RepeatedField<global::Tensorflow.ResourceHandle>();
     /// <summary>
-    ///  DT_RESOURCE
+    /// DT_RESOURCE
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<global::Tensorflow.ResourceHandle> ResourceHandleVal {
