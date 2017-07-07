@@ -2794,29 +2794,6 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Greedily selects a subset of bounding boxes in descending order of score,
-      ///</summary>
-      ///<param name="boxes">Input to the operation: A 2-D float tensor of shape `[num_boxes, 4]`.</param>
-      ///<param name="scores">Input to the operation: A 1-D float tensor of shape `[num_boxes]` representing a single score corresponding to each box (each row of boxes).</param>
-      ///<param name="max_output_size">Input to the operation: A scalar integer tensor representing the maximum number of boxes to be selected by non max suppression.</param>
-      ///<param name="iou_threshold">Input to the operation: A 0-D float tensor representing the threshold for deciding whether boxes overlap too much with respect to IOU.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] selected_indices(type: DtInt32): A 1-D integer tensor of shape `[M]` representing the selected indices from the boxes tensor, where `M &lt;= max_output_size`.
-      ///</return>
-      public Operation NonMaxSuppressionV2 (  Output boxes , Output scores , Output max_output_size , Output iou_threshold ,String opName= "NonMaxSuppressionV2" ) 
-      {
-         OperationDescription desc = NewOperation("NonMaxSuppressionV2", opName);
-         desc.AddInput(boxes);
-         desc.AddInput(scores);
-         desc.AddInput(max_output_size);
-         desc.AddInput(iou_threshold);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///Return a strided slice from `input`.
       ///</summary>
       ///<param name="input">Input to the operation. </param>
@@ -11675,6 +11652,25 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Computes the mean along segments of a tensor.
+      ///</summary>
+      ///<param name="data">Input to the operation. </param>
+      ///<param name="segment_ids">Input to the operation: A 1-D tensor whose rank is equal to the rank of `data`'s first dimension.  Values should be sorted and can be repeated.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): Has same shape as data, except for dimension 0 which has size `k`, the number of segments.
+      ///</return>
+      public Operation SegmentMean (  Output data , Output segment_ids ,String opName= "SegmentMean" ) 
+      {
+         OperationDescription desc = NewOperation("SegmentMean", opName);
+         desc.AddInput(data);
+         desc.AddInput(segment_ids);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Gradients for Local Response Normalization.
       ///</summary>
       ///<param name="input_grads">Input to the operation: 4-D with shape `[batch, height, width, channels]`.</param>
@@ -11699,25 +11695,6 @@ namespace Emgu.TF
          if (bias != 1f) desc.SetAttr("bias", bias);
          if (alpha != 1f) desc.SetAttr("alpha", alpha);
          if (beta != 0.5f) desc.SetAttr("beta", beta);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the mean along segments of a tensor.
-      ///</summary>
-      ///<param name="data">Input to the operation. </param>
-      ///<param name="segment_ids">Input to the operation: A 1-D tensor whose rank is equal to the rank of `data`'s first dimension.  Values should be sorted and can be repeated.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): Has same shape as data, except for dimension 0 which has size `k`, the number of segments.
-      ///</return>
-      public Operation SegmentMean (  Output data , Output segment_ids ,String opName= "SegmentMean" ) 
-      {
-         OperationDescription desc = NewOperation("SegmentMean", opName);
-         desc.AddInput(data);
-         desc.AddInput(segment_ids);
-
-
          return desc.FinishOperation();
       } 
 
