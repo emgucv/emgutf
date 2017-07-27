@@ -12,11 +12,17 @@ namespace Emgu.TF.Models
 {
     public class Inception : DownloadableModels
     {
-        public Inception(Status status = null, String[] modelFiles = null, String downloadUrl = null)
+        private String _inputLayer;
+        private String _outputLayer;
+
+        public Inception(Status status = null, String[] modelFiles = null, String downloadUrl = "https://github.com/emgucv/models/raw/master/inception/", String inputLayer = "input", String outputLayer = "output")
             : base(
                 modelFiles ?? new string[] { "tensorflow_inception_graph.pb", "imagenet_comp_graph_label_strings.txt" },
-                downloadUrl ?? "https://github.com/emgucv/models/raw/master/inception/")
+                downloadUrl)
         {
+            _inputLayer = inputLayer;
+            _outputLayer = outputLayer;
+
             Download();
 
 #if __ANDROID__
