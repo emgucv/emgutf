@@ -53,8 +53,8 @@ namespace Emgu.TF.Models
         public float[] Recognize(Tensor image)
         {
             Session inceptionSession = new Session(this);
-            Tensor[] finalTensor = inceptionSession.Run(new Output[] { this["input"] }, new Tensor[] { image },
-                new Output[] { this["output"] });
+            Tensor[] finalTensor = inceptionSession.Run(new Output[] { this[_inputLayer] }, new Tensor[] { image },
+                new Output[] { this[_outputLayer] });
             float[] probability = finalTensor[0].GetData(false) as float[];
             return probability;
         }
