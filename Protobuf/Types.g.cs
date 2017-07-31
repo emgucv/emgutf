@@ -50,17 +50,17 @@ namespace Tensorflow {
   }
   #region Enums
   /// <summary>
-  ///  LINT.IfChange
+  /// LINT.IfChange
   /// </summary>
   public enum DataType {
     /// <summary>
-    ///  Not a legal value for DataType.  Used to indicate a DataType field
-    ///  has not been set.
+    /// Not a legal value for DataType.  Used to indicate a DataType field
+    /// has not been set.
     /// </summary>
     [pbr::OriginalName("DT_INVALID")] DtInvalid = 0,
     /// <summary>
-    ///  Data types that all computation devices are expected to be
-    ///  capable to support.
+    /// Data types that all computation devices are expected to be
+    /// capable to support.
     /// </summary>
     [pbr::OriginalName("DT_FLOAT")] DtFloat = 1,
     [pbr::OriginalName("DT_DOUBLE")] DtDouble = 2,
@@ -70,45 +70,45 @@ namespace Tensorflow {
     [pbr::OriginalName("DT_INT8")] DtInt8 = 6,
     [pbr::OriginalName("DT_STRING")] DtString = 7,
     /// <summary>
-    ///  Single-precision complex
+    /// Single-precision complex
     /// </summary>
     [pbr::OriginalName("DT_COMPLEX64")] DtComplex64 = 8,
     [pbr::OriginalName("DT_INT64")] DtInt64 = 9,
     [pbr::OriginalName("DT_BOOL")] DtBool = 10,
     /// <summary>
-    ///  Quantized int8
+    /// Quantized int8
     /// </summary>
     [pbr::OriginalName("DT_QINT8")] DtQint8 = 11,
     /// <summary>
-    ///  Quantized uint8
+    /// Quantized uint8
     /// </summary>
     [pbr::OriginalName("DT_QUINT8")] DtQuint8 = 12,
     /// <summary>
-    ///  Quantized int32
+    /// Quantized int32
     /// </summary>
     [pbr::OriginalName("DT_QINT32")] DtQint32 = 13,
     /// <summary>
-    ///  Float32 truncated to 16 bits.  Only for cast ops.
+    /// Float32 truncated to 16 bits.  Only for cast ops.
     /// </summary>
     [pbr::OriginalName("DT_BFLOAT16")] DtBfloat16 = 14,
     /// <summary>
-    ///  Quantized int16
+    /// Quantized int16
     /// </summary>
     [pbr::OriginalName("DT_QINT16")] DtQint16 = 15,
     /// <summary>
-    ///  Quantized uint16
+    /// Quantized uint16
     /// </summary>
     [pbr::OriginalName("DT_QUINT16")] DtQuint16 = 16,
     [pbr::OriginalName("DT_UINT16")] DtUint16 = 17,
     /// <summary>
-    ///  Double-precision complex
+    /// Double-precision complex
     /// </summary>
     [pbr::OriginalName("DT_COMPLEX128")] DtComplex128 = 18,
     [pbr::OriginalName("DT_HALF")] DtHalf = 19,
     [pbr::OriginalName("DT_RESOURCE")] DtResource = 20,
     /// <summary>
-    ///  Do not use!  These are only for parameters.  Every enum above
-    ///  should have a corresponding value below (verified by types_test).
+    /// Do not use!  These are only for parameters.  Every enum above
+    /// should have a corresponding value below (verified by types_test).
     /// </summary>
     [pbr::OriginalName("DT_FLOAT_REF")] DtFloatRef = 101,
     [pbr::OriginalName("DT_DOUBLE_REF")] DtDoubleRef = 102,

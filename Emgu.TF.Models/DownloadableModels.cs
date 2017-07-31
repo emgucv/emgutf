@@ -29,8 +29,11 @@ namespace Emgu.TF.Models
                 Download(fileName, retry);
             }
         }
+
         private void Download(String fileName, int retry = 1)
         {
+            if (_downloadUrl == null)
+                return;
 #if __ANDROID__
             String multiboxFile = System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath,
                 Android.OS.Environment.DirectoryDownloads, fileName);

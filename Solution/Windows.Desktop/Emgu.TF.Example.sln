@@ -11,6 +11,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Util", "..\..\Emgu.
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Models", "..\..\Emgu.TF.Models\Emgu.TF.Models.shproj", "{752279F0-17EF-4EC8-857C-8F5F897AF0E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InceptionObjectRecognition", "..\..\Emgu.TF.Example\InceptionObjectRecognition\InceptionObjectRecognition.csproj", "{DAE2EF5C-AD22-473C-BC7B-75C3CE3D8EAE}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\Emgu.TF.Models\Emgu.TF.Models.projitems*{752279f0-17ef-4ec8-857c-8f5f897af0e8}*SharedItemsImports = 13
@@ -19,6 +21,9 @@ Global
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{a056234d-e585-4fff-a2e0-e63688595509}*SharedItemsImports = 4
 		..\..\Emgu.TF\Emgu.TF.projitems*{a056234d-e585-4fff-a2e0-e63688595509}*SharedItemsImports = 4
 		..\..\Emgu.TF\Emgu.TF.projitems*{d47d776e-9970-4552-bc8a-24cadcbea009}*SharedItemsImports = 13
+		..\..\Emgu.TF.Models\Emgu.TF.Models.projitems*{dae2ef5c-ad22-473c-bc7b-75c3ce3d8eae}*SharedItemsImports = 4
+		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{dae2ef5c-ad22-473c-bc7b-75c3ce3d8eae}*SharedItemsImports = 4
+		..\..\Emgu.TF\Emgu.TF.projitems*{dae2ef5c-ad22-473c-bc7b-75c3ce3d8eae}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +34,10 @@ Global
 		{A056234D-E585-4FFF-A2E0-E63688595509}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A056234D-E585-4FFF-A2E0-E63688595509}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A056234D-E585-4FFF-A2E0-E63688595509}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAE2EF5C-AD22-473C-BC7B-75C3CE3D8EAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAE2EF5C-AD22-473C-BC7B-75C3CE3D8EAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAE2EF5C-AD22-473C-BC7B-75C3CE3D8EAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAE2EF5C-AD22-473C-BC7B-75C3CE3D8EAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -39,9 +39,9 @@ namespace Tensorflow {
   }
   #region Messages
   /// <summary>
-  ///  Protocol buffer representing a handle to a tensorflow resource. Handles are
-  ///  not valid across executions, but can be serialized back and forth from within
-  ///  a single run.
+  /// Protocol buffer representing a handle to a tensorflow resource. Handles are
+  /// not valid across executions, but can be serialized back and forth from within
+  /// a single run.
   /// </summary>
   public sealed partial class ResourceHandle : pb::IMessage<ResourceHandle> {
     private static readonly pb::MessageParser<ResourceHandle> _parser = new pb::MessageParser<ResourceHandle>(() => new ResourceHandle());
@@ -83,7 +83,7 @@ namespace Tensorflow {
     public const int DeviceFieldNumber = 1;
     private string device_ = "";
     /// <summary>
-    ///  Unique name for the device containing the resource.
+    /// Unique name for the device containing the resource.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Device {
@@ -97,7 +97,7 @@ namespace Tensorflow {
     public const int ContainerFieldNumber = 2;
     private string container_ = "";
     /// <summary>
-    ///  Container in which this resource is placed.
+    /// Container in which this resource is placed.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Container {
@@ -111,7 +111,7 @@ namespace Tensorflow {
     public const int NameFieldNumber = 3;
     private string name_ = "";
     /// <summary>
-    ///  Unique name of this resource.
+    /// Unique name of this resource.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Name {
@@ -125,8 +125,8 @@ namespace Tensorflow {
     public const int HashCodeFieldNumber = 4;
     private ulong hashCode_;
     /// <summary>
-    ///  Hash code for the type of the resource. Is only valid in the same device
-    ///  and in the same execution.
+    /// Hash code for the type of the resource. Is only valid in the same device
+    /// and in the same execution.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ulong HashCode {
@@ -140,8 +140,8 @@ namespace Tensorflow {
     public const int MaybeTypeNameFieldNumber = 5;
     private string maybeTypeName_ = "";
     /// <summary>
-    ///  For debug-only, the name of the type pointed to by this handle, if
-    ///  available.
+    /// For debug-only, the name of the type pointed to by this handle, if
+    /// available.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string MaybeTypeName {

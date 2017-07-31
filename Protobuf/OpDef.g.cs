@@ -58,8 +58,8 @@ namespace Tensorflow {
   }
   #region Messages
   /// <summary>
-  ///  Defines an operation. A NodeDef in a GraphDef specifies an Op by
-  ///  using the "op" field which should match the name of a OpDef.
+  /// Defines an operation. A NodeDef in a GraphDef specifies an Op by
+  /// using the "op" field which should match the name of a OpDef.
   /// </summary>
   public sealed partial class OpDef : pb::IMessage<OpDef> {
     private static readonly pb::MessageParser<OpDef> _parser = new pb::MessageParser<OpDef>(() => new OpDef());
@@ -107,8 +107,8 @@ namespace Tensorflow {
     public const int NameFieldNumber = 1;
     private string name_ = "";
     /// <summary>
-    ///  Op names starting with an underscore are reserved for internal use.
-    ///  Names should be CamelCase and match the regexp "[A-Z][a-zA-Z0-9_]*".
+    /// Op names starting with an underscore are reserved for internal use.
+    /// Names should be CamelCase and match the regexp "[A-Z][a-zA-Z0-9_]*".
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Name {
@@ -124,7 +124,7 @@ namespace Tensorflow {
         = pb::FieldCodec.ForMessage(18, global::Tensorflow.OpDef.Types.ArgDef.Parser);
     private readonly pbc::RepeatedField<global::Tensorflow.OpDef.Types.ArgDef> inputArg_ = new pbc::RepeatedField<global::Tensorflow.OpDef.Types.ArgDef>();
     /// <summary>
-    ///  Description of the input(s).
+    /// Description of the input(s).
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<global::Tensorflow.OpDef.Types.ArgDef> InputArg {
@@ -137,7 +137,7 @@ namespace Tensorflow {
         = pb::FieldCodec.ForMessage(26, global::Tensorflow.OpDef.Types.ArgDef.Parser);
     private readonly pbc::RepeatedField<global::Tensorflow.OpDef.Types.ArgDef> outputArg_ = new pbc::RepeatedField<global::Tensorflow.OpDef.Types.ArgDef>();
     /// <summary>
-    ///  Description of the output(s).
+    /// Description of the output(s).
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<global::Tensorflow.OpDef.Types.ArgDef> OutputArg {
@@ -158,7 +158,7 @@ namespace Tensorflow {
     public const int DeprecationFieldNumber = 8;
     private global::Tensorflow.OpDeprecation deprecation_;
     /// <summary>
-    ///  Optional deprecation based on GraphDef versions.
+    /// Optional deprecation based on GraphDef versions.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Tensorflow.OpDeprecation Deprecation {
@@ -172,7 +172,7 @@ namespace Tensorflow {
     public const int SummaryFieldNumber = 5;
     private string summary_ = "";
     /// <summary>
-    ///  One-line human-readable description of what the Op does.
+    /// One-line human-readable description of what the Op does.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Summary {
@@ -186,7 +186,7 @@ namespace Tensorflow {
     public const int DescriptionFieldNumber = 6;
     private string description_ = "";
     /// <summary>
-    ///  Additional, longer human-readable description of what the Op does.
+    /// Additional, longer human-readable description of what the Op does.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Description {
@@ -200,7 +200,7 @@ namespace Tensorflow {
     public const int IsCommutativeFieldNumber = 18;
     private bool isCommutative_;
     /// <summary>
-    ///  True if the operation is commutative ("op(a,b) == op(b,a)" for all inputs)
+    /// True if the operation is commutative ("op(a,b) == op(b,a)" for all inputs)
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool IsCommutative {
@@ -214,14 +214,14 @@ namespace Tensorflow {
     public const int IsAggregateFieldNumber = 16;
     private bool isAggregate_;
     /// <summary>
-    ///  If is_aggregate is true, then this operation accepts N >= 2
-    ///  inputs and produces 1 output all of the same type.  Should be
-    ///  associative and commutative, and produce output with the same
-    ///  shape as the input.  The optimizer may replace an aggregate op
-    ///  taking input from multiple devices with a tree of aggregate ops
-    ///  that aggregate locally within each device (and possibly within
-    ///  groups of nearby devices) before communicating.
-    ///  TODO(josh11b): Implement that optimization.
+    /// If is_aggregate is true, then this operation accepts N >= 2
+    /// inputs and produces 1 output all of the same type.  Should be
+    /// associative and commutative, and produce output with the same
+    /// shape as the input.  The optimizer may replace an aggregate op
+    /// taking input from multiple devices with a tree of aggregate ops
+    /// that aggregate locally within each device (and possibly within
+    /// groups of nearby devices) before communicating.
+    /// TODO(josh11b): Implement that optimization.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool IsAggregate {
@@ -235,11 +235,11 @@ namespace Tensorflow {
     public const int IsStatefulFieldNumber = 17;
     private bool isStateful_;
     /// <summary>
-    ///  By default Ops may be moved between devices.  Stateful ops should
-    ///  either not be moved, or should only be moved if that state can also
-    ///  be moved (e.g. via some sort of save / restore).
-    ///  Stateful ops are guaranteed to never be optimized away by Common
-    ///  Subexpression Elimination (CSE).
+    /// By default Ops may be moved between devices.  Stateful ops should
+    /// either not be moved, or should only be moved if that state can also
+    /// be moved (e.g. via some sort of save / restore).
+    /// Stateful ops are guaranteed to never be optimized away by Common
+    /// Subexpression Elimination (CSE).
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool IsStateful {
@@ -253,10 +253,10 @@ namespace Tensorflow {
     public const int AllowsUninitializedInputFieldNumber = 19;
     private bool allowsUninitializedInput_;
     /// <summary>
-    ///  By default, all inputs to an Op must be initialized Tensors.  Ops
-    ///  that may initialize tensors for the first time should set this
-    ///  field to true, to allow the Op to take an uninitialized Tensor as
-    ///  input.
+    /// By default, all inputs to an Op must be initialized Tensors.  Ops
+    /// that may initialize tensors for the first time should set this
+    /// field to true, to allow the Op to take an uninitialized Tensor as
+    /// input.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool AllowsUninitializedInput {
@@ -488,7 +488,7 @@ namespace Tensorflow {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static partial class Types {
       /// <summary>
-      ///  For describing inputs and outputs.
+      /// For describing inputs and outputs.
       /// </summary>
       public sealed partial class ArgDef : pb::IMessage<ArgDef> {
         private static readonly pb::MessageParser<ArgDef> _parser = new pb::MessageParser<ArgDef>(() => new ArgDef());
@@ -532,7 +532,7 @@ namespace Tensorflow {
         public const int NameFieldNumber = 1;
         private string name_ = "";
         /// <summary>
-        ///  Name for the input/output.  Should match the regexp "[a-z][a-z0-9_]*".
+        /// Name for the input/output.  Should match the regexp "[a-z][a-z0-9_]*".
         /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public string Name {
@@ -546,7 +546,7 @@ namespace Tensorflow {
         public const int DescriptionFieldNumber = 2;
         private string description_ = "";
         /// <summary>
-        ///  Human readable description.
+        /// Human readable description.
         /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public string Description {
@@ -560,16 +560,16 @@ namespace Tensorflow {
         public const int TypeFieldNumber = 3;
         private global::Tensorflow.DataType type_ = 0;
         /// <summary>
-        ///  Describes the type of one or more tensors that are accepted/produced
-        ///  by this input/output arg.  The only legal combinations are:
-        ///  * For a single tensor: either the "type" field is set or the
-        ///    "type_attr" field is set to the name of an attr with type "type".
-        ///  * For a sequence of tensors with the same type: the "number_attr"
-        ///    field will be set to the name of an attr with type "int", and
-        ///    either the "type" or "type_attr" field will be set as for
-        ///    single tensors.
-        ///  * For a sequence of tensors, the "type_list_attr" field will be set
-        ///    to the name of an attr with type "list(type)".
+        /// Describes the type of one or more tensors that are accepted/produced
+        /// by this input/output arg.  The only legal combinations are:
+        /// * For a single tensor: either the "type" field is set or the
+        ///   "type_attr" field is set to the name of an attr with type "type".
+        /// * For a sequence of tensors with the same type: the "number_attr"
+        ///   field will be set to the name of an attr with type "int", and
+        ///   either the "type" or "type_attr" field will be set as for
+        ///   single tensors.
+        /// * For a sequence of tensors, the "type_list_attr" field will be set
+        ///   to the name of an attr with type "list(type)".
         /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public global::Tensorflow.DataType Type {
@@ -583,7 +583,7 @@ namespace Tensorflow {
         public const int TypeAttrFieldNumber = 4;
         private string typeAttr_ = "";
         /// <summary>
-        ///  if specified, attr must have type "type"
+        /// if specified, attr must have type "type"
         /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public string TypeAttr {
@@ -597,7 +597,7 @@ namespace Tensorflow {
         public const int NumberAttrFieldNumber = 5;
         private string numberAttr_ = "";
         /// <summary>
-        ///  if specified, attr must have type "int"
+        /// if specified, attr must have type "int"
         /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public string NumberAttr {
@@ -611,8 +611,8 @@ namespace Tensorflow {
         public const int TypeListAttrFieldNumber = 6;
         private string typeListAttr_ = "";
         /// <summary>
-        ///  If specified, attr must have type "list(type)", and none of
-        ///  type, type_attr, and number_attr may be specified.
+        /// If specified, attr must have type "list(type)", and none of
+        /// type, type_attr, and number_attr may be specified.
         /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public string TypeListAttr {
@@ -626,9 +626,9 @@ namespace Tensorflow {
         public const int IsRefFieldNumber = 16;
         private bool isRef_;
         /// <summary>
-        ///  For inputs: if true, the inputs are required to be refs.
-        ///    By default, inputs can be either refs or non-refs.
-        ///  For outputs: if true, outputs are refs, otherwise they are not.
+        /// For inputs: if true, the inputs are required to be refs.
+        ///   By default, inputs can be either refs or non-refs.
+        /// For outputs: if true, outputs are refs, otherwise they are not.
         /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public bool IsRef {
@@ -809,9 +809,9 @@ namespace Tensorflow {
       }
 
       /// <summary>
-      ///  Description of the graph-construction-time configuration of this
-      ///  Op.  That is to say, this describes the attr fields that will
-      ///  be specified in the NodeDef.
+      /// Description of the graph-construction-time configuration of this
+      /// Op.  That is to say, this describes the attr fields that will
+      /// be specified in the NodeDef.
       /// </summary>
       public sealed partial class AttrDef : pb::IMessage<AttrDef> {
         private static readonly pb::MessageParser<AttrDef> _parser = new pb::MessageParser<AttrDef>(() => new AttrDef());
@@ -855,9 +855,9 @@ namespace Tensorflow {
         public const int NameFieldNumber = 1;
         private string name_ = "";
         /// <summary>
-        ///  A descriptive name for the argument.  May be used, e.g. by the
-        ///  Python client, as a keyword argument name, and so should match
-        ///  the regexp "[a-z][a-z0-9_]+".
+        /// A descriptive name for the argument.  May be used, e.g. by the
+        /// Python client, as a keyword argument name, and so should match
+        /// the regexp "[a-z][a-z0-9_]+".
         /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public string Name {
@@ -871,8 +871,8 @@ namespace Tensorflow {
         public const int TypeFieldNumber = 2;
         private string type_ = "";
         /// <summary>
-        ///  One of the type names from attr_value.proto ("string", "list(string)",
-        ///  "int", etc.).
+        /// One of the type names from attr_value.proto ("string", "list(string)",
+        /// "int", etc.).
         /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public string Type {
@@ -886,8 +886,8 @@ namespace Tensorflow {
         public const int DefaultValueFieldNumber = 3;
         private global::Tensorflow.AttrValue defaultValue_;
         /// <summary>
-        ///  A reasonable default for this attribute if the user does not supply
-        ///  a value.  If not specified, the user must supply a value.
+        /// A reasonable default for this attribute if the user does not supply
+        /// a value.  If not specified, the user must supply a value.
         /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public global::Tensorflow.AttrValue DefaultValue {
@@ -901,7 +901,7 @@ namespace Tensorflow {
         public const int DescriptionFieldNumber = 4;
         private string description_ = "";
         /// <summary>
-        ///  Human-readable description.
+        /// Human-readable description.
         /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public string Description {
@@ -915,8 +915,8 @@ namespace Tensorflow {
         public const int HasMinimumFieldNumber = 5;
         private bool hasMinimum_;
         /// <summary>
-        ///  For type == "int", this is a minimum value.  For "list(___)"
-        ///  types, this is the minimum length.
+        /// For type == "int", this is a minimum value.  For "list(___)"
+        /// types, this is the minimum length.
         /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public bool HasMinimum {
@@ -941,12 +941,12 @@ namespace Tensorflow {
         public const int AllowedValuesFieldNumber = 7;
         private global::Tensorflow.AttrValue allowedValues_;
         /// <summary>
-        ///  The set of allowed values.  Has type that is the "list" version
-        ///  of the "type" field above (uses the "list" field of AttrValue).
-        ///  If type == "type" or "list(type)" above, then the "type" field
-        ///  of "allowed_values.list" has the set of allowed DataTypes.
-        ///  If type == "string" or "list(string)", then the "s" field of
-        ///  "allowed_values.list" has the set of allowed strings.
+        /// The set of allowed values.  Has type that is the "list" version
+        /// of the "type" field above (uses the "list" field of AttrValue).
+        /// If type == "type" or "list(type)" above, then the "type" field
+        /// of "allowed_values.list" has the set of allowed DataTypes.
+        /// If type == "string" or "list(string)", then the "s" field of
+        /// "allowed_values.list" has the set of allowed strings.
         /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public global::Tensorflow.AttrValue AllowedValues {
@@ -1144,7 +1144,7 @@ namespace Tensorflow {
   }
 
   /// <summary>
-  ///  Information about version-dependent deprecation of an op
+  /// Information about version-dependent deprecation of an op
   /// </summary>
   public sealed partial class OpDeprecation : pb::IMessage<OpDeprecation> {
     private static readonly pb::MessageParser<OpDeprecation> _parser = new pb::MessageParser<OpDeprecation>(() => new OpDeprecation());
@@ -1183,7 +1183,7 @@ namespace Tensorflow {
     public const int VersionFieldNumber = 1;
     private int version_;
     /// <summary>
-    ///  First GraphDef version at which the op is disallowed.
+    /// First GraphDef version at which the op is disallowed.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Version {
@@ -1197,7 +1197,7 @@ namespace Tensorflow {
     public const int ExplanationFieldNumber = 2;
     private string explanation_ = "";
     /// <summary>
-    ///  Explanation of why it was deprecated and what to use instead.
+    /// Explanation of why it was deprecated and what to use instead.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Explanation {
@@ -1298,7 +1298,7 @@ namespace Tensorflow {
   }
 
   /// <summary>
-  ///  A collection of OpDefs
+  /// A collection of OpDefs
   /// </summary>
   public sealed partial class OpList : pb::IMessage<OpList> {
     private static readonly pb::MessageParser<OpList> _parser = new pb::MessageParser<OpList>(() => new OpList());

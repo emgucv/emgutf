@@ -88,5 +88,11 @@ namespace Emgu.TF.Test
             byte[] jpegRaw = ImageIO.EncodeJpeg(image);
             File.WriteAllBytes("surefers_out.jpg", jpegRaw);
         }
+
+        [TestMethod]
+        public void TestCUDAEnabled()
+        {
+            bool cuda = TfInvoke.IsGoogleCudaEnabled;
+        }
     }
 }

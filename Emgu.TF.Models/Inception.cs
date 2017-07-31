@@ -12,11 +12,17 @@ namespace Emgu.TF.Models
 {
     public class Inception : DownloadableModels
     {
-        public Inception(Status status = null, String[] modelFiles = null, String downloadUrl = null)
+        private String _inputLayer;
+        private String _outputLayer;
+
+        public Inception(Status status = null, String[] modelFiles = null, String downloadUrl = "https://github.com/emgucv/models/raw/master/inception/", String inputLayer = "input", String outputLayer = "output")
             : base(
                 modelFiles ?? new string[] { "tensorflow_inception_graph.pb", "imagenet_comp_graph_label_strings.txt" },
-                downloadUrl ?? "https://github.com/emgucv/models/raw/master/inception/")
+                downloadUrl)
         {
+            _inputLayer = inputLayer;
+            _outputLayer = outputLayer;
+
             Download();
 
 #if __ANDROID__
@@ -47,8 +53,8 @@ namespace Emgu.TF.Models
         public float[] Recognize(Tensor image)
         {
             Session inceptionSession = new Session(this);
-            Tensor[] finalTensor = inceptionSession.Run(new Output[] { this["input"] }, new Tensor[] { image },
-                new Output[] { this["output"] });
+            Tensor[] finalTensor = inceptionSession.Run(new Output[] { this[_inputLayer] }, new Tensor[] { image },
+                new Output[] { this[_outputLayer] });
             float[] probability = finalTensor[0].GetData(false) as float[];
             return probability;
         }

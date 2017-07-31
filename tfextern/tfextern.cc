@@ -405,3 +405,8 @@ void tfeMemcpy(void* dst, void* src, int length)
 {
 	memcpy(dst, src, length);
 }
+
+bool tfeIsGoogleCudaEnabled()
+{
+	return tensorflow::IsGoogleCudaEnabled();
+}
