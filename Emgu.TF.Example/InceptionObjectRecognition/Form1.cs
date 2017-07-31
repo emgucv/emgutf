@@ -30,8 +30,19 @@ namespace InceptionObjectRecognition
             fileNameTextBox.Text = fileName;
             pictureBox.ImageLocation = fileName;
 
+            //Use the following code for the full inception model
             Inception inceptionGraph = new Inception();
             Tensor imageTensor = ImageIO.ReadTensorFromImageFile(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
+
+            //Uncomment the following code to use a retrained model to recognize followers, downloaded from the internet
+            //Inception inceptionGraph = new Inception(null, new string[] {"optimized_graph.pb", "output_labels.txt"}, "https://github.com/emgucv/models/raw/master/inception_flower_retrain/", "Mul", "final_result");
+            //Tensor imageTensor = ImageIO.ReadTensorFromImageFile(fileName, 299, 299, 128.0f, 1.0f / 128.0f);
+
+            //Uncomment the following code to use a retrained model to recognize followers, if you deployed the models with the application
+            //For ".pb" and ".txt" bundled with the application, set the url to null
+            //Inception inceptionGraph = new Inception(null, new string[] {"optimized_graph.pb", "output_labels.txt"}, null, "Mul", "final_result");
+            //Tensor imageTensor = ImageIO.ReadTensorFromImageFile(fileName, 299, 299, 128.0f, 1.0f / 128.0f);
+
             float[] probability = inceptionGraph.Recognize(imageTensor);
             String resStr = String.Empty;
             if (probability != null)
