@@ -17,6 +17,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)InceptionPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MultiboxDetectionPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StylizePage.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)ButtonTextImagePage.xaml">

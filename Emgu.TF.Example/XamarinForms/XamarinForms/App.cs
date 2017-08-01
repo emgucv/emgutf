@@ -20,6 +20,8 @@ namespace Emgu.TF.XamarinForms
             multiboxDetectionButton.Text = "People Detection";
             Button inceptionButton = new Button();
             inceptionButton.Text = "Object recognition";
+            Button stylizeButton = new Button();
+            stylizeButton.Text = "Stylize";
 
             // The root page of your application
             ContentPage page =
@@ -31,7 +33,8 @@ namespace Emgu.TF.XamarinForms
                        Children =
                      {
                        multiboxDetectionButton,
-                       inceptionButton
+                       inceptionButton,
+                       stylizeButton
                      }
                    }
                };
@@ -66,7 +69,10 @@ namespace Emgu.TF.XamarinForms
                 MainPage.Navigation.PushAsync(new InceptionPage());
             };
 
-
+            stylizeButton.Clicked += (sender, args) =>
+            {
+                MainPage.Navigation.PushAsync(new StylizePage());
+            };
         }
 
         public Page CurrentPage

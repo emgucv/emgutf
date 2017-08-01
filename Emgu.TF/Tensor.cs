@@ -119,6 +119,15 @@ namespace Emgu.TF
                     return typeof(double);
                 case DataType.Int32:
                     return typeof(int);
+                case DataType.Uint8:
+                    return typeof(byte);
+                case DataType.Int64:
+                    return typeof(Int64);
+                case DataType.Int16:
+                    return typeof(Int16);
+                case DataType.Uint16:
+                    return typeof(UInt16);
+                
                 default:
                     return null;
             }

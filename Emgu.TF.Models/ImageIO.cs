@@ -196,6 +196,55 @@ namespace Emgu.TF.Models
         }
 #else
 
+        public static byte[] GetRawImage(Tensor imageTensorF, float scale = 1.0f, int channels = 3, Status status = null)
+        {
+            using (StatusChecker checker = new StatusChecker(status))
+            {
+                var graph = new Graph();
+                Operation input = graph.Placeholder(imageTensorF.Type);
+
+                Tensor scaleTensor = new Tensor(scale);
+                Operation scaleOp = graph.Const(scaleTensor, scaleTensor.Type, opName: "scale");
+                Operation scaled = graph.Mul(input, scaleOp);
+
+                Operation byteCaster = graph.Cast(scaled, DstT: DataType.Uint8); //cast to byte
+
+                
+                //Operation scaled = graph.
+                Session session = new Session(graph);
+                
+                Tensor[] imageResults = session.Run(new Output[] { input }, new Tensor[] { imageTensorF },
+                    new Output[] { byteCaster });
+
+                byte[] raw = imageResults[0].Flat<byte>();
+
+                if (channels == 3)
+                {
+                    return raw;
+                } else if (channels == 4)
+                {
+
+                    int pixelCount = raw.Length / 3;
+                    byte[] colors = new byte[pixelCount * 4];
+                    for (int i = 0; i < pixelCount; i++)
+                    {
+                        colors[i * 4] = raw[i * 3];
+                        colors[i * 4 + 1] = raw[i * 3 + 1];
+                        colors[i * 4 + 2] = raw[i * 3 + 2];
+                        colors[i * 4 + 3] = (byte)255;
+                    }
+                    return colors;
+
+                }
+                else
+                {
+                    throw new Exception(String.Format("Channel count of {0} is not supported", channels));
+                }
+
+            }
+
+        }
+
         public static Tensor ReadTensorFromImageFile(String fileName, int inputHeight = -1, int inputWidth = -1, float inputMean = 0.0f, float scale = 1.0f, Status status = null)
         {
 #if __ANDROID__
