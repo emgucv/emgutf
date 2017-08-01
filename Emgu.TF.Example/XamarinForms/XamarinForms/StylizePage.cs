@@ -9,9 +9,12 @@ using System.Runtime.InteropServices;
 using System.Text;
 
 using System.Threading.Tasks;
+#if __ANDROID__
 using Android.Graphics;
+#endif
 using Emgu.TF;
 using Emgu.TF.Models;
+
 
 namespace Emgu.TF.XamarinForms
 {
@@ -42,7 +45,7 @@ namespace Emgu.TF.XamarinForms
                             Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile(image[0], -1, -1, 0f, 1.0f/255f);
                             Tensor stylizedImage = stylizeGraph.Stylize(imageTensor, 0);
                             
-                            byte[] rawPixel = ImageIO.GetRawImage(stylizedImage, 255.0f, 4);
+                            byte[] rawPixel = Emgu.TF.Models.ImageIO.GetRawImage(stylizedImage, 255.0f, 4);
 
 #if __ANDROID__
 

@@ -3,11 +3,7 @@
 //----------------------------------------------------------------------------
 using System;
 using System.Text;
-using System.Xml;
-#if !(UNITY_ANDROID || UNITY_IPHONE || UNITY_STANDALONE || UNITY_METRO || UNITY_EDITOR)
-using System.Xml.Linq;
-#endif
-using System.Xml.Serialization;
+
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
@@ -20,93 +16,7 @@ namespace Emgu.TF.Util
    /// </summary>
    public static class Toolbox
    {
-#if !(UNITY_ANDROID || UNITY_IPHONE || UNITY_STANDALONE || UNITY_METRO || UNITY_EDITOR)
-#region xml serilization and deserialization
-      /// <summary>
-      /// Convert an object to an xml document
-      /// </summary>
-      /// <typeparam name="T">The type of the object to be converted</typeparam>
-      /// <param name="sourceObject">The object to be serialized</param>
-      /// <returns>An xml document that represents the object</returns>
-      public static XDocument XmlSerialize<T>(T sourceObject)
-      {
-         StringBuilder sb = new StringBuilder();
-         using (StringWriter sw = new StringWriter(sb))
-            (new XmlSerializer(typeof(T))).Serialize(sw, sourceObject);
 
-         return XDocument.Parse(sb.ToString());
-      }
-
-      /// <summary>
-      /// Convert an object to an xml document
-      /// </summary>
-      /// <typeparam name="T">The type of the object to be converted</typeparam>
-      /// <param name="sourceObject">The object to be serialized</param>
-      /// <param name="knownTypes">Other types that it must known ahead to serialize the object</param>
-      /// <returns>An xml document that represents the object</returns>
-      public static XDocument XmlSerialize<T>(T sourceObject, Type[] knownTypes)
-      {
-         StringBuilder sb = new StringBuilder();
-         using (StringWriter sw = new StringWriter(sb))
-            (new XmlSerializer(typeof(T), knownTypes)).Serialize(sw, sourceObject);
-         return XDocument.Parse(sb.ToString());
-      }
-
-      /// <summary>
-      /// Convert an xml document to an object
-      /// </summary>
-      /// <typeparam name="T">The type of the object to be converted to</typeparam>
-      /// <param name="document">The xml document</param>
-      /// <returns>The object representation as a result of the deserialization of the xml document</returns>
-      public static T XmlDeserialize<T>(XDocument document)
-      {
-         using (XmlReader reader = document.Root.CreateReader())
-         {
-            if (reader.CanReadBinaryContent)
-               return (T)(new XmlSerializer(typeof(T))).Deserialize(reader);
-            else
-            {
-               return XmlStringDeserialize<T>(document.ToString());
-            }
-         }
-      }
-
-      /// <summary>
-      /// Convert an xml document to an object
-      /// </summary>
-      /// <typeparam name="T">The type of the object to be converted to</typeparam>
-      /// <param name="xDoc">The xml document</param>
-      /// <param name="knownTypes">Other types that it must known ahead to deserialize the object</param>
-      /// <returns>The object representation as a result of the deserialization of the xml document</returns>
-      public static T XmlDeserialize<T>(XDocument xDoc, Type[] knownTypes)
-      {
-         using (XmlReader reader = xDoc.Root.CreateReader())
-         {
-            if (reader.CanReadBinaryContent)
-               return (T)(new XmlSerializer(typeof(T), knownTypes)).Deserialize(reader);
-            else
-            {
-               using (StringReader stringReader = new StringReader(xDoc.ToString()))
-               {
-                  return (T)(new XmlSerializer(typeof(T), knownTypes)).Deserialize(stringReader);
-               }
-            }
-         }
-      }
-
-      /// <summary>
-      /// Convert an xml string to an object
-      /// </summary>
-      /// <typeparam name="T">The type of the object to be converted to</typeparam>
-      /// <param name="xmlString">The xml document as a string</param>
-      /// <returns>The object representation as a result of the deserialization of the xml string</returns>
-      public static T XmlStringDeserialize<T>(String xmlString)
-      {
-         using (StringReader stringReader = new StringReader(xmlString))
-            return (T) (new XmlSerializer(typeof(T))).Deserialize(stringReader);
-      }
-      #endregion
-#endif
 
       /// <summary>
       /// Similar to Marshal.SizeOf function
