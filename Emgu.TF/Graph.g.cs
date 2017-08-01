@@ -16,598 +16,78 @@ namespace Emgu.TF
    {
       
       ///<summary>
-      ///Returns shape of tensors.
-      ///</summary>
-      ///<param name="input">Input to the operation. </param>
-      ///<param name="out_type"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation ShapeN (  Output input , DataType? out_type = null ,String opName= "ShapeN" ) 
-      {
-         OperationDescription desc = NewOperation("ShapeN", opName);
-         desc.AddInput(input);
-
-         if (out_type.HasValue) desc.SetAttr("out_type", out_type.Value);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the gradients of 3-D convolution with respect to the filter.
-      ///</summary>
-      ///<param name="input">Input to the operation: Shape `[batch, depth, rows, cols, in_channels]`.</param>
-      ///<param name="filter">Input to the operation: Shape `[depth, rows, cols, in_channels, out_channels]`. `in_channels` must match between `input` and `filter`.</param>
-      ///<param name="out_backprop">Input to the operation: Backprop signal of shape `[batch, out_depth, out_rows, out_cols, out_channels]`.</param>
-      ///<param name="strides">1-D tensor of length 5. The stride of the sliding window for each dimension of `input`. Must have `strides[0] = strides[4] = 1`.</param>
-      ///<param name="padding">The type of padding algorithm to use.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation Conv3DBackpropFilter (  Output input , Output filter , Output out_backprop , long[] strides, string padding,String opName= "Conv3DBackpropFilter" ) 
-      {
-         OperationDescription desc = NewOperation("Conv3DBackpropFilter", opName);
-         desc.AddInput(input);
-         desc.AddInput(filter);
-         desc.AddInput(out_backprop);
-         desc.SetAttr("strides", strides);
-         desc.SetAttr("padding", padding);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Selects num_to_sample rows of input using the KMeans++ criterion.
-      ///</summary>
-      ///<param name="points">Input to the operation: Matrix of shape (n, d). Rows are assumed to be input points.</param>
-      ///<param name="num_to_sample">Input to the operation: Scalar. The number of rows to sample. This value must not be larger than n.</param>
-      ///<param name="seed">Input to the operation: Scalar. Seed for initializing the random number generator.</param>
-      ///<param name="num_retries_per_sample">Input to the operation: Scalar. For each row that is sampled, this parameter specifies the number of additional points to draw from the current distribution before selecting the best. If a negative value is specified, a heuristic is used to sample O(log(num_to_sample)) additional points.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] samples(type: DtFloat): Matrix of shape (num_to_sample, d). The sampled rows.
-      ///</return>
-      public Operation KmeansPlusPlusInitialization (  Output points , Output num_to_sample , Output seed , Output num_retries_per_sample ,String opName= "KmeansPlusPlusInitialization" ) 
-      {
-         OperationDescription desc = NewOperation("KmeansPlusPlusInitialization", opName);
-         desc.AddInput(points);
-         desc.AddInput(num_to_sample);
-         desc.AddInput(seed);
-         desc.AddInput(num_retries_per_sample);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the reciprocal of x element-wise.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtInvalid).
-      ///</return>
-      public Operation Inv (  Output x ,String opName= "Inv" ) 
-      {
-         OperationDescription desc = NewOperation("Inv", opName);
-         desc.AddInput(x);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes tan of x element-wise.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtInvalid).
-      ///</return>
-      public Operation Tan (  Output x ,String opName= "Tan" ) 
-      {
-         OperationDescription desc = NewOperation("Tan", opName);
-         desc.AddInput(x);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///
-      ///</summary>
-      ///<param name="input">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] diagonal(type: DtInvalid).
-      ///</return>
-      public Operation BatchMatrixDiagPart (  Output input ,String opName= "BatchMatrixDiagPart" ) 
-      {
-         OperationDescription desc = NewOperation("BatchMatrixDiagPart", opName);
-         desc.AddInput(input);
-
-
-         return desc.FinishOperation();
-      } 
-      // Skipped function _ParallelConcatUpdate
-
-      ///<summary>
-      ///Computes the product a * b, but only for indices (i, j) in mask_indices. The
-      ///</summary>
-      ///<param name="a">Input to the operation: A rank 2 tensor of shape [m, n].</param>
-      ///<param name="b">Input to the operation: A rank 2 tensor of shape [s, t]. The inner dimensions of a and b should match after transposition.</param>
-      ///<param name="mask_indices">Input to the operation: A rank 2 tensor, of shape [nnz, 2] where nnz is the number of non-zero elements in the output. The indices are not assumed to be in lexicographic, or any particular order. For all i, mask_indices[i, :] should represent a valid index of the product matrix (a * b) (after transposition). That is: mask_indices[i, 0] should be in [0, m) if !transpose_a, and in [0, n)   otherwise. mask_indices[i, 1] should be in [0, t) if !transpose_b, and in [0, s)   otherwise.</param>
-      ///<param name="transpose_a">Input to the operation: A boolean, specifies whether to transpose the matrix a.</param>
-      ///<param name="transpose_b">Input to the operation: A boolean, specifies whether to transpose the matrix b.  Output arguments:</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] prod_values(type: DtFloat): A rank 1 tensor of shape [nnz], representing the values of the non-zero elements in the product, such that for all i, prod_values[i] = (a * b)[mask_indices[i, 0], mask_indices[i, 1]].
-      ///</return>
-      public Operation MaskedMatmul (  Output a , Output b , Output mask_indices , Output transpose_a , Output transpose_b ,String opName= "MaskedMatmul" ) 
-      {
-         OperationDescription desc = NewOperation("MaskedMatmul", opName);
-         desc.AddInput(a);
-         desc.AddInput(b);
-         desc.AddInput(mask_indices);
-         desc.AddInput(transpose_a);
-         desc.AddInput(transpose_b);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///  Add elements in deltas to mutable input according to indices.
-      ///</summary>
-      ///<param name="input">Input to the operation. </param>
-      ///<param name="indices">Input to the operation. </param>
-      ///<param name="deltas">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      public Operation ScatterAddNdim (  Output input , Output indices , Output deltas ,String opName= "ScatterAddNdim" ) 
-      {
-         OperationDescription desc = NewOperation("ScatterAddNdim", opName);
-         desc.AddInput(input);
-         desc.AddInput(indices);
-         desc.AddInput(deltas);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Selects the k nearest centers for each point.
-      ///</summary>
-      ///<param name="points">Input to the operation: Matrix of shape (n, d). Rows are assumed to be input points.</param>
-      ///<param name="centers">Input to the operation: Matrix of shape (m, d). Rows are assumed to be centers.</param>
-      ///<param name="k">Input to the operation: Scalar. Number of nearest centers to return for each point. If k is larger than m, then only m centers are returned.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] nearest_center_indices(type: DtInt64): Matrix of shape (n, min(m, k)). Each row contains the indices of the centers closest to the corresponding point, ordered by increasing distance.
-      ///[1] nearest_center_distances(type: DtFloat): Matrix of shape (n, min(m, k)). Each row contains the squared L2 distance to the corresponding center in nearest_center_indices.
-      ///</return>
-      public Operation NearestNeighbors (  Output points , Output centers , Output k ,String opName= "NearestNeighbors" ) 
-      {
-         OperationDescription desc = NewOperation("NearestNeighbors", opName);
-         desc.AddInput(points);
-         desc.AddInput(centers);
-         desc.AddInput(k);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Calculates incremental statistics for a batch of training data.
-      ///</summary>
-      ///<param name="input_data">Input to the operation: The training batch's features as a 2-d tensor; `input_data[i][j]` gives the j-th feature of the i-th input.</param>
-      ///<param name="sparse_input_indices">Input to the operation: The indices tensor from the SparseTensor input.</param>
-      ///<param name="sparse_input_values">Input to the operation: The values tensor from the SparseTensor input.</param>
-      ///<param name="sparse_input_shape">Input to the operation: The shape tensor from the SparseTensor input.</param>
-      ///<param name="input_labels">Input to the operation: The training batch's labels; `input_labels[i]` is the class of the i-th input.</param>
-      ///<param name="input_weights">Input to the operation: = A 1-D float tensor.  If non-empty, `input_weights[i]` gives the weight of the i-th input.</param>
-      ///<param name="tree">Input to the operation: = A 2-d int32 tensor.  `tree[i][0]` gives the index of the left child of the i-th node, `tree[i][0] + 1` gives the index of the right child of the i-th node, and `tree[i][1]` gives the index of the feature used to split the i-th node.</param>
-      ///<param name="tree_thresholds">Input to the operation: `tree_thresholds[i]` is the value used to split the i-th node.</param>
-      ///<param name="node_to_accumulator">Input to the operation: If the i-th node is fertile, `node_to_accumulator[i]` is it's accumulator slot.  Otherwise, `node_to_accumulator[i]` is -1.</param>
-      ///<param name="candidate_split_features">Input to the operation: `candidate_split_features[a][s]` is the index of the feature being considered by split s of accumulator slot a.</param>
-      ///<param name="candidate_split_thresholds">Input to the operation: `candidate_split_thresholds[a][s]` is the threshold value being considered by split s of accumulator slot a.</param>
-      ///<param name="birth_epochs">Input to the operation: `birth_epoch[i]` is the epoch node i was born in.  Only nodes satisfying `current_epoch - birth_epoch &lt;= 1` accumulate statistics.</param>
-      ///<param name="current_epoch">Input to the operation: = A 1-d int32 tensor with shape (1).  current_epoch[0] contains the current epoch.</param>
-      ///<param name="input_spec">A 1-D tensor containing the type of each column in input_data, (e.g. continuous float, categorical).  Index 0 should contain the default type, individual feature types start at index 1.</param>
-      ///<param name="num_classes"></param>
-      ///<param name="regression"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] pcw_node_sums_delta(type: DtFloat): `pcw_node_sums_delta[i][c]` is the number of training examples in this training batch with class c that passed through node i for classification.  For regression, it is the sum of the input_labels that have passed through node i.
-      ///[1] pcw_node_squares_delta(type: DtFloat): `pcw_node_squares_delta[i][c]` is the sum of the squares of the input labels that have passed through node i for regression.  Not set for classification.
-      ///[2] pcw_splits_indices(type: DtInt32): = A 2-d tensor of shape (?, 3) for classification and (?, 2) for regression. `pcw_splits_indices[i]` gives the coordinates of an entry in candidate_split_pcw_sums and candidate_split_pcw_squares that need to be updated.  This is meant to be passed with `pcw_candidate_splits_*_delta` to a scatter_add for candidate_split_pcw_*:   training_ops.scatter_add_ndim(candidate_split_pcw_sums       pcw_splits_indices, pcw_candidate_splits_sums_delta)
-      ///[3] pcw_candidate_splits_sums_delta(type: DtFloat): For classification, `pcw_candidate_splits_sums_delta[i]` is the number of training examples in this training batch that correspond to the i-th entry in `pcw_splits_indices` which took the *left* branch of candidate split. For regression, it is the same but a 2-D tensor that has the sum of the input_labels for each i-th entry in the indices.
-      ///[4] pcw_candidate_splits_squares_delta(type: DtFloat): For regression, same as `pcw_candidate_splits_sums_delta` but the sum of the squares. Not set for classification.
-      ///[5] pcw_totals_indices(type: DtInt32): For classification, 'pcw_totals_indices` contains the indices (accumulator, class) into total_pcw_sums to update with pcw_totals_sums_delta.  For regression, it only contains the accumulator (not the class), because pcw_totals_*_delta will contain all the outputs.
-      ///[6] pcw_totals_sums_delta(type: DtFloat): For classification, `pcw_totals_sums_delta[i]` is the number of training examples in this batch that ended up in the fertile node with accumulator and class indicated by `pcw_totals_indices[i]`. For regression, it is the sum of the input_labels corresponding to the entries in `pcw_totals_indices[i]`.
-      ///[7] pcw_totals_squares_delta(type: DtFloat): For regression, same as `pcw_totals_sums_delta` but the sum of the squares. Not set for classification.
-      ///[8] leaves(type: DtInt32): `leaves[i]` is the leaf that input i ended up in.
-      ///</return>
-      public Operation CountExtremelyRandomStats (  Output input_data , Output sparse_input_indices , Output sparse_input_values , Output sparse_input_shape , Output input_labels , Output input_weights , Output tree , Output tree_thresholds , Output node_to_accumulator , Output candidate_split_features , Output candidate_split_thresholds , Output birth_epochs , Output current_epoch , string input_spec, long num_classes, bool regression = false ,String opName= "CountExtremelyRandomStats" ) 
-      {
-         OperationDescription desc = NewOperation("CountExtremelyRandomStats", opName);
-         desc.AddInput(input_data);
-         desc.AddInput(sparse_input_indices);
-         desc.AddInput(sparse_input_values);
-         desc.AddInput(sparse_input_shape);
-         desc.AddInput(input_labels);
-         desc.AddInput(input_weights);
-         desc.AddInput(tree);
-         desc.AddInput(tree_thresholds);
-         desc.AddInput(node_to_accumulator);
-         desc.AddInput(candidate_split_features);
-         desc.AddInput(candidate_split_thresholds);
-         desc.AddInput(birth_epochs);
-         desc.AddInput(current_epoch);
-         desc.SetAttr("input_spec", input_spec);
-         desc.SetAttr("num_classes", num_classes);
-         if (regression != false) desc.SetAttr("regression", regression);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns a tensor of ones with the same shape and type as x.
-      ///</summary>
-      ///<param name="x">Input to the operation: a tensor of type T.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtInvalid): a tensor of the same shape and type as x but filled with ones.
-      ///</return>
-      public Operation OnesLike (  Output x ,String opName= "OnesLike" ) 
-      {
-         OperationDescription desc = NewOperation("OnesLike", opName);
-         desc.AddInput(x);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Generates sparse cross form a list of sparse tensors.
-      ///</summary>
-      ///<param name="indices">Input to the operation: 2-D.  Indices of each input `SparseTensor`.</param>
-      ///<param name="values">Input to the operation: 1-D.   values of each `SparseTensor`.</param>
-      ///<param name="shapes">Input to the operation: 1-D.   Shapes of each `SparseTensor`.</param>
-      ///<param name="dense">Input to the operation: 2-D.    Columns represented by dense `Tensor`.</param>
-      ///<param name="hashed_output"></param>
-      ///<param name="num_buckets"></param>
-      ///<param name="hash_key"></param>
-      ///<param name="out_type"></param>
-      ///<param name="internal_type"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output_indices(type: DtInt64): 2-D.  Indices of the concatenated `SparseTensor`.
-      ///[1] output_values(type: DtInvalid): 1-D.  Non-empty values of the concatenated or hashed `SparseTensor`.
-      ///[2] output_shape(type: DtInt64): 1-D.  Shape of the concatenated `SparseTensor`.
-      ///</return>
-      public Operation SparseFeatureCrossV2 (  Output indices , Output values , Output shapes , Output dense , bool hashed_output, long num_buckets, long hash_key, DataType out_type, DataType internal_type,String opName= "SparseFeatureCrossV2" ) 
-      {
-         OperationDescription desc = NewOperation("SparseFeatureCrossV2", opName);
-         desc.AddInput(indices);
-         desc.AddInput(values);
-         desc.AddInput(shapes);
-         desc.AddInput(dense);
-         desc.SetAttr("hashed_output", hashed_output);
-         desc.SetAttr("num_buckets", num_buckets);
-         desc.SetAttr("hash_key", hash_key);
-         desc.SetAttr("out_type", out_type);
-         desc.SetAttr("internal_type", internal_type);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the partial left-hand side and right-hand side of WALS update.
-      ///</summary>
-      ///<param name="factors">Input to the operation: Matrix of size m * k.</param>
-      ///<param name="factor_weights">Input to the operation: Vector of size m. Corresponds to column weights</param>
-      ///<param name="unobserved_weights">Input to the operation: Scalar. Weight for unobserved input entries.</param>
-      ///<param name="input_weights">Input to the operation: Vector of size n. Corresponds to row weights.</param>
-      ///<param name="input_indices">Input to the operation: Indices for the input SparseTensor.</param>
-      ///<param name="input_values">Input to the operation: Values for the input SparseTensor.</param>
-      ///<param name="input_block_size">Input to the operation: Scalar. Number of rows spanned by input.</param>
-      ///<param name="input_is_transpose">Input to the operation: If true, logically transposes the input for processing.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] partial_lhs(type: DtFloat): 3-D tensor with size input_block_size x k x k.
-      ///[1] partial_rhs(type: DtFloat): Matrix with size input_block_size x k.
-      ///</return>
-      public Operation WALSComputePartialLhsAndRhs (  Output factors , Output factor_weights , Output unobserved_weights , Output input_weights , Output input_indices , Output input_values , Output input_block_size , Output input_is_transpose ,String opName= "WALSComputePartialLhsAndRhs" ) 
-      {
-         OperationDescription desc = NewOperation("WALSComputePartialLhsAndRhs", opName);
-         desc.AddInput(factors);
-         desc.AddInput(factor_weights);
-         desc.AddInput(unobserved_weights);
-         desc.AddInput(input_weights);
-         desc.AddInput(input_indices);
-         desc.AddInput(input_values);
-         desc.AddInput(input_block_size);
-         desc.AddInput(input_is_transpose);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Unpacks a given dimension of a rank-`R` tensor into `num` rank-`(R-1)` tensors.
-      ///</summary>
-      ///<param name="value">Input to the operation: 1-D or higher, with `axis` dimension size equal to `num`.</param>
-      ///<param name="num"></param>
-      ///<param name="axis">Dimension along which to unpack.  Negative values wrap around, so the valid range is `[-R, R)`.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): The list of tensors unpacked from `value`.
-      ///</return>
-      public Operation Unpack (  Output value , long num, long axis = 0 ,String opName= "Unpack" ) 
-      {
-         OperationDescription desc = NewOperation("Unpack", opName);
-         desc.AddInput(value);
-         desc.SetAttr("num", num);
-         if (axis != 0) desc.SetAttr("axis", axis);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Deprecated. Use TensorArrayCloseV3
+      ///Deprecated, use StackPopV2.
       ///</summary>
       ///<param name="handle">Input to the operation. </param>
+      ///<param name="elem_type"></param>
       ///<param name="opName">The name of the operation</param>
-      public Operation TensorArrayCloseV2 (  Output handle ,String opName= "TensorArrayCloseV2" ) 
+      ///<return>
+      ///[0] elem(type: DtInvalid).
+      ///</return>
+      public Operation StackPop (  Output handle , DataType elem_type,String opName= "StackPop" ) 
       {
-         OperationDescription desc = NewOperation("TensorArrayCloseV2", opName);
+         OperationDescription desc = NewOperation("StackPop", opName);
          desc.AddInput(handle);
-
+         desc.SetAttr("elem_type", elem_type);
 
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Generates sparse cross form a list of sparse tensors.
+      ///Gather slices from `params` axis `axis` according to `indices`.
       ///</summary>
-      ///<param name="indices">Input to the operation: 2-D.  Indices of each input `SparseTensor`.</param>
-      ///<param name="values">Input to the operation: 1-D.   values of each `SparseTensor`.</param>
-      ///<param name="shapes">Input to the operation: 1-D.   Shapes of each `SparseTensor`.</param>
-      ///<param name="dense">Input to the operation: 2-D.    Columns represented by dense `Tensor`.</param>
-      ///<param name="hashed_output"></param>
-      ///<param name="num_buckets"></param>
-      ///<param name="out_type"></param>
-      ///<param name="internal_type"></param>
+      ///<param name="parameters">Input to the operation: The tensor from which to gather values. Must be at least rank `axis + 1`.</param>
+      ///<param name="indices">Input to the operation: Index tensor. Must be in range `[0, params.shape[axis])`.</param>
+      ///<param name="axis">Input to the operation: The axis in `params` to gather `indices` from. Defaults to the first dimension. Supports negative indexes.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output_indices(type: DtInt64): 2-D.  Indices of the concatenated `SparseTensor`.
-      ///[1] output_values(type: DtInvalid): 1-D.  Non-empty values of the concatenated or hashed `SparseTensor`.
-      ///[2] output_shape(type: DtInt64): 1-D.  Shape of the concatenated `SparseTensor`.
+      ///[0] output(type: DtInvalid): Values from `params` gathered from indices given by `indices`, with shape `params.shape[:axis] + indices.shape + params.shape[axis + 1:]`.
       ///</return>
-      public Operation SparseFeatureCross (  Output indices , Output values , Output shapes , Output dense , bool hashed_output, long num_buckets, DataType out_type, DataType internal_type,String opName= "SparseFeatureCross" ) 
+      public Operation GatherV2 (  Output parameters , Output indices , Output axis ,String opName= "GatherV2" ) 
       {
-         OperationDescription desc = NewOperation("SparseFeatureCross", opName);
+         OperationDescription desc = NewOperation("GatherV2", opName);
+         desc.AddInput(parameters);
          desc.AddInput(indices);
+         desc.AddInput(axis);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Concatenates a list of `N` tensors along the first dimension.
+      ///</summary>
+      ///<param name="values">Input to the operation: Tensors to be concatenated. All must have size 1 in the first dimension and same shape.</param>
+      ///<param name="shape">the final shape of the result; should be equal to the shapes of any input but with the number of input values in the first dimension.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): The concatenated tensor.
+      ///</return>
+      public Operation ParallelConcat (  Output values , long[] shape,String opName= "ParallelConcat" ) 
+      {
+         OperationDescription desc = NewOperation("ParallelConcat", opName);
          desc.AddInput(values);
-         desc.AddInput(shapes);
-         desc.AddInput(dense);
-         desc.SetAttr("hashed_output", hashed_output);
-         desc.SetAttr("num_buckets", num_buckets);
-         desc.SetAttr("out_type", out_type);
-         desc.SetAttr("internal_type", internal_type);
+         desc.SetAttrShape("shape", shape);
 
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Copy a tensor setting everything outside a central band in each innermost matrix
+      ///Computes offsets of concat inputs within its output.
       ///</summary>
-      ///<param name="input">Input to the operation: Rank `k` tensor.</param>
-      ///<param name="num_lower">Input to the operation: 0-D tensor. Number of subdiagonals to keep. If negative, keep entire lower triangle.</param>
-      ///<param name="num_upper">Input to the operation: 0-D tensor. Number of superdiagonals to keep. If negative, keep entire upper triangle.</param>
+      ///<param name="concat_dim">Input to the operation: The dimension along which to concatenate.</param>
+      ///<param name="shape">Input to the operation: The `N` int32 vectors representing shape of tensors being concatenated.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] band(type: DtInvalid): Rank `k` tensor of the same shape as input. The extracted banded tensor.
+      ///[0] offset(type: DtInt32): The `N` int32 vectors representing the starting offset of input tensors within the concatenated output.
       ///</return>
-      public Operation MatrixBandPart (  Output input , Output num_lower , Output num_upper ,String opName= "MatrixBandPart" ) 
+      public Operation ConcatOffset (  Output concat_dim , Output shape ,String opName= "ConcatOffset" ) 
       {
-         OperationDescription desc = NewOperation("MatrixBandPart", opName);
-         desc.AddInput(input);
-         desc.AddInput(num_lower);
-         desc.AddInput(num_upper);
+         OperationDescription desc = NewOperation("ConcatOffset", opName);
+         desc.AddInput(concat_dim);
+         desc.AddInput(shape);
 
 
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///  Chooses a single path for each instance in `input_data` and returns the leaf
-      ///</summary>
-      ///<param name="input_data">Input to the operation. </param>
-      ///<param name="tree_parameters">Input to the operation. </param>
-      ///<param name="tree_biases">Input to the operation. </param>
-      ///<param name="max_nodes"></param>
-      ///<param name="tree_depth"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] path_probability(type: DtFloat).
-      ///[1] path(type: DtInt32).
-      ///</return>
-      public Operation HardRoutingFunction (  Output input_data , Output tree_parameters , Output tree_biases , long max_nodes, long tree_depth,String opName= "HardRoutingFunction" ) 
-      {
-         OperationDescription desc = NewOperation("HardRoutingFunction", opName);
-         desc.AddInput(input_data);
-         desc.AddInput(tree_parameters);
-         desc.AddInput(tree_biases);
-         desc.SetAttr("max_nodes", max_nodes);
-         desc.SetAttr("tree_depth", tree_depth);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///SpaceToBatch for N-D tensors of type T.
-      ///</summary>
-      ///<param name="input">Input to the operation: N-D with shape `input_shape = [batch] + spatial_shape + remaining_shape`, where spatial_shape has `M` dimensions.</param>
-      ///<param name="block_shape">Input to the operation: 1-D with shape `[M]`, all values must be &gt;= 1.</param>
-      ///<param name="paddings">Input to the operation: 2-D with shape `[M, 2]`, all values must be &gt;= 0.   `paddings[i] = [pad_start, pad_end]` specifies the padding for input dimension   `i + 1`, which corresponds to spatial dimension `i`.  It is required that   `block_shape[i]` divides `input_shape[i + 1] + pad_start + pad_end`.  This operation is equivalent to the following steps:  1. Zero-pad the start and end of dimensions `[1, ..., M]` of the    input according to `paddings` to produce `padded` of shape `padded_shape`.  2. Reshape `padded` to `reshaped_padded` of shape:       [batch] +      [padded_shape[1] / block_shape[0],        block_shape[0],       ...,       padded_shape[M] / block_shape[M-1],       block_shape[M-1]] +      remaining_shape  3. Permute dimensions of `reshaped_padded` to produce    `permuted_reshaped_padded` of shape:       block_shape +      [batch] +      [padded_shape[1] / block_shape[0],       ...,       padded_shape[M] / block_shape[M-1]] +      remaining_shape  4. Reshape `permuted_reshaped_padded` to flatten `block_shape` into the batch    dimension, producing an output tensor of shape:       [batch * prod(block_shape)] +      [padded_shape[1] / block_shape[0],       ...,       padded_shape[M] / block_shape[M-1]] +      remaining_shape  Some examples:  (1) For the following input of shape `[1, 2, 2, 1]`, `block_shape = [2, 2]`, and     `paddings = [[0, 0], [0, 0]]`:  ``` x = [[[[1], [2]], [[3], [4]]]] ```  The output tensor has shape `[4, 1, 1, 1]` and value:  ``` [[[[1]]], [[[2]]], [[[3]]], [[[4]]]] ```  (2) For the following input of shape `[1, 2, 2, 3]`, `block_shape = [2, 2]`, and     `paddings = [[0, 0], [0, 0]]`:  ``` x = [[[[1, 2, 3], [4, 5, 6]],       [[7, 8, 9], [10, 11, 12]]]] ```  The output tensor has shape `[4, 1, 1, 3]` and value:  ``` [[[1, 2, 3]], [[4, 5, 6]], [[7, 8, 9]], [[10, 11, 12]]] ```  (3) For the following input of shape `[1, 4, 4, 1]`, `block_shape = [2, 2]`, and     `paddings = [[0, 0], [0, 0]]`:  ``` x = [[[[1],   [2],  [3],  [4]],       [[5],   [6],  [7],  [8]],       [[9],  [10], [11],  [12]],       [[13], [14], [15],  [16]]]] ```  The output tensor has shape `[4, 2, 2, 1]` and value:  ``` x = [[[[1], [3]], [[9], [11]]],      [[[2], [4]], [[10], [12]]],      [[[5], [7]], [[13], [15]]],      [[[6], [8]], [[14], [16]]]] ```  (4) For the following input of shape `[2, 2, 4, 1]`, block_shape = `[2, 2]`, and     paddings = `[[0, 0], [2, 0]]`:  ``` x = [[[[1],   [2],  [3],  [4]],       [[5],   [6],  [7],  [8]]],      [[[9],  [10], [11],  [12]],       [[13], [14], [15],  [16]]]] ```  The output tensor has shape `[8, 1, 3, 1]` and value:  ``` x = [[[[0], [1], [3]]], [[[0], [9], [11]]],      [[[0], [2], [4]]], [[[0], [10], [12]]],      [[[0], [5], [7]]], [[[0], [13], [15]]],      [[[0], [6], [8]]], [[[0], [14], [16]]]] ```  Among others, this operation is useful for reducing atrous convolution into regular convolution.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation SpaceToBatchND (  Output input , Output block_shape , Output paddings ,String opName= "SpaceToBatchND" ) 
-      {
-         OperationDescription desc = NewOperation("SpaceToBatchND", opName);
-         desc.AddInput(input);
-         desc.AddInput(block_shape);
-         desc.AddInput(paddings);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Updates the accumulator with a new value for global_step.
-      ///</summary>
-      ///<param name="handle">Input to the operation: The handle to an accumulator.</param>
-      ///<param name="new_global_step">Input to the operation: The new global_step value to set.</param>
-      ///<param name="opName">The name of the operation</param>
-      public Operation AccumulatorSetGlobalStep (  Output handle , Output new_global_step ,String opName= "AccumulatorSetGlobalStep" ) 
-      {
-         OperationDescription desc = NewOperation("AccumulatorSetGlobalStep", opName);
-         desc.AddInput(handle);
-         desc.AddInput(new_global_step);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///V2 format specific: merges the metadata files of sharded checkpoints.  The
-      ///</summary>
-      ///<param name="checkpoint_prefixes">Input to the operation: prefixes of V2 checkpoints to merge.</param>
-      ///<param name="destination_prefix">Input to the operation: scalar.  The desired final prefix.  Allowed to be the same as one of the checkpoint_prefixes.</param>
-      ///<param name="delete_old_dirs">see above.</param>
-      ///<param name="opName">The name of the operation</param>
-      public Operation MergeV2Checkpoints (  Output checkpoint_prefixes , Output destination_prefix , bool delete_old_dirs = true ,String opName= "MergeV2Checkpoints" ) 
-      {
-         OperationDescription desc = NewOperation("MergeV2Checkpoints", opName);
-         desc.AddInput(checkpoint_prefixes);
-         desc.AddInput(destination_prefix);
-
-         if (delete_old_dirs != true) desc.SetAttr("delete_old_dirs", delete_old_dirs);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Outputs a `Summary` protocol buffer with images.
-      ///</summary>
-      ///<param name="tag">Input to the operation: Scalar. Used to build the `tag` attribute of the summary values.</param>
-      ///<param name="tensor">Input to the operation: 4-D of shape `[batch_size, height, width, channels]` where `channels` is 1, 3, or 4.</param>
-      ///<param name="max_images">Max number of batch elements to generate images for.</param>
-      ///<param name="bad_color">Color to use for pixels with non-finite values.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] summary(type: DtString): Scalar. Serialized `Summary` protocol buffer.
-      ///</return>
-      public Operation ImageSummary (  Output tag , Output tensor , long max_images = 3 , Tensor bad_color = null ,String opName= "ImageSummary" ) 
-      {
-         OperationDescription desc = NewOperation("ImageSummary", opName);
-         desc.AddInput(tag);
-         desc.AddInput(tensor);
-
-         if (max_images != 3) desc.SetAttr("max_images", max_images);
-         if (bad_color != null) desc.SetAttr("bad_color", bad_color);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Calculates the full beams from the per-step ids and parent beam ids.
-      ///</summary>
-      ///<param name="step_ids">Input to the operation: `[max_time, batch_size, beam_width]`.</param>
-      ///<param name="parent_ids">Input to the operation: `[max_time, batch_size, beam_width]`.</param>
-      ///<param name="sequence_length">Input to the operation: `[batch_size, beam_width]`.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] beams(type: DtInvalid): `[max_time, batch_size, beam_width]`.
-      ///</return>
-      public Operation GatherTree (  Output step_ids , Output parent_ids , Output sequence_length ,String opName= "GatherTree" ) 
-      {
-         OperationDescription desc = NewOperation("GatherTree", opName);
-         desc.AddInput(step_ids);
-         desc.AddInput(parent_ids);
-         desc.AddInput(sequence_length);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Solves one or more linear least-squares problems.
-      ///</summary>
-      ///<param name="matrix">Input to the operation: Shape is `[..., M, N]`.</param>
-      ///<param name="rhs">Input to the operation: Shape is `[..., M, K]`.</param>
-      ///<param name="l2_regularizer">Input to the operation: Scalar tensor.  @compatibility(numpy) Equivalent to np.linalg.lstsq @end_compatibility</param>
-      ///<param name="fast"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): Shape is `[..., N, K]`.
-      ///</return>
-      public Operation MatrixSolveLs (  Output matrix , Output rhs , Output l2_regularizer , bool fast = true ,String opName= "MatrixSolveLs" ) 
-      {
-         OperationDescription desc = NewOperation("MatrixSolveLs", opName);
-         desc.AddInput(matrix);
-         desc.AddInput(rhs);
-         desc.AddInput(l2_regularizer);
-
-         if (fast != true) desc.SetAttr("fast", fast);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///  Remove ids from a shortlist.
-      ///</summary>
-      ///<param name="ids">Input to the operation. </param>
-      ///<param name="remove_ids">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] shortlist_ids(type: DtInt64).
-      ///[1] new_length(type: DtInt64).
-      ///</return>
-      public Operation TopNRemove (  Output ids , Output remove_ids ,String opName= "TopNRemove" ) 
-      {
-         OperationDescription desc = NewOperation("TopNRemove", opName);
-         desc.AddInput(ids);
-         desc.AddInput(remove_ids);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///  Returns the index of the best split for each finished node.
-      ///</summary>
-      ///<param name="finished_nodes">Input to the operation. </param>
-      ///<param name="node_to_accumulator">Input to the operation. </param>
-      ///<param name="split_sums">Input to the operation. </param>
-      ///<param name="split_squares">Input to the operation. </param>
-      ///<param name="accumulator_sums">Input to the operation. </param>
-      ///<param name="accumulator_sqaures">Input to the operation. </param>
-      ///<param name="regression"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] split_indices(type: DtInt32).
-      ///</return>
-      public Operation BestSplits (  Output finished_nodes , Output node_to_accumulator , Output split_sums , Output split_squares , Output accumulator_sums , Output accumulator_sqaures , bool regression = false ,String opName= "BestSplits" ) 
-      {
-         OperationDescription desc = NewOperation("BestSplits", opName);
-         desc.AddInput(finished_nodes);
-         desc.AddInput(node_to_accumulator);
-         desc.AddInput(split_sums);
-         desc.AddInput(split_squares);
-         desc.AddInput(accumulator_sums);
-         desc.AddInput(accumulator_sqaures);
-
-         if (regression != false) desc.SetAttr("regression", regression);
          return desc.FinishOperation();
       } 
 
@@ -651,6 +131,60 @@ namespace Emgu.TF
          if (capacity != -1) desc.SetAttr("capacity", capacity);
          if (container != null) desc.SetAttr("container", container);
          if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Packs a list of `N` rank-`R` tensors into one rank-`(R+1)` tensor.
+      ///</summary>
+      ///<param name="values">Input to the operation: Must be of same shape and type.</param>
+      ///<param name="axis">Dimension along which to pack.  Negative values wrap around, so the valid range is `[-(R+1), R+1)`.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): The packed tensor.
+      ///</return>
+      public Operation Pack (  Output values , long axis = 0 ,String opName= "Pack" ) 
+      {
+         OperationDescription desc = NewOperation("Pack", opName);
+         desc.AddInput(values);
+
+         if (axis != 0) desc.SetAttr("axis", axis);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Inverse 2D real-valued fast Fourier transform.
+      ///</summary>
+      ///<param name="input">Input to the operation: A complex64 tensor.</param>
+      ///<param name="fft_length">Input to the operation: An int32 tensor of shape [2]. The FFT length for each dimension.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtFloat): A float32 tensor of the same rank as `input`. The inner-most 2   dimensions of `input` are replaced with the `fft_length` samples of their   inverse 2D Fourier transform.  @compatibility(numpy) Equivalent to np.fft.irfft2 @end_compatibility
+      ///</return>
+      public Operation IRFFT2D (  Output input , Output fft_length ,String opName= "IRFFT2D" ) 
+      {
+         OperationDescription desc = NewOperation("IRFFT2D", opName);
+         desc.AddInput(input);
+         desc.AddInput(fft_length);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the log of the absolute value of `Gamma(x)` element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid).
+      ///</return>
+      public Operation Lgamma (  Output x ,String opName= "Lgamma" ) 
+      {
+         OperationDescription desc = NewOperation("Lgamma", opName);
+         desc.AddInput(x);
+
+
          return desc.FinishOperation();
       } 
 
@@ -727,862 +261,85 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Computes the log of the absolute value of `Gamma(x)` element-wise.
+      ///Splits a tensor into `num_split` tensors along one dimension.
       ///</summary>
-      ///<param name="x">Input to the operation. </param>
+      ///<param name="split_dim">Input to the operation: 0-D.  The dimension along which to split.  Must be in the range `[-rank(value), rank(value))`.</param>
+      ///<param name="value">Input to the operation: The tensor to split.</param>
+      ///<param name="num_split">The number of ways to split.  Must evenly divide `value.shape[split_dim]`.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] y(type: DtInvalid).
+      ///[0] output(type: DtInvalid): They are identically shaped tensors, whose shape matches that of `value` except along `split_dim`, where their sizes are `values.shape[split_dim] / num_split`.
       ///</return>
-      public Operation Lgamma (  Output x ,String opName= "Lgamma" ) 
+      public Operation Split (  Output split_dim , Output value , long num_split,String opName= "Split" ) 
       {
-         OperationDescription desc = NewOperation("Lgamma", opName);
-         desc.AddInput(x);
-
+         OperationDescription desc = NewOperation("Split", opName);
+         desc.AddInput(split_dim);
+         desc.AddInput(value);
+         desc.SetAttr("num_split", num_split);
 
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Inverse 2D real-valued fast Fourier transform.
+      ///Op removes and returns the (key, value) element with the smallest
       ///</summary>
-      ///<param name="input">Input to the operation: A complex64 tensor.</param>
-      ///<param name="fft_length">Input to the operation: An int32 tensor of shape [2]. The FFT length for each dimension.</param>
+      ///<param name="indices">Input to the operation. </param>
+      ///<param name="dtypes"></param>
+      ///<param name="capacity"></param>
+      ///<param name="memory_limit"></param>
+      ///<param name="container"></param>
+      ///<param name="shared_name"></param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtFloat): A float32 tensor of the same rank as `input`. The inner-most 2   dimensions of `input` are replaced with the `fft_length` samples of their   inverse 2D Fourier transform.  @compatibility(numpy) Equivalent to np.fft.irfft2 @end_compatibility
+      ///[0] key(type: DtInt64).
+      ///[1] values(type: DtInvalid).
       ///</return>
-      public Operation IRFFT2D (  Output input , Output fft_length ,String opName= "IRFFT2D" ) 
+      public Operation OrderedMapUnstageNoKey (  Output indices , DataType[] dtypes, long capacity = 0 , long memory_limit = 0 , string container = null , string shared_name = null ,String opName= "OrderedMapUnstageNoKey" ) 
       {
-         OperationDescription desc = NewOperation("IRFFT2D", opName);
-         desc.AddInput(input);
-         desc.AddInput(fft_length);
-
-
+         OperationDescription desc = NewOperation("OrderedMapUnstageNoKey", opName);
+         desc.AddInput(indices);
+         desc.SetAttr("dtypes", dtypes);
+         if (capacity != 0) desc.SetAttr("capacity", capacity);
+         if (memory_limit != 0) desc.SetAttr("memory_limit", memory_limit);
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Packs a list of `N` rank-`R` tensors into one rank-`(R+1)` tensor.
+      ///Unpacks a given dimension of a rank-`R` tensor into `num` rank-`(R-1)` tensors.
       ///</summary>
-      ///<param name="values">Input to the operation: Must be of same shape and type.</param>
-      ///<param name="axis">Dimension along which to pack.  Negative values wrap around, so the valid range is `[-(R+1), R+1)`.</param>
+      ///<param name="value">Input to the operation: 1-D or higher, with `axis` dimension size equal to `num`.</param>
+      ///<param name="num"></param>
+      ///<param name="axis">Dimension along which to unpack.  Negative values wrap around, so the valid range is `[-R, R)`.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtInvalid): The packed tensor.
+      ///[0] output(type: DtInvalid): The list of tensors unpacked from `value`.
       ///</return>
-      public Operation Pack (  Output values , long axis = 0 ,String opName= "Pack" ) 
+      public Operation Unpack (  Output value , long num, long axis = 0 ,String opName= "Unpack" ) 
       {
-         OperationDescription desc = NewOperation("Pack", opName);
-         desc.AddInput(values);
-
+         OperationDescription desc = NewOperation("Unpack", opName);
+         desc.AddInput(value);
+         desc.SetAttr("num", num);
          if (axis != 0) desc.SetAttr("axis", axis);
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Determines which of the given leaf nodes are done accumulating.
+      ///Concatenates tensors along one dimension.
       ///</summary>
-      ///<param name="leaves">Input to the operation: = A 1-d int32 tensor.  Lists the nodes that are currently leaves.</param>
-      ///<param name="node_to_accumulator">Input to the operation: If the i-th node is fertile, `node_to_accumulator[i]` is it's accumulator slot.  Otherwise, `node_to_accumulator[i]` is -1.</param>
-      ///<param name="split_sums">Input to the operation: = a 3-d tensor where `split_sums[a][s]` summarizes the training labels for examples that fall into the fertile node associated with accumulator slot s and have then taken the *left* branch of candidate split s.  For a classification problem, `split_sums[a][s][c]` is the count of such examples with class c and for regression problems, `split_sums[a][s]` is the sum of the regression labels for such examples.</param>
-      ///<param name="split_squares">Input to the operation: Same as split_sums, but it contains the sum of the squares of the regression labels.  Only used for regression.  For classification problems, pass a dummy tensor into this.</param>
-      ///<param name="accumulator_sums">Input to the operation: For classification, `accumulator_sums[a][c]` records how many training examples have class c and have ended up in the fertile node associated with accumulator slot a.  It has the total sum in entry 0 for convenience. For regression, it is the same except it contains the sum of the input labels that have been seen, and entry 0 contains the number of training examples that have been seen.</param>
-      ///<param name="accumulator_squares">Input to the operation: Same as accumulator_sums, but it contains the sum of the squares of the regression labels.  Only used for regression.  For classification problems, pass a dummy tensor into this.</param>
-      ///<param name="birth_epochs">Input to the operation: = A 1-d int32 tensor.  `birth_epochs[i]` contains the epoch the i-th node was created in.</param>
-      ///<param name="current_epoch">Input to the operation: = A 1-d int32 tensor with shape (1).  `current_epoch[0]` stores the current epoch number.</param>
-      ///<param name="num_split_after_samples"></param>
-      ///<param name="min_split_samples"></param>
-      ///<param name="regression"></param>
-      ///<param name="dominate_fraction"></param>
-      ///<param name="dominate_method"></param>
-      ///<param name="random_seed"></param>
-      ///<param name="check_dominates_every_samples"></param>
+      ///<param name="concat_dim">Input to the operation: 0-D.  The dimension along which to concatenate.  Must be in the range [0, rank(values)).</param>
+      ///<param name="values">Input to the operation: The `N` Tensors to concatenate. Their ranks and types must match, and their sizes must match in all dimensions except `concat_dim`.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] finished(type: DtInt32): = A 1-d int32 tensor containing the indices of the finished nodes. Nodes are finished if they have received at least num_split_after_samples samples, or if they have received min_split_samples and the best scoring split is sufficiently greater than the next best split.
-      ///[1] stale(type: DtInt32): = A 1-d int32 tensor containing the fertile nodes that were created two or more epochs ago.
+      ///[0] output(type: DtInvalid): A `Tensor` with the concatenation of values stacked along the `concat_dim` dimension.  This tensor's shape matches that of `values` except in `concat_dim` where it has the sum of the sizes.
       ///</return>
-      public Operation FinishedNodes (  Output leaves , Output node_to_accumulator , Output split_sums , Output split_squares , Output accumulator_sums , Output accumulator_squares , Output birth_epochs , Output current_epoch , long num_split_after_samples, long min_split_samples, bool regression = false , float dominate_fraction = 0.99f , string dominate_method = null , long random_seed = 0 , long check_dominates_every_samples = 75 ,String opName= "FinishedNodes" ) 
+      public Operation Concat (  Output concat_dim , Output values ,String opName= "Concat" ) 
       {
-         OperationDescription desc = NewOperation("FinishedNodes", opName);
-         desc.AddInput(leaves);
-         desc.AddInput(node_to_accumulator);
-         desc.AddInput(split_sums);
-         desc.AddInput(split_squares);
-         desc.AddInput(accumulator_sums);
-         desc.AddInput(accumulator_squares);
-         desc.AddInput(birth_epochs);
-         desc.AddInput(current_epoch);
-         desc.SetAttr("num_split_after_samples", num_split_after_samples);
-         desc.SetAttr("min_split_samples", min_split_samples);
-         if (regression != false) desc.SetAttr("regression", regression);
-         if (dominate_fraction != 0.99f) desc.SetAttr("dominate_fraction", dominate_fraction);
-         if (dominate_method != null) desc.SetAttr("dominate_method", dominate_method);
-         if (random_seed != 0) desc.SetAttr("random_seed", random_seed);
-         if (check_dominates_every_samples != 75) desc.SetAttr("check_dominates_every_samples", check_dominates_every_samples);
-         return desc.FinishOperation();
-      } 
+         OperationDescription desc = NewOperation("Concat", opName);
+         desc.AddInput(concat_dim);
+         desc.AddInput(values);
 
-      ///<summary>
-      ///
-      ///</summary>
-      ///<param name="matrix">Input to the operation. </param>
-      ///<param name="rhs">Input to the operation. </param>
-      ///<param name="lower"></param>
-      ///<param name="adjoint"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation BatchMatrixTriangularSolve (  Output matrix , Output rhs , bool lower = true , bool adjoint = false ,String opName= "BatchMatrixTriangularSolve" ) 
-      {
-         OperationDescription desc = NewOperation("BatchMatrixTriangularSolve", opName);
-         desc.AddInput(matrix);
-         desc.AddInput(rhs);
-
-         if (lower != true) desc.SetAttr("lower", lower);
-         if (adjoint != false) desc.SetAttr("adjoint", adjoint);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///  Output the tree changes needed to resolve fertile nodes.
-      ///</summary>
-      ///<param name="end_of_tree">Input to the operation. </param>
-      ///<param name="node_to_accumulator">Input to the operation. </param>
-      ///<param name="finished_nodes">Input to the operation. </param>
-      ///<param name="best_splits">Input to the operation. </param>
-      ///<param name="candidate_split_features">Input to the operation. </param>
-      ///<param name="candidate_split_thresholds">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] nodes_to_update(type: DtInt32).
-      ///[1] tree_updates(type: DtInt32).
-      ///[2] threshold_updates(type: DtFloat).
-      ///[3] new_end_of_tree(type: DtInt32).
-      ///</return>
-      public Operation GrowTree (  Output end_of_tree , Output node_to_accumulator , Output finished_nodes , Output best_splits , Output candidate_split_features , Output candidate_split_thresholds ,String opName= "GrowTree" ) 
-      {
-         OperationDescription desc = NewOperation("GrowTree", opName);
-         desc.AddInput(end_of_tree);
-         desc.AddInput(node_to_accumulator);
-         desc.AddInput(finished_nodes);
-         desc.AddInput(best_splits);
-         desc.AddInput(candidate_split_features);
-         desc.AddInput(candidate_split_thresholds);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Initializes candidate splits for newly fertile nodes.
-      ///</summary>
-      ///<param name="input_data">Input to the operation: The features for the current batch of training data. `input_data[i][j]` is the j-th feature of the i-th input.</param>
-      ///<param name="sparse_input_indices">Input to the operation: The indices tensor from the SparseTensor input.</param>
-      ///<param name="sparse_input_values">Input to the operation: The values tensor from the SparseTensor input.</param>
-      ///<param name="sparse_input_shape">Input to the operation: The shape tensor from the SparseTensor input.</param>
-      ///<param name="input_weights">Input to the operation: For a dense input, input_weights[i] is the weight associated with input_data[i].  For sparse input, input_weights[i] is the weight associated with sparse_input_values[i].  Or in either case, if all the weights are 1, input_weights can be empty.  SampleInputs will reject inputs with weight less than Uniform([0,1)), so weights outside of that range may not be what you want.</param>
-      ///<param name="node_to_accumulator">Input to the operation: For a fertile node i, node_to_accumulator[i] is the associated accumulator slot.  For non-fertile nodes, it is -1.</param>
-      ///<param name="leaves">Input to the operation: `leaves[i]` is the leaf that the i-th input landed in, as calculated by CountExtremelyRandomStats.</param>
-      ///<param name="candidate_split_features">Input to the operation: The current features for the candidate splits; `candidate_split_features[a][s]` is the index of the feature being considered by split s in accumulator slot a.</param>
-      ///<param name="candidate_split_thresholds">Input to the operation: The current thresholds for the candidate splits; `candidate_split_thresholds[a][s]` is the threshold value being considered by split s in accumulator slot a.</param>
-      ///<param name="input_spec"></param>
-      ///<param name="split_initializations_per_input"></param>
-      ///<param name="split_sampling_random_seed"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] accumulators_to_update(type: DtInt32): A list of the accumulators to change in the candidate_split_features and candidate_split_thresholds tensors.
-      ///[1] new_split_feature_rows(type: DtInt32): The new values for the candidate_split_features tensor.  Intended to be used with `tf.scatter_update(candidate_split_features,                    accumulators_to_update,                    new_split_feature_rows)`
-      ///[2] new_split_threshold_rows(type: DtFloat): The new values for the candidate_split_thresholds tensor.  Intended to be used with `tf.scatter_update(candidate_split_thresholds,                    accumulators_to_update,                    new_split_feature_thresholds)`
-      ///</return>
-      public Operation SampleInputs (  Output input_data , Output sparse_input_indices , Output sparse_input_values , Output sparse_input_shape , Output input_weights , Output node_to_accumulator , Output leaves , Output candidate_split_features , Output candidate_split_thresholds , string input_spec, long split_initializations_per_input, long split_sampling_random_seed,String opName= "SampleInputs" ) 
-      {
-         OperationDescription desc = NewOperation("SampleInputs", opName);
-         desc.AddInput(input_data);
-         desc.AddInput(sparse_input_indices);
-         desc.AddInput(sparse_input_values);
-         desc.AddInput(sparse_input_shape);
-         desc.AddInput(input_weights);
-         desc.AddInput(node_to_accumulator);
-         desc.AddInput(leaves);
-         desc.AddInput(candidate_split_features);
-         desc.AddInput(candidate_split_thresholds);
-         desc.SetAttr("input_spec", input_spec);
-         desc.SetAttr("split_initializations_per_input", split_initializations_per_input);
-         desc.SetAttr("split_sampling_random_seed", split_sampling_random_seed);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Looks up keys in a table, outputs the corresponding values.
-      ///</summary>
-      ///<param name="table_handle">Input to the operation: Handle to the table.</param>
-      ///<param name="keys">Input to the operation: Any shape.  Keys to look up.</param>
-      ///<param name="default_value">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] values(type: DtInvalid): Same shape as `keys`.  Values found in the table, or `default_values` for missing keys.
-      ///</return>
-      public Operation LookupTableFind (  Output table_handle , Output keys , Output default_value ,String opName= "LookupTableFind" ) 
-      {
-         OperationDescription desc = NewOperation("LookupTableFind", opName);
-         desc.AddInput(table_handle);
-         desc.AddInput(keys);
-         desc.AddInput(default_value);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the complex absolute value of a tensor.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="Tout"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtInvalid).
-      ///</return>
-      public Operation ComplexAbs (  Output x , DataType? Tout = null ,String opName= "ComplexAbs" ) 
-      {
-         OperationDescription desc = NewOperation("ComplexAbs", opName);
-         desc.AddInput(x);
-
-         if (Tout.HasValue) desc.SetAttr("Tout", Tout.Value);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///   Converts byte arrays represented by strings to 32-bit
-      ///</summary>
-      ///<param name="input_data">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output_data(type: DtFloat).
-      ///</return>
-      public Operation ReinterpretStringToFloat (  Output input_data ,String opName= "ReinterpretStringToFloat" ) 
-      {
-         OperationDescription desc = NewOperation("ReinterpretStringToFloat", opName);
-         desc.AddInput(input_data);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Return the shape of s0 op s1 with broadcast.
-      ///</summary>
-      ///<param name="s0">Input to the operation. </param>
-      ///<param name="s1">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] r0(type: DtInvalid).
-      ///</return>
-      public Operation BroadcastArgs (  Output s0 , Output s1 ,String opName= "BroadcastArgs" ) 
-      {
-         OperationDescription desc = NewOperation("BroadcastArgs", opName);
-         desc.AddInput(s0);
-         desc.AddInput(s1);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Assign `value` to the sliced l-value reference of `ref`.
-      ///</summary>
-      ///<param name="reference">Input to the operation. </param>
-      ///<param name="begin">Input to the operation. </param>
-      ///<param name="end">Input to the operation. </param>
-      ///<param name="strides">Input to the operation. </param>
-      ///<param name="value">Input to the operation. </param>
-      ///<param name="begin_mask"></param>
-      ///<param name="end_mask"></param>
-      ///<param name="ellipsis_mask"></param>
-      ///<param name="new_axis_mask"></param>
-      ///<param name="shrink_axis_mask"></param>
-      ///<param name="opName">The name of the operation</param>
-      public Operation ResourceStridedSliceAssign (  Output reference , Output begin , Output end , Output strides , Output value , long begin_mask = 0 , long end_mask = 0 , long ellipsis_mask = 0 , long new_axis_mask = 0 , long shrink_axis_mask = 0 ,String opName= "ResourceStridedSliceAssign" ) 
-      {
-         OperationDescription desc = NewOperation("ResourceStridedSliceAssign", opName);
-         desc.AddInput(reference);
-         desc.AddInput(begin);
-         desc.AddInput(end);
-         desc.AddInput(strides);
-         desc.AddInput(value);
-
-         if (begin_mask != 0) desc.SetAttr("begin_mask", begin_mask);
-         if (end_mask != 0) desc.SetAttr("end_mask", end_mask);
-         if (ellipsis_mask != 0) desc.SetAttr("ellipsis_mask", ellipsis_mask);
-         if (new_axis_mask != 0) desc.SetAttr("new_axis_mask", new_axis_mask);
-         if (shrink_axis_mask != 0) desc.SetAttr("shrink_axis_mask", shrink_axis_mask);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the inverse permutation of a tensor.
-      ///</summary>
-      ///<param name="x">Input to the operation: 1-D.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtInvalid): 1-D.
-      ///</return>
-      public Operation InvertPermutation (  Output x ,String opName= "InvertPermutation" ) 
-      {
-         OperationDescription desc = NewOperation("InvertPermutation", opName);
-         desc.AddInput(x);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///  Outputs update Tensors for adding new_ids and new_scores to the shortlist.
-      ///</summary>
-      ///<param name="ids">Input to the operation. </param>
-      ///<param name="scores">Input to the operation. </param>
-      ///<param name="new_ids">Input to the operation. </param>
-      ///<param name="new_scores">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] shortlist_ids(type: DtInt64).
-      ///[1] update_ids(type: DtInt64).
-      ///[2] update_scores(type: DtFloat).
-      ///</return>
-      public Operation TopNInsert (  Output ids , Output scores , Output new_ids , Output new_scores ,String opName= "TopNInsert" ) 
-      {
-         OperationDescription desc = NewOperation("TopNInsert", opName);
-         desc.AddInput(ids);
-         desc.AddInput(scores);
-         desc.AddInput(new_ids);
-         desc.AddInput(new_scores);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Reshapes a tensor.
-      ///</summary>
-      ///<param name="tensor">Input to the operation. </param>
-      ///<param name="shape">Input to the operation: Defines the shape of the output tensor.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation Reshape (  Output tensor , Output shape ,String opName= "Reshape" ) 
-      {
-         OperationDescription desc = NewOperation("Reshape", opName);
-         desc.AddInput(tensor);
-         desc.AddInput(shape);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Update '*var' as FOBOS algorithm with fixed learning rate.
-      ///</summary>
-      ///<param name="var">Input to the operation: Should be from a Variable().</param>
-      ///<param name="alpha">Input to the operation: Scaling factor. Must be a scalar.</param>
-      ///<param name="l1">Input to the operation: L1 regularization. Must be a scalar.</param>
-      ///<param name="l2">Input to the operation: L2 regularization. Must be a scalar.</param>
-      ///<param name="delta">Input to the operation: The change.</param>
-      ///<param name="use_locking">If True, the subtraction will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] out(type: DtInvalid): Same as "var".
-      ///</return>
-      public Operation ApplyProximalGradientDescent (  Output var , Output alpha , Output l1 , Output l2 , Output delta , bool use_locking = false ,String opName= "ApplyProximalGradientDescent" ) 
-      {
-         OperationDescription desc = NewOperation("ApplyProximalGradientDescent", opName);
-         desc.AddInput(var);
-         desc.AddInput(alpha);
-         desc.AddInput(l1);
-         desc.AddInput(l2);
-         desc.AddInput(delta);
-
-         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Transforms a serialized tensorflow.TensorProto proto into a Tensor.
-      ///</summary>
-      ///<param name="serialized">Input to the operation: A scalar string containing a serialized TensorProto proto.</param>
-      ///<param name="out_type">The type of the serialized tensor.  The provided type must match the type of the serialized tensor and no implicit conversion will take place.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): A Tensor of type `out_type`.
-      ///</return>
-      public Operation ParseTensor (  Output serialized , DataType out_type,String opName= "ParseTensor" ) 
-      {
-         OperationDescription desc = NewOperation("ParseTensor", opName);
-         desc.AddInput(serialized);
-         desc.SetAttr("out_type", out_type);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///An identity op that triggers an error if a gradient is requested.
-      ///</summary>
-      ///<param name="input">Input to the operation: any tensor.</param>
-      ///<param name="message">Will be printed in the error when anyone tries to differentiate this operation.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): the same input tensor.
-      ///</return>
-      public Operation PreventGradient (  Output input , string message = null ,String opName= "PreventGradient" ) 
-      {
-         OperationDescription desc = NewOperation("PreventGradient", opName);
-         desc.AddInput(input);
-
-         if (message != null) desc.SetAttr("message", message);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Restores a tensor from checkpoint files.
-      ///</summary>
-      ///<param name="file_pattern">Input to the operation: Must have a single element. The pattern of the files from which we read the tensor.</param>
-      ///<param name="tensor_name">Input to the operation: Must have a single element. The name of the tensor to be restored.</param>
-      ///<param name="shape_and_slice">Input to the operation: Scalar. The shapes and slice specifications to use when restoring a tensors.</param>
-      ///<param name="dt">The type of the tensor to be restored.</param>
-      ///<param name="preferred_shard">Index of file to open first if multiple files match `file_pattern`. See the documentation for `Restore`.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] tensor(type: DtInvalid): The restored tensor.
-      ///</return>
-      public Operation RestoreSlice (  Output file_pattern , Output tensor_name , Output shape_and_slice , DataType dt, long preferred_shard = -1 ,String opName= "RestoreSlice" ) 
-      {
-         OperationDescription desc = NewOperation("RestoreSlice", opName);
-         desc.AddInput(file_pattern);
-         desc.AddInput(tensor_name);
-         desc.AddInput(shape_and_slice);
-         desc.SetAttr("dt", dt);
-         if (preferred_shard != -1) desc.SetAttr("preferred_shard", preferred_shard);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes softplus: `log(exp(features) + 1)`.
-      ///</summary>
-      ///<param name="features">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] activations(type: DtInvalid).
-      ///</return>
-      public Operation Softplus (  Output features ,String opName= "Softplus" ) 
-      {
-         OperationDescription desc = NewOperation("Softplus", opName);
-         desc.AddInput(features);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Stops gradient computation.
-      ///</summary>
-      ///<param name="input">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation StopGradient (  Output input ,String opName= "StopGradient" ) 
-      {
-         OperationDescription desc = NewOperation("StopGradient", opName);
-         desc.AddInput(input);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///
-      ///</summary>
-      ///<param name="input">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtComplex64).
-      ///</return>
-      public Operation BatchIFFT3D (  Output input ,String opName= "BatchIFFT3D" ) 
-      {
-         OperationDescription desc = NewOperation("BatchIFFT3D", opName);
-         desc.AddInput(input);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Reverses specific dimensions of a tensor.
-      ///</summary>
-      ///<param name="tensor">Input to the operation: Up to 8-D.</param>
-      ///<param name="dims">Input to the operation: 1-D. The dimensions to reverse.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): The same shape as `tensor`.
-      ///</return>
-      public Operation Reverse (  Output tensor , Output dims ,String opName= "Reverse" ) 
-      {
-         OperationDescription desc = NewOperation("Reverse", opName);
-         desc.AddInput(tensor);
-         desc.AddInput(dims);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///  Returns the per-class probabilities for each input.
-      ///</summary>
-      ///<param name="input_data">Input to the operation. </param>
-      ///<param name="sparse_input_indices">Input to the operation. </param>
-      ///<param name="sparse_input_values">Input to the operation. </param>
-      ///<param name="sparse_input_shape">Input to the operation. </param>
-      ///<param name="tree">Input to the operation. </param>
-      ///<param name="tree_thresholds">Input to the operation. </param>
-      ///<param name="node_per_class_weights">Input to the operation. </param>
-      ///<param name="input_spec"></param>
-      ///<param name="valid_leaf_threshold"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] predictions(type: DtFloat).
-      ///</return>
-      public Operation TreePredictions (  Output input_data , Output sparse_input_indices , Output sparse_input_values , Output sparse_input_shape , Output tree , Output tree_thresholds , Output node_per_class_weights , string input_spec, float valid_leaf_threshold,String opName= "TreePredictions" ) 
-      {
-         OperationDescription desc = NewOperation("TreePredictions", opName);
-         desc.AddInput(input_data);
-         desc.AddInput(sparse_input_indices);
-         desc.AddInput(sparse_input_values);
-         desc.AddInput(sparse_input_shape);
-         desc.AddInput(tree);
-         desc.AddInput(tree_thresholds);
-         desc.AddInput(node_per_class_weights);
-         desc.SetAttr("input_spec", input_spec);
-         desc.SetAttr("valid_leaf_threshold", valid_leaf_threshold);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Produces the max pool of the input tensor for quantized types.
-      ///</summary>
-      ///<param name="input">Input to the operation: The 4D (batch x rows x cols x depth) Tensor to MaxReduce over.</param>
-      ///<param name="min_input">Input to the operation: The float value that the lowest quantized input value represents.</param>
-      ///<param name="max_input">Input to the operation: The float value that the highest quantized input value represents.</param>
-      ///<param name="ksize">The size of the window for each dimension of the input tensor. The length must be 4 to match the number of dimensions of the input.</param>
-      ///<param name="strides">The stride of the sliding window for each dimension of the input tensor. The length must be 4 to match the number of dimensions of the input.</param>
-      ///<param name="padding">The type of padding algorithm to use.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///[1] min_output(type: DtFloat): The float value that the lowest quantized output value represents.
-      ///[2] max_output(type: DtFloat): The float value that the highest quantized output value represents.
-      ///</return>
-      public Operation QuantizedMaxPool (  Output input , Output min_input , Output max_input , long[] ksize, long[] strides, string padding,String opName= "QuantizedMaxPool" ) 
-      {
-         OperationDescription desc = NewOperation("QuantizedMaxPool", opName);
-         desc.AddInput(input);
-         desc.AddInput(min_input);
-         desc.AddInput(max_input);
-         desc.SetAttr("ksize", ksize);
-         desc.SetAttr("strides", strides);
-         desc.SetAttr("padding", padding);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Makes its input available to the next iteration.
-      ///</summary>
-      ///<param name="data">Input to the operation: The tensor to be made available to the next iteration.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): The same tensor as `data`.
-      ///</return>
-      public Operation RefNextIteration (  Output data ,String opName= "RefNextIteration" ) 
-      {
-         OperationDescription desc = NewOperation("RefNextIteration", opName);
-         desc.AddInput(data);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Updates accumulator slots to reflect finished or newly fertile nodes.
-      ///</summary>
-      ///<param name="finished">Input to the operation: = A 1-d int32 tensor containing the indices of fertile nodes that are ready to decide on a split.</param>
-      ///<param name="non_fertile_leaves">Input to the operation: = A 1-d int32 tensor containing the indices of all the currently non-fertile leaves.  If there are free accumulator slots after deallocation, UpdateFertileSlots will consider these nodes (plus the ones in new_leaves) and potentially turn some of them fertile.</param>
-      ///<param name="non_fertile_leaf_scores">Input to the operation: `non_fertile_leaf_scores[i]` is the splitting score of the non-fertile leaf `non_fertile_leaves[i]`.</param>
-      ///<param name="end_of_tree">Input to the operation: The end of tree tensor from the previous training iteration, used with the finished input to calculate a list of new leaf indices created by GrowTree, which will be considered to become fertile if there are free slots.</param>
-      ///<param name="accumulator_sums">Input to the operation: For classification, `accumulator_sums[a][c]` records how many training examples have class c and have ended up in the fertile node associated with accumulator slot a.  It has the total sum in entry 0 for convenience. For regression, it is the same except it contains the sum of the input labels that have been seen, and entry 0 contains the number of training examples that have been seen.</param>
-      ///<param name="node_to_accumulator">Input to the operation: `node_to_accumulator[i]` is the accumulator slot used by fertile node i, or -1 if node i isn't fertile.</param>
-      ///<param name="stale_leaves">Input to the operation: = A 1-d int32 tensor containing the indices of all leaves that have stopped accumulating statistics because they are too old.</param>
-      ///<param name="node_sums">Input to the operation: `node_sums[n][c]` records how many training examples have class c and have ended up in node n.</param>
-      ///<param name="regression"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] node_to_accumulator_map_updates(type: DtInt32): = A 2-d int32 tensor describing the changes that need to be applied to the node_to_accumulator map.  Intended to be used with `tf.scatter_update(node_to_accumulator,                    node_to_accumulator_map_updates[0],                    node_to_accumulator_map_updates[1])`.
-      ///[1] accumulator_to_node_map_updates(type: DtInt32): = A 2-d int32 tensor describing the changes that need to be applied to the node_to_accumulator map.  Intended to be used with `tf.scatter_update(accumulator_to_node_map,                    accumulator_to_node_map_updates[0],                    accumulator_to_node_map_updates[1])`.
-      ///[2] accumulators_cleared(type: DtInt32): = A 1-d int32 tensor containing the indices of all the accumulator slots that need to be cleared.
-      ///[3] accumulators_allocated(type: DtInt32): = A 1-d int32 tensor containing the indices of all the accumulator slots that need to be allocated.
-      ///</return>
-      public Operation UpdateFertileSlots (  Output finished , Output non_fertile_leaves , Output non_fertile_leaf_scores , Output end_of_tree , Output accumulator_sums , Output node_to_accumulator , Output stale_leaves , Output node_sums , bool regression = false ,String opName= "UpdateFertileSlots" ) 
-      {
-         OperationDescription desc = NewOperation("UpdateFertileSlots", opName);
-         desc.AddInput(finished);
-         desc.AddInput(non_fertile_leaves);
-         desc.AddInput(non_fertile_leaf_scores);
-         desc.AddInput(end_of_tree);
-         desc.AddInput(accumulator_sums);
-         desc.AddInput(node_to_accumulator);
-         desc.AddInput(stale_leaves);
-         desc.AddInput(node_sums);
-
-         if (regression != false) desc.SetAttr("regression", regression);
-         return desc.FinishOperation();
-      } 
-      // Skipped function _Send
-
-      ///<summary>
-      ///Returns a constant tensor.
-      ///</summary>
-      ///<param name="value">Attr `value` is the tensor to return.</param>
-      ///<param name="dtype"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation Const (  Tensor value, DataType dtype,String opName= "Const" ) 
-      {
-         OperationDescription desc = NewOperation("Const", opName);
-
-         desc.SetAttr("value", value);
-         desc.SetAttr("dtype", dtype);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///    Computes the derivative of the routing loss with respect to each decision
-      ///</summary>
-      ///<param name="input_data">Input to the operation. </param>
-      ///<param name="tree_parameters">Input to the operation. </param>
-      ///<param name="tree_biases">Input to the operation. </param>
-      ///<param name="routes">Input to the operation. </param>
-      ///<param name="layer_num"></param>
-      ///<param name="random_seed"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] routing_gradient(type: DtFloat).
-      ///[1] data_gradient(type: DtFloat).
-      ///[2] weight_gradient(type: DtFloat).
-      ///</return>
-      public Operation KFeatureGradient (  Output input_data , Output tree_parameters , Output tree_biases , Output routes , long layer_num, long random_seed,String opName= "KFeatureGradient" ) 
-      {
-         OperationDescription desc = NewOperation("KFeatureGradient", opName);
-         desc.AddInput(input_data);
-         desc.AddInput(tree_parameters);
-         desc.AddInput(tree_biases);
-         desc.AddInput(routes);
-         desc.SetAttr("layer_num", layer_num);
-         desc.SetAttr("random_seed", random_seed);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Creates a dataset that zips together `input_datasets`.
-      ///</summary>
-      ///<param name="input_datasets">Input to the operation. </param>
-      ///<param name="output_types"></param>
-      ///<param name="output_shapes"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] handle(type: DtResource).
-      ///</return>
-      public Operation ZipDataset (  Output input_datasets , DataType[] output_types, long[][] output_shapes,String opName= "ZipDataset" ) 
-      {
-         OperationDescription desc = NewOperation("ZipDataset", opName);
-         desc.AddInput(input_datasets);
-         desc.SetAttr("output_types", output_types);
-         desc.SetAttrShapeList("output_shapes", output_shapes);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///  Takes a batch of paths through a tree and a batch of values along those paths
-      ///</summary>
-      ///<param name="path">Input to the operation. </param>
-      ///<param name="path_values">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] unpacked_path(type: DtFloat).
-      ///</return>
-      public Operation UnpackPath (  Output path , Output path_values ,String opName= "UnpackPath" ) 
-      {
-         OperationDescription desc = NewOperation("UnpackPath", opName);
-         desc.AddInput(path);
-         desc.AddInput(path_values);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///  Returns the probability that each input will reach each leaf node.  Each
-      ///</summary>
-      ///<param name="input_data">Input to the operation. </param>
-      ///<param name="tree_parameters">Input to the operation. </param>
-      ///<param name="tree_biases">Input to the operation. </param>
-      ///<param name="layer_num"></param>
-      ///<param name="max_nodes"></param>
-      ///<param name="num_features_per_node"></param>
-      ///<param name="random_seed"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] probabilities(type: DtFloat).
-      ///</return>
-      public Operation KFeatureRoutingFunction (  Output input_data , Output tree_parameters , Output tree_biases , long layer_num, long max_nodes, long num_features_per_node, long random_seed,String opName= "KFeatureRoutingFunction" ) 
-      {
-         OperationDescription desc = NewOperation("KFeatureRoutingFunction", opName);
-         desc.AddInput(input_data);
-         desc.AddInput(tree_parameters);
-         desc.AddInput(tree_biases);
-         desc.SetAttr("layer_num", layer_num);
-         desc.SetAttr("max_nodes", max_nodes);
-         desc.SetAttr("num_features_per_node", num_features_per_node);
-         desc.SetAttr("random_seed", random_seed);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///  Returns the probability that each input will reach each leaf node.
-      ///</summary>
-      ///<param name="input_data">Input to the operation. </param>
-      ///<param name="tree_parameters">Input to the operation. </param>
-      ///<param name="tree_biases">Input to the operation. </param>
-      ///<param name="max_nodes"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] probabilities(type: DtFloat).
-      ///</return>
-      public Operation RoutingFunction (  Output input_data , Output tree_parameters , Output tree_biases , long max_nodes,String opName= "RoutingFunction" ) 
-      {
-         OperationDescription desc = NewOperation("RoutingFunction", opName);
-         desc.AddInput(input_data);
-         desc.AddInput(tree_parameters);
-         desc.AddInput(tree_biases);
-         desc.SetAttr("max_nodes", max_nodes);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///  Computes the derivative of the routing loss with respect to each decision
-      ///</summary>
-      ///<param name="input_data">Input to the operation. </param>
-      ///<param name="tree_parameters">Input to the operation. </param>
-      ///<param name="tree_biases">Input to the operation. </param>
-      ///<param name="routes">Input to the operation. </param>
-      ///<param name="max_nodes"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] routing_gradient(type: DtFloat).
-      ///</return>
-      public Operation RoutingGradient (  Output input_data , Output tree_parameters , Output tree_biases , Output routes , long max_nodes,String opName= "RoutingGradient" ) 
-      {
-         OperationDescription desc = NewOperation("RoutingGradient", opName);
-         desc.AddInput(input_data);
-         desc.AddInput(tree_parameters);
-         desc.AddInput(tree_biases);
-         desc.AddInput(routes);
-         desc.SetAttr("max_nodes", max_nodes);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Sparse update '*var' as FOBOS algorithm with fixed learning rate.
-      ///</summary>
-      ///<param name="var">Input to the operation: Should be from a Variable().</param>
-      ///<param name="alpha">Input to the operation: Scaling factor. Must be a scalar.</param>
-      ///<param name="l1">Input to the operation: L1 regularization. Must be a scalar.</param>
-      ///<param name="l2">Input to the operation: L2 regularization. Must be a scalar.</param>
-      ///<param name="grad">Input to the operation: The gradient.</param>
-      ///<param name="indices">Input to the operation: A vector of indices into the first dimension of var and accum.</param>
-      ///<param name="use_locking">If True, the subtraction will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] out(type: DtInvalid): Same as "var".
-      ///</return>
-      public Operation SparseApplyProximalGradientDescent (  Output var , Output alpha , Output l1 , Output l2 , Output grad , Output indices , bool use_locking = false ,String opName= "SparseApplyProximalGradientDescent" ) 
-      {
-         OperationDescription desc = NewOperation("SparseApplyProximalGradientDescent", opName);
-         desc.AddInput(var);
-         desc.AddInput(alpha);
-         desc.AddInput(l1);
-         desc.AddInput(l2);
-         desc.AddInput(grad);
-         desc.AddInput(indices);
-
-         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///  Samples a path for each instance in `input_data` and returns the
-      ///</summary>
-      ///<param name="input_data">Input to the operation. </param>
-      ///<param name="tree_parameters">Input to the operation. </param>
-      ///<param name="tree_biases">Input to the operation. </param>
-      ///<param name="tree_depth"></param>
-      ///<param name="random_seed"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] path_probability(type: DtFloat).
-      ///[1] path(type: DtInt32).
-      ///</return>
-      public Operation StochasticHardRoutingFunction (  Output input_data , Output tree_parameters , Output tree_biases , long tree_depth, long random_seed,String opName= "StochasticHardRoutingFunction" ) 
-      {
-         OperationDescription desc = NewOperation("StochasticHardRoutingFunction", opName);
-         desc.AddInput(input_data);
-         desc.AddInput(tree_parameters);
-         desc.AddInput(tree_biases);
-         desc.SetAttr("tree_depth", tree_depth);
-         desc.SetAttr("random_seed", random_seed);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Creates a dataset containing elements of `input_dataset` matching `predicate`.
-      ///</summary>
-      ///<param name="input_dataset">Input to the operation. </param>
-      ///<param name="other_arguments">Input to the operation: A list of tensors, typically values that were captured when building a closure for `predicate`.</param>
-      ///<param name="output_types"></param>
-      ///<param name="output_shapes"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] handle(type: DtResource).
-      ///</return>
-      //The following attributes are not known: predicate: func
-      public Operation FilterDataset (  Output input_dataset , Output other_arguments , DataType[] output_types, long[][] output_shapes,String opName= "FilterDataset" ) 
-      {
-         OperationDescription desc = NewOperation("FilterDataset", opName);
-         desc.AddInput(input_dataset);
-         desc.AddInput(other_arguments);
-         desc.SetAttr("output_types", output_types);
-         desc.SetAttrShapeList("output_shapes", output_shapes);
 
          return desc.FinishOperation();
       } 
@@ -1624,168 +381,6 @@ namespace Emgu.TF
          if (container != null) desc.SetAttr("container", container);
          if (shared_name != null) desc.SetAttr("shared_name", shared_name);
          if (compression_type != null) desc.SetAttr("compression_type", compression_type);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///  Computes the derivative of the routing loss with respect to each decision
-      ///</summary>
-      ///<param name="input_data">Input to the operation. </param>
-      ///<param name="tree_parameters">Input to the operation. </param>
-      ///<param name="tree_biases">Input to the operation. </param>
-      ///<param name="path_probability">Input to the operation. </param>
-      ///<param name="path">Input to the operation. </param>
-      ///<param name="tree_depth"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] routing_gradient(type: DtFloat).
-      ///[1] data_gradient(type: DtFloat).
-      ///[2] parameter_gradient(type: DtFloat).
-      ///[3] bias_gradient(type: DtFloat).
-      ///</return>
-      public Operation StochasticHardRoutingGradient (  Output input_data , Output tree_parameters , Output tree_biases , Output path_probability , Output path , long tree_depth,String opName= "StochasticHardRoutingGradient" ) 
-      {
-         OperationDescription desc = NewOperation("StochasticHardRoutingGradient", opName);
-         desc.AddInput(input_data);
-         desc.AddInput(tree_parameters);
-         desc.AddInput(tree_biases);
-         desc.AddInput(path_probability);
-         desc.AddInput(path);
-         desc.SetAttr("tree_depth", tree_depth);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Restore a reader to a previously saved state.
-      ///</summary>
-      ///<param name="reader_handle">Input to the operation: Handle to a Reader.</param>
-      ///<param name="state">Input to the operation: Result of a ReaderSerializeState of a Reader with type matching reader_handle.</param>
-      ///<param name="opName">The name of the operation</param>
-      public Operation ReaderRestoreState (  Output reader_handle , Output state ,String opName= "ReaderRestoreState" ) 
-      {
-         OperationDescription desc = NewOperation("ReaderRestoreState", opName);
-         desc.AddInput(reader_handle);
-         desc.AddInput(state);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes offsets of concat inputs within its output.
-      ///</summary>
-      ///<param name="concat_dim">Input to the operation: The dimension along which to concatenate.</param>
-      ///<param name="shape">Input to the operation: The `N` int32 vectors representing shape of tensors being concatenated.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] offset(type: DtInt32): The `N` int32 vectors representing the starting offset of input tensors within the concatenated output.
-      ///</return>
-      public Operation ConcatOffset (  Output concat_dim , Output shape ,String opName= "ConcatOffset" ) 
-      {
-         OperationDescription desc = NewOperation("ConcatOffset", opName);
-         desc.AddInput(concat_dim);
-         desc.AddInput(shape);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Pop the element at the top of the stack.
-      ///</summary>
-      ///<param name="handle">Input to the operation: The handle to a stack.</param>
-      ///<param name="elem_type">The type of the elem that is popped.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] elem(type: DtInvalid): The tensor that is popped from the top of the stack.
-      ///</return>
-      public Operation StackPop (  Output handle , DataType elem_type,String opName= "StackPop" ) 
-      {
-         OperationDescription desc = NewOperation("StackPop", opName);
-         desc.AddInput(handle);
-         desc.SetAttr("elem_type", elem_type);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Concatenates a list of `N` tensors along the first dimension.
-      ///</summary>
-      ///<param name="values">Input to the operation: Tensors to be concatenated. All must have size 1 in the first dimension and same shape.</param>
-      ///<param name="shape">the final shape of the result; should be equal to the shapes of any input but with the number of input values in the first dimension.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): The concatenated tensor.
-      ///</return>
-      public Operation ParallelConcat (  Output values , long[] shape,String opName= "ParallelConcat" ) 
-      {
-         OperationDescription desc = NewOperation("ParallelConcat", opName);
-         desc.AddInput(values);
-         desc.SetAttrShape("shape", shape);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Concatenates tensors along one dimension.
-      ///</summary>
-      ///<param name="concat_dim">Input to the operation: 0-D.  The dimension along which to concatenate.  Must be in the range [0, rank(values)).</param>
-      ///<param name="values">Input to the operation: The `N` Tensors to concatenate. Their ranks and types must match, and their sizes must match in all dimensions except `concat_dim`.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): A `Tensor` with the concatenation of values stacked along the `concat_dim` dimension.  This tensor's shape matches that of `values` except in `concat_dim` where it has the sum of the sizes.
-      ///</return>
-      public Operation Concat (  Output concat_dim , Output values ,String opName= "Concat" ) 
-      {
-         OperationDescription desc = NewOperation("Concat", opName);
-         desc.AddInput(concat_dim);
-         desc.AddInput(values);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Splits a tensor into `num_split` tensors along one dimension.
-      ///</summary>
-      ///<param name="split_dim">Input to the operation: 0-D.  The dimension along which to split.  Must be in the range `[0, rank(value))`.</param>
-      ///<param name="value">Input to the operation: The tensor to split.</param>
-      ///<param name="num_split">The number of ways to split.  Must evenly divide `value.shape[split_dim]`.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): They are identically shaped tensors, whose shape matches that of `value` except along `split_dim`, where their sizes are `values.shape[split_dim] / num_split`.
-      ///</return>
-      public Operation Split (  Output split_dim , Output value , long num_split,String opName= "Split" ) 
-      {
-         OperationDescription desc = NewOperation("Split", opName);
-         desc.AddInput(split_dim);
-         desc.AddInput(value);
-         desc.SetAttr("num_split", num_split);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Performs max pooling on the input.
-      ///</summary>
-      ///<param name="input">Input to the operation: 4-D input to pool over.</param>
-      ///<param name="ksize">The size of the window for each dimension of the input tensor.</param>
-      ///<param name="strides">The stride of the sliding window for each dimension of the input tensor.</param>
-      ///<param name="padding">The type of padding algorithm to use.</param>
-      ///<param name="data_format">Specify the data format of the input and output data. With the default format "NHWC", the data is stored in the order of:     [batch, in_height, in_width, in_channels]. Alternatively, the format could be "NCHW", the data storage order of:     [batch, in_channels, in_height, in_width].</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): The max pooled output tensor.
-      ///</return>
-      public Operation MaxPool (  Output input , long[] ksize, long[] strides, string padding, string data_format = null ,String opName= "MaxPool" ) 
-      {
-         OperationDescription desc = NewOperation("MaxPool", opName);
-         desc.AddInput(input);
-         desc.SetAttr("ksize", ksize);
-         desc.SetAttr("strides", strides);
-         desc.SetAttr("padding", padding);
-         if (data_format != null) desc.SetAttr("data_format", data_format);
          return desc.FinishOperation();
       } 
 
@@ -1849,11 +444,34 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Performs max pooling on the input.
+      ///</summary>
+      ///<param name="input">Input to the operation: 4-D input to pool over.</param>
+      ///<param name="ksize">The size of the window for each dimension of the input tensor.</param>
+      ///<param name="strides">The stride of the sliding window for each dimension of the input tensor.</param>
+      ///<param name="padding">The type of padding algorithm to use.</param>
+      ///<param name="data_format">Specify the data format of the input and output data. With the default format "NHWC", the data is stored in the order of:     [batch, in_height, in_width, in_channels]. Alternatively, the format could be "NCHW", the data storage order of:     [batch, in_channels, in_height, in_width].</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): The max pooled output tensor.
+      ///</return>
+      public Operation MaxPool (  Output input , long[] ksize, long[] strides, string padding, string data_format = null ,String opName= "MaxPool" ) 
+      {
+         OperationDescription desc = NewOperation("MaxPool", opName);
+         desc.AddInput(input);
+         desc.SetAttr("ksize", ksize);
+         desc.SetAttr("strides", strides);
+         desc.SetAttr("padding", padding);
+         if (data_format != null) desc.SetAttr("data_format", data_format);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Splits a tensor into `num_split` tensors along one dimension.
       ///</summary>
       ///<param name="value">Input to the operation: The tensor to split.</param>
       ///<param name="size_splits">Input to the operation: list containing the sizes of each output tensor along the split dimension. Must sum to the dimension of value along split_dim. Can contain one -1 indicating that dimension is to be inferred.</param>
-      ///<param name="split_dim">Input to the operation: 0-D.  The dimension along which to split.  Must be in the range `[0, rank(value))`.</param>
+      ///<param name="split_dim">Input to the operation: 0-D.  The dimension along which to split.  Must be in the range `[-rank(value), rank(value))`.</param>
       ///<param name="num_split"></param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
@@ -1889,25 +507,42 @@ namespace Emgu.TF
          if (align_corners != false) desc.SetAttr("align_corners", align_corners);
          return desc.FinishOperation();
       } 
+      // Skipped function _Send
 
       ///<summary>
-      ///Gather slices from the variable pointed to by `resource` according to `indices`.
+      ///Returns a constant tensor.
       ///</summary>
-      ///<param name="resource">Input to the operation. </param>
-      ///<param name="indices">Input to the operation. </param>
+      ///<param name="value">Attr `value` is the tensor to return.</param>
       ///<param name="dtype"></param>
-      ///<param name="validate_indices"></param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
       ///[0] output(type: DtInvalid).
       ///</return>
-      public Operation ResourceGather (  Output resource , Output indices , DataType dtype, bool validate_indices = true ,String opName= "ResourceGather" ) 
+      public Operation Const (  Tensor value, DataType dtype,String opName= "Const" ) 
       {
-         OperationDescription desc = NewOperation("ResourceGather", opName);
-         desc.AddInput(resource);
-         desc.AddInput(indices);
+         OperationDescription desc = NewOperation("Const", opName);
+
+         desc.SetAttr("value", value);
          desc.SetAttr("dtype", dtype);
-         if (validate_indices != true) desc.SetAttr("validate_indices", validate_indices);
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///A placeholder op for a value that will be fed into the computation.
+      ///</summary>
+      ///<param name="dtype">The type of elements in the tensor.</param>
+      ///<param name="shape">(Optional) The shape of the tensor. If the shape has 0 dimensions, the shape is unconstrained.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): A placeholder tensor that must be replaced using the feed mechanism.
+      ///</return>
+      public Operation Placeholder (  DataType dtype, long[] shape = null ,String opName= "Placeholder" ) 
+      {
+         OperationDescription desc = NewOperation("Placeholder", opName);
+
+         desc.SetAttr("dtype", dtype);
+         if (shape != null) desc.SetAttrShape("shape", shape);
          return desc.FinishOperation();
       } 
 
@@ -1929,6 +564,27 @@ namespace Emgu.TF
          desc.SetAttrShape("shape", shape);
          desc.SetAttr("memory_region_name", memory_region_name);
 
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Gather slices from the variable pointed to by `resource` according to `indices`.
+      ///</summary>
+      ///<param name="resource">Input to the operation. </param>
+      ///<param name="indices">Input to the operation. </param>
+      ///<param name="dtype"></param>
+      ///<param name="validate_indices"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation ResourceGather (  Output resource , Output indices , DataType dtype, bool validate_indices = true ,String opName= "ResourceGather" ) 
+      {
+         OperationDescription desc = NewOperation("ResourceGather", opName);
+         desc.AddInput(resource);
+         desc.AddInput(indices);
+         desc.SetAttr("dtype", dtype);
+         if (validate_indices != true) desc.SetAttr("validate_indices", validate_indices);
          return desc.FinishOperation();
       } 
 
@@ -1987,807 +643,17 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Creates a dataset that contains `count` elements from the `input_dataset`.
+      ///Returns a tensor of ones with the same shape and type as x.
       ///</summary>
-      ///<param name="input_dataset">Input to the operation. </param>
-      ///<param name="count">Input to the operation: A scalar representing the number of elements from the `input_dataset` that should be taken. A value of `-1` indicates that all of `input_dataset` is taken.</param>
-      ///<param name="output_types"></param>
-      ///<param name="output_shapes"></param>
+      ///<param name="x">Input to the operation: a tensor of type T.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] handle(type: DtResource).
+      ///[0] y(type: DtInvalid): a tensor of the same shape and type as x but filled with ones.
       ///</return>
-      public Operation TakeDataset (  Output input_dataset , Output count , DataType[] output_types, long[][] output_shapes,String opName= "TakeDataset" ) 
+      public Operation OnesLike (  Output x ,String opName= "OnesLike" ) 
       {
-         OperationDescription desc = NewOperation("TakeDataset", opName);
-         desc.AddInput(input_dataset);
-         desc.AddInput(count);
-         desc.SetAttr("output_types", output_types);
-         desc.SetAttrShapeList("output_shapes", output_shapes);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Finds unique elements in a 1-D tensor.
-      ///</summary>
-      ///<param name="x">Input to the operation: 1-D.</param>
-      ///<param name="out_idx"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtInvalid): 1-D.
-      ///[1] idx(type: DtInvalid): 1-D.
-      ///[2] count(type: DtInvalid): 1-D.
-      ///</return>
-      public Operation UniqueWithCounts (  Output x , DataType? out_idx = null ,String opName= "UniqueWithCounts" ) 
-      {
-         OperationDescription desc = NewOperation("UniqueWithCounts", opName);
+         OperationDescription desc = NewOperation("OnesLike", opName);
          desc.AddInput(x);
-
-         if (out_idx.HasValue) desc.SetAttr("out_idx", out_idx.Value);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the (possibly normalized) Levenshtein Edit Distance.
-      ///</summary>
-      ///<param name="hypothesis_indices">Input to the operation: The indices of the hypothesis list SparseTensor. This is an N x R int64 matrix.</param>
-      ///<param name="hypothesis_values">Input to the operation: The values of the hypothesis list SparseTensor. This is an N-length vector.</param>
-      ///<param name="hypothesis_shape">Input to the operation: The shape of the hypothesis list SparseTensor. This is an R-length vector.</param>
-      ///<param name="truth_indices">Input to the operation: The indices of the truth list SparseTensor. This is an M x R int64 matrix.</param>
-      ///<param name="truth_values">Input to the operation: The values of the truth list SparseTensor. This is an M-length vector.</param>
-      ///<param name="truth_shape">Input to the operation: truth indices, vector.</param>
-      ///<param name="normalize">boolean (if true, edit distances are normalized by length of truth).  The output is:</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtFloat): A dense float tensor with rank R - 1.  For the example input:      // hypothesis represents a 2x1 matrix with variable-length values:     //   (0,0) = ["a"]     //   (1,0) = ["b"]     hypothesis_indices = [[0, 0, 0],                           [1, 0, 0]]     hypothesis_values = ["a", "b"]     hypothesis_shape = [2, 1, 1]      // truth represents a 2x2 matrix with variable-length values:     //   (0,0) = []     //   (0,1) = ["a"]     //   (1,0) = ["b", "c"]     //   (1,1) = ["a"]     truth_indices = [[0, 1, 0],                      [1, 0, 0],                      [1, 0, 1],                      [1, 1, 0]]     truth_values = ["a", "b", "c", "a"]     truth_shape = [2, 2, 2]     normalize = true  The output will be:      // output is a 2x2 matrix with edit distances normalized by truth lengths.     output = [[inf, 1.0],  // (0,0): no truth, (0,1): no hypothesis               [0.5, 1.0]]  // (1,0): addition, (1,1): no hypothesis
-      ///</return>
-      public Operation EditDistance (  Output hypothesis_indices , Output hypothesis_values , Output hypothesis_shape , Output truth_indices , Output truth_values , Output truth_shape , bool normalize = true ,String opName= "EditDistance" ) 
-      {
-         OperationDescription desc = NewOperation("EditDistance", opName);
-         desc.AddInput(hypothesis_indices);
-         desc.AddInput(hypothesis_values);
-         desc.AddInput(hypothesis_shape);
-         desc.AddInput(truth_indices);
-         desc.AddInput(truth_values);
-         desc.AddInput(truth_shape);
-
-         if (normalize != true) desc.SetAttr("normalize", normalize);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns a diagonal tensor with a given diagonal values.
-      ///</summary>
-      ///<param name="diagonal">Input to the operation: Rank k tensor where k is at most 3.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation Diag (  Output diagonal ,String opName= "Diag" ) 
-      {
-         OperationDescription desc = NewOperation("Diag", opName);
-         desc.AddInput(diagonal);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///
-      ///</summary>
-      ///<param name="input">Input to the operation. </param>
-      ///<param name="adjoint"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation BatchMatrixInverse (  Output input , bool adjoint = false ,String opName= "BatchMatrixInverse" ) 
-      {
-         OperationDescription desc = NewOperation("BatchMatrixInverse", opName);
-         desc.AddInput(input);
-
-         if (adjoint != false) desc.SetAttr("adjoint", adjoint);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Add all input tensors element wise.
-      ///</summary>
-      ///<param name="inputs">Input to the operation: Must all be the same size and shape.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] sum(type: DtInvalid).
-      ///</return>
-      public Operation AddN (  Output inputs ,String opName= "AddN" ) 
-      {
-         OperationDescription desc = NewOperation("AddN", opName);
-         desc.AddInput(inputs);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns element-wise integer closest to x.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtInvalid).
-      ///</return>
-      public Operation Rint (  Output x ,String opName= "Rint" ) 
-      {
-         OperationDescription desc = NewOperation("Rint", opName);
-         desc.AddInput(x);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns the diagonal part of the tensor.
-      ///</summary>
-      ///<param name="input">Input to the operation: Rank k tensor where k is 2, 4, or 6.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] diagonal(type: DtInvalid): The extracted diagonal.
-      ///</return>
-      public Operation DiagPart (  Output input ,String opName= "DiagPart" ) 
-      {
-         OperationDescription desc = NewOperation("DiagPart", opName);
-         desc.AddInput(input);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns the rank of a tensor.
-      ///</summary>
-      ///<param name="input">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInt32).
-      ///</return>
-      public Operation Rank (  Output input ,String opName= "Rank" ) 
-      {
-         OperationDescription desc = NewOperation("Rank", opName);
-         desc.AddInput(input);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Generates sparse cross from a list of sparse and dense tensors.
-      ///</summary>
-      ///<param name="indices">Input to the operation: 2-D.  Indices of each input `SparseTensor`.</param>
-      ///<param name="values">Input to the operation: 1-D.   values of each `SparseTensor`.</param>
-      ///<param name="shapes">Input to the operation: 1-D.   Shapes of each `SparseTensor`.</param>
-      ///<param name="dense_inputs">Input to the operation: 2-D.    Columns represented by dense `Tensor`.</param>
-      ///<param name="hashed_output">If true, returns the hash of the cross instead of the string. This will allow us avoiding string manipulations.</param>
-      ///<param name="num_buckets">It is used if hashed_output is true. output = hashed_value%num_buckets if num_buckets &gt; 0 else hashed_value.</param>
-      ///<param name="hash_key">Specify the hash_key that will be used by the `FingerprintCat64` function to combine the crosses fingerprints.</param>
-      ///<param name="out_type"></param>
-      ///<param name="internal_type"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output_indices(type: DtInt64): 2-D.  Indices of the concatenated `SparseTensor`.
-      ///[1] output_values(type: DtInvalid): 1-D.  Non-empty values of the concatenated or hashed `SparseTensor`.
-      ///[2] output_shape(type: DtInt64): 1-D.  Shape of the concatenated `SparseTensor`.
-      ///</return>
-      public Operation SparseCross (  Output indices , Output values , Output shapes , Output dense_inputs , bool hashed_output, long num_buckets, long hash_key, DataType out_type, DataType internal_type,String opName= "SparseCross" ) 
-      {
-         OperationDescription desc = NewOperation("SparseCross", opName);
-         desc.AddInput(indices);
-         desc.AddInput(values);
-         desc.AddInput(shapes);
-         desc.AddInput(dense_inputs);
-         desc.SetAttr("hashed_output", hashed_output);
-         desc.SetAttr("num_buckets", num_buckets);
-         desc.SetAttr("hash_key", hash_key);
-         desc.SetAttr("out_type", out_type);
-         desc.SetAttr("internal_type", internal_type);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Push an element onto the stack.
-      ///</summary>
-      ///<param name="handle">Input to the operation: The handle to a stack.</param>
-      ///<param name="elem">Input to the operation: The tensor to be pushed onto the stack.</param>
-      ///<param name="swap_memory">Swap `elem` to CPU. Default to false.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): The same tensor as the input 'elem'.
-      ///</return>
-      public Operation StackPush (  Output handle , Output elem , bool swap_memory = false ,String opName= "StackPush" ) 
-      {
-         OperationDescription desc = NewOperation("StackPush", opName);
-         desc.AddInput(handle);
-         desc.AddInput(elem);
-
-         if (swap_memory != false) desc.SetAttr("swap_memory", swap_memory);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns a batched matrix tensor with new batched diagonal values.
-      ///</summary>
-      ///<param name="input">Input to the operation: Rank `k+1`, where `k &gt;= 1`.</param>
-      ///<param name="diagonal">Input to the operation: Rank `k`, where `k &gt;= 1`.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): Rank `k+1`, with `output.shape = input.shape`.
-      ///</return>
-      public Operation MatrixSetDiag (  Output input , Output diagonal ,String opName= "MatrixSetDiag" ) 
-      {
-         OperationDescription desc = NewOperation("MatrixSetDiag", opName);
-         desc.AddInput(input);
-         desc.AddInput(diagonal);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns the batched diagonal part of a batched tensor.
-      ///</summary>
-      ///<param name="input">Input to the operation: Rank `k` tensor where `k &gt;= 2`.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] diagonal(type: DtInvalid): The extracted diagonal(s) having shape `diagonal.shape = input.shape[:-2] + [min(input.shape[-2:])]`.
-      ///</return>
-      public Operation MatrixDiagPart (  Output input ,String opName= "MatrixDiagPart" ) 
-      {
-         OperationDescription desc = NewOperation("MatrixDiagPart", opName);
-         desc.AddInput(input);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns the index with the smallest value across dimensions of a tensor.
-      ///</summary>
-      ///<param name="input">Input to the operation. </param>
-      ///<param name="dimension">Input to the operation: int32, 0 &lt;= dimension &lt; rank(input).  Describes which dimension of the input Tensor to reduce across. For vectors, use dimension = 0.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInt64).
-      ///</return>
-      public Operation ArgMin (  Output input , Output dimension ,String opName= "ArgMin" ) 
-      {
-         OperationDescription desc = NewOperation("ArgMin", opName);
-         desc.AddInput(input);
-         desc.AddInput(dimension);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Reverses specific dimensions of a tensor.
-      ///</summary>
-      ///<param name="tensor">Input to the operation: Up to 8-D.</param>
-      ///<param name="axis">Input to the operation: 1-D. The indices of the dimensions to reverse.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): The same shape as `tensor`.
-      ///</return>
-      public Operation ReverseV2 (  Output tensor , Output axis ,String opName= "ReverseV2" ) 
-      {
-         OperationDescription desc = NewOperation("ReverseV2", opName);
-         desc.AddInput(tensor);
-         desc.AddInput(axis);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Adds sparse updates to the variable referenced by `resource`.
-      ///</summary>
-      ///<param name="resource">Input to the operation: Should be from a `Variable` node.</param>
-      ///<param name="indices">Input to the operation: A tensor of indices into the first dimension of `ref`.</param>
-      ///<param name="updates">Input to the operation: A tensor of updated values to add to `ref`.</param>
-      ///<param name="opName">The name of the operation</param>
-      public Operation ResourceScatterAdd (  Output resource , Output indices , Output updates ,String opName= "ResourceScatterAdd" ) 
-      {
-         OperationDescription desc = NewOperation("ResourceScatterAdd", opName);
-         desc.AddInput(resource);
-         desc.AddInput(indices);
-         desc.AddInput(updates);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Reverses variable length slices.
-      ///</summary>
-      ///<param name="input">Input to the operation: The input to reverse.</param>
-      ///<param name="seq_lengths">Input to the operation: 1-D with length `input.dims(batch_dim)` and `max(seq_lengths) &lt;= input.dims(seq_dim)`</param>
-      ///<param name="seq_dim">The dimension which is partially reversed.</param>
-      ///<param name="batch_dim">The dimension along which reversal is performed.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): The partially reversed input. It has the same shape as `input`.
-      ///</return>
-      public Operation ReverseSequence (  Output input , Output seq_lengths , long seq_dim, long batch_dim = 0 ,String opName= "ReverseSequence" ) 
-      {
-         OperationDescription desc = NewOperation("ReverseSequence", opName);
-         desc.AddInput(input);
-         desc.AddInput(seq_lengths);
-         desc.SetAttr("seq_dim", seq_dim);
-         if (batch_dim != 0) desc.SetAttr("batch_dim", batch_dim);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns element-wise smallest integer in not less than x.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtInvalid).
-      ///</return>
-      public Operation Ceil (  Output x ,String opName= "Ceil" ) 
-      {
-         OperationDescription desc = NewOperation("Ceil", opName);
-         desc.AddInput(x);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Adds up a SparseTensor and a dense Tensor, using these special rules:
-      ///</summary>
-      ///<param name="sp_indices">Input to the operation: 2-D.  `N x R` matrix with the indices of non-empty values in a SparseTensor, possibly not in canonical ordering.</param>
-      ///<param name="sp_values">Input to the operation: 1-D.  `N` non-empty values corresponding to `sp_indices`.</param>
-      ///<param name="sp_shape">Input to the operation: 1-D.  Shape of the input SparseTensor.</param>
-      ///<param name="dense">Input to the operation: `R`-D.  The dense Tensor operand.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): 1-D.  The `N` values that are operated on.
-      ///</return>
-      public Operation SparseDenseCwiseAdd (  Output sp_indices , Output sp_values , Output sp_shape , Output dense ,String opName= "SparseDenseCwiseAdd" ) 
-      {
-         OperationDescription desc = NewOperation("SparseDenseCwiseAdd", opName);
-         desc.AddInput(sp_indices);
-         desc.AddInput(sp_values);
-         desc.AddInput(sp_shape);
-         desc.AddInput(dense);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Creates a tensor filled with a scalar value.
-      ///</summary>
-      ///<param name="dims">Input to the operation: 1-D. Represents the shape of the output tensor.</param>
-      ///<param name="value">Input to the operation: 0-D (scalar). Value to fill the returned tensor.  @compatibility(numpy) Equivalent to np.full @end_compatibility</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation Fill (  Output dims , Output value ,String opName= "Fill" ) 
-      {
-         OperationDescription desc = NewOperation("Fill", opName);
-         desc.AddInput(dims);
-         desc.AddInput(value);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns x / y element-wise.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtInvalid).
-      ///</return>
-      public Operation Div (  Output x , Output y ,String opName= "Div" ) 
-      {
-         OperationDescription desc = NewOperation("Div", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes a 3-D convolution given 5-D `input` and `filter` tensors.
-      ///</summary>
-      ///<param name="input">Input to the operation: Shape `[batch, in_depth, in_height, in_width, in_channels]`.</param>
-      ///<param name="filter">Input to the operation: Shape `[filter_depth, filter_height, filter_width, in_channels, out_channels]`. `in_channels` must match between `input` and `filter`.</param>
-      ///<param name="strides">1-D tensor of length 5. The stride of the sliding window for each dimension of `input`. Must have `strides[0] = strides[4] = 1`.</param>
-      ///<param name="padding">The type of padding algorithm to use.</param>
-      ///<param name="data_format">The data format of the input and output data. With the default format "NDHWC", the data is stored in the order of:     [batch, in_depth, in_height, in_width, in_channels]. Alternatively, the format could be "NCDHW", the data storage order is:     [batch, in_channels, in_depth, in_height, in_width].</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation Conv3D (  Output input , Output filter , long[] strides, string padding, string data_format = null ,String opName= "Conv3D" ) 
-      {
-         OperationDescription desc = NewOperation("Conv3D", opName);
-         desc.AddInput(input);
-         desc.AddInput(filter);
-         desc.SetAttr("strides", strides);
-         desc.SetAttr("padding", padding);
-         if (data_format != null) desc.SetAttr("data_format", data_format);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Return a tensor with the same shape and contents as the input tensor or value.
-      ///</summary>
-      ///<param name="input">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation Identity (  Output input ,String opName= "Identity" ) 
-      {
-         OperationDescription desc = NewOperation("Identity", opName);
-         desc.AddInput(input);
-
-
-         return desc.FinishOperation();
-      } 
-      // Skipped function _ParallelConcatStart
-
-      ///<summary>
-      ///Gather slices from `params` according to `indices`.
-      ///</summary>
-      ///<param name="parameters">Input to the operation. </param>
-      ///<param name="indices">Input to the operation. </param>
-      ///<param name="validate_indices"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation Gather (  Output parameters , Output indices , bool validate_indices = true ,String opName= "Gather" ) 
-      {
-         OperationDescription desc = NewOperation("Gather", opName);
-         desc.AddInput(parameters);
-         desc.AddInput(indices);
-
-         if (validate_indices != true) desc.SetAttr("validate_indices", validate_indices);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Batch normalization.
-      ///</summary>
-      ///<param name="x">Input to the operation: A 4D Tensor for input data.</param>
-      ///<param name="scale">Input to the operation: A 1D Tensor for scaling factor, to scale the normalized x.</param>
-      ///<param name="offset">Input to the operation: A 1D Tensor for offset, to shift to the normalized x.</param>
-      ///<param name="mean">Input to the operation: A 1D Tensor for population mean. Used for inference only; must be empty for training.</param>
-      ///<param name="variance">Input to the operation: A 1D Tensor for population variance. Used for inference only; must be empty for training.</param>
-      ///<param name="epsilon">A small float number added to the variance of x.</param>
-      ///<param name="data_format">The data format for x and y. Either "NHWC" (default) or "NCHW".</param>
-      ///<param name="is_training">A bool value to indicate the operation is for training (default) or inference.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtInvalid): A 4D Tensor for output data.
-      ///[1] batch_mean(type: DtInvalid): A 1D Tensor for the computed batch mean, to be used by TensorFlow to compute the running mean.
-      ///[2] batch_variance(type: DtInvalid): A 1D Tensor for the computed batch variance, to be used by TensorFlow to compute the running variance.
-      ///[3] reserve_space_1(type: DtInvalid): A 1D Tensor for the computed batch mean, to be reused in the gradient computation.
-      ///[4] reserve_space_2(type: DtInvalid): A 1D Tensor for the computed batch variance (inverted variance in the cuDNN case), to be used in the gradient computation.
-      ///</return>
-      public Operation FusedBatchNorm (  Output x , Output scale , Output offset , Output mean , Output variance , float epsilon = 0.0001f , string data_format = null , bool is_training = true ,String opName= "FusedBatchNorm" ) 
-      {
-         OperationDescription desc = NewOperation("FusedBatchNorm", opName);
-         desc.AddInput(x);
-         desc.AddInput(scale);
-         desc.AddInput(offset);
-         desc.AddInput(mean);
-         desc.AddInput(variance);
-
-         if (epsilon != 0.0001f) desc.SetAttr("epsilon", epsilon);
-         if (data_format != null) desc.SetAttr("data_format", data_format);
-         if (is_training != true) desc.SetAttr("is_training", is_training);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Looks up keys in a table, outputs the corresponding values.
-      ///</summary>
-      ///<param name="table_handle">Input to the operation: Handle to the table.</param>
-      ///<param name="keys">Input to the operation: Any shape.  Keys to look up.</param>
-      ///<param name="default_value">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] values(type: DtInvalid): Same shape as `keys`.  Values found in the table, or `default_values` for missing keys.
-      ///</return>
-      public Operation LookupTableFindV2 (  Output table_handle , Output keys , Output default_value ,String opName= "LookupTableFindV2" ) 
-      {
-         OperationDescription desc = NewOperation("LookupTableFindV2", opName);
-         desc.AddInput(table_handle);
-         desc.AddInput(keys);
-         desc.AddInput(default_value);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Return the same ref tensor as the input ref tensor.
-      ///</summary>
-      ///<param name="input">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation RefIdentity (  Output input ,String opName= "RefIdentity" ) 
-      {
-         OperationDescription desc = NewOperation("RefIdentity", opName);
-         desc.AddInput(input);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Gather values or slices from `params` according to `indices`.
-      ///</summary>
-      ///<param name="parameters">Input to the operation: The tensor from which to gather values.</param>
-      ///<param name="indices">Input to the operation: Index tensor.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): Values from `params` gathered from indices given by `indices`, with shape `indices.shape[:-1] + params.shape[indices.shape[-1]:]`.
-      ///</return>
-      public Operation GatherNd (  Output parameters , Output indices ,String opName= "GatherNd" ) 
-      {
-         OperationDescription desc = NewOperation("GatherNd", opName);
-         desc.AddInput(parameters);
-         desc.AddInput(indices);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Split the data from the input value into TensorArray elements.
-      ///</summary>
-      ///<param name="handle">Input to the operation: The handle to a TensorArray.</param>
-      ///<param name="value">Input to the operation: The concatenated tensor to write to the TensorArray.</param>
-      ///<param name="lengths">Input to the operation: The vector of lengths, how to split the rows of value into the TensorArray.</param>
-      ///<param name="flow_in">Input to the operation: A float scalar that enforces proper chaining of operations.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] flow_out(type: DtFloat): A float scalar that enforces proper chaining of operations.
-      ///</return>
-      public Operation TensorArraySplitV3 (  Output handle , Output value , Output lengths , Output flow_in ,String opName= "TensorArraySplitV3" ) 
-      {
-         OperationDescription desc = NewOperation("TensorArraySplitV3", opName);
-         desc.AddInput(handle);
-         desc.AddInput(value);
-         desc.AddInput(lengths);
-         desc.AddInput(flow_in);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///A placeholder op that passes through `input` when its output is not fed.
-      ///</summary>
-      ///<param name="input">Input to the operation: The default value to produce when `output` is not fed.</param>
-      ///<param name="shape">The (possibly partial) shape of the tensor.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): A placeholder tensor that defaults to `input` if it is not fed.
-      ///</return>
-      public Operation PlaceholderWithDefault (  Output input , long[] shape,String opName= "PlaceholderWithDefault" ) 
-      {
-         OperationDescription desc = NewOperation("PlaceholderWithDefault", opName);
-         desc.AddInput(input);
-         desc.SetAttrShape("shape", shape);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Generates labels for candidate sampling with a learned unigram distribution.
-      ///</summary>
-      ///<param name="true_classes">Input to the operation: A batch_size * num_true matrix, in which each row contains the IDs of the num_true target_classes in the corresponding original label.</param>
-      ///<param name="num_true">Number of true labels per context.</param>
-      ///<param name="num_sampled">Number of candidates to produce.</param>
-      ///<param name="unique">If unique is true, we sample with rejection, so that all sampled candidates in a batch are unique. This requires some approximation to estimate the post-rejection sampling probabilities.</param>
-      ///<param name="seed">If either seed or seed2 are set to be non-zero, the random number generator is seeded by the given seed.  Otherwise, it is seeded by a random seed.</param>
-      ///<param name="seed2">An second seed to avoid seed collision.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] sampled_candidates(type: DtInt64): A vector of length num_sampled, in which each element is the ID of a sampled candidate.
-      ///[1] true_expected_count(type: DtFloat): A batch_size * num_true matrix, representing the number of times each candidate is expected to occur in a batch of sampled candidates. If unique=true, then this is a probability.
-      ///[2] sampled_expected_count(type: DtFloat): A vector of length num_sampled, for each sampled candidate representing the number of times the candidate is expected to occur in a batch of sampled candidates.  If unique=true, then this is a probability.
-      ///</return>
-      public Operation AllCandidateSampler (  Output true_classes , long num_true, long num_sampled, bool unique, long seed = 0 , long seed2 = 0 ,String opName= "AllCandidateSampler" ) 
-      {
-         OperationDescription desc = NewOperation("AllCandidateSampler", opName);
-         desc.AddInput(true_classes);
-         desc.SetAttr("num_true", num_true);
-         desc.SetAttr("num_sampled", num_sampled);
-         desc.SetAttr("unique", unique);
-         if (seed != 0) desc.SetAttr("seed", seed);
-         if (seed2 != 0) desc.SetAttr("seed2", seed2);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns the truth value of abs(x-y) &lt; tolerance element-wise.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
-      ///<param name="tolerance"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtBool).
-      ///</return>
-      public Operation ApproximateEqual (  Output x , Output y , float tolerance = 1E-05f ,String opName= "ApproximateEqual" ) 
-      {
-         OperationDescription desc = NewOperation("ApproximateEqual", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
-
-         if (tolerance != 1E-05f) desc.SetAttr("tolerance", tolerance);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Checks a tensor for NaN and Inf values.
-      ///</summary>
-      ///<param name="tensor">Input to the operation. </param>
-      ///<param name="message">Prefix of the error message.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation CheckNumerics (  Output tensor , string message,String opName= "CheckNumerics" ) 
-      {
-         OperationDescription desc = NewOperation("CheckNumerics", opName);
-         desc.AddInput(tensor);
-         desc.SetAttr("message", message);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Outputs a `Summary` protocol buffer with scalar values.
-      ///</summary>
-      ///<param name="tags">Input to the operation: Tags for the summary.</param>
-      ///<param name="values">Input to the operation: Same shape as `tags.  Values for the summary.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] summary(type: DtString): Scalar.  Serialized `Summary` protocol buffer.
-      ///</return>
-      public Operation ScalarSummary (  Output tags , Output values ,String opName= "ScalarSummary" ) 
-      {
-         OperationDescription desc = NewOperation("ScalarSummary", opName);
-         desc.AddInput(tags);
-         desc.AddInput(values);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes sigmoid of `x` element-wise.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtInvalid).
-      ///</return>
-      public Operation Sigmoid (  Output x ,String opName= "Sigmoid" ) 
-      {
-         OperationDescription desc = NewOperation("Sigmoid", opName);
-         desc.AddInput(x);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns element-wise remainder of division. When `x &lt; 0` xor `y &lt; 0` is
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtInvalid).
-      ///</return>
-      public Operation FloorMod (  Output x , Output y ,String opName= "FloorMod" ) 
-      {
-         OperationDescription desc = NewOperation("FloorMod", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns the shape of a tensor.
-      ///</summary>
-      ///<param name="input">Input to the operation. </param>
-      ///<param name="out_type"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation Shape (  Output input , DataType? out_type = null ,String opName= "Shape" ) 
-      {
-         OperationDescription desc = NewOperation("Shape", opName);
-         desc.AddInput(input);
-
-         if (out_type.HasValue) desc.SetAttr("out_type", out_type.Value);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Finds unique elements in a 1-D tensor.
-      ///</summary>
-      ///<param name="x">Input to the operation: 1-D.</param>
-      ///<param name="out_idx"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtInvalid): 1-D.
-      ///[1] idx(type: DtInvalid): 1-D.
-      ///</return>
-      public Operation Unique (  Output x , DataType? out_idx = null ,String opName= "Unique" ) 
-      {
-         OperationDescription desc = NewOperation("Unique", opName);
-         desc.AddInput(x);
-
-         if (out_idx.HasValue) desc.SetAttr("out_idx", out_idx.Value);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns the size of a tensor.
-      ///</summary>
-      ///<param name="input">Input to the operation. </param>
-      ///<param name="out_type"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation Size (  Output input , DataType? out_type = null ,String opName= "Size" ) 
-      {
-         OperationDescription desc = NewOperation("Size", opName);
-         desc.AddInput(input);
-
-         if (out_type.HasValue) desc.SetAttr("out_type", out_type.Value);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Return a slice from 'input'.
-      ///</summary>
-      ///<param name="input">Input to the operation. </param>
-      ///<param name="begin">Input to the operation: begin[i] specifies the offset into the 'i'th dimension of 'input' to slice from.</param>
-      ///<param name="size">Input to the operation: size[i] specifies the number of elements of the 'i'th dimension of 'input' to slice. If size[i] is -1, all remaining elements in dimension i are included in the slice (i.e. this is equivalent to setting size[i] = input.dim_size(i) - begin[i]).</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation Slice (  Output input , Output begin , Output size ,String opName= "Slice" ) 
-      {
-         OperationDescription desc = NewOperation("Slice", opName);
-         desc.AddInput(input);
-         desc.AddInput(begin);
-         desc.AddInput(size);
 
 
          return desc.FinishOperation();
@@ -2871,6 +737,1444 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Creates a dataset that contains `count` elements from the `input_dataset`.
+      ///</summary>
+      ///<param name="input_dataset">Input to the operation. </param>
+      ///<param name="count">Input to the operation: A scalar representing the number of elements from the `input_dataset` that should be taken. A value of `-1` indicates that all of `input_dataset` is taken.</param>
+      ///<param name="output_types"></param>
+      ///<param name="output_shapes"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] handle(type: DtResource).
+      ///</return>
+      public Operation TakeDataset (  Output input_dataset , Output count , DataType[] output_types, long[][] output_shapes,String opName= "TakeDataset" ) 
+      {
+         OperationDescription desc = NewOperation("TakeDataset", opName);
+         desc.AddInput(input_dataset);
+         desc.AddInput(count);
+         desc.SetAttr("output_types", output_types);
+         desc.SetAttrShapeList("output_shapes", output_shapes);
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Finds unique elements in a 1-D tensor.
+      ///</summary>
+      ///<param name="x">Input to the operation: 1-D.</param>
+      ///<param name="out_idx"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid): 1-D.
+      ///[1] idx(type: DtInvalid): 1-D.
+      ///[2] count(type: DtInvalid): 1-D.
+      ///</return>
+      public Operation UniqueWithCounts (  Output x , DataType? out_idx = null ,String opName= "UniqueWithCounts" ) 
+      {
+         OperationDescription desc = NewOperation("UniqueWithCounts", opName);
+         desc.AddInput(x);
+
+         if (out_idx.HasValue) desc.SetAttr("out_idx", out_idx.Value);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the (possibly normalized) Levenshtein Edit Distance.
+      ///</summary>
+      ///<param name="hypothesis_indices">Input to the operation: The indices of the hypothesis list SparseTensor. This is an N x R int64 matrix.</param>
+      ///<param name="hypothesis_values">Input to the operation: The values of the hypothesis list SparseTensor. This is an N-length vector.</param>
+      ///<param name="hypothesis_shape">Input to the operation: The shape of the hypothesis list SparseTensor. This is an R-length vector.</param>
+      ///<param name="truth_indices">Input to the operation: The indices of the truth list SparseTensor. This is an M x R int64 matrix.</param>
+      ///<param name="truth_values">Input to the operation: The values of the truth list SparseTensor. This is an M-length vector.</param>
+      ///<param name="truth_shape">Input to the operation: truth indices, vector.</param>
+      ///<param name="normalize">boolean (if true, edit distances are normalized by length of truth).  The output is:</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtFloat): A dense float tensor with rank R - 1.  For the example input:      // hypothesis represents a 2x1 matrix with variable-length values:     //   (0,0) = ["a"]     //   (1,0) = ["b"]     hypothesis_indices = [[0, 0, 0],                           [1, 0, 0]]     hypothesis_values = ["a", "b"]     hypothesis_shape = [2, 1, 1]      // truth represents a 2x2 matrix with variable-length values:     //   (0,0) = []     //   (0,1) = ["a"]     //   (1,0) = ["b", "c"]     //   (1,1) = ["a"]     truth_indices = [[0, 1, 0],                      [1, 0, 0],                      [1, 0, 1],                      [1, 1, 0]]     truth_values = ["a", "b", "c", "a"]     truth_shape = [2, 2, 2]     normalize = true  The output will be:      // output is a 2x2 matrix with edit distances normalized by truth lengths.     output = [[inf, 1.0],  // (0,0): no truth, (0,1): no hypothesis               [0.5, 1.0]]  // (1,0): addition, (1,1): no hypothesis
+      ///</return>
+      public Operation EditDistance (  Output hypothesis_indices , Output hypothesis_values , Output hypothesis_shape , Output truth_indices , Output truth_values , Output truth_shape , bool normalize = true ,String opName= "EditDistance" ) 
+      {
+         OperationDescription desc = NewOperation("EditDistance", opName);
+         desc.AddInput(hypothesis_indices);
+         desc.AddInput(hypothesis_values);
+         desc.AddInput(hypothesis_shape);
+         desc.AddInput(truth_indices);
+         desc.AddInput(truth_values);
+         desc.AddInput(truth_shape);
+
+         if (normalize != true) desc.SetAttr("normalize", normalize);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns element-wise integer closest to x.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid).
+      ///</return>
+      public Operation Rint (  Output x ,String opName= "Rint" ) 
+      {
+         OperationDescription desc = NewOperation("Rint", opName);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns a diagonal tensor with a given diagonal values.
+      ///</summary>
+      ///<param name="diagonal">Input to the operation: Rank k tensor where k is at most 3.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation Diag (  Output diagonal ,String opName= "Diag" ) 
+      {
+         OperationDescription desc = NewOperation("Diag", opName);
+         desc.AddInput(diagonal);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///
+      ///</summary>
+      ///<param name="input">Input to the operation. </param>
+      ///<param name="adjoint"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation BatchMatrixInverse (  Output input , bool adjoint = false ,String opName= "BatchMatrixInverse" ) 
+      {
+         OperationDescription desc = NewOperation("BatchMatrixInverse", opName);
+         desc.AddInput(input);
+
+         if (adjoint != false) desc.SetAttr("adjoint", adjoint);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Add all input tensors element wise.
+      ///</summary>
+      ///<param name="inputs">Input to the operation: Must all be the same size and shape.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] sum(type: DtInvalid).
+      ///</return>
+      public Operation AddN (  Output inputs ,String opName= "AddN" ) 
+      {
+         OperationDescription desc = NewOperation("AddN", opName);
+         desc.AddInput(inputs);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns the rank of a tensor.
+      ///</summary>
+      ///<param name="input">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInt32).
+      ///</return>
+      public Operation Rank (  Output input ,String opName= "Rank" ) 
+      {
+         OperationDescription desc = NewOperation("Rank", opName);
+         desc.AddInput(input);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns the diagonal part of the tensor.
+      ///</summary>
+      ///<param name="input">Input to the operation: Rank k tensor where k is 2, 4, or 6.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] diagonal(type: DtInvalid): The extracted diagonal.
+      ///</return>
+      public Operation DiagPart (  Output input ,String opName= "DiagPart" ) 
+      {
+         OperationDescription desc = NewOperation("DiagPart", opName);
+         desc.AddInput(input);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Generates sparse cross from a list of sparse and dense tensors.
+      ///</summary>
+      ///<param name="indices">Input to the operation: 2-D.  Indices of each input `SparseTensor`.</param>
+      ///<param name="values">Input to the operation: 1-D.   values of each `SparseTensor`.</param>
+      ///<param name="shapes">Input to the operation: 1-D.   Shapes of each `SparseTensor`.</param>
+      ///<param name="dense_inputs">Input to the operation: 2-D.    Columns represented by dense `Tensor`.</param>
+      ///<param name="hashed_output">If true, returns the hash of the cross instead of the string. This will allow us avoiding string manipulations.</param>
+      ///<param name="num_buckets">It is used if hashed_output is true. output = hashed_value%num_buckets if num_buckets &gt; 0 else hashed_value.</param>
+      ///<param name="hash_key">Specify the hash_key that will be used by the `FingerprintCat64` function to combine the crosses fingerprints.</param>
+      ///<param name="out_type"></param>
+      ///<param name="internal_type"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output_indices(type: DtInt64): 2-D.  Indices of the concatenated `SparseTensor`.
+      ///[1] output_values(type: DtInvalid): 1-D.  Non-empty values of the concatenated or hashed `SparseTensor`.
+      ///[2] output_shape(type: DtInt64): 1-D.  Shape of the concatenated `SparseTensor`.
+      ///</return>
+      public Operation SparseCross (  Output indices , Output values , Output shapes , Output dense_inputs , bool hashed_output, long num_buckets, long hash_key, DataType out_type, DataType internal_type,String opName= "SparseCross" ) 
+      {
+         OperationDescription desc = NewOperation("SparseCross", opName);
+         desc.AddInput(indices);
+         desc.AddInput(values);
+         desc.AddInput(shapes);
+         desc.AddInput(dense_inputs);
+         desc.SetAttr("hashed_output", hashed_output);
+         desc.SetAttr("num_buckets", num_buckets);
+         desc.SetAttr("hash_key", hash_key);
+         desc.SetAttr("out_type", out_type);
+         desc.SetAttr("internal_type", internal_type);
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Deprecated, use StackPushV2.
+      ///</summary>
+      ///<param name="handle">Input to the operation. </param>
+      ///<param name="elem">Input to the operation. </param>
+      ///<param name="swap_memory"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation StackPush (  Output handle , Output elem , bool swap_memory = false ,String opName= "StackPush" ) 
+      {
+         OperationDescription desc = NewOperation("StackPush", opName);
+         desc.AddInput(handle);
+         desc.AddInput(elem);
+
+         if (swap_memory != false) desc.SetAttr("swap_memory", swap_memory);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns a batched matrix tensor with new batched diagonal values.
+      ///</summary>
+      ///<param name="input">Input to the operation: Rank `k+1`, where `k &gt;= 1`.</param>
+      ///<param name="diagonal">Input to the operation: Rank `k`, where `k &gt;= 1`.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): Rank `k+1`, with `output.shape = input.shape`.
+      ///</return>
+      public Operation MatrixSetDiag (  Output input , Output diagonal ,String opName= "MatrixSetDiag" ) 
+      {
+         OperationDescription desc = NewOperation("MatrixSetDiag", opName);
+         desc.AddInput(input);
+         desc.AddInput(diagonal);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Stage (key, values) in the underlying container which behaves like a ordered
+      ///</summary>
+      ///<param name="key">Input to the operation: int64</param>
+      ///<param name="indices">Input to the operation. </param>
+      ///<param name="values">Input to the operation: a list of tensors dtypes A list of data types that inserted values should adhere to.</param>
+      ///<param name="dtypes"></param>
+      ///<param name="capacity">Maximum number of elements in the Staging Area. If &gt; 0, inserts on the container will block when the capacity is reached.</param>
+      ///<param name="memory_limit"></param>
+      ///<param name="container">If non-empty, this queue is placed in the given container. Otherwise, a default container is used.</param>
+      ///<param name="shared_name">It is necessary to match this name to the matching Unstage Op.</param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation OrderedMapStage (  Output key , Output indices , Output values , DataType[] dtypes, long capacity = 0 , long memory_limit = 0 , string container = null , string shared_name = null ,String opName= "OrderedMapStage" ) 
+      {
+         OperationDescription desc = NewOperation("OrderedMapStage", opName);
+         desc.AddInput(key);
+         desc.AddInput(indices);
+         desc.AddInput(values);
+         desc.SetAttr("dtypes", dtypes);
+         if (capacity != 0) desc.SetAttr("capacity", capacity);
+         if (memory_limit != 0) desc.SetAttr("memory_limit", memory_limit);
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns the batched diagonal part of a batched tensor.
+      ///</summary>
+      ///<param name="input">Input to the operation: Rank `k` tensor where `k &gt;= 2`.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] diagonal(type: DtInvalid): The extracted diagonal(s) having shape `diagonal.shape = input.shape[:-2] + [min(input.shape[-2:])]`.
+      ///</return>
+      public Operation MatrixDiagPart (  Output input ,String opName= "MatrixDiagPart" ) 
+      {
+         OperationDescription desc = NewOperation("MatrixDiagPart", opName);
+         desc.AddInput(input);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///SpaceToBatch for N-D tensors of type T.
+      ///</summary>
+      ///<param name="input">Input to the operation: N-D with shape `input_shape = [batch] + spatial_shape + remaining_shape`, where spatial_shape has `M` dimensions.</param>
+      ///<param name="block_shape">Input to the operation: 1-D with shape `[M]`, all values must be &gt;= 1.</param>
+      ///<param name="paddings">Input to the operation: 2-D with shape `[M, 2]`, all values must be &gt;= 0.   `paddings[i] = [pad_start, pad_end]` specifies the padding for input dimension   `i + 1`, which corresponds to spatial dimension `i`.  It is required that   `block_shape[i]` divides `input_shape[i + 1] + pad_start + pad_end`.  This operation is equivalent to the following steps:  1. Zero-pad the start and end of dimensions `[1, ..., M]` of the    input according to `paddings` to produce `padded` of shape `padded_shape`.  2. Reshape `padded` to `reshaped_padded` of shape:       [batch] +      [padded_shape[1] / block_shape[0],        block_shape[0],       ...,       padded_shape[M] / block_shape[M-1],       block_shape[M-1]] +      remaining_shape  3. Permute dimensions of `reshaped_padded` to produce    `permuted_reshaped_padded` of shape:       block_shape +      [batch] +      [padded_shape[1] / block_shape[0],       ...,       padded_shape[M] / block_shape[M-1]] +      remaining_shape  4. Reshape `permuted_reshaped_padded` to flatten `block_shape` into the batch    dimension, producing an output tensor of shape:       [batch * prod(block_shape)] +      [padded_shape[1] / block_shape[0],       ...,       padded_shape[M] / block_shape[M-1]] +      remaining_shape  Some examples:  (1) For the following input of shape `[1, 2, 2, 1]`, `block_shape = [2, 2]`, and     `paddings = [[0, 0], [0, 0]]`:  ``` x = [[[[1], [2]], [[3], [4]]]] ```  The output tensor has shape `[4, 1, 1, 1]` and value:  ``` [[[[1]]], [[[2]]], [[[3]]], [[[4]]]] ```  (2) For the following input of shape `[1, 2, 2, 3]`, `block_shape = [2, 2]`, and     `paddings = [[0, 0], [0, 0]]`:  ``` x = [[[[1, 2, 3], [4, 5, 6]],       [[7, 8, 9], [10, 11, 12]]]] ```  The output tensor has shape `[4, 1, 1, 3]` and value:  ``` [[[1, 2, 3]], [[4, 5, 6]], [[7, 8, 9]], [[10, 11, 12]]] ```  (3) For the following input of shape `[1, 4, 4, 1]`, `block_shape = [2, 2]`, and     `paddings = [[0, 0], [0, 0]]`:  ``` x = [[[[1],   [2],  [3],  [4]],       [[5],   [6],  [7],  [8]],       [[9],  [10], [11],  [12]],       [[13], [14], [15],  [16]]]] ```  The output tensor has shape `[4, 2, 2, 1]` and value:  ``` x = [[[[1], [3]], [[9], [11]]],      [[[2], [4]], [[10], [12]]],      [[[5], [7]], [[13], [15]]],      [[[6], [8]], [[14], [16]]]] ```  (4) For the following input of shape `[2, 2, 4, 1]`, block_shape = `[2, 2]`, and     paddings = `[[0, 0], [2, 0]]`:  ``` x = [[[[1],   [2],  [3],  [4]],       [[5],   [6],  [7],  [8]]],      [[[9],  [10], [11],  [12]],       [[13], [14], [15],  [16]]]] ```  The output tensor has shape `[8, 1, 3, 1]` and value:  ``` x = [[[[0], [1], [3]]], [[[0], [9], [11]]],      [[[0], [2], [4]]], [[[0], [10], [12]]],      [[[0], [5], [7]]], [[[0], [13], [15]]],      [[[0], [6], [8]]], [[[0], [14], [16]]]] ```  Among others, this operation is useful for reducing atrous convolution into regular convolution.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation SpaceToBatchND (  Output input , Output block_shape , Output paddings ,String opName= "SpaceToBatchND" ) 
+      {
+         OperationDescription desc = NewOperation("SpaceToBatchND", opName);
+         desc.AddInput(input);
+         desc.AddInput(block_shape);
+         desc.AddInput(paddings);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Updates the accumulator with a new value for global_step.
+      ///</summary>
+      ///<param name="handle">Input to the operation: The handle to an accumulator.</param>
+      ///<param name="new_global_step">Input to the operation: The new global_step value to set.</param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation AccumulatorSetGlobalStep (  Output handle , Output new_global_step ,String opName= "AccumulatorSetGlobalStep" ) 
+      {
+         OperationDescription desc = NewOperation("AccumulatorSetGlobalStep", opName);
+         desc.AddInput(handle);
+         desc.AddInput(new_global_step);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///V2 format specific: merges the metadata files of sharded checkpoints.  The
+      ///</summary>
+      ///<param name="checkpoint_prefixes">Input to the operation: prefixes of V2 checkpoints to merge.</param>
+      ///<param name="destination_prefix">Input to the operation: scalar.  The desired final prefix.  Allowed to be the same as one of the checkpoint_prefixes.</param>
+      ///<param name="delete_old_dirs">see above.</param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation MergeV2Checkpoints (  Output checkpoint_prefixes , Output destination_prefix , bool delete_old_dirs = true ,String opName= "MergeV2Checkpoints" ) 
+      {
+         OperationDescription desc = NewOperation("MergeV2Checkpoints", opName);
+         desc.AddInput(checkpoint_prefixes);
+         desc.AddInput(destination_prefix);
+
+         if (delete_old_dirs != true) desc.SetAttr("delete_old_dirs", delete_old_dirs);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Outputs a `Summary` protocol buffer with images.
+      ///</summary>
+      ///<param name="tag">Input to the operation: Scalar. Used to build the `tag` attribute of the summary values.</param>
+      ///<param name="tensor">Input to the operation: 4-D of shape `[batch_size, height, width, channels]` where `channels` is 1, 3, or 4.</param>
+      ///<param name="max_images">Max number of batch elements to generate images for.</param>
+      ///<param name="bad_color">Color to use for pixels with non-finite values.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] summary(type: DtString): Scalar. Serialized `Summary` protocol buffer.
+      ///</return>
+      public Operation ImageSummary (  Output tag , Output tensor , long max_images = 3 , Tensor bad_color = null ,String opName= "ImageSummary" ) 
+      {
+         OperationDescription desc = NewOperation("ImageSummary", opName);
+         desc.AddInput(tag);
+         desc.AddInput(tensor);
+
+         if (max_images != 3) desc.SetAttr("max_images", max_images);
+         if (bad_color != null) desc.SetAttr("bad_color", bad_color);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Solves one or more linear least-squares problems.
+      ///</summary>
+      ///<param name="matrix">Input to the operation: Shape is `[..., M, N]`.</param>
+      ///<param name="rhs">Input to the operation: Shape is `[..., M, K]`.</param>
+      ///<param name="l2_regularizer">Input to the operation: Scalar tensor.  @compatibility(numpy) Equivalent to np.linalg.lstsq @end_compatibility</param>
+      ///<param name="fast"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): Shape is `[..., N, K]`.
+      ///</return>
+      public Operation MatrixSolveLs (  Output matrix , Output rhs , Output l2_regularizer , bool fast = true ,String opName= "MatrixSolveLs" ) 
+      {
+         OperationDescription desc = NewOperation("MatrixSolveLs", opName);
+         desc.AddInput(matrix);
+         desc.AddInput(rhs);
+         desc.AddInput(l2_regularizer);
+
+         if (fast != true) desc.SetAttr("fast", fast);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Resize quantized `images` to `size` using quantized bilinear interpolation.
+      ///</summary>
+      ///<param name="images">Input to the operation: 4-D with shape `[batch, height, width, channels]`.</param>
+      ///<param name="size">Input to the operation: = A 1-D int32 Tensor of 2 elements: `new_height, new_width`.  The new size for the images.</param>
+      ///<param name="min">Input to the operation. </param>
+      ///<param name="max">Input to the operation. </param>
+      ///<param name="align_corners">If true, rescale input by (new_height - 1) / (height - 1), which exactly aligns the 4 corners of images and resized images. If false, rescale by new_height / height. Treat similarly the width dimension.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] resized_images(type: DtInvalid): 4-D with shape `[batch, new_height, new_width, channels]`.
+      ///[1] out_min(type: DtFloat).
+      ///[2] out_max(type: DtFloat).
+      ///</return>
+      public Operation QuantizedResizeBilinear (  Output images , Output size , Output min , Output max , bool align_corners = false ,String opName= "QuantizedResizeBilinear" ) 
+      {
+         OperationDescription desc = NewOperation("QuantizedResizeBilinear", opName);
+         desc.AddInput(images);
+         desc.AddInput(size);
+         desc.AddInput(min);
+         desc.AddInput(max);
+
+         if (align_corners != false) desc.SetAttr("align_corners", align_corners);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Copy a tensor setting everything outside a central band in each innermost matrix
+      ///</summary>
+      ///<param name="input">Input to the operation: Rank `k` tensor.</param>
+      ///<param name="num_lower">Input to the operation: 0-D tensor. Number of subdiagonals to keep. If negative, keep entire lower triangle.</param>
+      ///<param name="num_upper">Input to the operation: 0-D tensor. Number of superdiagonals to keep. If negative, keep entire upper triangle.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] band(type: DtInvalid): Rank `k` tensor of the same shape as input. The extracted banded tensor.
+      ///</return>
+      public Operation MatrixBandPart (  Output input , Output num_lower , Output num_upper ,String opName= "MatrixBandPart" ) 
+      {
+         OperationDescription desc = NewOperation("MatrixBandPart", opName);
+         desc.AddInput(input);
+         desc.AddInput(num_lower);
+         desc.AddInput(num_upper);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Reshapes a tensor.
+      ///</summary>
+      ///<param name="tensor">Input to the operation. </param>
+      ///<param name="shape">Input to the operation: Defines the shape of the output tensor.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation Reshape (  Output tensor , Output shape ,String opName= "Reshape" ) 
+      {
+         OperationDescription desc = NewOperation("Reshape", opName);
+         desc.AddInput(tensor);
+         desc.AddInput(shape);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Update '*var' as FOBOS algorithm with fixed learning rate.
+      ///</summary>
+      ///<param name="var">Input to the operation: Should be from a Variable().</param>
+      ///<param name="alpha">Input to the operation: Scaling factor. Must be a scalar.</param>
+      ///<param name="l1">Input to the operation: L1 regularization. Must be a scalar.</param>
+      ///<param name="l2">Input to the operation: L2 regularization. Must be a scalar.</param>
+      ///<param name="delta">Input to the operation: The change.</param>
+      ///<param name="use_locking">If True, the subtraction will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] out(type: DtInvalid): Same as "var".
+      ///</return>
+      public Operation ApplyProximalGradientDescent (  Output var , Output alpha , Output l1 , Output l2 , Output delta , bool use_locking = false ,String opName= "ApplyProximalGradientDescent" ) 
+      {
+         OperationDescription desc = NewOperation("ApplyProximalGradientDescent", opName);
+         desc.AddInput(var);
+         desc.AddInput(alpha);
+         desc.AddInput(l1);
+         desc.AddInput(l2);
+         desc.AddInput(delta);
+
+         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///An identity op that triggers an error if a gradient is requested.
+      ///</summary>
+      ///<param name="input">Input to the operation: any tensor.</param>
+      ///<param name="message">Will be printed in the error when anyone tries to differentiate this operation.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): the same input tensor.
+      ///</return>
+      public Operation PreventGradient (  Output input , string message = null ,String opName= "PreventGradient" ) 
+      {
+         OperationDescription desc = NewOperation("PreventGradient", opName);
+         desc.AddInput(input);
+
+         if (message != null) desc.SetAttr("message", message);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Transforms a serialized tensorflow.TensorProto proto into a Tensor.
+      ///</summary>
+      ///<param name="serialized">Input to the operation: A scalar string containing a serialized TensorProto proto.</param>
+      ///<param name="out_type">The type of the serialized tensor.  The provided type must match the type of the serialized tensor and no implicit conversion will take place.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): A Tensor of type `out_type`.
+      ///</return>
+      public Operation ParseTensor (  Output serialized , DataType out_type,String opName= "ParseTensor" ) 
+      {
+         OperationDescription desc = NewOperation("ParseTensor", opName);
+         desc.AddInput(serialized);
+         desc.SetAttr("out_type", out_type);
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Stops gradient computation.
+      ///</summary>
+      ///<param name="input">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation StopGradient (  Output input ,String opName= "StopGradient" ) 
+      {
+         OperationDescription desc = NewOperation("StopGradient", opName);
+         desc.AddInput(input);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes softplus: `log(exp(features) + 1)`.
+      ///</summary>
+      ///<param name="features">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] activations(type: DtInvalid).
+      ///</return>
+      public Operation Softplus (  Output features ,String opName= "Softplus" ) 
+      {
+         OperationDescription desc = NewOperation("Softplus", opName);
+         desc.AddInput(features);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Restores a tensor from checkpoint files.
+      ///</summary>
+      ///<param name="file_pattern">Input to the operation: Must have a single element. The pattern of the files from which we read the tensor.</param>
+      ///<param name="tensor_name">Input to the operation: Must have a single element. The name of the tensor to be restored.</param>
+      ///<param name="shape_and_slice">Input to the operation: Scalar. The shapes and slice specifications to use when restoring a tensors.</param>
+      ///<param name="dt">The type of the tensor to be restored.</param>
+      ///<param name="preferred_shard">Index of file to open first if multiple files match `file_pattern`. See the documentation for `Restore`.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] tensor(type: DtInvalid): The restored tensor.
+      ///</return>
+      public Operation RestoreSlice (  Output file_pattern , Output tensor_name , Output shape_and_slice , DataType dt, long preferred_shard = -1 ,String opName= "RestoreSlice" ) 
+      {
+         OperationDescription desc = NewOperation("RestoreSlice", opName);
+         desc.AddInput(file_pattern);
+         desc.AddInput(tensor_name);
+         desc.AddInput(shape_and_slice);
+         desc.SetAttr("dt", dt);
+         if (preferred_shard != -1) desc.SetAttr("preferred_shard", preferred_shard);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Reverses specific dimensions of a tensor.
+      ///</summary>
+      ///<param name="tensor">Input to the operation: Up to 8-D.</param>
+      ///<param name="dims">Input to the operation: 1-D. The dimensions to reverse.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): The same shape as `tensor`.
+      ///</return>
+      public Operation Reverse (  Output tensor , Output dims ,String opName= "Reverse" ) 
+      {
+         OperationDescription desc = NewOperation("Reverse", opName);
+         desc.AddInput(tensor);
+         desc.AddInput(dims);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///
+      ///</summary>
+      ///<param name="input">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtComplex64).
+      ///</return>
+      public Operation BatchIFFT3D (  Output input ,String opName= "BatchIFFT3D" ) 
+      {
+         OperationDescription desc = NewOperation("BatchIFFT3D", opName);
+         desc.AddInput(input);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///
+      ///</summary>
+      ///<param name="input">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtComplex64).
+      ///</return>
+      public Operation BatchFFT (  Output input ,String opName= "BatchFFT" ) 
+      {
+         OperationDescription desc = NewOperation("BatchFFT", opName);
+         desc.AddInput(input);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Reverses specific dimensions of a tensor.
+      ///</summary>
+      ///<param name="tensor">Input to the operation: Up to 8-D.</param>
+      ///<param name="axis">Input to the operation: 1-D. The indices of the dimensions to reverse.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): The same shape as `tensor`.
+      ///</return>
+      public Operation ReverseV2 (  Output tensor , Output axis ,String opName= "ReverseV2" ) 
+      {
+         OperationDescription desc = NewOperation("ReverseV2", opName);
+         desc.AddInput(tensor);
+         desc.AddInput(axis);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns element-wise smallest integer in not less than x.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid).
+      ///</return>
+      public Operation Ceil (  Output x ,String opName= "Ceil" ) 
+      {
+         OperationDescription desc = NewOperation("Ceil", opName);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Reverses variable length slices.
+      ///</summary>
+      ///<param name="input">Input to the operation: The input to reverse.</param>
+      ///<param name="seq_lengths">Input to the operation: 1-D with length `input.dims(batch_dim)` and `max(seq_lengths) &lt;= input.dims(seq_dim)`</param>
+      ///<param name="seq_dim">The dimension which is partially reversed.</param>
+      ///<param name="batch_dim">The dimension along which reversal is performed.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): The partially reversed input. It has the same shape as `input`.
+      ///</return>
+      public Operation ReverseSequence (  Output input , Output seq_lengths , long seq_dim, long batch_dim = 0 ,String opName= "ReverseSequence" ) 
+      {
+         OperationDescription desc = NewOperation("ReverseSequence", opName);
+         desc.AddInput(input);
+         desc.AddInput(seq_lengths);
+         desc.SetAttr("seq_dim", seq_dim);
+         if (batch_dim != 0) desc.SetAttr("batch_dim", batch_dim);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Adds sparse updates to the variable referenced by `resource`.
+      ///</summary>
+      ///<param name="resource">Input to the operation: Should be from a `Variable` node.</param>
+      ///<param name="indices">Input to the operation: A tensor of indices into the first dimension of `ref`.</param>
+      ///<param name="updates">Input to the operation: A tensor of updated values to add to `ref`.</param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation ResourceScatterAdd (  Output resource , Output indices , Output updates ,String opName= "ResourceScatterAdd" ) 
+      {
+         OperationDescription desc = NewOperation("ResourceScatterAdd", opName);
+         desc.AddInput(resource);
+         desc.AddInput(indices);
+         desc.AddInput(updates);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Adds up a SparseTensor and a dense Tensor, using these special rules:
+      ///</summary>
+      ///<param name="sp_indices">Input to the operation: 2-D.  `N x R` matrix with the indices of non-empty values in a SparseTensor, possibly not in canonical ordering.</param>
+      ///<param name="sp_values">Input to the operation: 1-D.  `N` non-empty values corresponding to `sp_indices`.</param>
+      ///<param name="sp_shape">Input to the operation: 1-D.  Shape of the input SparseTensor.</param>
+      ///<param name="dense">Input to the operation: `R`-D.  The dense Tensor operand.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): 1-D.  The `N` values that are operated on.
+      ///</return>
+      public Operation SparseDenseCwiseAdd (  Output sp_indices , Output sp_values , Output sp_shape , Output dense ,String opName= "SparseDenseCwiseAdd" ) 
+      {
+         OperationDescription desc = NewOperation("SparseDenseCwiseAdd", opName);
+         desc.AddInput(sp_indices);
+         desc.AddInput(sp_values);
+         desc.AddInput(sp_shape);
+         desc.AddInput(dense);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns x / y element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///</return>
+      public Operation Div (  Output x , Output y ,String opName= "Div" ) 
+      {
+         OperationDescription desc = NewOperation("Div", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Creates a tensor filled with a scalar value.
+      ///</summary>
+      ///<param name="dims">Input to the operation: 1-D. Represents the shape of the output tensor.</param>
+      ///<param name="value">Input to the operation: 0-D (scalar). Value to fill the returned tensor.  @compatibility(numpy) Equivalent to np.full @end_compatibility</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation Fill (  Output dims , Output value ,String opName= "Fill" ) 
+      {
+         OperationDescription desc = NewOperation("Fill", opName);
+         desc.AddInput(dims);
+         desc.AddInput(value);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes a 3-D convolution given 5-D `input` and `filter` tensors.
+      ///</summary>
+      ///<param name="input">Input to the operation: Shape `[batch, in_depth, in_height, in_width, in_channels]`.</param>
+      ///<param name="filter">Input to the operation: Shape `[filter_depth, filter_height, filter_width, in_channels, out_channels]`. `in_channels` must match between `input` and `filter`.</param>
+      ///<param name="strides">1-D tensor of length 5. The stride of the sliding window for each dimension of `input`. Must have `strides[0] = strides[4] = 1`.</param>
+      ///<param name="padding">The type of padding algorithm to use.</param>
+      ///<param name="data_format">The data format of the input and output data. With the default format "NDHWC", the data is stored in the order of:     [batch, in_depth, in_height, in_width, in_channels]. Alternatively, the format could be "NCDHW", the data storage order is:     [batch, in_channels, in_depth, in_height, in_width].</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation Conv3D (  Output input , Output filter , long[] strides, string padding, string data_format = null ,String opName= "Conv3D" ) 
+      {
+         OperationDescription desc = NewOperation("Conv3D", opName);
+         desc.AddInput(input);
+         desc.AddInput(filter);
+         desc.SetAttr("strides", strides);
+         desc.SetAttr("padding", padding);
+         if (data_format != null) desc.SetAttr("data_format", data_format);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Return a tensor with the same shape and contents as the input tensor or value.
+      ///</summary>
+      ///<param name="input">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation Identity (  Output input ,String opName= "Identity" ) 
+      {
+         OperationDescription desc = NewOperation("Identity", opName);
+         desc.AddInput(input);
+
+
+         return desc.FinishOperation();
+      } 
+      // Skipped function _ParallelConcatStart
+
+      ///<summary>
+      ///Computes tan of x element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid).
+      ///</return>
+      public Operation Tan (  Output x ,String opName= "Tan" ) 
+      {
+         OperationDescription desc = NewOperation("Tan", opName);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the reciprocal of x element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid).
+      ///</return>
+      public Operation Inv (  Output x ,String opName= "Inv" ) 
+      {
+         OperationDescription desc = NewOperation("Inv", opName);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns shape of tensors.
+      ///</summary>
+      ///<param name="input">Input to the operation. </param>
+      ///<param name="out_type"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation ShapeN (  Output input , DataType? out_type = null ,String opName= "ShapeN" ) 
+      {
+         OperationDescription desc = NewOperation("ShapeN", opName);
+         desc.AddInput(input);
+
+         if (out_type.HasValue) desc.SetAttr("out_type", out_type.Value);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the gradients of 3-D convolution with respect to the filter.
+      ///</summary>
+      ///<param name="input">Input to the operation: Shape `[batch, depth, rows, cols, in_channels]`.</param>
+      ///<param name="filter">Input to the operation: Shape `[depth, rows, cols, in_channels, out_channels]`. `in_channels` must match between `input` and `filter`.</param>
+      ///<param name="out_backprop">Input to the operation: Backprop signal of shape `[batch, out_depth, out_rows, out_cols, out_channels]`.</param>
+      ///<param name="strides">1-D tensor of length 5. The stride of the sliding window for each dimension of `input`. Must have `strides[0] = strides[4] = 1`.</param>
+      ///<param name="padding">The type of padding algorithm to use.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation Conv3DBackpropFilter (  Output input , Output filter , Output out_backprop , long[] strides, string padding,String opName= "Conv3DBackpropFilter" ) 
+      {
+         OperationDescription desc = NewOperation("Conv3DBackpropFilter", opName);
+         desc.AddInput(input);
+         desc.AddInput(filter);
+         desc.AddInput(out_backprop);
+         desc.SetAttr("strides", strides);
+         desc.SetAttr("padding", padding);
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///
+      ///</summary>
+      ///<param name="input">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] diagonal(type: DtInvalid).
+      ///</return>
+      public Operation BatchMatrixDiagPart (  Output input ,String opName= "BatchMatrixDiagPart" ) 
+      {
+         OperationDescription desc = NewOperation("BatchMatrixDiagPart", opName);
+         desc.AddInput(input);
+
+
+         return desc.FinishOperation();
+      } 
+      // Skipped function _ParallelConcatUpdate
+
+      ///<summary>
+      ///Gather slices from `params` according to `indices`.
+      ///</summary>
+      ///<param name="parameters">Input to the operation. </param>
+      ///<param name="indices">Input to the operation. </param>
+      ///<param name="validate_indices"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation Gather (  Output parameters , Output indices , bool validate_indices = true ,String opName= "Gather" ) 
+      {
+         OperationDescription desc = NewOperation("Gather", opName);
+         desc.AddInput(parameters);
+         desc.AddInput(indices);
+
+         if (validate_indices != true) desc.SetAttr("validate_indices", validate_indices);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Batch normalization.
+      ///</summary>
+      ///<param name="x">Input to the operation: A 4D Tensor for input data.</param>
+      ///<param name="scale">Input to the operation: A 1D Tensor for scaling factor, to scale the normalized x.</param>
+      ///<param name="offset">Input to the operation: A 1D Tensor for offset, to shift to the normalized x.</param>
+      ///<param name="mean">Input to the operation: A 1D Tensor for population mean. Used for inference only; must be empty for training.</param>
+      ///<param name="variance">Input to the operation: A 1D Tensor for population variance. Used for inference only; must be empty for training.</param>
+      ///<param name="epsilon">A small float number added to the variance of x.</param>
+      ///<param name="data_format">The data format for x and y. Either "NHWC" (default) or "NCHW".</param>
+      ///<param name="is_training">A bool value to indicate the operation is for training (default) or inference.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid): A 4D Tensor for output data.
+      ///[1] batch_mean(type: DtInvalid): A 1D Tensor for the computed batch mean, to be used by TensorFlow to compute the running mean.
+      ///[2] batch_variance(type: DtInvalid): A 1D Tensor for the computed batch variance, to be used by TensorFlow to compute the running variance.
+      ///[3] reserve_space_1(type: DtInvalid): A 1D Tensor for the computed batch mean, to be reused in the gradient computation.
+      ///[4] reserve_space_2(type: DtInvalid): A 1D Tensor for the computed batch variance (inverted variance in the cuDNN case), to be used in the gradient computation.
+      ///</return>
+      public Operation FusedBatchNorm (  Output x , Output scale , Output offset , Output mean , Output variance , float epsilon = 0.0001f , string data_format = null , bool is_training = true ,String opName= "FusedBatchNorm" ) 
+      {
+         OperationDescription desc = NewOperation("FusedBatchNorm", opName);
+         desc.AddInput(x);
+         desc.AddInput(scale);
+         desc.AddInput(offset);
+         desc.AddInput(mean);
+         desc.AddInput(variance);
+
+         if (epsilon != 0.0001f) desc.SetAttr("epsilon", epsilon);
+         if (data_format != null) desc.SetAttr("data_format", data_format);
+         if (is_training != true) desc.SetAttr("is_training", is_training);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Looks up keys in a table, outputs the corresponding values.
+      ///</summary>
+      ///<param name="table_handle">Input to the operation: Handle to the table.</param>
+      ///<param name="keys">Input to the operation: Any shape.  Keys to look up.</param>
+      ///<param name="default_value">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] values(type: DtInvalid): Same shape as `keys`.  Values found in the table, or `default_values` for missing keys.
+      ///</return>
+      public Operation LookupTableFindV2 (  Output table_handle , Output keys , Output default_value ,String opName= "LookupTableFindV2" ) 
+      {
+         OperationDescription desc = NewOperation("LookupTableFindV2", opName);
+         desc.AddInput(table_handle);
+         desc.AddInput(keys);
+         desc.AddInput(default_value);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns locations of true values in a boolean tensor.
+      ///</summary>
+      ///<param name="input">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] index(type: DtInt64).
+      ///</return>
+      public Operation Where (  Output input ,String opName= "Where" ) 
+      {
+         OperationDescription desc = NewOperation("Where", opName);
+         desc.AddInput(input);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Return the same ref tensor as the input ref tensor.
+      ///</summary>
+      ///<param name="input">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation RefIdentity (  Output input ,String opName= "RefIdentity" ) 
+      {
+         OperationDescription desc = NewOperation("RefIdentity", opName);
+         desc.AddInput(input);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Gather slices from `params` into a Tensor with shape specified by `indices`.
+      ///</summary>
+      ///<param name="parameters">Input to the operation: The tensor from which to gather values.</param>
+      ///<param name="indices">Input to the operation: Index tensor.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): Values from `params` gathered from indices given by `indices`, with shape `indices.shape[:-1] + params.shape[indices.shape[-1]:]`.
+      ///</return>
+      public Operation GatherNd (  Output parameters , Output indices ,String opName= "GatherNd" ) 
+      {
+         OperationDescription desc = NewOperation("GatherNd", opName);
+         desc.AddInput(parameters);
+         desc.AddInput(indices);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Split the data from the input value into TensorArray elements.
+      ///</summary>
+      ///<param name="handle">Input to the operation: The handle to a TensorArray.</param>
+      ///<param name="value">Input to the operation: The concatenated tensor to write to the TensorArray.</param>
+      ///<param name="lengths">Input to the operation: The vector of lengths, how to split the rows of value into the TensorArray.</param>
+      ///<param name="flow_in">Input to the operation: A float scalar that enforces proper chaining of operations.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] flow_out(type: DtFloat): A float scalar that enforces proper chaining of operations.
+      ///</return>
+      public Operation TensorArraySplitV3 (  Output handle , Output value , Output lengths , Output flow_in ,String opName= "TensorArraySplitV3" ) 
+      {
+         OperationDescription desc = NewOperation("TensorArraySplitV3", opName);
+         desc.AddInput(handle);
+         desc.AddInput(value);
+         desc.AddInput(lengths);
+         desc.AddInput(flow_in);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Inserts a dimension of 1 into a tensor's shape.
+      ///</summary>
+      ///<param name="input">Input to the operation. </param>
+      ///<param name="dim">Input to the operation: 0-D (scalar). Specifies the dimension index at which to expand the shape of `input`.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): Contains the same data as `input`, but its shape has an additional dimension of size 1 added.
+      ///</return>
+      public Operation ExpandDims (  Output input , Output dim ,String opName= "ExpandDims" ) 
+      {
+         OperationDescription desc = NewOperation("ExpandDims", opName);
+         desc.AddInput(input);
+         desc.AddInput(dim);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Identity op for gradient debugging.
+      ///</summary>
+      ///<param name="input">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation DebugGradientIdentity (  Output input ,String opName= "DebugGradientIdentity" ) 
+      {
+         OperationDescription desc = NewOperation("DebugGradientIdentity", opName);
+         desc.AddInput(input);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes a 2D convolution given quantized 4D input and filter tensors.
+      ///</summary>
+      ///<param name="input">Input to the operation. </param>
+      ///<param name="filter">Input to the operation: filter's input_depth dimension must match input's depth dimensions.</param>
+      ///<param name="min_input">Input to the operation: The float value that the lowest quantized input value represents.</param>
+      ///<param name="max_input">Input to the operation: The float value that the highest quantized input value represents.</param>
+      ///<param name="min_filter">Input to the operation: The float value that the lowest quantized filter value represents.</param>
+      ///<param name="max_filter">Input to the operation: The float value that the highest quantized filter value represents.</param>
+      ///<param name="strides">The stride of the sliding window for each dimension of the input tensor.</param>
+      ///<param name="padding">The type of padding algorithm to use.</param>
+      ///<param name="out_type"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///[1] min_output(type: DtFloat): The float value that the lowest quantized output value represents.
+      ///[2] max_output(type: DtFloat): The float value that the highest quantized output value represents.
+      ///</return>
+      public Operation QuantizedConv2D (  Output input , Output filter , Output min_input , Output max_input , Output min_filter , Output max_filter , long[] strides, string padding, DataType? out_type = null ,String opName= "QuantizedConv2D" ) 
+      {
+         OperationDescription desc = NewOperation("QuantizedConv2D", opName);
+         desc.AddInput(input);
+         desc.AddInput(filter);
+         desc.AddInput(min_input);
+         desc.AddInput(max_input);
+         desc.AddInput(min_filter);
+         desc.AddInput(max_filter);
+         desc.SetAttr("strides", strides);
+         desc.SetAttr("padding", padding);
+         if (out_type.HasValue) desc.SetAttr("out_type", out_type.Value);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Pads a tensor with zeros.
+      ///</summary>
+      ///<param name="input">Input to the operation. </param>
+      ///<param name="paddings">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation Pad (  Output input , Output paddings ,String opName= "Pad" ) 
+      {
+         OperationDescription desc = NewOperation("Pad", opName);
+         desc.AddInput(input);
+         desc.AddInput(paddings);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns element-wise remainder of division. When `x &lt; 0` xor `y &lt; 0` is
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///</return>
+      public Operation FloorMod (  Output x , Output y ,String opName= "FloorMod" ) 
+      {
+         OperationDescription desc = NewOperation("FloorMod", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes sigmoid of `x` element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid).
+      ///</return>
+      public Operation Sigmoid (  Output x ,String opName= "Sigmoid" ) 
+      {
+         OperationDescription desc = NewOperation("Sigmoid", opName);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Checks a tensor for NaN and Inf values.
+      ///</summary>
+      ///<param name="tensor">Input to the operation. </param>
+      ///<param name="message">Prefix of the error message.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation CheckNumerics (  Output tensor , string message,String opName= "CheckNumerics" ) 
+      {
+         OperationDescription desc = NewOperation("CheckNumerics", opName);
+         desc.AddInput(tensor);
+         desc.SetAttr("message", message);
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Outputs a `Summary` protocol buffer with scalar values.
+      ///</summary>
+      ///<param name="tags">Input to the operation: Tags for the summary.</param>
+      ///<param name="values">Input to the operation: Same shape as `tags.  Values for the summary.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] summary(type: DtString): Scalar.  Serialized `Summary` protocol buffer.
+      ///</return>
+      public Operation ScalarSummary (  Output tags , Output values ,String opName= "ScalarSummary" ) 
+      {
+         OperationDescription desc = NewOperation("ScalarSummary", opName);
+         desc.AddInput(tags);
+         desc.AddInput(values);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns the truth value of abs(x-y) &lt; tolerance element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="tolerance"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtBool).
+      ///</return>
+      public Operation ApproximateEqual (  Output x , Output y , float tolerance = 1E-05f ,String opName= "ApproximateEqual" ) 
+      {
+         OperationDescription desc = NewOperation("ApproximateEqual", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+         if (tolerance != 1E-05f) desc.SetAttr("tolerance", tolerance);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///A placeholder op that passes through `input` when its output is not fed.
+      ///</summary>
+      ///<param name="input">Input to the operation: The default value to produce when `output` is not fed.</param>
+      ///<param name="shape">The (possibly partial) shape of the tensor.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): A placeholder tensor that defaults to `input` if it is not fed.
+      ///</return>
+      public Operation PlaceholderWithDefault (  Output input , long[] shape,String opName= "PlaceholderWithDefault" ) 
+      {
+         OperationDescription desc = NewOperation("PlaceholderWithDefault", opName);
+         desc.AddInput(input);
+         desc.SetAttrShape("shape", shape);
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Generates labels for candidate sampling with a learned unigram distribution.
+      ///</summary>
+      ///<param name="true_classes">Input to the operation: A batch_size * num_true matrix, in which each row contains the IDs of the num_true target_classes in the corresponding original label.</param>
+      ///<param name="num_true">Number of true labels per context.</param>
+      ///<param name="num_sampled">Number of candidates to produce.</param>
+      ///<param name="unique">If unique is true, we sample with rejection, so that all sampled candidates in a batch are unique. This requires some approximation to estimate the post-rejection sampling probabilities.</param>
+      ///<param name="seed">If either seed or seed2 are set to be non-zero, the random number generator is seeded by the given seed.  Otherwise, it is seeded by a random seed.</param>
+      ///<param name="seed2">An second seed to avoid seed collision.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] sampled_candidates(type: DtInt64): A vector of length num_sampled, in which each element is the ID of a sampled candidate.
+      ///[1] true_expected_count(type: DtFloat): A batch_size * num_true matrix, representing the number of times each candidate is expected to occur in a batch of sampled candidates. If unique=true, then this is a probability.
+      ///[2] sampled_expected_count(type: DtFloat): A vector of length num_sampled, for each sampled candidate representing the number of times the candidate is expected to occur in a batch of sampled candidates.  If unique=true, then this is a probability.
+      ///</return>
+      public Operation AllCandidateSampler (  Output true_classes , long num_true, long num_sampled, bool unique, long seed = 0 , long seed2 = 0 ,String opName= "AllCandidateSampler" ) 
+      {
+         OperationDescription desc = NewOperation("AllCandidateSampler", opName);
+         desc.AddInput(true_classes);
+         desc.SetAttr("num_true", num_true);
+         desc.SetAttr("num_sampled", num_sampled);
+         desc.SetAttr("unique", unique);
+         if (seed != 0) desc.SetAttr("seed", seed);
+         if (seed2 != 0) desc.SetAttr("seed2", seed2);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Removes dimensions of size 1 from the shape of a tensor.
+      ///</summary>
+      ///<param name="input">Input to the operation: The `input` to squeeze.</param>
+      ///<param name="squeeze_dims">If specified, only squeezes the dimensions listed. The dimension index starts at 0. It is an error to squeeze a dimension that is not 1.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): Contains the same data as `input`, but has one or more dimensions of size 1 removed.
+      ///</return>
+      public Operation Squeeze (  Output input , long[] squeeze_dims = null ,String opName= "Squeeze" ) 
+      {
+         OperationDescription desc = NewOperation("Squeeze", opName);
+         desc.AddInput(input);
+
+         if (squeeze_dims != null) desc.SetAttr("squeeze_dims", squeeze_dims);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the inverse permutation of a tensor.
+      ///</summary>
+      ///<param name="x">Input to the operation: 1-D.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid): 1-D.
+      ///</return>
+      public Operation InvertPermutation (  Output x ,String opName= "InvertPermutation" ) 
+      {
+         OperationDescription desc = NewOperation("InvertPermutation", opName);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Assign `value` to the sliced l-value reference of `ref`.
+      ///</summary>
+      ///<param name="reference">Input to the operation. </param>
+      ///<param name="begin">Input to the operation. </param>
+      ///<param name="end">Input to the operation. </param>
+      ///<param name="strides">Input to the operation. </param>
+      ///<param name="value">Input to the operation. </param>
+      ///<param name="begin_mask"></param>
+      ///<param name="end_mask"></param>
+      ///<param name="ellipsis_mask"></param>
+      ///<param name="new_axis_mask"></param>
+      ///<param name="shrink_axis_mask"></param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation ResourceStridedSliceAssign (  Output reference , Output begin , Output end , Output strides , Output value , long begin_mask = 0 , long end_mask = 0 , long ellipsis_mask = 0 , long new_axis_mask = 0 , long shrink_axis_mask = 0 ,String opName= "ResourceStridedSliceAssign" ) 
+      {
+         OperationDescription desc = NewOperation("ResourceStridedSliceAssign", opName);
+         desc.AddInput(reference);
+         desc.AddInput(begin);
+         desc.AddInput(end);
+         desc.AddInput(strides);
+         desc.AddInput(value);
+
+         if (begin_mask != 0) desc.SetAttr("begin_mask", begin_mask);
+         if (end_mask != 0) desc.SetAttr("end_mask", end_mask);
+         if (ellipsis_mask != 0) desc.SetAttr("ellipsis_mask", ellipsis_mask);
+         if (new_axis_mask != 0) desc.SetAttr("new_axis_mask", new_axis_mask);
+         if (shrink_axis_mask != 0) desc.SetAttr("shrink_axis_mask", shrink_axis_mask);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns the shape of a tensor.
+      ///</summary>
+      ///<param name="input">Input to the operation. </param>
+      ///<param name="out_type"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation Shape (  Output input , DataType? out_type = null ,String opName= "Shape" ) 
+      {
+         OperationDescription desc = NewOperation("Shape", opName);
+         desc.AddInput(input);
+
+         if (out_type.HasValue) desc.SetAttr("out_type", out_type.Value);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Finds unique elements in a 1-D tensor.
+      ///</summary>
+      ///<param name="x">Input to the operation: 1-D.</param>
+      ///<param name="out_idx"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid): 1-D.
+      ///[1] idx(type: DtInvalid): 1-D.
+      ///</return>
+      public Operation Unique (  Output x , DataType? out_idx = null ,String opName= "Unique" ) 
+      {
+         OperationDescription desc = NewOperation("Unique", opName);
+         desc.AddInput(x);
+
+         if (out_idx.HasValue) desc.SetAttr("out_idx", out_idx.Value);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns the size of a tensor.
+      ///</summary>
+      ///<param name="input">Input to the operation. </param>
+      ///<param name="out_type"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation Size (  Output input , DataType? out_type = null ,String opName= "Size" ) 
+      {
+         OperationDescription desc = NewOperation("Size", opName);
+         desc.AddInput(input);
+
+         if (out_type.HasValue) desc.SetAttr("out_type", out_type.Value);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Return a slice from 'input'.
+      ///</summary>
+      ///<param name="input">Input to the operation. </param>
+      ///<param name="begin">Input to the operation: begin[i] specifies the offset into the 'i'th dimension of 'input' to slice from.</param>
+      ///<param name="size">Input to the operation: size[i] specifies the number of elements of the 'i'th dimension of 'input' to slice. If size[i] is -1, all remaining elements in dimension i are included in the slice (i.e. this is equivalent to setting size[i] = input.dim_size(i) - begin[i]).</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation Slice (  Output input , Output begin , Output size ,String opName= "Slice" ) 
+      {
+         OperationDescription desc = NewOperation("Slice", opName);
+         desc.AddInput(input);
+         desc.AddInput(begin);
+         desc.AddInput(size);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Greedily selects a subset of bounding boxes in descending order of score,
+      ///</summary>
+      ///<param name="boxes">Input to the operation: A 2-D float tensor of shape `[num_boxes, 4]`.</param>
+      ///<param name="scores">Input to the operation: A 1-D float tensor of shape `[num_boxes]` representing a single score corresponding to each box (each row of boxes).</param>
+      ///<param name="max_output_size">Input to the operation: A scalar integer tensor representing the maximum number of boxes to be selected by non max suppression.</param>
+      ///<param name="iou_threshold">Input to the operation: A 0-D float tensor representing the threshold for deciding whether boxes overlap too much with respect to IOU.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] selected_indices(type: DtInt32): A 1-D integer tensor of shape `[M]` representing the selected indices from the boxes tensor, where `M &lt;= max_output_size`.
+      ///</return>
+      public Operation NonMaxSuppressionV2 (  Output boxes , Output scores , Output max_output_size , Output iou_threshold ,String opName= "NonMaxSuppressionV2" ) 
+      {
+         OperationDescription desc = NewOperation("NonMaxSuppressionV2", opName);
+         desc.AddInput(boxes);
+         desc.AddInput(scores);
+         desc.AddInput(max_output_size);
+         desc.AddInput(iou_threshold);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Performs 3D average pooling on the input.
       ///</summary>
       ///<param name="input">Input to the operation: Shape `[batch, depth, rows, cols, channels]` tensor to pool over.</param>
@@ -2928,6 +2232,40 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///
+      ///</summary>
+      ///<param name="handle">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation TensorArrayClose (  Output handle ,String opName= "TensorArrayClose" ) 
+      {
+         OperationDescription desc = NewOperation("TensorArrayClose", opName);
+         desc.AddInput(handle);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the minimum of elements across dimensions of a tensor.
+      ///</summary>
+      ///<param name="input">Input to the operation: The tensor to reduce.</param>
+      ///<param name="reduction_indices">Input to the operation: The dimensions to reduce.</param>
+      ///<param name="keep_dims">If true, retain reduced dimensions with length 1.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): The reduced tensor.
+      ///</return>
+      public Operation Min (  Output input , Output reduction_indices , bool keep_dims = false ,String opName= "Min" ) 
+      {
+         OperationDescription desc = NewOperation("Min", opName);
+         desc.AddInput(input);
+         desc.AddInput(reduction_indices);
+
+         if (keep_dims != false) desc.SetAttr("keep_dims", keep_dims);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Assign `value` to the sliced l-value reference of `ref`.
       ///</summary>
       ///<param name="reference">Input to the operation. </param>
@@ -2962,34 +2300,19 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Computes the minimum of elements across dimensions of a tensor.
+      ///Constructs a tensor by tiling a given tensor.
       ///</summary>
-      ///<param name="input">Input to the operation: The tensor to reduce.</param>
-      ///<param name="reduction_indices">Input to the operation: The dimensions to reduce.</param>
-      ///<param name="keep_dims">If true, retain reduced dimensions with length 1.</param>
+      ///<param name="input">Input to the operation: 1-D or higher.</param>
+      ///<param name="multiples">Input to the operation: 1-D. Length must be the same as the number of dimensions in `input`</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtInvalid): The reduced tensor.
+      ///[0] output(type: DtInvalid).
       ///</return>
-      public Operation Min (  Output input , Output reduction_indices , bool keep_dims = false ,String opName= "Min" ) 
+      public Operation Tile (  Output input , Output multiples ,String opName= "Tile" ) 
       {
-         OperationDescription desc = NewOperation("Min", opName);
+         OperationDescription desc = NewOperation("Tile", opName);
          desc.AddInput(input);
-         desc.AddInput(reduction_indices);
-
-         if (keep_dims != false) desc.SetAttr("keep_dims", keep_dims);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///
-      ///</summary>
-      ///<param name="handle">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      public Operation TensorArrayClose (  Output handle ,String opName= "TensorArrayClose" ) 
-      {
-         OperationDescription desc = NewOperation("TensorArrayClose", opName);
-         desc.AddInput(handle);
+         desc.AddInput(multiples);
 
 
          return desc.FinishOperation();
@@ -3013,19 +2336,16 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Constructs a tensor by tiling a given tensor.
+      ///Restore a reader to a previously saved state.
       ///</summary>
-      ///<param name="input">Input to the operation: 1-D or higher.</param>
-      ///<param name="multiples">Input to the operation: 1-D. Length must be the same as the number of dimensions in `input`</param>
+      ///<param name="reader_handle">Input to the operation: Handle to a Reader.</param>
+      ///<param name="state">Input to the operation: Result of a ReaderSerializeState of a Reader with type matching reader_handle.</param>
       ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation Tile (  Output input , Output multiples ,String opName= "Tile" ) 
+      public Operation ReaderRestoreStateV2 (  Output reader_handle , Output state ,String opName= "ReaderRestoreStateV2" ) 
       {
-         OperationDescription desc = NewOperation("Tile", opName);
-         desc.AddInput(input);
-         desc.AddInput(multiples);
+         OperationDescription desc = NewOperation("ReaderRestoreStateV2", opName);
+         desc.AddInput(reader_handle);
+         desc.AddInput(state);
 
 
          return desc.FinishOperation();
@@ -3042,22 +2362,6 @@ namespace Emgu.TF
          OperationDescription desc = NewOperation("AssignSubVariableOp", opName);
          desc.AddInput(resource);
          desc.AddInput(value);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Restore a reader to a previously saved state.
-      ///</summary>
-      ///<param name="reader_handle">Input to the operation: Handle to a Reader.</param>
-      ///<param name="state">Input to the operation: Result of a ReaderSerializeState of a Reader with type matching reader_handle.</param>
-      ///<param name="opName">The name of the operation</param>
-      public Operation ReaderRestoreStateV2 (  Output reader_handle , Output state ,String opName= "ReaderRestoreStateV2" ) 
-      {
-         OperationDescription desc = NewOperation("ReaderRestoreStateV2", opName);
-         desc.AddInput(reader_handle);
-         desc.AddInput(state);
 
 
          return desc.FinishOperation();
@@ -3083,17 +2387,37 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Returns locations of true values in a boolean tensor.
+      ///Computes the complex absolute value of a tensor.
       ///</summary>
-      ///<param name="input">Input to the operation. </param>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="Tout"></param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] index(type: DtInt64).
+      ///[0] y(type: DtInvalid).
       ///</return>
-      public Operation Where (  Output input ,String opName= "Where" ) 
+      public Operation ComplexAbs (  Output x , DataType? Tout = null ,String opName= "ComplexAbs" ) 
       {
-         OperationDescription desc = NewOperation("Where", opName);
-         desc.AddInput(input);
+         OperationDescription desc = NewOperation("ComplexAbs", opName);
+         desc.AddInput(x);
+
+         if (Tout.HasValue) desc.SetAttr("Tout", Tout.Value);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Return the shape of s0 op s1 with broadcast.
+      ///</summary>
+      ///<param name="s0">Input to the operation. </param>
+      ///<param name="s1">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] r0(type: DtInvalid).
+      ///</return>
+      public Operation BroadcastArgs (  Output s0 , Output s1 ,String opName= "BroadcastArgs" ) 
+      {
+         OperationDescription desc = NewOperation("BroadcastArgs", opName);
+         desc.AddInput(s0);
+         desc.AddInput(s1);
 
 
          return desc.FinishOperation();
@@ -3120,19 +2444,21 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Pads a tensor with zeros.
+      ///Pads a tensor.
       ///</summary>
       ///<param name="input">Input to the operation. </param>
       ///<param name="paddings">Input to the operation. </param>
+      ///<param name="constant_values">Input to the operation. </param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
       ///[0] output(type: DtInvalid).
       ///</return>
-      public Operation Pad (  Output input , Output paddings ,String opName= "Pad" ) 
+      public Operation PadV2 (  Output input , Output paddings , Output constant_values ,String opName= "PadV2" ) 
       {
-         OperationDescription desc = NewOperation("Pad", opName);
+         OperationDescription desc = NewOperation("PadV2", opName);
          desc.AddInput(input);
          desc.AddInput(paddings);
+         desc.AddInput(constant_values);
 
 
          return desc.FinishOperation();
@@ -3205,20 +2531,19 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///A placeholder op for a value that will be fed into the computation.
+      ///
       ///</summary>
-      ///<param name="dtype">The type of elements in the tensor.</param>
-      ///<param name="shape">(Optional) The shape of the tensor. If the shape has 0 dimensions, the shape is unconstrained.</param>
+      ///<param name="input">Input to the operation. </param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtInvalid): A placeholder tensor that must be replaced using the feed mechanism.
+      ///[0] output(type: DtComplex64).
       ///</return>
-      public Operation Placeholder (  DataType dtype, long[] shape = null ,String opName= "Placeholder" ) 
+      public Operation BatchIFFT (  Output input ,String opName= "BatchIFFT" ) 
       {
-         OperationDescription desc = NewOperation("Placeholder", opName);
+         OperationDescription desc = NewOperation("BatchIFFT", opName);
+         desc.AddInput(input);
 
-         desc.SetAttr("dtype", dtype);
-         if (shape != null) desc.SetAttrShape("shape", shape);
+
          return desc.FinishOperation();
       } 
 
@@ -3238,43 +2563,6 @@ namespace Emgu.TF
          desc.SetAttr("dtype", dtype);
          desc.SetAttrShape("shape", shape);
 
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Inserts a dimension of 1 into a tensor's shape.
-      ///</summary>
-      ///<param name="input">Input to the operation. </param>
-      ///<param name="dim">Input to the operation: 0-D (scalar). Specifies the dimension index at which to expand the shape of `input`.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): Contains the same data as `input`, but its shape has an additional dimension of size 1 added.
-      ///</return>
-      public Operation ExpandDims (  Output input , Output dim ,String opName= "ExpandDims" ) 
-      {
-         OperationDescription desc = NewOperation("ExpandDims", opName);
-         desc.AddInput(input);
-         desc.AddInput(dim);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Removes dimensions of size 1 from the shape of a tensor.
-      ///</summary>
-      ///<param name="input">Input to the operation: The `input` to squeeze.</param>
-      ///<param name="squeeze_dims">If specified, only squeezes the dimensions listed. The dimension index starts at 0. It is an error to squeeze a dimension that is not 1.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): Contains the same data as `input`, but has one or more dimensions of size 1 removed.
-      ///</return>
-      public Operation Squeeze (  Output input , long[] squeeze_dims = null ,String opName= "Squeeze" ) 
-      {
-         OperationDescription desc = NewOperation("Squeeze", opName);
-         desc.AddInput(input);
-
-         if (squeeze_dims != null) desc.SetAttr("squeeze_dims", squeeze_dims);
          return desc.FinishOperation();
       } 
 
@@ -3364,6 +2652,33 @@ namespace Emgu.TF
          if (capacity != -1) desc.SetAttr("capacity", capacity);
          if (container != null) desc.SetAttr("container", container);
          if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Creates a dataset that applies `f` to the outputs of `input_dataset`.
+      ///</summary>
+      ///<param name="input_dataset">Input to the operation. </param>
+      ///<param name="other_arguments">Input to the operation. </param>
+      ///<param name="cycle_length">Input to the operation. </param>
+      ///<param name="block_length">Input to the operation. </param>
+      ///<param name="output_types"></param>
+      ///<param name="output_shapes"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] handle(type: DtResource).
+      ///</return>
+      //The following attributes are not known: f: func
+      public Operation InterleaveDataset (  Output input_dataset , Output other_arguments , Output cycle_length , Output block_length , DataType[] output_types, long[][] output_shapes,String opName= "InterleaveDataset" ) 
+      {
+         OperationDescription desc = NewOperation("InterleaveDataset", opName);
+         desc.AddInput(input_dataset);
+         desc.AddInput(other_arguments);
+         desc.AddInput(cycle_length);
+         desc.AddInput(block_length);
+         desc.SetAttr("output_types", output_types);
+         desc.SetAttrShapeList("output_shapes", output_shapes);
+
          return desc.FinishOperation();
       } 
 
@@ -3523,16 +2838,40 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Computes the max of elements across dimensions of a SparseTensor.
+      ///</summary>
+      ///<param name="input_indices">Input to the operation: 2-D.  `N x R` matrix with the indices of non-empty values in a SparseTensor, possibly not in canonical ordering.</param>
+      ///<param name="input_values">Input to the operation: 1-D.  `N` non-empty values corresponding to `input_indices`.</param>
+      ///<param name="input_shape">Input to the operation: 1-D.  Shape of the input SparseTensor.</param>
+      ///<param name="reduction_axes">Input to the operation: 1-D.  Length-`K` vector containing the reduction axes.</param>
+      ///<param name="keep_dims">If true, retain reduced dimensions with length 1.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): `R-K`-D.  The reduced Tensor.
+      ///</return>
+      public Operation SparseReduceMax (  Output input_indices , Output input_values , Output input_shape , Output reduction_axes , bool keep_dims = false ,String opName= "SparseReduceMax" ) 
+      {
+         OperationDescription desc = NewOperation("SparseReduceMax", opName);
+         desc.AddInput(input_indices);
+         desc.AddInput(input_values);
+         desc.AddInput(input_shape);
+         desc.AddInput(reduction_axes);
+
+         if (keep_dims != false) desc.SetAttr("keep_dims", keep_dims);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Extract `patches` from `images` and put them in the "depth" output dimension.
       ///</summary>
       ///<param name="images">Input to the operation: 4-D Tensor with shape `[batch, in_rows, in_cols, depth]`.</param>
       ///<param name="ksizes">The size of the sliding window for each dimension of `images`.</param>
       ///<param name="strides">1-D of length 4. How far the centers of two consecutive patches are in the images. Must be: `[1, stride_rows, stride_cols, 1]`.</param>
-      ///<param name="rates">1-D of length 4. Must be: `[1, rate_rows, rate_cols, 1]`. This is the input stride, specifying how far two consecutive patch samples are in the input. Equivalent to extracting patches with `patch_sizes_eff = patch_sizes + (patch_sizes - 1) * (rates - 1)`, followed by subsampling them spatially by a factor of `rates`.</param>
+      ///<param name="rates">1-D of length 4. Must be: `[1, rate_rows, rate_cols, 1]`. This is the input stride, specifying how far two consecutive patch samples are in the input. Equivalent to extracting patches with `patch_sizes_eff = patch_sizes + (patch_sizes - 1) * (rates - 1)`, followed by subsampling them spatially by a factor of `rates`. This is equivalent to `rate` in dilated (a.k.a. Atrous) convolutions.</param>
       ///<param name="padding">The type of padding algorithm to use.  We specify the size-related attributes as:  ```python       ksizes = [1, ksize_rows, ksize_cols, 1]       strides = [1, strides_rows, strides_cols, 1]       rates = [1, rates_rows, rates_cols, 1] ```</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] patches(type: DtInvalid): 4-D Tensor with shape `[batch, out_rows, out_cols, ksize_rows * ksize_cols * depth]` containing image patches with size `ksize_rows x ksize_cols x depth` vectorized in the "depth" dimension.
+      ///[0] patches(type: DtInvalid): 4-D Tensor with shape `[batch, out_rows, out_cols, ksize_rows * ksize_cols * depth]` containing image patches with size `ksize_rows x ksize_cols x depth` vectorized in the "depth" dimension. Note `out_rows` and `out_cols` are the dimensions of the output patches.
       ///</return>
       public Operation ExtractImagePatches (  Output images , long[] ksizes, long[] strides, long[] rates, string padding,String opName= "ExtractImagePatches" ) 
       {
@@ -3542,6 +2881,41 @@ namespace Emgu.TF
          desc.SetAttr("strides", strides);
          desc.SetAttr("rates", rates);
          desc.SetAttr("padding", padding);
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Converts each string in the input Tensor to its hash mod by a number of buckets.
+      ///</summary>
+      ///<param name="string_tensor">Input to the operation. </param>
+      ///<param name="num_buckets">The number of buckets.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInt64): A Tensor of the same shape as the input `string_tensor`.
+      ///</return>
+      public Operation StringToHashBucket (  Output string_tensor , long num_buckets,String opName= "StringToHashBucket" ) 
+      {
+         OperationDescription desc = NewOperation("StringToHashBucket", opName);
+         desc.AddInput(string_tensor);
+         desc.SetAttr("num_buckets", num_buckets);
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes hyperbolic sine of x element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid).
+      ///</return>
+      public Operation Sinh (  Output x ,String opName= "Sinh" ) 
+      {
+         OperationDescription desc = NewOperation("Sinh", opName);
+         desc.AddInput(x);
+
 
          return desc.FinishOperation();
       } 
@@ -3561,6 +2935,83 @@ namespace Emgu.TF
          desc.AddInput(input);
          desc.SetAttr("type", type);
 
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Op peeks at the values at the specified key.  If the
+      ///</summary>
+      ///<param name="key">Input to the operation. </param>
+      ///<param name="indices">Input to the operation. </param>
+      ///<param name="dtypes"></param>
+      ///<param name="capacity"></param>
+      ///<param name="memory_limit"></param>
+      ///<param name="container"></param>
+      ///<param name="shared_name"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] values(type: DtInvalid).
+      ///</return>
+      public Operation OrderedMapPeek (  Output key , Output indices , DataType[] dtypes, long capacity = 0 , long memory_limit = 0 , string container = null , string shared_name = null ,String opName= "OrderedMapPeek" ) 
+      {
+         OperationDescription desc = NewOperation("OrderedMapPeek", opName);
+         desc.AddInput(key);
+         desc.AddInput(indices);
+         desc.SetAttr("dtypes", dtypes);
+         if (capacity != 0) desc.SetAttr("capacity", capacity);
+         if (memory_limit != 0) desc.SetAttr("memory_limit", memory_limit);
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Outputs random values from a uniform distribution.
+      ///</summary>
+      ///<param name="shape">Input to the operation: The shape of the output tensor.</param>
+      ///<param name="dtype">The type of the output.</param>
+      ///<param name="seed">If either `seed` or `seed2` are set to be non-zero, the random number generator is seeded by the given seed.  Otherwise, it is seeded by a random seed.</param>
+      ///<param name="seed2">A second seed to avoid seed collision.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): A tensor of the specified shape filled with uniform random values.
+      ///</return>
+      public Operation RandomUniform (  Output shape , DataType dtype, long seed = 0 , long seed2 = 0 ,String opName= "RandomUniform" ) 
+      {
+         OperationDescription desc = NewOperation("RandomUniform", opName);
+         desc.AddInput(shape);
+         desc.SetAttr("dtype", dtype);
+         if (seed != 0) desc.SetAttr("seed", seed);
+         if (seed2 != 0) desc.SetAttr("seed2", seed2);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Performs fractional max pooling on the input.
+      ///</summary>
+      ///<param name="value">Input to the operation: 4-D with shape `[batch, height, width, channels]`.</param>
+      ///<param name="pooling_ratio">Pooling ratio for each dimension of `value`, currently only supports row and col dimension and should be &gt;= 1.0. For example, a valid pooling ratio looks like [1.0, 1.44, 1.73, 1.0]. The first and last elements must be 1.0 because we don't allow pooling on batch and channels dimensions. 1.44 and 1.73 are pooling ratio on height and width dimensions respectively.</param>
+      ///<param name="pseudo_random">When set to True, generates the pooling sequence in a pseudorandom fashion, otherwise, in a random fashion. Check paper [Benjamin Graham, Fractional Max-Pooling](http://arxiv.org/abs/1412.6071) for difference between pseudorandom and random.</param>
+      ///<param name="overlapping">When set to True, it means when pooling, the values at the boundary of adjacent pooling cells are used by both cells. For example:  `index  0  1  2  3  4`  `value  20 5  16 3  7`  If the pooling sequence is [0, 2, 4], then 16, at index 2 will be used twice. The result would be [20, 16] for fractional max pooling.</param>
+      ///<param name="deterministic">When set to True, a fixed pooling region will be used when iterating over a FractionalMaxPool node in the computation graph. Mainly used in unit test to make FractionalMaxPool deterministic.</param>
+      ///<param name="seed">If either seed or seed2 are set to be non-zero, the random number generator is seeded by the given seed.  Otherwise, it is seeded by a random seed.</param>
+      ///<param name="seed2">An second seed to avoid seed collision.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): output tensor after fractional max pooling.
+      ///[1] row_pooling_sequence(type: DtInt64): row pooling sequence, needed to calculate gradient.
+      ///[2] col_pooling_sequence(type: DtInt64): column pooling sequence, needed to calculate gradient.
+      ///</return>
+      public Operation FractionalMaxPool (  Output value , float[] pooling_ratio, bool pseudo_random = false , bool overlapping = false , bool deterministic = false , long seed = 0 , long seed2 = 0 ,String opName= "FractionalMaxPool" ) 
+      {
+         OperationDescription desc = NewOperation("FractionalMaxPool", opName);
+         desc.AddInput(value);
+         desc.SetAttr("pooling_ratio", pooling_ratio);
+         if (pseudo_random != false) desc.SetAttr("pseudo_random", pseudo_random);
+         if (overlapping != false) desc.SetAttr("overlapping", overlapping);
+         if (deterministic != false) desc.SetAttr("deterministic", deterministic);
+         if (seed != 0) desc.SetAttr("seed", seed);
+         if (seed2 != 0) desc.SetAttr("seed2", seed2);
          return desc.FinishOperation();
       } 
 
@@ -3585,6 +3036,25 @@ namespace Emgu.TF
          desc.AddInput(off_value);
 
          if (axis != -1) desc.SetAttr("axis", axis);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes rectified linear gradients for a Relu operation.
+      ///</summary>
+      ///<param name="gradients">Input to the operation: The backpropagated gradients to the corresponding Relu operation.</param>
+      ///<param name="features">Input to the operation: The features passed as input to the corresponding Relu operation, OR the outputs of that operation (both work equivalently).</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] backprops(type: DtInvalid): `gradients * (features &gt; 0)`.
+      ///</return>
+      public Operation ReluGrad (  Output gradients , Output features ,String opName= "ReluGrad" ) 
+      {
+         OperationDescription desc = NewOperation("ReluGrad", opName);
+         desc.AddInput(gradients);
+         desc.AddInput(features);
+
+
          return desc.FinishOperation();
       } 
 
@@ -3641,6 +3111,32 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Quantizes then dequantizes a tensor.
+      ///</summary>
+      ///<param name="input">Input to the operation. </param>
+      ///<param name="input_min">Input to the operation. </param>
+      ///<param name="input_max">Input to the operation. </param>
+      ///<param name="num_bits">Input to the operation. </param>
+      ///<param name="signed_input"></param>
+      ///<param name="range_given"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation QuantizeAndDequantizeV3 (  Output input , Output input_min , Output input_max , Output num_bits , bool signed_input = true , bool range_given = true ,String opName= "QuantizeAndDequantizeV3" ) 
+      {
+         OperationDescription desc = NewOperation("QuantizeAndDequantizeV3", opName);
+         desc.AddInput(input);
+         desc.AddInput(input_min);
+         desc.AddInput(input_max);
+         desc.AddInput(num_bits);
+
+         if (signed_input != true) desc.SetAttr("signed_input", signed_input);
+         if (range_given != true) desc.SetAttr("range_given", range_given);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Quantize the 'input' tensor of type float to 'output' tensor of type 'T'.
       ///</summary>
       ///<param name="input">Input to the operation. </param>
@@ -3662,29 +3158,6 @@ namespace Emgu.TF
          desc.AddInput(max_range);
          desc.SetAttr("T", T);
          if (mode != null) desc.SetAttr("mode", mode);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Applies set operation along last dimension of 2 `Tensor` inputs.
-      ///</summary>
-      ///<param name="set1">Input to the operation: `Tensor` with rank `n`. 1st `n-1` dimensions must be the same as `set2`. Dimension `n` contains values in a set, duplicates are allowed but ignored.</param>
-      ///<param name="set2">Input to the operation: `Tensor` with rank `n`. 1st `n-1` dimensions must be the same as `set1`. Dimension `n` contains values in a set, duplicates are allowed but ignored.</param>
-      ///<param name="set_operation"></param>
-      ///<param name="validate_indices"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] result_indices(type: DtInt64): 2D indices of a `SparseTensor`.
-      ///[1] result_values(type: DtInvalid): 1D values of a `SparseTensor`.
-      ///[2] result_shape(type: DtInt64): 1D `Tensor` shape of a `SparseTensor`. `result_shape[0...n-1]` is the same as the 1st `n-1` dimensions of `set1` and `set2`, `result_shape[n]` is the max result set size across all `0...n-1` dimensions.
-      ///</return>
-      public Operation DenseToDenseSetOperation (  Output set1 , Output set2 , string set_operation, bool validate_indices = true ,String opName= "DenseToDenseSetOperation" ) 
-      {
-         OperationDescription desc = NewOperation("DenseToDenseSetOperation", opName);
-         desc.AddInput(set1);
-         desc.AddInput(set2);
-         desc.SetAttr("set_operation", set_operation);
-         if (validate_indices != true) desc.SetAttr("validate_indices", validate_indices);
          return desc.FinishOperation();
       } 
 
@@ -3723,6 +3196,48 @@ namespace Emgu.TF
          desc.AddInput(table_handle);
          desc.AddInput(keys);
          desc.AddInput(values);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Applies set operation along last dimension of 2 `Tensor` inputs.
+      ///</summary>
+      ///<param name="set1">Input to the operation: `Tensor` with rank `n`. 1st `n-1` dimensions must be the same as `set2`. Dimension `n` contains values in a set, duplicates are allowed but ignored.</param>
+      ///<param name="set2">Input to the operation: `Tensor` with rank `n`. 1st `n-1` dimensions must be the same as `set1`. Dimension `n` contains values in a set, duplicates are allowed but ignored.</param>
+      ///<param name="set_operation"></param>
+      ///<param name="validate_indices"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] result_indices(type: DtInt64): 2D indices of a `SparseTensor`.
+      ///[1] result_values(type: DtInvalid): 1D values of a `SparseTensor`.
+      ///[2] result_shape(type: DtInt64): 1D `Tensor` shape of a `SparseTensor`. `result_shape[0...n-1]` is the same as the 1st `n-1` dimensions of `set1` and `set2`, `result_shape[n]` is the max result set size across all `0...n-1` dimensions.
+      ///</return>
+      public Operation DenseToDenseSetOperation (  Output set1 , Output set2 , string set_operation, bool validate_indices = true ,String opName= "DenseToDenseSetOperation" ) 
+      {
+         OperationDescription desc = NewOperation("DenseToDenseSetOperation", opName);
+         desc.AddInput(set1);
+         desc.AddInput(set2);
+         desc.SetAttr("set_operation", set_operation);
+         if (validate_indices != true) desc.SetAttr("validate_indices", validate_indices);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Elementwise computes the bitwise OR of `x` and `y`.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///</return>
+      public Operation BitwiseOr (  Output x , Output y ,String opName= "BitwiseOr" ) 
+      {
+         OperationDescription desc = NewOperation("BitwiseOr", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
 
 
          return desc.FinishOperation();
@@ -3872,23 +3387,23 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///A Reader that outputs the lines of a file delimited by '\n'.
+      ///Scatter `updates` into a new (initially zero) tensor according to `indices`.
       ///</summary>
-      ///<param name="skip_header_lines">Number of lines to skip from the beginning of every file.</param>
-      ///<param name="container">If non-empty, this reader is placed in the given container. Otherwise, a default container is used.</param>
-      ///<param name="shared_name">If non-empty, this reader is named in the given bucket with this shared_name. Otherwise, the node name is used instead.</param>
+      ///<param name="indices">Input to the operation: Index tensor.</param>
+      ///<param name="updates">Input to the operation: Updates to scatter into output.</param>
+      ///<param name="shape">Input to the operation: 1-D. The shape of the resulting tensor.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] reader_handle(type: DtResource): The handle to reference the Reader.
+      ///[0] output(type: DtInvalid): A new tensor with the given shape and updates applied according to the indices.
       ///</return>
-      public Operation TextLineReaderV2 (  long skip_header_lines = 0 , string container = null , string shared_name = null ,String opName= "TextLineReaderV2" ) 
+      public Operation ScatterNd (  Output indices , Output updates , Output shape ,String opName= "ScatterNd" ) 
       {
-         OperationDescription desc = NewOperation("TextLineReaderV2", opName);
+         OperationDescription desc = NewOperation("ScatterNd", opName);
+         desc.AddInput(indices);
+         desc.AddInput(updates);
+         desc.AddInput(shape);
 
 
-         if (skip_header_lines != 0) desc.SetAttr("skip_header_lines", skip_header_lines);
-         if (container != null) desc.SetAttr("container", container);
-         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
          return desc.FinishOperation();
       } 
 
@@ -3912,23 +3427,85 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Scatter `updates` into a new (initially zero) tensor according to `indices`.
+      ///A Reader that outputs the lines of a file delimited by '\n'.
       ///</summary>
-      ///<param name="indices">Input to the operation: Index tensor.</param>
-      ///<param name="updates">Input to the operation: Updates to scatter into output.</param>
-      ///<param name="shape">Input to the operation: 1-D. The shape of the resulting tensor.</param>
+      ///<param name="skip_header_lines">Number of lines to skip from the beginning of every file.</param>
+      ///<param name="container">If non-empty, this reader is placed in the given container. Otherwise, a default container is used.</param>
+      ///<param name="shared_name">If non-empty, this reader is named in the given bucket with this shared_name. Otherwise, the node name is used instead.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtInvalid): A new tensor with the given shape and updates applied according to the indices.
+      ///[0] reader_handle(type: DtResource): The handle to reference the Reader.
       ///</return>
-      public Operation ScatterNd (  Output indices , Output updates , Output shape ,String opName= "ScatterNd" ) 
+      public Operation TextLineReaderV2 (  long skip_header_lines = 0 , string container = null , string shared_name = null ,String opName= "TextLineReaderV2" ) 
       {
-         OperationDescription desc = NewOperation("ScatterNd", opName);
+         OperationDescription desc = NewOperation("TextLineReaderV2", opName);
+
+
+         if (skip_header_lines != 0) desc.SetAttr("skip_header_lines", skip_header_lines);
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Applies sparse addition to `input` using individual values or slices
+      ///</summary>
+      ///<param name="input">Input to the operation: A Tensor.</param>
+      ///<param name="indices">Input to the operation: A Tensor. Must be one of the following types: `int32`, `int64`. A tensor of indices into `input`.</param>
+      ///<param name="updates">Input to the operation: A Tensor. Must have the same type as ref. A tensor of updated values to add to `input`.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): A `Tensor` with the same shape as `input`, containing values of `input` updated with `updates`.
+      ///</return>
+      public Operation ScatterNdNonAliasingAdd (  Output input , Output indices , Output updates ,String opName= "ScatterNdNonAliasingAdd" ) 
+      {
+         OperationDescription desc = NewOperation("ScatterNdNonAliasingAdd", opName);
+         desc.AddInput(input);
          desc.AddInput(indices);
          desc.AddInput(updates);
-         desc.AddInput(shape);
 
 
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Dequeues `n` tuples of one or more tensors from the given queue.
+      ///</summary>
+      ///<param name="handle">Input to the operation: The handle to a queue.</param>
+      ///<param name="n">Input to the operation: The number of tuples to dequeue.</param>
+      ///<param name="component_types">The type of each component in a tuple.</param>
+      ///<param name="timeout_ms">If the queue has fewer than n elements, this operation will block for up to timeout_ms milliseconds. Note: This option is not supported yet.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] components(type: DtInvalid): One or more tensors that were dequeued as a tuple.
+      ///</return>
+      public Operation QueueDequeueManyV2 (  Output handle , Output n , DataType[] component_types, long timeout_ms = -1 ,String opName= "QueueDequeueManyV2" ) 
+      {
+         OperationDescription desc = NewOperation("QueueDequeueManyV2", opName);
+         desc.AddInput(handle);
+         desc.AddInput(n);
+         desc.SetAttr("component_types", component_types);
+         if (timeout_ms != -1) desc.SetAttr("timeout_ms", timeout_ms);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the "logical and" of elements across dimensions of a tensor.
+      ///</summary>
+      ///<param name="input">Input to the operation: The tensor to reduce.</param>
+      ///<param name="reduction_indices">Input to the operation: The dimensions to reduce.</param>
+      ///<param name="keep_dims">If true, retain reduced dimensions with length 1.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtBool): The reduced tensor.
+      ///</return>
+      public Operation All (  Output input , Output reduction_indices , bool keep_dims = false ,String opName= "All" ) 
+      {
+         OperationDescription desc = NewOperation("All", opName);
+         desc.AddInput(input);
+         desc.AddInput(reduction_indices);
+
+         if (keep_dims != false) desc.SetAttr("keep_dims", keep_dims);
          return desc.FinishOperation();
       } 
 
@@ -3985,37 +3562,18 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Computes the "logical and" of elements across dimensions of a tensor.
-      ///</summary>
-      ///<param name="input">Input to the operation: The tensor to reduce.</param>
-      ///<param name="reduction_indices">Input to the operation: The dimensions to reduce.</param>
-      ///<param name="keep_dims">If true, retain reduced dimensions with length 1.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtBool): The reduced tensor.
-      ///</return>
-      public Operation All (  Output input , Output reduction_indices , bool keep_dims = false ,String opName= "All" ) 
-      {
-         OperationDescription desc = NewOperation("All", opName);
-         desc.AddInput(input);
-         desc.AddInput(reduction_indices);
-
-         if (keep_dims != false) desc.SetAttr("keep_dims", keep_dims);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///Fake-quantize the 'inputs' tensor, type float to 'outputs' tensor of same type.
       ///</summary>
       ///<param name="inputs">Input to the operation. </param>
       ///<param name="min"></param>
       ///<param name="max"></param>
       ///<param name="num_bits"></param>
+      ///<param name="narrow_range"></param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
       ///[0] outputs(type: DtFloat).
       ///</return>
-      public Operation FakeQuantWithMinMaxArgs (  Output inputs , float min = -6f , float max = 6f , long num_bits = 8 ,String opName= "FakeQuantWithMinMaxArgs" ) 
+      public Operation FakeQuantWithMinMaxArgs (  Output inputs , float min = -6f , float max = 6f , long num_bits = 8 , bool narrow_range = false ,String opName= "FakeQuantWithMinMaxArgs" ) 
       {
          OperationDescription desc = NewOperation("FakeQuantWithMinMaxArgs", opName);
          desc.AddInput(inputs);
@@ -4023,6 +3581,7 @@ namespace Emgu.TF
          if (min != -6f) desc.SetAttr("min", min);
          if (max != 6f) desc.SetAttr("max", max);
          if (num_bits != 8) desc.SetAttr("num_bits", num_bits);
+         if (narrow_range != false) desc.SetAttr("narrow_range", narrow_range);
          return desc.FinishOperation();
       } 
 
@@ -4068,11 +3627,12 @@ namespace Emgu.TF
       ///<param name="min"></param>
       ///<param name="max"></param>
       ///<param name="num_bits"></param>
+      ///<param name="narrow_range"></param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
       ///[0] backprops(type: DtFloat): Backpropagated gradients below the FakeQuantWithMinMaxArgs operation: `gradients * (inputs &gt;= min &amp;&amp; inputs &lt;= max)`.
       ///</return>
-      public Operation FakeQuantWithMinMaxArgsGradient (  Output gradients , Output inputs , float min = -6f , float max = 6f , long num_bits = 8 ,String opName= "FakeQuantWithMinMaxArgsGradient" ) 
+      public Operation FakeQuantWithMinMaxArgsGradient (  Output gradients , Output inputs , float min = -6f , float max = 6f , long num_bits = 8 , bool narrow_range = false ,String opName= "FakeQuantWithMinMaxArgsGradient" ) 
       {
          OperationDescription desc = NewOperation("FakeQuantWithMinMaxArgsGradient", opName);
          desc.AddInput(gradients);
@@ -4081,6 +3641,7 @@ namespace Emgu.TF
          if (min != -6f) desc.SetAttr("min", min);
          if (max != 6f) desc.SetAttr("max", max);
          if (num_bits != 8) desc.SetAttr("num_bits", num_bits);
+         if (narrow_range != false) desc.SetAttr("narrow_range", narrow_range);
          return desc.FinishOperation();
       } 
 
@@ -4129,11 +3690,12 @@ namespace Emgu.TF
       ///<param name="min">Input to the operation. </param>
       ///<param name="max">Input to the operation. </param>
       ///<param name="num_bits"></param>
+      ///<param name="narrow_range"></param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
       ///[0] outputs(type: DtFloat).
       ///</return>
-      public Operation FakeQuantWithMinMaxVars (  Output inputs , Output min , Output max , long num_bits = 8 ,String opName= "FakeQuantWithMinMaxVars" ) 
+      public Operation FakeQuantWithMinMaxVars (  Output inputs , Output min , Output max , long num_bits = 8 , bool narrow_range = false ,String opName= "FakeQuantWithMinMaxVars" ) 
       {
          OperationDescription desc = NewOperation("FakeQuantWithMinMaxVars", opName);
          desc.AddInput(inputs);
@@ -4141,6 +3703,7 @@ namespace Emgu.TF
          desc.AddInput(max);
 
          if (num_bits != 8) desc.SetAttr("num_bits", num_bits);
+         if (narrow_range != false) desc.SetAttr("narrow_range", narrow_range);
          return desc.FinishOperation();
       } 
 
@@ -4152,13 +3715,14 @@ namespace Emgu.TF
       ///<param name="min">Input to the operation. </param>
       ///<param name="max">Input to the operation. </param>
       ///<param name="num_bits">The bitwidth of the quantization; between 2 and 8, inclusive.</param>
+      ///<param name="narrow_range">Whether to quantize into 2^num_bits - 1 distinct values.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
       ///[0] backprops_wrt_input(type: DtFloat): Backpropagated gradients w.r.t. inputs: `gradients * (inputs &gt;= min &amp;&amp; inputs &lt;= max)`.
       ///[1] backprop_wrt_min(type: DtFloat): Backpropagated gradients w.r.t. min parameter: `sum(gradients * (inputs &lt; min))`.
       ///[2] backprop_wrt_max(type: DtFloat): Backpropagated gradients w.r.t. max parameter: `sum(gradients * (inputs &gt; max))`.
       ///</return>
-      public Operation FakeQuantWithMinMaxVarsGradient (  Output gradients , Output inputs , Output min , Output max , long num_bits = 8 ,String opName= "FakeQuantWithMinMaxVarsGradient" ) 
+      public Operation FakeQuantWithMinMaxVarsGradient (  Output gradients , Output inputs , Output min , Output max , long num_bits = 8 , bool narrow_range = false ,String opName= "FakeQuantWithMinMaxVarsGradient" ) 
       {
          OperationDescription desc = NewOperation("FakeQuantWithMinMaxVarsGradient", opName);
          desc.AddInput(gradients);
@@ -4167,6 +3731,7 @@ namespace Emgu.TF
          desc.AddInput(max);
 
          if (num_bits != 8) desc.SetAttr("num_bits", num_bits);
+         if (narrow_range != false) desc.SetAttr("narrow_range", narrow_range);
          return desc.FinishOperation();
       } 
 
@@ -4194,11 +3759,12 @@ namespace Emgu.TF
       ///<param name="min">Input to the operation. </param>
       ///<param name="max">Input to the operation. </param>
       ///<param name="num_bits"></param>
+      ///<param name="narrow_range"></param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
       ///[0] outputs(type: DtFloat).
       ///</return>
-      public Operation FakeQuantWithMinMaxVarsPerChannel (  Output inputs , Output min , Output max , long num_bits = 8 ,String opName= "FakeQuantWithMinMaxVarsPerChannel" ) 
+      public Operation FakeQuantWithMinMaxVarsPerChannel (  Output inputs , Output min , Output max , long num_bits = 8 , bool narrow_range = false ,String opName= "FakeQuantWithMinMaxVarsPerChannel" ) 
       {
          OperationDescription desc = NewOperation("FakeQuantWithMinMaxVarsPerChannel", opName);
          desc.AddInput(inputs);
@@ -4206,6 +3772,7 @@ namespace Emgu.TF
          desc.AddInput(max);
 
          if (num_bits != 8) desc.SetAttr("num_bits", num_bits);
+         if (narrow_range != false) desc.SetAttr("narrow_range", narrow_range);
          return desc.FinishOperation();
       } 
 
@@ -4240,13 +3807,14 @@ namespace Emgu.TF
       ///<param name="min">Input to the operation. </param>
       ///<param name="max">Input to the operation. </param>
       ///<param name="num_bits">The bitwidth of the quantization; between 2 and 8, inclusive.</param>
+      ///<param name="narrow_range">Whether to quantize into 2^num_bits - 1 distinct values.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
       ///[0] backprops_wrt_input(type: DtFloat): Backpropagated gradients w.r.t. inputs, shape same as `inputs`:   `gradients * (inputs &gt;= min &amp;&amp; inputs &lt;= max)`.
       ///[1] backprop_wrt_min(type: DtFloat): Backpropagated gradients w.r.t. min parameter, shape `[d]`: `sum_per_d(gradients * (inputs &lt; min))`.
       ///[2] backprop_wrt_max(type: DtFloat): Backpropagated gradients w.r.t. max parameter, shape `[d]`: `sum_per_d(gradients * (inputs &gt; max))`.
       ///</return>
-      public Operation FakeQuantWithMinMaxVarsPerChannelGradient (  Output gradients , Output inputs , Output min , Output max , long num_bits = 8 ,String opName= "FakeQuantWithMinMaxVarsPerChannelGradient" ) 
+      public Operation FakeQuantWithMinMaxVarsPerChannelGradient (  Output gradients , Output inputs , Output min , Output max , long num_bits = 8 , bool narrow_range = false ,String opName= "FakeQuantWithMinMaxVarsPerChannelGradient" ) 
       {
          OperationDescription desc = NewOperation("FakeQuantWithMinMaxVarsPerChannelGradient", opName);
          desc.AddInput(gradients);
@@ -4255,6 +3823,7 @@ namespace Emgu.TF
          desc.AddInput(max);
 
          if (num_bits != 8) desc.SetAttr("num_bits", num_bits);
+         if (narrow_range != false) desc.SetAttr("narrow_range", narrow_range);
          return desc.FinishOperation();
       } 
 
@@ -4379,25 +3948,6 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Returns the index with the largest value across dimensions of a tensor.
-      ///</summary>
-      ///<param name="input">Input to the operation. </param>
-      ///<param name="dimension">Input to the operation: int32, 0 &lt;= dimension &lt; rank(input).  Describes which dimension of the input Tensor to reduce across. For vectors, use dimension = 0.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInt64).
-      ///</return>
-      public Operation ArgMax (  Output input , Output dimension ,String opName= "ArgMax" ) 
-      {
-         OperationDescription desc = NewOperation("ArgMax", opName);
-         desc.AddInput(input);
-         desc.AddInput(dimension);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///Converts a sparse representation into a dense tensor.
       ///</summary>
       ///<param name="sparse_indices">Input to the operation: 0-D, 1-D, or 2-D.  `sparse_indices[i]` contains the complete index where `sparse_values[i]` will be placed.</param>
@@ -4462,6 +4012,32 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Transforms a spectrogram into a form that's useful for speech recognition.
+      ///</summary>
+      ///<param name="spectrogram">Input to the operation: Typically produced by the Spectrogram op, with magnitude_squared set to true.</param>
+      ///<param name="sample_rate">Input to the operation: How many samples per second the source audio used.</param>
+      ///<param name="upper_frequency_limit">The highest frequency to use when calculating the ceptstrum.</param>
+      ///<param name="lower_frequency_limit">The lowest frequency to use when calculating the ceptstrum.</param>
+      ///<param name="filterbank_channel_count">Resolution of the Mel bank used internally.</param>
+      ///<param name="dct_coefficient_count">How many output channels to produce per time slice.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtFloat).
+      ///</return>
+      public Operation Mfcc (  Output spectrogram , Output sample_rate , float upper_frequency_limit = 4000f , float lower_frequency_limit = 20f , long filterbank_channel_count = 40 , long dct_coefficient_count = 13 ,String opName= "Mfcc" ) 
+      {
+         OperationDescription desc = NewOperation("Mfcc", opName);
+         desc.AddInput(spectrogram);
+         desc.AddInput(sample_rate);
+
+         if (upper_frequency_limit != 4000f) desc.SetAttr("upper_frequency_limit", upper_frequency_limit);
+         if (lower_frequency_limit != 20f) desc.SetAttr("lower_frequency_limit", lower_frequency_limit);
+         if (filterbank_channel_count != 40) desc.SetAttr("filterbank_channel_count", filterbank_channel_count);
+         if (dct_coefficient_count != 13) desc.SetAttr("dct_coefficient_count", dct_coefficient_count);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Applies L1 regularization shrink step on the parameters.
       ///</summary>
       ///<param name="weights">Input to the operation: a list of vectors where each value is the weight associated with a feature group.</param>
@@ -4503,28 +4079,21 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Transforms a spectrogram into a form that's useful for speech recognition.
+      ///3D real-valued fast Fourier transform.
       ///</summary>
-      ///<param name="spectrogram">Input to the operation: Typically produced by the Spectrogram op, with magnitude_squared set to true.</param>
-      ///<param name="sample_rate">Input to the operation: How many samples per second the source audio used.</param>
-      ///<param name="upper_frequency_limit">The highest frequency to use when calculating the ceptstrum.</param>
-      ///<param name="lower_frequency_limit">The lowest frequency to use when calculating the ceptstrum.</param>
-      ///<param name="filterbank_channel_count">Resolution of the Mel bank used internally.</param>
-      ///<param name="dct_coefficient_count">How many output channels to produce per time slice.</param>
+      ///<param name="input">Input to the operation: A float32 tensor.</param>
+      ///<param name="fft_length">Input to the operation: An int32 tensor of shape [3]. The FFT length for each dimension.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtFloat).
+      ///[0] output(type: DtComplex64): A complex64 tensor of the same rank as `input`. The inner-most 3   dimensions of `input` are replaced with the their 3D Fourier transform. The   inner-most dimension contains `fft_length / 2 + 1` unique frequency   components.  @compatibility(numpy) Equivalent to np.fft.rfftn with 3 dimensions. @end_compatibility
       ///</return>
-      public Operation Mfcc (  Output spectrogram , Output sample_rate , float upper_frequency_limit = 4000f , float lower_frequency_limit = 20f , long filterbank_channel_count = 40 , long dct_coefficient_count = 13 ,String opName= "Mfcc" ) 
+      public Operation RFFT3D (  Output input , Output fft_length ,String opName= "RFFT3D" ) 
       {
-         OperationDescription desc = NewOperation("Mfcc", opName);
-         desc.AddInput(spectrogram);
-         desc.AddInput(sample_rate);
+         OperationDescription desc = NewOperation("RFFT3D", opName);
+         desc.AddInput(input);
+         desc.AddInput(fft_length);
 
-         if (upper_frequency_limit != 4000f) desc.SetAttr("upper_frequency_limit", upper_frequency_limit);
-         if (lower_frequency_limit != 20f) desc.SetAttr("lower_frequency_limit", lower_frequency_limit);
-         if (filterbank_channel_count != 40) desc.SetAttr("filterbank_channel_count", filterbank_channel_count);
-         if (dct_coefficient_count != 13) desc.SetAttr("dct_coefficient_count", dct_coefficient_count);
+
          return desc.FinishOperation();
       } 
 
@@ -4554,65 +4123,6 @@ namespace Emgu.TF
          desc.SetAttr("range_max", range_max);
          if (seed != 0) desc.SetAttr("seed", seed);
          if (seed2 != 0) desc.SetAttr("seed2", seed2);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Debug NaN Value Counter Op
-      ///</summary>
-      ///<param name="input">Input to the operation: Input tensor, non-Reference type.</param>
-      ///<param name="tensor_name">Name of the input tensor.</param>
-      ///<param name="gated_grpc">Whether this op will be gated. If any of the debug_urls of this debug node is of the grpc:// scheme, when the value of this attribute is set to True, the data will not actually be sent via the grpc stream unless this debug op has been enabled at the debug_url. If all of the debug_urls of this debug node are of the grpc:// scheme and the debug op is enabled at none of them, the output will be an empty Tensor.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInt64): An integer output tensor that is the number of NaNs in the input.
-      ///</return>
-      //The following attributes are not known: debug_urls: list(string)
-      public Operation DebugNanCount (  Output input , string tensor_name = null , bool gated_grpc = false ,String opName= "DebugNanCount" ) 
-      {
-         OperationDescription desc = NewOperation("DebugNanCount", opName);
-         desc.AddInput(input);
-
-         if (tensor_name != null) desc.SetAttr("tensor_name", tensor_name);
-         if (gated_grpc != false) desc.SetAttr("gated_grpc", gated_grpc);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///3D real-valued fast Fourier transform.
-      ///</summary>
-      ///<param name="input">Input to the operation: A float32 tensor.</param>
-      ///<param name="fft_length">Input to the operation: An int32 tensor of shape [3]. The FFT length for each dimension.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtComplex64): A complex64 tensor of the same rank as `input`. The inner-most 3   dimensions of `input` are replaced with the their 3D Fourier transform. The   inner-most dimension contains `fft_length / 2 + 1` unique frequency   components.  @compatibility(numpy) Equivalent to np.fft.rfftn with 3 dimensions. @end_compatibility
-      ///</return>
-      public Operation RFFT3D (  Output input , Output fft_length ,String opName= "RFFT3D" ) 
-      {
-         OperationDescription desc = NewOperation("RFFT3D", opName);
-         desc.AddInput(input);
-         desc.AddInput(fft_length);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Copy Op.
-      ///</summary>
-      ///<param name="input">Input to the operation: Input tensor.</param>
-      ///<param name="tensor_name">The name of the input tensor.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): Output tensor, deep-copied from input.
-      ///</return>
-      //The following attributes are not known: debug_ops_spec: list(string)
-      public Operation Copy (  Output input , string tensor_name = null ,String opName= "Copy" ) 
-      {
-         OperationDescription desc = NewOperation("Copy", opName);
-         desc.AddInput(input);
-
-         if (tensor_name != null) desc.SetAttr("tensor_name", tensor_name);
          return desc.FinishOperation();
       } 
 
@@ -4680,6 +4190,50 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Creates a dataset that concatenates `input_dataset` with `another_dataset`.
+      ///</summary>
+      ///<param name="input_dataset">Input to the operation. </param>
+      ///<param name="another_dataset">Input to the operation. </param>
+      ///<param name="output_types"></param>
+      ///<param name="output_shapes"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] handle(type: DtResource).
+      ///</return>
+      public Operation ConcatenateDataset (  Output input_dataset , Output another_dataset , DataType[] output_types, long[][] output_shapes,String opName= "ConcatenateDataset" ) 
+      {
+         OperationDescription desc = NewOperation("ConcatenateDataset", opName);
+         desc.AddInput(input_dataset);
+         desc.AddInput(another_dataset);
+         desc.SetAttr("output_types", output_types);
+         desc.SetAttrShapeList("output_shapes", output_shapes);
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Creates a handle to a Variable resource.
+      ///</summary>
+      ///<param name="dtype">the type of this variable. Must agree with the dtypes of all ops using this variable.</param>
+      ///<param name="shape">The (possibly partially specified) shape of this variable.</param>
+      ///<param name="container">the container this variable is placed in.</param>
+      ///<param name="shared_name">the name by which this variable is referred to.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] resource(type: DtResource).
+      ///</return>
+      public Operation VarHandleOp (  DataType dtype, long[] shape, string container = null , string shared_name = null ,String opName= "VarHandleOp" ) 
+      {
+         OperationDescription desc = NewOperation("VarHandleOp", opName);
+
+         desc.SetAttr("dtype", dtype);
+         desc.SetAttrShape("shape", shape);
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Generates labels for candidate sampling with a learned unigram distribution.
       ///</summary>
       ///<param name="true_classes">Input to the operation: A batch_size * num_true matrix, in which each row contains the IDs of the num_true target_classes in the corresponding original label.</param>
@@ -4729,6 +4283,32 @@ namespace Emgu.TF
          if (container != null) desc.SetAttr("container", container);
          if (shared_name != null) desc.SetAttr("shared_name", shared_name);
          if (use_node_name_sharing != false) desc.SetAttr("use_node_name_sharing", use_node_name_sharing);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the gradient of morphological 2-D dilation with respect to the input.
+      ///</summary>
+      ///<param name="input">Input to the operation: 4-D with shape `[batch, in_height, in_width, depth]`.</param>
+      ///<param name="filter">Input to the operation: 3-D with shape `[filter_height, filter_width, depth]`.</param>
+      ///<param name="out_backprop">Input to the operation: 4-D with shape `[batch, out_height, out_width, depth]`.</param>
+      ///<param name="strides">1-D of length 4. The stride of the sliding window for each dimension of the input tensor. Must be: `[1, stride_height, stride_width, 1]`.</param>
+      ///<param name="rates">1-D of length 4. The input stride for atrous morphological dilation. Must be: `[1, rate_height, rate_width, 1]`.</param>
+      ///<param name="padding">The type of padding algorithm to use.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] in_backprop(type: DtInvalid): 4-D with shape `[batch, in_height, in_width, depth]`.
+      ///</return>
+      public Operation Dilation2DBackpropInput (  Output input , Output filter , Output out_backprop , long[] strides, long[] rates, string padding,String opName= "Dilation2DBackpropInput" ) 
+      {
+         OperationDescription desc = NewOperation("Dilation2DBackpropInput", opName);
+         desc.AddInput(input);
+         desc.AddInput(filter);
+         desc.AddInput(out_backprop);
+         desc.SetAttr("strides", strides);
+         desc.SetAttr("rates", rates);
+         desc.SetAttr("padding", padding);
+
          return desc.FinishOperation();
       } 
 
@@ -4991,59 +4571,6 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///A Reader that outputs fixed-length records from a file.
-      ///</summary>
-      ///<param name="record_bytes">Number of bytes in the record.</param>
-      ///<param name="header_bytes">Number of bytes in the header, defaults to 0.</param>
-      ///<param name="footer_bytes">Number of bytes in the footer, defaults to 0.</param>
-      ///<param name="hop_bytes">Number of bytes to hop before each read. Default of 0 means using record_bytes.</param>
-      ///<param name="container">If non-empty, this reader is placed in the given container. Otherwise, a default container is used.</param>
-      ///<param name="shared_name">If non-empty, this reader is named in the given bucket with this shared_name. Otherwise, the node name is used instead.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] reader_handle(type: DtResource): The handle to reference the Reader.
-      ///</return>
-      public Operation FixedLengthRecordReaderV2 (  long record_bytes, long header_bytes = 0 , long footer_bytes = 0 , long hop_bytes = 0 , string container = null , string shared_name = null ,String opName= "FixedLengthRecordReaderV2" ) 
-      {
-         OperationDescription desc = NewOperation("FixedLengthRecordReaderV2", opName);
-
-         desc.SetAttr("record_bytes", record_bytes);
-         if (header_bytes != 0) desc.SetAttr("header_bytes", header_bytes);
-         if (footer_bytes != 0) desc.SetAttr("footer_bytes", footer_bytes);
-         if (hop_bytes != 0) desc.SetAttr("hop_bytes", hop_bytes);
-         if (container != null) desc.SetAttr("container", container);
-         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes second-order gradients of the maxpooling function.
-      ///</summary>
-      ///<param name="orig_input">Input to the operation: The original input tensor.</param>
-      ///<param name="orig_output">Input to the operation: The original output tensor.</param>
-      ///<param name="grad">Input to the operation: 4-D.  Gradients of gradients w.r.t. the input of `max_pool`.</param>
-      ///<param name="ksize">The size of the window for each dimension of the input tensor.</param>
-      ///<param name="strides">The stride of the sliding window for each dimension of the input tensor.</param>
-      ///<param name="padding">The type of padding algorithm to use.</param>
-      ///<param name="data_format">Specify the data format of the input and output data. With the default format "NHWC", the data is stored in the order of:     [batch, in_height, in_width, in_channels]. Alternatively, the format could be "NCHW", the data storage order of:     [batch, in_channels, in_height, in_width].</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): Gradients of gradients w.r.t. the input to `max_pool`.
-      ///</return>
-      public Operation MaxPoolGradGrad (  Output orig_input , Output orig_output , Output grad , long[] ksize, long[] strides, string padding, string data_format = null ,String opName= "MaxPoolGradGrad" ) 
-      {
-         OperationDescription desc = NewOperation("MaxPoolGradGrad", opName);
-         desc.AddInput(orig_input);
-         desc.AddInput(orig_output);
-         desc.AddInput(grad);
-         desc.SetAttr("ksize", ksize);
-         desc.SetAttr("strides", strides);
-         desc.SetAttr("padding", padding);
-         if (data_format != null) desc.SetAttr("data_format", data_format);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///Forwards the value of an available tensor from `inputs` to `output`.
       ///</summary>
       ///<param name="inputs">Input to the operation: The input tensors, exactly one of which will become available.</param>
@@ -5101,6 +4628,79 @@ namespace Emgu.TF
          desc.AddInput(other_arguments);
          desc.SetAttr("output_types", output_types);
          desc.SetAttrShapeList("output_shapes", output_shapes);
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes second-order gradients of the maxpooling function.
+      ///</summary>
+      ///<param name="orig_input">Input to the operation: The original input tensor.</param>
+      ///<param name="orig_output">Input to the operation: The original output tensor.</param>
+      ///<param name="grad">Input to the operation: 4-D.  Gradients of gradients w.r.t. the input of `max_pool`.</param>
+      ///<param name="ksize">The size of the window for each dimension of the input tensor.</param>
+      ///<param name="strides">The stride of the sliding window for each dimension of the input tensor.</param>
+      ///<param name="padding">The type of padding algorithm to use.</param>
+      ///<param name="data_format">Specify the data format of the input and output data. With the default format "NHWC", the data is stored in the order of:     [batch, in_height, in_width, in_channels]. Alternatively, the format could be "NCHW", the data storage order of:     [batch, in_channels, in_height, in_width].</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): Gradients of gradients w.r.t. the input to `max_pool`.
+      ///</return>
+      public Operation MaxPoolGradGrad (  Output orig_input , Output orig_output , Output grad , long[] ksize, long[] strides, string padding, string data_format = null ,String opName= "MaxPoolGradGrad" ) 
+      {
+         OperationDescription desc = NewOperation("MaxPoolGradGrad", opName);
+         desc.AddInput(orig_input);
+         desc.AddInput(orig_output);
+         desc.AddInput(grad);
+         desc.SetAttr("ksize", ksize);
+         desc.SetAttr("strides", strides);
+         desc.SetAttr("padding", padding);
+         if (data_format != null) desc.SetAttr("data_format", data_format);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///A Reader that outputs fixed-length records from a file.
+      ///</summary>
+      ///<param name="record_bytes">Number of bytes in the record.</param>
+      ///<param name="header_bytes">Number of bytes in the header, defaults to 0.</param>
+      ///<param name="footer_bytes">Number of bytes in the footer, defaults to 0.</param>
+      ///<param name="hop_bytes">Number of bytes to hop before each read. Default of 0 means using record_bytes.</param>
+      ///<param name="container">If non-empty, this reader is placed in the given container. Otherwise, a default container is used.</param>
+      ///<param name="shared_name">If non-empty, this reader is named in the given bucket with this shared_name. Otherwise, the node name is used instead.</param>
+      ///<param name="encoding">The type of encoding for the file. Currently ZLIB and GZIP are supported. Defaults to none.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] reader_handle(type: DtResource): The handle to reference the Reader.
+      ///</return>
+      public Operation FixedLengthRecordReaderV2 (  long record_bytes, long header_bytes = 0 , long footer_bytes = 0 , long hop_bytes = 0 , string container = null , string shared_name = null , string encoding = null ,String opName= "FixedLengthRecordReaderV2" ) 
+      {
+         OperationDescription desc = NewOperation("FixedLengthRecordReaderV2", opName);
+
+         desc.SetAttr("record_bytes", record_bytes);
+         if (header_bytes != 0) desc.SetAttr("header_bytes", header_bytes);
+         if (footer_bytes != 0) desc.SetAttr("footer_bytes", footer_bytes);
+         if (hop_bytes != 0) desc.SetAttr("hop_bytes", hop_bytes);
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         if (encoding != null) desc.SetAttr("encoding", encoding);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Reads the value of a variable.
+      ///</summary>
+      ///<param name="resource">Input to the operation: handle to the resource in which to store the variable.</param>
+      ///<param name="dtype">the dtype of the value.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] value(type: DtInvalid).
+      ///</return>
+      public Operation ReadVariableOp (  Output resource , DataType dtype,String opName= "ReadVariableOp" ) 
+      {
+         OperationDescription desc = NewOperation("ReadVariableOp", opName);
+         desc.AddInput(resource);
+         desc.SetAttr("dtype", dtype);
 
          return desc.FinishOperation();
       } 
@@ -5175,6 +4775,23 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Computes sin of x element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid).
+      ///</return>
+      public Operation Sin (  Output x ,String opName= "Sin" ) 
+      {
+         OperationDescription desc = NewOperation("Sin", opName);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Creates or finds a child frame, and makes `data` available to the child frame.
       ///</summary>
       ///<param name="data">Input to the operation: The tensor to be made available to the child frame.</param>
@@ -5196,46 +4813,19 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Computes sin of x element-wise.
+      ///Computes softsign: `features / (abs(features) + 1)`.
       ///</summary>
-      ///<param name="x">Input to the operation. </param>
+      ///<param name="features">Input to the operation. </param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] y(type: DtInvalid).
+      ///[0] activations(type: DtInvalid).
       ///</return>
-      public Operation Sin (  Output x ,String opName= "Sin" ) 
+      public Operation Softsign (  Output features ,String opName= "Softsign" ) 
       {
-         OperationDescription desc = NewOperation("Sin", opName);
-         desc.AddInput(x);
+         OperationDescription desc = NewOperation("Softsign", opName);
+         desc.AddInput(features);
 
 
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Debug Numeric Summary Op.
-      ///</summary>
-      ///<param name="input">Input to the operation: Input tensor, non-Reference type, float or double.</param>
-      ///<param name="tensor_name">Name of the input tensor.</param>
-      ///<param name="lower_bound">(float) The lower bound &lt;= which values will be included in the generalized -inf count. Default: -inf.</param>
-      ///<param name="upper_bound">(float) The upper bound &gt;= which values will be included in the generalized +inf count. Default: +inf.</param>
-      ///<param name="mute_if_healthy">(bool) Do not send data to the debug URLs unless at least one of elements [2], [3] and [7] (i.e., the nan count and the generalized -inf and inf counts) is non-zero.</param>
-      ///<param name="gated_grpc">Whether this op will be gated. If any of the debug_urls of this debug node is of the grpc:// scheme, when the value of this attribute is set to True, the data will not actually be sent via the grpc stream unless this debug op has been enabled at the debug_url. If all of the debug_urls of this debug node are of the grpc:// scheme and the debug op is enabled at none of them, the output will be an empty Tensor.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtDouble): A double tensor of shape [12], the elements of which are:   [0]: is initialized (1.0) or not (0.0).   [1]: total number of elements   [2]: NaN element count   [3]: generalized -inf count: elements &lt;= lower_bound. lower_bound is -inf by     default.   [4]: negative element count (excluding -inf), if lower_bound is the default     -inf. Otherwise, this is the count of elements &gt; lower_bound and &lt; 0.   [5]: zero element count   [6]: positive element count (excluding +inf), if upper_bound is the default     -inf. Otherwise, this is the count of elements &lt; upper_bound and &gt; 0.   [7]: generalized +inf count, elements &gt;= upper_bound. upper_bound is +inf by     default. Output elements [1:8] are all zero, if the tensor is uninitialized.   [8]: minimum of all non-inf and non-NaN elements.        If uninitialized or no such element exists: +inf.   [9]: maximum of all non-inf and non-NaN elements.        If uninitialized or no such element exists: -inf.   [10]: mean of all non-inf and non-NaN elements.         If uninitialized or no such element exists: NaN.   [11]: variance of all non-inf and non-NaN elements.         If uninitialized or no such element exists: NaN.
-      ///</return>
-      //The following attributes are not known: debug_urls: list(string)
-      public Operation DebugNumericSummary (  Output input , string tensor_name = null , float lower_bound = Single.NegativeInfinity , float upper_bound = Single.PositiveInfinity , bool mute_if_healthy = false , bool gated_grpc = false ,String opName= "DebugNumericSummary" ) 
-      {
-         OperationDescription desc = NewOperation("DebugNumericSummary", opName);
-         desc.AddInput(input);
-
-         if (tensor_name != null) desc.SetAttr("tensor_name", tensor_name);
-         if (lower_bound != Single.NegativeInfinity) desc.SetAttr("lower_bound", lower_bound);
-         if (upper_bound != Single.PositiveInfinity) desc.SetAttr("upper_bound", upper_bound);
-         if (mute_if_healthy != false) desc.SetAttr("mute_if_healthy", mute_if_healthy);
-         if (gated_grpc != false) desc.SetAttr("gated_grpc", gated_grpc);
          return desc.FinishOperation();
       } 
 
@@ -5261,9 +4851,9 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Delete the stack from its resource container.
+      ///Deprecated, use StackCloseV2.
       ///</summary>
-      ///<param name="handle">Input to the operation: The handle to a stack.</param>
+      ///<param name="handle">Input to the operation. </param>
       ///<param name="opName">The name of the operation</param>
       public Operation StackClose (  Output handle ,String opName= "StackClose" ) 
       {
@@ -5340,6 +4930,70 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Makes its input available to the next iteration.
+      ///</summary>
+      ///<param name="data">Input to the operation: The tensor to be made available to the next iteration.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): The same tensor as `data`.
+      ///</return>
+      public Operation RefNextIteration (  Output data ,String opName= "RefNextIteration" ) 
+      {
+         OperationDescription desc = NewOperation("RefNextIteration", opName);
+         desc.AddInput(data);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Produces the max pool of the input tensor for quantized types.
+      ///</summary>
+      ///<param name="input">Input to the operation: The 4D (batch x rows x cols x depth) Tensor to MaxReduce over.</param>
+      ///<param name="min_input">Input to the operation: The float value that the lowest quantized input value represents.</param>
+      ///<param name="max_input">Input to the operation: The float value that the highest quantized input value represents.</param>
+      ///<param name="ksize">The size of the window for each dimension of the input tensor. The length must be 4 to match the number of dimensions of the input.</param>
+      ///<param name="strides">The stride of the sliding window for each dimension of the input tensor. The length must be 4 to match the number of dimensions of the input.</param>
+      ///<param name="padding">The type of padding algorithm to use.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///[1] min_output(type: DtFloat): The float value that the lowest quantized output value represents.
+      ///[2] max_output(type: DtFloat): The float value that the highest quantized output value represents.
+      ///</return>
+      public Operation QuantizedMaxPool (  Output input , Output min_input , Output max_input , long[] ksize, long[] strides, string padding,String opName= "QuantizedMaxPool" ) 
+      {
+         OperationDescription desc = NewOperation("QuantizedMaxPool", opName);
+         desc.AddInput(input);
+         desc.AddInput(min_input);
+         desc.AddInput(max_input);
+         desc.SetAttr("ksize", ksize);
+         desc.SetAttr("strides", strides);
+         desc.SetAttr("padding", padding);
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Reinterpret the bytes of a string as a vector of numbers.
+      ///</summary>
+      ///<param name="bytes">Input to the operation: All the elements must have the same length.</param>
+      ///<param name="out_type"></param>
+      ///<param name="little_endian">Whether the input `bytes` are in little-endian order. Ignored for `out_type` values that are stored in a single byte like `uint8`.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): A Tensor with one more dimension than the input `bytes`.  The added dimension will have size equal to the length of the elements of `bytes` divided by the number of bytes to represent `out_type`.
+      ///</return>
+      public Operation DecodeRaw (  Output bytes , DataType out_type, bool little_endian = true ,String opName= "DecodeRaw" ) 
+      {
+         OperationDescription desc = NewOperation("DecodeRaw", opName);
+         desc.AddInput(bytes);
+         desc.SetAttr("out_type", out_type);
+         if (little_endian != true) desc.SetAttr("little_endian", little_endian);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Forwards the input to the output.
       ///</summary>
       ///<param name="input">Input to the operation: A boolean scalar, representing the branch predicate of the Switch op.</param>
@@ -5396,22 +5050,28 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Convert CSV records to tensors. Each column maps to one tensor.
+      ///Computes the gradient of morphological 2-D dilation with respect to the filter.
       ///</summary>
-      ///<param name="records">Input to the operation: Each string is a record/row in the csv and all records should have the same format.</param>
-      ///<param name="record_defaults">Input to the operation: One tensor per column of the input record, with either a scalar default value for that column or empty if the column is required.</param>
-      ///<param name="field_delim">delimiter to separate fields in a record.</param>
+      ///<param name="input">Input to the operation: 4-D with shape `[batch, in_height, in_width, depth]`.</param>
+      ///<param name="filter">Input to the operation: 3-D with shape `[filter_height, filter_width, depth]`.</param>
+      ///<param name="out_backprop">Input to the operation: 4-D with shape `[batch, out_height, out_width, depth]`.</param>
+      ///<param name="strides">1-D of length 4. The stride of the sliding window for each dimension of the input tensor. Must be: `[1, stride_height, stride_width, 1]`.</param>
+      ///<param name="rates">1-D of length 4. The input stride for atrous morphological dilation. Must be: `[1, rate_height, rate_width, 1]`.</param>
+      ///<param name="padding">The type of padding algorithm to use.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtInvalid): Each tensor will have the same shape as records.
+      ///[0] filter_backprop(type: DtInvalid): 3-D with shape `[filter_height, filter_width, depth]`.
       ///</return>
-      public Operation DecodeCSV (  Output records , Output record_defaults , string field_delim = null ,String opName= "DecodeCSV" ) 
+      public Operation Dilation2DBackpropFilter (  Output input , Output filter , Output out_backprop , long[] strides, long[] rates, string padding,String opName= "Dilation2DBackpropFilter" ) 
       {
-         OperationDescription desc = NewOperation("DecodeCSV", opName);
-         desc.AddInput(records);
-         desc.AddInput(record_defaults);
+         OperationDescription desc = NewOperation("Dilation2DBackpropFilter", opName);
+         desc.AddInput(input);
+         desc.AddInput(filter);
+         desc.AddInput(out_backprop);
+         desc.SetAttr("strides", strides);
+         desc.SetAttr("rates", rates);
+         desc.SetAttr("padding", padding);
 
-         if (field_delim != null) desc.SetAttr("field_delim", field_delim);
          return desc.FinishOperation();
       } 
 
@@ -5432,31 +5092,24 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Calculates the CTC Loss (log probability) for each batch entry.  Also calculates
+      ///Convert CSV records to tensors. Each column maps to one tensor.
       ///</summary>
-      ///<param name="inputs">Input to the operation: 3-D, shape: `(max_time x batch_size x num_classes)`, the logits.</param>
-      ///<param name="labels_indices">Input to the operation: The indices of a `SparseTensor&lt;int32, 2&gt;`. `labels_indices(i, :) == [b, t]` means `labels_values(i)` stores the id for `(batch b, time t)`.</param>
-      ///<param name="labels_values">Input to the operation: The values (labels) associated with the given batch and time.</param>
-      ///<param name="sequence_length">Input to the operation: A vector containing sequence lengths (batch).</param>
-      ///<param name="preprocess_collapse_repeated">Scalar, if true then repeated labels are collapsed prior to the CTC calculation.</param>
-      ///<param name="ctc_merge_repeated">Scalar.  If set to false, *during* CTC calculation repeated non-blank labels will not be merged and are interpreted as individual labels.  This is a simplified version of CTC.</param>
-      ///<param name="ignore_longer_outputs_than_inputs">Scalar. If set to true, during CTC calculation items have longer input sequences than output sequences are ignored by returning zero-gradient for those items.</param>
+      ///<param name="records">Input to the operation: Each string is a record/row in the csv and all records should have the same format.</param>
+      ///<param name="record_defaults">Input to the operation: One tensor per column of the input record, with either a scalar default value for that column or empty if the column is required.</param>
+      ///<param name="field_delim">char delimiter to separate fields in a record.</param>
+      ///<param name="use_quote_delim">If false, treats double quotation marks as regular characters inside of the string fields (ignoring RFC 4180, Section 2, Bullet 5).</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] loss(type: DtFloat): A vector (batch) containing log-probabilities.
-      ///[1] gradient(type: DtFloat): The gradient of `loss`.  3-D, shape: `(max_time x batch_size x num_classes)`.
+      ///[0] output(type: DtInvalid): Each tensor will have the same shape as records.
       ///</return>
-      public Operation CTCLoss (  Output inputs , Output labels_indices , Output labels_values , Output sequence_length , bool preprocess_collapse_repeated = false , bool ctc_merge_repeated = true , bool ignore_longer_outputs_than_inputs = false ,String opName= "CTCLoss" ) 
+      public Operation DecodeCSV (  Output records , Output record_defaults , string field_delim = null , bool use_quote_delim = true ,String opName= "DecodeCSV" ) 
       {
-         OperationDescription desc = NewOperation("CTCLoss", opName);
-         desc.AddInput(inputs);
-         desc.AddInput(labels_indices);
-         desc.AddInput(labels_values);
-         desc.AddInput(sequence_length);
+         OperationDescription desc = NewOperation("DecodeCSV", opName);
+         desc.AddInput(records);
+         desc.AddInput(record_defaults);
 
-         if (preprocess_collapse_repeated != false) desc.SetAttr("preprocess_collapse_repeated", preprocess_collapse_repeated);
-         if (ctc_merge_repeated != true) desc.SetAttr("ctc_merge_repeated", ctc_merge_repeated);
-         if (ignore_longer_outputs_than_inputs != false) desc.SetAttr("ignore_longer_outputs_than_inputs", ignore_longer_outputs_than_inputs);
+         if (field_delim != null) desc.SetAttr("field_delim", field_delim);
+         if (use_quote_delim != true) desc.SetAttr("use_quote_delim", use_quote_delim);
          return desc.FinishOperation();
       } 
 
@@ -5478,23 +5131,31 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Computes the sum along sparse segments of a tensor.
+      ///Calculates the CTC Loss (log probability) for each batch entry.  Also calculates
       ///</summary>
-      ///<param name="data">Input to the operation. </param>
-      ///<param name="indices">Input to the operation: A 1-D tensor. Has same rank as `segment_ids`.</param>
-      ///<param name="segment_ids">Input to the operation: A 1-D tensor. Values should be sorted and can be repeated.</param>
+      ///<param name="inputs">Input to the operation: 3-D, shape: `(max_time x batch_size x num_classes)`, the logits.</param>
+      ///<param name="labels_indices">Input to the operation: The indices of a `SparseTensor&lt;int32, 2&gt;`. `labels_indices(i, :) == [b, t]` means `labels_values(i)` stores the id for `(batch b, time t)`.</param>
+      ///<param name="labels_values">Input to the operation: The values (labels) associated with the given batch and time.</param>
+      ///<param name="sequence_length">Input to the operation: A vector containing sequence lengths (batch).</param>
+      ///<param name="preprocess_collapse_repeated">Scalar, if true then repeated labels are collapsed prior to the CTC calculation.</param>
+      ///<param name="ctc_merge_repeated">Scalar.  If set to false, *during* CTC calculation repeated non-blank labels will not be merged and are interpreted as individual labels.  This is a simplified version of CTC.</param>
+      ///<param name="ignore_longer_outputs_than_inputs">Scalar. If set to true, during CTC calculation, items that have longer output sequences than input sequences are skipped: they don't contribute to the loss term and have zero-gradient.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtInvalid): Has same shape as data, except for dimension 0 which has size `k`, the number of segments.
+      ///[0] loss(type: DtFloat): A vector (batch) containing log-probabilities.
+      ///[1] gradient(type: DtFloat): The gradient of `loss`.  3-D, shape: `(max_time x batch_size x num_classes)`.
       ///</return>
-      public Operation SparseSegmentSum (  Output data , Output indices , Output segment_ids ,String opName= "SparseSegmentSum" ) 
+      public Operation CTCLoss (  Output inputs , Output labels_indices , Output labels_values , Output sequence_length , bool preprocess_collapse_repeated = false , bool ctc_merge_repeated = true , bool ignore_longer_outputs_than_inputs = false ,String opName= "CTCLoss" ) 
       {
-         OperationDescription desc = NewOperation("SparseSegmentSum", opName);
-         desc.AddInput(data);
-         desc.AddInput(indices);
-         desc.AddInput(segment_ids);
+         OperationDescription desc = NewOperation("CTCLoss", opName);
+         desc.AddInput(inputs);
+         desc.AddInput(labels_indices);
+         desc.AddInput(labels_values);
+         desc.AddInput(sequence_length);
 
-
+         if (preprocess_collapse_repeated != false) desc.SetAttr("preprocess_collapse_repeated", preprocess_collapse_repeated);
+         if (ctc_merge_repeated != true) desc.SetAttr("ctc_merge_repeated", ctc_merge_repeated);
+         if (ignore_longer_outputs_than_inputs != false) desc.SetAttr("ignore_longer_outputs_than_inputs", ignore_longer_outputs_than_inputs);
          return desc.FinishOperation();
       } 
 
@@ -5561,19 +5222,38 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Interleave the values from the `data` tensors into a single tensor.
+      ///A Reader that outputs the lines of a file delimited by '\n'.
       ///</summary>
-      ///<param name="indices">Input to the operation. </param>
-      ///<param name="data">Input to the operation. </param>
+      ///<param name="skip_header_lines">Number of lines to skip from the beginning of every file.</param>
+      ///<param name="container">If non-empty, this reader is placed in the given container. Otherwise, a default container is used.</param>
+      ///<param name="shared_name">If non-empty, this reader is named in the given bucket with this shared_name. Otherwise, the node name is used instead.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] merged(type: DtInvalid).
+      ///[0] reader_handle(type: DtString): The handle to reference the Reader.
       ///</return>
-      public Operation DynamicStitch (  Output indices , Output data ,String opName= "DynamicStitch" ) 
+      public Operation TextLineReader (  long skip_header_lines = 0 , string container = null , string shared_name = null ,String opName= "TextLineReader" ) 
       {
-         OperationDescription desc = NewOperation("DynamicStitch", opName);
-         desc.AddInput(indices);
-         desc.AddInput(data);
+         OperationDescription desc = NewOperation("TextLineReader", opName);
+
+
+         if (skip_header_lines != 0) desc.SetAttr("skip_header_lines", skip_header_lines);
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes rectified linear 6: `min(max(features, 0), 6)`.
+      ///</summary>
+      ///<param name="features">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] activations(type: DtInvalid).
+      ///</return>
+      public Operation Relu6 (  Output features ,String opName= "Relu6" ) 
+      {
+         OperationDescription desc = NewOperation("Relu6", opName);
+         desc.AddInput(features);
 
 
          return desc.FinishOperation();
@@ -5598,40 +5278,21 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Computes rectified linear 6: `min(max(features, 0), 6)`.
+      ///Interleave the values from the `data` tensors into a single tensor.
       ///</summary>
-      ///<param name="features">Input to the operation. </param>
+      ///<param name="indices">Input to the operation. </param>
+      ///<param name="data">Input to the operation. </param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] activations(type: DtInvalid).
+      ///[0] merged(type: DtInvalid).
       ///</return>
-      public Operation Relu6 (  Output features ,String opName= "Relu6" ) 
+      public Operation DynamicStitch (  Output indices , Output data ,String opName= "DynamicStitch" ) 
       {
-         OperationDescription desc = NewOperation("Relu6", opName);
-         desc.AddInput(features);
+         OperationDescription desc = NewOperation("DynamicStitch", opName);
+         desc.AddInput(indices);
+         desc.AddInput(data);
 
 
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///A Reader that outputs the lines of a file delimited by '\n'.
-      ///</summary>
-      ///<param name="skip_header_lines">Number of lines to skip from the beginning of every file.</param>
-      ///<param name="container">If non-empty, this reader is placed in the given container. Otherwise, a default container is used.</param>
-      ///<param name="shared_name">If non-empty, this reader is named in the given bucket with this shared_name. Otherwise, the node name is used instead.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] reader_handle(type: DtString): The handle to reference the Reader.
-      ///</return>
-      public Operation TextLineReader (  long skip_header_lines = 0 , string container = null , string shared_name = null ,String opName= "TextLineReader" ) 
-      {
-         OperationDescription desc = NewOperation("TextLineReader", opName);
-
-
-         if (skip_header_lines != 0) desc.SetAttr("skip_header_lines", skip_header_lines);
-         if (container != null) desc.SetAttr("container", container);
-         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
          return desc.FinishOperation();
       } 
 
@@ -5686,28 +5347,6 @@ namespace Emgu.TF
          if (shared_name != null) desc.SetAttr("shared_name", shared_name);
          return desc.FinishOperation();
       } 
-
-      ///<summary>
-      ///Number of unique elements along last dimension of input `set`.
-      ///</summary>
-      ///<param name="set_indices">Input to the operation: 2D `Tensor`, indices of a `SparseTensor`.</param>
-      ///<param name="set_values">Input to the operation: 1D `Tensor`, values of a `SparseTensor`.</param>
-      ///<param name="set_shape">Input to the operation: 1D `Tensor`, shape of a `SparseTensor`.</param>
-      ///<param name="validate_indices"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] size(type: DtInt32): For `set` ranked `n`, this is a `Tensor` with rank `n-1`, and the same 1st `n-1` dimensions as `set`. Each value is the number of unique elements in the corresponding `[0...n-1]` dimension of `set`.
-      ///</return>
-      public Operation SetSize (  Output set_indices , Output set_values , Output set_shape , bool validate_indices = true ,String opName= "SetSize" ) 
-      {
-         OperationDescription desc = NewOperation("SetSize", opName);
-         desc.AddInput(set_indices);
-         desc.AddInput(set_values);
-         desc.AddInput(set_shape);
-
-         if (validate_indices != true) desc.SetAttr("validate_indices", validate_indices);
-         return desc.FinishOperation();
-      } 
       // Skipped function _Recv
 
       ///<summary>
@@ -5737,6 +5376,28 @@ namespace Emgu.TF
          if (seed2 != 0) desc.SetAttr("seed2", seed2);
          if (container != null) desc.SetAttr("container", container);
          if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Number of unique elements along last dimension of input `set`.
+      ///</summary>
+      ///<param name="set_indices">Input to the operation: 2D `Tensor`, indices of a `SparseTensor`.</param>
+      ///<param name="set_values">Input to the operation: 1D `Tensor`, values of a `SparseTensor`.</param>
+      ///<param name="set_shape">Input to the operation: 1D `Tensor`, shape of a `SparseTensor`.</param>
+      ///<param name="validate_indices"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] size(type: DtInt32): For `set` ranked `n`, this is a `Tensor` with rank `n-1`, and the same 1st `n-1` dimensions as `set`. Each value is the number of unique elements in the corresponding `[0...n-1]` dimension of `set`.
+      ///</return>
+      public Operation SetSize (  Output set_indices , Output set_values , Output set_shape , bool validate_indices = true ,String opName= "SetSize" ) 
+      {
+         OperationDescription desc = NewOperation("SetSize", opName);
+         desc.AddInput(set_indices);
+         desc.AddInput(set_values);
+         desc.AddInput(set_shape);
+
+         if (validate_indices != true) desc.SetAttr("validate_indices", validate_indices);
          return desc.FinishOperation();
       } 
 
@@ -5781,46 +5442,6 @@ namespace Emgu.TF
          if (capacity != -1) desc.SetAttr("capacity", capacity);
          if (container != null) desc.SetAttr("container", container);
          if (shared_name != null) desc.SetAttr("shared_name", shared_name);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Update 'ref' by adding 'value' to it.
-      ///</summary>
-      ///<param name="reference">Input to the operation: Should be from a `Variable` node.</param>
-      ///<param name="value">Input to the operation: The value to be added to the variable.</param>
-      ///<param name="use_locking">If True, the addition will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output_ref(type: DtInvalid): = Same as "ref".  Returned as a convenience for operations that want to use the new value after the variable has been updated.
-      ///</return>
-      public Operation AssignAdd (  Output reference , Output value , bool use_locking = false ,String opName= "AssignAdd" ) 
-      {
-         OperationDescription desc = NewOperation("AssignAdd", opName);
-         desc.AddInput(reference);
-         desc.AddInput(value);
-
-         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Converts two real numbers to a complex number.
-      ///</summary>
-      ///<param name="real">Input to the operation. </param>
-      ///<param name="imag">Input to the operation. </param>
-      ///<param name="Tout"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] out(type: DtInvalid).
-      ///</return>
-      public Operation Complex (  Output real , Output imag , DataType? Tout = null ,String opName= "Complex" ) 
-      {
-         OperationDescription desc = NewOperation("Complex", opName);
-         desc.AddInput(real);
-         desc.AddInput(imag);
-
-         if (Tout.HasValue) desc.SetAttr("Tout", Tout.Value);
          return desc.FinishOperation();
       } 
 
@@ -5881,19 +5502,36 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Checks whether a resource handle-based variable has been initialized.
+      ///Update '*var' according to the Ftrl-proximal scheme.
       ///</summary>
-      ///<param name="resource">Input to the operation: the input resource handle.</param>
+      ///<param name="var">Input to the operation: Should be from a Variable().</param>
+      ///<param name="accum">Input to the operation: Should be from a Variable().</param>
+      ///<param name="linear">Input to the operation: Should be from a Variable().</param>
+      ///<param name="grad">Input to the operation: The gradient.</param>
+      ///<param name="lr">Input to the operation: Scaling factor. Must be a scalar.</param>
+      ///<param name="l1">Input to the operation: L1 regulariation. Must be a scalar.</param>
+      ///<param name="l2">Input to the operation: L2 shrinkage regulariation. Must be a scalar.</param>
+      ///<param name="l2_shrinkage">Input to the operation. </param>
+      ///<param name="lr_power">Input to the operation: Scaling factor. Must be a scalar.</param>
+      ///<param name="use_locking">If `True`, updating of the var and accum tensors will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] is_initialized(type: DtBool): a scalar boolean which is true if the variable has been initialized.
+      ///[0] out(type: DtInvalid): Same as "var".
       ///</return>
-      public Operation VarIsInitializedOp (  Output resource ,String opName= "VarIsInitializedOp" ) 
+      public Operation ApplyFtrlV2 (  Output var , Output accum , Output linear , Output grad , Output lr , Output l1 , Output l2 , Output l2_shrinkage , Output lr_power , bool use_locking = false ,String opName= "ApplyFtrlV2" ) 
       {
-         OperationDescription desc = NewOperation("VarIsInitializedOp", opName);
-         desc.AddInput(resource);
+         OperationDescription desc = NewOperation("ApplyFtrlV2", opName);
+         desc.AddInput(var);
+         desc.AddInput(accum);
+         desc.AddInput(linear);
+         desc.AddInput(grad);
+         desc.AddInput(lr);
+         desc.AddInput(l1);
+         desc.AddInput(l2);
+         desc.AddInput(l2_shrinkage);
+         desc.AddInput(lr_power);
 
-
+         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
          return desc.FinishOperation();
       } 
 
@@ -5922,6 +5560,23 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Checks whether a resource handle-based variable has been initialized.
+      ///</summary>
+      ///<param name="resource">Input to the operation: the input resource handle.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] is_initialized(type: DtBool): a scalar boolean which is true if the variable has been initialized.
+      ///</return>
+      public Operation VarIsInitializedOp (  Output resource ,String opName= "VarIsInitializedOp" ) 
+      {
+         OperationDescription desc = NewOperation("VarIsInitializedOp", opName);
+         desc.AddInput(resource);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///A queue that produces elements sorted by the first component value.
       ///</summary>
       ///<param name="shapes">The shape of each component in a value. The length of this attr must be either 0 or the same as the length of component_types. If the length of this attr is 0, the shapes of queue elements are not constrained, and only one element may be dequeued at a time.</param>
@@ -5946,6 +5601,24 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Returns the imaginary part of a complex number.
+      ///</summary>
+      ///<param name="input">Input to the operation. </param>
+      ///<param name="Tout"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation Imag (  Output input , DataType? Tout = null ,String opName= "Imag" ) 
+      {
+         OperationDescription desc = NewOperation("Imag", opName);
+         desc.AddInput(input);
+
+         if (Tout.HasValue) desc.SetAttr("Tout", Tout.Value);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Deprecated. Do not use.
       ///</summary>
       ///<param name="resource">Input to the operation. </param>
@@ -5963,6 +5636,25 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///A stack that produces elements in first-in last-out order.
+      ///</summary>
+      ///<param name="max_size">Input to the operation: The maximum size of the stack if non-negative. If negative, the stack size is unlimited.</param>
+      ///<param name="elem_type">The type of the elements on the stack.</param>
+      ///<param name="stack_name">Overrides the name used for the temporary stack resource. Default value is the name of the 'Stack' op (which is guaranteed unique).</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] handle(type: DtResource): The handle to the stack.
+      ///</return>
+      public Operation StackV2 (  Output max_size , DataType elem_type, string stack_name = null ,String opName= "StackV2" ) 
+      {
+         OperationDescription desc = NewOperation("StackV2", opName);
+         desc.AddInput(max_size);
+         desc.SetAttr("elem_type", elem_type);
+         if (stack_name != null) desc.SetAttr("stack_name", stack_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Rounds the values of a tensor to the nearest integer, element-wise.
       ///</summary>
       ///<param name="x">Input to the operation. </param>
@@ -5976,24 +5668,6 @@ namespace Emgu.TF
          desc.AddInput(x);
 
 
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns the imaginary part of a complex number.
-      ///</summary>
-      ///<param name="input">Input to the operation. </param>
-      ///<param name="Tout"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation Imag (  Output input , DataType? Tout = null ,String opName= "Imag" ) 
-      {
-         OperationDescription desc = NewOperation("Imag", opName);
-         desc.AddInput(input);
-
-         if (Tout.HasValue) desc.SetAttr("Tout", Tout.Value);
          return desc.FinishOperation();
       } 
 
@@ -6080,25 +5754,6 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Dequeues a tuple of one or more tensors from the given queue.
-      ///</summary>
-      ///<param name="handle">Input to the operation: The handle to a queue.</param>
-      ///<param name="component_types">The type of each component in a tuple.</param>
-      ///<param name="timeout_ms">If the queue is empty, this operation will block for up to timeout_ms milliseconds. Note: This option is not supported yet.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] components(type: DtInvalid): One or more tensors that were dequeued as a tuple.
-      ///</return>
-      public Operation QueueDequeue (  Output handle , DataType[] component_types, long timeout_ms = -1 ,String opName= "QueueDequeue" ) 
-      {
-         OperationDescription desc = NewOperation("QueueDequeue", opName);
-         desc.AddInput(handle);
-         desc.SetAttr("component_types", component_types);
-         if (timeout_ms != -1) desc.SetAttr("timeout_ms", timeout_ms);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///Computes the Max along segments of a tensor.
       ///</summary>
       ///<param name="data">Input to the operation. </param>
@@ -6129,12 +5784,50 @@ namespace Emgu.TF
       ///<return>
       ///[0] components(type: DtInvalid): One or more tensors that were dequeued as a tuple.
       ///</return>
+      public Operation QueueDequeue (  Output handle , DataType[] component_types, long timeout_ms = -1 ,String opName= "QueueDequeue" ) 
+      {
+         OperationDescription desc = NewOperation("QueueDequeue", opName);
+         desc.AddInput(handle);
+         desc.SetAttr("component_types", component_types);
+         if (timeout_ms != -1) desc.SetAttr("timeout_ms", timeout_ms);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Dequeues a tuple of one or more tensors from the given queue.
+      ///</summary>
+      ///<param name="handle">Input to the operation: The handle to a queue.</param>
+      ///<param name="component_types">The type of each component in a tuple.</param>
+      ///<param name="timeout_ms">If the queue is empty, this operation will block for up to timeout_ms milliseconds. Note: This option is not supported yet.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] components(type: DtInvalid): One or more tensors that were dequeued as a tuple.
+      ///</return>
       public Operation QueueDequeueV2 (  Output handle , DataType[] component_types, long timeout_ms = -1 ,String opName= "QueueDequeueV2" ) 
       {
          OperationDescription desc = NewOperation("QueueDequeueV2", opName);
          desc.AddInput(handle);
          desc.SetAttr("component_types", component_types);
          if (timeout_ms != -1) desc.SetAttr("timeout_ms", timeout_ms);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns element-wise remainder of division. This emulates C semantics in that
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///</return>
+      public Operation TruncateMod (  Output x , Output y ,String opName= "TruncateMod" ) 
+      {
+         OperationDescription desc = NewOperation("TruncateMod", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
          return desc.FinishOperation();
       } 
 
@@ -6158,25 +5851,6 @@ namespace Emgu.TF
          desc.AddInput(row_shape);
          desc.SetAttr("output_types", output_types);
          desc.SetAttrShapeList("output_shapes", output_shapes);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns element-wise remainder of division. This emulates C semantics in that
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtInvalid).
-      ///</return>
-      public Operation TruncateMod (  Output x , Output y ,String opName= "TruncateMod" ) 
-      {
-         OperationDescription desc = NewOperation("TruncateMod", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
-
 
          return desc.FinishOperation();
       } 
@@ -6213,13 +5887,31 @@ namespace Emgu.TF
       ///<return>
       ///[0] components(type: DtInvalid): One or more tensors that were dequeued as a tuple.
       ///</return>
-      public Operation QueueDequeueManyV2 (  Output handle , Output n , DataType[] component_types, long timeout_ms = -1 ,String opName= "QueueDequeueManyV2" ) 
+      public Operation QueueDequeueUpTo (  Output handle , Output n , DataType[] component_types, long timeout_ms = -1 ,String opName= "QueueDequeueUpTo" ) 
       {
-         OperationDescription desc = NewOperation("QueueDequeueManyV2", opName);
+         OperationDescription desc = NewOperation("QueueDequeueUpTo", opName);
          desc.AddInput(handle);
          desc.AddInput(n);
          desc.SetAttr("component_types", component_types);
          if (timeout_ms != -1) desc.SetAttr("timeout_ms", timeout_ms);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Decode the first frame of a BMP-encoded image to a uint8 tensor.
+      ///</summary>
+      ///<param name="contents">Input to the operation: 0-D.  The BMP-encoded image.</param>
+      ///<param name="channels"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] image(type: DtUint8): 3-D with shape `[height, width, channels]`. RGB order
+      ///</return>
+      public Operation DecodeBmp (  Output contents , long channels = 0 ,String opName= "DecodeBmp" ) 
+      {
+         OperationDescription desc = NewOperation("DecodeBmp", opName);
+         desc.AddInput(contents);
+
+         if (channels != 0) desc.SetAttr("channels", channels);
          return desc.FinishOperation();
       } 
 
@@ -6254,27 +5946,6 @@ namespace Emgu.TF
       ///<return>
       ///[0] components(type: DtInvalid): One or more tensors that were dequeued as a tuple.
       ///</return>
-      public Operation QueueDequeueUpTo (  Output handle , Output n , DataType[] component_types, long timeout_ms = -1 ,String opName= "QueueDequeueUpTo" ) 
-      {
-         OperationDescription desc = NewOperation("QueueDequeueUpTo", opName);
-         desc.AddInput(handle);
-         desc.AddInput(n);
-         desc.SetAttr("component_types", component_types);
-         if (timeout_ms != -1) desc.SetAttr("timeout_ms", timeout_ms);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Dequeues `n` tuples of one or more tensors from the given queue.
-      ///</summary>
-      ///<param name="handle">Input to the operation: The handle to a queue.</param>
-      ///<param name="n">Input to the operation: The number of tuples to dequeue.</param>
-      ///<param name="component_types">The type of each component in a tuple.</param>
-      ///<param name="timeout_ms">If the queue has fewer than n elements, this operation will block for up to timeout_ms milliseconds. Note: This option is not supported yet.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] components(type: DtInvalid): One or more tensors that were dequeued as a tuple.
-      ///</return>
       public Operation QueueDequeueUpToV2 (  Output handle , Output n , DataType[] component_types, long timeout_ms = -1 ,String opName= "QueueDequeueUpToV2" ) 
       {
          OperationDescription desc = NewOperation("QueueDequeueUpToV2", opName);
@@ -6289,7 +5960,7 @@ namespace Emgu.TF
       ///Closes the given queue.
       ///</summary>
       ///<param name="handle">Input to the operation: The handle to a queue.</param>
-      ///<param name="cancel_pending_enqueues">If true, all pending enqueue requests that are blocked on the given queue will be cancelled.</param>
+      ///<param name="cancel_pending_enqueues">If true, all pending enqueue requests that are blocked on the given queue will be canceled.</param>
       ///<param name="opName">The name of the operation</param>
       public Operation QueueClose (  Output handle , bool cancel_pending_enqueues = false ,String opName= "QueueClose" ) 
       {
@@ -6331,7 +6002,7 @@ namespace Emgu.TF
       ///Closes the given queue.
       ///</summary>
       ///<param name="handle">Input to the operation: The handle to a queue.</param>
-      ///<param name="cancel_pending_enqueues">If true, all pending enqueue requests that are blocked on the given queue will be cancelled.</param>
+      ///<param name="cancel_pending_enqueues">If true, all pending enqueue requests that are blocked on the given queue will be canceled.</param>
       ///<param name="opName">The name of the operation</param>
       public Operation QueueCloseV2 (  Output handle , bool cancel_pending_enqueues = false ,String opName= "QueueCloseV2" ) 
       {
@@ -6356,6 +6027,40 @@ namespace Emgu.TF
          OperationDescription desc = NewOperation("AdjustContrastv2", opName);
          desc.AddInput(images);
          desc.AddInput(contrast_factor);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns true if queue is closed.
+      ///</summary>
+      ///<param name="handle">Input to the operation: The handle to a queue.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] is_closed(type: DtBool).
+      ///</return>
+      public Operation QueueIsClosed (  Output handle ,String opName= "QueueIsClosed" ) 
+      {
+         OperationDescription desc = NewOperation("QueueIsClosed", opName);
+         desc.AddInput(handle);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns true if queue is closed.
+      ///</summary>
+      ///<param name="handle">Input to the operation: The handle to a queue.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] is_closed(type: DtBool).
+      ///</return>
+      public Operation QueueIsClosedV2 (  Output handle ,String opName= "QueueIsClosedV2" ) 
+      {
+         OperationDescription desc = NewOperation("QueueIsClosedV2", opName);
+         desc.AddInput(handle);
 
 
          return desc.FinishOperation();
@@ -6396,6 +6101,25 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Computes the product along segments of a tensor.
+      ///</summary>
+      ///<param name="data">Input to the operation. </param>
+      ///<param name="segment_ids">Input to the operation: A 1-D tensor whose rank is equal to the rank of `data`'s first dimension.  Values should be sorted and can be repeated.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): Has same shape as data, except for dimension 0 which has size `k`, the number of segments.
+      ///</return>
+      public Operation SegmentProd (  Output data , Output segment_ids ,String opName= "SegmentProd" ) 
+      {
+         OperationDescription desc = NewOperation("SegmentProd", opName);
+         desc.AddInput(data);
+         desc.AddInput(segment_ids);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Returns the number of gradients aggregated in the given accumulators.
       ///</summary>
       ///<param name="handle">Input to the operation: The handle to an accumulator.</param>
@@ -6427,25 +6151,6 @@ namespace Emgu.TF
          desc.AddInput(tensor_names);
          desc.AddInput(shapes_and_slices);
          desc.AddInput(data);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the product along segments of a tensor.
-      ///</summary>
-      ///<param name="data">Input to the operation. </param>
-      ///<param name="segment_ids">Input to the operation: A 1-D tensor whose rank is equal to the rank of `data`'s first dimension.  Values should be sorted and can be repeated.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): Has same shape as data, except for dimension 0 which has size `k`, the number of segments.
-      ///</return>
-      public Operation SegmentProd (  Output data , Output segment_ids ,String opName= "SegmentProd" ) 
-      {
-         OperationDescription desc = NewOperation("SegmentProd", opName);
-         desc.AddInput(data);
-         desc.AddInput(segment_ids);
 
 
          return desc.FinishOperation();
@@ -6492,6 +6197,23 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Fast Fourier transform.
+      ///</summary>
+      ///<param name="input">Input to the operation: A complex64 tensor.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtComplex64): A complex64 tensor of the same shape as `input`. The inner-most   dimension of `input` is replaced with its 1D Fourier transform.  @compatibility(numpy) Equivalent to np.fft.fft @end_compatibility
+      ///</return>
+      public Operation FFT (  Output input ,String opName= "FFT" ) 
+      {
+         OperationDescription desc = NewOperation("FFT", opName);
+         desc.AddInput(input);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///A conditional accumulator for aggregating sparse gradients.
       ///</summary>
       ///<param name="dtype">The type of the value being accumulated.</param>
@@ -6510,6 +6232,25 @@ namespace Emgu.TF
          desc.SetAttrShape("shape", shape);
          if (container != null) desc.SetAttr("container", container);
          if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns the truth value of (x &gt;= y) element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtBool).
+      ///</return>
+      public Operation GreaterEqual (  Output x , Output y ,String opName= "GreaterEqual" ) 
+      {
+         OperationDescription desc = NewOperation("GreaterEqual", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
          return desc.FinishOperation();
       } 
 
@@ -6537,25 +6278,6 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Returns the truth value of (x &gt;= y) element-wise.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtBool).
-      ///</return>
-      public Operation GreaterEqual (  Output x , Output y ,String opName= "GreaterEqual" ) 
-      {
-         OperationDescription desc = NewOperation("GreaterEqual", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///Extracts the average sparse gradient in a SparseConditionalAccumulator.
       ///</summary>
       ///<param name="handle">Input to the operation: The handle to a SparseConditionalAccumulator.</param>
@@ -6578,37 +6300,106 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Convert the quantized 'input' tensor into a lower-precision 'output', using the
+      ///Push an element onto the stack.
       ///</summary>
-      ///<param name="input">Input to the operation. </param>
-      ///<param name="input_min">Input to the operation: The float value that the minimum quantized input value represents.</param>
-      ///<param name="input_max">Input to the operation: The float value that the maximum quantized input value represents.</param>
-      ///<param name="out_type">The type of the output. Should be a lower bit depth than Tinput.</param>
+      ///<param name="handle">Input to the operation: The handle to a stack.</param>
+      ///<param name="elem">Input to the operation: The tensor to be pushed onto the stack.</param>
+      ///<param name="swap_memory">Swap `elem` to CPU. Default to false.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtInvalid).
-      ///[1] output_min(type: DtFloat): The float value that the minimum quantized output value represents.
-      ///[2] output_max(type: DtFloat): The float value that the maximum quantized output value represents.
+      ///[0] output(type: DtInvalid): The same tensor as the input 'elem'.
       ///</return>
-      public Operation QuantizeDownAndShrinkRange (  Output input , Output input_min , Output input_max , DataType out_type,String opName= "QuantizeDownAndShrinkRange" ) 
+      public Operation StackPushV2 (  Output handle , Output elem , bool swap_memory = false ,String opName= "StackPushV2" ) 
       {
-         OperationDescription desc = NewOperation("QuantizeDownAndShrinkRange", opName);
-         desc.AddInput(input);
-         desc.AddInput(input_min);
-         desc.AddInput(input_max);
-         desc.SetAttr("out_type", out_type);
+         OperationDescription desc = NewOperation("StackPushV2", opName);
+         desc.AddInput(handle);
+         desc.AddInput(elem);
+
+         if (swap_memory != false) desc.SetAttr("swap_memory", swap_memory);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes gradients for the exponential linear (Elu) operation.
+      ///</summary>
+      ///<param name="gradients">Input to the operation: The backpropagated gradients to the corresponding Elu operation.</param>
+      ///<param name="outputs">Input to the operation: The outputs of the corresponding Elu operation.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] backprops(type: DtInvalid): The gradients: `gradients * (outputs + 1)` if outputs &lt; 0, `gradients` otherwise.
+      ///</return>
+      public Operation EluGrad (  Output gradients , Output outputs ,String opName= "EluGrad" ) 
+      {
+         OperationDescription desc = NewOperation("EluGrad", opName);
+         desc.AddInput(gradients);
+         desc.AddInput(outputs);
+
 
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///A stack that produces elements in first-in last-out order.
+      ///Pop the element at the top of the stack.
       ///</summary>
-      ///<param name="elem_type">The type of the elements on the stack.</param>
-      ///<param name="stack_name">Overrides the name used for the temporary stack resource. Default value is the name of the 'Stack' op (which is guaranteed unique).</param>
+      ///<param name="handle">Input to the operation: The handle to a stack.</param>
+      ///<param name="elem_type">The type of the elem that is popped.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] handle(type: DtString): The handle to the stack.
+      ///[0] elem(type: DtInvalid): The tensor that is popped from the top of the stack.
+      ///</return>
+      public Operation StackPopV2 (  Output handle , DataType elem_type,String opName= "StackPopV2" ) 
+      {
+         OperationDescription desc = NewOperation("StackPopV2", opName);
+         desc.AddInput(handle);
+         desc.SetAttr("elem_type", elem_type);
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Creates a dataset that emits the outputs of `input_dataset` `count` times.
+      ///</summary>
+      ///<param name="input_dataset">Input to the operation. </param>
+      ///<param name="count">Input to the operation: A scalar representing the number of times that `input_dataset` should be repeated. A value of `-1` indicates that it should be repeated infinitely.</param>
+      ///<param name="output_types"></param>
+      ///<param name="output_shapes"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] handle(type: DtResource).
+      ///</return>
+      public Operation RepeatDataset (  Output input_dataset , Output count , DataType[] output_types, long[][] output_shapes,String opName= "RepeatDataset" ) 
+      {
+         OperationDescription desc = NewOperation("RepeatDataset", opName);
+         desc.AddInput(input_dataset);
+         desc.AddInput(count);
+         desc.SetAttr("output_types", output_types);
+         desc.SetAttrShapeList("output_shapes", output_shapes);
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Delete the stack from its resource container.
+      ///</summary>
+      ///<param name="handle">Input to the operation: The handle to a stack.</param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation StackCloseV2 (  Output handle ,String opName= "StackCloseV2" ) 
+      {
+         OperationDescription desc = NewOperation("StackCloseV2", opName);
+         desc.AddInput(handle);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Deprecated, use StackV2.
+      ///</summary>
+      ///<param name="elem_type"></param>
+      ///<param name="stack_name"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] handle(type: DtString).
       ///</return>
       public Operation Stack (  DataType elem_type, string stack_name = null ,String opName= "Stack" ) 
       {
@@ -6795,17 +6586,23 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Computes the number of complete elements in the given barrier.
+      ///Scatter the data from the input value into specific TensorArray elements.
       ///</summary>
-      ///<param name="handle">Input to the operation: The handle to a barrier.</param>
+      ///<param name="handle">Input to the operation: The handle to a TensorArray.</param>
+      ///<param name="indices">Input to the operation: The locations at which to write the tensor elements.</param>
+      ///<param name="value">Input to the operation: The concatenated tensor to write to the TensorArray.</param>
+      ///<param name="flow_in">Input to the operation: A float scalar that enforces proper chaining of operations.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] size(type: DtInt32): The number of complete elements (i.e. those with all of their value components set) in the barrier.
+      ///[0] flow_out(type: DtFloat): A float scalar that enforces proper chaining of operations.
       ///</return>
-      public Operation BarrierReadySize (  Output handle ,String opName= "BarrierReadySize" ) 
+      public Operation TensorArrayScatterV3 (  Output handle , Output indices , Output value , Output flow_in ,String opName= "TensorArrayScatterV3" ) 
       {
-         OperationDescription desc = NewOperation("BarrierReadySize", opName);
+         OperationDescription desc = NewOperation("TensorArrayScatterV3", opName);
          desc.AddInput(handle);
+         desc.AddInput(indices);
+         desc.AddInput(value);
+         desc.AddInput(flow_in);
 
 
          return desc.FinishOperation();
@@ -6838,36 +6635,16 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Scatter the data from the input value into specific TensorArray elements.
+      ///Computes the number of complete elements in the given barrier.
       ///</summary>
-      ///<param name="handle">Input to the operation: The handle to a TensorArray.</param>
-      ///<param name="indices">Input to the operation: The locations at which to write the tensor elements.</param>
-      ///<param name="value">Input to the operation: The concatenated tensor to write to the TensorArray.</param>
-      ///<param name="flow_in">Input to the operation: A float scalar that enforces proper chaining of operations.</param>
+      ///<param name="handle">Input to the operation: The handle to a barrier.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] flow_out(type: DtFloat): A float scalar that enforces proper chaining of operations.
+      ///[0] size(type: DtInt32): The number of complete elements (i.e. those with all of their value components set) in the barrier.
       ///</return>
-      public Operation TensorArrayScatterV3 (  Output handle , Output indices , Output value , Output flow_in ,String opName= "TensorArrayScatterV3" ) 
+      public Operation BarrierReadySize (  Output handle ,String opName= "BarrierReadySize" ) 
       {
-         OperationDescription desc = NewOperation("TensorArrayScatterV3", opName);
-         desc.AddInput(handle);
-         desc.AddInput(indices);
-         desc.AddInput(value);
-         desc.AddInput(flow_in);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Delete the TensorArray from its resource container.
-      ///</summary>
-      ///<param name="handle">Input to the operation: The handle to a TensorArray (output of TensorArray or TensorArrayGrad).</param>
-      ///<param name="opName">The name of the operation</param>
-      public Operation TensorArrayCloseV3 (  Output handle ,String opName= "TensorArrayCloseV3" ) 
-      {
-         OperationDescription desc = NewOperation("TensorArrayCloseV3", opName);
+         OperationDescription desc = NewOperation("BarrierReadySize", opName);
          desc.AddInput(handle);
 
 
@@ -6888,6 +6665,20 @@ namespace Emgu.TF
          OperationDescription desc = NewOperation("RealDiv", opName);
          desc.AddInput(x);
          desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Delete the TensorArray from its resource container.
+      ///</summary>
+      ///<param name="handle">Input to the operation: The handle to a TensorArray (output of TensorArray or TensorArrayGrad).</param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation TensorArrayCloseV3 (  Output handle ,String opName= "TensorArrayCloseV3" ) 
+      {
+         OperationDescription desc = NewOperation("TensorArrayCloseV3", opName);
+         desc.AddInput(handle);
 
 
          return desc.FinishOperation();
@@ -6969,24 +6760,6 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Table initializer that takes two tensors for keys and values respectively.
-      ///</summary>
-      ///<param name="table_handle">Input to the operation: Handle to a table which will be initialized.</param>
-      ///<param name="keys">Input to the operation: Keys of type Tkey.</param>
-      ///<param name="values">Input to the operation: Values of type Tval.</param>
-      ///<param name="opName">The name of the operation</param>
-      public Operation InitializeTableV2 (  Output table_handle , Output keys , Output values ,String opName= "InitializeTableV2" ) 
-      {
-         OperationDescription desc = NewOperation("InitializeTableV2", opName);
-         desc.AddInput(table_handle);
-         desc.AddInput(keys);
-         desc.AddInput(values);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///Multiply matrix "a" by matrix "b".
       ///</summary>
       ///<param name="a">Input to the operation. </param>
@@ -7009,6 +6782,24 @@ namespace Emgu.TF
          if (transpose_b != false) desc.SetAttr("transpose_b", transpose_b);
          if (a_is_sparse != false) desc.SetAttr("a_is_sparse", a_is_sparse);
          if (b_is_sparse != false) desc.SetAttr("b_is_sparse", b_is_sparse);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Table initializer that takes two tensors for keys and values respectively.
+      ///</summary>
+      ///<param name="table_handle">Input to the operation: Handle to a table which will be initialized.</param>
+      ///<param name="keys">Input to the operation: Keys of type Tkey.</param>
+      ///<param name="values">Input to the operation: Values of type Tval.</param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation InitializeTableV2 (  Output table_handle , Output keys , Output values ,String opName= "InitializeTableV2" ) 
+      {
+         OperationDescription desc = NewOperation("InitializeTableV2", opName);
+         desc.AddInput(table_handle);
+         desc.AddInput(keys);
+         desc.AddInput(values);
+
+
          return desc.FinishOperation();
       } 
 
@@ -7082,23 +6873,20 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///
+      ///Computes softplus gradients for a softplus operation.
       ///</summary>
-      ///<param name="handle">Input to the operation. </param>
-      ///<param name="index">Input to the operation. </param>
-      ///<param name="flow_in">Input to the operation. </param>
-      ///<param name="dtype"></param>
+      ///<param name="gradients">Input to the operation: The backpropagated gradients to the corresponding softplus operation.</param>
+      ///<param name="features">Input to the operation: The features passed as input to the corresponding softplus operation.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] value(type: DtInvalid).
+      ///[0] backprops(type: DtInvalid): The gradients: `gradients / (1 + exp(-features))`.
       ///</return>
-      public Operation TensorArrayRead (  Output handle , Output index , Output flow_in , DataType dtype,String opName= "TensorArrayRead" ) 
+      public Operation SoftplusGrad (  Output gradients , Output features ,String opName= "SoftplusGrad" ) 
       {
-         OperationDescription desc = NewOperation("TensorArrayRead", opName);
-         desc.AddInput(handle);
-         desc.AddInput(index);
-         desc.AddInput(flow_in);
-         desc.SetAttr("dtype", dtype);
+         OperationDescription desc = NewOperation("SoftplusGrad", opName);
+         desc.AddInput(gradients);
+         desc.AddInput(features);
+
 
          return desc.FinishOperation();
       } 
@@ -7123,7 +6911,7 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Deprecated. Use TensorArrayReadV3
+      ///
       ///</summary>
       ///<param name="handle">Input to the operation. </param>
       ///<param name="index">Input to the operation. </param>
@@ -7133,9 +6921,9 @@ namespace Emgu.TF
       ///<return>
       ///[0] value(type: DtInvalid).
       ///</return>
-      public Operation TensorArrayReadV2 (  Output handle , Output index , Output flow_in , DataType dtype,String opName= "TensorArrayReadV2" ) 
+      public Operation TensorArrayRead (  Output handle , Output index , Output flow_in , DataType dtype,String opName= "TensorArrayRead" ) 
       {
-         OperationDescription desc = NewOperation("TensorArrayReadV2", opName);
+         OperationDescription desc = NewOperation("TensorArrayRead", opName);
          desc.AddInput(handle);
          desc.AddInput(index);
          desc.AddInput(flow_in);
@@ -7157,6 +6945,28 @@ namespace Emgu.TF
          OperationDescription desc = NewOperation("Floor", opName);
          desc.AddInput(x);
 
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Deprecated. Use TensorArrayReadV3
+      ///</summary>
+      ///<param name="handle">Input to the operation. </param>
+      ///<param name="index">Input to the operation. </param>
+      ///<param name="flow_in">Input to the operation. </param>
+      ///<param name="dtype"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] value(type: DtInvalid).
+      ///</return>
+      public Operation TensorArrayReadV2 (  Output handle , Output index , Output flow_in , DataType dtype,String opName= "TensorArrayReadV2" ) 
+      {
+         OperationDescription desc = NewOperation("TensorArrayReadV2", opName);
+         desc.AddInput(handle);
+         desc.AddInput(index);
+         desc.AddInput(flow_in);
+         desc.SetAttr("dtype", dtype);
 
          return desc.FinishOperation();
       } 
@@ -7255,6 +7065,23 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Converts the given `resource_handle` representing an iterator to a string.
+      ///</summary>
+      ///<param name="resource_handle">Input to the operation: A handle to an iterator resource.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] string_handle(type: DtString): A string representation of the given handle.
+      ///</return>
+      public Operation IteratorToStringHandle (  Output resource_handle ,String opName= "IteratorToStringHandle" ) 
+      {
+         OperationDescription desc = NewOperation("IteratorToStringHandle", opName);
+         desc.AddInput(resource_handle);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Reshapes a SparseTensor to represent values in a new dense shape.
       ///</summary>
       ///<param name="input_indices">Input to the operation: 2-D.  `N x R_in` matrix with the indices of non-empty values in a SparseTensor.</param>
@@ -7323,23 +7150,6 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Returns the set of files matching one or more glob patterns.
-      ///</summary>
-      ///<param name="pattern">Input to the operation: Shell wildcard pattern(s). Scalar or vector of type string.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] filenames(type: DtString): A vector of matching filenames.
-      ///</return>
-      public Operation MatchingFiles (  Output pattern ,String opName= "MatchingFiles" ) 
-      {
-         OperationDescription desc = NewOperation("MatchingFiles", opName);
-         desc.AddInput(pattern);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///Compute the regularized incomplete beta integral \\(I_x(a, b)\\).
       ///</summary>
       ///<param name="a">Input to the operation. </param>
@@ -7355,6 +7165,23 @@ namespace Emgu.TF
          desc.AddInput(a);
          desc.AddInput(b);
          desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns the set of files matching one or more glob patterns.
+      ///</summary>
+      ///<param name="pattern">Input to the operation: Shell wildcard pattern(s). Scalar or vector of type string.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] filenames(type: DtString): A vector of matching filenames.
+      ///</return>
+      public Operation MatchingFiles (  Output pattern ,String opName= "MatchingFiles" ) 
+      {
+         OperationDescription desc = NewOperation("MatchingFiles", opName);
+         desc.AddInput(pattern);
 
 
          return desc.FinishOperation();
@@ -7406,6 +7233,27 @@ namespace Emgu.TF
          desc.AddInput(flow_in);
          desc.SetAttr("dtype", dtype);
          if (element_shape_except0 != null) desc.SetAttrShape("element_shape_except0", element_shape_except0);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Op removes all elements in the underlying container.
+      ///</summary>
+      ///<param name="dtypes"></param>
+      ///<param name="capacity"></param>
+      ///<param name="memory_limit"></param>
+      ///<param name="container"></param>
+      ///<param name="shared_name"></param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation OrderedMapClear (  DataType[] dtypes, long capacity = 0 , long memory_limit = 0 , string container = null , string shared_name = null ,String opName= "OrderedMapClear" ) 
+      {
+         OperationDescription desc = NewOperation("OrderedMapClear", opName);
+
+         desc.SetAttr("dtypes", dtypes);
+         if (capacity != 0) desc.SetAttr("capacity", capacity);
+         if (memory_limit != 0) desc.SetAttr("memory_limit", memory_limit);
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
          return desc.FinishOperation();
       } 
 
@@ -7471,25 +7319,6 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Computes the maximum along segments of a tensor.
-      ///</summary>
-      ///<param name="data">Input to the operation. </param>
-      ///<param name="segment_ids">Input to the operation: A 1-D tensor whose rank is equal to the rank of `data`'s first dimension.  Values should be sorted and can be repeated.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): Has same shape as data, except for dimension 0 which has size `k`, the number of segments.
-      ///</return>
-      public Operation SegmentMax (  Output data , Output segment_ids ,String opName= "SegmentMax" ) 
-      {
-         OperationDescription desc = NewOperation("SegmentMax", opName);
-         desc.AddInput(data);
-         desc.AddInput(segment_ids);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///Deprecated. Use TensorArraySizeV3
       ///</summary>
       ///<param name="handle">Input to the operation. </param>
@@ -7503,6 +7332,20 @@ namespace Emgu.TF
          OperationDescription desc = NewOperation("TensorArraySizeV2", opName);
          desc.AddInput(handle);
          desc.AddInput(flow_in);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Deprecated. Use TensorArrayCloseV3
+      ///</summary>
+      ///<param name="handle">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation TensorArrayCloseV2 (  Output handle ,String opName= "TensorArrayCloseV2" ) 
+      {
+         OperationDescription desc = NewOperation("TensorArrayCloseV2", opName);
+         desc.AddInput(handle);
 
 
          return desc.FinishOperation();
@@ -7558,7 +7401,7 @@ namespace Emgu.TF
       ///Closes the given barrier.
       ///</summary>
       ///<param name="handle">Input to the operation: The handle to a barrier.</param>
-      ///<param name="cancel_pending_enqueues">If true, all pending enqueue requests that are blocked on the barrier's queue will be cancelled. InsertMany will fail, even if no new key is introduced.</param>
+      ///<param name="cancel_pending_enqueues">If true, all pending enqueue requests that are blocked on the barrier's queue will be canceled. InsertMany will fail, even if no new key is introduced.</param>
       ///<param name="opName">The name of the operation</param>
       public Operation BarrierClose (  Output handle , bool cancel_pending_enqueues = false ,String opName= "BarrierClose" ) 
       {
@@ -7657,19 +7500,33 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Stage values similar to a lightweight Enqueue.
+      ///Applies set operation along last dimension of 2 `SparseTensor` inputs.
       ///</summary>
-      ///<param name="values">Input to the operation: a list of tensors</param>
-      ///<param name="container">If non-empty, this queue is placed in the given container. Otherwise, a default container is used.</param>
-      ///<param name="shared_name">It is necessary to match this name to the matching Unstage Op.</param>
+      ///<param name="set1_indices">Input to the operation: 2D `Tensor`, indices of a `SparseTensor`. Must be in row-major order.</param>
+      ///<param name="set1_values">Input to the operation: 1D `Tensor`, values of a `SparseTensor`. Must be in row-major order.</param>
+      ///<param name="set1_shape">Input to the operation: 1D `Tensor`, shape of a `SparseTensor`. `set1_shape[0...n-1]` must be the same as `set2_shape[0...n-1]`, `set1_shape[n]` is the max set size across `0...n-1` dimensions.</param>
+      ///<param name="set2_indices">Input to the operation: 2D `Tensor`, indices of a `SparseTensor`. Must be in row-major order.</param>
+      ///<param name="set2_values">Input to the operation: 1D `Tensor`, values of a `SparseTensor`. Must be in row-major order.</param>
+      ///<param name="set2_shape">Input to the operation: 1D `Tensor`, shape of a `SparseTensor`. `set2_shape[0...n-1]` must be the same as `set1_shape[0...n-1]`, `set2_shape[n]` is the max set size across `0...n-1` dimensions.</param>
+      ///<param name="set_operation"></param>
+      ///<param name="validate_indices"></param>
       ///<param name="opName">The name of the operation</param>
-      public Operation Stage (  Output values , string container = null , string shared_name = null ,String opName= "Stage" ) 
+      ///<return>
+      ///[0] result_indices(type: DtInt64): 2D indices of a `SparseTensor`.
+      ///[1] result_values(type: DtInvalid): 1D values of a `SparseTensor`.
+      ///[2] result_shape(type: DtInt64): 1D `Tensor` shape of a `SparseTensor`. `result_shape[0...n-1]` is the same as the 1st `n-1` dimensions of `set1` and `set2`, `result_shape[n]` is the max result set size across all `0...n-1` dimensions.
+      ///</return>
+      public Operation SparseToSparseSetOperation (  Output set1_indices , Output set1_values , Output set1_shape , Output set2_indices , Output set2_values , Output set2_shape , string set_operation, bool validate_indices = true ,String opName= "SparseToSparseSetOperation" ) 
       {
-         OperationDescription desc = NewOperation("Stage", opName);
-         desc.AddInput(values);
-
-         if (container != null) desc.SetAttr("container", container);
-         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         OperationDescription desc = NewOperation("SparseToSparseSetOperation", opName);
+         desc.AddInput(set1_indices);
+         desc.AddInput(set1_values);
+         desc.AddInput(set1_shape);
+         desc.AddInput(set2_indices);
+         desc.AddInput(set2_values);
+         desc.AddInput(set2_shape);
+         desc.SetAttr("set_operation", set_operation);
+         if (validate_indices != true) desc.SetAttr("validate_indices", validate_indices);
          return desc.FinishOperation();
       } 
 
@@ -7695,20 +7552,651 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Stage values similar to a lightweight Enqueue.
+      ///</summary>
+      ///<param name="values">Input to the operation: a list of tensors dtypes A list of data types that inserted values should adhere to.</param>
+      ///<param name="capacity">Maximum number of elements in the Staging Area. If &gt; 0, inserts on the container will block when the capacity is reached.</param>
+      ///<param name="memory_limit">The maximum number of bytes allowed for Tensors in the Staging Area. If &gt; 0, inserts will block until sufficient space is available.</param>
+      ///<param name="container">If non-empty, this queue is placed in the given container. Otherwise, a default container is used.</param>
+      ///<param name="shared_name">It is necessary to match this name to the matching Unstage Op.</param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation Stage (  Output values , long capacity = 0 , long memory_limit = 0 , string container = null , string shared_name = null ,String opName= "Stage" ) 
+      {
+         OperationDescription desc = NewOperation("Stage", opName);
+         desc.AddInput(values);
+
+         if (capacity != 0) desc.SetAttr("capacity", capacity);
+         if (memory_limit != 0) desc.SetAttr("memory_limit", memory_limit);
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Op is similar to a lightweight Dequeue.
       ///</summary>
       ///<param name="dtypes"></param>
+      ///<param name="capacity"></param>
+      ///<param name="memory_limit"></param>
       ///<param name="container"></param>
       ///<param name="shared_name"></param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
       ///[0] values(type: DtInvalid).
       ///</return>
-      public Operation Unstage (  DataType[] dtypes, string container = null , string shared_name = null ,String opName= "Unstage" ) 
+      public Operation Unstage (  DataType[] dtypes, long capacity = 0 , long memory_limit = 0 , string container = null , string shared_name = null ,String opName= "Unstage" ) 
       {
          OperationDescription desc = NewOperation("Unstage", opName);
 
          desc.SetAttr("dtypes", dtypes);
+         if (capacity != 0) desc.SetAttr("capacity", capacity);
+         if (memory_limit != 0) desc.SetAttr("memory_limit", memory_limit);
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Op peeks at the values at the specified index.  If the
+      ///</summary>
+      ///<param name="index">Input to the operation. </param>
+      ///<param name="dtypes"></param>
+      ///<param name="capacity"></param>
+      ///<param name="memory_limit"></param>
+      ///<param name="container"></param>
+      ///<param name="shared_name"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] values(type: DtInvalid).
+      ///</return>
+      public Operation StagePeek (  Output index , DataType[] dtypes, long capacity = 0 , long memory_limit = 0 , string container = null , string shared_name = null ,String opName= "StagePeek" ) 
+      {
+         OperationDescription desc = NewOperation("StagePeek", opName);
+         desc.AddInput(index);
+         desc.SetAttr("dtypes", dtypes);
+         if (capacity != 0) desc.SetAttr("capacity", capacity);
+         if (memory_limit != 0) desc.SetAttr("memory_limit", memory_limit);
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Op returns the number of elements in the underlying container.
+      ///</summary>
+      ///<param name="dtypes"></param>
+      ///<param name="capacity"></param>
+      ///<param name="memory_limit"></param>
+      ///<param name="container"></param>
+      ///<param name="shared_name"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] size(type: DtInt32).
+      ///</return>
+      public Operation StageSize (  DataType[] dtypes, long capacity = 0 , long memory_limit = 0 , string container = null , string shared_name = null ,String opName= "StageSize" ) 
+      {
+         OperationDescription desc = NewOperation("StageSize", opName);
+
+         desc.SetAttr("dtypes", dtypes);
+         if (capacity != 0) desc.SetAttr("capacity", capacity);
+         if (memory_limit != 0) desc.SetAttr("memory_limit", memory_limit);
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Op removes all elements in the underlying container.
+      ///</summary>
+      ///<param name="dtypes"></param>
+      ///<param name="capacity"></param>
+      ///<param name="memory_limit"></param>
+      ///<param name="container"></param>
+      ///<param name="shared_name"></param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation StageClear (  DataType[] dtypes, long capacity = 0 , long memory_limit = 0 , string container = null , string shared_name = null ,String opName= "StageClear" ) 
+      {
+         OperationDescription desc = NewOperation("StageClear", opName);
+
+         desc.SetAttr("dtypes", dtypes);
+         if (capacity != 0) desc.SetAttr("capacity", capacity);
+         if (memory_limit != 0) desc.SetAttr("memory_limit", memory_limit);
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Op peeks at the values at the specified key.  If the
+      ///</summary>
+      ///<param name="key">Input to the operation. </param>
+      ///<param name="indices">Input to the operation. </param>
+      ///<param name="dtypes"></param>
+      ///<param name="capacity"></param>
+      ///<param name="memory_limit"></param>
+      ///<param name="container"></param>
+      ///<param name="shared_name"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] values(type: DtInvalid).
+      ///</return>
+      public Operation MapPeek (  Output key , Output indices , DataType[] dtypes, long capacity = 0 , long memory_limit = 0 , string container = null , string shared_name = null ,String opName= "MapPeek" ) 
+      {
+         OperationDescription desc = NewOperation("MapPeek", opName);
+         desc.AddInput(key);
+         desc.AddInput(indices);
+         desc.SetAttr("dtypes", dtypes);
+         if (capacity != 0) desc.SetAttr("capacity", capacity);
+         if (memory_limit != 0) desc.SetAttr("memory_limit", memory_limit);
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes inverse hyperbolic sine of x element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid).
+      ///</return>
+      public Operation Asinh (  Output x ,String opName= "Asinh" ) 
+      {
+         OperationDescription desc = NewOperation("Asinh", opName);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Serialize a `SparseTensor` into a string 3-vector (1-D `Tensor`) object.
+      ///</summary>
+      ///<param name="sparse_indices">Input to the operation: 2-D.  The `indices` of the `SparseTensor`.</param>
+      ///<param name="sparse_values">Input to the operation: 1-D.  The `values` of the `SparseTensor`.</param>
+      ///<param name="sparse_shape">Input to the operation: 1-D.  The `shape` of the `SparseTensor`.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] serialized_sparse(type: DtString).
+      ///</return>
+      public Operation SerializeSparse (  Output sparse_indices , Output sparse_values , Output sparse_shape ,String opName= "SerializeSparse" ) 
+      {
+         OperationDescription desc = NewOperation("SerializeSparse", opName);
+         desc.AddInput(sparse_indices);
+         desc.AddInput(sparse_values);
+         desc.AddInput(sparse_shape);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the eigen decomposition of one or more square self-adjoint matrices.
+      ///</summary>
+      ///<param name="input">Input to the operation: `Tensor` input of shape `[N, N]`.</param>
+      ///<param name="compute_v">If `True` then eigenvectors will be computed and returned in `v`. Otherwise, only the eigenvalues will be computed.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] e(type: DtInvalid): Eigenvalues. Shape is `[N]`.
+      ///[1] v(type: DtInvalid): Eigenvectors. Shape is `[N, N]`.
+      ///</return>
+      public Operation SelfAdjointEigV2 (  Output input , bool compute_v = true ,String opName= "SelfAdjointEigV2" ) 
+      {
+         OperationDescription desc = NewOperation("SelfAdjointEigV2", opName);
+         desc.AddInput(input);
+
+         if (compute_v != true) desc.SetAttr("compute_v", compute_v);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Stage (key, values) in the underlying container which behaves like a hashtable.
+      ///</summary>
+      ///<param name="key">Input to the operation: int64</param>
+      ///<param name="indices">Input to the operation. </param>
+      ///<param name="values">Input to the operation: a list of tensors dtypes A list of data types that inserted values should adhere to.</param>
+      ///<param name="dtypes"></param>
+      ///<param name="capacity">Maximum number of elements in the Staging Area. If &gt; 0, inserts on the container will block when the capacity is reached.</param>
+      ///<param name="memory_limit"></param>
+      ///<param name="container">If non-empty, this queue is placed in the given container. Otherwise, a default container is used.</param>
+      ///<param name="shared_name">It is necessary to match this name to the matching Unstage Op.</param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation MapStage (  Output key , Output indices , Output values , DataType[] dtypes, long capacity = 0 , long memory_limit = 0 , string container = null , string shared_name = null ,String opName= "MapStage" ) 
+      {
+         OperationDescription desc = NewOperation("MapStage", opName);
+         desc.AddInput(key);
+         desc.AddInput(indices);
+         desc.AddInput(values);
+         desc.SetAttr("dtypes", dtypes);
+         if (capacity != 0) desc.SetAttr("capacity", capacity);
+         if (memory_limit != 0) desc.SetAttr("memory_limit", memory_limit);
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Updates the table to associates keys with values.
+      ///</summary>
+      ///<param name="table_handle">Input to the operation: Handle to the table.</param>
+      ///<param name="keys">Input to the operation: Any shape.  Keys to look up.</param>
+      ///<param name="values">Input to the operation: Values to associate with keys.</param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation LookupTableInsertV2 (  Output table_handle , Output keys , Output values ,String opName= "LookupTableInsertV2" ) 
+      {
+         OperationDescription desc = NewOperation("LookupTableInsertV2", opName);
+         desc.AddInput(table_handle);
+         desc.AddInput(keys);
+         desc.AddInput(values);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the gradient for the inverse of `x` wrt its input.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///</return>
+      public Operation InvGrad (  Output x , Output y ,String opName= "InvGrad" ) 
+      {
+         OperationDescription desc = NewOperation("InvGrad", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Op removes and returns the values associated with the key
+      ///</summary>
+      ///<param name="key">Input to the operation. </param>
+      ///<param name="indices">Input to the operation. </param>
+      ///<param name="dtypes"></param>
+      ///<param name="capacity"></param>
+      ///<param name="memory_limit"></param>
+      ///<param name="container"></param>
+      ///<param name="shared_name"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] values(type: DtInvalid).
+      ///</return>
+      public Operation MapUnstage (  Output key , Output indices , DataType[] dtypes, long capacity = 0 , long memory_limit = 0 , string container = null , string shared_name = null ,String opName= "MapUnstage" ) 
+      {
+         OperationDescription desc = NewOperation("MapUnstage", opName);
+         desc.AddInput(key);
+         desc.AddInput(indices);
+         desc.SetAttr("dtypes", dtypes);
+         if (capacity != 0) desc.SetAttr("capacity", capacity);
+         if (memory_limit != 0) desc.SetAttr("memory_limit", memory_limit);
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Op removes and returns a random (key, value)
+      ///</summary>
+      ///<param name="indices">Input to the operation. </param>
+      ///<param name="dtypes"></param>
+      ///<param name="capacity"></param>
+      ///<param name="memory_limit"></param>
+      ///<param name="container"></param>
+      ///<param name="shared_name"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] key(type: DtInt64).
+      ///[1] values(type: DtInvalid).
+      ///</return>
+      public Operation MapUnstageNoKey (  Output indices , DataType[] dtypes, long capacity = 0 , long memory_limit = 0 , string container = null , string shared_name = null ,String opName= "MapUnstageNoKey" ) 
+      {
+         OperationDescription desc = NewOperation("MapUnstageNoKey", opName);
+         desc.AddInput(indices);
+         desc.SetAttr("dtypes", dtypes);
+         if (capacity != 0) desc.SetAttr("capacity", capacity);
+         if (memory_limit != 0) desc.SetAttr("memory_limit", memory_limit);
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Converts the given string representing a handle to an iterator to a resource.
+      ///</summary>
+      ///<param name="string_handle">Input to the operation: A string representation of the given handle.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] resource_handle(type: DtResource): A handle to an iterator resource.
+      ///</return>
+      public Operation IteratorFromStringHandle (  Output string_handle ,String opName= "IteratorFromStringHandle" ) 
+      {
+         OperationDescription desc = NewOperation("IteratorFromStringHandle", opName);
+         desc.AddInput(string_handle);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Op returns the number of elements in the underlying container.
+      ///</summary>
+      ///<param name="dtypes"></param>
+      ///<param name="capacity"></param>
+      ///<param name="memory_limit"></param>
+      ///<param name="container"></param>
+      ///<param name="shared_name"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] size(type: DtInt32).
+      ///</return>
+      public Operation MapSize (  DataType[] dtypes, long capacity = 0 , long memory_limit = 0 , string container = null , string shared_name = null ,String opName= "MapSize" ) 
+      {
+         OperationDescription desc = NewOperation("MapSize", opName);
+
+         desc.SetAttr("dtypes", dtypes);
+         if (capacity != 0) desc.SetAttr("capacity", capacity);
+         if (memory_limit != 0) desc.SetAttr("memory_limit", memory_limit);
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Op returns the number of incomplete elements in the underlying container.
+      ///</summary>
+      ///<param name="dtypes"></param>
+      ///<param name="capacity"></param>
+      ///<param name="memory_limit"></param>
+      ///<param name="container"></param>
+      ///<param name="shared_name"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] size(type: DtInt32).
+      ///</return>
+      public Operation MapIncompleteSize (  DataType[] dtypes, long capacity = 0 , long memory_limit = 0 , string container = null , string shared_name = null ,String opName= "MapIncompleteSize" ) 
+      {
+         OperationDescription desc = NewOperation("MapIncompleteSize", opName);
+
+         desc.SetAttr("dtypes", dtypes);
+         if (capacity != 0) desc.SetAttr("capacity", capacity);
+         if (memory_limit != 0) desc.SetAttr("memory_limit", memory_limit);
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes square of x element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid).
+      ///</return>
+      public Operation Square (  Output x ,String opName= "Square" ) 
+      {
+         OperationDescription desc = NewOperation("Square", opName);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Op removes all elements in the underlying container.
+      ///</summary>
+      ///<param name="dtypes"></param>
+      ///<param name="capacity"></param>
+      ///<param name="memory_limit"></param>
+      ///<param name="container"></param>
+      ///<param name="shared_name"></param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation MapClear (  DataType[] dtypes, long capacity = 0 , long memory_limit = 0 , string container = null , string shared_name = null ,String opName= "MapClear" ) 
+      {
+         OperationDescription desc = NewOperation("MapClear", opName);
+
+         desc.SetAttr("dtypes", dtypes);
+         if (capacity != 0) desc.SetAttr("capacity", capacity);
+         if (memory_limit != 0) desc.SetAttr("memory_limit", memory_limit);
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Applies sparse subtraction between `updates` and individual values or slices
+      ///</summary>
+      ///<param name="reference">Input to the operation: A mutable Tensor. Should be from a Variable node.</param>
+      ///<param name="indices">Input to the operation: A Tensor. Must be one of the following types: int32, int64. A tensor of indices into ref.</param>
+      ///<param name="updates">Input to the operation: A Tensor. Must have the same type as ref. A tensor of updated values to subtract from ref.</param>
+      ///<param name="use_locking">An optional bool. Defaults to True. If True, the assignment will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output_ref(type: DtInvalid): Same as ref. Returned as a convenience for operations that want to use the updated values after the update is done.
+      ///</return>
+      public Operation ScatterNdSub (  Output reference , Output indices , Output updates , bool use_locking = false ,String opName= "ScatterNdSub" ) 
+      {
+         OperationDescription desc = NewOperation("ScatterNdSub", opName);
+         desc.AddInput(reference);
+         desc.AddInput(indices);
+         desc.AddInput(updates);
+
+         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Op removes and returns the values associated with the key
+      ///</summary>
+      ///<param name="key">Input to the operation. </param>
+      ///<param name="indices">Input to the operation. </param>
+      ///<param name="dtypes"></param>
+      ///<param name="capacity"></param>
+      ///<param name="memory_limit"></param>
+      ///<param name="container"></param>
+      ///<param name="shared_name"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] values(type: DtInvalid).
+      ///</return>
+      public Operation OrderedMapUnstage (  Output key , Output indices , DataType[] dtypes, long capacity = 0 , long memory_limit = 0 , string container = null , string shared_name = null ,String opName= "OrderedMapUnstage" ) 
+      {
+         OperationDescription desc = NewOperation("OrderedMapUnstage", opName);
+         desc.AddInput(key);
+         desc.AddInput(indices);
+         desc.SetAttr("dtypes", dtypes);
+         if (capacity != 0) desc.SetAttr("capacity", capacity);
+         if (memory_limit != 0) desc.SetAttr("memory_limit", memory_limit);
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///
+      ///</summary>
+      ///<param name="matrix">Input to the operation. </param>
+      ///<param name="rhs">Input to the operation. </param>
+      ///<param name="adjoint"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation BatchMatrixSolve (  Output matrix , Output rhs , bool adjoint = false ,String opName= "BatchMatrixSolve" ) 
+      {
+         OperationDescription desc = NewOperation("BatchMatrixSolve", opName);
+         desc.AddInput(matrix);
+         desc.AddInput(rhs);
+
+         if (adjoint != false) desc.SetAttr("adjoint", adjoint);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Transforms a scalar brain.SequenceExample proto (as strings) into typed tensors.
+      ///</summary>
+      ///<param name="serialized">Input to the operation: A scalar containing a binary serialized SequenceExample proto.</param>
+      ///<param name="feature_list_dense_missing_assumed_empty">Input to the operation: A vector listing the FeatureList keys which may be missing from the SequenceExample.  If the associated FeatureList is missing, it is treated as empty.  By default, any FeatureList not listed in this vector must exist in the SequenceExample.</param>
+      ///<param name="context_sparse_keys">Input to the operation: A list of Ncontext_sparse string Tensors (scalars). The keys expected in the Examples' features associated with context_sparse values.</param>
+      ///<param name="context_dense_keys">Input to the operation: A list of Ncontext_dense string Tensors (scalars). The keys expected in the SequenceExamples' context features associated with dense values.</param>
+      ///<param name="feature_list_sparse_keys">Input to the operation: A list of Nfeature_list_sparse string Tensors (scalars).  The keys expected in the FeatureLists associated with sparse values.</param>
+      ///<param name="feature_list_dense_keys">Input to the operation: A list of Nfeature_list_dense string Tensors (scalars). The keys expected in the SequenceExamples' feature_lists associated with lists of dense values.</param>
+      ///<param name="context_dense_defaults">Input to the operation: A list of Ncontext_dense Tensors (some may be empty). context_dense_defaults[j] provides default values when the SequenceExample's context map lacks context_dense_key[j]. If an empty Tensor is provided for context_dense_defaults[j], then the Feature context_dense_keys[j] is required. The input type is inferred from context_dense_defaults[j], even when it's empty.  If context_dense_defaults[j] is not empty, its shape must match context_dense_shapes[j].</param>
+      ///<param name="debug_name">Input to the operation: A scalar containing the name of the serialized proto. May contain, for example, table key (descriptive) name for the corresponding serialized proto.  This is purely useful for debugging purposes, and the presence of values here has no effect on the output. May also be an empty scalar if no name is available.</param>
+      ///<param name="context_sparse_types">A list of Ncontext_sparse types; the data types of data in each context Feature given in context_sparse_keys. Currently the ParseSingleSequenceExample supports DT_FLOAT (FloatList), DT_INT64 (Int64List), and DT_STRING (BytesList).</param>
+      ///<param name="feature_list_dense_types"></param>
+      ///<param name="context_dense_shapes">A list of Ncontext_dense shapes; the shapes of data in each context Feature given in context_dense_keys. The number of elements in the Feature corresponding to context_dense_key[j] must always equal context_dense_shapes[j].NumEntries(). The shape of context_dense_values[j] will match context_dense_shapes[j].</param>
+      ///<param name="feature_list_sparse_types">A list of Nfeature_list_sparse types; the data types of data in each FeatureList given in feature_list_sparse_keys. Currently the ParseSingleSequenceExample supports DT_FLOAT (FloatList), DT_INT64 (Int64List), and DT_STRING (BytesList).</param>
+      ///<param name="feature_list_dense_shapes">A list of Nfeature_list_dense shapes; the shapes of data in each FeatureList given in feature_list_dense_keys. The shape of each Feature in the FeatureList corresponding to feature_list_dense_key[j] must always equal feature_list_dense_shapes[j].NumEntries().</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] context_sparse_indices(type: DtInt64).
+      ///[1] context_sparse_values(type: DtInvalid).
+      ///[2] context_sparse_shapes(type: DtInt64).
+      ///[3] context_dense_values(type: DtInvalid).
+      ///[4] feature_list_sparse_indices(type: DtInt64).
+      ///[5] feature_list_sparse_values(type: DtInvalid).
+      ///[6] feature_list_sparse_shapes(type: DtInt64).
+      ///[7] feature_list_dense_values(type: DtInvalid).
+      ///</return>
+      public Operation ParseSingleSequenceExample (  Output serialized , Output feature_list_dense_missing_assumed_empty , Output context_sparse_keys , Output context_dense_keys , Output feature_list_sparse_keys , Output feature_list_dense_keys , Output context_dense_defaults , Output debug_name , DataType[] context_sparse_types = null , DataType[] feature_list_dense_types = null , long[][] context_dense_shapes = null , DataType[] feature_list_sparse_types = null , long[][] feature_list_dense_shapes = null ,String opName= "ParseSingleSequenceExample" ) 
+      {
+         OperationDescription desc = NewOperation("ParseSingleSequenceExample", opName);
+         desc.AddInput(serialized);
+         desc.AddInput(feature_list_dense_missing_assumed_empty);
+         desc.AddInput(context_sparse_keys);
+         desc.AddInput(context_dense_keys);
+         desc.AddInput(feature_list_sparse_keys);
+         desc.AddInput(feature_list_dense_keys);
+         desc.AddInput(context_dense_defaults);
+         desc.AddInput(debug_name);
+
+         if (context_sparse_types != null) desc.SetAttr("context_sparse_types", context_sparse_types);
+         if (feature_list_dense_types != null) desc.SetAttr("feature_list_dense_types", feature_list_dense_types);
+         if (context_dense_shapes != null) desc.SetAttrShapeList("context_dense_shapes", context_dense_shapes);
+         if (feature_list_sparse_types != null) desc.SetAttr("feature_list_sparse_types", feature_list_sparse_types);
+         if (feature_list_dense_shapes != null) desc.SetAttrShapeList("feature_list_dense_shapes", feature_list_dense_shapes);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns the element-wise max of two SparseTensors.
+      ///</summary>
+      ///<param name="a_indices">Input to the operation: 2-D.  `N x R` matrix with the indices of non-empty values in a SparseTensor, in the canonical lexicographic ordering.</param>
+      ///<param name="a_values">Input to the operation: 1-D.  `N` non-empty values corresponding to `a_indices`.</param>
+      ///<param name="a_shape">Input to the operation: 1-D.  Shape of the input SparseTensor.</param>
+      ///<param name="b_indices">Input to the operation: counterpart to `a_indices` for the other operand.</param>
+      ///<param name="b_values">Input to the operation: counterpart to `a_values` for the other operand; must be of the same dtype.</param>
+      ///<param name="b_shape">Input to the operation: counterpart to `a_shape` for the other operand; the two shapes must be equal.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output_indices(type: DtInt64): 2-D.  The indices of the output SparseTensor.
+      ///[1] output_values(type: DtInvalid): 1-D.  The values of the output SparseTensor.
+      ///</return>
+      public Operation SparseSparseMaximum (  Output a_indices , Output a_values , Output a_shape , Output b_indices , Output b_values , Output b_shape ,String opName= "SparseSparseMaximum" ) 
+      {
+         OperationDescription desc = NewOperation("SparseSparseMaximum", opName);
+         desc.AddInput(a_indices);
+         desc.AddInput(a_values);
+         desc.AddInput(a_shape);
+         desc.AddInput(b_indices);
+         desc.AddInput(b_values);
+         desc.AddInput(b_shape);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Op returns the number of elements in the underlying container.
+      ///</summary>
+      ///<param name="dtypes"></param>
+      ///<param name="capacity"></param>
+      ///<param name="memory_limit"></param>
+      ///<param name="container"></param>
+      ///<param name="shared_name"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] size(type: DtInt32).
+      ///</return>
+      public Operation OrderedMapSize (  DataType[] dtypes, long capacity = 0 , long memory_limit = 0 , string container = null , string shared_name = null ,String opName= "OrderedMapSize" ) 
+      {
+         OperationDescription desc = NewOperation("OrderedMapSize", opName);
+
+         desc.SetAttr("dtypes", dtypes);
+         if (capacity != 0) desc.SetAttr("capacity", capacity);
+         if (memory_limit != 0) desc.SetAttr("memory_limit", memory_limit);
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Makes a new iterator from the given `dataset` and stores it in `iterator`.
+      ///</summary>
+      ///<param name="dataset">Input to the operation. </param>
+      ///<param name="iterator">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation MakeIterator (  Output dataset , Output iterator ,String opName= "MakeIterator" ) 
+      {
+         OperationDescription desc = NewOperation("MakeIterator", opName);
+         desc.AddInput(dataset);
+         desc.AddInput(iterator);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Sparse update '*var' as FOBOS algorithm with fixed learning rate.
+      ///</summary>
+      ///<param name="var">Input to the operation: Should be from a Variable().</param>
+      ///<param name="alpha">Input to the operation: Scaling factor. Must be a scalar.</param>
+      ///<param name="l1">Input to the operation: L1 regularization. Must be a scalar.</param>
+      ///<param name="l2">Input to the operation: L2 regularization. Must be a scalar.</param>
+      ///<param name="grad">Input to the operation: The gradient.</param>
+      ///<param name="indices">Input to the operation: A vector of indices into the first dimension of var and accum.</param>
+      ///<param name="use_locking">If True, the subtraction will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation ResourceSparseApplyProximalGradientDescent (  Output var , Output alpha , Output l1 , Output l2 , Output grad , Output indices , bool use_locking = false ,String opName= "ResourceSparseApplyProximalGradientDescent" ) 
+      {
+         OperationDescription desc = NewOperation("ResourceSparseApplyProximalGradientDescent", opName);
+         desc.AddInput(var);
+         desc.AddInput(alpha);
+         desc.AddInput(l1);
+         desc.AddInput(l2);
+         desc.AddInput(grad);
+         desc.AddInput(indices);
+
+         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Op returns the number of incomplete elements in the underlying container.
+      ///</summary>
+      ///<param name="dtypes"></param>
+      ///<param name="capacity"></param>
+      ///<param name="memory_limit"></param>
+      ///<param name="container"></param>
+      ///<param name="shared_name"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] size(type: DtInt32).
+      ///</return>
+      public Operation OrderedMapIncompleteSize (  DataType[] dtypes, long capacity = 0 , long memory_limit = 0 , string container = null , string shared_name = null ,String opName= "OrderedMapIncompleteSize" ) 
+      {
+         OperationDescription desc = NewOperation("OrderedMapIncompleteSize", opName);
+
+         desc.SetAttr("dtypes", dtypes);
+         if (capacity != 0) desc.SetAttr("capacity", capacity);
+         if (memory_limit != 0) desc.SetAttr("memory_limit", memory_limit);
          if (container != null) desc.SetAttr("container", container);
          if (shared_name != null) desc.SetAttr("shared_name", shared_name);
          return desc.FinishOperation();
@@ -7770,26 +8258,6 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Says whether the targets are in the top `K` predictions.
-      ///</summary>
-      ///<param name="predictions">Input to the operation: A `batch_size` x `classes` tensor.</param>
-      ///<param name="targets">Input to the operation: A `batch_size` vector of class ids.</param>
-      ///<param name="k">Number of top elements to look at for computing precision.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] precision(type: DtBool): Computed Precision at `k` as a `bool Tensor`.
-      ///</return>
-      public Operation InTopK (  Output predictions , Output targets , long k,String opName= "InTopK" ) 
-      {
-         OperationDescription desc = NewOperation("InTopK", opName);
-         desc.AddInput(predictions);
-         desc.AddInput(targets);
-         desc.SetAttr("k", k);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///Creates a dataset that splits a SparseTensor into elements row-wise.
       ///</summary>
       ///<param name="indices">Input to the operation. </param>
@@ -7811,23 +8279,60 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Creates a dataset that emits the outputs of `input_dataset` `count` times.
+      ///Says whether the targets are in the top `K` predictions.
       ///</summary>
-      ///<param name="input_dataset">Input to the operation. </param>
-      ///<param name="count">Input to the operation: A scalar representing the number of times that `input_dataset` should be repeated. A value of `-1` indicates that it should be repeated infinitely.</param>
+      ///<param name="predictions">Input to the operation: A `batch_size` x `classes` tensor.</param>
+      ///<param name="targets">Input to the operation: A `batch_size` vector of class ids.</param>
+      ///<param name="k">Number of top elements to look at for computing precision.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] precision(type: DtBool): Computed Precision at `k` as a `bool Tensor`.
+      ///</return>
+      public Operation InTopK (  Output predictions , Output targets , long k,String opName= "InTopK" ) 
+      {
+         OperationDescription desc = NewOperation("InTopK", opName);
+         desc.AddInput(predictions);
+         desc.AddInput(targets);
+         desc.SetAttr("k", k);
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Creates a dataset that zips together `input_datasets`.
+      ///</summary>
+      ///<param name="input_datasets">Input to the operation. </param>
       ///<param name="output_types"></param>
       ///<param name="output_shapes"></param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
       ///[0] handle(type: DtResource).
       ///</return>
-      public Operation RepeatDataset (  Output input_dataset , Output count , DataType[] output_types, long[][] output_shapes,String opName= "RepeatDataset" ) 
+      public Operation ZipDataset (  Output input_datasets , DataType[] output_types, long[][] output_shapes,String opName= "ZipDataset" ) 
       {
-         OperationDescription desc = NewOperation("RepeatDataset", opName);
-         desc.AddInput(input_dataset);
-         desc.AddInput(count);
+         OperationDescription desc = NewOperation("ZipDataset", opName);
+         desc.AddInput(input_datasets);
          desc.SetAttr("output_types", output_types);
          desc.SetAttrShapeList("output_shapes", output_shapes);
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Compute the upper regularized incomplete Gamma function `Q(a, x)`.
+      ///</summary>
+      ///<param name="a">Input to the operation. </param>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///</return>
+      public Operation Igammac (  Output a , Output x ,String opName= "Igammac" ) 
+      {
+         OperationDescription desc = NewOperation("Igammac", opName);
+         desc.AddInput(a);
+         desc.AddInput(x);
+
 
          return desc.FinishOperation();
       } 
@@ -7855,20 +8360,81 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Compute the upper regularized incomplete Gamma function `Q(a, x)`.
+      ///Update '*var' according to the Adam algorithm.
       ///</summary>
-      ///<param name="a">Input to the operation. </param>
-      ///<param name="x">Input to the operation. </param>
+      ///<param name="var">Input to the operation: Should be from a Variable().</param>
+      ///<param name="m">Input to the operation: Should be from a Variable().</param>
+      ///<param name="v">Input to the operation: Should be from a Variable().</param>
+      ///<param name="beta1_power">Input to the operation: Must be a scalar.</param>
+      ///<param name="beta2_power">Input to the operation: Must be a scalar.</param>
+      ///<param name="lr">Input to the operation: Scaling factor. Must be a scalar.</param>
+      ///<param name="beta1">Input to the operation: Momentum factor. Must be a scalar.</param>
+      ///<param name="beta2">Input to the operation: Momentum factor. Must be a scalar.</param>
+      ///<param name="epsilon">Input to the operation: Ridge term. Must be a scalar.</param>
+      ///<param name="grad">Input to the operation: The gradient.</param>
+      ///<param name="use_locking">If `True`, updating of the var, m, and v tensors will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
+      ///<param name="use_nesterov">If `True`, uses the nesterov update.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] z(type: DtInvalid).
+      ///[0] out(type: DtInvalid): Same as "var".
       ///</return>
-      public Operation Igammac (  Output a , Output x ,String opName= "Igammac" ) 
+      public Operation ApplyAdam (  Output var , Output m , Output v , Output beta1_power , Output beta2_power , Output lr , Output beta1 , Output beta2 , Output epsilon , Output grad , bool use_locking = false , bool use_nesterov = false ,String opName= "ApplyAdam" ) 
       {
-         OperationDescription desc = NewOperation("Igammac", opName);
-         desc.AddInput(a);
-         desc.AddInput(x);
+         OperationDescription desc = NewOperation("ApplyAdam", opName);
+         desc.AddInput(var);
+         desc.AddInput(m);
+         desc.AddInput(v);
+         desc.AddInput(beta1_power);
+         desc.AddInput(beta2_power);
+         desc.AddInput(lr);
+         desc.AddInput(beta1);
+         desc.AddInput(beta2);
+         desc.AddInput(epsilon);
+         desc.AddInput(grad);
 
+         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
+         if (use_nesterov != false) desc.SetAttr("use_nesterov", use_nesterov);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Initializes a table from a text file.
+      ///</summary>
+      ///<param name="table_handle">Input to the operation: Handle to a table which will be initialized.</param>
+      ///<param name="filename">Input to the operation: Filename of a vocabulary text file.</param>
+      ///<param name="key_index">Column index in a line to get the table `key` values from.</param>
+      ///<param name="value_index">Column index that represents information of a line to get the table `value` values from.</param>
+      ///<param name="vocab_size">Number of elements of the file, use -1 if unknown.</param>
+      ///<param name="delimiter">Delimiter to separate fields in a line.</param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation InitializeTableFromTextFile (  Output table_handle , Output filename , long key_index, long value_index, long vocab_size = -1 , string delimiter = null ,String opName= "InitializeTableFromTextFile" ) 
+      {
+         OperationDescription desc = NewOperation("InitializeTableFromTextFile", opName);
+         desc.AddInput(table_handle);
+         desc.AddInput(filename);
+         desc.SetAttr("key_index", key_index);
+         desc.SetAttr("value_index", value_index);
+         if (vocab_size != -1) desc.SetAttr("vocab_size", vocab_size);
+         if (delimiter != null) desc.SetAttr("delimiter", delimiter);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Creates a dataset that contains the elements of `input_dataset` ignoring errors.
+      ///</summary>
+      ///<param name="input_dataset">Input to the operation. </param>
+      ///<param name="output_types"></param>
+      ///<param name="output_shapes"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] handle(type: DtResource).
+      ///</return>
+      public Operation IgnoreErrorsDataset (  Output input_dataset , DataType[] output_types, long[][] output_shapes,String opName= "IgnoreErrorsDataset" ) 
+      {
+         OperationDescription desc = NewOperation("IgnoreErrorsDataset", opName);
+         desc.AddInput(input_dataset);
+         desc.SetAttr("output_types", output_types);
+         desc.SetAttrShapeList("output_shapes", output_shapes);
 
          return desc.FinishOperation();
       } 
@@ -7888,6 +8454,57 @@ namespace Emgu.TF
       public Operation FlatMapDataset (  Output input_dataset , Output other_arguments , DataType[] output_types, long[][] output_shapes,String opName= "FlatMapDataset" ) 
       {
          OperationDescription desc = NewOperation("FlatMapDataset", opName);
+         desc.AddInput(input_dataset);
+         desc.AddInput(other_arguments);
+         desc.SetAttr("output_types", output_types);
+         desc.SetAttrShapeList("output_shapes", output_shapes);
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Sparse update '*var' as FOBOS algorithm with fixed learning rate.
+      ///</summary>
+      ///<param name="var">Input to the operation: Should be from a Variable().</param>
+      ///<param name="alpha">Input to the operation: Scaling factor. Must be a scalar.</param>
+      ///<param name="l1">Input to the operation: L1 regularization. Must be a scalar.</param>
+      ///<param name="l2">Input to the operation: L2 regularization. Must be a scalar.</param>
+      ///<param name="grad">Input to the operation: The gradient.</param>
+      ///<param name="indices">Input to the operation: A vector of indices into the first dimension of var and accum.</param>
+      ///<param name="use_locking">If True, the subtraction will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] out(type: DtInvalid): Same as "var".
+      ///</return>
+      public Operation SparseApplyProximalGradientDescent (  Output var , Output alpha , Output l1 , Output l2 , Output grad , Output indices , bool use_locking = false ,String opName= "SparseApplyProximalGradientDescent" ) 
+      {
+         OperationDescription desc = NewOperation("SparseApplyProximalGradientDescent", opName);
+         desc.AddInput(var);
+         desc.AddInput(alpha);
+         desc.AddInput(l1);
+         desc.AddInput(l2);
+         desc.AddInput(grad);
+         desc.AddInput(indices);
+
+         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Creates a dataset containing elements of `input_dataset` matching `predicate`.
+      ///</summary>
+      ///<param name="input_dataset">Input to the operation. </param>
+      ///<param name="other_arguments">Input to the operation: A list of tensors, typically values that were captured when building a closure for `predicate`.</param>
+      ///<param name="output_types"></param>
+      ///<param name="output_shapes"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] handle(type: DtResource).
+      ///</return>
+      //The following attributes are not known: predicate: func
+      public Operation FilterDataset (  Output input_dataset , Output other_arguments , DataType[] output_types, long[][] output_shapes,String opName= "FilterDataset" ) 
+      {
+         OperationDescription desc = NewOperation("FilterDataset", opName);
          desc.AddInput(input_dataset);
          desc.AddInput(other_arguments);
          desc.SetAttr("output_types", output_types);
@@ -7943,6 +8560,23 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Inverse 3D fast Fourier transform.
+      ///</summary>
+      ///<param name="input">Input to the operation: A complex64 tensor.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtComplex64): A complex64 tensor of the same shape as `input`. The inner-most 3   dimensions of `input` are replaced with their inverse 3D Fourier transform.  @compatibility(numpy) Equivalent to np.fft.ifftn with 3 dimensions. @end_compatibility
+      ///</return>
+      public Operation IFFT3D (  Output input ,String opName= "IFFT3D" ) 
+      {
+         OperationDescription desc = NewOperation("IFFT3D", opName);
+         desc.AddInput(input);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Creates a dataset that batches and pads `batch_size` elements from the input.
       ///</summary>
       ///<param name="input_dataset">Input to the operation. </param>
@@ -7991,17 +8625,62 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Creates a dataset that emits the lines of one or more text files.
+      ///Creates a dataset that caches elements from `input_dataset`.
       ///</summary>
-      ///<param name="filenames">Input to the operation: A scalar or a vector containing the name(s) of the file(s) to be read.</param>
+      ///<param name="input_dataset">Input to the operation. </param>
+      ///<param name="filename">Input to the operation: A path on the filesystem where we should cache the dataset. Note: this will be a directory.</param>
+      ///<param name="output_types"></param>
+      ///<param name="output_shapes"></param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
       ///[0] handle(type: DtResource).
       ///</return>
-      public Operation TextLineDataset (  Output filenames ,String opName= "TextLineDataset" ) 
+      public Operation CacheDataset (  Output input_dataset , Output filename , DataType[] output_types, long[][] output_shapes,String opName= "CacheDataset" ) 
+      {
+         OperationDescription desc = NewOperation("CacheDataset", opName);
+         desc.AddInput(input_dataset);
+         desc.AddInput(filename);
+         desc.SetAttr("output_types", output_types);
+         desc.SetAttrShapeList("output_shapes", output_shapes);
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Outputs a `Summary` protocol buffer with a tensor and per-plugin data.
+      ///</summary>
+      ///<param name="tag">Input to the operation: A string attached to this summary. Used for organization in TensorBoard.</param>
+      ///<param name="tensor">Input to the operation: A tensor to serialize.</param>
+      ///<param name="serialized_summary_metadata">Input to the operation: A serialized SummaryMetadata proto. Contains plugin data.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] summary(type: DtString).
+      ///</return>
+      public Operation TensorSummaryV2 (  Output tag , Output tensor , Output serialized_summary_metadata ,String opName= "TensorSummaryV2" ) 
+      {
+         OperationDescription desc = NewOperation("TensorSummaryV2", opName);
+         desc.AddInput(tag);
+         desc.AddInput(tensor);
+         desc.AddInput(serialized_summary_metadata);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Creates a dataset that emits the lines of one or more text files.
+      ///</summary>
+      ///<param name="filenames">Input to the operation: A scalar or a vector containing the name(s) of the file(s) to be read.</param>
+      ///<param name="compression_type">Input to the operation: A scalar containing either (i) the empty string (no compression), (ii) "ZLIB", or (iii) "GZIP".</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] handle(type: DtResource).
+      ///</return>
+      public Operation TextLineDataset (  Output filenames , Output compression_type ,String opName= "TextLineDataset" ) 
       {
          OperationDescription desc = NewOperation("TextLineDataset", opName);
          desc.AddInput(filenames);
+         desc.AddInput(compression_type);
 
 
          return desc.FinishOperation();
@@ -8072,44 +8751,6 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Update '*var' by subtracting 'alpha' * 'delta' from it.
-      ///</summary>
-      ///<param name="var">Input to the operation: Should be from a Variable().</param>
-      ///<param name="alpha">Input to the operation: Scaling factor. Must be a scalar.</param>
-      ///<param name="delta">Input to the operation: The change.</param>
-      ///<param name="use_locking">If `True`, the subtraction will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
-      ///<param name="opName">The name of the operation</param>
-      public Operation ResourceApplyGradientDescent (  Output var , Output alpha , Output delta , bool use_locking = false ,String opName= "ResourceApplyGradientDescent" ) 
-      {
-         OperationDescription desc = NewOperation("ResourceApplyGradientDescent", opName);
-         desc.AddInput(var);
-         desc.AddInput(alpha);
-         desc.AddInput(delta);
-
-         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns the truth value of (x == y) element-wise.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtBool).
-      ///</return>
-      public Operation Equal (  Output x , Output y ,String opName= "Equal" ) 
-      {
-         OperationDescription desc = NewOperation("Equal", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///A container for an iterator resource.
       ///</summary>
       ///<param name="shared_name"></param>
@@ -8133,18 +8774,25 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Makes a new iterator from the given `dataset` and stores it in `iterator`.
+      ///Makes a "one-shot" iterator that can be iterated only once.
       ///</summary>
-      ///<param name="dataset">Input to the operation. </param>
-      ///<param name="iterator">Input to the operation. </param>
+      ///<param name="output_types"></param>
+      ///<param name="output_shapes"></param>
+      ///<param name="container"></param>
+      ///<param name="shared_name"></param>
       ///<param name="opName">The name of the operation</param>
-      public Operation MakeIterator (  Output dataset , Output iterator ,String opName= "MakeIterator" ) 
+      ///<return>
+      ///[0] handle(type: DtResource): A handle to the iterator that can be passed to an "IteratorGetNext" op.
+      ///</return>
+      //The following attributes are not known: dataset_factory: func
+      public Operation OneShotIterator (  DataType[] output_types, long[][] output_shapes, string container = null , string shared_name = null ,String opName= "OneShotIterator" ) 
       {
-         OperationDescription desc = NewOperation("MakeIterator", opName);
-         desc.AddInput(dataset);
-         desc.AddInput(iterator);
+         OperationDescription desc = NewOperation("OneShotIterator", opName);
 
-
+         desc.SetAttr("output_types", output_types);
+         desc.SetAttrShapeList("output_shapes", output_shapes);
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
          return desc.FinishOperation();
       } 
 
@@ -8175,25 +8823,63 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Makes a "one-shot" iterator that can be iterated only once.
+      ///Distributed version of Stochastic Dual Coordinate Ascent (SDCA) optimizer for
       ///</summary>
-      ///<param name="output_types"></param>
-      ///<param name="output_shapes"></param>
-      ///<param name="container"></param>
-      ///<param name="shared_name"></param>
+      ///<param name="sparse_example_indices">Input to the operation: a list of vectors which contain example indices.</param>
+      ///<param name="sparse_feature_indices">Input to the operation: a list of vectors which contain feature indices.</param>
+      ///<param name="sparse_feature_values">Input to the operation: a list of vectors which contains feature value associated with each feature group.</param>
+      ///<param name="dense_features">Input to the operation: a list of matrices which contains the dense feature values.</param>
+      ///<param name="example_weights">Input to the operation: a vector which contains the weight associated with each example.</param>
+      ///<param name="example_labels">Input to the operation: a vector which contains the label/target associated with each example.</param>
+      ///<param name="sparse_indices">Input to the operation: a list of vectors where each value is the indices which has corresponding weights in sparse_weights. This field maybe omitted for the dense approach.</param>
+      ///<param name="sparse_weights">Input to the operation: a list of vectors where each value is the weight associated with a sparse feature group.</param>
+      ///<param name="dense_weights">Input to the operation: a list of vectors where the values are the weights associated with a dense feature group.</param>
+      ///<param name="example_state_data">Input to the operation: a list of vectors containing the example state data.</param>
+      ///<param name="loss_type">Type of the primal loss. Currently SdcaSolver supports logistic, squared and hinge losses.</param>
+      ///<param name="l1">Symmetric l1 regularization strength.</param>
+      ///<param name="l2">Symmetric l2 regularization strength.</param>
+      ///<param name="num_loss_partitions">Number of partitions of the global loss function.</param>
+      ///<param name="num_inner_iterations">Number of iterations per mini-batch.</param>
+      ///<param name="adaptative">Whether to use Adapative SDCA for the inner loop.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] handle(type: DtResource): A handle to the iterator that can be passed to an "IteratorGetNext" op.
+      ///[0] out_example_state_data(type: DtFloat): a list of vectors containing the updated example state data.
+      ///[1] out_delta_sparse_weights(type: DtFloat): a list of vectors where each value is the delta weights associated with a sparse feature group.
+      ///[2] out_delta_dense_weights(type: DtFloat): a list of vectors where the values are the delta weights associated with a dense feature group.
       ///</return>
-      //The following attributes are not known: dataset_factory: func
-      public Operation OneShotIterator (  DataType[] output_types, long[][] output_shapes, string container = null , string shared_name = null ,String opName= "OneShotIterator" ) 
+      public Operation SdcaOptimizer (  Output sparse_example_indices , Output sparse_feature_indices , Output sparse_feature_values , Output dense_features , Output example_weights , Output example_labels , Output sparse_indices , Output sparse_weights , Output dense_weights , Output example_state_data , string loss_type, float l1, float l2, long num_loss_partitions, long num_inner_iterations, bool adaptative = false ,String opName= "SdcaOptimizer" ) 
       {
-         OperationDescription desc = NewOperation("OneShotIterator", opName);
+         OperationDescription desc = NewOperation("SdcaOptimizer", opName);
+         desc.AddInput(sparse_example_indices);
+         desc.AddInput(sparse_feature_indices);
+         desc.AddInput(sparse_feature_values);
+         desc.AddInput(dense_features);
+         desc.AddInput(example_weights);
+         desc.AddInput(example_labels);
+         desc.AddInput(sparse_indices);
+         desc.AddInput(sparse_weights);
+         desc.AddInput(dense_weights);
+         desc.AddInput(example_state_data);
+         desc.SetAttr("loss_type", loss_type);
+         desc.SetAttr("l1", l1);
+         desc.SetAttr("l2", l2);
+         desc.SetAttr("num_loss_partitions", num_loss_partitions);
+         desc.SetAttr("num_inner_iterations", num_inner_iterations);
+         if (adaptative != false) desc.SetAttr("adaptative", adaptative);
+         return desc.FinishOperation();
+      } 
 
-         desc.SetAttr("output_types", output_types);
-         desc.SetAttrShapeList("output_shapes", output_shapes);
-         if (container != null) desc.SetAttr("container", container);
-         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+      ///<summary>
+      ///Releases any resources used by the given iterator.
+      ///</summary>
+      ///<param name="iterator">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation IteratorDispose (  Output iterator ,String opName= "IteratorDispose" ) 
+      {
+         OperationDescription desc = NewOperation("IteratorDispose", opName);
+         desc.AddInput(iterator);
+
+
          return desc.FinishOperation();
       } 
 
@@ -8220,247 +8906,6 @@ namespace Emgu.TF
          desc.AddInput(max_features);
 
          if (out_type.HasValue) desc.SetAttr("out_type", out_type.Value);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Releases any resources used by the given iterator.
-      ///</summary>
-      ///<param name="iterator">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      public Operation IteratorDispose (  Output iterator ,String opName= "IteratorDispose" ) 
-      {
-         OperationDescription desc = NewOperation("IteratorDispose", opName);
-         desc.AddInput(iterator);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Copy Host Op.
-      ///</summary>
-      ///<param name="input">Input to the operation: Input tensor.</param>
-      ///<param name="tensor_name">The name of the input tensor.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): Output tensor, deep-copied from input.
-      ///</return>
-      //The following attributes are not known: debug_ops_spec: list(string)
-      public Operation CopyHost (  Output input , string tensor_name = null ,String opName= "CopyHost" ) 
-      {
-         OperationDescription desc = NewOperation("CopyHost", opName);
-         desc.AddInput(input);
-
-         if (tensor_name != null) desc.SetAttr("tensor_name", tensor_name);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Update '*var' according to the proximal adagrad scheme.
-      ///</summary>
-      ///<param name="var">Input to the operation: Should be from a Variable().</param>
-      ///<param name="gradient_accumulator">Input to the operation: Should be from a Variable().</param>
-      ///<param name="gradient_squared_accumulator">Input to the operation: Should be from a Variable().</param>
-      ///<param name="grad">Input to the operation: The gradient.</param>
-      ///<param name="lr">Input to the operation: Scaling factor. Must be a scalar.</param>
-      ///<param name="l1">Input to the operation: L1 regularization. Must be a scalar.</param>
-      ///<param name="l2">Input to the operation: L2 regularization. Must be a scalar.</param>
-      ///<param name="global_step">Input to the operation: Training step number. Must be a scalar.</param>
-      ///<param name="use_locking">If True, updating of the var and accum tensors will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] out(type: DtInvalid): Same as "var".
-      ///</return>
-      public Operation ApplyAdagradDA (  Output var , Output gradient_accumulator , Output gradient_squared_accumulator , Output grad , Output lr , Output l1 , Output l2 , Output global_step , bool use_locking = false ,String opName= "ApplyAdagradDA" ) 
-      {
-         OperationDescription desc = NewOperation("ApplyAdagradDA", opName);
-         desc.AddInput(var);
-         desc.AddInput(gradient_accumulator);
-         desc.AddInput(gradient_squared_accumulator);
-         desc.AddInput(grad);
-         desc.AddInput(lr);
-         desc.AddInput(l1);
-         desc.AddInput(l2);
-         desc.AddInput(global_step);
-
-         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Debug Identity Op.
-      ///</summary>
-      ///<param name="input">Input to the operation: Input tensor, non-Reference type.</param>
-      ///<param name="tensor_name">Name of the input tensor.</param>
-      ///<param name="gated_grpc">Whether this op will be gated. If any of the debug_urls of this debug node is of the grpc:// scheme, when the value of this attribute is set to True, the data will not actually be sent via the grpc stream unless this debug op has been enabled at the debug_url. If all of the debug_urls of this debug node are of the grpc:// scheme and the debug op is enabled at none of them, the output will be an empty Tensor.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): Output tensor that equals the input tensor.
-      ///</return>
-      //The following attributes are not known: debug_urls: list(string)
-      public Operation DebugIdentity (  Output input , string tensor_name = null , bool gated_grpc = false ,String opName= "DebugIdentity" ) 
-      {
-         OperationDescription desc = NewOperation("DebugIdentity", opName);
-         desc.AddInput(input);
-
-         if (tensor_name != null) desc.SetAttr("tensor_name", tensor_name);
-         if (gated_grpc != false) desc.SetAttr("gated_grpc", gated_grpc);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Cast x of type SrcT to y of DstT.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="DstT"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtInvalid).
-      ///</return>
-      public Operation Cast (  Output x , DataType DstT,String opName= "Cast" ) 
-      {
-         OperationDescription desc = NewOperation("Cast", opName);
-         desc.AddInput(x);
-         desc.SetAttr("DstT", DstT);
-
-         return desc.FinishOperation();
-      } 
-      // Skipped function _Arg
-      // Skipped function _Retval
-      // Skipped function _ListToArray
-
-      ///<summary>
-      ///Compute the polygamma function \\(\psi^{(n)}(x)\\).
-      ///</summary>
-      ///<param name="a">Input to the operation. </param>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtInvalid).
-      ///</return>
-      public Operation Polygamma (  Output a , Output x ,String opName= "Polygamma" ) 
-      {
-         OperationDescription desc = NewOperation("Polygamma", opName);
-         desc.AddInput(a);
-         desc.AddInput(x);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns the truth value of (x != y) element-wise.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtBool).
-      ///</return>
-      public Operation NotEqual (  Output x , Output y ,String opName= "NotEqual" ) 
-      {
-         OperationDescription desc = NewOperation("NotEqual", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Generates values in an interval.
-      ///</summary>
-      ///<param name="start">Input to the operation: First entry in the range.</param>
-      ///<param name="stop">Input to the operation: Last entry in the range.</param>
-      ///<param name="num">Input to the operation: Number of values to generate.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): 1-D. The generated values.
-      ///</return>
-      public Operation LinSpace (  Output start , Output stop , Output num ,String opName= "LinSpace" ) 
-      {
-         OperationDescription desc = NewOperation("LinSpace", opName);
-         desc.AddInput(start);
-         desc.AddInput(stop);
-         desc.AddInput(num);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Update '*var' according to the RMSProp algorithm.
-      ///</summary>
-      ///<param name="var">Input to the operation: Should be from a Variable().</param>
-      ///<param name="ms">Input to the operation: Should be from a Variable().</param>
-      ///<param name="mom">Input to the operation: Should be from a Variable().</param>
-      ///<param name="lr">Input to the operation: Scaling factor. Must be a scalar.</param>
-      ///<param name="rho">Input to the operation: Decay rate. Must be a scalar.</param>
-      ///<param name="momentum">Input to the operation. </param>
-      ///<param name="epsilon">Input to the operation: Ridge term. Must be a scalar.</param>
-      ///<param name="grad">Input to the operation: The gradient.</param>
-      ///<param name="use_locking">If `True`, updating of the var, ms, and mom tensors is protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] out(type: DtInvalid): Same as "var".
-      ///</return>
-      public Operation ApplyRMSProp (  Output var , Output ms , Output mom , Output lr , Output rho , Output momentum , Output epsilon , Output grad , bool use_locking = false ,String opName= "ApplyRMSProp" ) 
-      {
-         OperationDescription desc = NewOperation("ApplyRMSProp", opName);
-         desc.AddInput(var);
-         desc.AddInput(ms);
-         desc.AddInput(mom);
-         desc.AddInput(lr);
-         desc.AddInput(rho);
-         desc.AddInput(momentum);
-         desc.AddInput(epsilon);
-         desc.AddInput(grad);
-
-         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
-         return desc.FinishOperation();
-      } 
-      // Skipped function _ArrayToList
-
-      ///<summary>
-      ///Performs average pooling on the input.
-      ///</summary>
-      ///<param name="value">Input to the operation: 4-D with shape `[batch, height, width, channels]`.</param>
-      ///<param name="ksize">The size of the sliding window for each dimension of `value`.</param>
-      ///<param name="strides">The stride of the sliding window for each dimension of `value`.</param>
-      ///<param name="padding">The type of padding algorithm to use.</param>
-      ///<param name="data_format">Specify the data format of the input and output data. With the default format "NHWC", the data is stored in the order of:     [batch, in_height, in_width, in_channels]. Alternatively, the format could be "NCHW", the data storage order of:     [batch, in_channels, in_height, in_width].</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): The average pooled output tensor.
-      ///</return>
-      public Operation AvgPool (  Output value , long[] ksize, long[] strides, string padding, string data_format = null ,String opName= "AvgPool" ) 
-      {
-         OperationDescription desc = NewOperation("AvgPool", opName);
-         desc.AddInput(value);
-         desc.SetAttr("ksize", ksize);
-         desc.SetAttr("strides", strides);
-         desc.SetAttr("padding", padding);
-         if (data_format != null) desc.SetAttr("data_format", data_format);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the gradient function for function f via backpropagation.
-      ///</summary>
-      ///<param name="input">Input to the operation: a list of input tensors of size N + M;</param>
-      ///<param name="Tout">the type list for the input list.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): a list of output tensors of size N;
-      ///</return>
-      //The following attributes are not known: f: func
-      public Operation SymbolicGradient (  Output input , DataType[] Tout,String opName= "SymbolicGradient" ) 
-      {
-         OperationDescription desc = NewOperation("SymbolicGradient", opName);
-         desc.AddInput(input);
-         desc.SetAttr("Tout", Tout);
-
          return desc.FinishOperation();
       } 
 
@@ -8547,6 +8992,24 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Returns the real part of a complex number.
+      ///</summary>
+      ///<param name="input">Input to the operation. </param>
+      ///<param name="Tout"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation Real (  Output input , DataType? Tout = null ,String opName= "Real" ) 
+      {
+         OperationDescription desc = NewOperation("Real", opName);
+         desc.AddInput(input);
+
+         if (Tout.HasValue) desc.SetAttr("Tout", Tout.Value);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Decode a JPEG-encoded image to a uint8 tensor.
       ///</summary>
       ///<param name="contents">Input to the operation: 0-D.  The JPEG-encoded image.</param>
@@ -8575,24 +9038,6 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Returns the real part of a complex number.
-      ///</summary>
-      ///<param name="input">Input to the operation. </param>
-      ///<param name="Tout"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation Real (  Output input , DataType? Tout = null ,String opName= "Real" ) 
-      {
-         OperationDescription desc = NewOperation("Real", opName);
-         desc.AddInput(input);
-
-         if (Tout.HasValue) desc.SetAttr("Tout", Tout.Value);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///Computes the gradients of depthwise convolution with respect to the input.
       ///</summary>
       ///<param name="input_sizes">Input to the operation: An integer vector representing the shape of `input`, based on `data_format`.  For example, if `data_format` is 'NHWC' then  `input` is a 4-D `[batch, height, width, channels]` tensor.</param>
@@ -8614,45 +9059,6 @@ namespace Emgu.TF
          desc.SetAttr("strides", strides);
          desc.SetAttr("padding", padding);
          if (data_format != null) desc.SetAttr("data_format", data_format);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Use VariableV2 instead.
-      ///</summary>
-      ///<param name="shape"></param>
-      ///<param name="dtype"></param>
-      ///<param name="container"></param>
-      ///<param name="shared_name"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] ref(type: DtInvalid).
-      ///</return>
-      public Operation Variable (  long[] shape, DataType dtype, string container = null , string shared_name = null ,String opName= "Variable" ) 
-      {
-         OperationDescription desc = NewOperation("Variable", opName);
-
-         desc.SetAttrShape("shape", shape);
-         desc.SetAttr("dtype", dtype);
-         if (container != null) desc.SetAttr("container", container);
-         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns the truth value of NOT x element-wise.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtBool).
-      ///</return>
-      public Operation LogicalNot (  Output x ,String opName= "LogicalNot" ) 
-      {
-         OperationDescription desc = NewOperation("LogicalNot", opName);
-         desc.AddInput(x);
-
-
          return desc.FinishOperation();
       } 
 
@@ -8770,23 +9176,6 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Computes atan of x element-wise.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtInvalid).
-      ///</return>
-      public Operation Atan (  Output x ,String opName= "Atan" ) 
-      {
-         OperationDescription desc = NewOperation("Atan", opName);
-         desc.AddInput(x);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///Decode the first frame of a GIF-encoded image to a uint8 tensor.
       ///</summary>
       ///<param name="contents">Input to the operation: 0-D.  The GIF-encoded image.</param>
@@ -8876,6 +9265,40 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Generate a single randomly distorted bounding box for an image.
+      ///</summary>
+      ///<param name="image_size">Input to the operation: 1-D, containing `[height, width, channels]`.</param>
+      ///<param name="bounding_boxes">Input to the operation: 3-D with shape `[batch, N, 4]` describing the N bounding boxes associated with the image.</param>
+      ///<param name="min_object_covered">Input to the operation: The cropped area of the image must contain at least this fraction of any bounding box supplied. The value of this parameter should be non-negative. In the case of 0, the cropped area does not need to overlap any of the bounding boxes supplied.</param>
+      ///<param name="seed">If either `seed` or `seed2` are set to non-zero, the random number generator is seeded by the given `seed`.  Otherwise, it is seeded by a random seed.</param>
+      ///<param name="seed2">A second seed to avoid seed collision.</param>
+      ///<param name="aspect_ratio_range">The cropped area of the image must have an aspect ratio = width / height within this range.</param>
+      ///<param name="area_range">The cropped area of the image must contain a fraction of the supplied image within in this range.</param>
+      ///<param name="max_attempts">Number of attempts at generating a cropped region of the image of the specified constraints. After `max_attempts` failures, return the entire image.</param>
+      ///<param name="use_image_if_no_bounding_boxes">Controls behavior if no bounding boxes supplied. If true, assume an implicit bounding box covering the whole input. If false, raise an error.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] begin(type: DtInvalid): 1-D, containing `[offset_height, offset_width, 0]`. Provide as input to `tf.slice`.
+      ///[1] size(type: DtInvalid): 1-D, containing `[target_height, target_width, -1]`. Provide as input to `tf.slice`.
+      ///[2] bboxes(type: DtFloat): 3-D with shape `[1, 1, 4]` containing the distorted bounding box. Provide as input to `tf.image.draw_bounding_boxes`.
+      ///</return>
+      public Operation SampleDistortedBoundingBoxV2 (  Output image_size , Output bounding_boxes , Output min_object_covered , long seed = 0 , long seed2 = 0 , float[] aspect_ratio_range = null , float[] area_range = null , long max_attempts = 100 , bool use_image_if_no_bounding_boxes = false ,String opName= "SampleDistortedBoundingBoxV2" ) 
+      {
+         OperationDescription desc = NewOperation("SampleDistortedBoundingBoxV2", opName);
+         desc.AddInput(image_size);
+         desc.AddInput(bounding_boxes);
+         desc.AddInput(min_object_covered);
+
+         if (seed != 0) desc.SetAttr("seed", seed);
+         if (seed2 != 0) desc.SetAttr("seed2", seed2);
+         if (aspect_ratio_range != null) desc.SetAttr("aspect_ratio_range", aspect_ratio_range);
+         if (area_range != null) desc.SetAttr("area_range", area_range);
+         if (max_attempts != 100) desc.SetAttr("max_attempts", max_attempts);
+         if (use_image_if_no_bounding_boxes != false) desc.SetAttr("use_image_if_no_bounding_boxes", use_image_if_no_bounding_boxes);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Produce a string tensor that encodes the state of a Reader.
       ///</summary>
       ///<param name="reader_handle">Input to the operation: Handle to a Reader.</param>
@@ -8919,10 +9342,27 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Returns which elements of x are Inf.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtBool).
+      ///</return>
+      public Operation IsInf (  Output x ,String opName= "IsInf" ) 
+      {
+         OperationDescription desc = NewOperation("IsInf", opName);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Extracts crops from the input image tensor and bilinearly resizes them (possibly
       ///</summary>
       ///<param name="image">Input to the operation: A 4-D tensor of shape `[batch, image_height, image_width, depth]`. Both `image_height` and `image_width` need to be positive.</param>
-      ///<param name="boxes">Input to the operation: A 2-D tensor of shape `[num_boxes, 4]`. The `i`-th row of the tensor specifies the coordinates of a box in the `box_ind[i]` image and is specified in normalized coordinates `[y1, x1, y2, x2]`. A normalized coordinate value of `y` is mapped to the image coordinate at `y * (image_height - 1)`, so as the `[0, 1]` interval of normalized image height is mapped to `[0, image_height - 1] in image height coordinates. We do allow y1 &gt; y2, in which case the sampled crop is an up-down flipped version of the original image. The width dimension is treated similarly. Normalized coordinates outside the `[0, 1]` range are allowed, in which case we use `extrapolation_value` to extrapolate the input image values.</param>
+      ///<param name="boxes">Input to the operation: A 2-D tensor of shape `[num_boxes, 4]`. The `i`-th row of the tensor specifies the coordinates of a box in the `box_ind[i]` image and is specified in normalized coordinates `[y1, x1, y2, x2]`. A normalized coordinate value of `y` is mapped to the image coordinate at `y * (image_height - 1)`, so as the `[0, 1]` interval of normalized image height is mapped to `[0, image_height - 1]` in image height coordinates. We do allow `y1` &gt; `y2`, in which case the sampled crop is an up-down flipped version of the original image. The width dimension is treated similarly. Normalized coordinates outside the `[0, 1]` range are allowed, in which case we use `extrapolation_value` to extrapolate the input image values.</param>
       ///<param name="box_ind">Input to the operation: A 1-D tensor of shape `[num_boxes]` with int32 values in `[0, batch)`. The value of `box_ind[i]` specifies the image that the `i`-th box refers to.</param>
       ///<param name="crop_size">Input to the operation: A 1-D tensor of 2 elements, `size = [crop_height, crop_width]`. All cropped image patches are resized to this size. The aspect ratio of the image content is not preserved. Both `crop_height` and `crop_width` need to be positive.</param>
       ///<param name="method">A string specifying the interpolation method. Only 'bilinear' is supported for now.</param>
@@ -8987,23 +9427,6 @@ namespace Emgu.TF
          if (shared_name != null) desc.SetAttr("shared_name", shared_name);
          if (use_node_name_sharing != false) desc.SetAttr("use_node_name_sharing", use_node_name_sharing);
          if (value_shape != null) desc.SetAttrShape("value_shape", value_shape);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns which elements of x are Inf.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtBool).
-      ///</return>
-      public Operation IsInf (  Output x ,String opName= "IsInf" ) 
-      {
-         OperationDescription desc = NewOperation("IsInf", opName);
-         desc.AddInput(x);
-
-
          return desc.FinishOperation();
       } 
 
@@ -9076,6 +9499,23 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Computes inverse hyperbolic tangent of x element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid).
+      ///</return>
+      public Operation Atanh (  Output x ,String opName= "Atanh" ) 
+      {
+         OperationDescription desc = NewOperation("Atanh", opName);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Computes the gradient of the crop_and_resize op wrt the input boxes tensor.
       ///</summary>
       ///<param name="grads">Input to the operation: A 4-D tensor of shape `[num_boxes, crop_height, crop_width, depth]`.</param>
@@ -9100,6 +9540,25 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Returns (x - y)(x - y) element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///</return>
+      public Operation SquaredDifference (  Output x , Output y ,String opName= "SquaredDifference" ) 
+      {
+         OperationDescription desc = NewOperation("SquaredDifference", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Restores tensors from a V2 checkpoint.
       ///</summary>
       ///<param name="prefix">Input to the operation: Must have a single element.  The prefix of a V2 checkpoint.</param>
@@ -9117,25 +9576,6 @@ namespace Emgu.TF
          desc.AddInput(tensor_names);
          desc.AddInput(shape_and_slices);
          desc.SetAttr("dtypes", dtypes);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns (x - y)(x - y) element-wise.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtInvalid).
-      ///</return>
-      public Operation SquaredDifference (  Output x , Output y ,String opName= "SquaredDifference" ) 
-      {
-         OperationDescription desc = NewOperation("SquaredDifference", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
-
 
          return desc.FinishOperation();
       } 
@@ -9210,27 +9650,6 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Finds values and indices of the `k` largest elements for the last dimension.
-      ///</summary>
-      ///<param name="input">Input to the operation: 1-D or higher with last dimension at least `k`.</param>
-      ///<param name="k">Input to the operation: 0-D.  Number of top elements to look for along the last dimension (along each row for matrices).</param>
-      ///<param name="sorted">If true the resulting `k` elements will be sorted by the values in descending order.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] values(type: DtInvalid): The `k` largest elements along each last dimensional slice.
-      ///[1] indices(type: DtInt32): The indices of `values` within the last dimension of `input`.
-      ///</return>
-      public Operation TopKV2 (  Output input , Output k , bool sorted = true ,String opName= "TopKV2" ) 
-      {
-         OperationDescription desc = NewOperation("TopKV2", opName);
-         desc.AddInput(input);
-         desc.AddInput(k);
-
-         if (sorted != true) desc.SetAttr("sorted", sorted);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///Restores a tensor from checkpoint files.
       ///</summary>
       ///<param name="file_pattern">Input to the operation: Must have a single element. The pattern of the files from which we read the tensor.</param>
@@ -9248,6 +9667,27 @@ namespace Emgu.TF
          desc.AddInput(tensor_name);
          desc.SetAttr("dt", dt);
          if (preferred_shard != -1) desc.SetAttr("preferred_shard", preferred_shard);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Finds values and indices of the `k` largest elements for the last dimension.
+      ///</summary>
+      ///<param name="input">Input to the operation: 1-D or higher with last dimension at least `k`.</param>
+      ///<param name="k">Input to the operation: 0-D.  Number of top elements to look for along the last dimension (along each row for matrices).</param>
+      ///<param name="sorted">If true the resulting `k` elements will be sorted by the values in descending order.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] values(type: DtInvalid): The `k` largest elements along each last dimensional slice.
+      ///[1] indices(type: DtInt32): The indices of `values` within the last dimension of `input`.
+      ///</return>
+      public Operation TopKV2 (  Output input , Output k , bool sorted = true ,String opName= "TopKV2" ) 
+      {
+         OperationDescription desc = NewOperation("TopKV2", opName);
+         desc.AddInput(input);
+         desc.AddInput(k);
+
+         if (sorted != true) desc.SetAttr("sorted", sorted);
          return desc.FinishOperation();
       } 
 
@@ -9345,6 +9785,51 @@ namespace Emgu.TF
       public Operation WholeFileReader (  string container = null , string shared_name = null ,String opName= "WholeFileReader" ) 
       {
          OperationDescription desc = NewOperation("WholeFileReader", opName);
+
+
+         if (container != null) desc.SetAttr("container", container);
+         if (shared_name != null) desc.SetAttr("shared_name", shared_name);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Split a `SparseTensor` into `num_split` tensors along one dimension.
+      ///</summary>
+      ///<param name="split_dim">Input to the operation: 0-D.  The dimension along which to split.  Must be in the range `[0, rank(shape))`.</param>
+      ///<param name="indices">Input to the operation: 2-D tensor represents the indices of the sparse tensor.</param>
+      ///<param name="values">Input to the operation: 1-D tensor represents the values of the sparse tensor.</param>
+      ///<param name="shape">Input to the operation: 1-D. tensor represents the shape of the sparse tensor. output indices: A list of 1-D tensors represents the indices of the output sparse tensors.</param>
+      ///<param name="num_split">The number of ways to split.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output_indices(type: DtInt64).
+      ///[1] output_values(type: DtInvalid): A list of 1-D tensors represents the values of the output sparse tensors.
+      ///[2] output_shape(type: DtInt64): A list of 1-D tensors represents the shape of the output sparse tensors.
+      ///</return>
+      public Operation SparseSplit (  Output split_dim , Output indices , Output values , Output shape , long num_split,String opName= "SparseSplit" ) 
+      {
+         OperationDescription desc = NewOperation("SparseSplit", opName);
+         desc.AddInput(split_dim);
+         desc.AddInput(indices);
+         desc.AddInput(values);
+         desc.AddInput(shape);
+         desc.SetAttr("num_split", num_split);
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///A Reader that outputs the records from a LMDB file.
+      ///</summary>
+      ///<param name="container">If non-empty, this reader is placed in the given container. Otherwise, a default container is used.</param>
+      ///<param name="shared_name">If non-empty, this reader is named in the given bucket with this shared_name. Otherwise, the node name is used instead.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] reader_handle(type: DtString): The handle to reference the Reader.
+      ///</return>
+      public Operation LMDBReader (  string container = null , string shared_name = null ,String opName= "LMDBReader" ) 
+      {
+         OperationDescription desc = NewOperation("LMDBReader", opName);
 
 
          if (container != null) desc.SetAttr("container", container);
@@ -9463,19 +9948,16 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Returns the truth value of (x &gt; y) element-wise.
+      ///Restore a reader to a previously saved state.
       ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
+      ///<param name="reader_handle">Input to the operation: Handle to a Reader.</param>
+      ///<param name="state">Input to the operation: Result of a ReaderSerializeState of a Reader with type matching reader_handle.</param>
       ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtBool).
-      ///</return>
-      public Operation Greater (  Output x , Output y ,String opName= "Greater" ) 
+      public Operation ReaderRestoreState (  Output reader_handle , Output state ,String opName= "ReaderRestoreState" ) 
       {
-         OperationDescription desc = NewOperation("Greater", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
+         OperationDescription desc = NewOperation("ReaderRestoreState", opName);
+         desc.AddInput(reader_handle);
+         desc.AddInput(state);
 
 
          return desc.FinishOperation();
@@ -9513,23 +9995,6 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Inverse 2D fast Fourier transform.
-      ///</summary>
-      ///<param name="input">Input to the operation: A complex64 tensor.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtComplex64): A complex64 tensor of the same shape as `input`. The inner-most 2   dimensions of `input` are replaced with their inverse 2D Fourier transform.  @compatibility(numpy) Equivalent to np.fft.ifft2 @end_compatibility
-      ///</return>
-      public Operation IFFT2D (  Output input ,String opName= "IFFT2D" ) 
-      {
-         OperationDescription desc = NewOperation("IFFT2D", opName);
-         desc.AddInput(input);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///Draws samples from a multinomial distribution.
       ///</summary>
       ///<param name="logits">Input to the operation: 2-D Tensor with shape `[batch_size, num_classes]`.  Each slice `[i, :]` represents the unnormalized log probabilities for all classes.</param>
@@ -9552,7 +10017,7 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Writes contents to the file at input filename. Creates file if not existing.
+      ///Writes contents to the file at input filename. Creates file and recursively
       ///</summary>
       ///<param name="filename">Input to the operation: scalar. The name of the file to which we write the contents.</param>
       ///<param name="contents">Input to the operation: scalar. The content to be written to the output file.</param>
@@ -9568,19 +10033,34 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Returns x - y element-wise.
+      ///Inverse 2D fast Fourier transform.
       ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
+      ///<param name="input">Input to the operation: A complex64 tensor.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] z(type: DtInvalid).
+      ///[0] output(type: DtComplex64): A complex64 tensor of the same shape as `input`. The inner-most 2   dimensions of `input` are replaced with their inverse 2D Fourier transform.  @compatibility(numpy) Equivalent to np.fft.ifft2 @end_compatibility
       ///</return>
-      public Operation Sub (  Output x , Output y ,String opName= "Sub" ) 
+      public Operation IFFT2D (  Output input ,String opName= "IFFT2D" ) 
       {
-         OperationDescription desc = NewOperation("Sub", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
+         OperationDescription desc = NewOperation("IFFT2D", opName);
+         desc.AddInput(input);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the Cholesky decomposition of one or more square matrices.
+      ///</summary>
+      ///<param name="input">Input to the operation: Shape is `[..., M, M]`.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): Shape is `[..., M, M]`.
+      ///</return>
+      public Operation Cholesky (  Output input ,String opName= "Cholesky" ) 
+      {
+         OperationDescription desc = NewOperation("Cholesky", opName);
+         desc.AddInput(input);
 
 
          return desc.FinishOperation();
@@ -9603,23 +10083,6 @@ namespace Emgu.TF
          desc.AddInput(input);
          desc.SetAttr("k", k);
          if (sorted != true) desc.SetAttr("sorted", sorted);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the Cholesky decomposition of one or more square matrices.
-      ///</summary>
-      ///<param name="input">Input to the operation: Shape is `[..., M, M]`.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): Shape is `[..., M, M]`.
-      ///</return>
-      public Operation Cholesky (  Output input ,String opName= "Cholesky" ) 
-      {
-         OperationDescription desc = NewOperation("Cholesky", opName);
-         desc.AddInput(input);
-
-
          return desc.FinishOperation();
       } 
 
@@ -9713,46 +10176,6 @@ namespace Emgu.TF
          desc.AddInput(input);
 
 
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Serialize a `SparseTensor` into a string 3-vector (1-D `Tensor`) object.
-      ///</summary>
-      ///<param name="sparse_indices">Input to the operation: 2-D.  The `indices` of the `SparseTensor`.</param>
-      ///<param name="sparse_values">Input to the operation: 1-D.  The `values` of the `SparseTensor`.</param>
-      ///<param name="sparse_shape">Input to the operation: 1-D.  The `shape` of the `SparseTensor`.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] serialized_sparse(type: DtString).
-      ///</return>
-      public Operation SerializeSparse (  Output sparse_indices , Output sparse_values , Output sparse_shape ,String opName= "SerializeSparse" ) 
-      {
-         OperationDescription desc = NewOperation("SerializeSparse", opName);
-         desc.AddInput(sparse_indices);
-         desc.AddInput(sparse_values);
-         desc.AddInput(sparse_shape);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the eigen decomposition of one or more square self-adjoint matrices.
-      ///</summary>
-      ///<param name="input">Input to the operation: `Tensor` input of shape `[N, N]`.</param>
-      ///<param name="compute_v">If `True` then eigenvectors will be computed and returned in `v`. Otherwise, only the eigenvalues will be computed.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] e(type: DtInvalid): Eigenvalues. Shape is `[N]`.
-      ///[1] v(type: DtInvalid): Eigenvectors. Shape is `[N, N]`.
-      ///</return>
-      public Operation SelfAdjointEigV2 (  Output input , bool compute_v = true ,String opName= "SelfAdjointEigV2" ) 
-      {
-         OperationDescription desc = NewOperation("SelfAdjointEigV2", opName);
-         desc.AddInput(input);
-
-         if (compute_v != true) desc.SetAttr("compute_v", compute_v);
          return desc.FinishOperation();
       } 
       // Skipped function _HostCast
@@ -9877,23 +10300,6 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///
-      ///</summary>
-      ///<param name="input">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation BatchSelfAdjointEig (  Output input ,String opName= "BatchSelfAdjointEig" ) 
-      {
-         OperationDescription desc = NewOperation("BatchSelfAdjointEig", opName);
-         desc.AddInput(input);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///Convert the quantized 'input' tensor into a lower-precision 'output', using the
       ///</summary>
       ///<param name="input">Input to the operation. </param>
@@ -9922,41 +10328,17 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Subtracts sparse updates to a variable reference.
+      ///
       ///</summary>
-      ///<param name="reference">Input to the operation: Should be from a `Variable` node.</param>
-      ///<param name="indices">Input to the operation: A tensor of indices into the first dimension of `ref`.</param>
-      ///<param name="updates">Input to the operation: A tensor of updated values to subtract from `ref`.</param>
-      ///<param name="use_locking">If True, the subtraction will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
+      ///<param name="input">Input to the operation. </param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output_ref(type: DtInvalid): = Same as `ref`.  Returned as a convenience for operations that want to use the updated values after the update is done.
+      ///[0] output(type: DtInvalid).
       ///</return>
-      public Operation ScatterSub (  Output reference , Output indices , Output updates , bool use_locking = false ,String opName= "ScatterSub" ) 
+      public Operation BatchSelfAdjointEig (  Output input ,String opName= "BatchSelfAdjointEig" ) 
       {
-         OperationDescription desc = NewOperation("ScatterSub", opName);
-         desc.AddInput(reference);
-         desc.AddInput(indices);
-         desc.AddInput(updates);
-
-         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns the max of x and y (i.e. x &gt; y ? x : y) element-wise.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtInvalid).
-      ///</return>
-      public Operation Maximum (  Output x , Output y ,String opName= "Maximum" ) 
-      {
-         OperationDescription desc = NewOperation("Maximum", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
+         OperationDescription desc = NewOperation("BatchSelfAdjointEig", opName);
+         desc.AddInput(input);
 
 
          return desc.FinishOperation();
@@ -9999,69 +10381,43 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Transforms a scalar brain.SequenceExample proto (as strings) into typed tensors.
-      ///</summary>
-      ///<param name="serialized">Input to the operation: A scalar containing a binary serialized SequenceExample proto.</param>
-      ///<param name="feature_list_dense_missing_assumed_empty">Input to the operation: A vector listing the FeatureList keys which may be missing from the SequenceExample.  If the associated FeatureList is missing, it is treated as empty.  By default, any FeatureList not listed in this vector must exist in the SequenceExample.</param>
-      ///<param name="context_sparse_keys">Input to the operation: A list of Ncontext_sparse string Tensors (scalars). The keys expected in the Examples' features associated with context_sparse values.</param>
-      ///<param name="context_dense_keys">Input to the operation: A list of Ncontext_dense string Tensors (scalars). The keys expected in the SequenceExamples' context features associated with dense values.</param>
-      ///<param name="feature_list_sparse_keys">Input to the operation: A list of Nfeature_list_sparse string Tensors (scalars).  The keys expected in the FeatureLists associated with sparse values.</param>
-      ///<param name="feature_list_dense_keys">Input to the operation: A list of Nfeature_list_dense string Tensors (scalars). The keys expected in the SequenceExamples' feature_lists associated with lists of dense values.</param>
-      ///<param name="context_dense_defaults">Input to the operation: A list of Ncontext_dense Tensors (some may be empty). context_dense_defaults[j] provides default values when the SequenceExample's context map lacks context_dense_key[j]. If an empty Tensor is provided for context_dense_defaults[j], then the Feature context_dense_keys[j] is required. The input type is inferred from context_dense_defaults[j], even when it's empty.  If context_dense_defaults[j] is not empty, its shape must match context_dense_shapes[j].</param>
-      ///<param name="debug_name">Input to the operation: A scalar containing the name of the serialized proto. May contain, for example, table key (descriptive) name for the corresponding serialized proto.  This is purely useful for debugging purposes, and the presence of values here has no effect on the output. May also be an empty scalar if no name is available.</param>
-      ///<param name="context_sparse_types">A list of Ncontext_sparse types; the data types of data in each context Feature given in context_sparse_keys. Currently the ParseSingleSequenceExample supports DT_FLOAT (FloatList), DT_INT64 (Int64List), and DT_STRING (BytesList).</param>
-      ///<param name="feature_list_dense_types"></param>
-      ///<param name="context_dense_shapes">A list of Ncontext_dense shapes; the shapes of data in each context Feature given in context_dense_keys. The number of elements in the Feature corresponding to context_dense_key[j] must always equal context_dense_shapes[j].NumEntries(). The shape of context_dense_values[j] will match context_dense_shapes[j].</param>
-      ///<param name="feature_list_sparse_types">A list of Nfeature_list_sparse types; the data types of data in each FeatureList given in feature_list_sparse_keys. Currently the ParseSingleSequenceExample supports DT_FLOAT (FloatList), DT_INT64 (Int64List), and DT_STRING (BytesList).</param>
-      ///<param name="feature_list_dense_shapes">A list of Nfeature_list_dense shapes; the shapes of data in each FeatureList given in feature_list_dense_keys. The shape of each Feature in the FeatureList corresponding to feature_list_dense_key[j] must always equal feature_list_dense_shapes[j].NumEntries().</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] context_sparse_indices(type: DtInt64).
-      ///[1] context_sparse_values(type: DtInvalid).
-      ///[2] context_sparse_shapes(type: DtInt64).
-      ///[3] context_dense_values(type: DtInvalid).
-      ///[4] feature_list_sparse_indices(type: DtInt64).
-      ///[5] feature_list_sparse_values(type: DtInvalid).
-      ///[6] feature_list_sparse_shapes(type: DtInt64).
-      ///[7] feature_list_dense_values(type: DtInvalid).
-      ///</return>
-      public Operation ParseSingleSequenceExample (  Output serialized , Output feature_list_dense_missing_assumed_empty , Output context_sparse_keys , Output context_dense_keys , Output feature_list_sparse_keys , Output feature_list_dense_keys , Output context_dense_defaults , Output debug_name , DataType[] context_sparse_types = null , DataType[] feature_list_dense_types = null , long[][] context_dense_shapes = null , DataType[] feature_list_sparse_types = null , long[][] feature_list_dense_shapes = null ,String opName= "ParseSingleSequenceExample" ) 
-      {
-         OperationDescription desc = NewOperation("ParseSingleSequenceExample", opName);
-         desc.AddInput(serialized);
-         desc.AddInput(feature_list_dense_missing_assumed_empty);
-         desc.AddInput(context_sparse_keys);
-         desc.AddInput(context_dense_keys);
-         desc.AddInput(feature_list_sparse_keys);
-         desc.AddInput(feature_list_dense_keys);
-         desc.AddInput(context_dense_defaults);
-         desc.AddInput(debug_name);
-
-         if (context_sparse_types != null) desc.SetAttr("context_sparse_types", context_sparse_types);
-         if (feature_list_dense_types != null) desc.SetAttr("feature_list_dense_types", feature_list_dense_types);
-         if (context_dense_shapes != null) desc.SetAttrShapeList("context_dense_shapes", context_dense_shapes);
-         if (feature_list_sparse_types != null) desc.SetAttr("feature_list_sparse_types", feature_list_sparse_types);
-         if (feature_list_dense_shapes != null) desc.SetAttrShapeList("feature_list_dense_shapes", feature_list_dense_shapes);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///
       ///</summary>
       ///<param name="matrix">Input to the operation. </param>
       ///<param name="rhs">Input to the operation. </param>
+      ///<param name="lower"></param>
       ///<param name="adjoint"></param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
       ///[0] output(type: DtInvalid).
       ///</return>
-      public Operation BatchMatrixSolve (  Output matrix , Output rhs , bool adjoint = false ,String opName= "BatchMatrixSolve" ) 
+      public Operation BatchMatrixTriangularSolve (  Output matrix , Output rhs , bool lower = true , bool adjoint = false ,String opName= "BatchMatrixTriangularSolve" ) 
       {
-         OperationDescription desc = NewOperation("BatchMatrixSolve", opName);
+         OperationDescription desc = NewOperation("BatchMatrixTriangularSolve", opName);
          desc.AddInput(matrix);
          desc.AddInput(rhs);
 
+         if (lower != true) desc.SetAttr("lower", lower);
          if (adjoint != false) desc.SetAttr("adjoint", adjoint);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes softsign gradients for a softsign operation.
+      ///</summary>
+      ///<param name="gradients">Input to the operation: The backpropagated gradients to the corresponding softsign operation.</param>
+      ///<param name="features">Input to the operation: The features passed as input to the corresponding softsign operation.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] backprops(type: DtInvalid): The gradients: `gradients / (1 + abs(-features)) ** 2`.
+      ///</return>
+      public Operation SoftsignGrad (  Output gradients , Output features ,String opName= "SoftsignGrad" ) 
+      {
+         OperationDescription desc = NewOperation("SoftsignGrad", opName);
+         desc.AddInput(gradients);
+         desc.AddInput(features);
+
+
          return desc.FinishOperation();
       } 
 
@@ -10106,6 +10462,23 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Returns which elements of x are NaN.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtBool).
+      ///</return>
+      public Operation IsNan (  Output x ,String opName= "IsNan" ) 
+      {
+         OperationDescription desc = NewOperation("IsNan", opName);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///
       ///</summary>
       ///<param name="input">Input to the operation. </param>
@@ -10128,194 +10501,21 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Returns which elements of x are NaN.
+      ///Looks up keys in a table, outputs the corresponding values.
       ///</summary>
-      ///<param name="x">Input to the operation. </param>
+      ///<param name="table_handle">Input to the operation: Handle to the table.</param>
+      ///<param name="keys">Input to the operation: Any shape.  Keys to look up.</param>
+      ///<param name="default_value">Input to the operation. </param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] y(type: DtBool).
+      ///[0] values(type: DtInvalid): Same shape as `keys`.  Values found in the table, or `default_values` for missing keys.
       ///</return>
-      public Operation IsNan (  Output x ,String opName= "IsNan" ) 
+      public Operation LookupTableFind (  Output table_handle , Output keys , Output default_value ,String opName= "LookupTableFind" ) 
       {
-         OperationDescription desc = NewOperation("IsNan", opName);
-         desc.AddInput(x);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Asserts that the given condition is true.
-      ///</summary>
-      ///<param name="condition">Input to the operation: The condition to evaluate.</param>
-      ///<param name="data">Input to the operation: The tensors to print out when condition is false.</param>
-      ///<param name="summarize">Print this many entries of each tensor.</param>
-      ///<param name="opName">The name of the operation</param>
-      public Operation Assert (  Output condition , Output data , long summarize = 3 ,String opName= "Assert" ) 
-      {
-         OperationDescription desc = NewOperation("Assert", opName);
-         desc.AddInput(condition);
-         desc.AddInput(data);
-
-         if (summarize != 3) desc.SetAttr("summarize", summarize);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Prints a list of tensors.
-      ///</summary>
-      ///<param name="input">Input to the operation: The tensor passed to `output`</param>
-      ///<param name="data">Input to the operation: A list of tensors to print out when op is evaluated.</param>
-      ///<param name="message">A string, prefix of the error message.</param>
-      ///<param name="first_n">Only log `first_n` number of times. -1 disables logging.</param>
-      ///<param name="summarize">Only print this many entries of each tensor.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): = The unmodified `input` tensor
-      ///</return>
-      public Operation Print (  Output input , Output data , string message = null , long first_n = -1 , long summarize = 3 ,String opName= "Print" ) 
-      {
-         OperationDescription desc = NewOperation("Print", opName);
-         desc.AddInput(input);
-         desc.AddInput(data);
-
-         if (message != null) desc.SetAttr("message", message);
-         if (first_n != -1) desc.SetAttr("first_n", first_n);
-         if (summarize != 3) desc.SetAttr("summarize", summarize);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Outputs a `Summary` protocol buffer with a tensor.
-      ///</summary>
-      ///<param name="tensor">Input to the operation: A tensor to serialize.</param>
-      ///<param name="description">A json-encoded SummaryDescription proto.</param>
-      ///<param name="display_name">An unused string.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] summary(type: DtString).
-      ///</return>
-      //The following attributes are not known: labels: list(string)
-      public Operation TensorSummary (  Output tensor , string description = null , string display_name = null ,String opName= "TensorSummary" ) 
-      {
-         OperationDescription desc = NewOperation("TensorSummary", opName);
-         desc.AddInput(tensor);
-
-         if (description != null) desc.SetAttr("description", description);
-         if (display_name != null) desc.SetAttr("display_name", display_name);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes acos of x element-wise.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtInvalid).
-      ///</return>
-      public Operation Acos (  Output x ,String opName= "Acos" ) 
-      {
-         OperationDescription desc = NewOperation("Acos", opName);
-         desc.AddInput(x);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Outputs a `Summary` protocol buffer with a histogram.
-      ///</summary>
-      ///<param name="tag">Input to the operation: Scalar.  Tag to use for the `Summary.Value`.</param>
-      ///<param name="values">Input to the operation: Any shape. Values to use to build the histogram.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] summary(type: DtString): Scalar. Serialized `Summary` protocol buffer.
-      ///</return>
-      public Operation HistogramSummary (  Output tag , Output values ,String opName= "HistogramSummary" ) 
-      {
-         OperationDescription desc = NewOperation("HistogramSummary", opName);
-         desc.AddInput(tag);
-         desc.AddInput(values);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Outputs a `Summary` protocol buffer with audio.
-      ///</summary>
-      ///<param name="tag">Input to the operation: Scalar. Used to build the `tag` attribute of the summary values.</param>
-      ///<param name="tensor">Input to the operation: 2-D of shape `[batch_size, frames]`.</param>
-      ///<param name="sample_rate">Input to the operation: The sample rate of the signal in hertz.</param>
-      ///<param name="max_outputs">Max number of batch elements to generate audio for.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] summary(type: DtString): Scalar. Serialized `Summary` protocol buffer.
-      ///</return>
-      public Operation AudioSummaryV2 (  Output tag , Output tensor , Output sample_rate , long max_outputs = 3 ,String opName= "AudioSummaryV2" ) 
-      {
-         OperationDescription desc = NewOperation("AudioSummaryV2", opName);
-         desc.AddInput(tag);
-         desc.AddInput(tensor);
-         desc.AddInput(sample_rate);
-
-         if (max_outputs != 3) desc.SetAttr("max_outputs", max_outputs);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Outputs a `Summary` protocol buffer with audio.
-      ///</summary>
-      ///<param name="tag">Input to the operation: Scalar. Used to build the `tag` attribute of the summary values.</param>
-      ///<param name="tensor">Input to the operation: 2-D of shape `[batch_size, frames]`.</param>
-      ///<param name="sample_rate">The sample rate of the signal in hertz.</param>
-      ///<param name="max_outputs">Max number of batch elements to generate audio for.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] summary(type: DtString): Scalar. Serialized `Summary` protocol buffer.
-      ///</return>
-      public Operation AudioSummary (  Output tag , Output tensor , float sample_rate, long max_outputs = 3 ,String opName= "AudioSummary" ) 
-      {
-         OperationDescription desc = NewOperation("AudioSummary", opName);
-         desc.AddInput(tag);
-         desc.AddInput(tensor);
-         desc.SetAttr("sample_rate", sample_rate);
-         if (max_outputs != 3) desc.SetAttr("max_outputs", max_outputs);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns x * y element-wise.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtInvalid).
-      ///</return>
-      public Operation Mul (  Output x , Output y ,String opName= "Mul" ) 
-      {
-         OperationDescription desc = NewOperation("Mul", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Merges summaries.
-      ///</summary>
-      ///<param name="inputs">Input to the operation: Can be of any shape.  Each must contain serialized `Summary` protocol buffers.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] summary(type: DtString): Scalar. Serialized `Summary` protocol buffer.
-      ///</return>
-      public Operation MergeSummary (  Output inputs ,String opName= "MergeSummary" ) 
-      {
-         OperationDescription desc = NewOperation("MergeSummary", opName);
-         desc.AddInput(inputs);
+         OperationDescription desc = NewOperation("LookupTableFind", opName);
+         desc.AddInput(table_handle);
+         desc.AddInput(keys);
+         desc.AddInput(default_value);
 
 
          return desc.FinishOperation();
@@ -10335,63 +10535,6 @@ namespace Emgu.TF
          desc.AddInput(keys);
          desc.AddInput(values);
 
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Updates the table to associates keys with values.
-      ///</summary>
-      ///<param name="table_handle">Input to the operation: Handle to the table.</param>
-      ///<param name="keys">Input to the operation: Any shape.  Keys to look up.</param>
-      ///<param name="values">Input to the operation: Values to associate with keys.</param>
-      ///<param name="opName">The name of the operation</param>
-      public Operation LookupTableInsertV2 (  Output table_handle , Output keys , Output values ,String opName= "LookupTableInsertV2" ) 
-      {
-         OperationDescription desc = NewOperation("LookupTableInsertV2", opName);
-         desc.AddInput(table_handle);
-         desc.AddInput(keys);
-         desc.AddInput(values);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the gradient for the inverse of `x` wrt its input.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtInvalid).
-      ///</return>
-      public Operation InvGrad (  Output x , Output y ,String opName= "InvGrad" ) 
-      {
-         OperationDescription desc = NewOperation("InvGrad", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Invokes a python function to compute func(input)-&gt;output.
-      ///</summary>
-      ///<param name="input">Input to the operation: List of Tensors that will provide input to the Op.</param>
-      ///<param name="token">A token representing a registered python function in this address space.</param>
-      ///<param name="Tout">Data types of the outputs from the op. The length of the list specifies the number of outputs.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): The outputs from the Op.
-      ///</return>
-      public Operation PyFunc (  Output input , string token, DataType[] Tout,String opName= "PyFunc" ) 
-      {
-         OperationDescription desc = NewOperation("PyFunc", opName);
-         desc.AddInput(input);
-         desc.SetAttr("token", token);
-         desc.SetAttr("Tout", Tout);
 
          return desc.FinishOperation();
       } 
@@ -10431,25 +10574,6 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Compute the pairwise cross product.
-      ///</summary>
-      ///<param name="a">Input to the operation: A tensor containing 3-element vectors.</param>
-      ///<param name="b">Input to the operation: Another tensor, of same type and shape as `a`.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] product(type: DtInvalid): Pairwise cross product of the vectors in `a` and `b`.
-      ///</return>
-      public Operation Cross (  Output a , Output b ,String opName= "Cross" ) 
-      {
-         OperationDescription desc = NewOperation("Cross", opName);
-         desc.AddInput(a);
-         desc.AddInput(b);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///Outputs all keys and values in the table.
       ///</summary>
       ///<param name="table_handle">Input to the operation: Handle to the table.</param>
@@ -10471,22 +10595,6 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Adds a value to the current value of a variable.
-      ///</summary>
-      ///<param name="resource">Input to the operation: handle to the resource in which to store the variable.</param>
-      ///<param name="value">Input to the operation: the value by which the variable will be incremented.</param>
-      ///<param name="opName">The name of the operation</param>
-      public Operation AssignAddVariableOp (  Output resource , Output value ,String opName= "AssignAddVariableOp" ) 
-      {
-         OperationDescription desc = NewOperation("AssignAddVariableOp", opName);
-         desc.AddInput(resource);
-         desc.AddInput(value);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///Replaces the contents of the table with the specified keys and values.
       ///</summary>
       ///<param name="table_handle">Input to the operation: Handle to the table.</param>
@@ -10499,6 +10607,22 @@ namespace Emgu.TF
          desc.AddInput(table_handle);
          desc.AddInput(keys);
          desc.AddInput(values);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Adds a value to the current value of a variable.
+      ///</summary>
+      ///<param name="resource">Input to the operation: handle to the resource in which to store the variable.</param>
+      ///<param name="value">Input to the operation: the value by which the variable will be incremented.</param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation AssignAddVariableOp (  Output resource , Output value ,String opName= "AssignAddVariableOp" ) 
+      {
+         OperationDescription desc = NewOperation("AssignAddVariableOp", opName);
+         desc.AddInput(resource);
+         desc.AddInput(value);
 
 
          return desc.FinishOperation();
@@ -10652,66 +10776,6 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Update '*var' according to the Adam algorithm.
-      ///</summary>
-      ///<param name="var">Input to the operation: Should be from a Variable().</param>
-      ///<param name="m">Input to the operation: Should be from a Variable().</param>
-      ///<param name="v">Input to the operation: Should be from a Variable().</param>
-      ///<param name="beta1_power">Input to the operation: Must be a scalar.</param>
-      ///<param name="beta2_power">Input to the operation: Must be a scalar.</param>
-      ///<param name="lr">Input to the operation: Scaling factor. Must be a scalar.</param>
-      ///<param name="beta1">Input to the operation: Momentum factor. Must be a scalar.</param>
-      ///<param name="beta2">Input to the operation: Momentum factor. Must be a scalar.</param>
-      ///<param name="epsilon">Input to the operation: Ridge term. Must be a scalar.</param>
-      ///<param name="grad">Input to the operation: The gradient.</param>
-      ///<param name="use_locking">If `True`, updating of the var, m, and v tensors will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
-      ///<param name="use_nesterov">If `True`, uses the nesterov update.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] out(type: DtInvalid): Same as "var".
-      ///</return>
-      public Operation ApplyAdam (  Output var , Output m , Output v , Output beta1_power , Output beta2_power , Output lr , Output beta1 , Output beta2 , Output epsilon , Output grad , bool use_locking = false , bool use_nesterov = false ,String opName= "ApplyAdam" ) 
-      {
-         OperationDescription desc = NewOperation("ApplyAdam", opName);
-         desc.AddInput(var);
-         desc.AddInput(m);
-         desc.AddInput(v);
-         desc.AddInput(beta1_power);
-         desc.AddInput(beta2_power);
-         desc.AddInput(lr);
-         desc.AddInput(beta1);
-         desc.AddInput(beta2);
-         desc.AddInput(epsilon);
-         desc.AddInput(grad);
-
-         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
-         if (use_nesterov != false) desc.SetAttr("use_nesterov", use_nesterov);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Initializes a table from a text file.
-      ///</summary>
-      ///<param name="table_handle">Input to the operation: Handle to a table which will be initialized.</param>
-      ///<param name="filename">Input to the operation: Filename of a vocabulary text file.</param>
-      ///<param name="key_index">Column index in a line to get the table `key` values from.</param>
-      ///<param name="value_index">Column index that represents information of a line to get the table `value` values from.</param>
-      ///<param name="vocab_size">Number of elements of the file, use -1 if unknown.</param>
-      ///<param name="delimiter">Delimiter to separate fields in a line.</param>
-      ///<param name="opName">The name of the operation</param>
-      public Operation InitializeTableFromTextFile (  Output table_handle , Output filename , long key_index, long value_index, long vocab_size = -1 , string delimiter = null ,String opName= "InitializeTableFromTextFile" ) 
-      {
-         OperationDescription desc = NewOperation("InitializeTableFromTextFile", opName);
-         desc.AddInput(table_handle);
-         desc.AddInput(filename);
-         desc.SetAttr("key_index", key_index);
-         desc.SetAttr("value_index", value_index);
-         if (vocab_size != -1) desc.SetAttr("vocab_size", vocab_size);
-         if (delimiter != null) desc.SetAttr("delimiter", delimiter);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///Initializes a table from a text file.
       ///</summary>
       ///<param name="table_handle">Input to the operation: Handle to a table which will be initialized.</param>
@@ -10751,721 +10815,431 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Returns the min of x and y (i.e. x &lt; y ? x : y) element-wise.
+      ///Asserts that the given condition is true.
       ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
+      ///<param name="condition">Input to the operation: The condition to evaluate.</param>
+      ///<param name="data">Input to the operation: The tensors to print out when condition is false.</param>
+      ///<param name="summarize">Print this many entries of each tensor.</param>
       ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtInvalid).
-      ///</return>
-      public Operation Minimum (  Output x , Output y ,String opName= "Minimum" ) 
+      public Operation Assert (  Output condition , Output data , long summarize = 3 ,String opName= "Assert" ) 
       {
-         OperationDescription desc = NewOperation("Minimum", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Multiplies slices of two tensors in batches.
-      ///</summary>
-      ///<param name="x">Input to the operation: 2-D or higher with shape `[..., r_x, c_x]`.</param>
-      ///<param name="y">Input to the operation: 2-D or higher with shape `[..., r_y, c_y]`.</param>
-      ///<param name="adj_x">If `True`, adjoint the slices of `x`. Defaults to `False`.</param>
-      ///<param name="adj_y">If `True`, adjoint the slices of `y`. Defaults to `False`.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): 3-D or higher with shape `[..., r_o, c_o]`
-      ///</return>
-      public Operation BatchMatMul (  Output x , Output y , bool adj_x = false , bool adj_y = false ,String opName= "BatchMatMul" ) 
-      {
-         OperationDescription desc = NewOperation("BatchMatMul", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
-
-         if (adj_x != false) desc.SetAttr("adj_x", adj_x);
-         if (adj_y != false) desc.SetAttr("adj_y", adj_y);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the absolute value of a tensor.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtInvalid).
-      ///</return>
-      public Operation Abs (  Output x ,String opName= "Abs" ) 
-      {
-         OperationDescription desc = NewOperation("Abs", opName);
-         desc.AddInput(x);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the grayscale dilation of 4-D `input` and 3-D `filter` tensors.
-      ///</summary>
-      ///<param name="input">Input to the operation: 4-D with shape `[batch, in_height, in_width, depth]`.</param>
-      ///<param name="filter">Input to the operation: 3-D with shape `[filter_height, filter_width, depth]`.</param>
-      ///<param name="strides">The stride of the sliding window for each dimension of the input tensor. Must be: `[1, stride_height, stride_width, 1]`.</param>
-      ///<param name="rates">The input stride for atrous morphological dilation. Must be: `[1, rate_height, rate_width, 1]`.</param>
-      ///<param name="padding">The type of padding algorithm to use.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): 4-D with shape `[batch, out_height, out_width, depth]`.
-      ///</return>
-      public Operation Dilation2D (  Output input , Output filter , long[] strides, long[] rates, string padding,String opName= "Dilation2D" ) 
-      {
-         OperationDescription desc = NewOperation("Dilation2D", opName);
-         desc.AddInput(input);
-         desc.AddInput(filter);
-         desc.SetAttr("strides", strides);
-         desc.SetAttr("rates", rates);
-         desc.SetAttr("padding", padding);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes numerical negative value element-wise.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtInvalid).
-      ///</return>
-      public Operation Neg (  Output x ,String opName= "Neg" ) 
-      {
-         OperationDescription desc = NewOperation("Neg", opName);
-         desc.AddInput(x);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the reciprocal of x element-wise.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtInvalid).
-      ///</return>
-      public Operation Reciprocal (  Output x ,String opName= "Reciprocal" ) 
-      {
-         OperationDescription desc = NewOperation("Reciprocal", opName);
-         desc.AddInput(x);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes softmax activations.
-      ///</summary>
-      ///<param name="logits">Input to the operation: 2-D with shape `[batch_size, num_classes]`.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] softmax(type: DtInvalid): Same shape as `logits`.
-      ///</return>
-      public Operation Softmax (  Output logits ,String opName= "Softmax" ) 
-      {
-         OperationDescription desc = NewOperation("Softmax", opName);
-         desc.AddInput(logits);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the gradient for the inverse of `x` wrt its input.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtInvalid).
-      ///</return>
-      public Operation ReciprocalGrad (  Output x , Output y ,String opName= "ReciprocalGrad" ) 
-      {
-         OperationDescription desc = NewOperation("ReciprocalGrad", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the complementary error function of `x` element-wise.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtInvalid).
-      ///</return>
-      public Operation Erfc (  Output x ,String opName= "Erfc" ) 
-      {
-         OperationDescription desc = NewOperation("Erfc", opName);
-         desc.AddInput(x);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes square of x element-wise.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtInvalid).
-      ///</return>
-      public Operation Square (  Output x ,String opName= "Square" ) 
-      {
-         OperationDescription desc = NewOperation("Square", opName);
-         desc.AddInput(x);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the gradient for the rsqrt of `x` wrt its input.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtInvalid).
-      ///</return>
-      public Operation RsqrtGrad (  Output x , Output y ,String opName= "RsqrtGrad" ) 
-      {
-         OperationDescription desc = NewOperation("RsqrtGrad", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Update entries in '*var' and '*accum' according to the proximal adagrad scheme.
-      ///</summary>
-      ///<param name="var">Input to the operation: Should be from a Variable().</param>
-      ///<param name="gradient_accumulator">Input to the operation: Should be from a Variable().</param>
-      ///<param name="gradient_squared_accumulator">Input to the operation: Should be from a Variable().</param>
-      ///<param name="grad">Input to the operation: The gradient.</param>
-      ///<param name="indices">Input to the operation: A vector of indices into the first dimension of var and accum.</param>
-      ///<param name="lr">Input to the operation: Learning rate. Must be a scalar.</param>
-      ///<param name="l1">Input to the operation: L1 regularization. Must be a scalar.</param>
-      ///<param name="l2">Input to the operation: L2 regularization. Must be a scalar.</param>
-      ///<param name="global_step">Input to the operation: Training step number. Must be a scalar.</param>
-      ///<param name="use_locking">If True, updating of the var and accum tensors will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
-      ///<param name="opName">The name of the operation</param>
-      public Operation ResourceSparseApplyAdagradDA (  Output var , Output gradient_accumulator , Output gradient_squared_accumulator , Output grad , Output indices , Output lr , Output l1 , Output l2 , Output global_step , bool use_locking = false ,String opName= "ResourceSparseApplyAdagradDA" ) 
-      {
-         OperationDescription desc = NewOperation("ResourceSparseApplyAdagradDA", opName);
-         desc.AddInput(var);
-         desc.AddInput(gradient_accumulator);
-         desc.AddInput(gradient_squared_accumulator);
-         desc.AddInput(grad);
-         desc.AddInput(indices);
-         desc.AddInput(lr);
-         desc.AddInput(l1);
-         desc.AddInput(l2);
-         desc.AddInput(global_step);
-
-         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes exponential of x - 1 element-wise.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtInvalid).
-      ///</return>
-      public Operation Expm1 (  Output x ,String opName= "Expm1" ) 
-      {
-         OperationDescription desc = NewOperation("Expm1", opName);
-         desc.AddInput(x);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the gradients of 3-D convolution with respect to the input.
-      ///</summary>
-      ///<param name="input_sizes">Input to the operation: An integer vector representing the tensor shape of `input`, where `input` is a 5-D `[batch, depth, rows, cols, in_channels]` tensor.</param>
-      ///<param name="filter">Input to the operation: Shape `[depth, rows, cols, in_channels, out_channels]`. `in_channels` must match between `input` and `filter`.</param>
-      ///<param name="out_backprop">Input to the operation: Backprop signal of shape `[batch, out_depth, out_rows, out_cols, out_channels]`.</param>
-      ///<param name="strides">1-D tensor of length 5. The stride of the sliding window for each dimension of `input`. Must have `strides[0] = strides[4] = 1`.</param>
-      ///<param name="padding">The type of padding algorithm to use.</param>
-      ///<param name="data_format">The data format of the input and output data. With the default format "NDHWC", the data is stored in the order of:     [batch, in_depth, in_height, in_width, in_channels]. Alternatively, the format could be "NCDHW", the data storage order is:     [batch, in_channels, in_depth, in_height, in_width].</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation Conv3DBackpropInputV2 (  Output input_sizes , Output filter , Output out_backprop , long[] strides, string padding, string data_format = null ,String opName= "Conv3DBackpropInputV2" ) 
-      {
-         OperationDescription desc = NewOperation("Conv3DBackpropInputV2", opName);
-         desc.AddInput(input_sizes);
-         desc.AddInput(filter);
-         desc.AddInput(out_backprop);
-         desc.SetAttr("strides", strides);
-         desc.SetAttr("padding", padding);
-         if (data_format != null) desc.SetAttr("data_format", data_format);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes natural logarithm of (1 + x) element-wise.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtInvalid).
-      ///</return>
-      public Operation Log1p (  Output x ,String opName= "Log1p" ) 
-      {
-         OperationDescription desc = NewOperation("Log1p", opName);
-         desc.AddInput(x);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Outputs deterministic pseudorandom random values from a uniform distribution.
-      ///</summary>
-      ///<param name="shape">Input to the operation: The shape of the output tensor.</param>
-      ///<param name="seed">Input to the operation: 2 seeds (shape [2]).</param>
-      ///<param name="dtype">The type of the output.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): Random values with specified shape.
-      ///</return>
-      public Operation StatelessRandomUniform (  Output shape , Output seed , DataType? dtype = null ,String opName= "StatelessRandomUniform" ) 
-      {
-         OperationDescription desc = NewOperation("StatelessRandomUniform", opName);
-         desc.AddInput(shape);
-         desc.AddInput(seed);
-
-         if (dtype.HasValue) desc.SetAttr("dtype", dtype.Value);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the gradient for the tanh of `x` wrt its input.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtInvalid).
-      ///</return>
-      public Operation TanhGrad (  Output x , Output y ,String opName= "TanhGrad" ) 
-      {
-         OperationDescription desc = NewOperation("TanhGrad", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes Psi, the derivative of Lgamma (the log of the absolute value of
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] y(type: DtInvalid).
-      ///</return>
-      public Operation Digamma (  Output x ,String opName= "Digamma" ) 
-      {
-         OperationDescription desc = NewOperation("Digamma", opName);
-         desc.AddInput(x);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the sum along segments of a tensor.
-      ///</summary>
-      ///<param name="data">Input to the operation. </param>
-      ///<param name="segment_ids">Input to the operation: A tensor whose shape is a prefix of `data.shape`.</param>
-      ///<param name="num_segments">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): Has same shape as data, except for the first `segment_ids.rank` dimensions, which are replaced with a single dimension which has size `num_segments`.
-      ///</return>
-      public Operation UnsortedSegmentSum (  Output data , Output segment_ids , Output num_segments ,String opName= "UnsortedSegmentSum" ) 
-      {
-         OperationDescription desc = NewOperation("UnsortedSegmentSum", opName);
+         OperationDescription desc = NewOperation("Assert", opName);
+         desc.AddInput(condition);
          desc.AddInput(data);
-         desc.AddInput(segment_ids);
-         desc.AddInput(num_segments);
 
-
+         if (summarize != 3) desc.SetAttr("summarize", summarize);
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Computes the gradient of the sigmoid of `x` wrt its input.
+      ///Prints a list of tensors.
       ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
+      ///<param name="input">Input to the operation: The tensor passed to `output`</param>
+      ///<param name="data">Input to the operation: A list of tensors to print out when op is evaluated.</param>
+      ///<param name="message">A string, prefix of the error message.</param>
+      ///<param name="first_n">Only log `first_n` number of times. -1 disables logging.</param>
+      ///<param name="summarize">Only print this many entries of each tensor.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] z(type: DtInvalid).
+      ///[0] output(type: DtInvalid): = The unmodified `input` tensor
       ///</return>
-      public Operation SigmoidGrad (  Output x , Output y ,String opName= "SigmoidGrad" ) 
+      public Operation Print (  Output input , Output data , string message = null , long first_n = -1 , long summarize = 3 ,String opName= "Print" ) 
       {
-         OperationDescription desc = NewOperation("SigmoidGrad", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
+         OperationDescription desc = NewOperation("Print", opName);
+         desc.AddInput(input);
+         desc.AddInput(data);
 
-
+         if (message != null) desc.SetAttr("message", message);
+         if (first_n != -1) desc.SetAttr("first_n", first_n);
+         if (summarize != 3) desc.SetAttr("summarize", summarize);
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Outputs random values from a normal distribution.
+      ///Outputs a `Summary` protocol buffer with a tensor.
       ///</summary>
-      ///<param name="shape">Input to the operation: The shape of the output tensor.</param>
-      ///<param name="dtype">The type of the output.</param>
-      ///<param name="seed">If either `seed` or `seed2` are set to be non-zero, the random number generator is seeded by the given seed.  Otherwise, it is seeded by a random seed.</param>
-      ///<param name="seed2">A second seed to avoid seed collision.</param>
+      ///<param name="tensor">Input to the operation: A tensor to serialize.</param>
+      ///<param name="description">A json-encoded SummaryDescription proto.</param>
+      ///<param name="display_name">An unused string.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtInvalid): A tensor of the specified shape filled with random normal values.
+      ///[0] summary(type: DtString).
       ///</return>
-      public Operation RandomStandardNormal (  Output shape , DataType dtype, long seed = 0 , long seed2 = 0 ,String opName= "RandomStandardNormal" ) 
+      //The following attributes are not known: labels: list(string)
+      public Operation TensorSummary (  Output tensor , string description = null , string display_name = null ,String opName= "TensorSummary" ) 
       {
-         OperationDescription desc = NewOperation("RandomStandardNormal", opName);
-         desc.AddInput(shape);
-         desc.SetAttr("dtype", dtype);
-         if (seed != 0) desc.SetAttr("seed", seed);
-         if (seed2 != 0) desc.SetAttr("seed2", seed2);
+         OperationDescription desc = NewOperation("TensorSummary", opName);
+         desc.AddInput(tensor);
+
+         if (description != null) desc.SetAttr("description", description);
+         if (display_name != null) desc.SetAttr("display_name", display_name);
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Computes cos of x element-wise.
+      ///Outputs a `Summary` protocol buffer with a histogram.
       ///</summary>
-      ///<param name="x">Input to the operation. </param>
+      ///<param name="tag">Input to the operation: Scalar.  Tag to use for the `Summary.Value`.</param>
+      ///<param name="values">Input to the operation: Any shape. Values to use to build the histogram.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] y(type: DtInvalid).
+      ///[0] summary(type: DtString): Scalar. Serialized `Summary` protocol buffer.
       ///</return>
-      public Operation Cos (  Output x ,String opName= "Cos" ) 
+      public Operation HistogramSummary (  Output tag , Output values ,String opName= "HistogramSummary" ) 
       {
-         OperationDescription desc = NewOperation("Cos", opName);
-         desc.AddInput(x);
+         OperationDescription desc = NewOperation("HistogramSummary", opName);
+         desc.AddInput(tag);
+         desc.AddInput(values);
 
 
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Computes asin of x element-wise.
+      ///Outputs a `Summary` protocol buffer with audio.
       ///</summary>
-      ///<param name="x">Input to the operation. </param>
+      ///<param name="tag">Input to the operation: Scalar. Used to build the `tag` attribute of the summary values.</param>
+      ///<param name="tensor">Input to the operation: 2-D of shape `[batch_size, frames]`.</param>
+      ///<param name="sample_rate">Input to the operation: The sample rate of the signal in hertz.</param>
+      ///<param name="max_outputs">Max number of batch elements to generate audio for.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] y(type: DtInvalid).
+      ///[0] summary(type: DtString): Scalar. Serialized `Summary` protocol buffer.
       ///</return>
-      public Operation Asin (  Output x ,String opName= "Asin" ) 
+      public Operation AudioSummaryV2 (  Output tag , Output tensor , Output sample_rate , long max_outputs = 3 ,String opName= "AudioSummaryV2" ) 
       {
-         OperationDescription desc = NewOperation("Asin", opName);
-         desc.AddInput(x);
+         OperationDescription desc = NewOperation("AudioSummaryV2", opName);
+         desc.AddInput(tag);
+         desc.AddInput(tensor);
+         desc.AddInput(sample_rate);
+
+         if (max_outputs != 3) desc.SetAttr("max_outputs", max_outputs);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Outputs a `Summary` protocol buffer with audio.
+      ///</summary>
+      ///<param name="tag">Input to the operation: Scalar. Used to build the `tag` attribute of the summary values.</param>
+      ///<param name="tensor">Input to the operation: 2-D of shape `[batch_size, frames]`.</param>
+      ///<param name="sample_rate">The sample rate of the signal in hertz.</param>
+      ///<param name="max_outputs">Max number of batch elements to generate audio for.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] summary(type: DtString): Scalar. Serialized `Summary` protocol buffer.
+      ///</return>
+      public Operation AudioSummary (  Output tag , Output tensor , float sample_rate, long max_outputs = 3 ,String opName= "AudioSummary" ) 
+      {
+         OperationDescription desc = NewOperation("AudioSummary", opName);
+         desc.AddInput(tag);
+         desc.AddInput(tensor);
+         desc.SetAttr("sample_rate", sample_rate);
+         if (max_outputs != 3) desc.SetAttr("max_outputs", max_outputs);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Merges summaries.
+      ///</summary>
+      ///<param name="inputs">Input to the operation: Can be of any shape.  Each must contain serialized `Summary` protocol buffers.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] summary(type: DtString): Scalar. Serialized `Summary` protocol buffer.
+      ///</return>
+      public Operation MergeSummary (  Output inputs ,String opName= "MergeSummary" ) 
+      {
+         OperationDescription desc = NewOperation("MergeSummary", opName);
+         desc.AddInput(inputs);
 
 
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Given a quantized tensor described by (input, input_min, input_max), outputs a
+      ///Inverse fast Fourier transform.
+      ///</summary>
+      ///<param name="input">Input to the operation: A complex64 tensor.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtComplex64): A complex64 tensor of the same shape as `input`. The inner-most   dimension of `input` is replaced with its inverse 1D Fourier transform.  @compatibility(numpy) Equivalent to np.fft.ifft @end_compatibility
+      ///</return>
+      public Operation IFFT (  Output input ,String opName= "IFFT" ) 
+      {
+         OperationDescription desc = NewOperation("IFFT", opName);
+         desc.AddInput(input);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///2D fast Fourier transform.
+      ///</summary>
+      ///<param name="input">Input to the operation: A complex64 tensor.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtComplex64): A complex64 tensor of the same shape as `input`. The inner-most 2   dimensions of `input` are replaced with their 2D Fourier transform.  @compatibility(numpy) Equivalent to np.fft.fft2 @end_compatibility
+      ///</return>
+      public Operation FFT2D (  Output input ,String opName= "FFT2D" ) 
+      {
+         OperationDescription desc = NewOperation("FFT2D", opName);
+         desc.AddInput(input);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///3D fast Fourier transform.
+      ///</summary>
+      ///<param name="input">Input to the operation: A complex64 tensor.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtComplex64): A complex64 tensor of the same shape as `input`. The inner-most 3   dimensions of `input` are replaced with their 3D Fourier transform.  @compatibility(numpy) Equivalent to np.fft.fftn with 3 dimensions. @end_compatibility
+      ///</return>
+      public Operation FFT3D (  Output input ,String opName= "FFT3D" ) 
+      {
+         OperationDescription desc = NewOperation("FFT3D", opName);
+         desc.AddInput(input);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Real-valued fast Fourier transform.
+      ///</summary>
+      ///<param name="input">Input to the operation: A float32 tensor.</param>
+      ///<param name="fft_length">Input to the operation: An int32 tensor of shape [1]. The FFT length.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtComplex64): A complex64 tensor of the same rank as `input`. The inner-most   dimension of `input` is replaced with the `fft_length / 2 + 1` unique   frequency components of its 1D Fourier transform.  @compatibility(numpy) Equivalent to np.fft.rfft @end_compatibility
+      ///</return>
+      public Operation RFFT (  Output input , Output fft_length ,String opName= "RFFT" ) 
+      {
+         OperationDescription desc = NewOperation("RFFT", opName);
+         desc.AddInput(input);
+         desc.AddInput(fft_length);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Inverse real-valued fast Fourier transform.
+      ///</summary>
+      ///<param name="input">Input to the operation: A complex64 tensor.</param>
+      ///<param name="fft_length">Input to the operation: An int32 tensor of shape [1]. The FFT length.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtFloat): A float32 tensor of the same rank as `input`. The inner-most   dimension of `input` is replaced with the `fft_length` samples of its inverse   1D Fourier transform.  @compatibility(numpy) Equivalent to np.fft.irfft @end_compatibility
+      ///</return>
+      public Operation IRFFT (  Output input , Output fft_length ,String opName= "IRFFT" ) 
+      {
+         OperationDescription desc = NewOperation("IRFFT", opName);
+         desc.AddInput(input);
+         desc.AddInput(fft_length);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///2D real-valued fast Fourier transform.
+      ///</summary>
+      ///<param name="input">Input to the operation: A float32 tensor.</param>
+      ///<param name="fft_length">Input to the operation: An int32 tensor of shape [2]. The FFT length for each dimension.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtComplex64): A complex64 tensor of the same rank as `input`. The inner-most 2   dimensions of `input` are replaced with their 2D Fourier transform. The   inner-most dimension contains `fft_length / 2 + 1` unique frequency   components.  @compatibility(numpy) Equivalent to np.fft.rfft2 @end_compatibility
+      ///</return>
+      public Operation RFFT2D (  Output input , Output fft_length ,String opName= "RFFT2D" ) 
+      {
+         OperationDescription desc = NewOperation("RFFT2D", opName);
+         desc.AddInput(input);
+         desc.AddInput(fft_length);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Inverse 3D real-valued fast Fourier transform.
+      ///</summary>
+      ///<param name="input">Input to the operation: A complex64 tensor.</param>
+      ///<param name="fft_length">Input to the operation: An int32 tensor of shape [3]. The FFT length for each dimension.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtFloat): A float32 tensor of the same rank as `input`. The inner-most 3   dimensions of `input` are replaced with the `fft_length` samples of their   inverse 3D real Fourier transform.  @compatibility(numpy) Equivalent to np.irfftn with 3 dimensions. @end_compatibility
+      ///</return>
+      public Operation IRFFT3D (  Output input , Output fft_length ,String opName= "IRFFT3D" ) 
+      {
+         OperationDescription desc = NewOperation("IRFFT3D", opName);
+         desc.AddInput(input);
+         desc.AddInput(fft_length);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Performs max pooling on the input and outputs both max values and indices.
+      ///</summary>
+      ///<param name="input">Input to the operation: 4-D with shape `[batch, height, width, channels]`.  Input to pool over.</param>
+      ///<param name="ksize">The size of the window for each dimension of the input tensor.</param>
+      ///<param name="strides">The stride of the sliding window for each dimension of the input tensor.</param>
+      ///<param name="padding">The type of padding algorithm to use.</param>
+      ///<param name="Targmax"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): The max pooled output tensor.
+      ///[1] argmax(type: DtInvalid): 4-D.  The flattened indices of the max values chosen for each output.
+      ///</return>
+      public Operation MaxPoolWithArgmax (  Output input , long[] ksize, long[] strides, string padding, DataType? Targmax = null ,String opName= "MaxPoolWithArgmax" ) 
+      {
+         OperationDescription desc = NewOperation("MaxPoolWithArgmax", opName);
+         desc.AddInput(input);
+         desc.SetAttr("ksize", ksize);
+         desc.SetAttr("strides", strides);
+         desc.SetAttr("padding", padding);
+         if (Targmax.HasValue) desc.SetAttr("Targmax", Targmax.Value);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///
       ///</summary>
       ///<param name="input">Input to the operation. </param>
-      ///<param name="input_min">Input to the operation: The float value that the minimum quantized input value represents.</param>
-      ///<param name="input_max">Input to the operation: The float value that the maximum quantized input value represents.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output_min(type: DtFloat): The computed min output.
-      ///[1] output_max(type: DtFloat): the computed max output.
+      ///[0] output(type: DtComplex64).
       ///</return>
-      public Operation RequantizationRange (  Output input , Output input_min , Output input_max ,String opName= "RequantizationRange" ) 
+      public Operation BatchFFT2D (  Output input ,String opName= "BatchFFT2D" ) 
       {
-         OperationDescription desc = NewOperation("RequantizationRange", opName);
+         OperationDescription desc = NewOperation("BatchFFT2D", opName);
          desc.AddInput(input);
-         desc.AddInput(input_min);
-         desc.AddInput(input_max);
 
 
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Returns which elements of x are finite.
+      ///
       ///</summary>
-      ///<param name="x">Input to the operation. </param>
+      ///<param name="input">Input to the operation. </param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] y(type: DtBool).
+      ///[0] output(type: DtComplex64).
       ///</return>
-      public Operation IsFinite (  Output x ,String opName= "IsFinite" ) 
+      public Operation BatchIFFT2D (  Output input ,String opName= "BatchIFFT2D" ) 
       {
-         OperationDescription desc = NewOperation("IsFinite", opName);
-         desc.AddInput(x);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns x + y element-wise.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtInvalid).
-      ///</return>
-      public Operation Add (  Output x , Output y ,String opName= "Add" ) 
-      {
-         OperationDescription desc = NewOperation("Add", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns x // y element-wise.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtInvalid).
-      ///</return>
-      public Operation FloorDiv (  Output x , Output y ,String opName= "FloorDiv" ) 
-      {
-         OperationDescription desc = NewOperation("FloorDiv", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns x / y element-wise for integer types.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtInvalid).
-      ///</return>
-      public Operation TruncateDiv (  Output x , Output y ,String opName= "TruncateDiv" ) 
-      {
-         OperationDescription desc = NewOperation("TruncateDiv", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the gradients of 3-D convolution with respect to the input.
-      ///</summary>
-      ///<param name="input">Input to the operation: Shape `[batch, depth, rows, cols, in_channels]`.</param>
-      ///<param name="filter">Input to the operation: Shape `[depth, rows, cols, in_channels, out_channels]`. `in_channels` must match between `input` and `filter`.</param>
-      ///<param name="out_backprop">Input to the operation: Backprop signal of shape `[batch, out_depth, out_rows, out_cols, out_channels]`.</param>
-      ///<param name="strides">1-D tensor of length 5. The stride of the sliding window for each dimension of `input`. Must have `strides[0] = strides[4] = 1`.</param>
-      ///<param name="padding">The type of padding algorithm to use.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation Conv3DBackpropInput (  Output input , Output filter , Output out_backprop , long[] strides, string padding,String opName= "Conv3DBackpropInput" ) 
-      {
-         OperationDescription desc = NewOperation("Conv3DBackpropInput", opName);
+         OperationDescription desc = NewOperation("BatchIFFT2D", opName);
          desc.AddInput(input);
-         desc.AddInput(filter);
-         desc.AddInput(out_backprop);
-         desc.SetAttr("strides", strides);
-         desc.SetAttr("padding", padding);
+
 
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Returns element-wise remainder of division. This emulates C semantics in that
+      ///
       ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
+      ///<param name="input">Input to the operation. </param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] z(type: DtInvalid).
+      ///[0] output(type: DtComplex64).
       ///</return>
-      public Operation Mod (  Output x , Output y ,String opName= "Mod" ) 
+      public Operation BatchFFT3D (  Output input ,String opName= "BatchFFT3D" ) 
       {
-         OperationDescription desc = NewOperation("Mod", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
+         OperationDescription desc = NewOperation("BatchFFT3D", opName);
+         desc.AddInput(input);
 
 
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Computes the power of one value to another.
+      ///Transforms a vector of brain.Example protos (as strings) into typed tensors.
       ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
+      ///<param name="serialized">Input to the operation: A vector containing a batch of binary serialized Example protos.</param>
+      ///<param name="names">Input to the operation: A vector containing the names of the serialized protos. May contain, for example, table key (descriptive) names for the corresponding serialized protos.  These are purely useful for debugging purposes, and the presence of values here has no effect on the output. May also be an empty vector if no names are available. If non-empty, this vector must be the same length as "serialized".</param>
+      ///<param name="sparse_keys">Input to the operation: A list of Nsparse string Tensors (scalars). The keys expected in the Examples' features associated with sparse values.</param>
+      ///<param name="dense_keys">Input to the operation: A list of Ndense string Tensors (scalars). The keys expected in the Examples' features associated with dense values.</param>
+      ///<param name="dense_defaults">Input to the operation: A list of Ndense Tensors (some may be empty). dense_defaults[j] provides default values when the example's feature_map lacks dense_key[j].  If an empty Tensor is provided for dense_defaults[j], then the Feature dense_keys[j] is required. The input type is inferred from dense_defaults[j], even when it's empty. If dense_defaults[j] is not empty, and dense_shapes[j] is fully defined, then the shape of dense_defaults[j] must match that of dense_shapes[j]. If dense_shapes[j] has an undefined major dimension (variable strides dense feature), dense_defaults[j] must contain a single element: the padding element.</param>
+      ///<param name="sparse_types">A list of Nsparse types; the data types of data in each Feature given in sparse_keys. Currently the ParseExample supports DT_FLOAT (FloatList), DT_INT64 (Int64List), and DT_STRING (BytesList).</param>
+      ///<param name="dense_shapes">A list of Ndense shapes; the shapes of data in each Feature given in dense_keys. The number of elements in the Feature corresponding to dense_key[j] must always equal dense_shapes[j].NumEntries(). If dense_shapes[j] == (D0, D1, ..., DN) then the shape of output Tensor dense_values[j] will be (|serialized|, D0, D1, ..., DN): The dense outputs are just the inputs row-stacked by batch. This works for dense_shapes[j] = (-1, D1, ..., DN).  In this case the shape of the output Tensor dense_values[j] will be (|serialized|, M, D1, .., DN), where M is the maximum number of blocks of elements of length D1 * .... * DN, across all minibatch entries in the input.  Any minibatch entry with less than M blocks of elements of length D1 * ... * DN will be padded with the corresponding default_value scalar element along the second dimension.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] z(type: DtInvalid).
+      ///[0] sparse_indices(type: DtInt64).
+      ///[1] sparse_values(type: DtInvalid).
+      ///[2] sparse_shapes(type: DtInt64).
+      ///[3] dense_values(type: DtInvalid).
       ///</return>
-      public Operation Pow (  Output x , Output y ,String opName= "Pow" ) 
+      public Operation ParseExample (  Output serialized , Output names , Output sparse_keys , Output dense_keys , Output dense_defaults , DataType[] sparse_types, long[][] dense_shapes,String opName= "ParseExample" ) 
       {
-         OperationDescription desc = NewOperation("Pow", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
-
+         OperationDescription desc = NewOperation("ParseExample", opName);
+         desc.AddInput(serialized);
+         desc.AddInput(names);
+         desc.AddInput(sparse_keys);
+         desc.AddInput(dense_keys);
+         desc.AddInput(dense_defaults);
+         desc.SetAttr("sparse_types", sparse_types);
+         desc.SetAttrShapeList("dense_shapes", dense_shapes);
 
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Returns the truth value of x AND y element-wise.
+      ///Converts each string in the input Tensor to the specified numeric type.
       ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
+      ///<param name="string_tensor">Input to the operation. </param>
+      ///<param name="out_type">The numeric type to interpret each string in `string_tensor` as.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] z(type: DtBool).
+      ///[0] output(type: DtInvalid): A Tensor of the same shape as the input `string_tensor`.
       ///</return>
-      public Operation LogicalAnd (  Output x , Output y ,String opName= "LogicalAnd" ) 
+      public Operation StringToNumber (  Output string_tensor , DataType? out_type = null ,String opName= "StringToNumber" ) 
       {
-         OperationDescription desc = NewOperation("LogicalAnd", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
+         OperationDescription desc = NewOperation("StringToNumber", opName);
+         desc.AddInput(string_tensor);
 
-
+         if (out_type.HasValue) desc.SetAttr("out_type", out_type.Value);
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Compute the lower regularized incomplete Gamma function `Q(a, x)`.
+      ///Execute a sub graph on a remote processor.
       ///</summary>
-      ///<param name="a">Input to the operation. </param>
-      ///<param name="x">Input to the operation. </param>
+      ///<param name="inputs">Input to the operation: Arbitrary number of tensors with arbitrary data types</param>
+      ///<param name="Toutputs"></param>
+      ///<param name="serialized_remote_fused_graph_execute_info">Serialized protocol buffer of RemoteFusedGraphExecuteInfo which contains graph specifications.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] z(type: DtInvalid).
+      ///[0] outputs(type: DtInvalid): Arbitrary number of tensors with arbitrary data types
       ///</return>
-      public Operation Igamma (  Output a , Output x ,String opName= "Igamma" ) 
+      public Operation RemoteFusedGraphExecute (  Output inputs , DataType[] Toutputs, string serialized_remote_fused_graph_execute_info,String opName= "RemoteFusedGraphExecute" ) 
       {
-         OperationDescription desc = NewOperation("Igamma", opName);
-         desc.AddInput(a);
-         desc.AddInput(x);
-
+         OperationDescription desc = NewOperation("RemoteFusedGraphExecute", opName);
+         desc.AddInput(inputs);
+         desc.SetAttr("Toutputs", Toutputs);
+         desc.SetAttr("serialized_remote_fused_graph_execute_info", serialized_remote_fused_graph_execute_info);
 
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Update '*var' by subtracting 'alpha' * 'delta' from it.
-      ///</summary>
-      ///<param name="var">Input to the operation: Should be from a Variable().</param>
-      ///<param name="alpha">Input to the operation: Scaling factor. Must be a scalar.</param>
-      ///<param name="delta">Input to the operation: The change.</param>
-      ///<param name="use_locking">If `True`, the subtraction will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] out(type: DtInvalid): Same as "var".
-      ///</return>
-      public Operation ApplyGradientDescent (  Output var , Output alpha , Output delta , bool use_locking = false ,String opName= "ApplyGradientDescent" ) 
-      {
-         OperationDescription desc = NewOperation("ApplyGradientDescent", opName);
-         desc.AddInput(var);
-         desc.AddInput(alpha);
-         desc.AddInput(delta);
-
-         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Compute the Hurwitz zeta function \\(\zeta(x, q)\\).
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="q">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtInvalid).
-      ///</return>
-      public Operation Zeta (  Output x , Output q ,String opName= "Zeta" ) 
-      {
-         OperationDescription desc = NewOperation("Zeta", opName);
-         desc.AddInput(x);
-         desc.AddInput(q);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes arctangent of `y/x` element-wise, respecting signs of the arguments.
-      ///</summary>
-      ///<param name="y">Input to the operation. </param>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtInvalid).
-      ///</return>
-      public Operation Atan2 (  Output y , Output x ,String opName= "Atan2" ) 
-      {
-         OperationDescription desc = NewOperation("Atan2", opName);
-         desc.AddInput(y);
-         desc.AddInput(x);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Adds sparse updates to a variable reference.
+      ///Divides a variable reference by sparse updates.
       ///</summary>
       ///<param name="reference">Input to the operation: Should be from a `Variable` node.</param>
       ///<param name="indices">Input to the operation: A tensor of indices into the first dimension of `ref`.</param>
-      ///<param name="updates">Input to the operation: A tensor of updated values to add to `ref`.</param>
-      ///<param name="use_locking">If True, the addition will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
+      ///<param name="updates">Input to the operation: A tensor of values that `ref` is divided by.</param>
+      ///<param name="use_locking">If True, the operation will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
       ///[0] output_ref(type: DtInvalid): = Same as `ref`.  Returned as a convenience for operations that want to use the updated values after the update is done.
       ///</return>
-      public Operation ScatterAdd (  Output reference , Output indices , Output updates , bool use_locking = false ,String opName= "ScatterAdd" ) 
+      public Operation ScatterDiv (  Output reference , Output indices , Output updates , bool use_locking = false ,String opName= "ScatterDiv" ) 
       {
-         OperationDescription desc = NewOperation("ScatterAdd", opName);
+         OperationDescription desc = NewOperation("ScatterDiv", opName);
          desc.AddInput(reference);
          desc.AddInput(indices);
          desc.AddInput(updates);
@@ -11475,435 +11249,71 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Returns the truth value of (x &lt; y) element-wise.
+      ///L2 Loss.
       ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
+      ///<param name="t">Input to the operation: Typically 2-D, but may have any dimensions.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] z(type: DtBool).
+      ///[0] output(type: DtInvalid): 0-D.
       ///</return>
-      public Operation Less (  Output x , Output y ,String opName= "Less" ) 
+      public Operation L2Loss (  Output t ,String opName= "L2Loss" ) 
       {
-         OperationDescription desc = NewOperation("Less", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
+         OperationDescription desc = NewOperation("L2Loss", opName);
+         desc.AddInput(t);
 
 
          return desc.FinishOperation();
       } 
+      // Skipped function _UnsafeReadVariable
 
       ///<summary>
-      ///Returns the truth value of (x &lt;= y) element-wise.
+      ///Deletes the resource specified by the handle.
       ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
+      ///<param name="resource">Input to the operation: handle to the resource to delete.</param>
+      ///<param name="ignore_lookup_error">whether to ignore the error when the resource doesn't exist.</param>
       ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtBool).
-      ///</return>
-      public Operation LessEqual (  Output x , Output y ,String opName= "LessEqual" ) 
+      public Operation DestroyResourceOp (  Output resource , bool ignore_lookup_error = true ,String opName= "DestroyResourceOp" ) 
       {
-         OperationDescription desc = NewOperation("LessEqual", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
+         OperationDescription desc = NewOperation("DestroyResourceOp", opName);
+         desc.AddInput(resource);
 
-
+         if (ignore_lookup_error != true) desc.SetAttr("ignore_lookup_error", ignore_lookup_error);
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Returns the truth value of x OR y element-wise.
-      ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] z(type: DtBool).
-      ///</return>
-      public Operation LogicalOr (  Output x , Output y ,String opName= "LogicalOr" ) 
-      {
-         OperationDescription desc = NewOperation("LogicalOr", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Converts each string in the input Tensor to its hash mod by a number of buckets.
-      ///</summary>
-      ///<param name="input">Input to the operation: The strings to assign a hash bucket.</param>
-      ///<param name="num_buckets">The number of buckets.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInt64): A Tensor of the same shape as the input `string_tensor`.
-      ///</return>
-      public Operation StringToHashBucketFast (  Output input , long num_buckets,String opName= "StringToHashBucketFast" ) 
-      {
-         OperationDescription desc = NewOperation("StringToHashBucketFast", opName);
-         desc.AddInput(input);
-         desc.SetAttr("num_buckets", num_buckets);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Multiply the matrix "a" by the matrix "b".
-      ///</summary>
-      ///<param name="a">Input to the operation. </param>
-      ///<param name="b">Input to the operation. </param>
-      ///<param name="transpose_a">If true, "a" is transposed before multiplication.</param>
-      ///<param name="transpose_b">If true, "b" is transposed before multiplication.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] product(type: DtInvalid).
-      ///</return>
-      public Operation MatMul (  Output a , Output b , bool transpose_a = false , bool transpose_b = false ,String opName= "MatMul" ) 
-      {
-         OperationDescription desc = NewOperation("MatMul", opName);
-         desc.AddInput(a);
-         desc.AddInput(b);
-
-         if (transpose_a != false) desc.SetAttr("transpose_a", transpose_a);
-         if (transpose_b != false) desc.SetAttr("transpose_b", transpose_b);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the sum of elements across dimensions of a tensor.
-      ///</summary>
-      ///<param name="input">Input to the operation: The tensor to reduce.</param>
-      ///<param name="reduction_indices">Input to the operation: The dimensions to reduce.</param>
-      ///<param name="keep_dims">If true, retain reduced dimensions with length 1.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): The reduced tensor.
-      ///</return>
-      public Operation Sum (  Output input , Output reduction_indices , bool keep_dims = false ,String opName= "Sum" ) 
-      {
-         OperationDescription desc = NewOperation("Sum", opName);
-         desc.AddInput(input);
-         desc.AddInput(reduction_indices);
-
-         if (keep_dims != false) desc.SetAttr("keep_dims", keep_dims);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the mean of elements across dimensions of a tensor.
-      ///</summary>
-      ///<param name="input">Input to the operation: The tensor to reduce.</param>
-      ///<param name="reduction_indices">Input to the operation: The dimensions to reduce.</param>
-      ///<param name="keep_dims">If true, retain reduced dimensions with length 1.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): The reduced tensor.
-      ///</return>
-      public Operation Mean (  Output input , Output reduction_indices , bool keep_dims = false ,String opName= "Mean" ) 
-      {
-         OperationDescription desc = NewOperation("Mean", opName);
-         desc.AddInput(input);
-         desc.AddInput(reduction_indices);
-
-         if (keep_dims != false) desc.SetAttr("keep_dims", keep_dims);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the product of elements across dimensions of a tensor.
-      ///</summary>
-      ///<param name="input">Input to the operation: The tensor to reduce.</param>
-      ///<param name="reduction_indices">Input to the operation: The dimensions to reduce.</param>
-      ///<param name="keep_dims">If true, retain reduced dimensions with length 1.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): The reduced tensor.
-      ///</return>
-      public Operation Prod (  Output input , Output reduction_indices , bool keep_dims = false ,String opName= "Prod" ) 
-      {
-         OperationDescription desc = NewOperation("Prod", opName);
-         desc.AddInput(input);
-         desc.AddInput(reduction_indices);
-
-         if (keep_dims != false) desc.SetAttr("keep_dims", keep_dims);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the maximum of elements across dimensions of a tensor.
-      ///</summary>
-      ///<param name="input">Input to the operation: The tensor to reduce.</param>
-      ///<param name="reduction_indices">Input to the operation: The dimensions to reduce.</param>
-      ///<param name="keep_dims">If true, retain reduced dimensions with length 1.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): The reduced tensor.
-      ///</return>
-      public Operation Max (  Output input , Output reduction_indices , bool keep_dims = false ,String opName= "Max" ) 
-      {
-         OperationDescription desc = NewOperation("Max", opName);
-         desc.AddInput(input);
-         desc.AddInput(reduction_indices);
-
-         if (keep_dims != false) desc.SetAttr("keep_dims", keep_dims);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the mean along segments of a tensor.
-      ///</summary>
-      ///<param name="data">Input to the operation. </param>
-      ///<param name="segment_ids">Input to the operation: A 1-D tensor whose rank is equal to the rank of `data`'s first dimension.  Values should be sorted and can be repeated.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): Has same shape as data, except for dimension 0 which has size `k`, the number of segments.
-      ///</return>
-      public Operation SegmentMean (  Output data , Output segment_ids ,String opName= "SegmentMean" ) 
-      {
-         OperationDescription desc = NewOperation("SegmentMean", opName);
-         desc.AddInput(data);
-         desc.AddInput(segment_ids);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Gradients for Local Response Normalization.
-      ///</summary>
-      ///<param name="input_grads">Input to the operation: 4-D with shape `[batch, height, width, channels]`.</param>
-      ///<param name="input_image">Input to the operation: 4-D with shape `[batch, height, width, channels]`.</param>
-      ///<param name="output_image">Input to the operation: 4-D with shape `[batch, height, width, channels]`.</param>
-      ///<param name="depth_radius">A depth radius.</param>
-      ///<param name="bias">An offset (usually &gt; 0 to avoid dividing by 0).</param>
-      ///<param name="alpha">A scale factor, usually positive.</param>
-      ///<param name="beta">An exponent.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): The gradients for LRN.
-      ///</return>
-      public Operation LRNGrad (  Output input_grads , Output input_image , Output output_image , long depth_radius = 5 , float bias = 1f , float alpha = 1f , float beta = 0.5f ,String opName= "LRNGrad" ) 
-      {
-         OperationDescription desc = NewOperation("LRNGrad", opName);
-         desc.AddInput(input_grads);
-         desc.AddInput(input_image);
-         desc.AddInput(output_image);
-
-         if (depth_radius != 5) desc.SetAttr("depth_radius", depth_radius);
-         if (bias != 1f) desc.SetAttr("bias", bias);
-         if (alpha != 1f) desc.SetAttr("alpha", alpha);
-         if (beta != 0.5f) desc.SetAttr("beta", beta);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the minimum along segments of a tensor.
-      ///</summary>
-      ///<param name="data">Input to the operation. </param>
-      ///<param name="segment_ids">Input to the operation: A 1-D tensor whose rank is equal to the rank of `data`'s first dimension.  Values should be sorted and can be repeated.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): Has same shape as data, except for dimension 0 which has size `k`, the number of segments.
-      ///</return>
-      public Operation SegmentMin (  Output data , Output segment_ids ,String opName= "SegmentMin" ) 
-      {
-         OperationDescription desc = NewOperation("SegmentMin", opName);
-         desc.AddInput(data);
-         desc.AddInput(segment_ids);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the mean along sparse segments of a tensor.
-      ///</summary>
-      ///<param name="data">Input to the operation. </param>
-      ///<param name="indices">Input to the operation: A 1-D tensor. Has same rank as `segment_ids`.</param>
-      ///<param name="segment_ids">Input to the operation: A 1-D tensor. Values should be sorted and can be repeated.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): Has same shape as data, except for dimension 0 which has size `k`, the number of segments.
-      ///</return>
-      public Operation SparseSegmentMean (  Output data , Output indices , Output segment_ids ,String opName= "SparseSegmentMean" ) 
-      {
-         OperationDescription desc = NewOperation("SparseSegmentMean", opName);
-         desc.AddInput(data);
-         desc.AddInput(indices);
-         desc.AddInput(segment_ids);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Sparse update entries in '*var' and '*accum' according to FOBOS algorithm.
+      ///Update relevant entries in '*var' according to the Ftrl-proximal scheme.
       ///</summary>
       ///<param name="var">Input to the operation: Should be from a Variable().</param>
       ///<param name="accum">Input to the operation: Should be from a Variable().</param>
-      ///<param name="lr">Input to the operation: Learning rate. Must be a scalar.</param>
-      ///<param name="l1">Input to the operation: L1 regularization. Must be a scalar.</param>
-      ///<param name="l2">Input to the operation: L2 regularization. Must be a scalar.</param>
+      ///<param name="linear">Input to the operation: Should be from a Variable().</param>
       ///<param name="grad">Input to the operation: The gradient.</param>
       ///<param name="indices">Input to the operation: A vector of indices into the first dimension of var and accum.</param>
-      ///<param name="use_locking">If True, updating of the var and accum tensors will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
+      ///<param name="lr">Input to the operation: Scaling factor. Must be a scalar.</param>
+      ///<param name="l1">Input to the operation: L1 regularization. Must be a scalar.</param>
+      ///<param name="l2">Input to the operation: L2 shrinkage regulariation. Must be a scalar.</param>
+      ///<param name="l2_shrinkage">Input to the operation. </param>
+      ///<param name="lr_power">Input to the operation: Scaling factor. Must be a scalar.</param>
+      ///<param name="use_locking">If `True`, updating of the var and accum tensors will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
       ///[0] out(type: DtInvalid): Same as "var".
       ///</return>
-      public Operation SparseApplyProximalAdagrad (  Output var , Output accum , Output lr , Output l1 , Output l2 , Output grad , Output indices , bool use_locking = false ,String opName= "SparseApplyProximalAdagrad" ) 
+      public Operation SparseApplyFtrlV2 (  Output var , Output accum , Output linear , Output grad , Output indices , Output lr , Output l1 , Output l2 , Output l2_shrinkage , Output lr_power , bool use_locking = false ,String opName= "SparseApplyFtrlV2" ) 
       {
-         OperationDescription desc = NewOperation("SparseApplyProximalAdagrad", opName);
+         OperationDescription desc = NewOperation("SparseApplyFtrlV2", opName);
          desc.AddInput(var);
          desc.AddInput(accum);
+         desc.AddInput(linear);
+         desc.AddInput(grad);
+         desc.AddInput(indices);
          desc.AddInput(lr);
          desc.AddInput(l1);
          desc.AddInput(l2);
-         desc.AddInput(grad);
-         desc.AddInput(indices);
+         desc.AddInput(l2_shrinkage);
+         desc.AddInput(lr_power);
 
          if (use_locking != false) desc.SetAttr("use_locking", use_locking);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes gradients for SparseSegmentMean.
-      ///</summary>
-      ///<param name="grad">Input to the operation: gradient propagated to the SparseSegmentMean op.</param>
-      ///<param name="indices">Input to the operation: indices passed to the corresponding SparseSegmentMean op.</param>
-      ///<param name="segment_ids">Input to the operation: segment_ids passed to the corresponding SparseSegmentMean op.</param>
-      ///<param name="output_dim0">Input to the operation: dimension 0 of "data" passed to SparseSegmentMean op.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation SparseSegmentMeanGrad (  Output grad , Output indices , Output segment_ids , Output output_dim0 ,String opName= "SparseSegmentMeanGrad" ) 
-      {
-         OperationDescription desc = NewOperation("SparseSegmentMeanGrad", opName);
-         desc.AddInput(grad);
-         desc.AddInput(indices);
-         desc.AddInput(segment_ids);
-         desc.AddInput(output_dim0);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the sum along sparse segments of a tensor divided by the sqrt of N.
-      ///</summary>
-      ///<param name="data">Input to the operation. </param>
-      ///<param name="indices">Input to the operation: A 1-D tensor. Has same rank as `segment_ids`.</param>
-      ///<param name="segment_ids">Input to the operation: A 1-D tensor. Values should be sorted and can be repeated.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): Has same shape as data, except for dimension 0 which has size `k`, the number of segments.
-      ///</return>
-      public Operation SparseSegmentSqrtN (  Output data , Output indices , Output segment_ids ,String opName= "SparseSegmentSqrtN" ) 
-      {
-         OperationDescription desc = NewOperation("SparseSegmentSqrtN", opName);
-         desc.AddInput(data);
-         desc.AddInput(indices);
-         desc.AddInput(segment_ids);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Update '*var' according to the RMSProp algorithm.
-      ///</summary>
-      ///<param name="var">Input to the operation: Should be from a Variable().</param>
-      ///<param name="ms">Input to the operation: Should be from a Variable().</param>
-      ///<param name="mom">Input to the operation: Should be from a Variable().</param>
-      ///<param name="lr">Input to the operation: Scaling factor. Must be a scalar.</param>
-      ///<param name="rho">Input to the operation: Decay rate. Must be a scalar.</param>
-      ///<param name="momentum">Input to the operation. </param>
-      ///<param name="epsilon">Input to the operation: Ridge term. Must be a scalar.</param>
-      ///<param name="grad">Input to the operation: The gradient.</param>
-      ///<param name="indices">Input to the operation: A vector of indices into the first dimension of var, ms and mom.</param>
-      ///<param name="use_locking">If `True`, updating of the var, ms, and mom tensors is protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
-      ///<param name="opName">The name of the operation</param>
-      public Operation ResourceSparseApplyRMSProp (  Output var , Output ms , Output mom , Output lr , Output rho , Output momentum , Output epsilon , Output grad , Output indices , bool use_locking = false ,String opName= "ResourceSparseApplyRMSProp" ) 
-      {
-         OperationDescription desc = NewOperation("ResourceSparseApplyRMSProp", opName);
-         desc.AddInput(var);
-         desc.AddInput(ms);
-         desc.AddInput(mom);
-         desc.AddInput(lr);
-         desc.AddInput(rho);
-         desc.AddInput(momentum);
-         desc.AddInput(epsilon);
-         desc.AddInput(grad);
-         desc.AddInput(indices);
-
-         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes gradients for SparseSegmentSqrtN.
-      ///</summary>
-      ///<param name="grad">Input to the operation: gradient propagated to the SparseSegmentSqrtN op.</param>
-      ///<param name="indices">Input to the operation: indices passed to the corresponding SparseSegmentSqrtN op.</param>
-      ///<param name="segment_ids">Input to the operation: segment_ids passed to the corresponding SparseSegmentSqrtN op.</param>
-      ///<param name="output_dim0">Input to the operation: dimension 0 of "data" passed to SparseSegmentSqrtN op.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///</return>
-      public Operation SparseSegmentSqrtNGrad (  Output grad , Output indices , Output segment_ids , Output output_dim0 ,String opName= "SparseSegmentSqrtNGrad" ) 
-      {
-         OperationDescription desc = NewOperation("SparseSegmentSqrtNGrad", opName);
-         desc.AddInput(grad);
-         desc.AddInput(indices);
-         desc.AddInput(segment_ids);
-         desc.AddInput(output_dim0);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes the "logical or" of elements across dimensions of a tensor.
-      ///</summary>
-      ///<param name="input">Input to the operation: The tensor to reduce.</param>
-      ///<param name="reduction_indices">Input to the operation: The dimensions to reduce.</param>
-      ///<param name="keep_dims">If true, retain reduced dimensions with length 1.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtBool): The reduced tensor.
-      ///</return>
-      public Operation Any (  Output input , Output reduction_indices , bool keep_dims = false ,String opName= "Any" ) 
-      {
-         OperationDescription desc = NewOperation("Any", opName);
-         desc.AddInput(input);
-         desc.AddInput(reduction_indices);
-
-         if (keep_dims != false) desc.SetAttr("keep_dims", keep_dims);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Creates a sequence of numbers.
-      ///</summary>
-      ///<param name="start">Input to the operation: 0-D (scalar). First entry in the sequence.</param>
-      ///<param name="limit">Input to the operation: 0-D (scalar). Upper limit of sequence, exclusive.</param>
-      ///<param name="delta">Input to the operation: 0-D (scalar). Optional. Default is 1. Number that increments `start`.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): 1-D.
-      ///</return>
-      public Operation Range (  Output start , Output limit , Output delta ,String opName= "Range" ) 
-      {
-         OperationDescription desc = NewOperation("Range", opName);
-         desc.AddInput(start);
-         desc.AddInput(limit);
-         desc.AddInput(delta);
-
-
          return desc.FinishOperation();
       } 
 
@@ -11958,22 +11368,6 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Assigns a new value to a variable.
-      ///</summary>
-      ///<param name="resource">Input to the operation: handle to the resource in which to store the variable.</param>
-      ///<param name="value">Input to the operation: the value to set the new tensor to use.</param>
-      ///<param name="opName">The name of the operation</param>
-      public Operation AssignVariableOp (  Output resource , Output value ,String opName= "AssignVariableOp" ) 
-      {
-         OperationDescription desc = NewOperation("AssignVariableOp", opName);
-         desc.AddInput(resource);
-         desc.AddInput(value);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///Returns the complex conjugate of a complex number.
       ///</summary>
       ///<param name="input">Input to the operation. </param>
@@ -11991,131 +11385,107 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Counts the number of occurrences of each value in an integer array.
+      ///Assigns a new value to a variable.
       ///</summary>
-      ///<param name="arr">Input to the operation: int32 `Tensor`.</param>
-      ///<param name="size">Input to the operation: non-negative int32 scalar `Tensor`.</param>
-      ///<param name="weights">Input to the operation: is an int32, int64, float32, or float64 `Tensor` with the same shape as `arr`, or a length-0 `Tensor`, in which case it acts as all weights equal to 1.</param>
+      ///<param name="resource">Input to the operation: handle to the resource in which to store the variable.</param>
+      ///<param name="value">Input to the operation: the value to set the new tensor to use.</param>
       ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] bins(type: DtInvalid): 1D `Tensor` with length equal to `size`. The counts or summed weights for each value in the range [0, size).
-      ///</return>
-      public Operation Bincount (  Output arr , Output size , Output weights ,String opName= "Bincount" ) 
+      public Operation AssignVariableOp (  Output resource , Output value ,String opName= "AssignVariableOp" ) 
       {
-         OperationDescription desc = NewOperation("Bincount", opName);
-         desc.AddInput(arr);
-         desc.AddInput(size);
-         desc.AddInput(weights);
+         OperationDescription desc = NewOperation("AssignVariableOp", opName);
+         desc.AddInput(resource);
+         desc.AddInput(value);
 
 
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Compute the cumulative product of the tensor `x` along `axis`.
+      ///Joins a string Tensor across the given dimensions.
       ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="axis">Input to the operation. </param>
-      ///<param name="exclusive"></param>
-      ///<param name="reverse"></param>
+      ///<param name="inputs">Input to the operation: The input to be joined.  All reduced indices must have non-zero size.</param>
+      ///<param name="reduction_indices">Input to the operation: The dimensions to reduce over.  Dimensions are reduced in the order specified.  Omitting `reduction_indices` is equivalent to passing `[n-1, n-2, ..., 0]`.  Negative indices from `-n` to `-1` are supported.</param>
+      ///<param name="keep_dims">If `True`, retain reduced dimensions with length `1`.</param>
+      ///<param name="separator">The separator to use when joining.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] out(type: DtInvalid).
+      ///[0] output(type: DtString): Has shape equal to that of the input with reduced dimensions removed or set to `1` depending on `keep_dims`.
       ///</return>
-      public Operation Cumprod (  Output x , Output axis , bool exclusive = false , bool reverse = false ,String opName= "Cumprod" ) 
+      public Operation ReduceJoin (  Output inputs , Output reduction_indices , bool keep_dims = false , string separator = null ,String opName= "ReduceJoin" ) 
       {
-         OperationDescription desc = NewOperation("Cumprod", opName);
-         desc.AddInput(x);
-         desc.AddInput(axis);
+         OperationDescription desc = NewOperation("ReduceJoin", opName);
+         desc.AddInput(inputs);
+         desc.AddInput(reduction_indices);
 
-         if (exclusive != false) desc.SetAttr("exclusive", exclusive);
-         if (reverse != false) desc.SetAttr("reverse", reverse);
+         if (keep_dims != false) desc.SetAttr("keep_dims", keep_dims);
+         if (separator != null) desc.SetAttr("separator", separator);
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Perform a quantized matrix multiplication of  `a` by the matrix `b`.
+      ///Computes fingerprints of the input strings.
       ///</summary>
-      ///<param name="a">Input to the operation: Must be a two-dimensional tensor.</param>
-      ///<param name="b">Input to the operation: Must be a two-dimensional tensor.</param>
-      ///<param name="min_a">Input to the operation: The float value that the lowest quantized `a` value represents.</param>
-      ///<param name="max_a">Input to the operation: The float value that the highest quantized `a` value represents.</param>
-      ///<param name="min_b">Input to the operation: The float value that the lowest quantized `b` value represents.</param>
-      ///<param name="max_b">Input to the operation: The float value that the highest quantized `b` value represents.</param>
-      ///<param name="Toutput"></param>
-      ///<param name="transpose_a">If true, `a` is transposed before multiplication.</param>
-      ///<param name="transpose_b">If true, `b` is transposed before multiplication.</param>
-      ///<param name="Tactivation">The type of output produced by activation function following this operation.</param>
+      ///<param name="input">Input to the operation: vector of strings to compute fingerprints on.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] out(type: DtInvalid).
-      ///[1] min_out(type: DtFloat): The float value that the lowest quantized output value represents.
-      ///[2] max_out(type: DtFloat): The float value that the highest quantized output value represents.
+      ///[0] output(type: DtInt64): a (N,2) shaped matrix where N is the number of elements in the input vector. Each row contains the low and high parts of the fingerprint.
       ///</return>
-      public Operation QuantizedMatMul (  Output a , Output b , Output min_a , Output max_a , Output min_b , Output max_b , DataType? Toutput = null , bool transpose_a = false , bool transpose_b = false , DataType? Tactivation = null ,String opName= "QuantizedMatMul" ) 
+      public Operation SdcaFprint (  Output input ,String opName= "SdcaFprint" ) 
       {
-         OperationDescription desc = NewOperation("QuantizedMatMul", opName);
-         desc.AddInput(a);
-         desc.AddInput(b);
-         desc.AddInput(min_a);
-         desc.AddInput(max_a);
-         desc.AddInput(min_b);
-         desc.AddInput(max_b);
-
-         if (Toutput.HasValue) desc.SetAttr("Toutput", Toutput.Value);
-         if (transpose_a != false) desc.SetAttr("transpose_a", transpose_a);
-         if (transpose_b != false) desc.SetAttr("transpose_b", transpose_b);
-         if (Tactivation.HasValue) desc.SetAttr("Tactivation", Tactivation.Value);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes softmax cross entropy cost and gradients to backpropagate.
-      ///</summary>
-      ///<param name="features">Input to the operation: batch_size x num_classes matrix</param>
-      ///<param name="labels">Input to the operation: batch_size x num_classes matrix The caller must ensure that each batch of labels represents a valid probability distribution.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] loss(type: DtInvalid): Per example loss (batch_size vector).
-      ///[1] backprop(type: DtInvalid): backpropagated gradients (batch_size x num_classes matrix).
-      ///</return>
-      public Operation SoftmaxCrossEntropyWithLogits (  Output features , Output labels ,String opName= "SoftmaxCrossEntropyWithLogits" ) 
-      {
-         OperationDescription desc = NewOperation("SoftmaxCrossEntropyWithLogits", opName);
-         desc.AddInput(features);
-         desc.AddInput(labels);
+         OperationDescription desc = NewOperation("SdcaFprint", opName);
+         desc.AddInput(input);
 
 
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Returns x * y element-wise, working on quantized buffers.
+      ///Applies set operation along last dimension of `Tensor` and `SparseTensor`.
       ///</summary>
-      ///<param name="x">Input to the operation. </param>
-      ///<param name="y">Input to the operation. </param>
-      ///<param name="min_x">Input to the operation: The float value that the lowest quantized `x` value represents.</param>
-      ///<param name="max_x">Input to the operation: The float value that the highest quantized `x` value represents.</param>
-      ///<param name="min_y">Input to the operation: The float value that the lowest quantized `y` value represents.</param>
-      ///<param name="max_y">Input to the operation: The float value that the highest quantized `y` value represents.</param>
-      ///<param name="Toutput"></param>
+      ///<param name="set1">Input to the operation: `Tensor` with rank `n`. 1st `n-1` dimensions must be the same as `set2`. Dimension `n` contains values in a set, duplicates are allowed but ignored.</param>
+      ///<param name="set2_indices">Input to the operation: 2D `Tensor`, indices of a `SparseTensor`. Must be in row-major order.</param>
+      ///<param name="set2_values">Input to the operation: 1D `Tensor`, values of a `SparseTensor`. Must be in row-major order.</param>
+      ///<param name="set2_shape">Input to the operation: 1D `Tensor`, shape of a `SparseTensor`. `set2_shape[0...n-1]` must be the same as the 1st `n-1` dimensions of `set1`, `result_shape[n]` is the max set size across `n-1` dimensions.</param>
+      ///<param name="set_operation"></param>
+      ///<param name="validate_indices"></param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] z(type: DtInvalid).
-      ///[1] min_z(type: DtFloat): The float value that the lowest quantized output value represents.
-      ///[2] max_z(type: DtFloat): The float value that the highest quantized output value represents.  *NOTE*: `QuantizedMul` supports limited forms of broadcasting. More about broadcasting [here](http://docs.scipy.org/doc/numpy/user/basics.broadcasting.html)
+      ///[0] result_indices(type: DtInt64): 2D indices of a `SparseTensor`.
+      ///[1] result_values(type: DtInvalid): 1D values of a `SparseTensor`.
+      ///[2] result_shape(type: DtInt64): 1D `Tensor` shape of a `SparseTensor`. `result_shape[0...n-1]` is the same as the 1st `n-1` dimensions of `set1` and `set2`, `result_shape[n]` is the max result set size across all `0...n-1` dimensions.
       ///</return>
-      public Operation QuantizedMul (  Output x , Output y , Output min_x , Output max_x , Output min_y , Output max_y , DataType? Toutput = null ,String opName= "QuantizedMul" ) 
+      public Operation DenseToSparseSetOperation (  Output set1 , Output set2_indices , Output set2_values , Output set2_shape , string set_operation, bool validate_indices = true ,String opName= "DenseToSparseSetOperation" ) 
       {
-         OperationDescription desc = NewOperation("QuantizedMul", opName);
-         desc.AddInput(x);
-         desc.AddInput(y);
-         desc.AddInput(min_x);
-         desc.AddInput(max_x);
-         desc.AddInput(min_y);
-         desc.AddInput(max_y);
+         OperationDescription desc = NewOperation("DenseToSparseSetOperation", opName);
+         desc.AddInput(set1);
+         desc.AddInput(set2_indices);
+         desc.AddInput(set2_values);
+         desc.AddInput(set2_shape);
+         desc.SetAttr("set_operation", set_operation);
+         if (validate_indices != true) desc.SetAttr("validate_indices", validate_indices);
+         return desc.FinishOperation();
+      } 
 
-         if (Toutput.HasValue) desc.SetAttr("Toutput", Toutput.Value);
+      ///<summary>
+      ///Performs average pooling on the input.
+      ///</summary>
+      ///<param name="value">Input to the operation: 4-D with shape `[batch, height, width, channels]`.</param>
+      ///<param name="ksize">The size of the sliding window for each dimension of `value`.</param>
+      ///<param name="strides">The stride of the sliding window for each dimension of `value`.</param>
+      ///<param name="padding">The type of padding algorithm to use.</param>
+      ///<param name="data_format">Specify the data format of the input and output data. With the default format "NHWC", the data is stored in the order of:     [batch, in_height, in_width, in_channels]. Alternatively, the format could be "NCHW", the data storage order of:     [batch, in_channels, in_height, in_width].</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): The average pooled output tensor.
+      ///</return>
+      public Operation AvgPool (  Output value , long[] ksize, long[] strides, string padding, string data_format = null ,String opName= "AvgPool" ) 
+      {
+         OperationDescription desc = NewOperation("AvgPool", opName);
+         desc.AddInput(value);
+         desc.SetAttr("ksize", ksize);
+         desc.SetAttr("strides", strides);
+         desc.SetAttr("padding", padding);
+         if (data_format != null) desc.SetAttr("data_format", data_format);
          return desc.FinishOperation();
       } 
 
@@ -12314,23 +11684,6 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Computes log softmax activations.
-      ///</summary>
-      ///<param name="logits">Input to the operation: 2-D with shape `[batch_size, num_classes]`.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] logsoftmax(type: DtInvalid): Same shape as `logits`.
-      ///</return>
-      public Operation LogSoftmax (  Output logits ,String opName= "LogSoftmax" ) 
-      {
-         OperationDescription desc = NewOperation("LogSoftmax", opName);
-         desc.AddInput(logits);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///Performs a padding as a preprocess during a convolution.
       ///</summary>
       ///<param name="input">Input to the operation: 4-D with shape `[batch, in_height, in_width, in_channels]`.</param>
@@ -12357,6 +11710,23 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Computes log softmax activations.
+      ///</summary>
+      ///<param name="logits">Input to the operation: 2-D with shape `[batch_size, num_classes]`.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] logsoftmax(type: DtInvalid): Same shape as `logits`.
+      ///</return>
+      public Operation LogSoftmax (  Output logits ,String opName= "LogSoftmax" ) 
+      {
+         OperationDescription desc = NewOperation("LogSoftmax", opName);
+         desc.AddInput(logits);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Computes a 2-D depthwise convolution given 4-D `input` and `filter` tensors.
       ///</summary>
       ///<param name="input">Input to the operation. </param>
@@ -12376,6 +11746,122 @@ namespace Emgu.TF
          desc.SetAttr("strides", strides);
          desc.SetAttr("padding", padding);
          if (data_format != null) desc.SetAttr("data_format", data_format);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns x / y element-wise for integer types.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///</return>
+      public Operation TruncateDiv (  Output x , Output y ,String opName= "TruncateDiv" ) 
+      {
+         OperationDescription desc = NewOperation("TruncateDiv", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the gradients of 3-D convolution with respect to the input.
+      ///</summary>
+      ///<param name="input">Input to the operation: Shape `[batch, depth, rows, cols, in_channels]`.</param>
+      ///<param name="filter">Input to the operation: Shape `[depth, rows, cols, in_channels, out_channels]`. `in_channels` must match between `input` and `filter`.</param>
+      ///<param name="out_backprop">Input to the operation: Backprop signal of shape `[batch, out_depth, out_rows, out_cols, out_channels]`.</param>
+      ///<param name="strides">1-D tensor of length 5. The stride of the sliding window for each dimension of `input`. Must have `strides[0] = strides[4] = 1`.</param>
+      ///<param name="padding">The type of padding algorithm to use.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation Conv3DBackpropInput (  Output input , Output filter , Output out_backprop , long[] strides, string padding,String opName= "Conv3DBackpropInput" ) 
+      {
+         OperationDescription desc = NewOperation("Conv3DBackpropInput", opName);
+         desc.AddInput(input);
+         desc.AddInput(filter);
+         desc.AddInput(out_backprop);
+         desc.SetAttr("strides", strides);
+         desc.SetAttr("padding", padding);
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Update entries in '*var' and '*accum' according to the proximal adagrad scheme.
+      ///</summary>
+      ///<param name="var">Input to the operation: Should be from a Variable().</param>
+      ///<param name="gradient_accumulator">Input to the operation: Should be from a Variable().</param>
+      ///<param name="gradient_squared_accumulator">Input to the operation: Should be from a Variable().</param>
+      ///<param name="grad">Input to the operation: The gradient.</param>
+      ///<param name="indices">Input to the operation: A vector of indices into the first dimension of var and accum.</param>
+      ///<param name="lr">Input to the operation: Learning rate. Must be a scalar.</param>
+      ///<param name="l1">Input to the operation: L1 regularization. Must be a scalar.</param>
+      ///<param name="l2">Input to the operation: L2 regularization. Must be a scalar.</param>
+      ///<param name="global_step">Input to the operation: Training step number. Must be a scalar.</param>
+      ///<param name="use_locking">If True, updating of the var and accum tensors will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation ResourceSparseApplyAdagradDA (  Output var , Output gradient_accumulator , Output gradient_squared_accumulator , Output grad , Output indices , Output lr , Output l1 , Output l2 , Output global_step , bool use_locking = false ,String opName= "ResourceSparseApplyAdagradDA" ) 
+      {
+         OperationDescription desc = NewOperation("ResourceSparseApplyAdagradDA", opName);
+         desc.AddInput(var);
+         desc.AddInput(gradient_accumulator);
+         desc.AddInput(gradient_squared_accumulator);
+         desc.AddInput(grad);
+         desc.AddInput(indices);
+         desc.AddInput(lr);
+         desc.AddInput(l1);
+         desc.AddInput(l2);
+         desc.AddInput(global_step);
+
+         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the gradients of 3-D convolution with respect to the input.
+      ///</summary>
+      ///<param name="input_sizes">Input to the operation: An integer vector representing the tensor shape of `input`, where `input` is a 5-D `[batch, depth, rows, cols, in_channels]` tensor.</param>
+      ///<param name="filter">Input to the operation: Shape `[depth, rows, cols, in_channels, out_channels]`. `in_channels` must match between `input` and `filter`.</param>
+      ///<param name="out_backprop">Input to the operation: Backprop signal of shape `[batch, out_depth, out_rows, out_cols, out_channels]`.</param>
+      ///<param name="strides">1-D tensor of length 5. The stride of the sliding window for each dimension of `input`. Must have `strides[0] = strides[4] = 1`.</param>
+      ///<param name="padding">The type of padding algorithm to use.</param>
+      ///<param name="data_format">The data format of the input and output data. With the default format "NDHWC", the data is stored in the order of:     [batch, in_depth, in_height, in_width, in_channels]. Alternatively, the format could be "NCDHW", the data storage order is:     [batch, in_channels, in_depth, in_height, in_width].</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation Conv3DBackpropInputV2 (  Output input_sizes , Output filter , Output out_backprop , long[] strides, string padding, string data_format = null ,String opName= "Conv3DBackpropInputV2" ) 
+      {
+         OperationDescription desc = NewOperation("Conv3DBackpropInputV2", opName);
+         desc.AddInput(input_sizes);
+         desc.AddInput(filter);
+         desc.AddInput(out_backprop);
+         desc.SetAttr("strides", strides);
+         desc.SetAttr("padding", padding);
+         if (data_format != null) desc.SetAttr("data_format", data_format);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes exponential of x - 1 element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid).
+      ///</return>
+      public Operation Expm1 (  Output x ,String opName= "Expm1" ) 
+      {
+         OperationDescription desc = NewOperation("Expm1", opName);
+         desc.AddInput(x);
+
+
          return desc.FinishOperation();
       } 
 
@@ -12434,45 +11920,6 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Divides a variable reference by sparse updates.
-      ///</summary>
-      ///<param name="reference">Input to the operation: Should be from a `Variable` node.</param>
-      ///<param name="indices">Input to the operation: A tensor of indices into the first dimension of `ref`.</param>
-      ///<param name="updates">Input to the operation: A tensor of values that `ref` is divided by.</param>
-      ///<param name="use_locking">If True, the operation will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output_ref(type: DtInvalid): = Same as `ref`.  Returned as a convenience for operations that want to use the updated values after the update is done.
-      ///</return>
-      public Operation ScatterDiv (  Output reference , Output indices , Output updates , bool use_locking = false ,String opName= "ScatterDiv" ) 
-      {
-         OperationDescription desc = NewOperation("ScatterDiv", opName);
-         desc.AddInput(reference);
-         desc.AddInput(indices);
-         desc.AddInput(updates);
-
-         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///L2 Loss.
-      ///</summary>
-      ///<param name="t">Input to the operation: Typically 2-D, but may have any dimensions.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): 0-D.
-      ///</return>
-      public Operation L2Loss (  Output t ,String opName= "L2Loss" ) 
-      {
-         OperationDescription desc = NewOperation("L2Loss", opName);
-         desc.AddInput(t);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///Local Response Normalization.
       ///</summary>
       ///<param name="input">Input to the operation: 4-D.</param>
@@ -12488,6 +11935,53 @@ namespace Emgu.TF
       {
          OperationDescription desc = NewOperation("LRN", opName);
          desc.AddInput(input);
+
+         if (depth_radius != 5) desc.SetAttr("depth_radius", depth_radius);
+         if (bias != 1f) desc.SetAttr("bias", bias);
+         if (alpha != 1f) desc.SetAttr("alpha", alpha);
+         if (beta != 0.5f) desc.SetAttr("beta", beta);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the mean along segments of a tensor.
+      ///</summary>
+      ///<param name="data">Input to the operation. </param>
+      ///<param name="segment_ids">Input to the operation: A 1-D tensor whose rank is equal to the rank of `data`'s first dimension.  Values should be sorted and can be repeated.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): Has same shape as data, except for dimension 0 which has size `k`, the number of segments.
+      ///</return>
+      public Operation SegmentMean (  Output data , Output segment_ids ,String opName= "SegmentMean" ) 
+      {
+         OperationDescription desc = NewOperation("SegmentMean", opName);
+         desc.AddInput(data);
+         desc.AddInput(segment_ids);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Gradients for Local Response Normalization.
+      ///</summary>
+      ///<param name="input_grads">Input to the operation: 4-D with shape `[batch, height, width, channels]`.</param>
+      ///<param name="input_image">Input to the operation: 4-D with shape `[batch, height, width, channels]`.</param>
+      ///<param name="output_image">Input to the operation: 4-D with shape `[batch, height, width, channels]`.</param>
+      ///<param name="depth_radius">A depth radius.</param>
+      ///<param name="bias">An offset (usually &gt; 0 to avoid dividing by 0).</param>
+      ///<param name="alpha">A scale factor, usually positive.</param>
+      ///<param name="beta">An exponent.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): The gradients for LRN.
+      ///</return>
+      public Operation LRNGrad (  Output input_grads , Output input_image , Output output_image , long depth_radius = 5 , float bias = 1f , float alpha = 1f , float beta = 0.5f ,String opName= "LRNGrad" ) 
+      {
+         OperationDescription desc = NewOperation("LRNGrad", opName);
+         desc.AddInput(input_grads);
+         desc.AddInput(input_image);
+         desc.AddInput(output_image);
 
          if (depth_radius != 5) desc.SetAttr("depth_radius", depth_radius);
          if (bias != 1f) desc.SetAttr("bias", bias);
@@ -12524,49 +12018,6 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Inverse 3D real-valued fast Fourier transform.
-      ///</summary>
-      ///<param name="input">Input to the operation: A complex64 tensor.</param>
-      ///<param name="fft_length">Input to the operation: An int32 tensor of shape [3]. The FFT length for each dimension.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtFloat): A float32 tensor of the same rank as `input`. The inner-most 3   dimensions of `input` are replaced with the `fft_length` samples of their   inverse 3D real Fourier transform.  @compatibility(numpy) Equivalent to np.irfftn with 3 dimensions. @end_compatibility
-      ///</return>
-      public Operation IRFFT3D (  Output input , Output fft_length ,String opName= "IRFFT3D" ) 
-      {
-         OperationDescription desc = NewOperation("IRFFT3D", opName);
-         desc.AddInput(input);
-         desc.AddInput(fft_length);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Performs max pooling on the input and outputs both max values and indices.
-      ///</summary>
-      ///<param name="input">Input to the operation: 4-D with shape `[batch, height, width, channels]`.  Input to pool over.</param>
-      ///<param name="ksize">The size of the window for each dimension of the input tensor.</param>
-      ///<param name="strides">The stride of the sliding window for each dimension of the input tensor.</param>
-      ///<param name="padding">The type of padding algorithm to use.</param>
-      ///<param name="Targmax"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): The max pooled output tensor.
-      ///[1] argmax(type: DtInvalid): 4-D.  The flattened indices of the max values chosen for each output.
-      ///</return>
-      public Operation MaxPoolWithArgmax (  Output input , long[] ksize, long[] strides, string padding, DataType? Targmax = null ,String opName= "MaxPoolWithArgmax" ) 
-      {
-         OperationDescription desc = NewOperation("MaxPoolWithArgmax", opName);
-         desc.AddInput(input);
-         desc.SetAttr("ksize", ksize);
-         desc.SetAttr("strides", strides);
-         desc.SetAttr("padding", padding);
-         if (Targmax.HasValue) desc.SetAttr("Targmax", Targmax.Value);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///Computes second-order gradients of the maxpooling function.
       ///</summary>
       ///<param name="input">Input to the operation: The original input.</param>
@@ -12593,24 +12044,22 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Computes the gradient of morphological 2-D dilation with respect to the input.
+      ///Computes the grayscale dilation of 4-D `input` and 3-D `filter` tensors.
       ///</summary>
       ///<param name="input">Input to the operation: 4-D with shape `[batch, in_height, in_width, depth]`.</param>
       ///<param name="filter">Input to the operation: 3-D with shape `[filter_height, filter_width, depth]`.</param>
-      ///<param name="out_backprop">Input to the operation: 4-D with shape `[batch, out_height, out_width, depth]`.</param>
-      ///<param name="strides">1-D of length 4. The stride of the sliding window for each dimension of the input tensor. Must be: `[1, stride_height, stride_width, 1]`.</param>
-      ///<param name="rates">1-D of length 4. The input stride for atrous morphological dilation. Must be: `[1, rate_height, rate_width, 1]`.</param>
+      ///<param name="strides">The stride of the sliding window for each dimension of the input tensor. Must be: `[1, stride_height, stride_width, 1]`.</param>
+      ///<param name="rates">The input stride for atrous morphological dilation. Must be: `[1, rate_height, rate_width, 1]`.</param>
       ///<param name="padding">The type of padding algorithm to use.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] in_backprop(type: DtInvalid): 4-D with shape `[batch, in_height, in_width, depth]`.
+      ///[0] output(type: DtInvalid): 4-D with shape `[batch, out_height, out_width, depth]`.
       ///</return>
-      public Operation Dilation2DBackpropInput (  Output input , Output filter , Output out_backprop , long[] strides, long[] rates, string padding,String opName= "Dilation2DBackpropInput" ) 
+      public Operation Dilation2D (  Output input , Output filter , long[] strides, long[] rates, string padding,String opName= "Dilation2D" ) 
       {
-         OperationDescription desc = NewOperation("Dilation2DBackpropInput", opName);
+         OperationDescription desc = NewOperation("Dilation2D", opName);
          desc.AddInput(input);
          desc.AddInput(filter);
-         desc.AddInput(out_backprop);
          desc.SetAttr("strides", strides);
          desc.SetAttr("rates", rates);
          desc.SetAttr("padding", padding);
@@ -12619,27 +12068,18 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Computes the gradient of morphological 2-D dilation with respect to the filter.
+      ///Computes numerical negative value element-wise.
       ///</summary>
-      ///<param name="input">Input to the operation: 4-D with shape `[batch, in_height, in_width, depth]`.</param>
-      ///<param name="filter">Input to the operation: 3-D with shape `[filter_height, filter_width, depth]`.</param>
-      ///<param name="out_backprop">Input to the operation: 4-D with shape `[batch, out_height, out_width, depth]`.</param>
-      ///<param name="strides">1-D of length 4. The stride of the sliding window for each dimension of the input tensor. Must be: `[1, stride_height, stride_width, 1]`.</param>
-      ///<param name="rates">1-D of length 4. The input stride for atrous morphological dilation. Must be: `[1, rate_height, rate_width, 1]`.</param>
-      ///<param name="padding">The type of padding algorithm to use.</param>
+      ///<param name="x">Input to the operation. </param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] filter_backprop(type: DtInvalid): 3-D with shape `[filter_height, filter_width, depth]`.
+      ///[0] y(type: DtInvalid).
       ///</return>
-      public Operation Dilation2DBackpropFilter (  Output input , Output filter , Output out_backprop , long[] strides, long[] rates, string padding,String opName= "Dilation2DBackpropFilter" ) 
+      public Operation Neg (  Output x ,String opName= "Neg" ) 
       {
-         OperationDescription desc = NewOperation("Dilation2DBackpropFilter", opName);
-         desc.AddInput(input);
-         desc.AddInput(filter);
-         desc.AddInput(out_backprop);
-         desc.SetAttr("strides", strides);
-         desc.SetAttr("rates", rates);
-         desc.SetAttr("padding", padding);
+         OperationDescription desc = NewOperation("Neg", opName);
+         desc.AddInput(x);
+
 
          return desc.FinishOperation();
       } 
@@ -12655,25 +12095,6 @@ namespace Emgu.TF
       public Operation Relu (  Output features ,String opName= "Relu" ) 
       {
          OperationDescription desc = NewOperation("Relu", opName);
-         desc.AddInput(features);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes rectified linear gradients for a Relu operation.
-      ///</summary>
-      ///<param name="gradients">Input to the operation: The backpropagated gradients to the corresponding Relu operation.</param>
-      ///<param name="features">Input to the operation: The features passed as input to the corresponding Relu operation, OR the outputs of that operation (both work equivalently).</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] backprops(type: DtInvalid): `gradients * (features &gt; 0)`.
-      ///</return>
-      public Operation ReluGrad (  Output gradients , Output features ,String opName= "ReluGrad" ) 
-      {
-         OperationDescription desc = NewOperation("ReluGrad", opName);
-         desc.AddInput(gradients);
          desc.AddInput(features);
 
 
@@ -12698,74 +12119,127 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Computes gradients for the exponential linear (Elu) operation.
+      ///Computes the complementary error function of `x` element-wise.
       ///</summary>
-      ///<param name="gradients">Input to the operation: The backpropagated gradients to the corresponding Elu operation.</param>
-      ///<param name="outputs">Input to the operation: The outputs of the corresponding Elu operation.</param>
+      ///<param name="x">Input to the operation. </param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] backprops(type: DtInvalid): The gradients: `gradients * (outputs + 1)` if outputs &lt; 0, `gradients` otherwise.
+      ///[0] y(type: DtInvalid).
       ///</return>
-      public Operation EluGrad (  Output gradients , Output outputs ,String opName= "EluGrad" ) 
+      public Operation Erfc (  Output x ,String opName= "Erfc" ) 
       {
-         OperationDescription desc = NewOperation("EluGrad", opName);
-         desc.AddInput(gradients);
-         desc.AddInput(outputs);
+         OperationDescription desc = NewOperation("Erfc", opName);
+         desc.AddInput(x);
 
 
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Computes softplus gradients for a softplus operation.
+      ///Computes softmax activations.
       ///</summary>
-      ///<param name="gradients">Input to the operation: The backpropagated gradients to the corresponding softplus operation.</param>
-      ///<param name="features">Input to the operation: The features passed as input to the corresponding softplus operation.</param>
+      ///<param name="logits">Input to the operation: 2-D with shape `[batch_size, num_classes]`.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] backprops(type: DtInvalid): The gradients: `gradients / (1 + exp(-features))`.
+      ///[0] softmax(type: DtInvalid): Same shape as `logits`.
       ///</return>
-      public Operation SoftplusGrad (  Output gradients , Output features ,String opName= "SoftplusGrad" ) 
+      public Operation Softmax (  Output logits ,String opName= "Softmax" ) 
       {
-         OperationDescription desc = NewOperation("SoftplusGrad", opName);
-         desc.AddInput(gradients);
-         desc.AddInput(features);
+         OperationDescription desc = NewOperation("Softmax", opName);
+         desc.AddInput(logits);
 
 
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Computes softsign: `features / (abs(features) + 1)`.
+      ///Computes the gradient for the inverse of `x` wrt its input.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///</return>
+      public Operation ReciprocalGrad (  Output x , Output y ,String opName= "ReciprocalGrad" ) 
+      {
+         OperationDescription desc = NewOperation("ReciprocalGrad", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes Quantized Rectified Linear: `max(features, 0)`
       ///</summary>
       ///<param name="features">Input to the operation. </param>
+      ///<param name="min_features">Input to the operation: The float value that the lowest quantized value represents.</param>
+      ///<param name="max_features">Input to the operation: The float value that the highest quantized value represents.</param>
+      ///<param name="out_type"></param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] activations(type: DtInvalid).
+      ///[0] activations(type: DtInvalid): Has the same output shape as "features".
+      ///[1] min_activations(type: DtFloat): The float value that the lowest quantized value represents.
+      ///[2] max_activations(type: DtFloat): The float value that the highest quantized value represents.
       ///</return>
-      public Operation Softsign (  Output features ,String opName= "Softsign" ) 
+      public Operation QuantizedRelu (  Output features , Output min_features , Output max_features , DataType? out_type = null ,String opName= "QuantizedRelu" ) 
       {
-         OperationDescription desc = NewOperation("Softsign", opName);
+         OperationDescription desc = NewOperation("QuantizedRelu", opName);
          desc.AddInput(features);
+         desc.AddInput(min_features);
+         desc.AddInput(max_features);
 
-
+         if (out_type.HasValue) desc.SetAttr("out_type", out_type.Value);
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Computes softsign gradients for a softsign operation.
+      ///Returns x * y element-wise, working on quantized buffers.
       ///</summary>
-      ///<param name="gradients">Input to the operation: The backpropagated gradients to the corresponding softsign operation.</param>
-      ///<param name="features">Input to the operation: The features passed as input to the corresponding softsign operation.</param>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="min_x">Input to the operation: The float value that the lowest quantized `x` value represents.</param>
+      ///<param name="max_x">Input to the operation: The float value that the highest quantized `x` value represents.</param>
+      ///<param name="min_y">Input to the operation: The float value that the lowest quantized `y` value represents.</param>
+      ///<param name="max_y">Input to the operation: The float value that the highest quantized `y` value represents.</param>
+      ///<param name="Toutput"></param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] backprops(type: DtInvalid): The gradients: `gradients / (1 + abs(-features)) ** 2`.
+      ///[0] z(type: DtInvalid).
+      ///[1] min_z(type: DtFloat): The float value that the lowest quantized output value represents.
+      ///[2] max_z(type: DtFloat): The float value that the highest quantized output value represents.  *NOTE*: `QuantizedMul` supports limited forms of broadcasting. More about broadcasting [here](http://docs.scipy.org/doc/numpy/user/basics.broadcasting.html)
       ///</return>
-      public Operation SoftsignGrad (  Output gradients , Output features ,String opName= "SoftsignGrad" ) 
+      public Operation QuantizedMul (  Output x , Output y , Output min_x , Output max_x , Output min_y , Output max_y , DataType? Toutput = null ,String opName= "QuantizedMul" ) 
       {
-         OperationDescription desc = NewOperation("SoftsignGrad", opName);
-         desc.AddInput(gradients);
+         OperationDescription desc = NewOperation("QuantizedMul", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+         desc.AddInput(min_x);
+         desc.AddInput(max_x);
+         desc.AddInput(min_y);
+         desc.AddInput(max_y);
+
+         if (Toutput.HasValue) desc.SetAttr("Toutput", Toutput.Value);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes softmax cross entropy cost and gradients to backpropagate.
+      ///</summary>
+      ///<param name="features">Input to the operation: batch_size x num_classes matrix</param>
+      ///<param name="labels">Input to the operation: batch_size x num_classes matrix The caller must ensure that each batch of labels represents a valid probability distribution.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] loss(type: DtInvalid): Per example loss (batch_size vector).
+      ///[1] backprop(type: DtInvalid): backpropagated gradients (batch_size x num_classes matrix).
+      ///</return>
+      public Operation SoftmaxCrossEntropyWithLogits (  Output features , Output labels ,String opName= "SoftmaxCrossEntropyWithLogits" ) 
+      {
+         OperationDescription desc = NewOperation("SoftmaxCrossEntropyWithLogits", opName);
          desc.AddInput(features);
+         desc.AddInput(labels);
 
 
          return desc.FinishOperation();
@@ -12788,56 +12262,6 @@ namespace Emgu.TF
          desc.AddInput(labels);
 
 
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Outputs random values from a uniform distribution.
-      ///</summary>
-      ///<param name="shape">Input to the operation: The shape of the output tensor.</param>
-      ///<param name="dtype">The type of the output.</param>
-      ///<param name="seed">If either `seed` or `seed2` are set to be non-zero, the random number generator is seeded by the given seed.  Otherwise, it is seeded by a random seed.</param>
-      ///<param name="seed2">A second seed to avoid seed collision.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): A tensor of the specified shape filled with uniform random values.
-      ///</return>
-      public Operation RandomUniform (  Output shape , DataType dtype, long seed = 0 , long seed2 = 0 ,String opName= "RandomUniform" ) 
-      {
-         OperationDescription desc = NewOperation("RandomUniform", opName);
-         desc.AddInput(shape);
-         desc.SetAttr("dtype", dtype);
-         if (seed != 0) desc.SetAttr("seed", seed);
-         if (seed2 != 0) desc.SetAttr("seed2", seed2);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Performs fractional max pooling on the input.
-      ///</summary>
-      ///<param name="value">Input to the operation: 4-D with shape `[batch, height, width, channels]`.</param>
-      ///<param name="pooling_ratio">Pooling ratio for each dimension of `value`, currently only supports row and col dimension and should be &gt;= 1.0. For example, a valid pooling ratio looks like [1.0, 1.44, 1.73, 1.0]. The first and last elements must be 1.0 because we don't allow pooling on batch and channels dimensions. 1.44 and 1.73 are pooling ratio on height and width dimensions respectively.</param>
-      ///<param name="pseudo_random">When set to True, generates the pooling sequence in a pseudorandom fashion, otherwise, in a random fashion. Check paper [Benjamin Graham, Fractional Max-Pooling](http://arxiv.org/abs/1412.6071) for difference between pseudorandom and random.</param>
-      ///<param name="overlapping">When set to True, it means when pooling, the values at the boundary of adjacent pooling cells are used by both cells. For example:  `index  0  1  2  3  4`  `value  20 5  16 3  7`  If the pooling sequence is [0, 2, 4], then 16, at index 2 will be used twice. The result would be [20, 16] for fractional max pooling.</param>
-      ///<param name="deterministic">When set to True, a fixed pooling region will be used when iterating over a FractionalMaxPool node in the computation graph. Mainly used in unit test to make FractionalMaxPool deterministic.</param>
-      ///<param name="seed">If either seed or seed2 are set to be non-zero, the random number generator is seeded by the given seed.  Otherwise, it is seeded by a random seed.</param>
-      ///<param name="seed2">An second seed to avoid seed collision.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): output tensor after fractional max pooling.
-      ///[1] row_pooling_sequence(type: DtInt64): row pooling sequence, needed to calculate gradient.
-      ///[2] col_pooling_sequence(type: DtInt64): column pooling sequence, needed to calculate gradient.
-      ///</return>
-      public Operation FractionalMaxPool (  Output value , float[] pooling_ratio, bool pseudo_random = false , bool overlapping = false , bool deterministic = false , long seed = 0 , long seed2 = 0 ,String opName= "FractionalMaxPool" ) 
-      {
-         OperationDescription desc = NewOperation("FractionalMaxPool", opName);
-         desc.AddInput(value);
-         desc.SetAttr("pooling_ratio", pooling_ratio);
-         if (pseudo_random != false) desc.SetAttr("pseudo_random", pseudo_random);
-         if (overlapping != false) desc.SetAttr("overlapping", overlapping);
-         if (deterministic != false) desc.SetAttr("deterministic", deterministic);
-         if (seed != 0) desc.SetAttr("seed", seed);
-         if (seed2 != 0) desc.SetAttr("seed2", seed2);
          return desc.FinishOperation();
       } 
 
@@ -12929,63 +12353,6 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Computes a 2D convolution given quantized 4D input and filter tensors.
-      ///</summary>
-      ///<param name="input">Input to the operation. </param>
-      ///<param name="filter">Input to the operation: filter's input_depth dimension must match input's depth dimensions.</param>
-      ///<param name="min_input">Input to the operation: The float value that the lowest quantized input value represents.</param>
-      ///<param name="max_input">Input to the operation: The float value that the highest quantized input value represents.</param>
-      ///<param name="min_filter">Input to the operation: The float value that the lowest quantized filter value represents.</param>
-      ///<param name="max_filter">Input to the operation: The float value that the highest quantized filter value represents.</param>
-      ///<param name="strides">The stride of the sliding window for each dimension of the input tensor.</param>
-      ///<param name="padding">The type of padding algorithm to use.</param>
-      ///<param name="out_type"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid).
-      ///[1] min_output(type: DtFloat): The float value that the lowest quantized output value represents.
-      ///[2] max_output(type: DtFloat): The float value that the highest quantized output value represents.
-      ///</return>
-      public Operation QuantizedConv2D (  Output input , Output filter , Output min_input , Output max_input , Output min_filter , Output max_filter , long[] strides, string padding, DataType? out_type = null ,String opName= "QuantizedConv2D" ) 
-      {
-         OperationDescription desc = NewOperation("QuantizedConv2D", opName);
-         desc.AddInput(input);
-         desc.AddInput(filter);
-         desc.AddInput(min_input);
-         desc.AddInput(max_input);
-         desc.AddInput(min_filter);
-         desc.AddInput(max_filter);
-         desc.SetAttr("strides", strides);
-         desc.SetAttr("padding", padding);
-         if (out_type.HasValue) desc.SetAttr("out_type", out_type.Value);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Computes Quantized Rectified Linear: `max(features, 0)`
-      ///</summary>
-      ///<param name="features">Input to the operation. </param>
-      ///<param name="min_features">Input to the operation: The float value that the lowest quantized value represents.</param>
-      ///<param name="max_features">Input to the operation: The float value that the highest quantized value represents.</param>
-      ///<param name="out_type"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] activations(type: DtInvalid): Has the same output shape as "features".
-      ///[1] min_activations(type: DtFloat): The float value that the lowest quantized value represents.
-      ///[2] max_activations(type: DtFloat): The float value that the highest quantized value represents.
-      ///</return>
-      public Operation QuantizedRelu (  Output features , Output min_features , Output max_features , DataType? out_type = null ,String opName= "QuantizedRelu" ) 
-      {
-         OperationDescription desc = NewOperation("QuantizedRelu", opName);
-         desc.AddInput(features);
-         desc.AddInput(min_features);
-         desc.AddInput(max_features);
-
-         if (out_type.HasValue) desc.SetAttr("out_type", out_type.Value);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
       ///Computes Quantized Rectified Linear 6: `min(max(features, 0), 6)`
       ///</summary>
       ///<param name="features">Input to the operation. </param>
@@ -13010,140 +12377,226 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Does nothing. Only useful as a placeholder for control edges.
+      ///Multiplies slices of two tensors in batches.
       ///</summary>
-      ///<param name="opName">The name of the operation</param>
-      public Operation NoOp ( String opName= "NoOp" ) 
-      {
-         OperationDescription desc = NewOperation("NoOp", opName);
-
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Reinterpret the bytes of a string as a vector of numbers.
-      ///</summary>
-      ///<param name="bytes">Input to the operation: All the elements must have the same length.</param>
-      ///<param name="out_type"></param>
-      ///<param name="little_endian">Whether the input `bytes` are in little-endian order. Ignored for `out_type` values that are stored in a single byte like `uint8`.</param>
+      ///<param name="x">Input to the operation: 2-D or higher with shape `[..., r_x, c_x]`.</param>
+      ///<param name="y">Input to the operation: 2-D or higher with shape `[..., r_y, c_y]`.</param>
+      ///<param name="adj_x">If `True`, adjoint the slices of `x`. Defaults to `False`.</param>
+      ///<param name="adj_y">If `True`, adjoint the slices of `y`. Defaults to `False`.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtInvalid): A Tensor with one more dimension than the input `bytes`.  The added dimension will have size equal to the length of the elements of `bytes` divided by the number of bytes to represent `out_type`.
+      ///[0] output(type: DtInvalid): 3-D or higher with shape `[..., r_o, c_o]`
       ///</return>
-      public Operation DecodeRaw (  Output bytes , DataType out_type, bool little_endian = true ,String opName= "DecodeRaw" ) 
+      public Operation BatchMatMul (  Output x , Output y , bool adj_x = false , bool adj_y = false ,String opName= "BatchMatMul" ) 
       {
-         OperationDescription desc = NewOperation("DecodeRaw", opName);
-         desc.AddInput(bytes);
-         desc.SetAttr("out_type", out_type);
-         if (little_endian != true) desc.SetAttr("little_endian", little_endian);
+         OperationDescription desc = NewOperation("BatchMatMul", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+         if (adj_x != false) desc.SetAttr("adj_x", adj_x);
+         if (adj_y != false) desc.SetAttr("adj_y", adj_y);
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Transforms a vector of brain.Example protos (as strings) into typed tensors.
+      ///Cast x of type SrcT to y of DstT.
       ///</summary>
-      ///<param name="serialized">Input to the operation: A vector containing a batch of binary serialized Example protos.</param>
-      ///<param name="names">Input to the operation: A vector containing the names of the serialized protos. May contain, for example, table key (descriptive) names for the corresponding serialized protos.  These are purely useful for debugging purposes, and the presence of values here has no effect on the output. May also be an empty vector if no names are available. If non-empty, this vector must be the same length as "serialized".</param>
-      ///<param name="sparse_keys">Input to the operation: A list of Nsparse string Tensors (scalars). The keys expected in the Examples' features associated with sparse values.</param>
-      ///<param name="dense_keys">Input to the operation: A list of Ndense string Tensors (scalars). The keys expected in the Examples' features associated with dense values.</param>
-      ///<param name="dense_defaults">Input to the operation: A list of Ndense Tensors (some may be empty). dense_defaults[j] provides default values when the example's feature_map lacks dense_key[j].  If an empty Tensor is provided for dense_defaults[j], then the Feature dense_keys[j] is required. The input type is inferred from dense_defaults[j], even when it's empty. If dense_defaults[j] is not empty, and dense_shapes[j] is fully defined, then the shape of dense_defaults[j] must match that of dense_shapes[j]. If dense_shapes[j] has an undefined major dimension (variable strides dense feature), dense_defaults[j] must contain a single element: the padding element.</param>
-      ///<param name="sparse_types">A list of Nsparse types; the data types of data in each Feature given in sparse_keys. Currently the ParseExample supports DT_FLOAT (FloatList), DT_INT64 (Int64List), and DT_STRING (BytesList).</param>
-      ///<param name="dense_shapes">A list of Ndense shapes; the shapes of data in each Feature given in dense_keys. The number of elements in the Feature corresponding to dense_key[j] must always equal dense_shapes[j].NumEntries(). If dense_shapes[j] == (D0, D1, ..., DN) then the shape of output Tensor dense_values[j] will be (|serialized|, D0, D1, ..., DN): The dense outputs are just the inputs row-stacked by batch. This works for dense_shapes[j] = (-1, D1, ..., DN).  In this case the shape of the output Tensor dense_values[j] will be (|serialized|, M, D1, .., DN), where M is the maximum number of blocks of elements of length D1 * .... * DN, across all minibatch entries in the input.  Any minibatch entry with less than M blocks of elements of length D1 * ... * DN will be padded with the corresponding default_value scalar element along the second dimension.</param>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="DstT"></param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] sparse_indices(type: DtInt64).
-      ///[1] sparse_values(type: DtInvalid).
-      ///[2] sparse_shapes(type: DtInt64).
-      ///[3] dense_values(type: DtInvalid).
+      ///[0] y(type: DtInvalid).
       ///</return>
-      public Operation ParseExample (  Output serialized , Output names , Output sparse_keys , Output dense_keys , Output dense_defaults , DataType[] sparse_types, long[][] dense_shapes,String opName= "ParseExample" ) 
+      public Operation Cast (  Output x , DataType DstT,String opName= "Cast" ) 
       {
-         OperationDescription desc = NewOperation("ParseExample", opName);
-         desc.AddInput(serialized);
-         desc.AddInput(names);
-         desc.AddInput(sparse_keys);
-         desc.AddInput(dense_keys);
-         desc.AddInput(dense_defaults);
-         desc.SetAttr("sparse_types", sparse_types);
-         desc.SetAttrShapeList("dense_shapes", dense_shapes);
+         OperationDescription desc = NewOperation("Cast", opName);
+         desc.AddInput(x);
+         desc.SetAttr("DstT", DstT);
 
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Converts each string in the input Tensor to the specified numeric type.
+      ///Computes the absolute value of a tensor.
       ///</summary>
-      ///<param name="string_tensor">Input to the operation. </param>
-      ///<param name="out_type">The numeric type to interpret each string in `string_tensor` as.</param>
+      ///<param name="x">Input to the operation. </param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtInvalid): A Tensor of the same shape as the input `string_tensor`.
+      ///[0] y(type: DtInvalid).
       ///</return>
-      public Operation StringToNumber (  Output string_tensor , DataType? out_type = null ,String opName= "StringToNumber" ) 
+      public Operation Abs (  Output x ,String opName= "Abs" ) 
       {
-         OperationDescription desc = NewOperation("StringToNumber", opName);
-         desc.AddInput(string_tensor);
+         OperationDescription desc = NewOperation("Abs", opName);
+         desc.AddInput(x);
 
-         if (out_type.HasValue) desc.SetAttr("out_type", out_type.Value);
+
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Outputs random integers from a uniform distribution.
+      ///Computes the reciprocal of x element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid).
+      ///</return>
+      public Operation Reciprocal (  Output x ,String opName= "Reciprocal" ) 
+      {
+         OperationDescription desc = NewOperation("Reciprocal", opName);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the gradient for the rsqrt of `x` wrt its input.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///</return>
+      public Operation RsqrtGrad (  Output x , Output y ,String opName= "RsqrtGrad" ) 
+      {
+         OperationDescription desc = NewOperation("RsqrtGrad", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes natural logarithm of (1 + x) element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid).
+      ///</return>
+      public Operation Log1p (  Output x ,String opName= "Log1p" ) 
+      {
+         OperationDescription desc = NewOperation("Log1p", opName);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes hyperbolic cosine of x element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid).
+      ///</return>
+      public Operation Cosh (  Output x ,String opName= "Cosh" ) 
+      {
+         OperationDescription desc = NewOperation("Cosh", opName);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes inverse hyperbolic cosine of x element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid).
+      ///</return>
+      public Operation Acosh (  Output x ,String opName= "Acosh" ) 
+      {
+         OperationDescription desc = NewOperation("Acosh", opName);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Outputs deterministic pseudorandom random values from a uniform distribution.
       ///</summary>
       ///<param name="shape">Input to the operation: The shape of the output tensor.</param>
-      ///<param name="minval">Input to the operation: 0-D.  Inclusive lower bound on the generated integers.</param>
-      ///<param name="maxval">Input to the operation: 0-D.  Exclusive upper bound on the generated integers.</param>
-      ///<param name="seed">If either `seed` or `seed2` are set to be non-zero, the random number generator is seeded by the given seed.  Otherwise, it is seeded by a random seed.</param>
-      ///<param name="seed2">A second seed to avoid seed collision.</param>
+      ///<param name="seed">Input to the operation: 2 seeds (shape [2]).</param>
+      ///<param name="dtype">The type of the output.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtInvalid): A tensor of the specified shape filled with uniform random integers.
+      ///[0] output(type: DtInvalid): Random values with specified shape.
       ///</return>
-      public Operation RandomUniformInt (  Output shape , Output minval , Output maxval , long seed = 0 , long seed2 = 0 ,String opName= "RandomUniformInt" ) 
+      public Operation StatelessRandomUniform (  Output shape , Output seed , DataType? dtype = null ,String opName= "StatelessRandomUniform" ) 
       {
-         OperationDescription desc = NewOperation("RandomUniformInt", opName);
+         OperationDescription desc = NewOperation("StatelessRandomUniform", opName);
          desc.AddInput(shape);
-         desc.AddInput(minval);
-         desc.AddInput(maxval);
+         desc.AddInput(seed);
 
-         if (seed != 0) desc.SetAttr("seed", seed);
-         if (seed2 != 0) desc.SetAttr("seed2", seed2);
+         if (dtype.HasValue) desc.SetAttr("dtype", dtype.Value);
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Outputs random values from a normal distribution. The parameters may each be a
+      ///Computes the gradient for the tanh of `x` wrt its input.
       ///</summary>
-      ///<param name="shape">Input to the operation: The shape of the output tensor. Batches are indexed by the 0th dimension.</param>
-      ///<param name="means">Input to the operation: The mean parameter of each batch.</param>
-      ///<param name="stdevs">Input to the operation: The standard deviation parameter of each batch. Must be greater than 0.</param>
-      ///<param name="minvals">Input to the operation: The minimum cutoff. May be -infinity.</param>
-      ///<param name="maxvals">Input to the operation: The maximum cutoff. May be +infinity, and must be more than the minval for each batch.</param>
-      ///<param name="seed">If either `seed` or `seed2` are set to be non-zero, the random number generator is seeded by the given seed.  Otherwise, it is seeded by a random seed.</param>
-      ///<param name="seed2">A second seed to avoid seed collision.</param>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtInvalid): A matrix of shape num_batches x samples_per_batch, filled with random truncated normal values using the parameters for each row.
+      ///[0] z(type: DtInvalid).
       ///</return>
-      public Operation ParameterizedTruncatedNormal (  Output shape , Output means , Output stdevs , Output minvals , Output maxvals , long seed = 0 , long seed2 = 0 ,String opName= "ParameterizedTruncatedNormal" ) 
+      public Operation TanhGrad (  Output x , Output y ,String opName= "TanhGrad" ) 
       {
-         OperationDescription desc = NewOperation("ParameterizedTruncatedNormal", opName);
-         desc.AddInput(shape);
-         desc.AddInput(means);
-         desc.AddInput(stdevs);
-         desc.AddInput(minvals);
-         desc.AddInput(maxvals);
+         OperationDescription desc = NewOperation("TanhGrad", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
 
-         if (seed != 0) desc.SetAttr("seed", seed);
-         if (seed2 != 0) desc.SetAttr("seed2", seed2);
+
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Outputs random values from a truncated normal distribution.
+      ///Computes Psi, the derivative of Lgamma (the log of the absolute value of
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid).
+      ///</return>
+      public Operation Digamma (  Output x ,String opName= "Digamma" ) 
+      {
+         OperationDescription desc = NewOperation("Digamma", opName);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the gradient of the sigmoid of `x` wrt its input.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///</return>
+      public Operation SigmoidGrad (  Output x , Output y ,String opName= "SigmoidGrad" ) 
+      {
+         OperationDescription desc = NewOperation("SigmoidGrad", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Outputs random values from a normal distribution.
       ///</summary>
       ///<param name="shape">Input to the operation: The shape of the output tensor.</param>
       ///<param name="dtype">The type of the output.</param>
@@ -13151,11 +12604,11 @@ namespace Emgu.TF
       ///<param name="seed2">A second seed to avoid seed collision.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtInvalid): A tensor of the specified shape filled with random truncated normal values.
+      ///[0] output(type: DtInvalid): A tensor of the specified shape filled with random normal values.
       ///</return>
-      public Operation TruncatedNormal (  Output shape , DataType dtype, long seed = 0 , long seed2 = 0 ,String opName= "TruncatedNormal" ) 
+      public Operation RandomStandardNormal (  Output shape , DataType dtype, long seed = 0 , long seed2 = 0 ,String opName= "RandomStandardNormal" ) 
       {
-         OperationDescription desc = NewOperation("TruncatedNormal", opName);
+         OperationDescription desc = NewOperation("RandomStandardNormal", opName);
          desc.AddInput(shape);
          desc.SetAttr("dtype", dtype);
          if (seed != 0) desc.SetAttr("seed", seed);
@@ -13164,266 +12617,1339 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Outputs random values from the Gamma distribution(s) described by alpha.
+      ///Computes cos of x element-wise.
       ///</summary>
-      ///<param name="shape">Input to the operation: 1-D integer tensor. Shape of independent samples to draw from each distribution described by the shape parameters given in alpha.</param>
-      ///<param name="alpha">Input to the operation: A tensor in which each scalar is a "shape" parameter describing the associated gamma distribution.</param>
-      ///<param name="seed">If either `seed` or `seed2` are set to be non-zero, the random number generator is seeded by the given seed.  Otherwise, it is seeded by a random seed.</param>
-      ///<param name="seed2">A second seed to avoid seed collision.</param>
+      ///<param name="x">Input to the operation. </param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtInvalid): A tensor with shape `shape + shape(alpha)`. Each slice `[:, ..., :, i0, i1, ...iN]` contains the samples drawn for `alpha[i0, i1, ...iN]`. The dtype of the output matches the dtype of alpha.
+      ///[0] y(type: DtInvalid).
       ///</return>
-      public Operation RandomGamma (  Output shape , Output alpha , long seed = 0 , long seed2 = 0 ,String opName= "RandomGamma" ) 
+      public Operation Cos (  Output x ,String opName= "Cos" ) 
       {
-         OperationDescription desc = NewOperation("RandomGamma", opName);
-         desc.AddInput(shape);
+         OperationDescription desc = NewOperation("Cos", opName);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Given a quantized tensor described by (input, input_min, input_max), outputs a
+      ///</summary>
+      ///<param name="input">Input to the operation. </param>
+      ///<param name="input_min">Input to the operation: The float value that the minimum quantized input value represents.</param>
+      ///<param name="input_max">Input to the operation: The float value that the maximum quantized input value represents.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output_min(type: DtFloat): The computed min output.
+      ///[1] output_max(type: DtFloat): the computed max output.
+      ///</return>
+      public Operation RequantizationRange (  Output input , Output input_min , Output input_max ,String opName= "RequantizationRange" ) 
+      {
+         OperationDescription desc = NewOperation("RequantizationRange", opName);
+         desc.AddInput(input);
+         desc.AddInput(input_min);
+         desc.AddInput(input_max);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes asin of x element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid).
+      ///</return>
+      public Operation Asin (  Output x ,String opName= "Asin" ) 
+      {
+         OperationDescription desc = NewOperation("Asin", opName);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes acos of x element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid).
+      ///</return>
+      public Operation Acos (  Output x ,String opName= "Acos" ) 
+      {
+         OperationDescription desc = NewOperation("Acos", opName);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes atan of x element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid).
+      ///</return>
+      public Operation Atan (  Output x ,String opName= "Atan" ) 
+      {
+         OperationDescription desc = NewOperation("Atan", opName);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns which elements of x are finite.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtBool).
+      ///</return>
+      public Operation IsFinite (  Output x ,String opName= "IsFinite" ) 
+      {
+         OperationDescription desc = NewOperation("IsFinite", opName);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns x + y element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///</return>
+      public Operation Add (  Output x , Output y ,String opName= "Add" ) 
+      {
+         OperationDescription desc = NewOperation("Add", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns x - y element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///</return>
+      public Operation Sub (  Output x , Output y ,String opName= "Sub" ) 
+      {
+         OperationDescription desc = NewOperation("Sub", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns x * y element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///</return>
+      public Operation Mul (  Output x , Output y ,String opName= "Mul" ) 
+      {
+         OperationDescription desc = NewOperation("Mul", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns x // y element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///</return>
+      public Operation FloorDiv (  Output x , Output y ,String opName= "FloorDiv" ) 
+      {
+         OperationDescription desc = NewOperation("FloorDiv", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Subtracts sparse updates to a variable reference.
+      ///</summary>
+      ///<param name="reference">Input to the operation: Should be from a `Variable` node.</param>
+      ///<param name="indices">Input to the operation: A tensor of indices into the first dimension of `ref`.</param>
+      ///<param name="updates">Input to the operation: A tensor of updated values to subtract from `ref`.</param>
+      ///<param name="use_locking">If True, the subtraction will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output_ref(type: DtInvalid): = Same as `ref`.  Returned as a convenience for operations that want to use the updated values after the update is done.
+      ///</return>
+      public Operation ScatterSub (  Output reference , Output indices , Output updates , bool use_locking = false ,String opName= "ScatterSub" ) 
+      {
+         OperationDescription desc = NewOperation("ScatterSub", opName);
+         desc.AddInput(reference);
+         desc.AddInput(indices);
+         desc.AddInput(updates);
+
+         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns the max of x and y (i.e. x &gt; y ? x : y) element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///</return>
+      public Operation Maximum (  Output x , Output y ,String opName= "Maximum" ) 
+      {
+         OperationDescription desc = NewOperation("Maximum", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns the min of x and y (i.e. x &lt; y ? x : y) element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///</return>
+      public Operation Minimum (  Output x , Output y ,String opName= "Minimum" ) 
+      {
+         OperationDescription desc = NewOperation("Minimum", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns element-wise remainder of division. This emulates C semantics in that
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///</return>
+      public Operation Mod (  Output x , Output y ,String opName= "Mod" ) 
+      {
+         OperationDescription desc = NewOperation("Mod", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the power of one value to another.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///</return>
+      public Operation Pow (  Output x , Output y ,String opName= "Pow" ) 
+      {
+         OperationDescription desc = NewOperation("Pow", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Compute the lower regularized incomplete Gamma function `Q(a, x)`.
+      ///</summary>
+      ///<param name="a">Input to the operation. </param>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///</return>
+      public Operation Igamma (  Output a , Output x ,String opName= "Igamma" ) 
+      {
+         OperationDescription desc = NewOperation("Igamma", opName);
+         desc.AddInput(a);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Update '*var' by subtracting 'alpha' * 'delta' from it.
+      ///</summary>
+      ///<param name="var">Input to the operation: Should be from a Variable().</param>
+      ///<param name="alpha">Input to the operation: Scaling factor. Must be a scalar.</param>
+      ///<param name="delta">Input to the operation: The change.</param>
+      ///<param name="use_locking">If `True`, the subtraction will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] out(type: DtInvalid): Same as "var".
+      ///</return>
+      public Operation ApplyGradientDescent (  Output var , Output alpha , Output delta , bool use_locking = false ,String opName= "ApplyGradientDescent" ) 
+      {
+         OperationDescription desc = NewOperation("ApplyGradientDescent", opName);
+         desc.AddInput(var);
          desc.AddInput(alpha);
+         desc.AddInput(delta);
 
-         if (seed != 0) desc.SetAttr("seed", seed);
-         if (seed2 != 0) desc.SetAttr("seed2", seed2);
+         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Execute a sub graph on a remote processor transferred by GraphTransferer.
+      ///Compute the Hurwitz zeta function \\(\zeta(x, q)\\).
       ///</summary>
-      ///<param name="inputs">Input to the operation. </param>
-      ///<param name="Toutputs"></param>
-      ///<param name="serialized_remote_fused_graph_execute_info"></param>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="q">Input to the operation. </param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] outputs(type: DtInvalid).
+      ///[0] z(type: DtInvalid).
       ///</return>
-      public Operation RemoteFusedGraphExecute (  Output inputs , DataType[] Toutputs, string serialized_remote_fused_graph_execute_info,String opName= "RemoteFusedGraphExecute" ) 
+      public Operation Zeta (  Output x , Output q ,String opName= "Zeta" ) 
       {
-         OperationDescription desc = NewOperation("RemoteFusedGraphExecute", opName);
-         desc.AddInput(inputs);
-         desc.SetAttr("Toutputs", Toutputs);
-         desc.SetAttr("serialized_remote_fused_graph_execute_info", serialized_remote_fused_graph_execute_info);
+         OperationDescription desc = NewOperation("Zeta", opName);
+         desc.AddInput(x);
+         desc.AddInput(q);
+
+
+         return desc.FinishOperation();
+      } 
+      // Skipped function _ListToArray
+
+      ///<summary>
+      ///Compute the polygamma function \\(\psi^{(n)}(x)\\).
+      ///</summary>
+      ///<param name="a">Input to the operation. </param>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///</return>
+      public Operation Polygamma (  Output a , Output x ,String opName= "Polygamma" ) 
+      {
+         OperationDescription desc = NewOperation("Polygamma", opName);
+         desc.AddInput(a);
+         desc.AddInput(x);
+
 
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Creates a handle to a Variable resource.
+      ///Computes arctangent of `y/x` element-wise, respecting signs of the arguments.
       ///</summary>
-      ///<param name="dtype">the type of this variable. Must agree with the dtypes of all ops using this variable.</param>
-      ///<param name="shape">The (possibly partially specified) shape of this variable.</param>
-      ///<param name="container">the container this variable is placed in.</param>
-      ///<param name="shared_name">the name by which this variable is referred to.</param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="x">Input to the operation. </param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] resource(type: DtResource).
+      ///[0] z(type: DtInvalid).
       ///</return>
-      public Operation VarHandleOp (  DataType dtype, long[] shape, string container = null , string shared_name = null ,String opName= "VarHandleOp" ) 
+      public Operation Atan2 (  Output y , Output x ,String opName= "Atan2" ) 
       {
-         OperationDescription desc = NewOperation("VarHandleOp", opName);
+         OperationDescription desc = NewOperation("Atan2", opName);
+         desc.AddInput(y);
+         desc.AddInput(x);
 
-         desc.SetAttr("dtype", dtype);
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Adds sparse updates to a variable reference.
+      ///</summary>
+      ///<param name="reference">Input to the operation: Should be from a `Variable` node.</param>
+      ///<param name="indices">Input to the operation: A tensor of indices into the first dimension of `ref`.</param>
+      ///<param name="updates">Input to the operation: A tensor of updated values to add to `ref`.</param>
+      ///<param name="use_locking">If True, the addition will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output_ref(type: DtInvalid): = Same as `ref`.  Returned as a convenience for operations that want to use the updated values after the update is done.
+      ///</return>
+      public Operation ScatterAdd (  Output reference , Output indices , Output updates , bool use_locking = false ,String opName= "ScatterAdd" ) 
+      {
+         OperationDescription desc = NewOperation("ScatterAdd", opName);
+         desc.AddInput(reference);
+         desc.AddInput(indices);
+         desc.AddInput(updates);
+
+         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns the truth value of (x &lt; y) element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtBool).
+      ///</return>
+      public Operation Less (  Output x , Output y ,String opName= "Less" ) 
+      {
+         OperationDescription desc = NewOperation("Less", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns the truth value of (x &lt;= y) element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtBool).
+      ///</return>
+      public Operation LessEqual (  Output x , Output y ,String opName= "LessEqual" ) 
+      {
+         OperationDescription desc = NewOperation("LessEqual", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns the truth value of (x &gt; y) element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtBool).
+      ///</return>
+      public Operation Greater (  Output x , Output y ,String opName= "Greater" ) 
+      {
+         OperationDescription desc = NewOperation("Greater", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Update '*var' by subtracting 'alpha' * 'delta' from it.
+      ///</summary>
+      ///<param name="var">Input to the operation: Should be from a Variable().</param>
+      ///<param name="alpha">Input to the operation: Scaling factor. Must be a scalar.</param>
+      ///<param name="delta">Input to the operation: The change.</param>
+      ///<param name="use_locking">If `True`, the subtraction will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation ResourceApplyGradientDescent (  Output var , Output alpha , Output delta , bool use_locking = false ,String opName= "ResourceApplyGradientDescent" ) 
+      {
+         OperationDescription desc = NewOperation("ResourceApplyGradientDescent", opName);
+         desc.AddInput(var);
+         desc.AddInput(alpha);
+         desc.AddInput(delta);
+
+         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns the truth value of (x == y) element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtBool).
+      ///</return>
+      public Operation Equal (  Output x , Output y ,String opName= "Equal" ) 
+      {
+         OperationDescription desc = NewOperation("Equal", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Generates values in an interval.
+      ///</summary>
+      ///<param name="start">Input to the operation: First entry in the range.</param>
+      ///<param name="stop">Input to the operation: Last entry in the range.</param>
+      ///<param name="num">Input to the operation: Number of values to generate.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): 1-D. The generated values.
+      ///</return>
+      public Operation LinSpace (  Output start , Output stop , Output num ,String opName= "LinSpace" ) 
+      {
+         OperationDescription desc = NewOperation("LinSpace", opName);
+         desc.AddInput(start);
+         desc.AddInput(stop);
+         desc.AddInput(num);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns the truth value of (x != y) element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtBool).
+      ///</return>
+      public Operation NotEqual (  Output x , Output y ,String opName= "NotEqual" ) 
+      {
+         OperationDescription desc = NewOperation("NotEqual", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Use VariableV2 instead.
+      ///</summary>
+      ///<param name="shape"></param>
+      ///<param name="dtype"></param>
+      ///<param name="container"></param>
+      ///<param name="shared_name"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] ref(type: DtInvalid).
+      ///</return>
+      public Operation Variable (  long[] shape, DataType dtype, string container = null , string shared_name = null ,String opName= "Variable" ) 
+      {
+         OperationDescription desc = NewOperation("Variable", opName);
+
          desc.SetAttrShape("shape", shape);
+         desc.SetAttr("dtype", dtype);
          if (container != null) desc.SetAttr("container", container);
          if (shared_name != null) desc.SetAttr("shared_name", shared_name);
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Reads the value of a variable.
+      ///Returns the truth value of NOT x element-wise.
       ///</summary>
-      ///<param name="resource">Input to the operation: handle to the resource in which to store the variable.</param>
-      ///<param name="dtype">the dtype of the value.</param>
+      ///<param name="x">Input to the operation. </param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] value(type: DtInvalid).
+      ///[0] y(type: DtBool).
       ///</return>
-      public Operation ReadVariableOp (  Output resource , DataType dtype,String opName= "ReadVariableOp" ) 
+      public Operation LogicalNot (  Output x ,String opName= "LogicalNot" ) 
       {
-         OperationDescription desc = NewOperation("ReadVariableOp", opName);
-         desc.AddInput(resource);
-         desc.SetAttr("dtype", dtype);
+         OperationDescription desc = NewOperation("LogicalNot", opName);
+         desc.AddInput(x);
+
 
          return desc.FinishOperation();
       } 
-      // Skipped function _UnsafeReadVariable
 
       ///<summary>
-      ///Deletes the resource specified by the handle.
+      ///Returns the truth value of x AND y element-wise.
       ///</summary>
-      ///<param name="resource">Input to the operation: handle to the resource to delete.</param>
-      ///<param name="ignore_lookup_error">whether to ignore the error when the resource doesn't exist.</param>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
       ///<param name="opName">The name of the operation</param>
-      public Operation DestroyResourceOp (  Output resource , bool ignore_lookup_error = true ,String opName= "DestroyResourceOp" ) 
+      ///<return>
+      ///[0] z(type: DtBool).
+      ///</return>
+      public Operation LogicalAnd (  Output x , Output y ,String opName= "LogicalAnd" ) 
       {
-         OperationDescription desc = NewOperation("DestroyResourceOp", opName);
-         desc.AddInput(resource);
+         OperationDescription desc = NewOperation("LogicalAnd", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
 
-         if (ignore_lookup_error != true) desc.SetAttr("ignore_lookup_error", ignore_lookup_error);
+
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///A stateless version of PyFunc.
+      ///Returns the truth value of x OR y element-wise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtBool).
+      ///</return>
+      public Operation LogicalOr (  Output x , Output y ,String opName= "LogicalOr" ) 
+      {
+         OperationDescription desc = NewOperation("LogicalOr", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Converts each string in the input Tensor to its hash mod by a number of buckets.
+      ///</summary>
+      ///<param name="input">Input to the operation: The strings to assign a hash bucket.</param>
+      ///<param name="num_buckets">The number of buckets.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInt64): A Tensor of the same shape as the input `string_tensor`.
+      ///</return>
+      public Operation StringToHashBucketFast (  Output input , long num_buckets,String opName= "StringToHashBucketFast" ) 
+      {
+         OperationDescription desc = NewOperation("StringToHashBucketFast", opName);
+         desc.AddInput(input);
+         desc.SetAttr("num_buckets", num_buckets);
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Multiply the matrix "a" by the matrix "b".
+      ///</summary>
+      ///<param name="a">Input to the operation. </param>
+      ///<param name="b">Input to the operation. </param>
+      ///<param name="transpose_a">If true, "a" is transposed before multiplication.</param>
+      ///<param name="transpose_b">If true, "b" is transposed before multiplication.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] product(type: DtInvalid).
+      ///</return>
+      public Operation MatMul (  Output a , Output b , bool transpose_a = false , bool transpose_b = false ,String opName= "MatMul" ) 
+      {
+         OperationDescription desc = NewOperation("MatMul", opName);
+         desc.AddInput(a);
+         desc.AddInput(b);
+
+         if (transpose_a != false) desc.SetAttr("transpose_a", transpose_a);
+         if (transpose_b != false) desc.SetAttr("transpose_b", transpose_b);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the sum of elements across dimensions of a tensor.
+      ///</summary>
+      ///<param name="input">Input to the operation: The tensor to reduce.</param>
+      ///<param name="reduction_indices">Input to the operation: The dimensions to reduce.</param>
+      ///<param name="keep_dims">If true, retain reduced dimensions with length 1.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): The reduced tensor.
+      ///</return>
+      public Operation Sum (  Output input , Output reduction_indices , bool keep_dims = false ,String opName= "Sum" ) 
+      {
+         OperationDescription desc = NewOperation("Sum", opName);
+         desc.AddInput(input);
+         desc.AddInput(reduction_indices);
+
+         if (keep_dims != false) desc.SetAttr("keep_dims", keep_dims);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the mean of elements across dimensions of a tensor.
+      ///</summary>
+      ///<param name="input">Input to the operation: The tensor to reduce.</param>
+      ///<param name="reduction_indices">Input to the operation: The dimensions to reduce.</param>
+      ///<param name="keep_dims">If true, retain reduced dimensions with length 1.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): The reduced tensor.
+      ///</return>
+      public Operation Mean (  Output input , Output reduction_indices , bool keep_dims = false ,String opName= "Mean" ) 
+      {
+         OperationDescription desc = NewOperation("Mean", opName);
+         desc.AddInput(input);
+         desc.AddInput(reduction_indices);
+
+         if (keep_dims != false) desc.SetAttr("keep_dims", keep_dims);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///The gradient of SparseFillEmptyRows.
+      ///</summary>
+      ///<param name="reverse_index_map">Input to the operation: 1-D.  The reverse index map from SparseFillEmptyRows.</param>
+      ///<param name="grad_values">Input to the operation: 1-D.  The gradients from backprop.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] d_values(type: DtInvalid): 1-D.  The backprop into values.
+      ///[1] d_default_value(type: DtInvalid): 0-D.  The backprop into default_value.
+      ///</return>
+      public Operation SparseFillEmptyRowsGrad (  Output reverse_index_map , Output grad_values ,String opName= "SparseFillEmptyRowsGrad" ) 
+      {
+         OperationDescription desc = NewOperation("SparseFillEmptyRowsGrad", opName);
+         desc.AddInput(reverse_index_map);
+         desc.AddInput(grad_values);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the product of elements across dimensions of a tensor.
+      ///</summary>
+      ///<param name="input">Input to the operation: The tensor to reduce.</param>
+      ///<param name="reduction_indices">Input to the operation: The dimensions to reduce.</param>
+      ///<param name="keep_dims">If true, retain reduced dimensions with length 1.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): The reduced tensor.
+      ///</return>
+      public Operation Prod (  Output input , Output reduction_indices , bool keep_dims = false ,String opName= "Prod" ) 
+      {
+         OperationDescription desc = NewOperation("Prod", opName);
+         desc.AddInput(input);
+         desc.AddInput(reduction_indices);
+
+         if (keep_dims != false) desc.SetAttr("keep_dims", keep_dims);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the maximum of elements across dimensions of a tensor.
+      ///</summary>
+      ///<param name="input">Input to the operation: The tensor to reduce.</param>
+      ///<param name="reduction_indices">Input to the operation: The dimensions to reduce.</param>
+      ///<param name="keep_dims">If true, retain reduced dimensions with length 1.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): The reduced tensor.
+      ///</return>
+      public Operation Max (  Output input , Output reduction_indices , bool keep_dims = false ,String opName= "Max" ) 
+      {
+         OperationDescription desc = NewOperation("Max", opName);
+         desc.AddInput(input);
+         desc.AddInput(reduction_indices);
+
+         if (keep_dims != false) desc.SetAttr("keep_dims", keep_dims);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns the index with the largest value across dimensions of a tensor.
       ///</summary>
       ///<param name="input">Input to the operation. </param>
-      ///<param name="token"></param>
-      ///<param name="Tout"></param>
+      ///<param name="dimension">Input to the operation: int32 or int64, 0 &lt;= dimension &lt; rank(input).  Describes which dimension of the input Tensor to reduce across. For vectors, use dimension = 0.</param>
+      ///<param name="output_type"></param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
       ///[0] output(type: DtInvalid).
       ///</return>
-      public Operation PyFuncStateless (  Output input , string token, DataType[] Tout,String opName= "PyFuncStateless" ) 
+      public Operation ArgMax (  Output input , Output dimension , DataType? output_type = null ,String opName= "ArgMax" ) 
       {
-         OperationDescription desc = NewOperation("PyFuncStateless", opName);
+         OperationDescription desc = NewOperation("ArgMax", opName);
          desc.AddInput(input);
-         desc.SetAttr("token", token);
-         desc.SetAttr("Tout", Tout);
+         desc.AddInput(dimension);
+
+         if (output_type.HasValue) desc.SetAttr("output_type", output_type.Value);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns the index with the smallest value across dimensions of a tensor.
+      ///</summary>
+      ///<param name="input">Input to the operation. </param>
+      ///<param name="dimension">Input to the operation: int32 or int64, 0 &lt;= dimension &lt; rank(input).  Describes which dimension of the input Tensor to reduce across. For vectors, use dimension = 0.</param>
+      ///<param name="output_type"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation ArgMin (  Output input , Output dimension , DataType? output_type = null ,String opName= "ArgMin" ) 
+      {
+         OperationDescription desc = NewOperation("ArgMin", opName);
+         desc.AddInput(input);
+         desc.AddInput(dimension);
+
+         if (output_type.HasValue) desc.SetAttr("output_type", output_type.Value);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the minimum along segments of a tensor.
+      ///</summary>
+      ///<param name="data">Input to the operation. </param>
+      ///<param name="segment_ids">Input to the operation: A 1-D tensor whose rank is equal to the rank of `data`'s first dimension.  Values should be sorted and can be repeated.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): Has same shape as data, except for dimension 0 which has size `k`, the number of segments.
+      ///</return>
+      public Operation SegmentMin (  Output data , Output segment_ids ,String opName= "SegmentMin" ) 
+      {
+         OperationDescription desc = NewOperation("SegmentMin", opName);
+         desc.AddInput(data);
+         desc.AddInput(segment_ids);
+
 
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Distributed version of Stochastic Dual Coordinate Ascent (SDCA) optimizer for
+      ///Computes the maximum along segments of a tensor.
       ///</summary>
-      ///<param name="sparse_example_indices">Input to the operation: a list of vectors which contain example indices.</param>
-      ///<param name="sparse_feature_indices">Input to the operation: a list of vectors which contain feature indices.</param>
-      ///<param name="sparse_feature_values">Input to the operation: a list of vectors which contains feature value associated with each feature group.</param>
-      ///<param name="dense_features">Input to the operation: a list of matrices which contains the dense feature values.</param>
-      ///<param name="example_weights">Input to the operation: a vector which contains the weight associated with each example.</param>
-      ///<param name="example_labels">Input to the operation: a vector which contains the label/target associated with each example.</param>
-      ///<param name="sparse_indices">Input to the operation: a list of vectors where each value is the indices which has corresponding weights in sparse_weights. This field maybe omitted for the dense approach.</param>
-      ///<param name="sparse_weights">Input to the operation: a list of vectors where each value is the weight associated with a sparse feature group.</param>
-      ///<param name="dense_weights">Input to the operation: a list of vectors where the values are the weights associated with a dense feature group.</param>
-      ///<param name="example_state_data">Input to the operation: a list of vectors containing the example state data.</param>
-      ///<param name="loss_type">Type of the primal loss. Currently SdcaSolver supports logistic, squared and hinge losses.</param>
-      ///<param name="l1">Symmetric l1 regularization strength.</param>
-      ///<param name="l2">Symmetric l2 regularization strength.</param>
-      ///<param name="num_loss_partitions">Number of partitions of the global loss function.</param>
-      ///<param name="num_inner_iterations">Number of iterations per mini-batch.</param>
-      ///<param name="adaptative">Whether to use Adapative SDCA for the inner loop.</param>
+      ///<param name="data">Input to the operation. </param>
+      ///<param name="segment_ids">Input to the operation: A 1-D tensor whose rank is equal to the rank of `data`'s first dimension.  Values should be sorted and can be repeated.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] out_example_state_data(type: DtFloat): a list of vectors containing the updated example state data.
-      ///[1] out_delta_sparse_weights(type: DtFloat): a list of vectors where each value is the delta weights associated with a sparse feature group.
-      ///[2] out_delta_dense_weights(type: DtFloat): a list of vectors where the values are the delta weights associated with a dense feature group.
+      ///[0] output(type: DtInvalid): Has same shape as data, except for dimension 0 which has size `k`, the number of segments.
       ///</return>
-      public Operation SdcaOptimizer (  Output sparse_example_indices , Output sparse_feature_indices , Output sparse_feature_values , Output dense_features , Output example_weights , Output example_labels , Output sparse_indices , Output sparse_weights , Output dense_weights , Output example_state_data , string loss_type, float l1, float l2, long num_loss_partitions, long num_inner_iterations, bool adaptative = false ,String opName= "SdcaOptimizer" ) 
+      public Operation SegmentMax (  Output data , Output segment_ids ,String opName= "SegmentMax" ) 
       {
-         OperationDescription desc = NewOperation("SdcaOptimizer", opName);
-         desc.AddInput(sparse_example_indices);
-         desc.AddInput(sparse_feature_indices);
-         desc.AddInput(sparse_feature_values);
-         desc.AddInput(dense_features);
-         desc.AddInput(example_weights);
-         desc.AddInput(example_labels);
-         desc.AddInput(sparse_indices);
-         desc.AddInput(sparse_weights);
-         desc.AddInput(dense_weights);
-         desc.AddInput(example_state_data);
-         desc.SetAttr("loss_type", loss_type);
-         desc.SetAttr("l1", l1);
-         desc.SetAttr("l2", l2);
-         desc.SetAttr("num_loss_partitions", num_loss_partitions);
-         desc.SetAttr("num_inner_iterations", num_inner_iterations);
-         if (adaptative != false) desc.SetAttr("adaptative", adaptative);
+         OperationDescription desc = NewOperation("SegmentMax", opName);
+         desc.AddInput(data);
+         desc.AddInput(segment_ids);
+
+
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Joins a string Tensor across the given dimensions.
+      ///Computes the sum along segments of a tensor.
       ///</summary>
-      ///<param name="inputs">Input to the operation: The input to be joined.  All reduced indices must have non-zero size.</param>
-      ///<param name="reduction_indices">Input to the operation: The dimensions to reduce over.  Dimensions are reduced in the order specified.  Omitting `reduction_indices` is equivalent to passing `[n-1, n-2, ..., 0]`.  Negative indices from `-n` to `-1` are supported.</param>
-      ///<param name="keep_dims">If `True`, retain reduced dimensions with length `1`.</param>
-      ///<param name="separator">The separator to use when joining.</param>
+      ///<param name="data">Input to the operation. </param>
+      ///<param name="segment_ids">Input to the operation: A tensor whose shape is a prefix of `data.shape`.</param>
+      ///<param name="num_segments">Input to the operation. </param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtString): Has shape equal to that of the input with reduced dimensions removed or set to `1` depending on `keep_dims`.
+      ///[0] output(type: DtInvalid): Has same shape as data, except for the first `segment_ids.rank` dimensions, which are replaced with a single dimension which has size `num_segments`.
       ///</return>
-      public Operation ReduceJoin (  Output inputs , Output reduction_indices , bool keep_dims = false , string separator = null ,String opName= "ReduceJoin" ) 
+      public Operation UnsortedSegmentSum (  Output data , Output segment_ids , Output num_segments ,String opName= "UnsortedSegmentSum" ) 
       {
-         OperationDescription desc = NewOperation("ReduceJoin", opName);
-         desc.AddInput(inputs);
+         OperationDescription desc = NewOperation("UnsortedSegmentSum", opName);
+         desc.AddInput(data);
+         desc.AddInput(segment_ids);
+         desc.AddInput(num_segments);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the sum along sparse segments of a tensor.
+      ///</summary>
+      ///<param name="data">Input to the operation. </param>
+      ///<param name="indices">Input to the operation: A 1-D tensor. Has same rank as `segment_ids`.</param>
+      ///<param name="segment_ids">Input to the operation: A 1-D tensor. Values should be sorted and can be repeated.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): Has same shape as data, except for dimension 0 which has size `k`, the number of segments.
+      ///</return>
+      public Operation SparseSegmentSum (  Output data , Output indices , Output segment_ids ,String opName= "SparseSegmentSum" ) 
+      {
+         OperationDescription desc = NewOperation("SparseSegmentSum", opName);
+         desc.AddInput(data);
+         desc.AddInput(indices);
+         desc.AddInput(segment_ids);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the mean along sparse segments of a tensor.
+      ///</summary>
+      ///<param name="data">Input to the operation. </param>
+      ///<param name="indices">Input to the operation: A 1-D tensor. Has same rank as `segment_ids`.</param>
+      ///<param name="segment_ids">Input to the operation: A 1-D tensor. Values should be sorted and can be repeated.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): Has same shape as data, except for dimension 0 which has size `k`, the number of segments.
+      ///</return>
+      public Operation SparseSegmentMean (  Output data , Output indices , Output segment_ids ,String opName= "SparseSegmentMean" ) 
+      {
+         OperationDescription desc = NewOperation("SparseSegmentMean", opName);
+         desc.AddInput(data);
+         desc.AddInput(indices);
+         desc.AddInput(segment_ids);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Sparse update entries in '*var' and '*accum' according to FOBOS algorithm.
+      ///</summary>
+      ///<param name="var">Input to the operation: Should be from a Variable().</param>
+      ///<param name="accum">Input to the operation: Should be from a Variable().</param>
+      ///<param name="lr">Input to the operation: Learning rate. Must be a scalar.</param>
+      ///<param name="l1">Input to the operation: L1 regularization. Must be a scalar.</param>
+      ///<param name="l2">Input to the operation: L2 regularization. Must be a scalar.</param>
+      ///<param name="grad">Input to the operation: The gradient.</param>
+      ///<param name="indices">Input to the operation: A vector of indices into the first dimension of var and accum.</param>
+      ///<param name="use_locking">If True, updating of the var and accum tensors will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] out(type: DtInvalid): Same as "var".
+      ///</return>
+      public Operation SparseApplyProximalAdagrad (  Output var , Output accum , Output lr , Output l1 , Output l2 , Output grad , Output indices , bool use_locking = false ,String opName= "SparseApplyProximalAdagrad" ) 
+      {
+         OperationDescription desc = NewOperation("SparseApplyProximalAdagrad", opName);
+         desc.AddInput(var);
+         desc.AddInput(accum);
+         desc.AddInput(lr);
+         desc.AddInput(l1);
+         desc.AddInput(l2);
+         desc.AddInput(grad);
+         desc.AddInput(indices);
+
+         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes gradients for SparseSegmentMean.
+      ///</summary>
+      ///<param name="grad">Input to the operation: gradient propagated to the SparseSegmentMean op.</param>
+      ///<param name="indices">Input to the operation: indices passed to the corresponding SparseSegmentMean op.</param>
+      ///<param name="segment_ids">Input to the operation: segment_ids passed to the corresponding SparseSegmentMean op.</param>
+      ///<param name="output_dim0">Input to the operation: dimension 0 of "data" passed to SparseSegmentMean op.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation SparseSegmentMeanGrad (  Output grad , Output indices , Output segment_ids , Output output_dim0 ,String opName= "SparseSegmentMeanGrad" ) 
+      {
+         OperationDescription desc = NewOperation("SparseSegmentMeanGrad", opName);
+         desc.AddInput(grad);
+         desc.AddInput(indices);
+         desc.AddInput(segment_ids);
+         desc.AddInput(output_dim0);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the sum along sparse segments of a tensor divided by the sqrt of N.
+      ///</summary>
+      ///<param name="data">Input to the operation. </param>
+      ///<param name="indices">Input to the operation: A 1-D tensor. Has same rank as `segment_ids`.</param>
+      ///<param name="segment_ids">Input to the operation: A 1-D tensor. Values should be sorted and can be repeated.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): Has same shape as data, except for dimension 0 which has size `k`, the number of segments.
+      ///</return>
+      public Operation SparseSegmentSqrtN (  Output data , Output indices , Output segment_ids ,String opName= "SparseSegmentSqrtN" ) 
+      {
+         OperationDescription desc = NewOperation("SparseSegmentSqrtN", opName);
+         desc.AddInput(data);
+         desc.AddInput(indices);
+         desc.AddInput(segment_ids);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Update '*var' according to the RMSProp algorithm.
+      ///</summary>
+      ///<param name="var">Input to the operation: Should be from a Variable().</param>
+      ///<param name="ms">Input to the operation: Should be from a Variable().</param>
+      ///<param name="mom">Input to the operation: Should be from a Variable().</param>
+      ///<param name="lr">Input to the operation: Scaling factor. Must be a scalar.</param>
+      ///<param name="rho">Input to the operation: Decay rate. Must be a scalar.</param>
+      ///<param name="momentum">Input to the operation. </param>
+      ///<param name="epsilon">Input to the operation: Ridge term. Must be a scalar.</param>
+      ///<param name="grad">Input to the operation: The gradient.</param>
+      ///<param name="indices">Input to the operation: A vector of indices into the first dimension of var, ms and mom.</param>
+      ///<param name="use_locking">If `True`, updating of the var, ms, and mom tensors is protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation ResourceSparseApplyRMSProp (  Output var , Output ms , Output mom , Output lr , Output rho , Output momentum , Output epsilon , Output grad , Output indices , bool use_locking = false ,String opName= "ResourceSparseApplyRMSProp" ) 
+      {
+         OperationDescription desc = NewOperation("ResourceSparseApplyRMSProp", opName);
+         desc.AddInput(var);
+         desc.AddInput(ms);
+         desc.AddInput(mom);
+         desc.AddInput(lr);
+         desc.AddInput(rho);
+         desc.AddInput(momentum);
+         desc.AddInput(epsilon);
+         desc.AddInput(grad);
+         desc.AddInput(indices);
+
+         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes gradients for SparseSegmentSqrtN.
+      ///</summary>
+      ///<param name="grad">Input to the operation: gradient propagated to the SparseSegmentSqrtN op.</param>
+      ///<param name="indices">Input to the operation: indices passed to the corresponding SparseSegmentSqrtN op.</param>
+      ///<param name="segment_ids">Input to the operation: segment_ids passed to the corresponding SparseSegmentSqrtN op.</param>
+      ///<param name="output_dim0">Input to the operation: dimension 0 of "data" passed to SparseSegmentSqrtN op.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///</return>
+      public Operation SparseSegmentSqrtNGrad (  Output grad , Output indices , Output segment_ids , Output output_dim0 ,String opName= "SparseSegmentSqrtNGrad" ) 
+      {
+         OperationDescription desc = NewOperation("SparseSegmentSqrtNGrad", opName);
+         desc.AddInput(grad);
+         desc.AddInput(indices);
+         desc.AddInput(segment_ids);
+         desc.AddInput(output_dim0);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Computes the "logical or" of elements across dimensions of a tensor.
+      ///</summary>
+      ///<param name="input">Input to the operation: The tensor to reduce.</param>
+      ///<param name="reduction_indices">Input to the operation: The dimensions to reduce.</param>
+      ///<param name="keep_dims">If true, retain reduced dimensions with length 1.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtBool): The reduced tensor.
+      ///</return>
+      public Operation Any (  Output input , Output reduction_indices , bool keep_dims = false ,String opName= "Any" ) 
+      {
+         OperationDescription desc = NewOperation("Any", opName);
+         desc.AddInput(input);
          desc.AddInput(reduction_indices);
 
          if (keep_dims != false) desc.SetAttr("keep_dims", keep_dims);
-         if (separator != null) desc.SetAttr("separator", separator);
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Computes fingerprints of the input strings.
+      ///Creates a sequence of numbers.
       ///</summary>
-      ///<param name="input">Input to the operation: vector of strings to compute fingerprints on.</param>
+      ///<param name="start">Input to the operation: 0-D (scalar). First entry in the sequence.</param>
+      ///<param name="limit">Input to the operation: 0-D (scalar). Upper limit of sequence, exclusive.</param>
+      ///<param name="delta">Input to the operation: 0-D (scalar). Optional. Default is 1. Number that increments `start`.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtInt64): a (N,2) shaped matrix where N is the number of elements in the input vector. Each row contains the low and high parts of the fingerprint.
+      ///[0] output(type: DtInvalid): 1-D.
       ///</return>
-      public Operation SdcaFprint (  Output input ,String opName= "SdcaFprint" ) 
+      public Operation Range (  Output start , Output limit , Output delta ,String opName= "Range" ) 
       {
-         OperationDescription desc = NewOperation("SdcaFprint", opName);
+         OperationDescription desc = NewOperation("Range", opName);
+         desc.AddInput(start);
+         desc.AddInput(limit);
+         desc.AddInput(delta);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Update 'ref' by adding 'value' to it.
+      ///</summary>
+      ///<param name="reference">Input to the operation: Should be from a `Variable` node.</param>
+      ///<param name="value">Input to the operation: The value to be added to the variable.</param>
+      ///<param name="use_locking">If True, the addition will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output_ref(type: DtInvalid): = Same as "ref".  Returned as a convenience for operations that want to use the new value after the variable has been updated.
+      ///</return>
+      public Operation AssignAdd (  Output reference , Output value , bool use_locking = false ,String opName= "AssignAdd" ) 
+      {
+         OperationDescription desc = NewOperation("AssignAdd", opName);
+         desc.AddInput(reference);
+         desc.AddInput(value);
+
+         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Converts two real numbers to a complex number.
+      ///</summary>
+      ///<param name="real">Input to the operation. </param>
+      ///<param name="imag">Input to the operation. </param>
+      ///<param name="Tout"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] out(type: DtInvalid).
+      ///</return>
+      public Operation Complex (  Output real , Output imag , DataType? Tout = null ,String opName= "Complex" ) 
+      {
+         OperationDescription desc = NewOperation("Complex", opName);
+         desc.AddInput(real);
+         desc.AddInput(imag);
+
+         if (Tout.HasValue) desc.SetAttr("Tout", Tout.Value);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Compute the pairwise cross product.
+      ///</summary>
+      ///<param name="a">Input to the operation: A tensor containing 3-element vectors.</param>
+      ///<param name="b">Input to the operation: Another tensor, of same type and shape as `a`.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] product(type: DtInvalid): Pairwise cross product of the vectors in `a` and `b`.
+      ///</return>
+      public Operation Cross (  Output a , Output b ,String opName= "Cross" ) 
+      {
+         OperationDescription desc = NewOperation("Cross", opName);
+         desc.AddInput(a);
+         desc.AddInput(b);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Counts the number of occurrences of each value in an integer array.
+      ///</summary>
+      ///<param name="arr">Input to the operation: int32 `Tensor`.</param>
+      ///<param name="size">Input to the operation: non-negative int32 scalar `Tensor`.</param>
+      ///<param name="weights">Input to the operation: is an int32, int64, float32, or float64 `Tensor` with the same shape as `arr`, or a length-0 `Tensor`, in which case it acts as all weights equal to 1.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] bins(type: DtInvalid): 1D `Tensor` with length equal to `size`. The counts or summed weights for each value in the range [0, size).
+      ///</return>
+      public Operation Bincount (  Output arr , Output size , Output weights ,String opName= "Bincount" ) 
+      {
+         OperationDescription desc = NewOperation("Bincount", opName);
+         desc.AddInput(arr);
+         desc.AddInput(size);
+         desc.AddInput(weights);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Compute the cumulative product of the tensor `x` along `axis`.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="axis">Input to the operation. </param>
+      ///<param name="exclusive"></param>
+      ///<param name="reverse"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] out(type: DtInvalid).
+      ///</return>
+      public Operation Cumprod (  Output x , Output axis , bool exclusive = false , bool reverse = false ,String opName= "Cumprod" ) 
+      {
+         OperationDescription desc = NewOperation("Cumprod", opName);
+         desc.AddInput(x);
+         desc.AddInput(axis);
+
+         if (exclusive != false) desc.SetAttr("exclusive", exclusive);
+         if (reverse != false) desc.SetAttr("reverse", reverse);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Perform a quantized matrix multiplication of  `a` by the matrix `b`.
+      ///</summary>
+      ///<param name="a">Input to the operation: Must be a two-dimensional tensor.</param>
+      ///<param name="b">Input to the operation: Must be a two-dimensional tensor.</param>
+      ///<param name="min_a">Input to the operation: The float value that the lowest quantized `a` value represents.</param>
+      ///<param name="max_a">Input to the operation: The float value that the highest quantized `a` value represents.</param>
+      ///<param name="min_b">Input to the operation: The float value that the lowest quantized `b` value represents.</param>
+      ///<param name="max_b">Input to the operation: The float value that the highest quantized `b` value represents.</param>
+      ///<param name="Toutput"></param>
+      ///<param name="transpose_a">If true, `a` is transposed before multiplication.</param>
+      ///<param name="transpose_b">If true, `b` is transposed before multiplication.</param>
+      ///<param name="Tactivation">The type of output produced by activation function following this operation.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] out(type: DtInvalid).
+      ///[1] min_out(type: DtFloat): The float value that the lowest quantized output value represents.
+      ///[2] max_out(type: DtFloat): The float value that the highest quantized output value represents.
+      ///</return>
+      public Operation QuantizedMatMul (  Output a , Output b , Output min_a , Output max_a , Output min_b , Output max_b , DataType? Toutput = null , bool transpose_a = false , bool transpose_b = false , DataType? Tactivation = null ,String opName= "QuantizedMatMul" ) 
+      {
+         OperationDescription desc = NewOperation("QuantizedMatMul", opName);
+         desc.AddInput(a);
+         desc.AddInput(b);
+         desc.AddInput(min_a);
+         desc.AddInput(max_a);
+         desc.AddInput(min_b);
+         desc.AddInput(max_b);
+
+         if (Toutput.HasValue) desc.SetAttr("Toutput", Toutput.Value);
+         if (transpose_a != false) desc.SetAttr("transpose_a", transpose_a);
+         if (transpose_b != false) desc.SetAttr("transpose_b", transpose_b);
+         if (Tactivation.HasValue) desc.SetAttr("Tactivation", Tactivation.Value);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Returns x + y element-wise, working on quantized buffers.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="min_x">Input to the operation: The float value that the lowest quantized `x` value represents.</param>
+      ///<param name="max_x">Input to the operation: The float value that the highest quantized `x` value represents.</param>
+      ///<param name="min_y">Input to the operation: The float value that the lowest quantized `y` value represents.</param>
+      ///<param name="max_y">Input to the operation: The float value that the highest quantized `y` value represents.</param>
+      ///<param name="Toutput"></param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///[1] min_z(type: DtFloat): The float value that the lowest quantized output value represents.
+      ///[2] max_z(type: DtFloat): The float value that the highest quantized output value represents.  *NOTE*: `QuantizedAdd` supports limited forms of broadcasting. More about broadcasting [here](http://docs.scipy.org/doc/numpy/user/basics.broadcasting.html)
+      ///</return>
+      public Operation QuantizedAdd (  Output x , Output y , Output min_x , Output max_x , Output min_y , Output max_y , DataType? Toutput = null ,String opName= "QuantizedAdd" ) 
+      {
+         OperationDescription desc = NewOperation("QuantizedAdd", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+         desc.AddInput(min_x);
+         desc.AddInput(max_x);
+         desc.AddInput(min_y);
+         desc.AddInput(max_y);
+
+         if (Toutput.HasValue) desc.SetAttr("Toutput", Toutput.Value);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Convert the quantized 'input' tensor into a lower-precision 'output', using the
+      ///</summary>
+      ///<param name="input">Input to the operation. </param>
+      ///<param name="input_min">Input to the operation: The float value that the minimum quantized input value represents.</param>
+      ///<param name="input_max">Input to the operation: The float value that the maximum quantized input value represents.</param>
+      ///<param name="out_type">The type of the output. Should be a lower bit depth than Tinput.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid).
+      ///[1] output_min(type: DtFloat): The float value that the minimum quantized output value represents.
+      ///[2] output_max(type: DtFloat): The float value that the maximum quantized output value represents.
+      ///</return>
+      public Operation QuantizeDownAndShrinkRange (  Output input , Output input_min , Output input_max , DataType out_type,String opName= "QuantizeDownAndShrinkRange" ) 
+      {
+         OperationDescription desc = NewOperation("QuantizeDownAndShrinkRange", opName);
          desc.AddInput(input);
+         desc.AddInput(input_min);
+         desc.AddInput(input_max);
+         desc.SetAttr("out_type", out_type);
 
-
-         return desc.FinishOperation();
-      } 
-      // Skipped function _HostSend
-      // Skipped function _HostRecv
-
-      ///<summary>
-      ///Applies set operation along last dimension of `Tensor` and `SparseTensor`.
-      ///</summary>
-      ///<param name="set1">Input to the operation: `Tensor` with rank `n`. 1st `n-1` dimensions must be the same as `set2`. Dimension `n` contains values in a set, duplicates are allowed but ignored.</param>
-      ///<param name="set2_indices">Input to the operation: 2D `Tensor`, indices of a `SparseTensor`. Must be in row-major order.</param>
-      ///<param name="set2_values">Input to the operation: 1D `Tensor`, values of a `SparseTensor`. Must be in row-major order.</param>
-      ///<param name="set2_shape">Input to the operation: 1D `Tensor`, shape of a `SparseTensor`. `set2_shape[0...n-1]` must be the same as the 1st `n-1` dimensions of `set1`, `result_shape[n]` is the max set size across `n-1` dimensions.</param>
-      ///<param name="set_operation"></param>
-      ///<param name="validate_indices"></param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] result_indices(type: DtInt64): 2D indices of a `SparseTensor`.
-      ///[1] result_values(type: DtInvalid): 1D values of a `SparseTensor`.
-      ///[2] result_shape(type: DtInt64): 1D `Tensor` shape of a `SparseTensor`. `result_shape[0...n-1]` is the same as the 1st `n-1` dimensions of `set1` and `set2`, `result_shape[n]` is the max result set size across all `0...n-1` dimensions.
-      ///</return>
-      public Operation DenseToSparseSetOperation (  Output set1 , Output set2_indices , Output set2_values , Output set2_shape , string set_operation, bool validate_indices = true ,String opName= "DenseToSparseSetOperation" ) 
-      {
-         OperationDescription desc = NewOperation("DenseToSparseSetOperation", opName);
-         desc.AddInput(set1);
-         desc.AddInput(set2_indices);
-         desc.AddInput(set2_values);
-         desc.AddInput(set2_shape);
-         desc.SetAttr("set_operation", set_operation);
-         if (validate_indices != true) desc.SetAttr("validate_indices", validate_indices);
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Applies set operation along last dimension of 2 `SparseTensor` inputs.
+      ///Update relevant entries in '*var' and '*accum' according to the adagrad scheme.
       ///</summary>
-      ///<param name="set1_indices">Input to the operation: 2D `Tensor`, indices of a `SparseTensor`. Must be in row-major order.</param>
-      ///<param name="set1_values">Input to the operation: 1D `Tensor`, values of a `SparseTensor`. Must be in row-major order.</param>
-      ///<param name="set1_shape">Input to the operation: 1D `Tensor`, shape of a `SparseTensor`. `set1_shape[0...n-1]` must be the same as `set2_shape[0...n-1]`, `set1_shape[n]` is the max set size across `0...n-1` dimensions.</param>
-      ///<param name="set2_indices">Input to the operation: 2D `Tensor`, indices of a `SparseTensor`. Must be in row-major order.</param>
-      ///<param name="set2_values">Input to the operation: 1D `Tensor`, values of a `SparseTensor`. Must be in row-major order.</param>
-      ///<param name="set2_shape">Input to the operation: 1D `Tensor`, shape of a `SparseTensor`. `set2_shape[0...n-1]` must be the same as `set1_shape[0...n-1]`, `set2_shape[n]` is the max set size across `0...n-1` dimensions.</param>
-      ///<param name="set_operation"></param>
-      ///<param name="validate_indices"></param>
+      ///<param name="var">Input to the operation: Should be from a Variable().</param>
+      ///<param name="accum">Input to the operation: Should be from a Variable().</param>
+      ///<param name="lr">Input to the operation: Learning rate. Must be a scalar.</param>
+      ///<param name="grad">Input to the operation: The gradient.</param>
+      ///<param name="indices">Input to the operation: A vector of indices into the first dimension of var and accum.</param>
+      ///<param name="use_locking">If `True`, updating of the var and accum tensors will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] result_indices(type: DtInt64): 2D indices of a `SparseTensor`.
-      ///[1] result_values(type: DtInvalid): 1D values of a `SparseTensor`.
-      ///[2] result_shape(type: DtInt64): 1D `Tensor` shape of a `SparseTensor`. `result_shape[0...n-1]` is the same as the 1st `n-1` dimensions of `set1` and `set2`, `result_shape[n]` is the max result set size across all `0...n-1` dimensions.
+      ///[0] out(type: DtInvalid): Same as "var".
       ///</return>
-      public Operation SparseToSparseSetOperation (  Output set1_indices , Output set1_values , Output set1_shape , Output set2_indices , Output set2_values , Output set2_shape , string set_operation, bool validate_indices = true ,String opName= "SparseToSparseSetOperation" ) 
+      public Operation SparseApplyAdagrad (  Output var , Output accum , Output lr , Output grad , Output indices , bool use_locking = false ,String opName= "SparseApplyAdagrad" ) 
       {
-         OperationDescription desc = NewOperation("SparseToSparseSetOperation", opName);
-         desc.AddInput(set1_indices);
-         desc.AddInput(set1_values);
-         desc.AddInput(set1_shape);
-         desc.AddInput(set2_indices);
-         desc.AddInput(set2_values);
-         desc.AddInput(set2_shape);
-         desc.SetAttr("set_operation", set_operation);
-         if (validate_indices != true) desc.SetAttr("validate_indices", validate_indices);
+         OperationDescription desc = NewOperation("SparseApplyAdagrad", opName);
+         desc.AddInput(var);
+         desc.AddInput(accum);
+         desc.AddInput(lr);
+         desc.AddInput(grad);
+         desc.AddInput(indices);
+
+         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Flips all bits elementwise.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] y(type: DtInvalid).
+      ///</return>
+      public Operation Invert (  Output x ,String opName= "Invert" ) 
+      {
+         OperationDescription desc = NewOperation("Invert", opName);
+         desc.AddInput(x);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Elementwise computes the bitwise AND of `x` and `y`.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///</return>
+      public Operation BitwiseAnd (  Output x , Output y ,String opName= "BitwiseAnd" ) 
+      {
+         OperationDescription desc = NewOperation("BitwiseAnd", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Elementwise computes the bitwise XOR of `x` and `y`.
+      ///</summary>
+      ///<param name="x">Input to the operation. </param>
+      ///<param name="y">Input to the operation. </param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] z(type: DtInvalid).
+      ///</return>
+      public Operation BitwiseXor (  Output x , Output y ,String opName= "BitwiseXor" ) 
+      {
+         OperationDescription desc = NewOperation("BitwiseXor", opName);
+         desc.AddInput(x);
+         desc.AddInput(y);
+
+
          return desc.FinishOperation();
       } 
 
@@ -13574,27 +14100,28 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Split a `SparseTensor` into `num_split` tensors along one dimension.
+      ///Slice a `SparseTensor` based on the `start` and `size`.
       ///</summary>
-      ///<param name="split_dim">Input to the operation: 0-D.  The dimension along which to split.  Must be in the range `[0, rank(shape))`.</param>
       ///<param name="indices">Input to the operation: 2-D tensor represents the indices of the sparse tensor.</param>
       ///<param name="values">Input to the operation: 1-D tensor represents the values of the sparse tensor.</param>
-      ///<param name="shape">Input to the operation: 1-D. tensor represents the shape of the sparse tensor. output indices: A list of 1-D tensors represents the indices of the output sparse tensors.</param>
-      ///<param name="num_split">The number of ways to split.</param>
+      ///<param name="shape">Input to the operation: 1-D. tensor represents the shape of the sparse tensor.</param>
+      ///<param name="start">Input to the operation: 1-D. tensor represents the start of the slice.</param>
+      ///<param name="size">Input to the operation: 1-D. tensor represents the size of the slice. output indices: A list of 1-D tensors represents the indices of the output sparse tensors.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
       ///[0] output_indices(type: DtInt64).
       ///[1] output_values(type: DtInvalid): A list of 1-D tensors represents the values of the output sparse tensors.
       ///[2] output_shape(type: DtInt64): A list of 1-D tensors represents the shape of the output sparse tensors.
       ///</return>
-      public Operation SparseSplit (  Output split_dim , Output indices , Output values , Output shape , long num_split,String opName= "SparseSplit" ) 
+      public Operation SparseSlice (  Output indices , Output values , Output shape , Output start , Output size ,String opName= "SparseSlice" ) 
       {
-         OperationDescription desc = NewOperation("SparseSplit", opName);
-         desc.AddInput(split_dim);
+         OperationDescription desc = NewOperation("SparseSlice", opName);
          desc.AddInput(indices);
          desc.AddInput(values);
          desc.AddInput(shape);
-         desc.SetAttr("num_split", num_split);
+         desc.AddInput(start);
+         desc.AddInput(size);
+
 
          return desc.FinishOperation();
       } 
@@ -13645,6 +14172,32 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Computes the max of elements across dimensions of a SparseTensor.
+      ///</summary>
+      ///<param name="input_indices">Input to the operation: 2-D.  `N x R` matrix with the indices of non-empty values in a SparseTensor, possibly not in canonical ordering.</param>
+      ///<param name="input_values">Input to the operation: 1-D.  `N` non-empty values corresponding to `input_indices`.</param>
+      ///<param name="input_shape">Input to the operation: 1-D.  Shape of the input SparseTensor.</param>
+      ///<param name="reduction_axes">Input to the operation: 1-D.  Length-`K` vector containing the reduction axes.</param>
+      ///<param name="keep_dims">If true, retain reduced dimensions with length 1.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output_indices(type: DtInt64).
+      ///[1] output_values(type: DtInvalid).
+      ///[2] output_shape(type: DtInt64).
+      ///</return>
+      public Operation SparseReduceMaxSparse (  Output input_indices , Output input_values , Output input_shape , Output reduction_axes , bool keep_dims = false ,String opName= "SparseReduceMaxSparse" ) 
+      {
+         OperationDescription desc = NewOperation("SparseReduceMaxSparse", opName);
+         desc.AddInput(input_indices);
+         desc.AddInput(input_values);
+         desc.AddInput(input_shape);
+         desc.AddInput(reduction_axes);
+
+         if (keep_dims != false) desc.SetAttr("keep_dims", keep_dims);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Computes the sum of elements across dimensions of a SparseTensor.
       ///</summary>
       ///<param name="input_indices">Input to the operation: 2-D.  `N x R` matrix with the indices of non-empty values in a SparseTensor, possibly not in canonical ordering.</param>
@@ -13686,34 +14239,6 @@ namespace Emgu.TF
          desc.AddInput(sp_values);
          desc.AddInput(sp_shape);
          desc.AddInput(dense);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Returns the element-wise max of two SparseTensors.
-      ///</summary>
-      ///<param name="a_indices">Input to the operation: 2-D.  `N x R` matrix with the indices of non-empty values in a SparseTensor, in the canonical lexicographic ordering.</param>
-      ///<param name="a_values">Input to the operation: 1-D.  `N` non-empty values corresponding to `a_indices`.</param>
-      ///<param name="a_shape">Input to the operation: 1-D.  Shape of the input SparseTensor.</param>
-      ///<param name="b_indices">Input to the operation: counterpart to `a_indices` for the other operand.</param>
-      ///<param name="b_values">Input to the operation: counterpart to `a_values` for the other operand; must be of the same dtype.</param>
-      ///<param name="b_shape">Input to the operation: counterpart to `a_shape` for the other operand; the two shapes must be equal.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output_indices(type: DtInt64): 2-D.  The indices of the output SparseTensor.
-      ///[1] output_values(type: DtInvalid): 1-D.  The values of the output SparseTensor.
-      ///</return>
-      public Operation SparseSparseMaximum (  Output a_indices , Output a_values , Output a_shape , Output b_indices , Output b_values , Output b_shape ,String opName= "SparseSparseMaximum" ) 
-      {
-         OperationDescription desc = NewOperation("SparseSparseMaximum", opName);
-         desc.AddInput(a_indices);
-         desc.AddInput(a_values);
-         desc.AddInput(a_shape);
-         desc.AddInput(b_indices);
-         desc.AddInput(b_values);
-         desc.AddInput(b_shape);
 
 
          return desc.FinishOperation();
@@ -13796,226 +14321,301 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Fast Fourier transform.
+      ///Fills empty rows in the input 2-D `SparseTensor` with a default value.
       ///</summary>
-      ///<param name="input">Input to the operation: A complex64 tensor.</param>
+      ///<param name="indices">Input to the operation: 2-D. the indices of the sparse tensor.</param>
+      ///<param name="values">Input to the operation: 1-D. the values of the sparse tensor.</param>
+      ///<param name="dense_shape">Input to the operation: 1-D. the shape of the sparse tensor.</param>
+      ///<param name="default_value">Input to the operation: 0-D. default value to insert into location `[row, 0, ..., 0]`   for rows missing from the input sparse tensor. output indices: 2-D. the indices of the filled sparse tensor.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtComplex64): A complex64 tensor of the same shape as `input`. The inner-most   dimension of `input` is replaced with its 1D Fourier transform.  @compatibility(numpy) Equivalent to np.fft.fft @end_compatibility
+      ///[0] output_indices(type: DtInt64).
+      ///[1] output_values(type: DtInvalid): 1-D. the values of the filled sparse tensor.
+      ///[2] empty_row_indicator(type: DtBool): 1-D. whether the dense row was missing in the input sparse tensor.
+      ///[3] reverse_index_map(type: DtInt64): 1-D. a map from the input indices to the output indices.
       ///</return>
-      public Operation FFT (  Output input ,String opName= "FFT" ) 
+      public Operation SparseFillEmptyRows (  Output indices , Output values , Output dense_shape , Output default_value ,String opName= "SparseFillEmptyRows" ) 
       {
-         OperationDescription desc = NewOperation("FFT", opName);
-         desc.AddInput(input);
+         OperationDescription desc = NewOperation("SparseFillEmptyRows", opName);
+         desc.AddInput(indices);
+         desc.AddInput(values);
+         desc.AddInput(dense_shape);
+         desc.AddInput(default_value);
 
 
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///Inverse fast Fourier transform.
+      ///Outputs random integers from a uniform distribution.
       ///</summary>
-      ///<param name="input">Input to the operation: A complex64 tensor.</param>
+      ///<param name="shape">Input to the operation: The shape of the output tensor.</param>
+      ///<param name="minval">Input to the operation: 0-D.  Inclusive lower bound on the generated integers.</param>
+      ///<param name="maxval">Input to the operation: 0-D.  Exclusive upper bound on the generated integers.</param>
+      ///<param name="seed">If either `seed` or `seed2` are set to be non-zero, the random number generator is seeded by the given seed.  Otherwise, it is seeded by a random seed.</param>
+      ///<param name="seed2">A second seed to avoid seed collision.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtComplex64): A complex64 tensor of the same shape as `input`. The inner-most   dimension of `input` is replaced with its inverse 1D Fourier transform.  @compatibility(numpy) Equivalent to np.fft.ifft @end_compatibility
+      ///[0] output(type: DtInvalid): A tensor of the specified shape filled with uniform random integers.
       ///</return>
-      public Operation IFFT (  Output input ,String opName= "IFFT" ) 
+      public Operation RandomUniformInt (  Output shape , Output minval , Output maxval , long seed = 0 , long seed2 = 0 ,String opName= "RandomUniformInt" ) 
       {
-         OperationDescription desc = NewOperation("IFFT", opName);
-         desc.AddInput(input);
+         OperationDescription desc = NewOperation("RandomUniformInt", opName);
+         desc.AddInput(shape);
+         desc.AddInput(minval);
+         desc.AddInput(maxval);
 
+         if (seed != 0) desc.SetAttr("seed", seed);
+         if (seed2 != 0) desc.SetAttr("seed2", seed2);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Outputs random values from a normal distribution. The parameters may each be a
+      ///</summary>
+      ///<param name="shape">Input to the operation: The shape of the output tensor. Batches are indexed by the 0th dimension.</param>
+      ///<param name="means">Input to the operation: The mean parameter of each batch.</param>
+      ///<param name="stdevs">Input to the operation: The standard deviation parameter of each batch. Must be greater than 0.</param>
+      ///<param name="minvals">Input to the operation: The minimum cutoff. May be -infinity.</param>
+      ///<param name="maxvals">Input to the operation: The maximum cutoff. May be +infinity, and must be more than the minval for each batch.</param>
+      ///<param name="seed">If either `seed` or `seed2` are set to be non-zero, the random number generator is seeded by the given seed.  Otherwise, it is seeded by a random seed.</param>
+      ///<param name="seed2">A second seed to avoid seed collision.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): A matrix of shape num_batches x samples_per_batch, filled with random truncated normal values using the parameters for each row.
+      ///</return>
+      public Operation ParameterizedTruncatedNormal (  Output shape , Output means , Output stdevs , Output minvals , Output maxvals , long seed = 0 , long seed2 = 0 ,String opName= "ParameterizedTruncatedNormal" ) 
+      {
+         OperationDescription desc = NewOperation("ParameterizedTruncatedNormal", opName);
+         desc.AddInput(shape);
+         desc.AddInput(means);
+         desc.AddInput(stdevs);
+         desc.AddInput(minvals);
+         desc.AddInput(maxvals);
+
+         if (seed != 0) desc.SetAttr("seed", seed);
+         if (seed2 != 0) desc.SetAttr("seed2", seed2);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Outputs random values from a truncated normal distribution.
+      ///</summary>
+      ///<param name="shape">Input to the operation: The shape of the output tensor.</param>
+      ///<param name="dtype">The type of the output.</param>
+      ///<param name="seed">If either `seed` or `seed2` are set to be non-zero, the random number generator is seeded by the given seed.  Otherwise, it is seeded by a random seed.</param>
+      ///<param name="seed2">A second seed to avoid seed collision.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): A tensor of the specified shape filled with random truncated normal values.
+      ///</return>
+      public Operation TruncatedNormal (  Output shape , DataType dtype, long seed = 0 , long seed2 = 0 ,String opName= "TruncatedNormal" ) 
+      {
+         OperationDescription desc = NewOperation("TruncatedNormal", opName);
+         desc.AddInput(shape);
+         desc.SetAttr("dtype", dtype);
+         if (seed != 0) desc.SetAttr("seed", seed);
+         if (seed2 != 0) desc.SetAttr("seed2", seed2);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Outputs random values from the Gamma distribution(s) described by alpha.
+      ///</summary>
+      ///<param name="shape">Input to the operation: 1-D integer tensor. Shape of independent samples to draw from each distribution described by the shape parameters given in alpha.</param>
+      ///<param name="alpha">Input to the operation: A tensor in which each scalar is a "shape" parameter describing the associated gamma distribution.</param>
+      ///<param name="seed">If either `seed` or `seed2` are set to be non-zero, the random number generator is seeded by the given seed.  Otherwise, it is seeded by a random seed.</param>
+      ///<param name="seed2">A second seed to avoid seed collision.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): A tensor with shape `shape + shape(alpha)`. Each slice `[:, ..., :, i0, i1, ...iN]` contains the samples drawn for `alpha[i0, i1, ...iN]`. The dtype of the output matches the dtype of alpha.
+      ///</return>
+      public Operation RandomGamma (  Output shape , Output alpha , long seed = 0 , long seed2 = 0 ,String opName= "RandomGamma" ) 
+      {
+         OperationDescription desc = NewOperation("RandomGamma", opName);
+         desc.AddInput(shape);
+         desc.AddInput(alpha);
+
+         if (seed != 0) desc.SetAttr("seed", seed);
+         if (seed2 != 0) desc.SetAttr("seed2", seed2);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Outputs deterministic pseudorandom values from a normal distribution.
+      ///</summary>
+      ///<param name="shape">Input to the operation: The shape of the output tensor.</param>
+      ///<param name="seed">Input to the operation: 2 seeds (shape [2]).</param>
+      ///<param name="dtype">The type of the output.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): Random values with specified shape.
+      ///</return>
+      public Operation StatelessRandomNormal (  Output shape , Output seed , DataType? dtype = null ,String opName= "StatelessRandomNormal" ) 
+      {
+         OperationDescription desc = NewOperation("StatelessRandomNormal", opName);
+         desc.AddInput(shape);
+         desc.AddInput(seed);
+
+         if (dtype.HasValue) desc.SetAttr("dtype", dtype.Value);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Outputs deterministic pseudorandom values from a truncated normal distribution.
+      ///</summary>
+      ///<param name="shape">Input to the operation: The shape of the output tensor.</param>
+      ///<param name="seed">Input to the operation: 2 seeds (shape [2]).</param>
+      ///<param name="dtype">The type of the output.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInvalid): Random values with specified shape.
+      ///</return>
+      public Operation StatelessTruncatedNormal (  Output shape , Output seed , DataType? dtype = null ,String opName= "StatelessTruncatedNormal" ) 
+      {
+         OperationDescription desc = NewOperation("StatelessTruncatedNormal", opName);
+         desc.AddInput(shape);
+         desc.AddInput(seed);
+
+         if (dtype.HasValue) desc.SetAttr("dtype", dtype.Value);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Converts each string in the input Tensor to its hash mod by a number of buckets.
+      ///</summary>
+      ///<param name="input">Input to the operation: The strings to assign a hash bucket.</param>
+      ///<param name="num_buckets">The number of buckets.</param>
+      ///<param name="key">The key for the keyed hash function passed as a list of two uint64 elements.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtInt64): A Tensor of the same shape as the input `string_tensor`.
+      ///</return>
+      public Operation StringToHashBucketStrong (  Output input , long num_buckets, long[] key,String opName= "StringToHashBucketStrong" ) 
+      {
+         OperationDescription desc = NewOperation("StringToHashBucketStrong", opName);
+         desc.AddInput(input);
+         desc.SetAttr("num_buckets", num_buckets);
+         desc.SetAttr("key", key);
 
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///2D fast Fourier transform.
-      ///</summary>
-      ///<param name="input">Input to the operation: A complex64 tensor.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtComplex64): A complex64 tensor of the same shape as `input`. The inner-most 2   dimensions of `input` are replaced with their 2D Fourier transform.  @compatibility(numpy) Equivalent to np.fft.fft2 @end_compatibility
-      ///</return>
-      public Operation FFT2D (  Output input ,String opName= "FFT2D" ) 
-      {
-         OperationDescription desc = NewOperation("FFT2D", opName);
-         desc.AddInput(input);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///3D fast Fourier transform.
-      ///</summary>
-      ///<param name="input">Input to the operation: A complex64 tensor.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtComplex64): A complex64 tensor of the same shape as `input`. The inner-most 3   dimensions of `input` are replaced with their 3D Fourier transform.  @compatibility(numpy) Equivalent to np.fft.fftn with 3 dimensions. @end_compatibility
-      ///</return>
-      public Operation FFT3D (  Output input ,String opName= "FFT3D" ) 
-      {
-         OperationDescription desc = NewOperation("FFT3D", opName);
-         desc.AddInput(input);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Inverse 3D fast Fourier transform.
-      ///</summary>
-      ///<param name="input">Input to the operation: A complex64 tensor.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtComplex64): A complex64 tensor of the same shape as `input`. The inner-most 3   dimensions of `input` are replaced with their inverse 3D Fourier transform.  @compatibility(numpy) Equivalent to np.fft.ifftn with 3 dimensions. @end_compatibility
-      ///</return>
-      public Operation IFFT3D (  Output input ,String opName= "IFFT3D" ) 
-      {
-         OperationDescription desc = NewOperation("IFFT3D", opName);
-         desc.AddInput(input);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Real-valued fast Fourier transform.
-      ///</summary>
-      ///<param name="input">Input to the operation: A float32 tensor.</param>
-      ///<param name="fft_length">Input to the operation: An int32 tensor of shape [1]. The FFT length.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtComplex64): A complex64 tensor of the same rank as `input`. The inner-most   dimension of `input` is replaced with the `fft_length / 2 + 1` unique   frequency components of its 1D Fourier transform.  @compatibility(numpy) Equivalent to np.fft.rfft @end_compatibility
-      ///</return>
-      public Operation RFFT (  Output input , Output fft_length ,String opName= "RFFT" ) 
-      {
-         OperationDescription desc = NewOperation("RFFT", opName);
-         desc.AddInput(input);
-         desc.AddInput(fft_length);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Inverse real-valued fast Fourier transform.
-      ///</summary>
-      ///<param name="input">Input to the operation: A complex64 tensor.</param>
-      ///<param name="fft_length">Input to the operation: An int32 tensor of shape [1]. The FFT length.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtFloat): A float32 tensor of the same rank as `input`. The inner-most   dimension of `input` is replaced with the `fft_length` samples of its inverse   1D Fourier transform.  @compatibility(numpy) Equivalent to np.fft.irfft @end_compatibility
-      ///</return>
-      public Operation IRFFT (  Output input , Output fft_length ,String opName= "IRFFT" ) 
-      {
-         OperationDescription desc = NewOperation("IRFFT", opName);
-         desc.AddInput(input);
-         desc.AddInput(fft_length);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///2D real-valued fast Fourier transform.
-      ///</summary>
-      ///<param name="input">Input to the operation: A float32 tensor.</param>
-      ///<param name="fft_length">Input to the operation: An int32 tensor of shape [2]. The FFT length for each dimension.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtComplex64): A complex64 tensor of the same rank as `input`. The inner-most 2   dimensions of `input` are replaced with their 2D Fourier transform. The   inner-most dimension contains `fft_length / 2 + 1` unique frequency   components.  @compatibility(numpy) Equivalent to np.fft.rfft2 @end_compatibility
-      ///</return>
-      public Operation RFFT2D (  Output input , Output fft_length ,String opName= "RFFT2D" ) 
-      {
-         OperationDescription desc = NewOperation("RFFT2D", opName);
-         desc.AddInput(input);
-         desc.AddInput(fft_length);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///
+      ///Converts each entry in the given tensor to strings.  Supports many numeric
       ///</summary>
       ///<param name="input">Input to the operation. </param>
+      ///<param name="precision">The post-decimal precision to use for floating point numbers. Only used if precision &gt; -1.</param>
+      ///<param name="scientific">Use scientific notation for floating point numbers.</param>
+      ///<param name="shortest">Use shortest representation (either scientific or standard) for floating point numbers.</param>
+      ///<param name="width">Pad pre-decimal numbers to this width. Applies to both floating point and integer numbers. Only used if width &gt; -1.</param>
+      ///<param name="fill">The value to pad if width &gt; -1.  If empty, pads with spaces. Another typical value is '0'.  String cannot be longer than 1 character.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtComplex64).
+      ///[0] output(type: DtString).
       ///</return>
-      public Operation BatchFFT (  Output input ,String opName= "BatchFFT" ) 
+      public Operation AsString (  Output input , long precision = -1 , bool scientific = false , bool shortest = false , long width = -1 , string fill = null ,String opName= "AsString" ) 
       {
-         OperationDescription desc = NewOperation("BatchFFT", opName);
+         OperationDescription desc = NewOperation("AsString", opName);
          desc.AddInput(input);
+
+         if (precision != -1) desc.SetAttr("precision", precision);
+         if (scientific != false) desc.SetAttr("scientific", scientific);
+         if (shortest != false) desc.SetAttr("shortest", shortest);
+         if (width != -1) desc.SetAttr("width", width);
+         if (fill != null) desc.SetAttr("fill", fill);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Joins the strings in the given list of string tensors into one tensor;
+      ///</summary>
+      ///<param name="inputs">Input to the operation: A list of string tensors.  The tensors must all have the same shape, or be scalars.  Scalars may be mixed in; these will be broadcast to the shape of non-scalar inputs.</param>
+      ///<param name="separator">string, an optional join separator.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] output(type: DtString).
+      ///</return>
+      public Operation StringJoin (  Output inputs , string separator = null ,String opName= "StringJoin" ) 
+      {
+         OperationDescription desc = NewOperation("StringJoin", opName);
+         desc.AddInput(inputs);
+
+         if (separator != null) desc.SetAttr("separator", separator);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Split elements of `input` based on `delimiter` into a `SparseTensor`.
+      ///</summary>
+      ///<param name="input">Input to the operation: 1-D. Strings to split.</param>
+      ///<param name="delimiter">Input to the operation: 0-D. Delimiter characters (bytes), or empty string.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] indices(type: DtInt64): A dense matrix of int64 representing the indices of the sparse tensor.
+      ///[1] values(type: DtString): A vector of strings corresponding to the splited values.
+      ///[2] shape(type: DtInt64): a length-2 vector of int64 representing the shape of the sparse tensor, where the first value is N and the second value is the maximum number of tokens in a single input entry.
+      ///</return>
+      public Operation StringSplit (  Output input , Output delimiter ,String opName= "StringSplit" ) 
+      {
+         OperationDescription desc = NewOperation("StringSplit", opName);
+         desc.AddInput(input);
+         desc.AddInput(delimiter);
 
 
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///
+      ///Return substrings from `Tensor` of strings.
       ///</summary>
-      ///<param name="input">Input to the operation. </param>
+      ///<param name="input">Input to the operation: Tensor of strings</param>
+      ///<param name="pos">Input to the operation: Scalar defining the position of first character in each substring</param>
+      ///<param name="len">Input to the operation: Scalar defining the number of characters to include in each substring</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtComplex64).
+      ///[0] output(type: DtString): Tensor of substrings
       ///</return>
-      public Operation BatchIFFT (  Output input ,String opName= "BatchIFFT" ) 
+      public Operation Substr (  Output input , Output pos , Output len ,String opName= "Substr" ) 
       {
-         OperationDescription desc = NewOperation("BatchIFFT", opName);
+         OperationDescription desc = NewOperation("Substr", opName);
          desc.AddInput(input);
+         desc.AddInput(pos);
+         desc.AddInput(len);
 
 
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///
+      ///Encode strings into web-safe base64 format.
       ///</summary>
-      ///<param name="input">Input to the operation. </param>
+      ///<param name="input">Input to the operation: Strings to be encoded.</param>
+      ///<param name="pad">Bool whether padding is applied at the ends.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtComplex64).
+      ///[0] output(type: DtString): Input strings encoded in base64.
       ///</return>
-      public Operation BatchFFT2D (  Output input ,String opName= "BatchFFT2D" ) 
+      public Operation EncodeBase64 (  Output input , bool pad = false ,String opName= "EncodeBase64" ) 
       {
-         OperationDescription desc = NewOperation("BatchFFT2D", opName);
+         OperationDescription desc = NewOperation("EncodeBase64", opName);
          desc.AddInput(input);
 
-
+         if (pad != false) desc.SetAttr("pad", pad);
          return desc.FinishOperation();
       } 
 
       ///<summary>
-      ///
+      ///Decode web-safe base64-encoded strings.
       ///</summary>
-      ///<param name="input">Input to the operation. </param>
+      ///<param name="input">Input to the operation: Base64 strings to decode.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] output(type: DtComplex64).
+      ///[0] output(type: DtString): Decoded strings.
       ///</return>
-      public Operation BatchIFFT2D (  Output input ,String opName= "BatchIFFT2D" ) 
+      public Operation DecodeBase64 (  Output input ,String opName= "DecodeBase64" ) 
       {
-         OperationDescription desc = NewOperation("BatchIFFT2D", opName);
-         desc.AddInput(input);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///
-      ///</summary>
-      ///<param name="input">Input to the operation. </param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtComplex64).
-      ///</return>
-      public Operation BatchFFT3D (  Output input ,String opName= "BatchFFT3D" ) 
-      {
-         OperationDescription desc = NewOperation("BatchFFT3D", opName);
+         OperationDescription desc = NewOperation("DecodeBase64", opName);
          desc.AddInput(input);
 
 
@@ -14186,223 +14786,25 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Applies sparse subtraction between `updates` and individual values or slices
+      ///var -= alpha * (delta + lambda * delta * (var - shadow))
       ///</summary>
-      ///<param name="reference">Input to the operation: A mutable Tensor. Should be from a Variable node.</param>
-      ///<param name="indices">Input to the operation: A Tensor. Must be one of the following types: int32, int64. A tensor of indices into ref.</param>
-      ///<param name="updates">Input to the operation: A Tensor. Must have the same type as ref. A tensor of updated values to subtract from ref.</param>
-      ///<param name="use_locking">An optional bool. Defaults to True. If True, the assignment will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
+      ///<param name="var">Input to the operation: Should be from a Variable().</param>
+      ///<param name="alpha">Input to the operation: Scaling factor. Must be a scalar.</param>
+      ///<param name="delta">Input to the operation: The change.</param>
+      ///<param name="lambda">Input to the operation: The variance parameter.</param>
+      ///<param name="shadow">Input to the operation: Same as "var".</param>
+      ///<param name="use_locking">If `True`, the subtraction will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
       ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output_ref(type: DtInvalid): Same as ref. Returned as a convenience for operations that want to use the updated values after the update is done.
-      ///</return>
-      public Operation ScatterNdSub (  Output reference , Output indices , Output updates , bool use_locking = false ,String opName= "ScatterNdSub" ) 
+      public Operation ApplyDelayCompensatedGradientDescent (  Output var , Output alpha , Output delta , Output lambda , Output shadow , bool use_locking = false ,String opName= "ApplyDelayCompensatedGradientDescent" ) 
       {
-         OperationDescription desc = NewOperation("ScatterNdSub", opName);
-         desc.AddInput(reference);
-         desc.AddInput(indices);
-         desc.AddInput(updates);
+         OperationDescription desc = NewOperation("ApplyDelayCompensatedGradientDescent", opName);
+         desc.AddInput(var);
+         desc.AddInput(alpha);
+         desc.AddInput(delta);
+         desc.AddInput(lambda);
+         desc.AddInput(shadow);
 
          if (use_locking != false) desc.SetAttr("use_locking", use_locking);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Outputs deterministic pseudorandom values from a normal distribution.
-      ///</summary>
-      ///<param name="shape">Input to the operation: The shape of the output tensor.</param>
-      ///<param name="seed">Input to the operation: 2 seeds (shape [2]).</param>
-      ///<param name="dtype">The type of the output.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): Random values with specified shape.
-      ///</return>
-      public Operation StatelessRandomNormal (  Output shape , Output seed , DataType? dtype = null ,String opName= "StatelessRandomNormal" ) 
-      {
-         OperationDescription desc = NewOperation("StatelessRandomNormal", opName);
-         desc.AddInput(shape);
-         desc.AddInput(seed);
-
-         if (dtype.HasValue) desc.SetAttr("dtype", dtype.Value);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Outputs deterministic pseudorandom values from a truncated normal distribution.
-      ///</summary>
-      ///<param name="shape">Input to the operation: The shape of the output tensor.</param>
-      ///<param name="seed">Input to the operation: 2 seeds (shape [2]).</param>
-      ///<param name="dtype">The type of the output.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInvalid): Random values with specified shape.
-      ///</return>
-      public Operation StatelessTruncatedNormal (  Output shape , Output seed , DataType? dtype = null ,String opName= "StatelessTruncatedNormal" ) 
-      {
-         OperationDescription desc = NewOperation("StatelessTruncatedNormal", opName);
-         desc.AddInput(shape);
-         desc.AddInput(seed);
-
-         if (dtype.HasValue) desc.SetAttr("dtype", dtype.Value);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Converts each string in the input Tensor to its hash mod by a number of buckets.
-      ///</summary>
-      ///<param name="input">Input to the operation: The strings to assign a hash bucket.</param>
-      ///<param name="num_buckets">The number of buckets.</param>
-      ///<param name="key">The key for the keyed hash function passed as a list of two uint64 elements.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInt64): A Tensor of the same shape as the input `string_tensor`.
-      ///</return>
-      public Operation StringToHashBucketStrong (  Output input , long num_buckets, long[] key,String opName= "StringToHashBucketStrong" ) 
-      {
-         OperationDescription desc = NewOperation("StringToHashBucketStrong", opName);
-         desc.AddInput(input);
-         desc.SetAttr("num_buckets", num_buckets);
-         desc.SetAttr("key", key);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Converts each string in the input Tensor to its hash mod by a number of buckets.
-      ///</summary>
-      ///<param name="string_tensor">Input to the operation. </param>
-      ///<param name="num_buckets">The number of buckets.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtInt64): A Tensor of the same shape as the input `string_tensor`.
-      ///</return>
-      public Operation StringToHashBucket (  Output string_tensor , long num_buckets,String opName= "StringToHashBucket" ) 
-      {
-         OperationDescription desc = NewOperation("StringToHashBucket", opName);
-         desc.AddInput(string_tensor);
-         desc.SetAttr("num_buckets", num_buckets);
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Converts each entry in the given tensor to strings.  Supports many numeric
-      ///</summary>
-      ///<param name="input">Input to the operation. </param>
-      ///<param name="precision">The post-decimal precision to use for floating point numbers. Only used if precision &gt; -1.</param>
-      ///<param name="scientific">Use scientific notation for floating point numbers.</param>
-      ///<param name="shortest">Use shortest representation (either scientific or standard) for floating point numbers.</param>
-      ///<param name="width">Pad pre-decimal numbers to this width. Applies to both floating point and integer numbers. Only used if width &gt; -1.</param>
-      ///<param name="fill">The value to pad if width &gt; -1.  If empty, pads with spaces. Another typical value is '0'.  String cannot be longer than 1 character.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtString).
-      ///</return>
-      public Operation AsString (  Output input , long precision = -1 , bool scientific = false , bool shortest = false , long width = -1 , string fill = null ,String opName= "AsString" ) 
-      {
-         OperationDescription desc = NewOperation("AsString", opName);
-         desc.AddInput(input);
-
-         if (precision != -1) desc.SetAttr("precision", precision);
-         if (scientific != false) desc.SetAttr("scientific", scientific);
-         if (shortest != false) desc.SetAttr("shortest", shortest);
-         if (width != -1) desc.SetAttr("width", width);
-         if (fill != null) desc.SetAttr("fill", fill);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Joins the strings in the given list of string tensors into one tensor;
-      ///</summary>
-      ///<param name="inputs">Input to the operation: A list of string tensors.  The tensors must all have the same shape, or be scalars.  Scalars may be mixed in; these will be broadcast to the shape of non-scalar inputs.</param>
-      ///<param name="separator">string, an optional join separator.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtString).
-      ///</return>
-      public Operation StringJoin (  Output inputs , string separator = null ,String opName= "StringJoin" ) 
-      {
-         OperationDescription desc = NewOperation("StringJoin", opName);
-         desc.AddInput(inputs);
-
-         if (separator != null) desc.SetAttr("separator", separator);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Split elements of `input` based on `delimiter` into a `SparseTensor`.
-      ///</summary>
-      ///<param name="input">Input to the operation: 1-D. Strings to split.</param>
-      ///<param name="delimiter">Input to the operation: 0-D. Delimiter characters (bytes), or empty string.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] indices(type: DtInt64): A dense matrix of int64 representing the indices of the sparse tensor.
-      ///[1] values(type: DtString): A vector of strings corresponding to the splited values.
-      ///[2] shape(type: DtInt64): a length-2 vector of int64 representing the shape of the sparse tensor, where the first value is N and the second value is the maximum number of tokens in a single input entry.
-      ///</return>
-      public Operation StringSplit (  Output input , Output delimiter ,String opName= "StringSplit" ) 
-      {
-         OperationDescription desc = NewOperation("StringSplit", opName);
-         desc.AddInput(input);
-         desc.AddInput(delimiter);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Return substrings from `Tensor` of strings.
-      ///</summary>
-      ///<param name="input">Input to the operation: Tensor of strings</param>
-      ///<param name="pos">Input to the operation: Scalar defining the position of first character in each substring</param>
-      ///<param name="len">Input to the operation: Scalar defining the number of characters to include in each substring</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtString): Tensor of substrings
-      ///</return>
-      public Operation Substr (  Output input , Output pos , Output len ,String opName= "Substr" ) 
-      {
-         OperationDescription desc = NewOperation("Substr", opName);
-         desc.AddInput(input);
-         desc.AddInput(pos);
-         desc.AddInput(len);
-
-
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Encode strings into web-safe base64 format.
-      ///</summary>
-      ///<param name="input">Input to the operation: Strings to be encoded.</param>
-      ///<param name="pad">Bool whether padding is applied at the ends.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtString): Input strings encoded in base64.
-      ///</return>
-      public Operation EncodeBase64 (  Output input , bool pad = false ,String opName= "EncodeBase64" ) 
-      {
-         OperationDescription desc = NewOperation("EncodeBase64", opName);
-         desc.AddInput(input);
-
-         if (pad != false) desc.SetAttr("pad", pad);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Decode web-safe base64-encoded strings.
-      ///</summary>
-      ///<param name="input">Input to the operation: Base64 strings to decode.</param>
-      ///<param name="opName">The name of the operation</param>
-      ///<return>
-      ///[0] output(type: DtString): Decoded strings.
-      ///</return>
-      public Operation DecodeBase64 (  Output input ,String opName= "DecodeBase64" ) 
-      {
-         OperationDescription desc = NewOperation("DecodeBase64", opName);
-         desc.AddInput(input);
-
-
          return desc.FinishOperation();
       } 
 
@@ -14424,31 +14826,6 @@ namespace Emgu.TF
          desc.AddInput(l1);
          desc.AddInput(l2);
          desc.AddInput(delta);
-
-         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
-         return desc.FinishOperation();
-      } 
-
-      ///<summary>
-      ///Sparse update '*var' as FOBOS algorithm with fixed learning rate.
-      ///</summary>
-      ///<param name="var">Input to the operation: Should be from a Variable().</param>
-      ///<param name="alpha">Input to the operation: Scaling factor. Must be a scalar.</param>
-      ///<param name="l1">Input to the operation: L1 regularization. Must be a scalar.</param>
-      ///<param name="l2">Input to the operation: L2 regularization. Must be a scalar.</param>
-      ///<param name="grad">Input to the operation: The gradient.</param>
-      ///<param name="indices">Input to the operation: A vector of indices into the first dimension of var and accum.</param>
-      ///<param name="use_locking">If True, the subtraction will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
-      ///<param name="opName">The name of the operation</param>
-      public Operation ResourceSparseApplyProximalGradientDescent (  Output var , Output alpha , Output l1 , Output l2 , Output grad , Output indices , bool use_locking = false ,String opName= "ResourceSparseApplyProximalGradientDescent" ) 
-      {
-         OperationDescription desc = NewOperation("ResourceSparseApplyProximalGradientDescent", opName);
-         desc.AddInput(var);
-         desc.AddInput(alpha);
-         desc.AddInput(l1);
-         desc.AddInput(l2);
-         desc.AddInput(grad);
-         desc.AddInput(indices);
 
          if (use_locking != false) desc.SetAttr("use_locking", use_locking);
          return desc.FinishOperation();
@@ -14615,26 +14992,32 @@ namespace Emgu.TF
       } 
 
       ///<summary>
-      ///Update relevant entries in '*var' and '*accum' according to the adagrad scheme.
+      ///Update '*var' according to the proximal adagrad scheme.
       ///</summary>
       ///<param name="var">Input to the operation: Should be from a Variable().</param>
-      ///<param name="accum">Input to the operation: Should be from a Variable().</param>
-      ///<param name="lr">Input to the operation: Learning rate. Must be a scalar.</param>
+      ///<param name="gradient_accumulator">Input to the operation: Should be from a Variable().</param>
+      ///<param name="gradient_squared_accumulator">Input to the operation: Should be from a Variable().</param>
       ///<param name="grad">Input to the operation: The gradient.</param>
-      ///<param name="indices">Input to the operation: A vector of indices into the first dimension of var and accum.</param>
-      ///<param name="use_locking">If `True`, updating of the var and accum tensors will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
+      ///<param name="lr">Input to the operation: Scaling factor. Must be a scalar.</param>
+      ///<param name="l1">Input to the operation: L1 regularization. Must be a scalar.</param>
+      ///<param name="l2">Input to the operation: L2 regularization. Must be a scalar.</param>
+      ///<param name="global_step">Input to the operation: Training step number. Must be a scalar.</param>
+      ///<param name="use_locking">If True, updating of the var and accum tensors will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
       ///[0] out(type: DtInvalid): Same as "var".
       ///</return>
-      public Operation SparseApplyAdagrad (  Output var , Output accum , Output lr , Output grad , Output indices , bool use_locking = false ,String opName= "SparseApplyAdagrad" ) 
+      public Operation ApplyAdagradDA (  Output var , Output gradient_accumulator , Output gradient_squared_accumulator , Output grad , Output lr , Output l1 , Output l2 , Output global_step , bool use_locking = false ,String opName= "ApplyAdagradDA" ) 
       {
-         OperationDescription desc = NewOperation("SparseApplyAdagrad", opName);
+         OperationDescription desc = NewOperation("ApplyAdagradDA", opName);
          desc.AddInput(var);
-         desc.AddInput(accum);
-         desc.AddInput(lr);
+         desc.AddInput(gradient_accumulator);
+         desc.AddInput(gradient_squared_accumulator);
          desc.AddInput(grad);
-         desc.AddInput(indices);
+         desc.AddInput(lr);
+         desc.AddInput(l1);
+         desc.AddInput(l2);
+         desc.AddInput(global_step);
 
          if (use_locking != false) desc.SetAttr("use_locking", use_locking);
          return desc.FinishOperation();
@@ -14832,6 +15215,70 @@ namespace Emgu.TF
       } 
 
       ///<summary>
+      ///Update '*var' according to the Ftrl-proximal scheme.
+      ///</summary>
+      ///<param name="var">Input to the operation: Should be from a Variable().</param>
+      ///<param name="accum">Input to the operation: Should be from a Variable().</param>
+      ///<param name="linear">Input to the operation: Should be from a Variable().</param>
+      ///<param name="grad">Input to the operation: The gradient.</param>
+      ///<param name="lr">Input to the operation: Scaling factor. Must be a scalar.</param>
+      ///<param name="l1">Input to the operation: L1 regulariation. Must be a scalar.</param>
+      ///<param name="l2">Input to the operation: L2 shrinkage regulariation. Must be a scalar.</param>
+      ///<param name="l2_shrinkage">Input to the operation. </param>
+      ///<param name="lr_power">Input to the operation: Scaling factor. Must be a scalar.</param>
+      ///<param name="use_locking">If `True`, updating of the var and accum tensors will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation ResourceApplyFtrlV2 (  Output var , Output accum , Output linear , Output grad , Output lr , Output l1 , Output l2 , Output l2_shrinkage , Output lr_power , bool use_locking = false ,String opName= "ResourceApplyFtrlV2" ) 
+      {
+         OperationDescription desc = NewOperation("ResourceApplyFtrlV2", opName);
+         desc.AddInput(var);
+         desc.AddInput(accum);
+         desc.AddInput(linear);
+         desc.AddInput(grad);
+         desc.AddInput(lr);
+         desc.AddInput(l1);
+         desc.AddInput(l2);
+         desc.AddInput(l2_shrinkage);
+         desc.AddInput(lr_power);
+
+         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Update relevant entries in '*var' according to the Ftrl-proximal scheme.
+      ///</summary>
+      ///<param name="var">Input to the operation: Should be from a Variable().</param>
+      ///<param name="accum">Input to the operation: Should be from a Variable().</param>
+      ///<param name="linear">Input to the operation: Should be from a Variable().</param>
+      ///<param name="grad">Input to the operation: The gradient.</param>
+      ///<param name="indices">Input to the operation: A vector of indices into the first dimension of var and accum.</param>
+      ///<param name="lr">Input to the operation: Scaling factor. Must be a scalar.</param>
+      ///<param name="l1">Input to the operation: L1 regularization. Must be a scalar.</param>
+      ///<param name="l2">Input to the operation: L2 shrinkage regulariation. Must be a scalar.</param>
+      ///<param name="l2_shrinkage">Input to the operation. </param>
+      ///<param name="lr_power">Input to the operation: Scaling factor. Must be a scalar.</param>
+      ///<param name="use_locking">If `True`, updating of the var and accum tensors will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
+      ///<param name="opName">The name of the operation</param>
+      public Operation ResourceSparseApplyFtrlV2 (  Output var , Output accum , Output linear , Output grad , Output indices , Output lr , Output l1 , Output l2 , Output l2_shrinkage , Output lr_power , bool use_locking = false ,String opName= "ResourceSparseApplyFtrlV2" ) 
+      {
+         OperationDescription desc = NewOperation("ResourceSparseApplyFtrlV2", opName);
+         desc.AddInput(var);
+         desc.AddInput(accum);
+         desc.AddInput(linear);
+         desc.AddInput(grad);
+         desc.AddInput(indices);
+         desc.AddInput(lr);
+         desc.AddInput(l1);
+         desc.AddInput(l2);
+         desc.AddInput(l2_shrinkage);
+         desc.AddInput(lr_power);
+
+         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
       ///Update '*var' according to the momentum scheme. Set use_nesterov = True if you
       ///</summary>
       ///<param name="var">Input to the operation: Should be from a Variable().</param>
@@ -14938,6 +15385,39 @@ namespace Emgu.TF
 
          if (use_locking != false) desc.SetAttr("use_locking", use_locking);
          if (use_nesterov != false) desc.SetAttr("use_nesterov", use_nesterov);
+         return desc.FinishOperation();
+      } 
+      // Skipped function _ArrayToList
+
+      ///<summary>
+      ///Update '*var' according to the RMSProp algorithm.
+      ///</summary>
+      ///<param name="var">Input to the operation: Should be from a Variable().</param>
+      ///<param name="ms">Input to the operation: Should be from a Variable().</param>
+      ///<param name="mom">Input to the operation: Should be from a Variable().</param>
+      ///<param name="lr">Input to the operation: Scaling factor. Must be a scalar.</param>
+      ///<param name="rho">Input to the operation: Decay rate. Must be a scalar.</param>
+      ///<param name="momentum">Input to the operation. </param>
+      ///<param name="epsilon">Input to the operation: Ridge term. Must be a scalar.</param>
+      ///<param name="grad">Input to the operation: The gradient.</param>
+      ///<param name="use_locking">If `True`, updating of the var, ms, and mom tensors is protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</param>
+      ///<param name="opName">The name of the operation</param>
+      ///<return>
+      ///[0] out(type: DtInvalid): Same as "var".
+      ///</return>
+      public Operation ApplyRMSProp (  Output var , Output ms , Output mom , Output lr , Output rho , Output momentum , Output epsilon , Output grad , bool use_locking = false ,String opName= "ApplyRMSProp" ) 
+      {
+         OperationDescription desc = NewOperation("ApplyRMSProp", opName);
+         desc.AddInput(var);
+         desc.AddInput(ms);
+         desc.AddInput(mom);
+         desc.AddInput(lr);
+         desc.AddInput(rho);
+         desc.AddInput(momentum);
+         desc.AddInput(epsilon);
+         desc.AddInput(grad);
+
+         if (use_locking != false) desc.SetAttr("use_locking", use_locking);
          return desc.FinishOperation();
       } 
 
@@ -15089,21 +15569,41 @@ namespace Emgu.TF
 
          return desc.FinishOperation();
       } 
+      // Skipped function _Arg
+      // Skipped function _Retval
 
       ///<summary>
-      ///Output a fact about factorials.
+      ///Computes the gradient function for function f via backpropagation.
       ///</summary>
+      ///<param name="input">Input to the operation: a list of input tensors of size N + M;</param>
+      ///<param name="Tout">the type list for the input list.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
-      ///[0] fact(type: DtString).
+      ///[0] output(type: DtInvalid): a list of output tensors of size N;
       ///</return>
-      public Operation Fact ( String opName= "Fact" ) 
+      //The following attributes are not known: f: func
+      public Operation SymbolicGradient (  Output input , DataType[] Tout,String opName= "SymbolicGradient" ) 
       {
-         OperationDescription desc = NewOperation("Fact", opName);
+         OperationDescription desc = NewOperation("SymbolicGradient", opName);
+         desc.AddInput(input);
+         desc.SetAttr("Tout", Tout);
+
+         return desc.FinishOperation();
+      } 
+
+      ///<summary>
+      ///Does nothing. Only useful as a placeholder for control edges.
+      ///</summary>
+      ///<param name="opName">The name of the operation</param>
+      public Operation NoOp ( String opName= "NoOp" ) 
+      {
+         OperationDescription desc = NewOperation("NoOp", opName);
 
 
 
          return desc.FinishOperation();
       } 
+      // Skipped function _HostSend
+      // Skipped function _HostRecv
    }
 }
