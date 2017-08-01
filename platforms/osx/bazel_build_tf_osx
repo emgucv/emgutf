@@ -1,6 +1,9 @@
 cd ../../
 cp -r tfextern tensorflow/tensorflow
-cp platforms/osx/libtensorflow_cpu.sh tensorflow/tensorflow/tools/ci_build/osx/
+cp platforms/osx/libtensorflow.sh tensorflow/tensorflow/tools/ci_build/builds/
+
 cd tensorflow
 tensorflow/tools/ci_build/osx/libtensorflow_cpu.sh
- 
+cd ..
+mkdir -p lib/osx
+cp tensorflow/bazel-bin/tfextern/libtfextern.so lib/osx/
