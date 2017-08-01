@@ -13,6 +13,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Models", "..\..\Emg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.World.Unified", "..\..\Emgu.TF.World\Emgu.TF.World.Unified.csproj", "{64306FF5-1E98-4D18-9CA7-666CD2D0F642}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.OSX", "..\..\Emgu.TF.Example\Mac\Emgu.TF.Example.Mac\Example.OSX\Example.OSX.csproj", "{AC9F58C0-BD1D-4A90-831F-718933E76CF3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -29,6 +31,14 @@ Global
 		{64306FF5-1E98-4D18-9CA7-666CD2D0F642}.Debug|x64.Build.0 = Debug|x64
 		{64306FF5-1E98-4D18-9CA7-666CD2D0F642}.Release|x64.ActiveCfg = Release|x64
 		{64306FF5-1E98-4D18-9CA7-666CD2D0F642}.Release|x64.Build.0 = Release|x64
+		{AC9F58C0-BD1D-4A90-831F-718933E76CF3}.Debug|x86.ActiveCfg = Debug|x64
+		{AC9F58C0-BD1D-4A90-831F-718933E76CF3}.Debug|x86.Build.0 = Debug|x64
+		{AC9F58C0-BD1D-4A90-831F-718933E76CF3}.Release|x86.ActiveCfg = Debug|x64
+		{AC9F58C0-BD1D-4A90-831F-718933E76CF3}.Release|x86.Build.0 = Debug|x64
+		{AC9F58C0-BD1D-4A90-831F-718933E76CF3}.Debug|x64.ActiveCfg = Debug|x64
+		{AC9F58C0-BD1D-4A90-831F-718933E76CF3}.Debug|x64.Build.0 = Debug|x64
+		{AC9F58C0-BD1D-4A90-831F-718933E76CF3}.Release|x64.ActiveCfg = Release|x64
+		{AC9F58C0-BD1D-4A90-831F-718933E76CF3}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0

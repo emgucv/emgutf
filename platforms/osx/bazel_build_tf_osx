@@ -7,4 +7,5 @@ cd tensorflow
 tensorflow/tools/ci_build/osx/libtensorflow_cpu.sh
 cd ..
 mkdir -p lib/osx
-cp tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so lib/osx/
+cp tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so lib/osx/libtfextern.dylib
+cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64"
