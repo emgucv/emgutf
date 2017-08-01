@@ -7,4 +7,4 @@ cd tensorflow
 tensorflow/tools/ci_build/osx/libtensorflow_cpu.sh
 cd ..
 mkdir -p lib/osx
-cp tensorflow/bazel-bin/tfextern/libtfextern.so lib/osx/
+cp tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so lib/osx/
