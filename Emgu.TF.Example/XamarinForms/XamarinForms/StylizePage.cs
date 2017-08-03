@@ -11,6 +11,9 @@ using System.Text;
 using System.Threading.Tasks;
 #if __ANDROID__
 using Android.Graphics;
+#elif __IOS__
+using UIKit;
+using CoreGraphics;
 #endif
 using Emgu.TF;
 using Emgu.TF.Models;
@@ -44,11 +47,11 @@ namespace Emgu.TF.XamarinForms
 
                             Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile(image[0], -1, -1, 0f, 1.0f/255f);
                             Tensor stylizedImage = stylizeGraph.Stylize(imageTensor, 0);
-                            
-                            byte[] rawPixel = Emgu.TF.Models.ImageIO.GetRawImage(stylizedImage, 255.0f, 4);
+
+
 
 #if __ANDROID__
-
+                            byte[] rawPixel = Emgu.TF.Models.ImageIO.GetRawImage(stylizedImage, 255.0f, 4);
                             int[] dim = stylizedImage.Dim;
                             using (Bitmap bitmap = Bitmap.CreateBitmap(dim[2], dim[1], Bitmap.Config.Argb8888))
                             using (MemoryStream ms = new MemoryStream())
@@ -61,6 +64,29 @@ namespace Emgu.TF.XamarinForms
                                 
                                 bitmap.Compress(Bitmap.CompressFormat.Jpeg, 90, ms);
                                 return new Tuple<byte[], string, long>(ms.ToArray(), null, 0);
+                            }
+#elif __IOS__
+                            byte[] rawPixel = Emgu.TF.Models.ImageIO.GetRawImage(stylizedImage, 255.0f);
+                            int[] dim = stylizedImage.Dim;
+                            System.Drawing.Size sz = new System.Drawing.Size(dim[2], dim[1]);
+                            GCHandle handle = GCHandle.Alloc(rawPixel, GCHandleType.Pinned);
+                            using (CGColorSpace cspace = CGColorSpace.CreateDeviceRGB())
+                            using (CGBitmapContext context = new CGBitmapContext(
+                                handle.AddrOfPinnedObject(),
+                                sz.Width, sz.Height,
+                                8,
+                                sz.Width * 3,
+                                cspace,
+                                CGImageAlphaInfo.PremultipliedLast))
+                            using (CGImage cgImage = context.ToImage())
+                            using (UIImage newImg = new UIImage(cgImage))
+                            {
+                                handle.Free();
+                                var jpegData = newImg.AsJPEG();
+                                byte[] raw = new byte[jpegData.Length];
+                                System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, raw, 0,
+                                    (int)jpegData.Length);
+                                return new Tuple<byte[], string, long>(raw, String.Empty, 0);
                             }
 #else
                             return new Tuple<byte[], string, long>(null, null, 0);
@@ -79,6 +105,10 @@ namespace Emgu.TF.XamarinForms
                 t.Start();
 
 #if __ANDROID__
+                var result = await t;
+                SetImage(t.Result.Item1);
+                GetLabel().Text = t.Result.Item2;
+#elif __IOS__
                 var result = await t;
                 SetImage(t.Result.Item1);
                 GetLabel().Text = t.Result.Item2;
