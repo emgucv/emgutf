@@ -71,17 +71,28 @@ IF %DEVENV%==%VS2013% SET CMAKE_CONF="Visual Studio 12%OS_MODE%"
 IF %DEVENV%==%VS2015% SET CMAKE_CONF="Visual Studio 14%OS_MODE%"
 IF %DEVENV%==%VS2017% SET CMAKE_CONF="Visual Studio 15%OS_MODE%"
 
-
-
 REM BUILD TENSORFLOW
-
+@echo on
 cp -r tfextern tensorflow/tensorflow
 cp platforms/windows/libtensorflow_cpu.sh tensorflow/tensorflow/tools/ci_build/windows/
 cd tensorflow\tensorflow\tools\ci_build\windows
+
+
+cmd.exe /v /c "set PATH=c:\tools\msys64\usr\bin;%PATH% & c:\tools\msys64\usr\bin\bash.exe libtensorflow_cpu.sh"
 set PATH=c:\tools\msys64\usr\bin;%PATH%
-c:\tools\msys64\usr\bin\bash.exe libtensorflow_cpu.sh
+REM c:\tools\msys64\usr\bin\bash.exe libtensorflow_cpu.sh
+
 cd ../../../../../
-mkdir -p lib\x64
+IF NOT EXIST lib\x64 mkdir lib\x64
 cp tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so lib/x64/tfextern.dll
 
+cd tensorflow
+bazel clean
+bazel shutdown
+rm -rf c:\tmp\_bazel_canming
 popd
+
+Exit /B
+
+TITLE=BAZEL_BUILD_TF
+REM TASKKILL /FI "WINDOWTITLE eq BAZEL_BUILD_TF" /F /IM cmd.txt /T
