@@ -88,7 +88,7 @@ cd build
 -DPYTHON_EXECUTABLE="C:/Program Files/Anaconda3/python.exe" ^
 -DPYTHON_LIBRARIES="C:/Program Files/Anaconda3/libs/python35.lib" ^
 -Dtensorflow_BUILD_PYTHON_BINDINGS:BOOL=OFF
-call %DEVENV% %BUILD_TYPE% tensorflow.sln /project tfextern
+#call %DEVENV% %BUILD_TYPE% tensorflow.sln /project tfextern
 cd ..\..\..\..\..
 
 
