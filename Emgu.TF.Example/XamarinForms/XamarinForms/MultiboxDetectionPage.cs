@@ -8,6 +8,7 @@ using System.Text;
 using System.IO;
 using System.Drawing;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using Emgu.TF;
 using Emgu.TF.Models;
 #if __ANDROID__
@@ -50,7 +51,9 @@ namespace Emgu.TF.XamarinForms
                         //MultiboxGrapho.Download();
                         MultiboxGraph graph = new MultiboxGraph();
                         Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
+                        Stopwatch watch = Stopwatch.StartNew();
                         MultiboxGraph.Result detectResult = graph.Detect(imageTensor);
+                        watch.Stop();
 #if __ANDROID__
                      BitmapFactory.Options options = new BitmapFactory.Options();
                      options.InMutable = true;
@@ -59,9 +62,9 @@ namespace Emgu.TF.XamarinForms
                      using (MemoryStream ms = new MemoryStream())
                      {
                          bmp.Compress(Bitmap.CompressFormat.Jpeg, 90, ms);
-                         return new Tuple<byte[], long>(ms.ToArray(), 0);
+                         return new Tuple<byte[], long>(ms.ToArray(), watch.ElapsedMilliseconds);
                      }
-                 
+
 #elif __UNIFIED__ && !__IOS__
 
                         NSImage img = NSImage.ImageNamed(image[0]);
@@ -75,7 +78,7 @@ namespace Emgu.TF.XamarinForms
                          byte[] raw = new byte[jpegData.Length];
                          System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, raw, 0, (int)jpegData.Length);
 						 SetImage(raw);
-						 GetLabel().Text = String.Format("Detected with in {0} milliseconds.", 0);
+						 GetLabel().Text = String.Format("Detected with in {0} milliseconds.", watch.ElapsedMilliseconds);
                      });
 
 
@@ -91,7 +94,7 @@ namespace Emgu.TF.XamarinForms
 							byte[] raw = new byte[jpegData.Length];
 							System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, raw, 0, (int)jpegData.Length);
 	                        SetImage(raw);
-							GetLabel().Text = String.Format("Detected with in {0} milliseconds.", 0);
+							GetLabel().Text = String.Format("Detected with in {0} milliseconds.", watch.ElapsedMilliseconds);
 						});
 
                     return new Tuple<byte[], long>(null, 0);
@@ -104,7 +107,7 @@ namespace Emgu.TF.XamarinForms
 #if !(__UNIFIED__)
              var result = await t;
             SetImage(t.Result.Item1);
-            GetLabel().Text = String.Format("Detected with in {0} milliseconds.", t.Result.Item2);
+            GetLabel().Text = String.Format("Detection took {0} milliseconds.", t.Result.Item2);
 #endif
             };
       }

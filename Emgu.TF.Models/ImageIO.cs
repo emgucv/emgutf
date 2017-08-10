@@ -196,32 +196,39 @@ namespace Emgu.TF.Models
         }
 #else
 
-        public static byte[] GetRawImage(Tensor imageTensorF, float scale = 1.0f, int channels = 3, Status status = null)
+        public static byte[] TensorToPixel(Tensor imageTensorF, float scale = 1.0f, int dstChannels = 3, Status status = null)
         {
+            int[] dim = imageTensorF.Dim;
+            if (dim[3] != 3)
+            {
+                throw new NotImplementedException("Only 3 channel tensor input is supported.");
+            }
+
             using (StatusChecker checker = new StatusChecker(status))
             {
                 var graph = new Graph();
                 Operation input = graph.Placeholder(imageTensorF.Type);
 
+                //multiply with scale
                 Tensor scaleTensor = new Tensor(scale);
                 Operation scaleOp = graph.Const(scaleTensor, scaleTensor.Type, opName: "scale");
                 Operation scaled = graph.Mul(input, scaleOp);
 
-                Operation byteCaster = graph.Cast(scaled, DstT: DataType.Uint8); //cast to byte
+                //cast to byte
+                Operation byteCaster = graph.Cast(scaled, DstT: DataType.Uint8); 
 
-                
-                //Operation scaled = graph.
+                //run the graph
                 Session session = new Session(graph);
-                
                 Tensor[] imageResults = session.Run(new Output[] { input }, new Tensor[] { imageTensorF },
                     new Output[] { byteCaster });
 
+                //get the raw data
                 byte[] raw = imageResults[0].Flat<byte>();
 
-                if (channels == 3)
+                if (dstChannels == 3)
                 {
                     return raw;
-                } else if (channels == 4)
+                } else if (dstChannels == 4)
                 {
 
                     int pixelCount = raw.Length / 3;
@@ -238,11 +245,32 @@ namespace Emgu.TF.Models
                 }
                 else
                 {
-                    throw new Exception(String.Format("Channel count of {0} is not supported", channels));
+                    throw new Exception(String.Format("Output channel count of {0} is not supported", dstChannels));
                 }
 
             }
+        }
 
+        public static byte[] PixelToJpeg(byte[] rawPixel, int width, int height, int channels)
+        {
+#if __ANDROID__
+            if (channels != 4)
+                throw new NotImplementedException("Only 4 channel pixel input is supported.");
+            using (Bitmap bitmap = Bitmap.CreateBitmap(width, height, Bitmap.Config.Argb8888))
+            using (MemoryStream ms = new MemoryStream())
+            {
+                IntPtr ptr = bitmap.LockPixels();
+                //GCHandle handle = GCHandle.Alloc(colors, GCHandleType.Pinned);
+                Marshal.Copy(rawPixel, 0, ptr, rawPixel.Length);
+
+                bitmap.UnlockPixels();
+
+                bitmap.Compress(Bitmap.CompressFormat.Jpeg, 90, ms);
+                return ms.ToArray();
+            }
+#else
+            throw new NotImplementedException("Not Implemented");
+#endif
         }
 
         public static Tensor ReadTensorFromImageFile(String fileName, int inputHeight = -1, int inputWidth = -1, float inputMean = 0.0f, float scale = 1.0f, Status status = null)
@@ -356,5 +384,5 @@ namespace Emgu.TF.Models
 #endif
         }
 #endif
-    }
+        }
 }

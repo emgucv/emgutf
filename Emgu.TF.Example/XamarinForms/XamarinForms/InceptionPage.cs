@@ -8,6 +8,7 @@ using System.Text;
 using System.IO;
 using System.Drawing;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using Emgu.TF;
 using Emgu.TF.Models;
 #if __ANDROID__
@@ -54,8 +55,10 @@ namespace Emgu.TF.XamarinForms
                             SetMessage("Please wait...");
 
                             Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
-                            //MultiboxGraph.Result detectResult = graph.Detect(imageTensor);
+                            Stopwatch watch = Stopwatch.StartNew();
                             float[] probability = inceptionGraph.Recognize(imageTensor);
+                            watch.Stop();
+
                             String resStr = String.Empty;
                             if (probability != null)
                             {

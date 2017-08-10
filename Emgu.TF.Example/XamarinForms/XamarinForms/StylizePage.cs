@@ -48,23 +48,10 @@ namespace Emgu.TF.XamarinForms
                             Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile(image[0], -1, -1, 0f, 1.0f/255f);
                             Tensor stylizedImage = stylizeGraph.Stylize(imageTensor, 0);
 
-
-
 #if __ANDROID__
-                            byte[] rawPixel = Emgu.TF.Models.ImageIO.GetRawImage(stylizedImage, 255.0f, 4);
+                            byte[] rawPixel = Emgu.TF.Models.ImageIO.TensorToPixel(stylizedImage, 255.0f, 4);
                             int[] dim = stylizedImage.Dim;
-                            using (Bitmap bitmap = Bitmap.CreateBitmap(dim[2], dim[1], Bitmap.Config.Argb8888))
-                            using (MemoryStream ms = new MemoryStream())
-                            {
-                                IntPtr ptr = bitmap.LockPixels();
-                                //GCHandle handle = GCHandle.Alloc(colors, GCHandleType.Pinned);
-                                Marshal.Copy(rawPixel, 0, ptr, rawPixel.Length);
-
-                                bitmap.UnlockPixels();
-                                
-                                bitmap.Compress(Bitmap.CompressFormat.Jpeg, 90, ms);
-                                return new Tuple<byte[], string, long>(ms.ToArray(), null, 0);
-                            }
+                            return new Tuple<byte[], string, long>(Emgu.TF.Models.ImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 4), null, 0);
 #elif __IOS__
                             byte[] rawPixel = Emgu.TF.Models.ImageIO.GetRawImage(stylizedImage, 255.0f);
                             int[] dim = stylizedImage.Dim;
