@@ -28,7 +28,6 @@ namespace Emgu.TF.Models
 {
     public class MultiboxGraph : DownloadableModels
     {
-        
         public MultiboxGraph(Status status = null, String[] modelFiles = null, String downloadUrl = null)
             : base(
                   modelFiles ?? new string[] { "multibox_model.pb", "multibox_location_priors.txt" },
@@ -36,12 +35,8 @@ namespace Emgu.TF.Models
         {
             Download();
 
-#if __ANDROID__
-            byte[] model = File.ReadAllBytes(System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, Android.OS.Environment.DirectoryDownloads, _modelFiles[0]));
-#else
-            byte[] model = File.ReadAllBytes(_modelFiles[0]);
-#endif
-
+            byte[] model = File.ReadAllBytes( GetLocalFileName( _modelFiles[0] ));
+            
             Buffer modelBuffer = Buffer.FromString(model);
 
             using (ImportGraphDefOptions options = new ImportGraphDefOptions())
@@ -62,12 +57,7 @@ namespace Emgu.TF.Models
 
             float[] encodedLocations = finalTensor[1].Flat<float>();
 
-#if __ANDROID__
-            float[] boxPriors = ReadBoxPriors(System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, Android.OS.Environment.DirectoryDownloads, _modelFiles[1]));
-#else
-            float[] boxPriors = ReadBoxPriors(_modelFiles[1]);
-#endif
-
+            float[] boxPriors = ReadBoxPriors( GetLocalFileName(_modelFiles[1]) );
 
             Result result = new Result();
             result.Scores = DecodeScoresEncoding(encodedScores);

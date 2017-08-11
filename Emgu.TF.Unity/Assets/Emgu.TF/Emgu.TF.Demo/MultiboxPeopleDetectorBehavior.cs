@@ -51,9 +51,14 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
             return false;
         };
 
-        TfInvoke.CheckLibraryLoaded();
-        
+        DownloadableModels.PersistentDataPath = Application.persistentDataPath;
 
+        bool loaded = TfInvoke.CheckLibraryLoaded();
+        //DisplayText.text = String.Format("Tensorflow library loaded: {0}", loaded);
+
+        _liveCameraView = false;
+
+        /*
         WebCamDevice[] devices = WebCamTexture.devices;
         int cameraCount = devices.Length;
 
@@ -66,12 +71,9 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
         {
             _liveCameraView = true;
             webcamTexture = new WebCamTexture(devices[0].name);
-            
             baseRotation = transform.rotation;
-            webcamTexture.Play();
-            
-            
-        }
+            webcamTexture.Play(); 
+        }*/
     }
 
     private bool _loadingModel = false;

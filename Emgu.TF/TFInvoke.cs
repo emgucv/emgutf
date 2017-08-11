@@ -422,7 +422,6 @@ namespace Emgu.TF
             modules.RemoveAll(String.IsNullOrEmpty);
 
             _libraryLoaded = DefaultLoadUnmanagedModules(modules.ToArray());
-
         }
 
         /// <summary>

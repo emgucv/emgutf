@@ -66,16 +66,20 @@ namespace Emgu.TF.Models
             var graph = new Graph();
             Operation input = graph.Placeholder(DataType.Uint8);
 
-        #region slice out the alpha channel
-            Tensor sliceBegin = new Tensor(new int[] {0, 0, 0, 0});
+            #region Cast to float
+            Operation floatCaster = graph.Cast(input, DstT: DataType.Float); //cast to float
+            #endregion
+
+            #region slice out the alpha channel
+            Tensor sliceBegin = new Tensor(new int[] { 0, 0, 0, 0 });
             Operation sliceBeginOp = graph.Const(sliceBegin, sliceBegin.Type, opName: "sliceBegin");
             Tensor sliceSize = new Tensor(new int[] { 1, -1, -1, 3 });
             Operation sliceSizeOp = graph.Const(sliceSize, sliceSize.Type, opName: "sliceSize");
-            Operation sliced = graph.Slice(input, sliceBeginOp, sliceSizeOp, "slice");
-        #endregion
+            Operation sliced = graph.Slice(floatCaster, sliceBeginOp, sliceSizeOp, "slice");
+            #endregion
 
+            #region crop and resize image
             Tensor boxes = new Tensor(DataType.Float, new int[] {1, 4});
-
             float[] boxCorners;
             if (flipUpsideDown)
             {
@@ -85,13 +89,12 @@ namespace Emgu.TF.Models
             {
                 boxCorners = new float[] { 0f, 0f, 1f, 1f }; //y1, x1, y2, x2    
             }
-            
             Marshal.Copy(boxCorners, 0, boxes.DataPointer, boxCorners.Length);
             Operation boxesOp = graph.Const(boxes, boxes.Type, "boxes");
+            
 
             Tensor boxIdx = new Tensor(new int[] {0});
             Operation boxIdxOp = graph.Const(boxIdx, boxIdx.Type, "boxIdx");
-
             int width, height;
             if (inputHeight > 0 || inputWidth > 0)
             {
@@ -106,12 +109,11 @@ namespace Emgu.TF.Models
             Tensor cropSize = new Tensor(new int[] {height, width });
             Operation cropSizeOp = graph.Const(cropSize, cropSize.Type, "cropSize");
             Operation resized = graph.CropAndResize(sliced, boxesOp, boxIdxOp, cropSizeOp);
-
-            Operation floatCaster = graph.Cast(resized, DstT: DataType.Float); //cast to float
+            #endregion
 
             Tensor mean = new Tensor(inputMean);
             Operation meanOp = graph.Const(mean, mean.Type, opName: "mean");
-            Operation substracted = graph.Sub(floatCaster, meanOp);
+            Operation substracted = graph.Sub(resized, meanOp);
 
             Tensor scaleTensor = new Tensor(scale);
             Operation scaleOp = graph.Const(scaleTensor, scaleTensor.Type, opName: "scale");
@@ -268,6 +270,29 @@ namespace Emgu.TF.Models
                 bitmap.Compress(Bitmap.CompressFormat.Jpeg, 90, ms);
                 return ms.ToArray();
             }
+#elif __IOS__
+            if (channels != 3)
+                throw new NotImplementedException("Only 3 channel pixel input is supported.");
+            System.Drawing.Size sz = new System.Drawing.Size(width, height);
+            GCHandle handle = GCHandle.Alloc(rawPixel, GCHandleType.Pinned);
+            using (CGColorSpace cspace = CGColorSpace.CreateDeviceRGB())
+            using (CGBitmapContext context = new CGBitmapContext(
+                handle.AddrOfPinnedObject(),
+                sz.Width, sz.Height,
+                8,
+                sz.Width * 3,
+                cspace,
+                CGImageAlphaInfo.PremultipliedLast))
+            using (CGImage cgImage = context.ToImage())
+            using (UIImage newImg = new UIImage(cgImage))
+            {
+                handle.Free();
+                var jpegData = newImg.AsJPEG();
+                byte[] raw = new byte[jpegData.Length];
+                System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, raw, 0,
+                    (int)jpegData.Length);
+                return raw;
+            }
 #else
             throw new NotImplementedException("Not Implemented");
 #endif
@@ -384,5 +409,5 @@ namespace Emgu.TF.Models
 #endif
         }
 #endif
-        }
+    }
 }

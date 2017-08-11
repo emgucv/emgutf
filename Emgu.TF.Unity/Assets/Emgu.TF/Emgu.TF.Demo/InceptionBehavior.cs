@@ -54,7 +54,7 @@ public class InceptionBehavior : MonoBehaviour
                     maxIdx = i;
                 }
             }
-            DisplayText.text = String.Format("Object is {0} with {1}% probability.", _inceptionLabels[maxIdx], maxVal * 100);
+            _displayMessage = String.Format("Object is {0} with {1}% probability.", _inceptionLabels[maxIdx], maxVal * 100);
         }
     }
 
@@ -74,10 +74,13 @@ public class InceptionBehavior : MonoBehaviour
             return false;
         };
 
-        
-        TfInvoke.CheckLibraryLoaded();
-        DisplayText.text = String.Format("Loading inception model, please wait...");
+        DownloadableModels.PersistentDataPath = Application.persistentDataPath;
 
+        bool loaded = TfInvoke.CheckLibraryLoaded();
+        //DisplayText.text = String.Format("Tensorflow library loaded: {0}", loaded);
+
+        _liveCameraView = false;
+        /*
         WebCamDevice[] devices = WebCamTexture.devices;
         cameraCount = devices.Length;
 
@@ -93,10 +96,12 @@ public class InceptionBehavior : MonoBehaviour
             baseRotation = transform.rotation;
             webcamTexture.Play();
             //data = new Color32[webcamTexture.width * webcamTexture.height];
-        }
+        }*/
     }
 
     private bool _loadingModel = false;
+
+    private String _displayMessage = String.Empty;
 
     // Update is called once per frame
     void Update()
@@ -106,7 +111,7 @@ public class InceptionBehavior : MonoBehaviour
             if (_loadingModel)
                 return;
             _loadingModel = true;
-            DisplayText.text = String.Format("Loading Inception Model, please wait...");
+            _displayMessage = String.Format("Loading Inception Model, please wait...");
             System.Threading.ThreadPool.QueueUserWorkItem(
                 (o) =>
                 {
@@ -117,10 +122,8 @@ public class InceptionBehavior : MonoBehaviour
                     }
                     catch (Exception e)
                     {
-                        //DisplayText.text = e.Message;
-                        Console.WriteLine(e);
+                        _displayMessage = e.Message;
                         return;
-                        //throw;
                     }
 
                     _loadingModel = false;
@@ -195,5 +198,7 @@ public class InceptionBehavior : MonoBehaviour
                 _staticViewRendered = true;
             }
         }
+
+        DisplayText.text = _displayMessage;
     }
 }

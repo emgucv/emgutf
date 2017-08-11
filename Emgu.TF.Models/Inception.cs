@@ -25,11 +25,7 @@ namespace Emgu.TF.Models
 
             Download();
 
-#if __ANDROID__
-            byte[] model = File.ReadAllBytes(System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, Android.OS.Environment.DirectoryDownloads, _modelFiles[0]));
-#else
-            byte[] model = File.ReadAllBytes(_modelFiles[0]);
-#endif
+            byte[] model = File.ReadAllBytes(GetLocalFileName(_modelFiles[0]));
 
             Buffer modelBuffer = Buffer.FromString(model);
 
@@ -41,12 +37,7 @@ namespace Emgu.TF.Models
         {
             get
             {
-#if __ANDROID__
-                return File.ReadAllLines(System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath,
-                    Android.OS.Environment.DirectoryDownloads, _modelFiles[1]));
-#else
-                return File.ReadAllLines(_modelFiles[1]);
-#endif
+                return File.ReadAllLines(GetLocalFileName(_modelFiles[1]));
             }
         }
 

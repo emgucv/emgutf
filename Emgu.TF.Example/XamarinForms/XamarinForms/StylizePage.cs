@@ -53,28 +53,9 @@ namespace Emgu.TF.XamarinForms
                             int[] dim = stylizedImage.Dim;
                             return new Tuple<byte[], string, long>(Emgu.TF.Models.ImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 4), null, 0);
 #elif __IOS__
-                            byte[] rawPixel = Emgu.TF.Models.ImageIO.GetRawImage(stylizedImage, 255.0f);
+                            byte[] rawPixel = Emgu.TF.Models.ImageIO.TensorToPixel(stylizedImage, 255.0f);
                             int[] dim = stylizedImage.Dim;
-                            System.Drawing.Size sz = new System.Drawing.Size(dim[2], dim[1]);
-                            GCHandle handle = GCHandle.Alloc(rawPixel, GCHandleType.Pinned);
-                            using (CGColorSpace cspace = CGColorSpace.CreateDeviceRGB())
-                            using (CGBitmapContext context = new CGBitmapContext(
-                                handle.AddrOfPinnedObject(),
-                                sz.Width, sz.Height,
-                                8,
-                                sz.Width * 3,
-                                cspace,
-                                CGImageAlphaInfo.PremultipliedLast))
-                            using (CGImage cgImage = context.ToImage())
-                            using (UIImage newImg = new UIImage(cgImage))
-                            {
-                                handle.Free();
-                                var jpegData = newImg.AsJPEG();
-                                byte[] raw = new byte[jpegData.Length];
-                                System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, raw, 0,
-                                    (int)jpegData.Length);
-                                return new Tuple<byte[], string, long>(raw, String.Empty, 0);
-                            }
+                            return new Tuple<byte[], string, long>(Emgu.TF.Models.ImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 3), null, 0);
 #else
                             return new Tuple<byte[], string, long>(null, null, 0);
 #endif
