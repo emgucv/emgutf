@@ -73,8 +73,8 @@ IF %DEVENV%==%VS2017% SET CMAKE_CONF="Visual Studio 15%OS_MODE%"
 
 REM BUILD TENSORFLOW
 @echo on
-cp -r tfextern tensorflow/tensorflow
-cp platforms/windows/libtensorflow_cpu.sh tensorflow/tensorflow/tools/ci_build/windows/
+REM cp -r tfextern tensorflow/tensorflow
+REM cp platforms/windows/libtensorflow_cpu.sh tensorflow/tensorflow/tools/ci_build/windows/
 cd tensorflow\tensorflow\tools\ci_build\windows
 
 
