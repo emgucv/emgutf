@@ -75,10 +75,10 @@ IF %DEVENV%==%VS2017% SET CMAKE_CONF="Visual Studio 15%OS_MODE%"
 
 
 REM BUILD TENSORFLOW
-cp tfextern\tfextern.cmake tensorflow\tensorflow\contrib\cmake
+REM cp tfextern\tfextern.cmake tensorflow\tensorflow\contrib\cmake
 cd tensorflow\tensorflow\contrib\cmake
-git checkout CMakeLists.txt
-echo include(tfextern.cmake) >> CMakeLists.txt
+REM git checkout CMakeLists.txt
+REM echo include(tfextern.cmake) >> CMakeLists.txt
 mkdir build
 cd build
 %CMAKE% .. ^
@@ -88,7 +88,7 @@ cd build
 -DPYTHON_EXECUTABLE="C:/Program Files/Anaconda3/python.exe" ^
 -DPYTHON_LIBRARIES="C:/Program Files/Anaconda3/libs/python35.lib" ^
 -Dtensorflow_BUILD_PYTHON_BINDINGS:BOOL=OFF
-#call %DEVENV% %BUILD_TYPE% tensorflow.sln /project tfextern
+REM call %DEVENV% %BUILD_TYPE% tensorflow.sln /project tfextern
 cd ..\..\..\..\..
 
 
