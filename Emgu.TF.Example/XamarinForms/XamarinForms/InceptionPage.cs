@@ -89,7 +89,7 @@ namespace Emgu.TF.XamarinForms
                     });
                 t.Start();
 
-#if !(__UNIFIED__)
+#if !(__IOS__)
                 var result = await t;
                 SetImage(t.Result.Item1);
                 GetLabel().Text = t.Result.Item2;

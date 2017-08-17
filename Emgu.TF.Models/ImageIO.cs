@@ -15,6 +15,9 @@ using Android.Graphics;
 #elif __IOS__
 using CoreGraphics;
 using UIKit;
+#elif __UNIFIED__
+using AppKit;
+using CoreGraphics;
 #endif
 
 namespace Emgu.TF.Models
@@ -253,6 +256,25 @@ namespace Emgu.TF.Models
             }
         }
 
+        public static byte[] TensorToJpeg(Tensor stylizedImage, float scale = 1.0f, Status status = null)
+        {
+#if __ANDROID__
+                            byte[] rawPixel = TensorToPixel(stylizedImage, scale, 4);
+                            int[] dim = stylizedImage.Dim;
+                            return PixelToJpeg(rawPixel, dim[2], dim[1], 4);
+#elif __IOS__
+                            byte[] rawPixel = TensorToPixel(stylizedImage, scale, 3);
+                            int[] dim = stylizedImage.Dim;
+                            return PixelToJpeg(rawPixel, dim[2], dim[1], 3);
+#elif __UNIFIED__ //MAC OSX
+            byte[] rawPixel = TensorToPixel(stylizedImage, scale, 4);
+            int[] dim = stylizedImage.Dim;
+            return PixelToJpeg(rawPixel, dim[2], dim[1], 4);
+#else
+            return null;
+#endif
+        }
+
         public static byte[] PixelToJpeg(byte[] rawPixel, int width, int height, int channels)
         {
 #if __ANDROID__
@@ -288,6 +310,30 @@ namespace Emgu.TF.Models
             {
                 handle.Free();
                 var jpegData = newImg.AsJPEG();
+                byte[] raw = new byte[jpegData.Length];
+                System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, raw, 0,
+                    (int)jpegData.Length);
+                return raw;
+            }
+#elif __UNIFIED__ //OSX
+                    if (channels != 4)
+                throw new NotImplementedException("Only 4 channel pixel input is supported.");
+                                    System.Drawing.Size sz = new System.Drawing.Size(width, height);
+
+            using (CGColorSpace cspace = CGColorSpace.CreateDeviceRGB())
+            using (CGBitmapContext context = new CGBitmapContext(
+                rawPixel,
+                sz.Width, sz.Height,
+                8,
+                sz.Width * 4,
+                cspace,
+                CGBitmapFlags.PremultipliedLast | CGBitmapFlags.ByteOrder32Big))
+            using (CGImage cgImage = context.ToImage())
+
+            using (NSBitmapImageRep newImg = new NSBitmapImageRep(cgImage))
+            {
+                var jpegData = newImg.RepresentationUsingTypeProperties(NSBitmapImageFileType.Jpeg);
+
                 byte[] raw = new byte[jpegData.Length];
                 System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, raw, 0,
                     (int)jpegData.Length);

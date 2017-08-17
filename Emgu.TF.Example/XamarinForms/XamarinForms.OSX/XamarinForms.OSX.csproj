@@ -91,12 +91,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Emgu.TF.World\Emgu.TF.World.Unified.csproj">
-      <Project>{64306FF5-1E98-4D18-9CA7-666CD2D0F642}</Project>
-      <Name>Emgu.TF.World.Unified</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <Import Project="..\..\..\Emgu.TF\Emgu.TF.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.TF\Emgu.TF.projitems')" />
+  <Import Project="..\..\..\Emgu.TF.Util\Emgu.TF.Util.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.TF.Util\Emgu.TF.Util.projitems')" />
   <Import Project="..\XamarinForms\XamarinForms.projitems" Label="Shared" Condition="Exists('..\XamarinForms\XamarinForms.projitems')" />
   <Import Project="..\..\..\Emgu.TF.Models\Emgu.TF.Models.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.TF.Models\Emgu.TF.Models.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
