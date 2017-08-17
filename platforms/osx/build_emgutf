@@ -1,0 +1,13 @@
+#!/bin/sh
+cd ../../
+#cmake .
+#cp -r tfextern tensorflow/tensorflow
+#cp platforms/osx/libtensorflow.sh tensorflow/tensorflow/tools/ci_build/builds/
+
+#cd tensorflow
+#tensorflow/tools/ci_build/osx/libtensorflow_cpu.sh
+#cd ..
+#mkdir -p lib/osx
+#cp tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so lib/osx/libtfextern.dylib
+#cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64"
+cmake . -DCMAKE_BUILD_TYPE=Release 
