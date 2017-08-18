@@ -14,6 +14,9 @@ using Android.Graphics;
 #elif __IOS__
 using UIKit;
 using CoreGraphics;
+#elif __UNIFIED__
+using AppKit;
+using CoreGraphics;
 #endif
 using Emgu.TF;
 using Emgu.TF.Models;
@@ -36,7 +39,7 @@ namespace Emgu.TF.XamarinForms
                 SetMessage("Please wait...");
                 SetImage();
 
-                Task<Tuple<byte[], string, long>> t = new Task<Tuple<byte[], string, long>>(
+                Task<Tuple<Tensor, string, long>> t = new Task<Tuple<Tensor, string, long>>(
                     () =>
                     {
                         try
@@ -47,31 +50,22 @@ namespace Emgu.TF.XamarinForms
 
                             Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile(image[0], -1, -1, 0f, 1.0f/255f);
                             Tensor stylizedImage = stylizeGraph.Stylize(imageTensor, 0);
+                            return new Tuple<Tensor, string, long>(stylizedImage, null, 0);
 
-#if __ANDROID__
-                            byte[] rawPixel = Emgu.TF.Models.ImageIO.TensorToPixel(stylizedImage, 255.0f, 4);
-                            int[] dim = stylizedImage.Dim;
-                            return new Tuple<byte[], string, long>(Emgu.TF.Models.ImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 4), null, 0);
-#elif __IOS__
-                            byte[] rawPixel = Emgu.TF.Models.ImageIO.TensorToPixel(stylizedImage, 255.0f);
-                            int[] dim = stylizedImage.Dim;
-                            return new Tuple<byte[], string, long>(Emgu.TF.Models.ImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 3), null, 0);
-#else
-                            return new Tuple<byte[], string, long>(null, null, 0);
-#endif
-
-                            //SetImage(t.Result.Item1);
-                            //GetLabel().Text = String.Format("Detected {0} in {1} milliseconds.", t.Result.Item2, t.Result.Item3);
-                        }
+						}
                         catch (Exception e)
                         {
                             String msg = e.Message.Replace(System.Environment.NewLine, " ");
                             SetMessage(msg);
-                            return new Tuple<byte[], string, long>(null, msg, 0);
+                            return new Tuple<Tensor, string, long>(null, msg, 0);
                         }
                     });
                 t.Start();
 
+				var result = await t;
+                SetImage( Emgu.TF.Models.ImageIO.TensorToJpeg(t.Result.Item1, 255.0f) );
+				GetLabel().Text = t.Result.Item2;
+                /*
 #if __ANDROID__
                 var result = await t;
                 SetImage(t.Result.Item1);
@@ -84,7 +78,7 @@ namespace Emgu.TF.XamarinForms
                 var result = await t;
                 //SetImage(t.Result.Item1);
                 GetLabel().Text = t.Result.Item2;
-#endif
+#endif*/
             };
         }
 

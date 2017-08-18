@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 using AppKit;
 using Foundation;
+using CoreGraphics;
 
 using Emgu.TF;
 using Emgu.TF.Models;
@@ -85,12 +87,34 @@ namespace Example.OSX
         partial void stylizeClicked(NSObject sender)
         {
             messageLabel.StringValue = "stylize Clicked";
-            mainImageView.Image = null;
+            //mainImageView.Image = null;
 
             StylizeGraph stylizeGraph = new StylizeGraph();
 
             Tensor image = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile("surfers.jpg");
             Tensor stylizedImage = stylizeGraph.Stylize(image, 0);
+            var dim = stylizedImage.Dim;
+            System.Drawing.Size sz = new System.Drawing.Size(dim[2], dim[1]);
+
+			byte[] rawPixels = Emgu.TF.Models.ImageIO.TensorToPixel(stylizedImage, 255, 4);
+
+            CGColorSpace cspace = CGColorSpace.CreateDeviceRGB();
+            CGBitmapContext context = new CGBitmapContext(
+                rawPixels,
+                sz.Width, sz.Height,
+                8,
+                sz.Width * 4,
+                cspace,
+                CGBitmapFlags.PremultipliedLast | CGBitmapFlags.ByteOrder32Big);
+            CGImage cgImage = context.ToImage();
+			
+			NSImage newImg = new NSImage(cgImage, new CGSize(cgImage.Width, cgImage.Height));
+			mainImageView.Image = newImg;
+
+            NSData dta = newImg.AsTiff();
+            NSBitmapImageRep imgRep = new NSBitmapImageRep(dta);
+            //var datra = imgRep.RepresentationUsingTypeProperties(NSBitmapImageFileType.NSBitmapImageFileType.Jpeg);
+
 
         }
     }
