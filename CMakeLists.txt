@@ -487,7 +487,7 @@ IF (WIN32)
   # ----------------------------------------------------------------------------
   LIST(APPEND CPACK_NSIS_MENU_LINKS "http://www.emgu.com/wiki/index.php/Emgu_TF" "Emgu TF wiki")
   #LIST(APPEND CPACK_NSIS_MENU_LINKS "http://www.emgu.com/forum" "Emgu TF Discussion Forums")
-  LIST(APPEND CPACK_NSIS_MENU_LINKS "https://github.com/emgucv/emgutf/issues "Emgu TF Bug Tracking")
+  LIST(APPEND CPACK_NSIS_MENU_LINKS "https://github.com/emgucv/emgutf/issues" "Emgu TF Bug Tracking")
   
   # ----------------------------------------------------------------------------
   #  Add menu link for Visual Studio solutions 
