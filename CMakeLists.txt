@@ -272,6 +272,11 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CommonAssemblyInfo.cs.in ${CMAK
 
 
 # ----------------------------------------------------------------------------
+#  Generate xamarin component configuration file
+# ----------------------------------------------------------------------------
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/component.yaml.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/xamarin/emgutf_v1/component/component.yaml)
+
+# ----------------------------------------------------------------------------
 #  Generate readme file for Emgu TF project
 # ----------------------------------------------------------------------------
 MACRO(CHECK_LICENSE_TYPE)

@@ -1,0 +1,23 @@
+%YAML 1.2
+---
+summary: Emgu TF is a cross platform .Net wrapper to the Tensorflow machine learning library.
+getting-started: GettingStarted.md
+details: Details.md
+screenshots: 
+  - screenshots/screenshot1.png
+license: XamarinComponentEmguTFLicenseV1.md
+no_build: true
+icons: 
+  - emgutf-v1_128x128.png
+  - emgutf-v1_512x512.png
+publisher: Emgu Corporation
+name: Emgu TF V1
+id: emgutf-v1
+samples: 
+  - name: "Android Samples"
+    path: samples/android/Emgu.TF.Android.Example.sln
+publisher-url: http://www.emgu.com
+libraries: 
+  android: lib/android/Emgu.TF.World.Android.dll
+version: "${CPACK_PACKAGE_VERSION}"
+

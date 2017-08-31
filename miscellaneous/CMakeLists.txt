@@ -2,6 +2,8 @@
 #  Copyright (C) 2004-2017 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
+IF(HAVE_WINDESKTOP_X86 OR HAVE_WINDESKTOP_X64)  
+
 #MESSAGE(STATUS "MSBUILD_EXECUTABLE_40: ${MSBUILD_EXECUTABLE_40}")
 SET(MSBUILD_EXECUTABLE ${MSBUILD_EXECUTABLE_40})
 
@@ -32,4 +34,6 @@ INSTALL(
 
 ELSE()
 MESSAGE(STATUS "MSBUILD_EXECUTABLE: NOT FOUND")
+ENDIF()
+
 ENDIF()

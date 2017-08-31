@@ -141,10 +141,17 @@ ENDMACRO(SET_CS_TARGET_FRAMEWORK)
 MACRO(BUILD_CSPROJ target csproj_file extra_flags)
     ADD_CUSTOM_TARGET (
       ${target} ${ARGV3})
-    ADD_CUSTOM_COMMAND (
+    IF (WIN32 AND MSVC AND NOT ("${CMAKE_VS_DEVENV_COMMAND}" STREQUAL ""))
+	ADD_CUSTOM_COMMAND (
+      TARGET ${target}
+      COMMAND ${CMAKE_VS_DEVENV_COMMAND} /Build Release ${extra_flags} ${csproj_file}
+      COMMENT "Building ${target}")
+	ELSE()
+	ADD_CUSTOM_COMMAND (
       TARGET ${target}
       COMMAND ${MSBUILD_EXECUTABLE} /t:Build /p:Configuration=Release ${extra_flags} ${csproj_file}
       COMMENT "Building ${target}")
+	ENDIF()
 ENDMACRO()
 
 MACRO(COMPILE_CS target target_type source)
