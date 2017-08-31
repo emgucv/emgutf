@@ -14,7 +14,7 @@ cd android
 cp -rf ../../../../../../tmp/Emgu.TF.Example/XamarinForms/XamarinForms .
 cp -rf ../../../../../../tmp/Emgu.TF.Example/XamarinForms/XamarinForms.Android/* .
 cp -rf ../../../../../../tmp/Emgu.TF.Models .
-rm Emgu.TF.Models/CMakeList.txt
+rm Emgu.TF.Models/CMakeLists.txt
 cp -rf ../../../../../../tensorflow/tensorflow/examples/multibox_detector/data/surfers.jpg Assets/
 cp -rf ../../../../../../tensorflow/tensorflow/examples/label_image/data/grace_hopper.jpg Assets/
 c:\cygwin64\bin\mkdir.exe -p Resources/Raw
