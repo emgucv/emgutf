@@ -3,8 +3,8 @@ pushd %~p0
 cd ..
 cd tensorflow
 rm -rf bazel-*
-git clean -d -fx ""
+git clean -d -fx "."
 cd ..
 
-git clean -d -fx "" 
+git clean -d -fx "." 
 popd
