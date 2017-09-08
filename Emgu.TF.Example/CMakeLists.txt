@@ -122,33 +122,6 @@ IF(HAVE_OSX)
     )
 ENDIF()
 
-IF(HAVE_WINSTORE_10_X86 OR HAVE_WINSTORE_10_X64 OR HAVE_WINSTORE_10_ARM)
-  INSTALL(
-    DIRECTORY
-    "${CMAKE_CURRENT_SOURCE_DIR}/XamarinForms/XamarinForms.UWP/"
-    DESTINATION Emgu.TF.Example/XamarinForms/XamarinForms.UWP/
-    COMPONENT emgutf_example_source
-    FILES_MATCHING 
-    PATTERN "*.cs"
-    PATTERN "Properties/*"
-    PATTERN "*.csproj"
-    PATTERN "*.appxmanifest"
-    PATTERN "*.xaml"
-    PATTERN "*.json"
-    PATTERN "*.pfx"
-    PATTERN "*.config"
-    PATTERN "Assets/*.png"  
-    PATTERN ".git" EXCLUDE
-    PATTERN "obj" EXCLUDE
-    PATTERN "CMake*" EXCLUDE
-    PATTERN "Release" EXCLUDE
-    PATTERN "Debug" EXCLUDE
-    PATTERN "RelWithDebInfo" EXCLUDE
-    PATTERN "*.dir" EXCLUDE
-    PATTERN "bin" EXCLUDE
-    )  
-ENDIF()
-
 
 IF(NOT (NETFX_CORE OR ANDROID OR (APPLE AND (NOT IOS))))
   SET(EMGU_TF_REFERENCE 
@@ -161,4 +134,5 @@ IF(NOT (NETFX_CORE OR ANDROID OR (APPLE AND (NOT IOS))))
 ENDIF()
 
 add_subdirectory(MultiboxPeopleDetection)
+add_subdirectory(InceptionObjectRecognition)
 
