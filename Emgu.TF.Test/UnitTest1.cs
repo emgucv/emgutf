@@ -94,5 +94,42 @@ namespace Emgu.TF.Test
         {
             bool cuda = TfInvoke.IsGoogleCudaEnabled;
         }
+
+        public static int Add(int a, int b)
+        {
+            Tensor tensorA = new Tensor(a);
+            Tensor tensorB = new Tensor(b);
+            Graph graph = new Graph();
+            Operation opA = graph.Placeholder(DataType.Int32, null, "valA");
+            Operation opB = graph.Placeholder(DataType.Int32, null, "valB");
+            Operation sumOp = graph.Add(opA, opB, "sum");
+
+            Session session = new Session(graph);
+            Tensor[] results = session.Run(new Output[] { opA, opB }, new Tensor[] { tensorA, tensorB }, new Output[] { sumOp });
+            return results[0].Flat<int>()[0];
+        }
+
+        [TestMethod]
+        public void TestAddition()
+        {
+            int a = 10;
+            int b = 20;
+            int sum = Add(a, b);
+        }
+
+        [TestMethod]
+        public void TestHelloWorld()
+        {
+            String h = "Hello, tensorflow!";
+
+            Tensor hello = Tensor.FromString(System.Text.Encoding.Default.GetBytes(h));
+            Graph g = new Graph();
+            Operation helloOp = g.Const(hello, DataType.String);
+            Session session = new Session(g);
+            Tensor[] results = session.Run(new Output[] {}, new Tensor[] {}, new Output[] {helloOp});
+            byte[] data = results[0].DecodeString();
+            String output = System.Text.Encoding.Default.GetString(data);
+
+        }
     }
 }

@@ -127,7 +127,8 @@ namespace Emgu.TF
                     return typeof(Int16);
                 case DataType.Uint16:
                     return typeof(UInt16);
-                
+                case DataType.String:
+                    return typeof(Byte);
                 default:
                     return null;
             }
