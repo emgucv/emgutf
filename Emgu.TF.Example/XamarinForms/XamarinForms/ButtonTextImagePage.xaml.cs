@@ -28,7 +28,7 @@ namespace Emgu.TF.XamarinForms
 			await CrossMedia.Current.Initialize();
 #endif			
 
-#if (__UNIFIED__ && !__IOS__) //NETFX or Xamarin Mac
+#if (__MACOS__) //Xamarin Mac
             //use default images
             InvokeOnImagesLoaded(imageNames);
 #else
@@ -112,7 +112,7 @@ namespace Emgu.TF.XamarinForms
             this.DisplayImage.Source = imageSource;
         }
 
-        public void SetImage(byte[] image = null)
+        public void SetImage(byte[] image = null, int widthRequest = -1, int heightRequest=-1)
         {
             if (image == null)
             {
@@ -122,6 +122,10 @@ namespace Emgu.TF.XamarinForms
 
             this.DisplayImage.Source = ImageSource.FromStream(() => new MemoryStream(image));
 
+            if (widthRequest > 0)
+                this.DisplayImage.WidthRequest = widthRequest;
+            if (heightRequest > 0)
+                this.DisplayImage.HeightRequest = heightRequest;
         }
 
         public Label GetLabel()
