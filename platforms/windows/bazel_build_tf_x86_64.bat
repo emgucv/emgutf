@@ -10,9 +10,6 @@ SET OS_MODE=
 IF "%1%"=="64" SET OS_MODE= Win64
 IF "%1%"=="ARM" SET OS_MODE= ARM
 
-IF "%2%"=="gpu" SET GPU_MODE= -Dtensorflow_ENABLE_GPU=ON ^
--DCUDNN_HOME="%CUDA_PATH%" 
-
 SET PROGRAMFILES_DIR_X86=%programfiles(x86)%
 if NOT EXIST "%PROGRAMFILES_DIR_X86%" SET PROGRAMFILES_DIR_X86=%programfiles%
 SET PROGRAMFILES_DIR=%programfiles%
@@ -77,7 +74,7 @@ REM cp -r tfextern tensorflow/tensorflow
 REM cp platforms/windows/libtensorflow_cpu.sh tensorflow/tensorflow/tools/ci_build/windows/
 cd tensorflow\tensorflow\tools\ci_build\windows
 
-IF "%1%" == "gpu" GOTO BUILD_GPU
+IF "%2%" == "gpu" GOTO BUILD_GPU
 
 :BUILD_CPU
 cmd.exe /v /c "set PATH=c:\tools\msys64\usr\bin;%PATH% & c:\tools\msys64\usr\bin\bash.exe libtensorflow_cpu.sh"
@@ -95,10 +92,15 @@ cd ../../../../../
 IF NOT EXIST lib\x64 mkdir lib\x64
 cp tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so lib/x64/tfextern.dll
 
+IF "%3%"=="dev" GOTO END_OF_CLEAN
+
+:CLEAN
 cd tensorflow
 bazel clean
 bazel shutdown
 rm -rf c:\tmp\_bazel_canming
+:END_OF_CLEAN
+
 popd
 
 Exit /B
