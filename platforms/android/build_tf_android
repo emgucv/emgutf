@@ -1,9 +1,7 @@
 #!/bin/sh
 cd ../..
 cd tensorflow
-#git checkout HEAD WORKSPACE
-#cat ../platforms/android/workspace_extra.txt >> WORKSPACE
-#cp -rf ../tfextern tensorflow/
+
 bazel build -c opt //tensorflow/tfextern:libtfextern.so \
 --crosstool_top=external:android/crosstool \
 --host_crosstool_top=@bazel_tools//tools/cpp:toolchain \
