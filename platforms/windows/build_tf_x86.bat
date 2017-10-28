@@ -11,7 +11,8 @@ IF "%1%"=="64" SET OS_MODE= Win64
 IF "%1%"=="ARM" SET OS_MODE= ARM
 
 IF "%2%"=="gpu" SET GPU_MODE= -Dtensorflow_ENABLE_GPU=ON ^
--DCUDNN_HOME="%CUDA_PATH%" 
+-DCUDNN_HOME="%CUDA_PATH_V8_0:\=/%" ^
+-DCUDA_TOOLKIT_ROOT_DIR="%CUDA_PATH_V8_0:\=/%" 
 
 SET PROGRAMFILES_DIR_X86=%programfiles(x86)%
 if NOT EXIST "%PROGRAMFILES_DIR_X86%" SET PROGRAMFILES_DIR_X86=%programfiles%
@@ -72,13 +73,8 @@ IF %DEVENV%==%VS2015% SET CMAKE_CONF="Visual Studio 14%OS_MODE%"
 IF %DEVENV%==%VS2017% SET CMAKE_CONF="Visual Studio 15%OS_MODE%"
 
 
-
-
-REM BUILD TENSORFLOW
-REM cp tfextern\tfextern.cmake tensorflow\tensorflow\contrib\cmake
 cd tensorflow\tensorflow\contrib\cmake
-REM git checkout CMakeLists.txt
-REM echo include(tfextern.cmake) >> CMakeLists.txt
+
 mkdir build
 cd build
 %CMAKE% .. ^
@@ -88,7 +84,14 @@ cd build
 -DPYTHON_EXECUTABLE="C:/Program Files/Anaconda3/python.exe" ^
 -DPYTHON_LIBRARIES="C:/Program Files/Anaconda3/libs/python35.lib" ^
 -Dtensorflow_BUILD_PYTHON_BINDINGS:BOOL=OFF
-REM call %DEVENV% %BUILD_TYPE% tensorflow.sln /project tfextern
+
+REM download and build protobuf
+call %DEVENV% %BUILD_TYPE% tensorflow.sln /project protobuf
+REM Fix protobuf 64MB limit
+sed -i 's/kDefaultTotalBytesLimit = 64/kDefaultTotalBytesLimit = 500/g' .\protobuf\src\protobuf\src\google\protobuf\io\coded_stream.h
+REM build tfextern
+call %DEVENV% %BUILD_TYPE% tensorflow.sln /project tfextern
+
 cd ..\..\..\..\..
 
 
