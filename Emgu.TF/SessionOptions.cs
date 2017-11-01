@@ -48,6 +48,16 @@ namespace Emgu.TF
         {
             TfInvoke.tfeSetTarget(_ptr, target);
         }
+
+        public void SetConfig(byte[] proto, Status status = null)
+        {
+            using (StatusChecker checker = new StatusChecker(status))
+            {
+                GCHandle handle = GCHandle.Alloc(proto, GCHandleType.Pinned);
+                TfInvoke.tfeSetConfig(_ptr, handle.AddrOfPinnedObject(), proto.Length, checker.Status);
+                handle.Free();
+            }
+        }
     }
 
     public static partial class TfInvoke
@@ -64,5 +74,8 @@ namespace Emgu.TF
             IntPtr options,
             [MarshalAs(StringMarshalType)]
             String target);
+
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        internal static extern void tfeSetConfig(IntPtr options, IntPtr proto, int protoLen, IntPtr status);
     }
 }
