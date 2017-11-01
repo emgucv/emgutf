@@ -23,15 +23,15 @@ namespace Tensorflow {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "Ci90ZW5zb3JmbG93L2NvcmUvZnJhbWV3b3JrL3Jlc291cmNlX2hhbmRsZS5w",
-            "cm90bxIKdGVuc29yZmxvdyJtCg5SZXNvdXJjZUhhbmRsZRIOCgZkZXZpY2UY",
-            "ASABKAkSEQoJY29udGFpbmVyGAIgASgJEgwKBG5hbWUYAyABKAkSEQoJaGFz",
-            "aF9jb2RlGAQgASgEEhcKD21heWJlX3R5cGVfbmFtZRgFIAEoCUI0Chhvcmcu",
-            "dGVuc29yZmxvdy5mcmFtZXdvcmtCE1Jlc291cmNlSGFuZGxlUHJvdG9QAfgB",
+            "cm90bxIKdGVuc29yZmxvdyJyChNSZXNvdXJjZUhhbmRsZVByb3RvEg4KBmRl",
+            "dmljZRgBIAEoCRIRCgljb250YWluZXIYAiABKAkSDAoEbmFtZRgDIAEoCRIR",
+            "CgloYXNoX2NvZGUYBCABKAQSFwoPbWF5YmVfdHlwZV9uYW1lGAUgASgJQi8K",
+            "GG9yZy50ZW5zb3JmbG93LmZyYW1ld29ya0IOUmVzb3VyY2VIYW5kbGVQAfgB",
             "AWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.ResourceHandle), global::Tensorflow.ResourceHandle.Parser, new[]{ "Device", "Container", "Name", "HashCode", "MaybeTypeName" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.ResourceHandleProto), global::Tensorflow.ResourceHandleProto.Parser, new[]{ "Device", "Container", "Name", "HashCode", "MaybeTypeName" }, null, null, null)
           }));
     }
     #endregion
@@ -43,10 +43,10 @@ namespace Tensorflow {
   /// not valid across executions, but can be serialized back and forth from within
   /// a single run.
   /// </summary>
-  public sealed partial class ResourceHandle : pb::IMessage<ResourceHandle> {
-    private static readonly pb::MessageParser<ResourceHandle> _parser = new pb::MessageParser<ResourceHandle>(() => new ResourceHandle());
+  public sealed partial class ResourceHandleProto : pb::IMessage<ResourceHandleProto> {
+    private static readonly pb::MessageParser<ResourceHandleProto> _parser = new pb::MessageParser<ResourceHandleProto>(() => new ResourceHandleProto());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<ResourceHandle> Parser { get { return _parser; } }
+    public static pb::MessageParser<ResourceHandleProto> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -59,14 +59,14 @@ namespace Tensorflow {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ResourceHandle() {
+    public ResourceHandleProto() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ResourceHandle(ResourceHandle other) : this() {
+    public ResourceHandleProto(ResourceHandleProto other) : this() {
       device_ = other.device_;
       container_ = other.container_;
       name_ = other.name_;
@@ -75,8 +75,8 @@ namespace Tensorflow {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ResourceHandle Clone() {
-      return new ResourceHandle(this);
+    public ResourceHandleProto Clone() {
+      return new ResourceHandleProto(this);
     }
 
     /// <summary>Field number for the "device" field.</summary>
@@ -153,11 +153,11 @@ namespace Tensorflow {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as ResourceHandle);
+      return Equals(other as ResourceHandleProto);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(ResourceHandle other) {
+    public bool Equals(ResourceHandleProto other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -234,7 +234,7 @@ namespace Tensorflow {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(ResourceHandle other) {
+    public void MergeFrom(ResourceHandleProto other) {
       if (other == null) {
         return;
       }

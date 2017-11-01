@@ -25,35 +25,35 @@ namespace Tensorflow {
             "Cip0ZW5zb3JmbG93L2NvcmUvZnJhbWV3b3JrL3N0ZXBfc3RhdHMucHJvdG8S",
             "CnRlbnNvcmZsb3caNnRlbnNvcmZsb3cvY29yZS9mcmFtZXdvcmsvYWxsb2Nh",
             "dGlvbl9kZXNjcmlwdGlvbi5wcm90bxoydGVuc29yZmxvdy9jb3JlL2ZyYW1l",
-            "d29yay90ZW5zb3JfZGVzY3JpcHRpb24ucHJvdG8iagoTQWxsb2NhdG9yTWVt",
-            "b3J5VXNlZBIWCg5hbGxvY2F0b3JfbmFtZRgBIAEoCRITCgt0b3RhbF9ieXRl",
-            "cxgCIAEoAxISCgpwZWFrX2J5dGVzGAMgASgDEhIKCmxpdmVfYnl0ZXMYBCAB",
-            "KAMiVQoKTm9kZU91dHB1dBIMCgRzbG90GAEgASgFEjkKEnRlbnNvcl9kZXNj",
-            "cmlwdGlvbhgDIAEoCzIdLnRlbnNvcmZsb3cuVGVuc29yRGVzY3JpcHRpb24i",
-            "7wEKC01lbW9yeVN0YXRzEh0KFWhvc3RfdGVtcF9tZW1vcnlfc2l6ZRgBIAEo",
-            "AxIfChdkZXZpY2VfdGVtcF9tZW1vcnlfc2l6ZRgCIAEoAxIjChtob3N0X3Bl",
-            "cnNpc3RlbnRfbWVtb3J5X3NpemUYAyABKAMSJQodZGV2aWNlX3BlcnNpc3Rl",
-            "bnRfbWVtb3J5X3NpemUYBCABKAMSKAogaG9zdF9wZXJzaXN0ZW50X3RlbnNv",
-            "cl9hbGxvY19pZHMYBSADKAMSKgoiZGV2aWNlX3BlcnNpc3RlbnRfdGVuc29y",
-            "X2FsbG9jX2lkcxgGIAMoAyKbAwoNTm9kZUV4ZWNTdGF0cxIRCglub2RlX25h",
-            "bWUYASABKAkSGAoQYWxsX3N0YXJ0X21pY3JvcxgCIAEoAxIbChNvcF9zdGFy",
-            "dF9yZWxfbWljcm9zGAMgASgDEhkKEW9wX2VuZF9yZWxfbWljcm9zGAQgASgD",
-            "EhoKEmFsbF9lbmRfcmVsX21pY3JvcxgFIAEoAxIvCgZtZW1vcnkYBiADKAsy",
-            "Hy50ZW5zb3JmbG93LkFsbG9jYXRvck1lbW9yeVVzZWQSJgoGb3V0cHV0GAcg",
-            "AygLMhYudGVuc29yZmxvdy5Ob2RlT3V0cHV0EhYKDnRpbWVsaW5lX2xhYmVs",
-            "GAggASgJEhgKEHNjaGVkdWxlZF9taWNyb3MYCSABKAMSEQoJdGhyZWFkX2lk",
-            "GAogASgNEjwKEXJlZmVyZW5jZWRfdGVuc29yGAsgAygLMiEudGVuc29yZmxv",
-            "dy5BbGxvY2F0aW9uRGVzY3JpcHRpb24SLQoMbWVtb3J5X3N0YXRzGAwgASgL",
-            "MhcudGVuc29yZmxvdy5NZW1vcnlTdGF0cyJQCg9EZXZpY2VTdGVwU3RhdHMS",
-            "DgoGZGV2aWNlGAEgASgJEi0KCm5vZGVfc3RhdHMYAiADKAsyGS50ZW5zb3Jm",
-            "bG93Lk5vZGVFeGVjU3RhdHMiOwoJU3RlcFN0YXRzEi4KCWRldl9zdGF0cxgB",
-            "IAMoCzIbLnRlbnNvcmZsb3cuRGV2aWNlU3RlcFN0YXRzQjAKGG9yZy50ZW5z",
-            "b3JmbG93LmZyYW1ld29ya0IPU3RlcFN0YXRzUHJvdG9zUAH4AQFiBnByb3Rv",
-            "Mw=="));
+            "d29yay90ZW5zb3JfZGVzY3JpcHRpb24ucHJvdG8iigEKE0FsbG9jYXRvck1l",
+            "bW9yeVVzZWQSFgoOYWxsb2NhdG9yX25hbWUYASABKAkSEwoLdG90YWxfYnl0",
+            "ZXMYAiABKAMSEgoKcGVha19ieXRlcxgDIAEoAxISCgpsaXZlX2J5dGVzGAQg",
+            "ASgDEh4KFmFsbG9jYXRvcl9ieXRlc19pbl91c2UYBSABKAMiVQoKTm9kZU91",
+            "dHB1dBIMCgRzbG90GAEgASgFEjkKEnRlbnNvcl9kZXNjcmlwdGlvbhgDIAEo",
+            "CzIdLnRlbnNvcmZsb3cuVGVuc29yRGVzY3JpcHRpb24i7wEKC01lbW9yeVN0",
+            "YXRzEh0KFWhvc3RfdGVtcF9tZW1vcnlfc2l6ZRgBIAEoAxIfChdkZXZpY2Vf",
+            "dGVtcF9tZW1vcnlfc2l6ZRgCIAEoAxIjChtob3N0X3BlcnNpc3RlbnRfbWVt",
+            "b3J5X3NpemUYAyABKAMSJQodZGV2aWNlX3BlcnNpc3RlbnRfbWVtb3J5X3Np",
+            "emUYBCABKAMSKAogaG9zdF9wZXJzaXN0ZW50X3RlbnNvcl9hbGxvY19pZHMY",
+            "BSADKAMSKgoiZGV2aWNlX3BlcnNpc3RlbnRfdGVuc29yX2FsbG9jX2lkcxgG",
+            "IAMoAyKbAwoNTm9kZUV4ZWNTdGF0cxIRCglub2RlX25hbWUYASABKAkSGAoQ",
+            "YWxsX3N0YXJ0X21pY3JvcxgCIAEoAxIbChNvcF9zdGFydF9yZWxfbWljcm9z",
+            "GAMgASgDEhkKEW9wX2VuZF9yZWxfbWljcm9zGAQgASgDEhoKEmFsbF9lbmRf",
+            "cmVsX21pY3JvcxgFIAEoAxIvCgZtZW1vcnkYBiADKAsyHy50ZW5zb3JmbG93",
+            "LkFsbG9jYXRvck1lbW9yeVVzZWQSJgoGb3V0cHV0GAcgAygLMhYudGVuc29y",
+            "Zmxvdy5Ob2RlT3V0cHV0EhYKDnRpbWVsaW5lX2xhYmVsGAggASgJEhgKEHNj",
+            "aGVkdWxlZF9taWNyb3MYCSABKAMSEQoJdGhyZWFkX2lkGAogASgNEjwKEXJl",
+            "ZmVyZW5jZWRfdGVuc29yGAsgAygLMiEudGVuc29yZmxvdy5BbGxvY2F0aW9u",
+            "RGVzY3JpcHRpb24SLQoMbWVtb3J5X3N0YXRzGAwgASgLMhcudGVuc29yZmxv",
+            "dy5NZW1vcnlTdGF0cyJQCg9EZXZpY2VTdGVwU3RhdHMSDgoGZGV2aWNlGAEg",
+            "ASgJEi0KCm5vZGVfc3RhdHMYAiADKAsyGS50ZW5zb3JmbG93Lk5vZGVFeGVj",
+            "U3RhdHMiOwoJU3RlcFN0YXRzEi4KCWRldl9zdGF0cxgBIAMoCzIbLnRlbnNv",
+            "cmZsb3cuRGV2aWNlU3RlcFN0YXRzQjAKGG9yZy50ZW5zb3JmbG93LmZyYW1l",
+            "d29ya0IPU3RlcFN0YXRzUHJvdG9zUAH4AQFiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Tensorflow.AllocationDescriptionReflection.Descriptor, global::Tensorflow.TensorDescriptionReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.AllocatorMemoryUsed), global::Tensorflow.AllocatorMemoryUsed.Parser, new[]{ "AllocatorName", "TotalBytes", "PeakBytes", "LiveBytes" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.AllocatorMemoryUsed), global::Tensorflow.AllocatorMemoryUsed.Parser, new[]{ "AllocatorName", "TotalBytes", "PeakBytes", "LiveBytes", "AllocatorBytesInUse" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.NodeOutput), global::Tensorflow.NodeOutput.Parser, new[]{ "Slot", "TensorDescription" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.MemoryStats), global::Tensorflow.MemoryStats.Parser, new[]{ "HostTempMemorySize", "DeviceTempMemorySize", "HostPersistentMemorySize", "DevicePersistentMemorySize", "HostPersistentTensorAllocIds", "DevicePersistentTensorAllocIds" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.NodeExecStats), global::Tensorflow.NodeExecStats.Parser, new[]{ "NodeName", "AllStartMicros", "OpStartRelMicros", "OpEndRelMicros", "AllEndRelMicros", "Memory", "Output", "TimelineLabel", "ScheduledMicros", "ThreadId", "ReferencedTensor", "MemoryStats" }, null, null, null),
@@ -93,6 +93,7 @@ namespace Tensorflow {
       totalBytes_ = other.totalBytes_;
       peakBytes_ = other.peakBytes_;
       liveBytes_ = other.liveBytes_;
+      allocatorBytesInUse_ = other.allocatorBytesInUse_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -114,6 +115,9 @@ namespace Tensorflow {
     /// <summary>Field number for the "total_bytes" field.</summary>
     public const int TotalBytesFieldNumber = 2;
     private long totalBytes_;
+    /// <summary>
+    /// These are per-node allocator memory stats.
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public long TotalBytes {
       get { return totalBytes_; }
@@ -147,6 +151,21 @@ namespace Tensorflow {
       }
     }
 
+    /// <summary>Field number for the "allocator_bytes_in_use" field.</summary>
+    public const int AllocatorBytesInUseFieldNumber = 5;
+    private long allocatorBytesInUse_;
+    /// <summary>
+    /// These are snapshots of the overall allocator memory stats.
+    /// The number of live bytes currently allocated by the allocator.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public long AllocatorBytesInUse {
+      get { return allocatorBytesInUse_; }
+      set {
+        allocatorBytesInUse_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as AllocatorMemoryUsed);
@@ -164,6 +183,7 @@ namespace Tensorflow {
       if (TotalBytes != other.TotalBytes) return false;
       if (PeakBytes != other.PeakBytes) return false;
       if (LiveBytes != other.LiveBytes) return false;
+      if (AllocatorBytesInUse != other.AllocatorBytesInUse) return false;
       return true;
     }
 
@@ -174,6 +194,7 @@ namespace Tensorflow {
       if (TotalBytes != 0L) hash ^= TotalBytes.GetHashCode();
       if (PeakBytes != 0L) hash ^= PeakBytes.GetHashCode();
       if (LiveBytes != 0L) hash ^= LiveBytes.GetHashCode();
+      if (AllocatorBytesInUse != 0L) hash ^= AllocatorBytesInUse.GetHashCode();
       return hash;
     }
 
@@ -200,6 +221,10 @@ namespace Tensorflow {
         output.WriteRawTag(32);
         output.WriteInt64(LiveBytes);
       }
+      if (AllocatorBytesInUse != 0L) {
+        output.WriteRawTag(40);
+        output.WriteInt64(AllocatorBytesInUse);
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -216,6 +241,9 @@ namespace Tensorflow {
       }
       if (LiveBytes != 0L) {
         size += 1 + pb::CodedOutputStream.ComputeInt64Size(LiveBytes);
+      }
+      if (AllocatorBytesInUse != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(AllocatorBytesInUse);
       }
       return size;
     }
@@ -236,6 +264,9 @@ namespace Tensorflow {
       }
       if (other.LiveBytes != 0L) {
         LiveBytes = other.LiveBytes;
+      }
+      if (other.AllocatorBytesInUse != 0L) {
+        AllocatorBytesInUse = other.AllocatorBytesInUse;
       }
     }
 
@@ -261,6 +292,10 @@ namespace Tensorflow {
           }
           case 32: {
             LiveBytes = input.ReadInt64();
+            break;
+          }
+          case 40: {
+            AllocatorBytesInUse = input.ReadInt64();
             break;
           }
         }

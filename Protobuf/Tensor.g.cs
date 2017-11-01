@@ -26,7 +26,7 @@ namespace Tensorflow {
             "c29yZmxvdxovdGVuc29yZmxvdy9jb3JlL2ZyYW1ld29yay9yZXNvdXJjZV9o",
             "YW5kbGUucHJvdG8aLHRlbnNvcmZsb3cvY29yZS9mcmFtZXdvcmsvdGVuc29y",
             "X3NoYXBlLnByb3RvGiV0ZW5zb3JmbG93L2NvcmUvZnJhbWV3b3JrL3R5cGVz",
-            "LnByb3RvIp4DCgtUZW5zb3JQcm90bxIjCgVkdHlwZRgBIAEoDjIULnRlbnNv",
+            "LnByb3RvItwDCgtUZW5zb3JQcm90bxIjCgVkdHlwZRgBIAEoDjIULnRlbnNv",
             "cmZsb3cuRGF0YVR5cGUSMgoMdGVuc29yX3NoYXBlGAIgASgLMhwudGVuc29y",
             "Zmxvdy5UZW5zb3JTaGFwZVByb3RvEhYKDnZlcnNpb25fbnVtYmVyGAMgASgF",
             "EhYKDnRlbnNvcl9jb250ZW50GAQgASgMEhQKCGhhbGZfdmFsGA0gAygFQgIQ",
@@ -34,13 +34,18 @@ namespace Tensorflow {
             "AhABEhMKB2ludF92YWwYByADKAVCAhABEhIKCnN0cmluZ192YWwYCCADKAwS",
             "GAoMc2NvbXBsZXhfdmFsGAkgAygCQgIQARIVCglpbnQ2NF92YWwYCiADKANC",
             "AhABEhQKCGJvb2xfdmFsGAsgAygIQgIQARIYCgxkY29tcGxleF92YWwYDCAD",
-            "KAFCAhABEjcKE3Jlc291cmNlX2hhbmRsZV92YWwYDiADKAsyGi50ZW5zb3Jm",
-            "bG93LlJlc291cmNlSGFuZGxlQi0KGG9yZy50ZW5zb3JmbG93LmZyYW1ld29y",
-            "a0IMVGVuc29yUHJvdG9zUAH4AQFiBnByb3RvMw=="));
+            "KAFCAhABEjwKE3Jlc291cmNlX2hhbmRsZV92YWwYDiADKAsyHy50ZW5zb3Jm",
+            "bG93LlJlc291cmNlSGFuZGxlUHJvdG8SNwoLdmFyaWFudF92YWwYDyADKAsy",
+            "Ii50ZW5zb3JmbG93LlZhcmlhbnRUZW5zb3JEYXRhUHJvdG8iZwoWVmFyaWFu",
+            "dFRlbnNvckRhdGFQcm90bxIRCgl0eXBlX25hbWUYASABKAkSEAoIbWV0YWRh",
+            "dGEYAiABKAwSKAoHdGVuc29ycxgDIAMoCzIXLnRlbnNvcmZsb3cuVGVuc29y",
+            "UHJvdG9CLQoYb3JnLnRlbnNvcmZsb3cuZnJhbWV3b3JrQgxUZW5zb3JQcm90",
+            "b3NQAfgBAWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Tensorflow.ResourceHandleReflection.Descriptor, global::Tensorflow.TensorShapeReflection.Descriptor, global::Tensorflow.TypesReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.TensorProto), global::Tensorflow.TensorProto.Parser, new[]{ "Dtype", "TensorShape", "VersionNumber", "TensorContent", "HalfVal", "FloatVal", "DoubleVal", "IntVal", "StringVal", "ScomplexVal", "Int64Val", "BoolVal", "DcomplexVal", "ResourceHandleVal" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.TensorProto), global::Tensorflow.TensorProto.Parser, new[]{ "Dtype", "TensorShape", "VersionNumber", "TensorContent", "HalfVal", "FloatVal", "DoubleVal", "IntVal", "StringVal", "ScomplexVal", "Int64Val", "BoolVal", "DcomplexVal", "ResourceHandleVal", "VariantVal" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.VariantTensorDataProto), global::Tensorflow.VariantTensorDataProto.Parser, new[]{ "TypeName", "Metadata", "Tensors" }, null, null, null)
           }));
     }
     #endregion
@@ -88,6 +93,7 @@ namespace Tensorflow {
       boolVal_ = other.boolVal_.Clone();
       dcomplexVal_ = other.dcomplexVal_.Clone();
       resourceHandleVal_ = other.resourceHandleVal_.Clone();
+      variantVal_ = other.variantVal_.Clone();
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -278,15 +284,28 @@ namespace Tensorflow {
 
     /// <summary>Field number for the "resource_handle_val" field.</summary>
     public const int ResourceHandleValFieldNumber = 14;
-    private static readonly pb::FieldCodec<global::Tensorflow.ResourceHandle> _repeated_resourceHandleVal_codec
-        = pb::FieldCodec.ForMessage(114, global::Tensorflow.ResourceHandle.Parser);
-    private readonly pbc::RepeatedField<global::Tensorflow.ResourceHandle> resourceHandleVal_ = new pbc::RepeatedField<global::Tensorflow.ResourceHandle>();
+    private static readonly pb::FieldCodec<global::Tensorflow.ResourceHandleProto> _repeated_resourceHandleVal_codec
+        = pb::FieldCodec.ForMessage(114, global::Tensorflow.ResourceHandleProto.Parser);
+    private readonly pbc::RepeatedField<global::Tensorflow.ResourceHandleProto> resourceHandleVal_ = new pbc::RepeatedField<global::Tensorflow.ResourceHandleProto>();
     /// <summary>
     /// DT_RESOURCE
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Tensorflow.ResourceHandle> ResourceHandleVal {
+    public pbc::RepeatedField<global::Tensorflow.ResourceHandleProto> ResourceHandleVal {
       get { return resourceHandleVal_; }
+    }
+
+    /// <summary>Field number for the "variant_val" field.</summary>
+    public const int VariantValFieldNumber = 15;
+    private static readonly pb::FieldCodec<global::Tensorflow.VariantTensorDataProto> _repeated_variantVal_codec
+        = pb::FieldCodec.ForMessage(122, global::Tensorflow.VariantTensorDataProto.Parser);
+    private readonly pbc::RepeatedField<global::Tensorflow.VariantTensorDataProto> variantVal_ = new pbc::RepeatedField<global::Tensorflow.VariantTensorDataProto>();
+    /// <summary>
+    /// DT_VARIANT
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::Tensorflow.VariantTensorDataProto> VariantVal {
+      get { return variantVal_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -316,6 +335,7 @@ namespace Tensorflow {
       if(!boolVal_.Equals(other.boolVal_)) return false;
       if(!dcomplexVal_.Equals(other.dcomplexVal_)) return false;
       if(!resourceHandleVal_.Equals(other.resourceHandleVal_)) return false;
+      if(!variantVal_.Equals(other.variantVal_)) return false;
       return true;
     }
 
@@ -336,6 +356,7 @@ namespace Tensorflow {
       hash ^= boolVal_.GetHashCode();
       hash ^= dcomplexVal_.GetHashCode();
       hash ^= resourceHandleVal_.GetHashCode();
+      hash ^= variantVal_.GetHashCode();
       return hash;
     }
 
@@ -372,6 +393,7 @@ namespace Tensorflow {
       dcomplexVal_.WriteTo(output, _repeated_dcomplexVal_codec);
       halfVal_.WriteTo(output, _repeated_halfVal_codec);
       resourceHandleVal_.WriteTo(output, _repeated_resourceHandleVal_codec);
+      variantVal_.WriteTo(output, _repeated_variantVal_codec);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -399,6 +421,7 @@ namespace Tensorflow {
       size += boolVal_.CalculateSize(_repeated_boolVal_codec);
       size += dcomplexVal_.CalculateSize(_repeated_dcomplexVal_codec);
       size += resourceHandleVal_.CalculateSize(_repeated_resourceHandleVal_codec);
+      size += variantVal_.CalculateSize(_repeated_variantVal_codec);
       return size;
     }
 
@@ -432,6 +455,7 @@ namespace Tensorflow {
       boolVal_.Add(other.boolVal_);
       dcomplexVal_.Add(other.dcomplexVal_);
       resourceHandleVal_.Add(other.resourceHandleVal_);
+      variantVal_.Add(other.variantVal_);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -507,6 +531,187 @@ namespace Tensorflow {
           }
           case 114: {
             resourceHandleVal_.AddEntriesFrom(input, _repeated_resourceHandleVal_codec);
+            break;
+          }
+          case 122: {
+            variantVal_.AddEntriesFrom(input, _repeated_variantVal_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  /// <summary>
+  /// Protocol buffer representing the serialization format of DT_VARIANT tensors.
+  /// </summary>
+  public sealed partial class VariantTensorDataProto : pb::IMessage<VariantTensorDataProto> {
+    private static readonly pb::MessageParser<VariantTensorDataProto> _parser = new pb::MessageParser<VariantTensorDataProto>(() => new VariantTensorDataProto());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<VariantTensorDataProto> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Tensorflow.TensorReflection.Descriptor.MessageTypes[1]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public VariantTensorDataProto() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public VariantTensorDataProto(VariantTensorDataProto other) : this() {
+      typeName_ = other.typeName_;
+      metadata_ = other.metadata_;
+      tensors_ = other.tensors_.Clone();
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public VariantTensorDataProto Clone() {
+      return new VariantTensorDataProto(this);
+    }
+
+    /// <summary>Field number for the "type_name" field.</summary>
+    public const int TypeNameFieldNumber = 1;
+    private string typeName_ = "";
+    /// <summary>
+    /// Name of the type of objects being serialized.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string TypeName {
+      get { return typeName_; }
+      set {
+        typeName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "metadata" field.</summary>
+    public const int MetadataFieldNumber = 2;
+    private pb::ByteString metadata_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Portions of the object that are not Tensors.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pb::ByteString Metadata {
+      get { return metadata_; }
+      set {
+        metadata_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "tensors" field.</summary>
+    public const int TensorsFieldNumber = 3;
+    private static readonly pb::FieldCodec<global::Tensorflow.TensorProto> _repeated_tensors_codec
+        = pb::FieldCodec.ForMessage(26, global::Tensorflow.TensorProto.Parser);
+    private readonly pbc::RepeatedField<global::Tensorflow.TensorProto> tensors_ = new pbc::RepeatedField<global::Tensorflow.TensorProto>();
+    /// <summary>
+    /// Tensors contained within objects being serialized.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::Tensorflow.TensorProto> Tensors {
+      get { return tensors_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as VariantTensorDataProto);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(VariantTensorDataProto other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (TypeName != other.TypeName) return false;
+      if (Metadata != other.Metadata) return false;
+      if(!tensors_.Equals(other.tensors_)) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (TypeName.Length != 0) hash ^= TypeName.GetHashCode();
+      if (Metadata.Length != 0) hash ^= Metadata.GetHashCode();
+      hash ^= tensors_.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (TypeName.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(TypeName);
+      }
+      if (Metadata.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteBytes(Metadata);
+      }
+      tensors_.WriteTo(output, _repeated_tensors_codec);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (TypeName.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(TypeName);
+      }
+      if (Metadata.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeBytesSize(Metadata);
+      }
+      size += tensors_.CalculateSize(_repeated_tensors_codec);
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(VariantTensorDataProto other) {
+      if (other == null) {
+        return;
+      }
+      if (other.TypeName.Length != 0) {
+        TypeName = other.TypeName;
+      }
+      if (other.Metadata.Length != 0) {
+        Metadata = other.Metadata;
+      }
+      tensors_.Add(other.tensors_);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            TypeName = input.ReadString();
+            break;
+          }
+          case 18: {
+            Metadata = input.ReadBytes();
+            break;
+          }
+          case 26: {
+            tensors_.AddEntriesFrom(input, _repeated_tensors_codec);
             break;
           }
         }

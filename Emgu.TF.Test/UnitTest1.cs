@@ -95,7 +95,16 @@ namespace Emgu.TF.Test
             bool cuda = TfInvoke.IsGoogleCudaEnabled;
         }
 
-        public static int Add(int a, int b)
+        [TestMethod]
+        public void TestChooseDevice()
+        {
+            SessionOptions so = new SessionOptions();
+            
+            int sum = Add(1, 2, so);
+            
+        }
+
+        public static int Add(int a, int b, SessionOptions sessionOptions = null)
         {
             Tensor tensorA = new Tensor(a);
             Tensor tensorB = new Tensor(b);
@@ -104,7 +113,7 @@ namespace Emgu.TF.Test
             Operation opB = graph.Placeholder(DataType.Int32, null, "valB");
             Operation sumOp = graph.Add(opA, opB, "sum");
 
-            Session session = new Session(graph);
+            Session session = new Session(graph, sessionOptions);
             Tensor[] results = session.Run(new Output[] { opA, opB }, new Tensor[] { tensorA, tensorB }, new Output[] { sumOp });
             return results[0].Flat<int>()[0];
         }

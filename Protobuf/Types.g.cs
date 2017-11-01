@@ -23,24 +23,24 @@ namespace Tensorflow {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "CiV0ZW5zb3JmbG93L2NvcmUvZnJhbWV3b3JrL3R5cGVzLnByb3RvEgp0ZW5z",
-            "b3JmbG93KsIFCghEYXRhVHlwZRIOCgpEVF9JTlZBTElEEAASDAoIRFRfRkxP",
+            "b3JmbG93KuYFCghEYXRhVHlwZRIOCgpEVF9JTlZBTElEEAASDAoIRFRfRkxP",
             "QVQQARINCglEVF9ET1VCTEUQAhIMCghEVF9JTlQzMhADEgwKCERUX1VJTlQ4",
             "EAQSDAoIRFRfSU5UMTYQBRILCgdEVF9JTlQ4EAYSDQoJRFRfU1RSSU5HEAcS",
             "EAoMRFRfQ09NUExFWDY0EAgSDAoIRFRfSU5UNjQQCRILCgdEVF9CT09MEAoS",
             "DAoIRFRfUUlOVDgQCxINCglEVF9RVUlOVDgQDBINCglEVF9RSU5UMzIQDRIP",
             "CgtEVF9CRkxPQVQxNhAOEg0KCURUX1FJTlQxNhAPEg4KCkRUX1FVSU5UMTYQ",
             "EBINCglEVF9VSU5UMTYQERIRCg1EVF9DT01QTEVYMTI4EBISCwoHRFRfSEFM",
-            "RhATEg8KC0RUX1JFU09VUkNFEBQSEAoMRFRfRkxPQVRfUkVGEGUSEQoNRFRf",
-            "RE9VQkxFX1JFRhBmEhAKDERUX0lOVDMyX1JFRhBnEhAKDERUX1VJTlQ4X1JF",
-            "RhBoEhAKDERUX0lOVDE2X1JFRhBpEg8KC0RUX0lOVDhfUkVGEGoSEQoNRFRf",
-            "U1RSSU5HX1JFRhBrEhQKEERUX0NPTVBMRVg2NF9SRUYQbBIQCgxEVF9JTlQ2",
-            "NF9SRUYQbRIPCgtEVF9CT09MX1JFRhBuEhAKDERUX1FJTlQ4X1JFRhBvEhEK",
-            "DURUX1FVSU5UOF9SRUYQcBIRCg1EVF9RSU5UMzJfUkVGEHESEwoPRFRfQkZM",
-            "T0FUMTZfUkVGEHISEQoNRFRfUUlOVDE2X1JFRhBzEhIKDkRUX1FVSU5UMTZf",
-            "UkVGEHQSEQoNRFRfVUlOVDE2X1JFRhB1EhUKEURUX0NPTVBMRVgxMjhfUkVG",
-            "EHYSDwoLRFRfSEFMRl9SRUYQdxITCg9EVF9SRVNPVVJDRV9SRUYQeEIsChhv",
-            "cmcudGVuc29yZmxvdy5mcmFtZXdvcmtCC1R5cGVzUHJvdG9zUAH4AQFiBnBy",
-            "b3RvMw=="));
+            "RhATEg8KC0RUX1JFU09VUkNFEBQSDgoKRFRfVkFSSUFOVBAVEhAKDERUX0ZM",
+            "T0FUX1JFRhBlEhEKDURUX0RPVUJMRV9SRUYQZhIQCgxEVF9JTlQzMl9SRUYQ",
+            "ZxIQCgxEVF9VSU5UOF9SRUYQaBIQCgxEVF9JTlQxNl9SRUYQaRIPCgtEVF9J",
+            "TlQ4X1JFRhBqEhEKDURUX1NUUklOR19SRUYQaxIUChBEVF9DT01QTEVYNjRf",
+            "UkVGEGwSEAoMRFRfSU5UNjRfUkVGEG0SDwoLRFRfQk9PTF9SRUYQbhIQCgxE",
+            "VF9RSU5UOF9SRUYQbxIRCg1EVF9RVUlOVDhfUkVGEHASEQoNRFRfUUlOVDMy",
+            "X1JFRhBxEhMKD0RUX0JGTE9BVDE2X1JFRhByEhEKDURUX1FJTlQxNl9SRUYQ",
+            "cxISCg5EVF9RVUlOVDE2X1JFRhB0EhEKDURUX1VJTlQxNl9SRUYQdRIVChFE",
+            "VF9DT01QTEVYMTI4X1JFRhB2Eg8KC0RUX0hBTEZfUkVGEHcSEwoPRFRfUkVT",
+            "T1VSQ0VfUkVGEHgSEgoORFRfVkFSSUFOVF9SRUYQeUIsChhvcmcudGVuc29y",
+            "Zmxvdy5mcmFtZXdvcmtCC1R5cGVzUHJvdG9zUAH4AQFiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Tensorflow.DataType), }, null));
@@ -107,6 +107,10 @@ namespace Tensorflow {
     [pbr::OriginalName("DT_HALF")] DtHalf = 19,
     [pbr::OriginalName("DT_RESOURCE")] DtResource = 20,
     /// <summary>
+    /// Arbitrary C++ data types
+    /// </summary>
+    [pbr::OriginalName("DT_VARIANT")] DtVariant = 21,
+    /// <summary>
     /// Do not use!  These are only for parameters.  Every enum above
     /// should have a corresponding value below (verified by types_test).
     /// </summary>
@@ -130,6 +134,7 @@ namespace Tensorflow {
     [pbr::OriginalName("DT_COMPLEX128_REF")] DtComplex128Ref = 118,
     [pbr::OriginalName("DT_HALF_REF")] DtHalfRef = 119,
     [pbr::OriginalName("DT_RESOURCE_REF")] DtResourceRef = 120,
+    [pbr::OriginalName("DT_VARIANT_REF")] DtVariantRef = 121,
   }
 
   #endregion

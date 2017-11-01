@@ -50,42 +50,42 @@ namespace Tensorflow {
             "bmVkX2dyYXBoGAYgASgIEiAKGGVuYWJsZV9iZmxvYXQxNl9zZW5kcmVjdhgH",
             "IAEoCBIVCg10aW1lbGluZV9zdGVwGAggASgFEjMKD3Jld3JpdGVfb3B0aW9u",
             "cxgKIAEoCzIaLnRlbnNvcmZsb3cuUmV3cml0ZXJDb25maWdKBAgBEAJSJXNr",
-            "aXBfY29tbW9uX3N1YmV4cHJlc3Npb25fZWxpbWluYXRpb24iLAoVVGhyZWFk",
-            "UG9vbE9wdGlvblByb3RvEhMKC251bV90aHJlYWRzGAEgASgFIjIKClJQQ09w",
-            "dGlvbnMSJAocdXNlX3JwY19mb3JfaW5wcm9jZXNzX21hc3RlchgBIAEoCCL+",
-            "BAoLQ29uZmlnUHJvdG8SPgoMZGV2aWNlX2NvdW50GAEgAygLMigudGVuc29y",
-            "Zmxvdy5Db25maWdQcm90by5EZXZpY2VDb3VudEVudHJ5EiQKHGludHJhX29w",
-            "X3BhcmFsbGVsaXNtX3RocmVhZHMYAiABKAUSJAocaW50ZXJfb3BfcGFyYWxs",
-            "ZWxpc21fdGhyZWFkcxgFIAEoBRIfChd1c2VfcGVyX3Nlc3Npb25fdGhyZWFk",
-            "cxgJIAEoCBJHChxzZXNzaW9uX2ludGVyX29wX3RocmVhZF9wb29sGAwgAygL",
-            "MiEudGVuc29yZmxvdy5UaHJlYWRQb29sT3B0aW9uUHJvdG8SGAoQcGxhY2Vt",
-            "ZW50X3BlcmlvZBgDIAEoBRIWCg5kZXZpY2VfZmlsdGVycxgEIAMoCRIrCgtn",
-            "cHVfb3B0aW9ucxgGIAEoCzIWLnRlbnNvcmZsb3cuR1BVT3B0aW9ucxIcChRh",
-            "bGxvd19zb2Z0X3BsYWNlbWVudBgHIAEoCBIcChRsb2dfZGV2aWNlX3BsYWNl",
-            "bWVudBgIIAEoCBIvCg1ncmFwaF9vcHRpb25zGAogASgLMhgudGVuc29yZmxv",
-            "dy5HcmFwaE9wdGlvbnMSHwoXb3BlcmF0aW9uX3RpbWVvdXRfaW5fbXMYCyAB",
-            "KAMSKwoLcnBjX29wdGlvbnMYDSABKAsyFi50ZW5zb3JmbG93LlJQQ09wdGlv",
-            "bnMSKwoLY2x1c3Rlcl9kZWYYDiABKAsyFi50ZW5zb3JmbG93LkNsdXN0ZXJE",
-            "ZWYaMgoQRGV2aWNlQ291bnRFbnRyeRILCgNrZXkYASABKAkSDQoFdmFsdWUY",
-            "AiABKAU6AjgBIqUCCgpSdW5PcHRpb25zEjYKC3RyYWNlX2xldmVsGAEgASgO",
-            "MiEudGVuc29yZmxvdy5SdW5PcHRpb25zLlRyYWNlTGV2ZWwSFQoNdGltZW91",
-            "dF9pbl9tcxgCIAEoAxIcChRpbnRlcl9vcF90aHJlYWRfcG9vbBgDIAEoBRIf",
-            "ChdvdXRwdXRfcGFydGl0aW9uX2dyYXBocxgFIAEoCBIvCg1kZWJ1Z19vcHRp",
-            "b25zGAYgASgLMhgudGVuc29yZmxvdy5EZWJ1Z09wdGlvbnMiUgoKVHJhY2VM",
-            "ZXZlbBIMCghOT19UUkFDRRAAEhIKDlNPRlRXQVJFX1RSQUNFEAESEgoOSEFS",
-            "RFdBUkVfVFJBQ0UQAhIOCgpGVUxMX1RSQUNFEANKBAgEEAUilgEKC1J1bk1l",
-            "dGFkYXRhEikKCnN0ZXBfc3RhdHMYASABKAsyFS50ZW5zb3JmbG93LlN0ZXBT",
-            "dGF0cxIsCgpjb3N0X2dyYXBoGAIgASgLMhgudGVuc29yZmxvdy5Db3N0R3Jh",
-            "cGhEZWYSLgoQcGFydGl0aW9uX2dyYXBocxgDIAMoCzIULnRlbnNvcmZsb3cu",
-            "R3JhcGhEZWZCLQoYb3JnLnRlbnNvcmZsb3cuZnJhbWV3b3JrQgxDb25maWdQ",
-            "cm90b3NQAfgBAWIGcHJvdG8z"));
+            "aXBfY29tbW9uX3N1YmV4cHJlc3Npb25fZWxpbWluYXRpb24iQQoVVGhyZWFk",
+            "UG9vbE9wdGlvblByb3RvEhMKC251bV90aHJlYWRzGAEgASgFEhMKC2dsb2Jh",
+            "bF9uYW1lGAIgASgJIjIKClJQQ09wdGlvbnMSJAocdXNlX3JwY19mb3JfaW5w",
+            "cm9jZXNzX21hc3RlchgBIAEoCCL+BAoLQ29uZmlnUHJvdG8SPgoMZGV2aWNl",
+            "X2NvdW50GAEgAygLMigudGVuc29yZmxvdy5Db25maWdQcm90by5EZXZpY2VD",
+            "b3VudEVudHJ5EiQKHGludHJhX29wX3BhcmFsbGVsaXNtX3RocmVhZHMYAiAB",
+            "KAUSJAocaW50ZXJfb3BfcGFyYWxsZWxpc21fdGhyZWFkcxgFIAEoBRIfChd1",
+            "c2VfcGVyX3Nlc3Npb25fdGhyZWFkcxgJIAEoCBJHChxzZXNzaW9uX2ludGVy",
+            "X29wX3RocmVhZF9wb29sGAwgAygLMiEudGVuc29yZmxvdy5UaHJlYWRQb29s",
+            "T3B0aW9uUHJvdG8SGAoQcGxhY2VtZW50X3BlcmlvZBgDIAEoBRIWCg5kZXZp",
+            "Y2VfZmlsdGVycxgEIAMoCRIrCgtncHVfb3B0aW9ucxgGIAEoCzIWLnRlbnNv",
+            "cmZsb3cuR1BVT3B0aW9ucxIcChRhbGxvd19zb2Z0X3BsYWNlbWVudBgHIAEo",
+            "CBIcChRsb2dfZGV2aWNlX3BsYWNlbWVudBgIIAEoCBIvCg1ncmFwaF9vcHRp",
+            "b25zGAogASgLMhgudGVuc29yZmxvdy5HcmFwaE9wdGlvbnMSHwoXb3BlcmF0",
+            "aW9uX3RpbWVvdXRfaW5fbXMYCyABKAMSKwoLcnBjX29wdGlvbnMYDSABKAsy",
+            "Fi50ZW5zb3JmbG93LlJQQ09wdGlvbnMSKwoLY2x1c3Rlcl9kZWYYDiABKAsy",
+            "Fi50ZW5zb3JmbG93LkNsdXN0ZXJEZWYaMgoQRGV2aWNlQ291bnRFbnRyeRIL",
+            "CgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAU6AjgBIqUCCgpSdW5PcHRpb25z",
+            "EjYKC3RyYWNlX2xldmVsGAEgASgOMiEudGVuc29yZmxvdy5SdW5PcHRpb25z",
+            "LlRyYWNlTGV2ZWwSFQoNdGltZW91dF9pbl9tcxgCIAEoAxIcChRpbnRlcl9v",
+            "cF90aHJlYWRfcG9vbBgDIAEoBRIfChdvdXRwdXRfcGFydGl0aW9uX2dyYXBo",
+            "cxgFIAEoCBIvCg1kZWJ1Z19vcHRpb25zGAYgASgLMhgudGVuc29yZmxvdy5E",
+            "ZWJ1Z09wdGlvbnMiUgoKVHJhY2VMZXZlbBIMCghOT19UUkFDRRAAEhIKDlNP",
+            "RlRXQVJFX1RSQUNFEAESEgoOSEFSRFdBUkVfVFJBQ0UQAhIOCgpGVUxMX1RS",
+            "QUNFEANKBAgEEAUilgEKC1J1bk1ldGFkYXRhEikKCnN0ZXBfc3RhdHMYASAB",
+            "KAsyFS50ZW5zb3JmbG93LlN0ZXBTdGF0cxIsCgpjb3N0X2dyYXBoGAIgASgL",
+            "MhgudGVuc29yZmxvdy5Db3N0R3JhcGhEZWYSLgoQcGFydGl0aW9uX2dyYXBo",
+            "cxgDIAMoCzIULnRlbnNvcmZsb3cuR3JhcGhEZWZCLQoYb3JnLnRlbnNvcmZs",
+            "b3cuZnJhbWV3b3JrQgxDb25maWdQcm90b3NQAfgBAWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Tensorflow.CostGraphReflection.Descriptor, global::Tensorflow.GraphReflection.Descriptor, global::Tensorflow.StepStatsReflection.Descriptor, global::Tensorflow.DebugReflection.Descriptor, global::Tensorflow.ClusterReflection.Descriptor, global::Tensorflow.RewriterConfigReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.GPUOptions), global::Tensorflow.GPUOptions.Parser, new[]{ "PerProcessGpuMemoryFraction", "AllocatorType", "DeferredDeletionBytes", "AllowGrowth", "VisibleDeviceList", "PollingActiveDelayUsecs", "PollingInactiveDelayMsecs", "ForceGpuCompatible" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.OptimizerOptions), global::Tensorflow.OptimizerOptions.Parser, new[]{ "DoCommonSubexpressionElimination", "DoConstantFolding", "DoFunctionInlining", "OptLevel", "GlobalJitLevel" }, null, new[]{ typeof(global::Tensorflow.OptimizerOptions.Types.Level), typeof(global::Tensorflow.OptimizerOptions.Types.GlobalJitLevel) }, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.GraphOptions), global::Tensorflow.GraphOptions.Parser, new[]{ "EnableRecvScheduling", "OptimizerOptions", "BuildCostModel", "BuildCostModelAfter", "InferShapes", "PlacePrunedGraph", "EnableBfloat16Sendrecv", "TimelineStep", "RewriteOptions" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.ThreadPoolOptionProto), global::Tensorflow.ThreadPoolOptionProto.Parser, new[]{ "NumThreads" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.ThreadPoolOptionProto), global::Tensorflow.ThreadPoolOptionProto.Parser, new[]{ "NumThreads", "GlobalName" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.RPCOptions), global::Tensorflow.RPCOptions.Parser, new[]{ "UseRpcForInprocessMaster" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.ConfigProto), global::Tensorflow.ConfigProto.Parser, new[]{ "DeviceCount", "IntraOpParallelismThreads", "InterOpParallelismThreads", "UsePerSessionThreads", "SessionInterOpThreadPool", "PlacementPeriod", "DeviceFilters", "GpuOptions", "AllowSoftPlacement", "LogDevicePlacement", "GraphOptions", "OperationTimeoutInMs", "RpcOptions", "ClusterDef" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.RunOptions), global::Tensorflow.RunOptions.Parser, new[]{ "TraceLevel", "TimeoutInMs", "InterOpThreadPool", "OutputPartitionGraphs", "DebugOptions" }, null, new[]{ typeof(global::Tensorflow.RunOptions.Types.TraceLevel) }, null),
@@ -211,7 +211,7 @@ namespace Tensorflow {
     /// A comma-separated list of GPU ids that determines the 'visible'
     /// to 'virtual' mapping of GPU devices.  For example, if TensorFlow
     /// can see 8 GPU devices in the process, and one wanted to map
-    /// visible GPU devices 5 and 3 as "/gpu:0", and "/gpu:1", then one
+    /// visible GPU devices 5 and 3 as "/device:GPU:0", and "/device:GPU:1", then one
     /// would specify this field as "5,3".  This field is similar in
     /// spirit to the CUDA_VISIBLE_DEVICES environment variable, except
     /// it applies to the visible GPU devices in the process.
@@ -557,6 +557,10 @@ namespace Tensorflow {
     /// <summary>Field number for the "opt_level" field.</summary>
     public const int OptLevelFieldNumber = 3;
     private global::Tensorflow.OptimizerOptions.Types.Level optLevel_ = 0;
+    /// <summary>
+    /// Overall optimization level. The actual optimizations applied will be the
+    /// logical OR of the flags that this level implies and any flags already set.
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Tensorflow.OptimizerOptions.Types.Level OptLevel {
       get { return optLevel_; }
@@ -926,6 +930,8 @@ namespace Tensorflow {
     private global::Tensorflow.RewriterConfig rewriteOptions_;
     /// <summary>
     /// Options that control the type and amount of graph rewriting.
+    /// Not currently configurable via the public Python API (i.e. there is no API
+    /// stability guarantee if you import RewriterConfig explicitly).
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Tensorflow.RewriterConfig RewriteOptions {
@@ -1174,6 +1180,7 @@ namespace Tensorflow {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ThreadPoolOptionProto(ThreadPoolOptionProto other) : this() {
       numThreads_ = other.numThreads_;
+      globalName_ = other.globalName_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1198,6 +1205,34 @@ namespace Tensorflow {
       }
     }
 
+    /// <summary>Field number for the "global_name" field.</summary>
+    public const int GlobalNameFieldNumber = 2;
+    private string globalName_ = "";
+    /// <summary>
+    /// The global name of the threadpool.
+    ///
+    /// If empty, then the threadpool is made and used according to the scope it's
+    /// in - e.g., for a session threadpool, it is used by that session only.
+    ///
+    /// If non-empty, then:
+    /// - a global threadpool associated with this name is looked
+    ///   up or created. This allows, for example, sharing one threadpool across
+    ///   many sessions (e.g., like the default behavior, if
+    ///   inter_op_parallelism_threads is not configured), but still partitioning
+    ///   into a large and small pool.
+    /// - if the threadpool for this global_name already exists, then it is an
+    ///   error if the existing pool was created using a different num_threads
+    ///   value as is specified on this call.
+    /// - threadpools created this way are never garbage collected.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string GlobalName {
+      get { return globalName_; }
+      set {
+        globalName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as ThreadPoolOptionProto);
@@ -1212,6 +1247,7 @@ namespace Tensorflow {
         return true;
       }
       if (NumThreads != other.NumThreads) return false;
+      if (GlobalName != other.GlobalName) return false;
       return true;
     }
 
@@ -1219,6 +1255,7 @@ namespace Tensorflow {
     public override int GetHashCode() {
       int hash = 1;
       if (NumThreads != 0) hash ^= NumThreads.GetHashCode();
+      if (GlobalName.Length != 0) hash ^= GlobalName.GetHashCode();
       return hash;
     }
 
@@ -1233,6 +1270,10 @@ namespace Tensorflow {
         output.WriteRawTag(8);
         output.WriteInt32(NumThreads);
       }
+      if (GlobalName.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(GlobalName);
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1240,6 +1281,9 @@ namespace Tensorflow {
       int size = 0;
       if (NumThreads != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(NumThreads);
+      }
+      if (GlobalName.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(GlobalName);
       }
       return size;
     }
@@ -1251,6 +1295,9 @@ namespace Tensorflow {
       }
       if (other.NumThreads != 0) {
         NumThreads = other.NumThreads;
+      }
+      if (other.GlobalName.Length != 0) {
+        GlobalName = other.GlobalName;
       }
     }
 
@@ -1264,6 +1311,10 @@ namespace Tensorflow {
             break;
           case 8: {
             NumThreads = input.ReadInt32();
+            break;
+          }
+          case 18: {
+            GlobalName = input.ReadString();
             break;
           }
         }
@@ -1527,13 +1578,24 @@ namespace Tensorflow {
     private readonly pbc::RepeatedField<global::Tensorflow.ThreadPoolOptionProto> sessionInterOpThreadPool_ = new pbc::RepeatedField<global::Tensorflow.ThreadPoolOptionProto>();
     /// <summary>
     /// This option is experimental - it may be replaced with a different mechanism
-    /// in the future. The intended use is for when some session invocations need
-    /// to run in a background pool limited to a small number of threads.
+    /// in the future.
     ///
     /// Configures session thread pools. If this is configured, then RunOptions for
     /// a Run call can select the thread pool to use.
     ///
-    /// If a pool's num_threads is 0, then inter_op_parallelism_threads is used.
+    /// The intended use is for when some session invocations need to run in a
+    /// background pool limited to a small number of threads:
+    /// - For example, a session may be configured to have one large pool (for
+    /// regular compute) and one small pool (for periodic, low priority work);
+    /// using the small pool is currently the mechanism for limiting the inter-op
+    /// parallelism of the low priority work.  Note that it does not limit the
+    /// parallelism of work spawned by a single op kernel implementation.
+    /// - Using this setting is normally not needed in training, but may help some
+    /// serving use cases.
+    /// - It is also generally recommended to set the global_name field of this
+    /// proto, to avoid creating multiple large pools. It is typically better to
+    /// run the non-low-priority work, even across sessions, in a single large
+    /// pool.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<global::Tensorflow.ThreadPoolOptionProto> SessionInterOpThreadPool {

@@ -60,6 +60,7 @@ namespace Tensorflow {
   /// <summary>
   /// Defines an operation. A NodeDef in a GraphDef specifies an Op by
   /// using the "op" field which should match the name of a OpDef.
+  /// LINT.IfChange
   /// </summary>
   public sealed partial class OpDef : pb::IMessage<OpDef> {
     private static readonly pb::MessageParser<OpDef> _parser = new pb::MessageParser<OpDef>(() => new OpDef());

@@ -1,1 +1,1 @@
-call build_emgutf 64 nogpu vc nodoc
+call build_emgutf 64 nodoc
