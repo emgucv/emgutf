@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading;
 using Emgu.TF.Models;
 using Tensorflow;
+using Google.Protobuf;
 
 namespace Emgu.TF.Test
 {
@@ -99,7 +100,15 @@ namespace Emgu.TF.Test
         public void TestChooseDevice()
         {
             SessionOptions so = new SessionOptions();
-            
+            Tensorflow.ConfigProto config = new Tensorflow.ConfigProto();
+            config.LogDevicePlacement = true;
+            using (MemoryStream ms = new MemoryStream())
+            using (Google.Protobuf.CodedOutputStream stream = new CodedOutputStream(ms))
+            {
+               config.WriteTo(stream);
+                byte[] bytes = ms.ToArray();
+                so.SetConfig(bytes);
+            }
             int sum = Add(1, 2, so);
             
         }
