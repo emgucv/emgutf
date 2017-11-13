@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Emgu.TF</id>
+    <id>${EMGUTF_NUGET_ID}</id>
 	<title>${EMGUTF_NUGET_TITLE}</title>
     <version>${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}</version>
     <authors>${CPACK_PACKAGE_VENDOR}</authors>
