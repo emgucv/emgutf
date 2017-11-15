@@ -4,7 +4,7 @@
 # Root CMake file for Emgu TF
 #
 # From the off-tree build directory, invoke:
-#   $ cmake <PATH_TO_EMGUCV_ROOT>
+#   $ cmake <PATH_TO_EMGUTF_ROOT>
 #
 # --------------------------------------------------------
 
@@ -97,7 +97,7 @@ IF (WIN32)
       SET(EMGUTF_ARCH win32)
     ENDIF()
     #ELSE()
-    #  SET(EMGUCV_ARCH win32)
+    #  SET(EMGUTF_ARCH win32)
   ENDIF()
 ELSE(WIN32)
   SET(EMGUTF_ARCH ${CMAKE_SYSTEM_NAME})
@@ -317,24 +317,27 @@ IF(HAVE_WINDESKTOP_X64)
 	SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
 	<file src=\"..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />")
 ENDIF()
+
+
+SET(EMGUTF_NUGET_ID "EMGU.TF")
+IF(HAVE_WINDESKTOP_X64_CUDA)
+	SET(EMGUTF_NUGET_ID "${EMGUTF_NUGET_ID}-CUDA")
+ENDIF()
+
 IF(HAVE_WINDESKTOP_X64)
 	SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
-	<file src=\"Emgu.TF.targets\" target=\"build\" />
+	<file src=\"Emgu.TF.targets\" target=\"build\\${EMGUTF_NUGET_ID}.targets\" />
     <file src=\"..\\..\\lib\\Emgu.TF.World.dll\" target=\"lib\\net35\" />
 	<file src=\"..\\..\\lib\\Emgu.TF.World.XML\" target=\"lib\\net35\" />")
 ENDIF()
 
 
-SET(EMGUTF_NUGET_ID "EMGU.TF")
-IF(HAVE_WINDESKTOP_X64_CUDA)
-	SET(EMGUCV_NUGET_ID "${EMGUCV_NUGET_ID}-CUDA")
-ENDIF()
 SET(EMGUTF_NUGET_TITLE_ARCH "")
 IF(HAVE_WINDESKTOP_X86)
- SET(EMGUTF_NUGET_TITLE_ARCH "${EMGUCV_NUGET_TITLE_ARCH} x86")
+ SET(EMGUTF_NUGET_TITLE_ARCH "${EMGUTF_NUGET_TITLE_ARCH} x86")
 ENDIF()
 IF(HAVE_WINDESKTOP_X64)
- SET(EMGUTF_NUGET_TITLE_ARCH "${EMGUCV_NUGET_TITLE_ARCH} x64")
+ SET(EMGUTF_NUGET_TITLE_ARCH "${EMGUTF_NUGET_TITLE_ARCH} x64")
 ENDIF()
 STRING(STRIP "${EMGUTF_NUGET_TITLE_ARCH}" EMGUTF_NUGET_TITLE_ARCH)
 STRING(REPLACE "x86 x64" "" EMGUTF_NUGET_TITLE_ARCH "${EMGUTF_NUGET_TITLE_ARCH}")
