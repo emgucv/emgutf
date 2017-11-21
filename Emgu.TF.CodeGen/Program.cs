@@ -18,6 +18,7 @@ namespace Emgu.TF.CodeGen
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Starting code generation");
             using (Buffer bf = TfInvoke.GetAllOpList())
             using (MemoryStream ms = bf.GetMemoryStream())
             {
@@ -53,6 +54,7 @@ namespace Emgu.TF
    }
 }";
                 File.WriteAllText("Graph.g.cs", page);
+                Console.WriteLine("Code generation completed");
             }
         }
 

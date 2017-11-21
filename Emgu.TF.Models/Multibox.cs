@@ -43,9 +43,9 @@ namespace Emgu.TF.Models
                 ImportGraphDef(modelBuffer, options, status);
         }
 
-        public Result Detect(Tensor imageResults)
+        public Result Detect(Tensor imageResults, SessionOptions sessionOptions = null)
         {
-            Session multiboxSession = new Session(this);
+            Session multiboxSession = new Session(this, sessionOptions);
 
             Tensor[] finalTensor = multiboxSession.Run(new Output[] { this["ResizeBilinear"] }, new Tensor[] { imageResults },
                 new Output[] { this["output_scores/Reshape"], this["output_locations/Reshape"] });

@@ -94,6 +94,17 @@ namespace Emgu.TF.Test
         public void TestCUDAEnabled()
         {
             bool cuda = TfInvoke.IsGoogleCudaEnabled;
+            Tensorflow.ConfigProto config = new Tensorflow.ConfigProto();
+            config.LogDevicePlacement = true;
+            byte[] pbuff;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                config.WriteTo(ms);
+                pbuff = ms.ToArray();
+            }
+            SessionOptions options = new SessionOptions();
+            options.SetConfig(pbuff);
+            Add(3, 4, options);
         }
 
         [TestMethod]
