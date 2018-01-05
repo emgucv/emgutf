@@ -28,6 +28,12 @@ namespace Emgu.TF.Test
         }
 
         [TestMethod]
+        public void TestLoadLargeGraph()
+        {
+            Inception inceptionGraph = new Inception(null, new string[] { "optimized_graph.pb", "output_labels.txt" }, "https://github.com/emgucv/models/raw/master/inception_flower_retrain/", "Mul", "final_result");
+        }
+
+        [TestMethod]
         public void TestInception()
         {
             Tensor imageTensor = ImageIO.ReadTensorFromImageFile("grace_hopper.jpg", 224, 224, 128.0f, 1.0f);

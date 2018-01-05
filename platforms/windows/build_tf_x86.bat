@@ -70,6 +70,17 @@ IF %DEVENV%==%VS2013% SET BUILD_TYPE=/Build Release
 IF %DEVENV%==%VS2015% SET BUILD_TYPE=/Build Release
 IF %DEVENV%==%VS2017% SET BUILD_TYPE=/Build Release
 
+:SET_CLEAN_TYPE
+IF %DEVENV%=="%MSBUILD35%" SET CLEAN_TYPE=/property:Configuration=Release /t:clean
+IF %DEVENV%=="%MSBUILD40%" SET CLEAN_TYPE=/property:Configuration=Release /t:clean
+IF %DEVENV%==%VS2005% SET CLEAN_TYPE=/Clean Release
+IF %DEVENV%==%VS2008% SET CLEAN_TYPE=/Clean Release
+IF %DEVENV%==%VS2010% SET CLEAN_TYPE=/Clean Release
+IF %DEVENV%==%VS2012% SET CLEAN_TYPE=/Clean Release
+IF %DEVENV%==%VS2013% SET CLEAN_TYPE=/Clean Release
+IF %DEVENV%==%VS2015% SET CLEAN_TYPE=/Clean Release
+IF %DEVENV%==%VS2017% SET CLEAN_TYPE=/Clean Release
+
 IF %DEVENV%=="%MSBUILD35%" SET CMAKE_CONF="Visual Studio 12 2005%OS_MODE%"
 IF %DEVENV%=="%MSBUILD40%" SET CMAKE_CONF="Visual Studio 12 2005%OS_MODE%"
 IF %DEVENV%==%VS2005% SET CMAKE_CONF="Visual Studio 8 2005%OS_MODE%"
@@ -95,6 +106,8 @@ REM download and build protobuf
 call %DEVENV% %BUILD_TYPE% tensorflow.sln /project protobuf
 REM Fix protobuf 64MB limit
 sed -i 's/kDefaultTotalBytesLimit = 64/kDefaultTotalBytesLimit = 500/g' .\protobuf\src\protobuf\src\google\protobuf\io\coded_stream.h
+REM need to clean the project to for the rebuild of protobuf
+call %DEVENV% %CLEAN_TYPE% tensorflow.sln /project protobuf
 REM build tfextern
 call %DEVENV% %BUILD_TYPE% tensorflow.sln /project tfextern
 
