@@ -25,6 +25,14 @@ IF EXIST "%PROGRAMFILES_DIR_X86%\CMake\bin\cmake.exe" SET CMAKE="%PROGRAMFILES_D
 IF EXIST "%PROGRAMFILES_DIR%\CMake\bin\cmake.exe" SET CMAKE="%PROGRAMFILES_DIR%\CMake\bin\cmake.exe"
 IF EXIST "%PROGRAMW6432%\CMake\bin\cmake.exe" SET CMAKE="%PROGRAMW6432%\CMake\bin\cmake.exe"
 
+REM Find Python Executable
+SET PYTHON_EXECUTABLE="python.exe"
+IF EXIST "%PROGRAMFILES_DIR_X86%\Anaconda2\python.exe" SET PYTHON_EXECUTABLE=%PROGRAMFILES_DIR_X86%\Anaconda2\python.exe
+IF EXIST "%PROGRAMFILES_DIR_X86%\Anaconda3\python.exe" SET PYTHON_EXECUTABLE=%PROGRAMFILES_DIR_X86%\Anaconda3\python.exe
+IF EXIST "%PROGRAMFILES_DIR%\Anaconda2\python.exe" SET PYTHON_EXECUTABLE=%PROGRAMFILES_DIR%\Anaconda2\python.exe
+IF EXIST "%PROGRAMFILES_DIR%\Anaconda3\python.exe" SET PYTHON_EXECUTABLE=%PROGRAMFILES_DIR%\Anaconda3\python.exe
+IF EXIST "%PROGRAMFILES_DIR_X86%\Microsoft Visual Studio\Shared\Anaconda3_64\python.exe" SET PYTHON_EXECUTABLE=%PROGRAMFILES_DIR_X86%\Microsoft Visual Studio\Shared\Anaconda3_64\python.exe
+
 REM Find Visual Studio or Msbuild
 SET VS2005="%VS80COMNTOOLS%..\IDE\devenv.com"
 SET VS2008="%VS90COMNTOOLS%..\IDE\devenv.com"
@@ -80,9 +88,7 @@ cd build
 %CMAKE% .. ^
 -DCMAKE_BUILD_TYPE=Release ^
 -G %CMAKE_CONF% %GPU_MODE%^
--DSWIG_EXECUTABLE=C:/tools/swigwin-3.0.12/swig.exe ^
--DPYTHON_EXECUTABLE="C:/Program Files/Anaconda3/python.exe" ^
--DPYTHON_LIBRARIES="C:/Program Files/Anaconda3/libs/python35.lib" ^
+-DPYTHON_EXECUTABLE="%PYTHON_EXECUTABLE%" ^
 -Dtensorflow_BUILD_PYTHON_BINDINGS:BOOL=OFF
 
 REM download and build protobuf
