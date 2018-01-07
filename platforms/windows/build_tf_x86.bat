@@ -103,11 +103,11 @@ cd build
 -Dtensorflow_BUILD_PYTHON_BINDINGS:BOOL=OFF
 
 REM download and build protobuf
-call %DEVENV% %BUILD_TYPE% tensorflow.sln /project protobuf
+REM call %DEVENV% %BUILD_TYPE% tensorflow.sln /project protobuf
 REM Fix protobuf 64MB limit
-sed -i 's/kDefaultTotalBytesLimit = 64/kDefaultTotalBytesLimit = 500/g' .\protobuf\src\protobuf\src\google\protobuf\io\coded_stream.h
+REM sed -i 's/kDefaultTotalBytesLimit = 64/kDefaultTotalBytesLimit = 500/g' .\protobuf\src\protobuf\src\google\protobuf\io\coded_stream.h
 REM need to clean the project to for the rebuild of protobuf
-call %DEVENV% %CLEAN_TYPE% tensorflow.sln /project protobuf
+REM call %DEVENV% %CLEAN_TYPE% tensorflow.sln /project protobuf
 REM build tfextern
 call %DEVENV% %BUILD_TYPE% tensorflow.sln /project tfextern
 
