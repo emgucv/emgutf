@@ -67,7 +67,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Emgu.TF.Test.Core\Emgu.TF.Test.Core.csproj">
       <Project>{67a1a571-95e4-43a0-a67f-c6f210a71aae}</Project>
-      <Name>Emgu.TF.Extra</Name>
+      <Name>Emgu.TF.Test.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Emgu.TF.World\Emgu.TF.World.csproj">
       <Project>{cf1433de-b607-479e-862d-8f4cb6783261}</Project>

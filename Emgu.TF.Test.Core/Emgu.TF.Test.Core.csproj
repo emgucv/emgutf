@@ -58,8 +58,8 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <Import Project="..\Protobuf\Emgu.TF.Protobuf.projitems" Label="Shared" />
-  <Import Project="..\Emgu.TF.Models\Emgu.TF.Models.projitems" Label="Shared" />
+  <Import Project="..\Protobuf\Emgu.TF.Protobuf.Shared.projitems" Label="Shared" />
+  <Import Project="..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
