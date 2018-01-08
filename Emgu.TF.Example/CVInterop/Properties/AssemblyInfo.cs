@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("InceptionObjectRecognition")]
+[assembly: AssemblyTitle("Emgu.CV.Interop")]
 [assembly: AssemblyDescription("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("dae2ef5c-ad22-473c-bc7b-75c3ce3d8eae")]
+[assembly: Guid("149e78f6-349d-42b7-8e03-3edeb6ef348e")]
 
 // Version information for an assembly consists of the following four values:
 //
