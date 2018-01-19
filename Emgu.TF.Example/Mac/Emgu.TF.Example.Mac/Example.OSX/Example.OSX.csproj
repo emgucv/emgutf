@@ -98,7 +98,7 @@
     </Content>
   </ItemGroup>
   <Import Project="..\..\..\..\Emgu.TF.Util\Emgu.TF.Util.projitems" Label="Shared" Condition="Exists('..\..\..\..\Emgu.TF.Util\Emgu.TF.Util.projitems')" />
-  <Import Project="..\..\..\..\Emgu.TF.Models\Emgu.TF.Models.projitems" Label="Shared" Condition="Exists('..\..\..\..\Emgu.TF.Models\Emgu.TF.Models.projitems')" />
+  <Import Project="..\..\..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems')" />
   <Import Project="..\..\..\..\Emgu.TF\Emgu.TF.projitems" Label="Shared" Condition="Exists('..\..\..\..\Emgu.TF\Emgu.TF.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>

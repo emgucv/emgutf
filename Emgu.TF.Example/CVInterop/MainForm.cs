@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using Emgu.TF;
 using Emgu.TF.Models;
 using Emgu.CV;
-
+using System.Diagnostics;
 
 namespace CVInterop
 {
@@ -90,7 +90,10 @@ namespace CVInterop
                 //Inception inceptionGraph = new Inception(null, new string[] {"optimized_graph.pb", "output_labels.txt"}, null, "Mul", "final_result");
                 //Tensor imageTensor = ImageIO.ReadTensorFromMatBgr(fileName, 299, 299, 128.0f, 1.0f / 128.0f);
 
+                Stopwatch sw = Stopwatch.StartNew();
                 float[] probability = inceptionGraph.Recognize(imageTensor);
+                sw.Stop();
+
                 String resStr = String.Empty;
                 if (probability != null)
                 {
@@ -105,7 +108,7 @@ namespace CVInterop
                             maxIdx = i;
                         }
                     }
-                    resStr = String.Format("Object is {0} with {1}% probability.", labels[maxIdx], maxVal * 100);
+                    resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", labels[maxIdx], maxVal * 100, sw.ElapsedMilliseconds);
                 }
                 messageLabel.Text = resStr;
             }

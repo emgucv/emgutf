@@ -105,7 +105,7 @@
     </Content>
   </ItemGroup>
   <Import Project="..\..\Emgu.TF\Emgu.TF.projitems" Label="Shared" />
-  <Import Project="..\..\Emgu.TF.Models\Emgu.TF.Models.projitems" Label="Shared" />
+  <Import Project="..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems" Label="Shared" />
   <Import Project="..\..\Emgu.TF.Util\Emgu.TF.Util.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\nugetpackages\EMGU.CV.3.3.0.2824\build\Emgu.CV.targets" Condition="Exists('..\..\nugetpackages\EMGU.CV.3.3.0.2824\build\Emgu.CV.targets')" />

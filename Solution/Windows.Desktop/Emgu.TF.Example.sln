@@ -9,7 +9,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF", "..\..\Emgu.TF\Em
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Util", "..\..\Emgu.TF.Util\Emgu.TF.Util.shproj", "{98561642-5EC3-4244-BAF9-6876D9BA5527}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Models", "..\..\Emgu.TF.Models\Emgu.TF.Models.shproj", "{752279F0-17EF-4EC8-857C-8F5F897AF0E8}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Models.Shared", "..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.shproj", "{752279F0-17EF-4EC8-857C-8F5F897AF0E8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InceptionObjectRecognition", "..\..\Emgu.TF.Example\InceptionObjectRecognition\InceptionObjectRecognition.csproj", "{DAE2EF5C-AD22-473C-BC7B-75C3CE3D8EAE}"
 EndProject
@@ -17,16 +17,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CVInterop", "..\..\Emgu.TF.
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\Emgu.TF.Models\Emgu.TF.Models.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
+		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
 		..\..\Emgu.TF\Emgu.TF.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
-		..\..\Emgu.TF.Models\Emgu.TF.Models.projitems*{752279f0-17ef-4ec8-857c-8f5f897af0e8}*SharedItemsImports = 13
+		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{752279f0-17ef-4ec8-857c-8f5f897af0e8}*SharedItemsImports = 13
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{98561642-5ec3-4244-baf9-6876d9ba5527}*SharedItemsImports = 13
-		..\..\Emgu.TF.Models\Emgu.TF.Models.projitems*{a056234d-e585-4fff-a2e0-e63688595509}*SharedItemsImports = 4
+		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{a056234d-e585-4fff-a2e0-e63688595509}*SharedItemsImports = 4
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{a056234d-e585-4fff-a2e0-e63688595509}*SharedItemsImports = 4
 		..\..\Emgu.TF\Emgu.TF.projitems*{a056234d-e585-4fff-a2e0-e63688595509}*SharedItemsImports = 4
 		..\..\Emgu.TF\Emgu.TF.projitems*{d47d776e-9970-4552-bc8a-24cadcbea009}*SharedItemsImports = 13
-		..\..\Emgu.TF.Models\Emgu.TF.Models.projitems*{dae2ef5c-ad22-473c-bc7b-75c3ce3d8eae}*SharedItemsImports = 4
+		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{dae2ef5c-ad22-473c-bc7b-75c3ce3d8eae}*SharedItemsImports = 4
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{dae2ef5c-ad22-473c-bc7b-75c3ce3d8eae}*SharedItemsImports = 4
 		..\..\Emgu.TF\Emgu.TF.projitems*{dae2ef5c-ad22-473c-bc7b-75c3ce3d8eae}*SharedItemsImports = 4
 	EndGlobalSection

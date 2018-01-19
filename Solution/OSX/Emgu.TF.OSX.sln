@@ -9,7 +9,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Util", "..\..\Emgu.
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "XamarinForms", "..\..\Emgu.TF.Example\XamarinForms\XamarinForms\XamarinForms.shproj", "{26BDB58D-52D9-4AD1-9205-BE5792781A98}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Models", "..\..\Emgu.TF.Models\Emgu.TF.Models.shproj", "{752279F0-17EF-4EC8-857C-8F5F897AF0E8}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Models.Shared", "..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.shproj", "{752279F0-17EF-4EC8-857C-8F5F897AF0E8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.World.Unified", "..\..\Emgu.TF.World\Emgu.TF.World.Unified.csproj", "{64306FF5-1E98-4D18-9CA7-666CD2D0F642}"
 EndProject
