@@ -28,47 +28,6 @@ namespace CVInterop
 
         }
 
-        public static Tensor ReadTensorFromMatBgr(Mat image, int inputHeight = -1, int inputWidth = -1, float inputMean = 0.0f, float scale = 1.0f, Status status = null)
-        {
-            if (image.NumberOfChannels != 3)
-            {
-                throw new ArgumentException("Input must be 3 channel BGR image");
-            }
-
-            Emgu.CV.CvEnum.DepthType depth = image.Depth;
-            if (!(depth == Emgu.CV.CvEnum.DepthType.Cv8U || depth == Emgu.CV.CvEnum.DepthType.Cv32F))
-            {
-                throw new ArgumentException("Input image must be 8U or 32F");
-            }
-
-            //resize
-            int finalHeight = inputHeight == -1 ? image.Height : inputHeight;
-            int finalWidth = inputWidth == -1 ? image.Width : inputWidth;
-            Size finalSize = new Size(finalWidth, finalHeight);
-
-            if (image.Size != finalSize)
-            {
-                using (Mat tmp = new Mat())
-                {
-                    CvInvoke.Resize(image, tmp, finalSize);
-                    return ReadTensorFromMatBgrF(tmp, inputMean, scale);
-                }
-            }
-            else
-            {
-                return ReadTensorFromMatBgrF(image, inputMean, scale);
-            }
-        }
-
-        private static Tensor ReadTensorFromMatBgrF(Mat image, float inputMean, float scale)
-        {
-            Tensor t = new Tensor(DataType.Float, new int[] { 1, image.Height, image.Width, 3 });
-            using (Mat matF = new Mat(image.Size, Emgu.CV.CvEnum.DepthType.Cv32F, 3, t.DataPointer, sizeof(float) * 3 * image.Width))
-            {
-                image.ConvertTo(matF, Emgu.CV.CvEnum.DepthType.Cv32F, scale, -inputMean * scale);
-            }
-            return t;
-        }
 
         public void Recognize(String fileName)
         {
@@ -79,7 +38,7 @@ namespace CVInterop
             {
                 //Use the following code for the full inception model
                 Inception inceptionGraph = new Inception();
-                Tensor imageTensor = ReadTensorFromMatBgr(m, 224, 224, 128.0f, 1.0f / 128.0f);
+                Tensor imageTensor = Emgu.TF.TensorConvert.ReadTensorFromMatBgr(m, 224, 224, 128.0f, 1.0f / 128.0f);
 
                 //Uncomment the following code to use a retrained model to recognize followers, downloaded from the internet
                 //Inception inceptionGraph = new Inception(null, new string[] {"optimized_graph.pb", "output_labels.txt"}, "https://github.com/emgucv/models/raw/master/inception_flower_retrain/", "Mul", "final_result");
