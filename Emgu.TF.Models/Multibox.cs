@@ -357,7 +357,6 @@ namespace Emgu.TF.Models
         {
             Rectangle[] locations = ScaleLocation(result.DecodedLocations, bmp.Width, bmp.Height);
 
-
             using (Graphics g = Graphics.FromImage(bmp))
             {
                 for (int i = 0; i < result.Scores.Length; i++)
