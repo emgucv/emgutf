@@ -90,11 +90,11 @@ namespace Emgu.TF.Models
         public static float[] ReadBoxPriors(String fileName)
         {
             List<float> priors = new List<float>();
-#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+//#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+//            foreach (String line in File.ReadAllLines(fileName))
+//#else
             foreach (String line in File.ReadAllLines(fileName))
-#else
-            foreach (String line in File.ReadLines(fileName))
-#endif
+//#endif
             {
                 String[] tokens = line.Split(',');
                 foreach (var token in tokens)
