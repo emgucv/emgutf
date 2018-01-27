@@ -2,13 +2,14 @@
 #  Copyright (C) 2004-2018 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-IF (WIN32 AND (HAVE_WINDESKTOP_X86 OR HAVE_WINDESKTOP_X64) )
+IF (WIN32 AND (HAVE_WINDESKTOP_X64_CUDA) )
 
-PROJECT(Emgu.TF.Models.nuget)
+PROJECT(Emgu.TF.Dnn.nuget)
 ADD_CUSTOM_TARGET(
    ${PROJECT_NAME}
+   COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../../../tensorflow/tensorflow/contrib/cmake/nuget/Dnn/Package.nuspec ${CMAKE_CURRENT_SOURCE_DIR}
    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/../../../miscellaneous/nuget.exe pack Package.nuspec
 )
-ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Models Emgu.TF.nuget)
+ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.World)
 
 ENDIF()

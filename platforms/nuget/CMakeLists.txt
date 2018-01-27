@@ -4,12 +4,19 @@
 
 IF (WIN32 AND (HAVE_WINDESKTOP_X86 OR HAVE_WINDESKTOP_X64) )
 
+add_subdirectory(Dnn)
+
 PROJECT(Emgu.TF.nuget)
 ADD_CUSTOM_TARGET(
    ${PROJECT_NAME}
    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/../../miscellaneous/nuget.exe pack Package.nuspec
 )
+
 ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.World)
+
+IF (WIN32 AND (HAVE_WINDESKTOP_X64_CUDA) )
+	ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Dnn.nuget)
+ENDIF()
 
 add_subdirectory(Models)
 ENDIF()

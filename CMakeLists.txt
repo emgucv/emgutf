@@ -321,23 +321,7 @@ ENDIF()
 
 SET(EMGUTF_NUGET_ID "EMGU.TF")
 SET(EMGUTF_MODEL_NUGET_ID "EMGU.TF.MODELS")
-IF(HAVE_WINDESKTOP_X64_CUDA)
-	SET(EMGUTF_NUGET_ID "${EMGUTF_NUGET_ID}-CUDA")
-	SET(EMGUTF_MODEL_NUGET_ID "${EMGUTF_MODEL_NUGET_ID}-CUDA")
-ENDIF()
 
-
-
-IF(HAVE_WINDESKTOP_X64)
-	SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
-	<file src=\"Emgu.TF.targets\" target=\"build\\${EMGUTF_NUGET_ID}.targets\" />
-    <file src=\"..\\..\\lib\\Emgu.TF.World.dll\" target=\"lib\\net35\" />
-	<file src=\"..\\..\\lib\\Emgu.TF.World.XML\" target=\"lib\\net35\" />")
-ENDIF()
-
-SET(EMGUTF_MODEL_NUGET_FILE_LIST "
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.dll\" target=\"lib\\net35\" />
-	<file src=\"..\\..\\..\\lib\\Emgu.TF.Models.XML\" target=\"lib\\net35\" />")
 
 SET(EMGUTF_NUGET_TITLE_ARCH "")
 IF(HAVE_WINDESKTOP_X86)
@@ -354,19 +338,42 @@ SET(EMGUTF_MODEL_NUGET_TITLE "EMGU TF MODELS")
 
 STRING(STRIP "${EMGUTF_NUGET_TITLE}" EMGUTF_NUGET_TITLE)
 
-IF ("${LICENSE_TYPE}" EQUAL "Commercial")
-	SET(EMGUTF_NUGET_TITLE "${EMGUTF_NUGET_TITLE} Commercial Release")
-	SET(EMGUTF_MODEL_NUGET_TITLE "${EMGUTF_MODEL_NUGET_TITLE} Commercial Release")
-ENDIF()
-
 IF(HAVE_WINDESKTOP_X64_CUDA)
+	SET(EMGUTF_NUGET_ID "${EMGUTF_NUGET_ID}-CUDA")
+	SET(EMGUTF_MODEL_NUGET_ID "${EMGUTF_MODEL_NUGET_ID}-CUDA")
 	SET(EMGUTF_NUGET_TITLE "${EMGUTF_NUGET_TITLE} with CUDA support")	
 	SET(EMGUTF_MODEL_NUGET_TITLE "${EMGUTF_MODEL_NUGET_TITLE} with CUDA support")
 ENDIF()
 
+IF ("${LICENSE_TYPE}" EQUAL "Commercial")
+	SET(EMGUTF_NUGET_ID "${EMGUTF_NUGET_ID}-CR")
+	SET(EMGUTF_MODEL_NUGET_ID "${EMGUTF_MODEL_NUGET_ID}-CR")
+	SET(EMGUTF_NUGET_TITLE "${EMGUTF_NUGET_TITLE} Commercial Release")
+	SET(EMGUTF_MODEL_NUGET_TITLE "${EMGUTF_MODEL_NUGET_TITLE} Commercial Release")
+ENDIF()
+
+IF(HAVE_WINDESKTOP_X64)
+	IF(HAVE_WINDESKTOP_X64_CUDA)
+		SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} <file src=\"Emgu.TF.targets\" exclude=\"..\\..\\lib\\x64\\cudnn*.dll\" target=\"build\\${EMGUTF_NUGET_ID}.targets\" />")
+	ELSE()
+		SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} <file src=\"Emgu.TF.targets\" target=\"build\\${EMGUTF_NUGET_ID}.targets\" />")
+	ENDIF()
+	SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
+    <file src=\"..\\..\\lib\\Emgu.TF.World.dll\" target=\"lib\\net35\" />
+	<file src=\"..\\..\\lib\\Emgu.TF.World.XML\" target=\"lib\\net35\" />")
+ENDIF()
+
+SET(EMGUTF_MODEL_NUGET_FILE_LIST "
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.dll\" target=\"lib\\net35\" />
+	<file src=\"..\\..\\..\\lib\\Emgu.TF.Models.XML\" target=\"lib\\net35\" />")
+
+SET(EMGUTF_NUGET_DEPENDENCY "")
+IF(HAVE_WINDESKTOP_X64_CUDA)
+	SET(EMGUTF_NUGET_DEPENDENCY "<dependencies><dependency id=\"EMGU.DNN\" version=\"7.0\" /></dependencies>")
+ENDIF()
+	
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Models.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Models/Package.nuspec)
-
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/XamarinForms.Android.AndroidManifest.xml.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Example/XamarinForms/XamarinForms.Android/Properties/AndroidManifest.xml)
 
 # ----------------------------------------------------------------------------
@@ -394,6 +401,7 @@ ADD_SUBDIRECTORY(Emgu.TF.Example)
 ADD_SUBDIRECTORY(Emgu.TF.World)
 ADD_SUBDIRECTORY(Emgu.TF.Models)
 ADD_SUBDIRECTORY(Emgu.TF.CodeGen)
+ADD_SUBDIRECTORY(Emgu.TF.Protobuf)
 ADD_SUBDIRECTORY(platforms)
 
 IF(HAVE_ANDROID)
