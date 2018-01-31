@@ -19,7 +19,7 @@
     <Error Condition="'$(EmguDnnLinkTarget)'==''" Text="Emgu DNN is not able to detect the project type, please send a bug report to support@emgu.com" />
     <Message Condition="'$(EmguDnnLinkTarget)'!=''" Text="Emgu DNN nuget package compiling against $(EmguDnnLinkTarget)" Importance="High" />
     <Error Text="'$(EmguDnnErrorMessage)'" Condition="'$(EmguDnnErrorMessage)'!=''" />
-    <Message Text="Emgu DNN dependency Compiling with $(EmguCudaDeployMessage)binary" Condition="'$(EmguCudaDeployMessage)'!=''" Importance="High" />
-    <Message Text="No native binary is deployed by the Emgu DNN package." Condition="'$(EmguCudaDeployMessage)'==''" Importance="High" />
+    <Message Text="Emgu DNN dependency Compiling with $(EmguDnnDeployMessage)binary" Condition="'$(EmguDnnDeployMessage)'!=''" Importance="High" />
+    <Message Text="No native binary is deployed by the Emgu DNN package." Condition="'$(EmguDnnDeployMessage)'==''" Importance="High" />
   </Target>
 </Project>

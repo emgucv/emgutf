@@ -3,9 +3,9 @@
       <PropertyGroup>
         <EmguTFLinkTarget>WindowsForms</EmguTFLinkTarget>
         <EmguTFBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguTFBuildX64>
-        <EmguTFNativeFileX64>$(MSBuildThisFileDirectory)\x64\tfextern.dll</EmguTFNativeFileX64>
+        <EmguTFNativeFileX64>$(MSBuildThisFileDirectory)x64\tfextern.dll</EmguTFNativeFileX64>
         <EmguTFErrorMessage Condition="'$(EmguTFBuildX64)'=='True' AND !Exists('$(EmguTFNativeFileX64)')">This package do not contain necessary binary for $(EmguTFLinkTarget). X64 is targeted, but file $(EmguTFNativeFileX64) is missing.</EmguTFErrorMessage>
-        <EmguTFDeployMessage Condition="'$(EmguTFBuildX64)'=='True' AND Exists('$(EmguTFNativeFileX64)')">$(EmguTFDeployMessage )x64 </EmguTFDeployMessage >
+        <EmguTFDeployMessage Condition="'$(EmguTFBuildX64)'=='True' AND Exists('$(EmguTFNativeFileX64)')">$(EmguTFDeployMessage)x64 </EmguTFDeployMessage >
       </PropertyGroup>
       <ItemGroup Condition="'$(EmguTFBuildX64)'=='True' AND Exists('$(EmguTFNativeFileX64)')">
         <Content Include="$(MSBuildThisFileDirectory)\x64\*.dll">
@@ -18,7 +18,7 @@
     <Error Condition="'$(EmguTFLinkTarget)'==''" Text="Emgu TF is not able to detect the project type, please use the pre-compiled Emgu.TF.World dll or send a bug report to support@emgu.com" />
     <Message Condition="'$(EmguTFLinkTarget)'!=''" Text="Emgu TF nuget package compiling against $(EmguTFLinkTarget)" Importance="High" />
     <Error Text="'$(EmguTFErrorMessage)'" Condition="'$(EmguTFErrorMessage)'!=''" />
-    <Message Text="Emgu TF Compiling with $(EmguTFDeployMessage )binary" Condition="'$(EmguTFDeployMessage )'!=''" Importance="High" />
-    <Message Text="No native binary is deployed by the Emgu.TF shared project." Condition="'$(EmguTFDeployMessage )'==''" Importance="High" />
+    <Message Text="Emgu TF Compiling with $(EmguTFDeployMessage)binary" Condition="'$(EmguTFDeployMessage)'!=''" Importance="High" />
+    <Message Text="No native binary is deployed by the Emgu.TF shared project." Condition="'$(EmguTFDeployMessage)'==''" Importance="High" />
   </Target>
 </Project>

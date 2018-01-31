@@ -352,10 +352,16 @@ IF ("${LICENSE_TYPE}" EQUAL "Commercial")
 	SET(EMGUTF_MODEL_NUGET_TITLE "${EMGUTF_MODEL_NUGET_TITLE} Commercial Release")
 ENDIF()
 
+SET(EMGUTF_NUGET_DEPENDENCY "")
 IF(HAVE_WINDESKTOP_X64)
 	IF(HAVE_WINDESKTOP_X64_CUDA)
+		SET(EMGUTF_NUGET_DEPENDENCY "${EMGUTF_NUGET_DEPENDENCY}
+		<dependencies>
+			<dependency id=\"EMGU.DNN\" version=\"7.0\" />
+			<dependency id=\"EMGU.CUFFT\" version=\"9.0\" />
+		</dependencies>")
 		SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
-		<file src=\"..\\..\\lib\\x64\\*.dll\" exclude=\"..\\..\\lib\\x64\\cudnn*.dll\" target=\"build\\x64\" />")
+		<file src=\"..\\..\\lib\\x64\\*.dll\" exclude=\"..\\..\\lib\\x64\\cudnn*.dll;..\\..\\lib\\x64\\cufft*.dll\" target=\"build\\x64\" />")
 	ELSE()
 		SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
 		<file src=\"..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />")
@@ -372,9 +378,9 @@ SET(EMGUTF_MODEL_NUGET_FILE_LIST "
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.dll\" target=\"lib\\net35\" />
 	<file src=\"..\\..\\..\\lib\\Emgu.TF.Models.XML\" target=\"lib\\net35\" />")
 
-SET(EMGUTF_NUGET_DEPENDENCY "")
+
 IF(HAVE_WINDESKTOP_X64_CUDA)
-	SET(EMGUTF_NUGET_DEPENDENCY "<dependencies><dependency id=\"EMGU.DNN\" version=\"7.0\" /></dependencies>")
+	
 ENDIF()
 	
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Package.nuspec)
