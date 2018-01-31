@@ -301,6 +301,8 @@ namespace Emgu.TF
                 return "parameters";
             if (name.Equals("ref"))
                 return "reference";
+            if (name.Equals("event"))
+                return "tfEvent";
             return name;
         }
 

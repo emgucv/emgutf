@@ -11,8 +11,8 @@ IF "%1%"=="64" SET OS_MODE= Win64
 IF "%1%"=="ARM" SET OS_MODE= ARM
 
 IF "%2%"=="gpu" SET GPU_MODE= -Dtensorflow_ENABLE_GPU=ON ^
--DCUDNN_HOME="%CUDA_PATH_V8_0:\=/%" ^
--DCUDA_TOOLKIT_ROOT_DIR="%CUDA_PATH_V8_0:\=/%" 
+-DCUDNN_HOME="%CUDA_PATH_V9_0:\=/%" ^
+-DCUDA_TOOLKIT_ROOT_DIR="%CUDA_PATH_V9_0:\=/%" 
 
 SET PROGRAMFILES_DIR_X86=%programfiles(x86)%
 if NOT EXIST "%PROGRAMFILES_DIR_X86%" SET PROGRAMFILES_DIR_X86=%programfiles%
@@ -40,7 +40,14 @@ SET VS2010="%VS100COMNTOOLS%..\IDE\devenv.com"
 SET VS2012="%VS110COMNTOOLS%..\IDE\devenv.com"
 SET VS2013="%VS120COMNTOOLS%..\IDE\devenv.com"
 SET VS2015="%VS140COMNTOOLS%..\IDE\devenv.com"
-SET VS2017="%PROGRAMFILES_DIR_X86%\Microsoft Visual Studio\2017\Community\Common7\IDE\devenv.com"
+
+SET VS2017_DIR=%PROGRAMFILES_DIR_X86%\Microsoft Visual Studio\2017\Community
+IF EXIST "%PROGRAMFILES_DIR_X86%\Microsoft Visual Studio\2017\Professional\Common7\IDE\devenv.com" SET VS2017_DIR=%PROGRAMFILES_DIR_X86%\Microsoft Visual Studio\2017\Professional
+IF EXIST "%PROGRAMFILES_DIR_X86%\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\devenv.com" SET VS2017_DIR=%PROGRAMFILES_DIR_X86%\Microsoft Visual Studio\2017\Enterprise
+IF EXIST "%VS2017INSTALLDIR%\Common7\IDE\devenv.com" SET VS2017_DIR=%VS2017INSTALLDIR%
+IF EXIST "%VS150COMNTOOLS%..\IDE\devenv.com" SET VS2017_DIR =%VS150COMNTOOLS%..\..
+SET VS2017="%VS2017_DIR%\Common7\IDE\devenv.com" 
+
 IF EXIST "%windir%\Microsoft.NET\Framework\v3.5\MSBuild.exe" SET MSBUILD35=%windir%\Microsoft.NET\Framework\v3.5\MSBuild.exe
 IF EXIST "%windir%\Microsoft.NET\Framework64\v3.5\MSBuild.exe" SET MSBUILD35=%windir%\Microsoft.NET\Framework64\v3.5\MSBuild.exe
 IF EXIST "%windir%\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe" SET MSBUILD40=%windir%\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe

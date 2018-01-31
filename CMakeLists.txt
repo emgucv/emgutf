@@ -313,10 +313,10 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CommonAssemblyInfo.cs.in ${CMAK
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/component.yaml.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/xamarin/emgutf_v1/component/component.yaml)
 
 SET(EMGUTF_NUGET_FILE_LIST "")
-IF(HAVE_WINDESKTOP_X64)
-	SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
-	<file src=\"..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />")
-ENDIF()
+#IF(HAVE_WINDESKTOP_X64)
+#	SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
+#	<file src=\"..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />")
+#ENDIF()
 
 
 SET(EMGUTF_NUGET_ID "EMGU.TF")
@@ -354,10 +354,15 @@ ENDIF()
 
 IF(HAVE_WINDESKTOP_X64)
 	IF(HAVE_WINDESKTOP_X64_CUDA)
-		SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} <file src=\"Emgu.TF.targets\" exclude=\"..\\..\\lib\\x64\\cudnn*.dll\" target=\"build\\${EMGUTF_NUGET_ID}.targets\" />")
+		SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
+		<file src=\"..\\..\\lib\\x64\\*.dll\" exclude=\"..\\..\\lib\\x64\\cudnn*.dll\" target=\"build\\x64\" />")
 	ELSE()
-		SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} <file src=\"Emgu.TF.targets\" target=\"build\\${EMGUTF_NUGET_ID}.targets\" />")
+		SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
+		<file src=\"..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />")
 	ENDIF()
+	SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
+		<file src=\"Emgu.TF.targets\" target=\"build\\${EMGUTF_NUGET_ID}.targets\" />")
+	
 	SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
     <file src=\"..\\..\\lib\\Emgu.TF.World.dll\" target=\"lib\\net35\" />
 	<file src=\"..\\..\\lib\\Emgu.TF.World.XML\" target=\"lib\\net35\" />")

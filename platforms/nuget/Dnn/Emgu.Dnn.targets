@@ -6,7 +6,7 @@
         <EmguDnnBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguDnnBuildX64>
 		<EmguDnnNativeFileX64>$(MSBuildThisFileDirectory)\x64\cudnn64_7.dll</EmguDnnNativeFileX64>
 		<EmguDnnErrorMessage Condition="'$(EmguDnnBuildX86)'=='True'">X86 or AnyCPU is targeted, but this DNN package do not support 32-bit</EmguDnnErrorMessage>
-        <EmguDnnDeployMessage Condition="'$(EmguDnnBuildX64)'=='True' AND Exists('$(EmguDnnNativeFileX64)')">$(EmguCudaDeployMessage)x64 </EmguCudaDeployMessage>
+        <EmguDnnDeployMessage Condition="'$(EmguDnnBuildX64)'=='True' AND Exists('$(EmguDnnNativeFileX64)')">$(EmguCudaDeployMessage)x64 </EmguDnnDeployMessage>
         <EmguDnnErrorMessage Condition="'$(EmguDnnBuildX64)'=='True' AND !Exists('$(EmguDnnNativeFileX64)')">This package do not contain necessary binary for $(EmguDnnLinkTarget). X64 is targeted, but file $(EmguDnnNativeFileX64) is missing.</EmguDnnErrorMessage>
       </PropertyGroup>
       <ItemGroup Condition="'$(EmguDnnBuildX64)'=='True' AND Exists('$(EmguDnnNativeFileX64)')">
