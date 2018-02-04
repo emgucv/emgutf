@@ -8,4 +8,13 @@ tensorflow/tools/ci_build/osx/libtensorflow_cpu.sh
 cd ..
 mkdir -p lib/osx
 cp tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so lib/osx/libtfextern.dylib
+chmod u+w lib/osx/libtfextern.dylib
+install_name_tool -id @rpath/libtfextern.dylib lib/osx/libtfextern.dylib
+install_name_tool -change @rpath/libtensorflow_framework.so @rpath/libtensorflow_framework.dylib lib/osx/libtfextern.dylib
+chmod u-w lib/osx/libtfextern.dylib
+
+cp tensorflow/bazel-bin/tensorflow/libtensorflow_framework.so lib/osx/libtensorflow_framework.dylib
+chmod u+w lib/osx/libtensorflow_framework.dylib
+install_name_tool -id @rpath/libtensorflow_framework.dylib lib/osx/libtensorflow_framework.dylib
+chmod u-w lib/osx/libtensorflow_framework.dylib
 cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64"

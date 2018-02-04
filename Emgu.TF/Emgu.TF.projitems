@@ -90,11 +90,16 @@
       <PropertyGroup>
         <EmguTFLinkTarget>Xamarin.Mac</EmguTFLinkTarget>
         <EmguTFNativeFile>$(MSBuildThisFileDirectory)..\lib\osx\libtfextern.dylib</EmguTFNativeFile>
+	<EmguTFNativeFile2>$(MSBuildThisFileDirectory)..\lib\osx\libtensorflow_framework.dylib</EmguTFNativeFile2>
         <EmguTFErrorMessage Condition="!Exists('$(EmguTFNativeFile)')"> This package do not contain necessary binary for $(EmguTFLinkTarget). Emgu TF for Mac Commercial License is required. Missing $(EmguTFNativeFile) </EmguTFErrorMessage>
         <EmguTFDeployMessage Condition="Exists('$(EmguTFNativeFile)')">$(EmguTFDeployMessage)mac </EmguTFDeployMessage>
       </PropertyGroup>
       <ItemGroup>
         <NativeReference Include="$(EmguTFNativeFile)">
+          <Kind>Dynamic</Kind>
+          <SmartLink>False</SmartLink>
+        </NativeReference>
+        <NativeReference Include="$(EmguTFNativeFile2)">
           <Kind>Dynamic</Kind>
           <SmartLink>False</SmartLink>
         </NativeReference>
