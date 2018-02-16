@@ -1,4 +1,8 @@
-﻿using System;
+﻿//----------------------------------------------------------------------------
+//  Copyright (C) 2004-2018 by EMGU Corporation. All rights reserved.       
+//----------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Emgu.TF;
@@ -39,7 +43,7 @@ namespace Emgu.TF.Test
             Tensor imageTensor = ImageIO.ReadTensorFromImageFile("grace_hopper.jpg", 224, 224, 128.0f, 1.0f);
 
             Inception inceptionGraph = new Inception();
-            
+
             float[] probability = inceptionGraph.Recognize(imageTensor);
             if (probability != null)
             {
@@ -73,7 +77,7 @@ namespace Emgu.TF.Test
             bmp.Save("surfers_result.jpg");
         }
 
-        
+
         [TestMethod]
         public void TestStylize()
         {
@@ -85,7 +89,7 @@ namespace Emgu.TF.Test
         [TestMethod]
         public void TestTensorCreate()
         {
-            Tensor t = new Tensor(DataType.Float, new []{1, 3, 224, 224});
+            Tensor t = new Tensor(DataType.Float, new[] { 1, 3, 224, 224 });
         }
 
         [TestMethod]
@@ -118,16 +122,21 @@ namespace Emgu.TF.Test
         {
             SessionOptions so = new SessionOptions();
             Tensorflow.ConfigProto config = new Tensorflow.ConfigProto();
-            config.LogDevicePlacement = true;
-            using (MemoryStream ms = new MemoryStream())
-            using (Google.Protobuf.CodedOutputStream stream = new CodedOutputStream(ms))
-            {
-               config.WriteTo(stream);
-                byte[] bytes = ms.ToArray();
-                so.SetConfig(bytes);
-            }
-            int sum = Add(1, 2, so);
+            //config.DeviceCount.Add("GPU", 1);
+            //config.DeviceCount.Add("CPU", 1);
+
+            config.GpuOptions = new GPUOptions();
+            config.GpuOptions.VisibleDeviceList = "0";
+            //config.GpuOptions.VisibleDeviceList = "0, 1";
+            //var devicesList = config.GpuOptions.VisibleDeviceList;
             
+            //config.LogDevicePlacement = true;
+            
+            if (TfInvoke.IsGoogleCudaEnabled)
+                so.SetConfig(config.ToProtobuf());
+
+            int sum = Add(1, 2, so);
+
         }
 
         public static int Add(int a, int b, SessionOptions sessionOptions = null)
@@ -139,7 +148,42 @@ namespace Emgu.TF.Test
             Operation opB = graph.Placeholder(DataType.Int32, null, "valB");
             Operation sumOp = graph.Add(opA, opB, "sum");
 
+            using (Buffer versionDef = new Buffer())
+            using (Buffer graphDef = new Buffer())
+            {
+                graph.Versions(versionDef);
+                
+                Tensorflow.VersionDef vdef = Tensorflow.VersionDef.Parser.ParseFrom(versionDef.Data);
+
+                graph.ToGraphDef(graphDef);
+                
+                Tensorflow.GraphDef gdef = Tensorflow.GraphDef.Parser.ParseFrom(graphDef.Data);
+
+                using (MemoryStream ms = new MemoryStream())
+                using (Google.Protobuf.CodedOutputStream stream = new CodedOutputStream(ms))
+                {
+                    gdef.WriteTo(stream);
+                    stream.Flush();
+                    byte[] serializedGraphDef2 = ms.ToArray();
+
+                    byte[] serializedGraphDef1 = graphDef.Data;
+
+                    bool equal = true;
+                    for (int i = 0; i < serializedGraphDef1.Length; i++)
+                    {
+                        if (serializedGraphDef1[i] != serializedGraphDef2[i])
+                            equal = false;
+                    }
+                    
+                }
+
+                foreach (Operation op in graph)
+                {
+                    String device = op.Device;
+                }
+            }
             Session session = new Session(graph, sessionOptions);
+            Session.Device[] devices = session.ListDevices();
             Tensor[] results = session.Run(new Output[] { opA, opB }, new Tensor[] { tensorA, tensorB }, new Output[] { sumOp });
             return results[0].Flat<int>()[0];
         }
@@ -161,7 +205,7 @@ namespace Emgu.TF.Test
             Graph g = new Graph();
             Operation helloOp = g.Const(hello, DataType.String);
             Session session = new Session(g);
-            Tensor[] results = session.Run(new Output[] {}, new Tensor[] {}, new Output[] {helloOp});
+            Tensor[] results = session.Run(new Output[] { }, new Tensor[] { }, new Output[] { helloOp });
             byte[] data = results[0].DecodeString();
             String output = System.Text.Encoding.Default.GetString(data);
 

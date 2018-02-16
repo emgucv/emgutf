@@ -47,7 +47,7 @@ namespace Emgu.TF
         /// <summary>
         /// Get the pointer to the unmanaged data
         /// </summary>
-        public IntPtr Data
+        public IntPtr DataPtr
         {
             get { return TfInvoke.tfeBufferGetData(_ptr); }
         }
@@ -66,9 +66,17 @@ namespace Emgu.TF
         /// <returns>A copy of the data as a Memory stream</returns>
         public MemoryStream GetMemoryStream()
         {
-            byte[] bytes = new byte[Length];
-            Marshal.Copy(Data, bytes, 0, bytes.Length);
-            return new MemoryStream(bytes);
+            return new MemoryStream(Data);
+        }
+
+        public byte[] Data
+        {
+            get
+            {
+                byte[] bytes = new byte[Length];
+                Marshal.Copy(DataPtr, bytes, 0, bytes.Length);
+                return bytes;
+            }
         }
 
         /// <summary>

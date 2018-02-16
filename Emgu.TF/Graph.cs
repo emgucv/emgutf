@@ -7,14 +7,16 @@ using System.Collections.Generic;
 using System.Text;
 using Emgu.TF.Util;
 using System.Runtime.InteropServices;
+using System.Collections;
 
 namespace Emgu.TF
 {
     /// <summary>
     /// Tensorflow Graph
     /// </summary>
-    public partial class Graph : UnmanagedObject
+    public partial class Graph : UnmanagedObject, IEnumerable<Operation> 
     {
+        
         /// <summary>
         /// Create a new Graph
         /// </summary>
@@ -126,9 +128,9 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="pos">The position pointer that can be used to iterate though the operations of this graph. Use IntPtr.Zero to get the first operation</param>
         /// <returns>The next operation from the position</returns>
-        public Operation NextOperation(IntPtr pos = new IntPtr())
+        public Operation NextOperation(ref IntPtr pos)
         {
-            return new Operation(TfInvoke.tfeGraphNextOperation(_ptr, pos));
+            return new Operation(TfInvoke.tfeGraphNextOperation(_ptr, ref pos));
         }
 
         /// <summary>
@@ -141,6 +143,29 @@ namespace Emgu.TF
         {
             using (StatusChecker checker = new StatusChecker(status))
                 TfInvoke.tfeGraphToGraphDef(_ptr, outputGraphDef, checker.Status);
+        }
+
+        
+        public void Versions(Buffer versionDef, Status status = null)
+        {
+            using (StatusChecker checker = new StatusChecker(status))
+                TfInvoke.tfeGraphVersions(_ptr, versionDef, checker.Status);
+        }
+
+        public IEnumerator<Operation> GetEnumerator()
+        {
+            IntPtr pos = IntPtr.Zero;
+            Operation op = NextOperation(ref pos);
+            while (!op.Empty)
+            {
+                yield return op;
+                op = NextOperation(ref pos);
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 
@@ -174,12 +199,15 @@ namespace Emgu.TF
             String opName);
 
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
-        internal static extern IntPtr tfeGraphNextOperation(IntPtr graph, IntPtr pos);
+        internal static extern IntPtr tfeGraphNextOperation(IntPtr graph, ref IntPtr pos);
 
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         internal static extern void tfeGraphSetTensorShape(IntPtr graph, IntPtr outputOperation, int idx, IntPtr dims, int numDims, IntPtr status);
 
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         internal static extern void tfeGraphGetTensorShape(IntPtr graph, IntPtr outputOperation, int idx, IntPtr dims, int numDims, IntPtr status);
+
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        internal static extern void tfeGraphVersions(IntPtr graph, IntPtr output_version_def, IntPtr status);
     }
 }

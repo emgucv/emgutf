@@ -22,6 +22,14 @@ namespace Emgu.TF
             _ptr = ptr;
         }
 
+        public bool Empty
+        {
+            get
+            {
+                return _ptr == IntPtr.Zero;
+            }
+        }
+
         /// <summary>
         /// Get the unmanaged pointer to the Operation
         /// </summary>
@@ -55,7 +63,12 @@ namespace Emgu.TF
         /// </summary>
         public String Name
         {
-            get { return Marshal.PtrToStringAnsi(TfInvoke.tfeOperationName(_ptr)); }
+            get
+            {
+                if (Empty)
+                    return null;
+                return Marshal.PtrToStringAnsi(TfInvoke.tfeOperationName(_ptr));
+            }
         }
 
         /// <summary>
@@ -63,7 +76,12 @@ namespace Emgu.TF
         /// </summary>
         public String OpType
         {
-            get { return Marshal.PtrToStringAnsi(TfInvoke.tfeOperationOpType(_ptr)); }
+            get
+            {
+                if (Empty)
+                    return null;
+                return Marshal.PtrToStringAnsi(TfInvoke.tfeOperationOpType(_ptr));
+            }
         }
 
         /// <summary>
@@ -71,7 +89,12 @@ namespace Emgu.TF
         /// </summary>
         public String Device
         {
-            get { return Marshal.PtrToStringAnsi(TfInvoke.tfeOperationDevice(_ptr)); }
+            get
+            {
+                if (Empty)
+                    return null;
+                return Marshal.PtrToStringAnsi(TfInvoke.tfeOperationDevice(_ptr));
+            }
         }
 
         /// <summary>
@@ -79,17 +102,12 @@ namespace Emgu.TF
         /// </summary>
         public int NumOutputs
         {
-            get { return TfInvoke.tfeOperationNumOutputs(_ptr); }
-        }
-
-        /// <summary>
-        /// Get the output type of the specific output index
-        /// </summary>
-        /// <param name="index">the output index</param>
-        /// <returns>The output type of the specific output index</returns>
-        public DataType GetOutputType(int index)
-        {
-            return TfInvoke.tfeOperationOutputType(_ptr, index);
+            get
+            {
+                if (Empty)
+                    return 0;
+                return TfInvoke.tfeOperationNumOutputs(_ptr);
+            }
         }
 
         /// <summary>
@@ -97,17 +115,60 @@ namespace Emgu.TF
         /// </summary>
         public int NumInputs
         {
-            get { return TfInvoke.tfeOperationNumInputs(_ptr); }
+            get
+            {
+                if (Empty)
+                    return 0;
+                return TfInvoke.tfeOperationNumInputs(_ptr);
+            }
         }
 
-        /// <summary>
-        /// Get the input type of the specific input index
-        /// </summary>
-        /// <param name="index">The input index</param>
-        /// <returns>The input type of the specific input index</returns>
-        public DataType GetInputType(int index)
+        public Input[] Inputs
         {
-            return TfInvoke.tfeOperationInputType(_ptr, index);
+            get
+            {
+                if (Empty)
+                    return null;
+
+                Input[] result = new Input[NumInputs];
+                for (int i = 0; i < result.Length; i++)
+                    result[i] = new Input(this, i);
+                return result;   
+            }
+        }
+
+        public Output[] Outputs
+        {
+            get
+            {
+                if (Empty)
+                    return null;
+
+                Output[] result = new Output[NumOutputs];
+                for (int i = 0; i < result.Length; i++)
+                    result[i] = new Output(this, i);
+                return result;
+            }
+        }
+
+        public int NumControlInputs
+        {
+            get
+            {
+                if (Empty)
+                    return 0;
+                return TfInvoke.tfeOperationNumControlInputs(_ptr);
+            }
+        }
+
+        public int NumControlOutputs
+        {
+            get
+            {
+                if (Empty)
+                    return 0;
+                return TfInvoke.tfeOperationNumControlOutputs(_ptr);
+            }
         }
     }
 
@@ -126,13 +187,14 @@ namespace Emgu.TF
 
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         internal static extern int tfeOperationNumOutputs(IntPtr oper);
-
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
-        internal static extern DataType tfeOperationOutputType(IntPtr oper, int idx);
-
+        
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         internal static extern int tfeOperationNumInputs(IntPtr oper);
+
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
-        internal static extern DataType tfeOperationInputType(IntPtr oper, int idx);
+        internal static extern int tfeOperationNumControlInputs(IntPtr oper);
+
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        internal static extern int tfeOperationNumControlOutputs(IntPtr oper);
     }
 }

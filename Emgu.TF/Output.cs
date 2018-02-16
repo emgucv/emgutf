@@ -34,5 +34,34 @@ namespace Emgu.TF
             Operation = operation;
             Index = index;
         }
+
+        /// <summary>
+        /// Get the output type
+        /// </summary>
+        public DataType OutputType
+        {
+            get
+            {
+                return TfInvoke.tfeOperationOutputType(Operation.Ptr, Index);
+            }
+        }
+
+        public int NumConsumers
+        {
+            get
+            {
+                return TfInvoke.tfeOperationOutputNumConsumers(Operation.Ptr, Index);
+            }
+        }
+    }
+
+    public static partial class TfInvoke
+    {
+
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        internal static extern DataType tfeOperationOutputType(IntPtr oper, int idx);
+
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        internal static extern int tfeOperationOutputNumConsumers(IntPtr oper, int idx);
     }
 }
