@@ -1014,18 +1014,19 @@ namespace Emgu.TF
       ///</summary>
       ///<param name="tensor">Input to the operation: A tensor to serialize.</param>
       ///<param name="description">A json-encoded SummaryDescription proto.</param>
+      ///<param name="labels">An unused list of strings.</param>
       ///<param name="display_name">An unused string.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
       ///[0] summary(type: DtString).
       ///</return>
-      //The following attributes are not known: labels: list(string)
-      public Operation TensorSummary (  Output tensor , string description = null , string display_name = null ,String opName= "TensorSummary" ) 
+      public Operation TensorSummary (  Output tensor , string description = null , string[] labels = null , string display_name = null ,String opName= "TensorSummary" ) 
       {
          OperationDescription desc = NewOperation("TensorSummary", opName);
          desc.AddInput(tensor);
 
          if (description != null) desc.SetAttr("description", description);
+         if (labels != null) desc.SetAttr("labels", labels);
          if (display_name != null) desc.SetAttr("display_name", display_name);
          return desc.FinishOperation();
       } 
@@ -1466,13 +1467,14 @@ namespace Emgu.TF
       ///<param name="sparse_float_feature_values">Input to the operation: List of rank 1 tensors containing the sparse float feature values.</param>
       ///<param name="sparse_float_feature_shapes">Input to the operation: List of rank 1 tensors containing the shape of the float feature.</param>
       ///<param name="example_weights">Input to the operation: Rank 1 tensor containing the example weight tensor.</param>
+      ///<param name="dense_config">Config for computing buckets for dense values. Each entry is QuantileConfig proto.</param>
+      ///<param name="sparse_config">Config for computing buckets for sparse feature values. Each entry is QuantileConfig proto.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
       ///[0] dense_buckets(type: DtFloat): Output quantile summary for each dense float tensor representing boundaries each with "num_quantile" elements.
       ///[1] sparse_buckets(type: DtFloat): Output quantile summary for each sparse float value tensor representing boundaries each with "num_quantile" elements.
       ///</return>
-      //The following attributes are not known: dense_config: list(string); sparse_config: list(string)
-      public Operation QuantileBuckets (  Output dense_float_features , Output sparse_float_feature_indices , Output sparse_float_feature_values , Output sparse_float_feature_shapes , Output example_weights ,String opName= "QuantileBuckets" ) 
+      public Operation QuantileBuckets (  Output dense_float_features , Output sparse_float_feature_indices , Output sparse_float_feature_values , Output sparse_float_feature_shapes , Output example_weights , string[] dense_config, string[] sparse_config,String opName= "QuantileBuckets" ) 
       {
          OperationDescription desc = NewOperation("QuantileBuckets", opName);
          desc.AddInput(dense_float_features);
@@ -1480,7 +1482,8 @@ namespace Emgu.TF
          desc.AddInput(sparse_float_feature_values);
          desc.AddInput(sparse_float_feature_shapes);
          desc.AddInput(example_weights);
-
+         desc.SetAttr("dense_config", dense_config);
+         desc.SetAttr("sparse_config", sparse_config);
 
          return desc.FinishOperation();
       } 
@@ -7740,19 +7743,20 @@ namespace Emgu.TF
       ///<param name="input">Input to the operation: Input tensor, non-Reference type.</param>
       ///<param name="device_name"></param>
       ///<param name="tensor_name">Name of the input tensor.</param>
+      ///<param name="debug_urls">List of URLs to debug targets, e.g., file:///foo/tfdbg_dump, grpc:://localhost:11011.</param>
       ///<param name="gated_grpc">Whether this op will be gated. If any of the debug_urls of this debug node is of the grpc:// scheme, when the value of this attribute is set to True, the data will not actually be sent via the grpc stream unless this debug op has been enabled at the debug_url. If all of the debug_urls of this debug node are of the grpc:// scheme and the debug op is enabled at none of them, the output will be an empty Tensor.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
       ///[0] output(type: DtInt64): An integer output tensor that is the number of NaNs in the input.
       ///</return>
-      //The following attributes are not known: debug_urls: list(string)
-      public Operation DebugNanCount (  Output input , string device_name = null , string tensor_name = null , bool gated_grpc = false ,String opName= "DebugNanCount" ) 
+      public Operation DebugNanCount (  Output input , string device_name = null , string tensor_name = null , string[] debug_urls = null , bool gated_grpc = false ,String opName= "DebugNanCount" ) 
       {
          OperationDescription desc = NewOperation("DebugNanCount", opName);
          desc.AddInput(input);
 
          if (device_name != null) desc.SetAttr("device_name", device_name);
          if (tensor_name != null) desc.SetAttr("tensor_name", tensor_name);
+         if (debug_urls != null) desc.SetAttr("debug_urls", debug_urls);
          if (gated_grpc != false) desc.SetAttr("gated_grpc", gated_grpc);
          return desc.FinishOperation();
       } 
@@ -7781,17 +7785,18 @@ namespace Emgu.TF
       ///</summary>
       ///<param name="input">Input to the operation: Input tensor.</param>
       ///<param name="tensor_name">The name of the input tensor.</param>
+      ///<param name="debug_ops_spec">A list of debug op spec (op, url, gated_grpc) for attached debug ops. Each element of the list has the format &lt;debug_op&gt;;&lt;grpc_url&gt;;&lt;gated_grpc&gt;, wherein gated_grpc is boolean represented as 0/1. E.g., "DebugIdentity;grpc://foo:3333;1", "DebugIdentity;file:///tmp/tfdbg_1;0".</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
       ///[0] output(type: DtInvalid): Output tensor, deep-copied from input.
       ///</return>
-      //The following attributes are not known: debug_ops_spec: list(string)
-      public Operation Copy (  Output input , string tensor_name = null ,String opName= "Copy" ) 
+      public Operation Copy (  Output input , string tensor_name = null , string[] debug_ops_spec = null ,String opName= "Copy" ) 
       {
          OperationDescription desc = NewOperation("Copy", opName);
          desc.AddInput(input);
 
          if (tensor_name != null) desc.SetAttr("tensor_name", tensor_name);
+         if (debug_ops_spec != null) desc.SetAttr("debug_ops_spec", debug_ops_spec);
          return desc.FinishOperation();
       } 
 
@@ -8230,6 +8235,7 @@ namespace Emgu.TF
       ///<param name="input">Input to the operation: Input tensor, non-Reference type, float or double.</param>
       ///<param name="device_name"></param>
       ///<param name="tensor_name">Name of the input tensor.</param>
+      ///<param name="debug_urls">List of URLs to debug targets, e.g., file:///foo/tfdbg_dump, grpc:://localhost:11011</param>
       ///<param name="lower_bound">(float) The lower bound &lt;= which values will be included in the generalized -inf count. Default: -inf.</param>
       ///<param name="upper_bound">(float) The upper bound &gt;= which values will be included in the generalized +inf count. Default: +inf.</param>
       ///<param name="mute_if_healthy">(bool) Do not send data to the debug URLs unless at least one of elements [2], [3] and [7] (i.e., the nan count and the generalized -inf and inf counts) is non-zero.</param>
@@ -8238,14 +8244,14 @@ namespace Emgu.TF
       ///<return>
       ///[0] output(type: DtDouble): A double tensor of shape [14 + nDimensions], where nDimensions is the   the number of dimensions of the tensor's shape. The elements of output are:   [0]: is initialized (1.0) or not (0.0).   [1]: total number of elements   [2]: NaN element count   [3]: generalized -inf count: elements &lt;= lower_bound. lower_bound is -inf by     default.   [4]: negative element count (excluding -inf), if lower_bound is the default     -inf. Otherwise, this is the count of elements &gt; lower_bound and &lt; 0.   [5]: zero element count   [6]: positive element count (excluding +inf), if upper_bound is the default     -inf. Otherwise, this is the count of elements &lt; upper_bound and &gt; 0.   [7]: generalized +inf count, elements &gt;= upper_bound. upper_bound is +inf by     default. Output elements [1:8] are all zero, if the tensor is uninitialized.   [8]: minimum of all non-inf and non-NaN elements.        If uninitialized or no such element exists: +inf.   [9]: maximum of all non-inf and non-NaN elements.        If uninitialized or no such element exists: -inf.   [10]: mean of all non-inf and non-NaN elements.         If uninitialized or no such element exists: NaN.   [11]: variance of all non-inf and non-NaN elements.         If uninitialized or no such element exists: NaN.   [12]: Data type of the tensor encoded as an enum integer. See the DataType         proto for more details.   [13]: Number of dimensions of the tensor (ndims).   [14+]: Sizes of the dimensions.
       ///</return>
-      //The following attributes are not known: debug_urls: list(string)
-      public Operation DebugNumericSummary (  Output input , string device_name = null , string tensor_name = null , float lower_bound = Single.NegativeInfinity , float upper_bound = Single.PositiveInfinity , bool mute_if_healthy = false , bool gated_grpc = false ,String opName= "DebugNumericSummary" ) 
+      public Operation DebugNumericSummary (  Output input , string device_name = null , string tensor_name = null , string[] debug_urls = null , float lower_bound = Single.NegativeInfinity , float upper_bound = Single.PositiveInfinity , bool mute_if_healthy = false , bool gated_grpc = false ,String opName= "DebugNumericSummary" ) 
       {
          OperationDescription desc = NewOperation("DebugNumericSummary", opName);
          desc.AddInput(input);
 
          if (device_name != null) desc.SetAttr("device_name", device_name);
          if (tensor_name != null) desc.SetAttr("tensor_name", tensor_name);
+         if (debug_urls != null) desc.SetAttr("debug_urls", debug_urls);
          if (lower_bound != Single.NegativeInfinity) desc.SetAttr("lower_bound", lower_bound);
          if (upper_bound != Single.PositiveInfinity) desc.SetAttr("upper_bound", upper_bound);
          if (mute_if_healthy != false) desc.SetAttr("mute_if_healthy", mute_if_healthy);
@@ -12276,17 +12282,18 @@ namespace Emgu.TF
       ///</summary>
       ///<param name="input">Input to the operation: Input tensor.</param>
       ///<param name="tensor_name">The name of the input tensor.</param>
+      ///<param name="debug_ops_spec">A list of debug op spec (op, url, gated_grpc) for attached debug ops. Each element of the list has the format &lt;debug_op&gt;;&lt;grpc_url&gt;;&lt;gated_grpc&gt;, wherein gated_grpc is boolean represented as 0/1. E.g., "DebugIdentity;grpc://foo:3333;1", "DebugIdentity;file:///tmp/tfdbg_1;0".</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
       ///[0] output(type: DtInvalid): Output tensor, deep-copied from input.
       ///</return>
-      //The following attributes are not known: debug_ops_spec: list(string)
-      public Operation CopyHost (  Output input , string tensor_name = null ,String opName= "CopyHost" ) 
+      public Operation CopyHost (  Output input , string tensor_name = null , string[] debug_ops_spec = null ,String opName= "CopyHost" ) 
       {
          OperationDescription desc = NewOperation("CopyHost", opName);
          desc.AddInput(input);
 
          if (tensor_name != null) desc.SetAttr("tensor_name", tensor_name);
+         if (debug_ops_spec != null) desc.SetAttr("debug_ops_spec", debug_ops_spec);
          return desc.FinishOperation();
       } 
 
@@ -12328,19 +12335,20 @@ namespace Emgu.TF
       ///<param name="input">Input to the operation: Input tensor, non-Reference type.</param>
       ///<param name="device_name"></param>
       ///<param name="tensor_name">Name of the input tensor.</param>
+      ///<param name="debug_urls">List of URLs to debug targets, e.g., file:///foo/tfdbg_dump, grpc:://localhost:11011</param>
       ///<param name="gated_grpc">Whether this op will be gated. If any of the debug_urls of this debug node is of the grpc:// scheme, when the value of this attribute is set to True, the data will not actually be sent via the grpc stream unless this debug op has been enabled at the debug_url. If all of the debug_urls of this debug node are of the grpc:// scheme and the debug op is enabled at none of them, the output will be an empty Tensor.</param>
       ///<param name="opName">The name of the operation</param>
       ///<return>
       ///[0] output(type: DtInvalid): Output tensor that equals the input tensor.
       ///</return>
-      //The following attributes are not known: debug_urls: list(string)
-      public Operation DebugIdentity (  Output input , string device_name = null , string tensor_name = null , bool gated_grpc = false ,String opName= "DebugIdentity" ) 
+      public Operation DebugIdentity (  Output input , string device_name = null , string tensor_name = null , string[] debug_urls = null , bool gated_grpc = false ,String opName= "DebugIdentity" ) 
       {
          OperationDescription desc = NewOperation("DebugIdentity", opName);
          desc.AddInput(input);
 
          if (device_name != null) desc.SetAttr("device_name", device_name);
          if (tensor_name != null) desc.SetAttr("tensor_name", tensor_name);
+         if (debug_urls != null) desc.SetAttr("debug_urls", debug_urls);
          if (gated_grpc != false) desc.SetAttr("gated_grpc", gated_grpc);
          return desc.FinishOperation();
       } 

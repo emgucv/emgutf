@@ -30,7 +30,6 @@ Global
 		..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems*{67a1a571-95e4-43a0-a67f-c6f210a71aae}*SharedItemsImports = 4
 		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{752279f0-17ef-4ec8-857c-8f5f897af0e8}*SharedItemsImports = 13
 		..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems*{88fed2cb-ee86-4b5e-85a0-9f5fdf42111f}*SharedItemsImports = 13
-		..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems*{8e82c665-6538-4655-9db1-52fc71c35717}*SharedItemsImports = 4
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{98561642-5ec3-4244-baf9-6876d9ba5527}*SharedItemsImports = 13
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{cf1433de-b607-479e-862d-8f4cb6783261}*SharedItemsImports = 4
 		..\..\Emgu.TF\Emgu.TF.projitems*{cf1433de-b607-479e-862d-8f4cb6783261}*SharedItemsImports = 4

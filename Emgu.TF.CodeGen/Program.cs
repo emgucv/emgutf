@@ -99,8 +99,8 @@ namespace Emgu.TF
             if (_typeMap.ContainsKey(typeName))
                 return true;
 
-            String isTypeList = IsTypeList(typeName);
-            if (!String.IsNullOrEmpty(isTypeList) && _typeMap.ContainsKey(isTypeList) && (!isTypeList.Equals("string")))
+            String elementType = IsTypeList(typeName);
+            if (!String.IsNullOrEmpty(elementType) && _typeMap.ContainsKey(elementType))
                 return true;
 
             return false;
