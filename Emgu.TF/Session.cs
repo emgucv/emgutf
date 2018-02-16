@@ -137,6 +137,56 @@ namespace Emgu.TF
             return Array.ConvertAll(outputTensors, t => new Tensor(t));
 
         }
+
+        public Device[] ListDevices(Status status = null)
+        {
+            using (StatusChecker checker = new StatusChecker(status))
+            {
+                byte[] nameBuffer = new byte[2048];
+                byte[] typeBuffer = new byte[2048];
+                Int64[] memorySizeBuffer = new Int64[128];
+                GCHandle nameHandle = GCHandle.Alloc(nameBuffer, GCHandleType.Pinned);
+                GCHandle typeHandle = GCHandle.Alloc(typeBuffer, GCHandleType.Pinned);
+                GCHandle memorySizeHandle = GCHandle.Alloc(memorySizeBuffer, GCHandleType.Pinned);
+
+                TfInvoke.tfeSessionListDevices(
+                    _ptr, 
+                    nameHandle.AddrOfPinnedObject(), 
+                    typeHandle.AddrOfPinnedObject(),
+                    memorySizeHandle.AddrOfPinnedObject(),
+                    checker.Status);
+
+                nameHandle.Free();
+                typeHandle.Free();
+                memorySizeHandle.Free();
+
+                String nameResult = System.Text.Encoding.ASCII.GetString(nameBuffer);
+                String[] names = nameResult.TrimEnd('\0', '\n').Split('\n');
+
+                String typeResult = System.Text.Encoding.ASCII.GetString(typeBuffer);
+                String[] types = typeResult.TrimEnd('\0', '\n').Split('\n');
+
+                Device[] devices = new Device[names.Length];
+                for (int i = 0; i < devices.Length; i++)
+                {
+                    Device d = new Device();
+                    d.Name = names[i];
+                    d.Type = types[i];
+                    d.MemoryBytes = memorySizeBuffer[i];
+                    devices[i] = d;
+                }
+                return devices;
+            }
+        }
+
+        public class Device
+        {
+            public String Name { get; set; }
+            public String Type { get; set; }
+            public Int64 MemoryBytes { get; set; }
+
+            public double MemoryGB { get { return MemoryBytes / (1024.0 * 1024.0 * 1024.0); } }
+        }
     }
 
 
@@ -159,5 +209,8 @@ namespace Emgu.TF
             IntPtr outputOps, IntPtr outputIdx, IntPtr outputValues, int noutputs,
             IntPtr targetOpers, int ntargets,
             IntPtr runMetadata, IntPtr status);
+
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        internal static extern void tfeSessionListDevices(IntPtr session, IntPtr nameBuffer, IntPtr typeBuffer, IntPtr memorySizeBuffer, IntPtr status);
     }
 }
