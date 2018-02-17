@@ -15,10 +15,13 @@ ADD_CUSTOM_TARGET(
 
 ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.World)
 
+set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "NUGET")
+
 IF (WIN32 AND (HAVE_WINDESKTOP_X64_CUDA) )
 	ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.Dnn.nuget)
 	ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.Cufft.nuget)
 ENDIF()
 
 add_subdirectory(Models)
+add_subdirectory(Protobuf)
 ENDIF()

@@ -10,5 +10,6 @@ ADD_CUSTOM_TARGET(
    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/../../../miscellaneous/nuget.exe pack Package.nuspec
 )
 ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Models Emgu.TF.nuget)
+set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "NUGET")
 
 ENDIF()

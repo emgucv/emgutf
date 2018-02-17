@@ -84,6 +84,7 @@ IF "%2%"=="htmldoc" ^
 call %DEVENV% %BUILD_TYPE% emgutf.sln /project Emgu.TF.Document.Html 
 
 IF "%4%"=="nuget" ^
-call %DEVENV% %BUILD_TYPE% emgutf.sln /project Emgu.TF.nuget 
+call %DEVENV% %BUILD_TYPE% emgutf.sln /project Emgu.TF.Models.nuget 
+call %DEVENV% %BUILD_TYPE% emgutf.sln /project Emgu.TF.Protobuf.nuget 
 
 popd

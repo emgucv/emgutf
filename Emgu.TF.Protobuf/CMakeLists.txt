@@ -2,7 +2,10 @@
 #  Copyright (C) 2004-2018 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
+
 PROJECT(Emgu.TF.Protobuf)
+
+#MESSAGE("In protobug project now. HAVE_WINDESKTOP_X64: ${HAVE_WINDESKTOP_X64}")
 
 INSTALL(
   DIRECTORY
@@ -19,7 +22,9 @@ PATTERN "CMakeFiles" EXCLUDE
 PATTERN "${PROJECT_NAME}.dir" EXCLUDE
 )
 
-IF(HAVE_WINDESKTOP_x86 OR HAVE_WINDESKTOP_x64)
+IF(HAVE_WINDESKTOP_X86 OR HAVE_WINDESKTOP_X64)
+
+#MESSAGE("Adding protobuf project")
 BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf/Emgu.TF.Protobuf.csproj" "" ALL)
 
 INSTALL(
@@ -30,4 +35,7 @@ DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
 COMPONENT emgutf_binary)
 
 ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.World)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "NUGET")
 ENDIF()
+
