@@ -76,6 +76,9 @@ MACRO(CHECK_LICENSE_TYPE)
 ENDMACRO()
 CHECK_LICENSE_TYPE()
 
+IF(MSVC)
+  set(ENABLE_SOLUTION_FOLDERS ON CACHE BOOL "Solution folder in Visual Studio")
+ENDIF()
 
 # ----------------------------------------------------------------------------
 #  Check if 32bit or 64-bit
@@ -360,6 +363,7 @@ IF ("${LICENSE_TYPE}" EQUAL "Commercial")
 ENDIF()
 
 SET(EMGUTF_NUGET_DEPENDENCY "")
+SET(EMGUTF_PROTOBUF_NUGET_DEPENDENCY "")
 IF(HAVE_WINDESKTOP_X64)
 	IF(HAVE_WINDESKTOP_X64_CUDA)
 		SET(EMGUTF_NUGET_DEPENDENCY "${EMGUTF_NUGET_DEPENDENCY}
@@ -385,9 +389,15 @@ SET(EMGUTF_MODEL_NUGET_FILE_LIST "
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.dll\" target=\"lib\\net35\" />
 	<file src=\"..\\..\\..\\lib\\Emgu.TF.Models.XML\" target=\"lib\\net35\" />")
 
-SET(EMGUTF_MODEL_NUGET_FILE_LIST "
+SET(EMGUTF_PROTOBUF_NUGET_FILE_LIST "
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.dll\" target=\"lib\\net35\" />
 	<file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.XML\" target=\"lib\\net35\" />")
+
+SET(EMGUTF_PROTOBUF_NUGET_DEPENDENCY "${EMGUTF_PROTOBUF_NUGET_DEPENDENCY}
+    <dependencies>
+		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
+		<dependency id=\"Google.Protobuf\" version=\"3.5.1\" />
+    </dependencies>")
 	
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Models.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Models/Package.nuspec)

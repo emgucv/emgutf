@@ -36,6 +36,5 @@ COMPONENT emgutf_binary)
 
 ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.World)
 
-set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "NUGET")
 ENDIF()
 
