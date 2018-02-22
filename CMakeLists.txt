@@ -390,8 +390,8 @@ SET(EMGUTF_MODEL_NUGET_FILE_LIST "
 	<file src=\"..\\..\\..\\lib\\Emgu.TF.Models.XML\" target=\"lib\\net35\" />")
 
 SET(EMGUTF_PROTOBUF_NUGET_FILE_LIST "
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.dll\" target=\"lib\\net35\" />
-	<file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.XML\" target=\"lib\\net35\" />")
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.dll\" target=\"lib\\net45\" />
+	<file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.XML\" target=\"lib\\net45\" />")
 
 SET(EMGUTF_PROTOBUF_NUGET_DEPENDENCY "${EMGUTF_PROTOBUF_NUGET_DEPENDENCY}
     <dependencies>
