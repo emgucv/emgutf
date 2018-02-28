@@ -85,11 +85,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
   <Import Project="..\..\Emgu.TF\Emgu.TF.projitems" Label="Shared" />
   <Import Project="..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems" Label="Shared" />
   <Import Project="..\..\Emgu.TF.Util\Emgu.TF.Util.projitems" Label="Shared" />

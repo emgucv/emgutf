@@ -22,6 +22,10 @@ namespace MultiboxPeopleDetection
         {
             InitializeComponent();
             TfInvoke.CheckLibraryLoaded();
+
+            System.Net.ServicePointManager.Expect100Continue = true;
+            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+
             Detect("surfers.jpg");
         }
 

@@ -27,9 +27,10 @@ namespace CVInterop
             messageLabel.Text = String.Empty;
             cameraButton.Text = "Start Camera";
 
-            //Use the following code for the full inception model
             System.Net.ServicePointManager.Expect100Continue = true;
             System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+
+            //Use the following code for the full inception model
             inceptionGraph = new Inception();
 
             Recognize("space_shuttle.jpg");
@@ -68,7 +69,7 @@ namespace CVInterop
                         maxIdx = i;
                     }
                 }
-                resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", labels[maxIdx], maxVal * 100, sw.ElapsedMilliseconds);
+                resStr = String.Format("Object is {0} with {1}% probability. Recognized in {2} milliseconds.", labels[maxIdx], maxVal * 100, sw.ElapsedMilliseconds);
             }
 
             if (InvokeRequired)
@@ -78,6 +79,10 @@ namespace CVInterop
                        messageLabel.Text = resStr;
                        pictureBox.Image = m.Bitmap;
                    }));
+            } else
+            {
+                messageLabel.Text = resStr;
+                pictureBox.Image = m.Bitmap;
             }
         }
 
