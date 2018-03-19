@@ -15,7 +15,7 @@ namespace Emgu.TF.Models
         private String _inputLayer;
         private String _outputLayer;
 
-        public Inception(Status status = null, String[] modelFiles = null, String downloadUrl = "https://github.com/emgucv/models/raw/master/inception/", String inputLayer = "input", String outputLayer = "output")
+        public Inception(Status status = null, String[] modelFiles = null, String downloadUrl = "https://s3.amazonaws.com/emgu-public/inception/", String inputLayer = "input", String outputLayer = "output")
             : base(
                 modelFiles ?? new string[] { "tensorflow_inception_graph.pb", "imagenet_comp_graph_label_strings.txt" },
                 downloadUrl)

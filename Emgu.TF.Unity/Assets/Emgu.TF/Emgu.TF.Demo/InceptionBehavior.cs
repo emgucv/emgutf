@@ -68,7 +68,12 @@ public class InceptionBehavior : MonoBehaviour
             if (webRequest != null)
             {
                 String requestStr = webRequest.Address.AbsoluteUri;
-                if (requestStr.StartsWith(@"https://github.com/") || requestStr.StartsWith(@"https://raw.githubusercontent.com/"))
+                if (
+                requestStr.StartsWith(@"https://github.com/") ||
+                requestStr.StartsWith(@"https://raw.githubusercontent.com/") ||
+                requestStr.StartsWith(@"https://s3.amazonaws.com/") ||
+                requestStr.StartsWith(@"https://s3.amazonaws.com/emgu-public/inception/") 
+                )
                     return true;
             }
             return false;
@@ -106,12 +111,14 @@ public class InceptionBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        DisplayText.text = _displayMessage;
         if (_inceptionGraph == null)
         {
             if (_loadingModel)
                 return;
             _loadingModel = true;
             _displayMessage = String.Format("Loading Inception Model, please wait...");
+
             System.Threading.ThreadPool.QueueUserWorkItem(
                 (o) =>
                 {
@@ -128,10 +135,9 @@ public class InceptionBehavior : MonoBehaviour
 
                     _loadingModel = false;
                 });
-			return;
-        }
-        
-        if (_liveCameraView)
+            //DisplayText.text = _displayMessage;
+            return;
+        } else if (_liveCameraView)
         {
             if (webcamTexture != null && webcamTexture.didUpdateThisFrame)
             {
@@ -182,23 +188,24 @@ public class InceptionBehavior : MonoBehaviour
                 //count++;
 
             }
+            //DisplayText.text = _displayMessage;
         }
-        else
-        {
-            if (!_staticViewRendered)
+        else if(!_staticViewRendered)
             {
-				if (_inceptionGraph == null)
-					return;
-                Texture2D texture = Resources.Load<Texture2D>("space_shuttle");
 
-                RecognizeAndUpdateText(texture);
-                
-                this.GetComponent<GUITexture>().texture = texture;
-                this.GetComponent<GUITexture>().pixelInset = new Rect(-texture.width / 2, -texture.height / 2, texture.width, texture.height);
-                _staticViewRendered = true;
-            }
+            if (_inceptionGraph == null)
+                return;
+            Texture2D texture = Resources.Load<Texture2D>("space_shuttle");
+
+            RecognizeAndUpdateText(texture);
+
+            this.GetComponent<GUITexture>().texture = texture;
+            this.GetComponent<GUITexture>().pixelInset = new Rect(-texture.width / 2, -texture.height / 2, texture.width, texture.height);
+            _staticViewRendered = true;
+            //DisplayText.text = _displayMessage;
         }
+    
 
-        DisplayText.text = _displayMessage;
+
     }
 }

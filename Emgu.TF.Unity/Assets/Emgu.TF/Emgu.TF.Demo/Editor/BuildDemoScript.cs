@@ -7,9 +7,9 @@ using System.Collections;
 public class BuildDemoScript {
 
 	static void PerformOSXBuild () {
-		EditorUserBuildSettings.SwitchActiveBuildTarget (BuildTargetGroup.Standalone, BuildTarget.StandaloneOSXUniversal);
+		EditorUserBuildSettings.SwitchActiveBuildTarget (BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
 		string[] scenes = {"Assets/Emgu.TF/Emgu.TF.Demo/InceptionScene.unity"};
-		BuildPipeline.BuildPlayer (scenes, "Builds/OSX/osx.app", BuildTarget.StandaloneOSXUniversal, BuildOptions.None);
+		BuildPipeline.BuildPlayer (scenes, "Builds/OSX/osx.app", BuildTarget.StandaloneOSX, BuildOptions.None);
 	}
 
 

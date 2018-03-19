@@ -45,7 +45,11 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
             if (webRequest != null)
             {
                 String requestStr = webRequest.Address.AbsoluteUri;
-                if (requestStr.StartsWith(@"https://github.com/") || requestStr.StartsWith(@"https://raw.githubusercontent.com/"))
+                if (
+                requestStr.StartsWith(@"https://github.com/") ||
+                requestStr.StartsWith(@"https://raw.githubusercontent.com/") ||
+                requestStr.StartsWith(@"https://s3.amazonaws.com/") )
+                
                     return true;
             }
             return false;
@@ -97,7 +101,7 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
                     catch (Exception e)
                     {
                         //DisplayText.text = e.Message;
-                        Console.WriteLine(e);
+                        Debug.LogError(e);
                         return;
                         //throw;
                     }
@@ -106,9 +110,12 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
                 });
         }
 
-        DisplayText.text = String.Empty;
+        if (_multiboxGraph == null)
+            return;
+
         if (_liveCameraView)
         {
+
             if (webcamTexture != null && webcamTexture.didUpdateThisFrame)
             {
                 #region convert the webcam texture to RGBA bytes
@@ -169,8 +176,7 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
         }
         else if (!_staticViewRendered)
         {
-			if (_multiboxGraph == null)
-				return;
+
 			
             Texture2D texture = Resources.Load<Texture2D>("surfers");
             Tensor imageTensor = ImageIO.ReadTensorFromTexture2D(texture, 224, 224, 128.0f, 1.0f / 128.0f, true);

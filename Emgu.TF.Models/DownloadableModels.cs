@@ -76,7 +76,10 @@ namespace Emgu.TF.Models
                     }
                     else
                     {
-                        Console.WriteLine(e);
+                        if (File.Exists(localFile))
+                            //The downloaded file may be corrupted, should delete it
+                            File.Delete(localFile);
+                        Debug.WriteLine(e);
                         throw;
                     }
                 }
