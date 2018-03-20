@@ -27,8 +27,8 @@ namespace CVInterop
             messageLabel.Text = String.Empty;
             cameraButton.Text = "Start Camera";
 
-            System.Net.ServicePointManager.Expect100Continue = true;
-            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+            //System.Net.ServicePointManager.Expect100Continue = true;
+            //System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
 
             //Use the following code for the full inception model
             inceptionGraph = new Inception();

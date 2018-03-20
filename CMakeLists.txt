@@ -386,8 +386,8 @@ IF(HAVE_WINDESKTOP_X64)
 ENDIF()
 
 SET(EMGUTF_MODEL_NUGET_FILE_LIST "
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.dll\" target=\"lib\\net35\" />
-	<file src=\"..\\..\\..\\lib\\Emgu.TF.Models.XML\" target=\"lib\\net35\" />")
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.dll\" target=\"lib\\net46\" />
+	<file src=\"..\\..\\..\\lib\\Emgu.TF.Models.XML\" target=\"lib\\net46\" />")
 
 SET(EMGUTF_PROTOBUF_NUGET_FILE_LIST "
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.dll\" target=\"lib\\net45\" />
