@@ -10,10 +10,10 @@
         <EmguDnnErrorMessage Condition="'$(EmguDnnBuildX64)'=='True' AND !Exists('$(EmguDnnNativeFileX64)')">This package do not contain necessary binary for $(EmguDnnLinkTarget). X64 is targeted, but file $(EmguDnnNativeFileX64) is missing.</EmguDnnErrorMessage>
       </PropertyGroup>
       <ItemGroup Condition="'$(EmguDnnBuildX64)'=='True' AND Exists('$(EmguDnnNativeFileX64)')">
-        <Content Include="$(MSBuildThisFileDirectory)\x64\*.dll">
+        <None Include="$(MSBuildThisFileDirectory)\x64\*.dll">
           <Link>x64\%(RecursiveDir)%(Filename)%(Extension)</Link>
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
+        </None>
       </ItemGroup>
 	    <Target Name="EmguDNNPackageBuildImports" BeforeTargets="PrepareForBuild">
     <Error Condition="'$(EmguDnnLinkTarget)'==''" Text="Emgu DNN is not able to detect the project type, please send a bug report to support@emgu.com" />

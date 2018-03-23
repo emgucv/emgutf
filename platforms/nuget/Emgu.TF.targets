@@ -8,10 +8,10 @@
         <EmguTFDeployMessage Condition="'$(EmguTFBuildX64)'=='True' AND Exists('$(EmguTFNativeFileX64)')">$(EmguTFDeployMessage)x64 </EmguTFDeployMessage >
       </PropertyGroup>
       <ItemGroup Condition="'$(EmguTFBuildX64)'=='True' AND Exists('$(EmguTFNativeFileX64)')">
-        <Content Include="$(MSBuildThisFileDirectory)\x64\*.dll">
+        <None Include="$(MSBuildThisFileDirectory)\x64\*.dll">
           <Link>x64\%(RecursiveDir)%(Filename)%(Extension)</Link>
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
+        </None>
       </ItemGroup>
 	  
   <Target Name="EmguTFPackageBuildImports" BeforeTargets="PrepareForBuild">
