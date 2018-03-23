@@ -28,20 +28,50 @@ namespace Emgu.TF.Models
 {
     public class MultiboxGraph : DownloadableModels
     {
-        public MultiboxGraph(Status status = null, String[] modelFiles = null, String downloadUrl = null)
+        public MultiboxGraph(
+            String[] modelFiles = null, 
+            String downloadUrl = null)
             : base(
                   modelFiles ?? new string[] { "multibox_model.pb", "multibox_location_priors.txt" },
                   downloadUrl ?? "https://github.com/emgucv/models/raw/master/mobile_multibox_v1a/")
         {
-            Download();
+            /*
+            Download(1, onDownloadProgressChanged);
 
             byte[] model = File.ReadAllBytes( GetLocalFileName( _modelFiles[0] ));
             
             Buffer modelBuffer = Buffer.FromString(model);
 
             using (ImportGraphDefOptions options = new ImportGraphDefOptions())
-                ImportGraphDef(modelBuffer, options, status);
+                ImportGraphDef(modelBuffer, options, status);*/
         }
+
+
+        public void Init(
+            Status status = null,
+            System.Net.DownloadProgressChangedEventHandler onDownloadProgressChanged = null,
+            System.ComponentModel.AsyncCompletedEventHandler onDownloadFileCompleted = null)
+        {
+            int retry = 1;
+            Download(
+                retry,
+                onDownloadProgressChanged,
+                (object sender, System.ComponentModel.AsyncCompletedEventArgs e) =>
+                {
+                    byte[] model = File.ReadAllBytes(GetLocalFileName(_modelFiles[0]));
+
+                    Buffer modelBuffer = Buffer.FromString(model);
+
+                    using (ImportGraphDefOptions options = new ImportGraphDefOptions())
+                        ImportGraphDef(modelBuffer, options, status);
+
+                    if (onDownloadFileCompleted != null)
+                    {
+                        onDownloadFileCompleted(sender, e);
+                    }
+                });
+        }
+
 
         public Result Detect(Tensor imageResults, SessionOptions sessionOptions = null)
         {

@@ -25,12 +25,44 @@ namespace Emgu.TF.Models
         public String[] _modelFiles;
         public String _downloadUrl;
 
-        public void Download(int retry = 1)
+        public void Download(int retry = 1,
+            System.Net.DownloadProgressChangedEventHandler onDownloadProgressChanged = null,
+            System.ComponentModel.AsyncCompletedEventHandler onDownloadFileCompleted = null)
         {
+            DownloadHelper(_modelFiles, _downloadUrl, retry, onDownloadProgressChanged, onDownloadFileCompleted);
+        }
+
+        private static void DownloadHelper(
+            String[] fileNames,
+            String downloadUrl,
+            int retry = 1, 
+            System.Net.DownloadProgressChangedEventHandler onDownloadProgressChanged = null,
+            System.ComponentModel.AsyncCompletedEventHandler onDownloadFileCompleted = null)
+        {
+            if (fileNames == null || fileNames.Length == 0)
+            {
+                if (onDownloadFileCompleted != null)
+                    onDownloadFileCompleted(null, null);
+            } else if (fileNames.Length == 1)
+            {
+                DownloadHelper(fileNames[0], downloadUrl, retry, onDownloadProgressChanged, onDownloadFileCompleted);
+            } else
+            {
+                String currentFile = fileNames[0];
+                String[] remainingFiles = new String[fileNames.Length - 1];
+                Array.Copy(fileNames, 1, remainingFiles, 0, remainingFiles.Length);
+                DownloadHelper(currentFile, downloadUrl, retry, onDownloadProgressChanged,
+                    (object sender, System.ComponentModel.AsyncCompletedEventArgs e) =>
+                    {
+                        DownloadHelper(remainingFiles, downloadUrl, retry, onDownloadProgressChanged, onDownloadFileCompleted);
+                    }
+                    );
+            }
+            /*
             foreach (var fileName in _modelFiles)
             {
-                Download(fileName, retry);
-            }
+                Download(fileName, retry, onDownloadProgressChanged, onDownloadFileCompleted);
+            }*/
         }
 
 #if __ANDROID__
@@ -50,9 +82,16 @@ namespace Emgu.TF.Models
 #endif
         }
 
-        private void Download(String fileName, int retry = 1)
+
+        private static void DownloadHelper(
+            String fileName, 
+            String downloadUrl,
+            int retry = 1, 
+            System.Net.DownloadProgressChangedEventHandler onDownloadProgressChanged = null,
+            System.ComponentModel.AsyncCompletedEventHandler onDownloadFileCompleted = null
+            )
         {
-            if (_downloadUrl == null)
+            if (downloadUrl == null)
                 return;
 
             String localFile = GetLocalFileName(fileName);
@@ -62,27 +101,39 @@ namespace Emgu.TF.Models
                 try
                 {
                     //Download the tensorflow file
-                    String multiboxUrl = _downloadUrl + fileName;
+                    String multiboxUrl = downloadUrl + fileName;
                     Trace.WriteLine("downloading file from:" + multiboxUrl + " to: " + localFile);
                     System.Net.WebClient downloadClient = new System.Net.WebClient();
-                    downloadClient.DownloadFile(multiboxUrl, localFile);
+                    
+                    if (onDownloadProgressChanged != null)
+                        downloadClient.DownloadProgressChanged += onDownloadProgressChanged;
+                    if (onDownloadFileCompleted != null)
+                        downloadClient.DownloadFileCompleted += onDownloadFileCompleted;
 
+                    downloadClient.DownloadFileAsync(new Uri( multiboxUrl ), localFile);
+                    
                 }
                 catch (Exception e)
                 {
+                    if (File.Exists(localFile))
+                        //The downloaded file may be corrupted, should delete it
+                        File.Delete(localFile);
+
                     if (retry > 0)
                     {
-                        Download(retry - 1);
+                        DownloadHelper(fileName, downloadUrl, retry - 1);
                     }
                     else
                     {
-                        if (File.Exists(localFile))
-                            //The downloaded file may be corrupted, should delete it
-                            File.Delete(localFile);
+
                         Debug.WriteLine(e);
                         throw;
                     }
                 }
+            } else
+            {
+                if (onDownloadFileCompleted != null)
+                     onDownloadFileCompleted(null, null);
             }
         }
     }

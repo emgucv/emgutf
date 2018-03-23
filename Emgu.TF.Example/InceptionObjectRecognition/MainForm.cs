@@ -16,6 +16,8 @@ namespace InceptionObjectRecognition
 {
     public partial class MainForm : Form
     {
+        private Inception inceptionGraph;
+
         public MainForm()
         {
             InitializeComponent();
@@ -23,20 +25,79 @@ namespace InceptionObjectRecognition
             TfInvoke.CheckLibraryLoaded();
             messageLabel.Text = String.Empty;
 
-            System.Net.ServicePointManager.Expect100Continue = true;
-            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+            //System.Net.ServicePointManager.Expect100Continue = true;
+            //System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
 
-            Recognize("space_shuttle.jpg");
+            DisableUI();
+
+            //Use the following code for the full inception model
+            inceptionGraph = new Inception();
+
+            //Recognize("space_shuttle.jpg");
+            inceptionGraph.Init(
+                onDownloadProgressChanged: OnDownloadProgressChangedEventHandler,
+                onDownloadFileCompleted:
+                (object sender, System.ComponentModel.AsyncCompletedEventArgs e) =>
+                {
+                    EnableUI();
+                    Recognize("space_shuttle.jpg");
+                }
+                );
+
+        }
+
+        public void OnDownloadProgressChangedEventHandler(object sender, System.Net.DownloadProgressChangedEventArgs e)
+        {
+            String msg = String.Format("Downloading models, please wait... {0} of {1} bytes ({2}%) downloaded.", e.BytesReceived, e.TotalBytesToReceive, e.ProgressPercentage);
+            if (InvokeRequired)
+            {
+                this.Invoke((MethodInvoker)(() =>
+                {
+                    messageLabel.Text = msg;
+
+                }));
+            }
+            else
+            {
+                messageLabel.Text = msg;
+
+            }
+        }
+
+        public void DisableUI()
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke((MethodInvoker)(() =>
+                {
+                    openFileButton.Enabled = false;
+                }));
+            }
+            else
+            {
+                openFileButton.Enabled = false;
+            }
+        }
+
+        public void EnableUI()
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke((MethodInvoker)(() =>
+                {
+                    openFileButton.Enabled = true;                    
+                }));
+            }
+            else
+            {
+                openFileButton.Enabled = true;
+            }
 
         }
 
         public void Recognize(String fileName)
         {
-            fileNameTextBox.Text = fileName;
-            pictureBox.ImageLocation = fileName;
-
-            //Use the following code for the full inception model
-            Inception inceptionGraph = new Inception();
+            
             Tensor imageTensor = ImageIO.ReadTensorFromImageFile(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
 
             //Uncomment the following code to use a retrained model to recognize followers, downloaded from the internet
@@ -68,7 +129,24 @@ namespace InceptionObjectRecognition
                 }
                 resStr = String.Format("Object is {0} with {1}% probability. Recognition done in {2} milliseconds.", labels[maxIdx], maxVal * 100, sw.ElapsedMilliseconds);
             }
-            messageLabel.Text = resStr;
+
+            if (InvokeRequired)
+            {
+                this.Invoke((MethodInvoker)(() =>
+                {
+                    fileNameTextBox.Text = fileName;
+                    pictureBox.ImageLocation = fileName;
+                    messageLabel.Text = resStr;
+                }));
+            }
+            else
+            {
+                fileNameTextBox.Text = fileName;
+                pictureBox.ImageLocation = fileName;
+                messageLabel.Text = resStr;
+            }
+
+            
 
         }
 

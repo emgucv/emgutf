@@ -27,15 +27,73 @@ namespace CVInterop
             messageLabel.Text = String.Empty;
             cameraButton.Text = "Start Camera";
 
-            //System.Net.ServicePointManager.Expect100Continue = true;
-            //System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+            DisableUI();
 
             //Use the following code for the full inception model
             inceptionGraph = new Inception();
 
-            Recognize("space_shuttle.jpg");
+            inceptionGraph.Init(
+                onDownloadProgressChanged: OnDownloadProgressChangedEventHandler,
+                onDownloadFileCompleted: 
+                (object sender, System.ComponentModel.AsyncCompletedEventArgs e) =>
+                {
+                    EnableUI();                    
+                    Recognize("space_shuttle.jpg");
+                }
+                );
+        }
 
-            
+        public void DisableUI()
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke((MethodInvoker)(() =>
+                {
+                    openFileButton.Enabled = false;
+                    cameraButton.Enabled = false;
+                }));
+            }
+            else
+            {
+                openFileButton.Enabled = false;
+                cameraButton.Enabled = false;
+            }
+        }
+
+        public void EnableUI()
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke((MethodInvoker)(() =>
+                {
+                    openFileButton.Enabled = true;
+                    cameraButton.Enabled = true;
+                }));
+            }
+            else
+            {
+                openFileButton.Enabled = true;
+                cameraButton.Enabled = true;
+            }
+
+        }
+
+        public void OnDownloadProgressChangedEventHandler(object sender, System.Net.DownloadProgressChangedEventArgs e)
+        {
+            String msg = String.Format("Downloading models, please wait... {0} of {1} bytes ({2}%) downloaded.", e.BytesReceived, e.TotalBytesToReceive, e.ProgressPercentage);
+            if (InvokeRequired)
+            {
+                this.Invoke((MethodInvoker)(() =>
+                {
+                    messageLabel.Text = msg;
+             
+                }));
+            }
+            else
+            {
+                messageLabel.Text = msg;
+             
+            }
         }
 
         public void Recognize(Mat m)

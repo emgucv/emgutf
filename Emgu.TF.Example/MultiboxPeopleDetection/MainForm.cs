@@ -18,21 +18,50 @@ namespace MultiboxPeopleDetection
 {
     public partial class MainForm : Form
     {
+        private MultiboxGraph graph;
         public MainForm()
         {
             InitializeComponent();
             TfInvoke.CheckLibraryLoaded();
+            SetLabelText(String.Empty);
 
-            //System.Net.ServicePointManager.Expect100Continue = true;
-            //System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+            graph = new MultiboxGraph();
+            graph.Init(
+                onDownloadProgressChanged: OnDownloadProgressChangedEventHandler,
+                onDownloadFileCompleted:
+                (object sender, System.ComponentModel.AsyncCompletedEventArgs e) =>
+                {
+                    Detect("surfers.jpg");
+                }
+                );
+        }
 
-            Detect("surfers.jpg");
+        public void OnDownloadProgressChangedEventHandler(object sender, System.Net.DownloadProgressChangedEventArgs e)
+        {
+            String msg = String.Format("Downloading models, please wait... {0} of {1} bytes ({2}%) downloaded.", e.BytesReceived, e.TotalBytesToReceive, e.ProgressPercentage);
+            SetLabelText(msg);
+        }
+
+        public void SetLabelText(String msg)
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke((MethodInvoker)(() =>
+                {
+                    messageLabel.Text = msg;
+
+                }));
+            }
+            else
+            {
+                messageLabel.Text = msg;
+
+            }
         }
 
         public void Detect(String fileName)
         {
 
-            MultiboxGraph graph = new MultiboxGraph();
             Tensor imageTensor = ImageIO.ReadTensorFromImageFile(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
 
             Stopwatch watch = Stopwatch.StartNew();           
@@ -41,8 +70,22 @@ namespace MultiboxPeopleDetection
 
             Bitmap bmp = new Bitmap(fileName);
             MultiboxGraph.DrawResults(bmp, result, 0.1f);
-            resultPictureBox.Image = bmp;
-            messageLabel.Text = String.Format("Detection completed in {0} milliseconds", watch.ElapsedMilliseconds);
+
+
+            if (InvokeRequired)
+            {
+                this.Invoke((MethodInvoker)(() =>
+                {
+                    resultPictureBox.Image = bmp;
+                    messageLabel.Text = String.Format("Detection completed in {0} milliseconds", watch.ElapsedMilliseconds);
+                }));
+            }
+            else
+            {
+                resultPictureBox.Image = bmp;
+                messageLabel.Text = String.Format("Detection completed in {0} milliseconds", watch.ElapsedMilliseconds);
+            }
+            
         }
     }
 }

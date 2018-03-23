@@ -10,12 +10,16 @@ namespace Emgu.TF.Models
 {
     public class StylizeGraph : DownloadableModels
     {
-        public StylizeGraph(Status status = null, String[] modelFiles = null, String downloadUrl = null)
+        public StylizeGraph(
+            Status status = null, 
+            String[] modelFiles = null, 
+            String downloadUrl = null,
+            System.Net.DownloadProgressChangedEventHandler onDownloadProgressChanged = null)
             : base(
         modelFiles ?? new string[] { "stylize_quantized.pb" },
         downloadUrl ?? "https://github.com/emgucv/models/raw/master/stylize_v1/")
         {
-            Download();
+            Download(1, onDownloadProgressChanged);
 #if __ANDROID__
             byte[] model = File.ReadAllBytes(System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, Android.OS.Environment.DirectoryDownloads, _modelFiles[0]));
 #else

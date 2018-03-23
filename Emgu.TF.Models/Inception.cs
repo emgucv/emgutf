@@ -15,23 +15,45 @@ namespace Emgu.TF.Models
         private String _inputLayer;
         private String _outputLayer;
 
-        public Inception(Status status = null, String[] modelFiles = null, String downloadUrl = "https://s3.amazonaws.com/emgu-public/inception/", String inputLayer = "input", String outputLayer = "output")
+        public Inception(            
+            String[] modelFiles = null,
+            //String downloadUrl = "https://s3.amazonaws.com/emgu-public/inception/",
+            String downloadUrl = "https://github.com/emgucv/models/raw/master/inception/",
+            String inputLayer = "input", 
+            String outputLayer = "output")
             : base(
                 modelFiles ?? new string[] { "tensorflow_inception_graph.pb", "imagenet_comp_graph_label_strings.txt" },
                 downloadUrl)
         {
             _inputLayer = inputLayer;
             _outputLayer = outputLayer;
-
-            Download();
-
-            byte[] model = File.ReadAllBytes(GetLocalFileName(_modelFiles[0]));
-
-            Buffer modelBuffer = Buffer.FromString(model);
-
-            using (ImportGraphDefOptions options = new ImportGraphDefOptions())
-                ImportGraphDef(modelBuffer, options, status);
         }
+
+        public void Init(
+            Status status = null,
+            System.Net.DownloadProgressChangedEventHandler onDownloadProgressChanged = null,
+            System.ComponentModel.AsyncCompletedEventHandler onDownloadFileCompleted = null)
+        {
+            int retry = 1;
+            Download(
+                retry,
+                onDownloadProgressChanged,
+                (object sender, System.ComponentModel.AsyncCompletedEventArgs e) =>
+                {
+                    byte[] model = File.ReadAllBytes(GetLocalFileName(_modelFiles[0]));
+
+                    Buffer modelBuffer = Buffer.FromString(model);
+
+                    using (ImportGraphDefOptions options = new ImportGraphDefOptions())
+                        ImportGraphDef(modelBuffer, options, status);
+
+                    if (onDownloadFileCompleted != null)
+                    {
+                        onDownloadFileCompleted(sender, e);
+                    }
+                });
+        }
+        
 
         public String[] Labels
         {
