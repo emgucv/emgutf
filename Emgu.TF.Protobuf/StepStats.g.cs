@@ -35,33 +35,33 @@ namespace Tensorflow {
             "IAMoCzIcLnRlbnNvcmZsb3cuQWxsb2NhdGlvblJlY29yZBIeChZhbGxvY2F0",
             "b3JfYnl0ZXNfaW5fdXNlGAUgASgDIlUKCk5vZGVPdXRwdXQSDAoEc2xvdBgB",
             "IAEoBRI5ChJ0ZW5zb3JfZGVzY3JpcHRpb24YAyABKAsyHS50ZW5zb3JmbG93",
-            "LlRlbnNvckRlc2NyaXB0aW9uIu8BCgtNZW1vcnlTdGF0cxIdChVob3N0X3Rl",
-            "bXBfbWVtb3J5X3NpemUYASABKAMSHwoXZGV2aWNlX3RlbXBfbWVtb3J5X3Np",
-            "emUYAiABKAMSIwobaG9zdF9wZXJzaXN0ZW50X21lbW9yeV9zaXplGAMgASgD",
-            "EiUKHWRldmljZV9wZXJzaXN0ZW50X21lbW9yeV9zaXplGAQgASgDEigKIGhv",
-            "c3RfcGVyc2lzdGVudF90ZW5zb3JfYWxsb2NfaWRzGAUgAygDEioKImRldmlj",
-            "ZV9wZXJzaXN0ZW50X3RlbnNvcl9hbGxvY19pZHMYBiADKAMimwMKDU5vZGVF",
-            "eGVjU3RhdHMSEQoJbm9kZV9uYW1lGAEgASgJEhgKEGFsbF9zdGFydF9taWNy",
-            "b3MYAiABKAMSGwoTb3Bfc3RhcnRfcmVsX21pY3JvcxgDIAEoAxIZChFvcF9l",
-            "bmRfcmVsX21pY3JvcxgEIAEoAxIaChJhbGxfZW5kX3JlbF9taWNyb3MYBSAB",
-            "KAMSLwoGbWVtb3J5GAYgAygLMh8udGVuc29yZmxvdy5BbGxvY2F0b3JNZW1v",
-            "cnlVc2VkEiYKBm91dHB1dBgHIAMoCzIWLnRlbnNvcmZsb3cuTm9kZU91dHB1",
-            "dBIWCg50aW1lbGluZV9sYWJlbBgIIAEoCRIYChBzY2hlZHVsZWRfbWljcm9z",
-            "GAkgASgDEhEKCXRocmVhZF9pZBgKIAEoDRI8ChFyZWZlcmVuY2VkX3RlbnNv",
-            "chgLIAMoCzIhLnRlbnNvcmZsb3cuQWxsb2NhdGlvbkRlc2NyaXB0aW9uEi0K",
-            "DG1lbW9yeV9zdGF0cxgMIAEoCzIXLnRlbnNvcmZsb3cuTWVtb3J5U3RhdHMi",
-            "UAoPRGV2aWNlU3RlcFN0YXRzEg4KBmRldmljZRgBIAEoCRItCgpub2RlX3N0",
-            "YXRzGAIgAygLMhkudGVuc29yZmxvdy5Ob2RlRXhlY1N0YXRzIjsKCVN0ZXBT",
-            "dGF0cxIuCglkZXZfc3RhdHMYASADKAsyGy50ZW5zb3JmbG93LkRldmljZVN0",
-            "ZXBTdGF0c0IwChhvcmcudGVuc29yZmxvdy5mcmFtZXdvcmtCD1N0ZXBTdGF0",
-            "c1Byb3Rvc1AB+AEBYgZwcm90bzM="));
+            "LlRlbnNvckRlc2NyaXB0aW9uIuwBCgtNZW1vcnlTdGF0cxIYChB0ZW1wX21l",
+            "bW9yeV9zaXplGAEgASgDEh4KFnBlcnNpc3RlbnRfbWVtb3J5X3NpemUYAyAB",
+            "KAMSIwobcGVyc2lzdGVudF90ZW5zb3JfYWxsb2NfaWRzGAUgAygDEiMKF2Rl",
+            "dmljZV90ZW1wX21lbW9yeV9zaXplGAIgASgDQgIYARIpCh1kZXZpY2VfcGVy",
+            "c2lzdGVudF9tZW1vcnlfc2l6ZRgEIAEoA0ICGAESLgoiZGV2aWNlX3BlcnNp",
+            "c3RlbnRfdGVuc29yX2FsbG9jX2lkcxgGIAMoA0ICGAEimwMKDU5vZGVFeGVj",
+            "U3RhdHMSEQoJbm9kZV9uYW1lGAEgASgJEhgKEGFsbF9zdGFydF9taWNyb3MY",
+            "AiABKAMSGwoTb3Bfc3RhcnRfcmVsX21pY3JvcxgDIAEoAxIZChFvcF9lbmRf",
+            "cmVsX21pY3JvcxgEIAEoAxIaChJhbGxfZW5kX3JlbF9taWNyb3MYBSABKAMS",
+            "LwoGbWVtb3J5GAYgAygLMh8udGVuc29yZmxvdy5BbGxvY2F0b3JNZW1vcnlV",
+            "c2VkEiYKBm91dHB1dBgHIAMoCzIWLnRlbnNvcmZsb3cuTm9kZU91dHB1dBIW",
+            "Cg50aW1lbGluZV9sYWJlbBgIIAEoCRIYChBzY2hlZHVsZWRfbWljcm9zGAkg",
+            "ASgDEhEKCXRocmVhZF9pZBgKIAEoDRI8ChFyZWZlcmVuY2VkX3RlbnNvchgL",
+            "IAMoCzIhLnRlbnNvcmZsb3cuQWxsb2NhdGlvbkRlc2NyaXB0aW9uEi0KDG1l",
+            "bW9yeV9zdGF0cxgMIAEoCzIXLnRlbnNvcmZsb3cuTWVtb3J5U3RhdHMiUAoP",
+            "RGV2aWNlU3RlcFN0YXRzEg4KBmRldmljZRgBIAEoCRItCgpub2RlX3N0YXRz",
+            "GAIgAygLMhkudGVuc29yZmxvdy5Ob2RlRXhlY1N0YXRzIjsKCVN0ZXBTdGF0",
+            "cxIuCglkZXZfc3RhdHMYASADKAsyGy50ZW5zb3JmbG93LkRldmljZVN0ZXBT",
+            "dGF0c0IwChhvcmcudGVuc29yZmxvdy5mcmFtZXdvcmtCD1N0ZXBTdGF0c1By",
+            "b3Rvc1AB+AEBYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Tensorflow.AllocationDescriptionReflection.Descriptor, global::Tensorflow.TensorDescriptionReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.AllocationRecord), global::Tensorflow.AllocationRecord.Parser, new[]{ "AllocMicros", "AllocBytes" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.AllocatorMemoryUsed), global::Tensorflow.AllocatorMemoryUsed.Parser, new[]{ "AllocatorName", "TotalBytes", "PeakBytes", "LiveBytes", "AllocationRecords", "AllocatorBytesInUse" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.NodeOutput), global::Tensorflow.NodeOutput.Parser, new[]{ "Slot", "TensorDescription" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.MemoryStats), global::Tensorflow.MemoryStats.Parser, new[]{ "HostTempMemorySize", "DeviceTempMemorySize", "HostPersistentMemorySize", "DevicePersistentMemorySize", "HostPersistentTensorAllocIds", "DevicePersistentTensorAllocIds" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.MemoryStats), global::Tensorflow.MemoryStats.Parser, new[]{ "TempMemorySize", "PersistentMemorySize", "PersistentTensorAllocIds", "DeviceTempMemorySize", "DevicePersistentMemorySize", "DevicePersistentTensorAllocIds" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.NodeExecStats), global::Tensorflow.NodeExecStats.Parser, new[]{ "NodeName", "AllStartMicros", "OpStartRelMicros", "OpEndRelMicros", "AllEndRelMicros", "Memory", "Output", "TimelineLabel", "ScheduledMicros", "ThreadId", "ReferencedTensor", "MemoryStats" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.DeviceStepStats), global::Tensorflow.DeviceStepStats.Parser, new[]{ "Device", "NodeStats" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.StepStats), global::Tensorflow.StepStats.Parser, new[]{ "DevStats" }, null, null, null)
@@ -705,11 +705,11 @@ namespace Tensorflow {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public MemoryStats(MemoryStats other) : this() {
-      hostTempMemorySize_ = other.hostTempMemorySize_;
+      tempMemorySize_ = other.tempMemorySize_;
+      persistentMemorySize_ = other.persistentMemorySize_;
+      persistentTensorAllocIds_ = other.persistentTensorAllocIds_.Clone();
       deviceTempMemorySize_ = other.deviceTempMemorySize_;
-      hostPersistentMemorySize_ = other.hostPersistentMemorySize_;
       devicePersistentMemorySize_ = other.devicePersistentMemorySize_;
-      hostPersistentTensorAllocIds_ = other.hostPersistentTensorAllocIds_.Clone();
       devicePersistentTensorAllocIds_ = other.devicePersistentTensorAllocIds_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -719,20 +719,42 @@ namespace Tensorflow {
       return new MemoryStats(this);
     }
 
-    /// <summary>Field number for the "host_temp_memory_size" field.</summary>
-    public const int HostTempMemorySizeFieldNumber = 1;
-    private long hostTempMemorySize_;
+    /// <summary>Field number for the "temp_memory_size" field.</summary>
+    public const int TempMemorySizeFieldNumber = 1;
+    private long tempMemorySize_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public long HostTempMemorySize {
-      get { return hostTempMemorySize_; }
+    public long TempMemorySize {
+      get { return tempMemorySize_; }
       set {
-        hostTempMemorySize_ = value;
+        tempMemorySize_ = value;
       }
+    }
+
+    /// <summary>Field number for the "persistent_memory_size" field.</summary>
+    public const int PersistentMemorySizeFieldNumber = 3;
+    private long persistentMemorySize_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public long PersistentMemorySize {
+      get { return persistentMemorySize_; }
+      set {
+        persistentMemorySize_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "persistent_tensor_alloc_ids" field.</summary>
+    public const int PersistentTensorAllocIdsFieldNumber = 5;
+    private static readonly pb::FieldCodec<long> _repeated_persistentTensorAllocIds_codec
+        = pb::FieldCodec.ForInt64(42);
+    private readonly pbc::RepeatedField<long> persistentTensorAllocIds_ = new pbc::RepeatedField<long>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<long> PersistentTensorAllocIds {
+      get { return persistentTensorAllocIds_; }
     }
 
     /// <summary>Field number for the "device_temp_memory_size" field.</summary>
     public const int DeviceTempMemorySizeFieldNumber = 2;
     private long deviceTempMemorySize_;
+    [global::System.ObsoleteAttribute]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public long DeviceTempMemorySize {
       get { return deviceTempMemorySize_; }
@@ -741,20 +763,10 @@ namespace Tensorflow {
       }
     }
 
-    /// <summary>Field number for the "host_persistent_memory_size" field.</summary>
-    public const int HostPersistentMemorySizeFieldNumber = 3;
-    private long hostPersistentMemorySize_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public long HostPersistentMemorySize {
-      get { return hostPersistentMemorySize_; }
-      set {
-        hostPersistentMemorySize_ = value;
-      }
-    }
-
     /// <summary>Field number for the "device_persistent_memory_size" field.</summary>
     public const int DevicePersistentMemorySizeFieldNumber = 4;
     private long devicePersistentMemorySize_;
+    [global::System.ObsoleteAttribute]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public long DevicePersistentMemorySize {
       get { return devicePersistentMemorySize_; }
@@ -763,21 +775,12 @@ namespace Tensorflow {
       }
     }
 
-    /// <summary>Field number for the "host_persistent_tensor_alloc_ids" field.</summary>
-    public const int HostPersistentTensorAllocIdsFieldNumber = 5;
-    private static readonly pb::FieldCodec<long> _repeated_hostPersistentTensorAllocIds_codec
-        = pb::FieldCodec.ForInt64(42);
-    private readonly pbc::RepeatedField<long> hostPersistentTensorAllocIds_ = new pbc::RepeatedField<long>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<long> HostPersistentTensorAllocIds {
-      get { return hostPersistentTensorAllocIds_; }
-    }
-
     /// <summary>Field number for the "device_persistent_tensor_alloc_ids" field.</summary>
     public const int DevicePersistentTensorAllocIdsFieldNumber = 6;
     private static readonly pb::FieldCodec<long> _repeated_devicePersistentTensorAllocIds_codec
         = pb::FieldCodec.ForInt64(50);
     private readonly pbc::RepeatedField<long> devicePersistentTensorAllocIds_ = new pbc::RepeatedField<long>();
+    [global::System.ObsoleteAttribute]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<long> DevicePersistentTensorAllocIds {
       get { return devicePersistentTensorAllocIds_; }
@@ -796,11 +799,11 @@ namespace Tensorflow {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (HostTempMemorySize != other.HostTempMemorySize) return false;
+      if (TempMemorySize != other.TempMemorySize) return false;
+      if (PersistentMemorySize != other.PersistentMemorySize) return false;
+      if(!persistentTensorAllocIds_.Equals(other.persistentTensorAllocIds_)) return false;
       if (DeviceTempMemorySize != other.DeviceTempMemorySize) return false;
-      if (HostPersistentMemorySize != other.HostPersistentMemorySize) return false;
       if (DevicePersistentMemorySize != other.DevicePersistentMemorySize) return false;
-      if(!hostPersistentTensorAllocIds_.Equals(other.hostPersistentTensorAllocIds_)) return false;
       if(!devicePersistentTensorAllocIds_.Equals(other.devicePersistentTensorAllocIds_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -808,11 +811,11 @@ namespace Tensorflow {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (HostTempMemorySize != 0L) hash ^= HostTempMemorySize.GetHashCode();
+      if (TempMemorySize != 0L) hash ^= TempMemorySize.GetHashCode();
+      if (PersistentMemorySize != 0L) hash ^= PersistentMemorySize.GetHashCode();
+      hash ^= persistentTensorAllocIds_.GetHashCode();
       if (DeviceTempMemorySize != 0L) hash ^= DeviceTempMemorySize.GetHashCode();
-      if (HostPersistentMemorySize != 0L) hash ^= HostPersistentMemorySize.GetHashCode();
       if (DevicePersistentMemorySize != 0L) hash ^= DevicePersistentMemorySize.GetHashCode();
-      hash ^= hostPersistentTensorAllocIds_.GetHashCode();
       hash ^= devicePersistentTensorAllocIds_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -827,23 +830,23 @@ namespace Tensorflow {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (HostTempMemorySize != 0L) {
+      if (TempMemorySize != 0L) {
         output.WriteRawTag(8);
-        output.WriteInt64(HostTempMemorySize);
+        output.WriteInt64(TempMemorySize);
       }
       if (DeviceTempMemorySize != 0L) {
         output.WriteRawTag(16);
         output.WriteInt64(DeviceTempMemorySize);
       }
-      if (HostPersistentMemorySize != 0L) {
+      if (PersistentMemorySize != 0L) {
         output.WriteRawTag(24);
-        output.WriteInt64(HostPersistentMemorySize);
+        output.WriteInt64(PersistentMemorySize);
       }
       if (DevicePersistentMemorySize != 0L) {
         output.WriteRawTag(32);
         output.WriteInt64(DevicePersistentMemorySize);
       }
-      hostPersistentTensorAllocIds_.WriteTo(output, _repeated_hostPersistentTensorAllocIds_codec);
+      persistentTensorAllocIds_.WriteTo(output, _repeated_persistentTensorAllocIds_codec);
       devicePersistentTensorAllocIds_.WriteTo(output, _repeated_devicePersistentTensorAllocIds_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -853,19 +856,19 @@ namespace Tensorflow {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (HostTempMemorySize != 0L) {
-        size += 1 + pb::CodedOutputStream.ComputeInt64Size(HostTempMemorySize);
+      if (TempMemorySize != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(TempMemorySize);
       }
+      if (PersistentMemorySize != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(PersistentMemorySize);
+      }
+      size += persistentTensorAllocIds_.CalculateSize(_repeated_persistentTensorAllocIds_codec);
       if (DeviceTempMemorySize != 0L) {
         size += 1 + pb::CodedOutputStream.ComputeInt64Size(DeviceTempMemorySize);
-      }
-      if (HostPersistentMemorySize != 0L) {
-        size += 1 + pb::CodedOutputStream.ComputeInt64Size(HostPersistentMemorySize);
       }
       if (DevicePersistentMemorySize != 0L) {
         size += 1 + pb::CodedOutputStream.ComputeInt64Size(DevicePersistentMemorySize);
       }
-      size += hostPersistentTensorAllocIds_.CalculateSize(_repeated_hostPersistentTensorAllocIds_codec);
       size += devicePersistentTensorAllocIds_.CalculateSize(_repeated_devicePersistentTensorAllocIds_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -878,19 +881,19 @@ namespace Tensorflow {
       if (other == null) {
         return;
       }
-      if (other.HostTempMemorySize != 0L) {
-        HostTempMemorySize = other.HostTempMemorySize;
+      if (other.TempMemorySize != 0L) {
+        TempMemorySize = other.TempMemorySize;
       }
+      if (other.PersistentMemorySize != 0L) {
+        PersistentMemorySize = other.PersistentMemorySize;
+      }
+      persistentTensorAllocIds_.Add(other.persistentTensorAllocIds_);
       if (other.DeviceTempMemorySize != 0L) {
         DeviceTempMemorySize = other.DeviceTempMemorySize;
-      }
-      if (other.HostPersistentMemorySize != 0L) {
-        HostPersistentMemorySize = other.HostPersistentMemorySize;
       }
       if (other.DevicePersistentMemorySize != 0L) {
         DevicePersistentMemorySize = other.DevicePersistentMemorySize;
       }
-      hostPersistentTensorAllocIds_.Add(other.hostPersistentTensorAllocIds_);
       devicePersistentTensorAllocIds_.Add(other.devicePersistentTensorAllocIds_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -904,7 +907,7 @@ namespace Tensorflow {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            HostTempMemorySize = input.ReadInt64();
+            TempMemorySize = input.ReadInt64();
             break;
           }
           case 16: {
@@ -912,7 +915,7 @@ namespace Tensorflow {
             break;
           }
           case 24: {
-            HostPersistentMemorySize = input.ReadInt64();
+            PersistentMemorySize = input.ReadInt64();
             break;
           }
           case 32: {
@@ -921,7 +924,7 @@ namespace Tensorflow {
           }
           case 42:
           case 40: {
-            hostPersistentTensorAllocIds_.AddEntriesFrom(input, _repeated_hostPersistentTensorAllocIds_codec);
+            persistentTensorAllocIds_.AddEntriesFrom(input, _repeated_persistentTensorAllocIds_codec);
             break;
           }
           case 50:

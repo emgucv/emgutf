@@ -27,28 +27,28 @@ namespace Tensorflow {
             "Cip0ZW5zb3JmbG93L2NvcmUvZnJhbWV3b3JrL2Nvc3RfZ3JhcGgucHJvdG8S",
             "CnRlbnNvcmZsb3caLHRlbnNvcmZsb3cvY29yZS9mcmFtZXdvcmsvdGVuc29y",
             "X3NoYXBlLnByb3RvGiV0ZW5zb3JmbG93L2NvcmUvZnJhbWV3b3JrL3R5cGVz",
-            "LnByb3RvIsUFCgxDb3N0R3JhcGhEZWYSKwoEbm9kZRgBIAMoCzIdLnRlbnNv",
-            "cmZsb3cuQ29zdEdyYXBoRGVmLk5vZGUahwUKBE5vZGUSDAoEbmFtZRgBIAEo",
+            "LnByb3RvIswFCgxDb3N0R3JhcGhEZWYSKwoEbm9kZRgBIAMoCzIdLnRlbnNv",
+            "cmZsb3cuQ29zdEdyYXBoRGVmLk5vZGUajgUKBE5vZGUSDAoEbmFtZRgBIAEo",
             "CRIOCgZkZXZpY2UYAiABKAkSCgoCaWQYAyABKAUSOwoKaW5wdXRfaW5mbxgE",
             "IAMoCzInLnRlbnNvcmZsb3cuQ29zdEdyYXBoRGVmLk5vZGUuSW5wdXRJbmZv",
             "Ej0KC291dHB1dF9pbmZvGAUgAygLMigudGVuc29yZmxvdy5Db3N0R3JhcGhE",
             "ZWYuTm9kZS5PdXRwdXRJbmZvEh0KFXRlbXBvcmFyeV9tZW1vcnlfc2l6ZRgG",
-            "IAEoAxIdChVob3N0X3RlbXBfbWVtb3J5X3NpemUYCiABKAMSHwoXZGV2aWNl",
-            "X3RlbXBfbWVtb3J5X3NpemUYCyABKAMSIwobaG9zdF9wZXJzaXN0ZW50X21l",
-            "bW9yeV9zaXplGAwgASgDEiUKHWRldmljZV9wZXJzaXN0ZW50X21lbW9yeV9z",
-            "aXplGBAgASgDEhQKDGNvbXB1dGVfY29zdBgJIAEoAxIUCgxjb21wdXRlX3Rp",
-            "bWUYDiABKAMSEwoLbWVtb3J5X3RpbWUYDyABKAMSEAoIaXNfZmluYWwYByAB",
-            "KAgSFQoNY29udHJvbF9pbnB1dBgIIAMoBRo7CglJbnB1dEluZm8SFgoOcHJl",
-            "Y2VkaW5nX25vZGUYASABKAUSFgoOcHJlY2VkaW5nX3BvcnQYAiABKAUahgEK",
-            "Ck91dHB1dEluZm8SDAoEc2l6ZRgBIAEoAxIYChBhbGlhc19pbnB1dF9wb3J0",
-            "GAIgASgDEisKBXNoYXBlGAMgASgLMhwudGVuc29yZmxvdy5UZW5zb3JTaGFw",
-            "ZVByb3RvEiMKBWR0eXBlGAQgASgOMhQudGVuc29yZmxvdy5EYXRhVHlwZUIw",
-            "ChhvcmcudGVuc29yZmxvdy5mcmFtZXdvcmtCD0Nvc3RHcmFwaFByb3Rvc1AB",
-            "+AEBYgZwcm90bzM="));
+            "IAEoAxIeChZwZXJzaXN0ZW50X21lbW9yeV9zaXplGAwgASgDEiEKFWhvc3Rf",
+            "dGVtcF9tZW1vcnlfc2l6ZRgKIAEoA0ICGAESIwoXZGV2aWNlX3RlbXBfbWVt",
+            "b3J5X3NpemUYCyABKANCAhgBEikKHWRldmljZV9wZXJzaXN0ZW50X21lbW9y",
+            "eV9zaXplGBAgASgDQgIYARIUCgxjb21wdXRlX2Nvc3QYCSABKAMSFAoMY29t",
+            "cHV0ZV90aW1lGA4gASgDEhMKC21lbW9yeV90aW1lGA8gASgDEhAKCGlzX2Zp",
+            "bmFsGAcgASgIEhUKDWNvbnRyb2xfaW5wdXQYCCADKAUaOwoJSW5wdXRJbmZv",
+            "EhYKDnByZWNlZGluZ19ub2RlGAEgASgFEhYKDnByZWNlZGluZ19wb3J0GAIg",
+            "ASgFGoYBCgpPdXRwdXRJbmZvEgwKBHNpemUYASABKAMSGAoQYWxpYXNfaW5w",
+            "dXRfcG9ydBgCIAEoAxIrCgVzaGFwZRgDIAEoCzIcLnRlbnNvcmZsb3cuVGVu",
+            "c29yU2hhcGVQcm90bxIjCgVkdHlwZRgEIAEoDjIULnRlbnNvcmZsb3cuRGF0",
+            "YVR5cGVCMAoYb3JnLnRlbnNvcmZsb3cuZnJhbWV3b3JrQg9Db3N0R3JhcGhQ",
+            "cm90b3NQAfgBAWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Tensorflow.TensorShapeReflection.Descriptor, global::Tensorflow.TypesReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.CostGraphDef), global::Tensorflow.CostGraphDef.Parser, new[]{ "Node" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.CostGraphDef.Types.Node), global::Tensorflow.CostGraphDef.Types.Node.Parser, new[]{ "Name", "Device", "Id", "InputInfo", "OutputInfo", "TemporaryMemorySize", "HostTempMemorySize", "DeviceTempMemorySize", "HostPersistentMemorySize", "DevicePersistentMemorySize", "ComputeCost", "ComputeTime", "MemoryTime", "IsFinal", "ControlInput" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.CostGraphDef.Types.Node.Types.InputInfo), global::Tensorflow.CostGraphDef.Types.Node.Types.InputInfo.Parser, new[]{ "PrecedingNode", "PrecedingPort" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.CostGraphDef), global::Tensorflow.CostGraphDef.Parser, new[]{ "Node" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.CostGraphDef.Types.Node), global::Tensorflow.CostGraphDef.Types.Node.Parser, new[]{ "Name", "Device", "Id", "InputInfo", "OutputInfo", "TemporaryMemorySize", "PersistentMemorySize", "HostTempMemorySize", "DeviceTempMemorySize", "DevicePersistentMemorySize", "ComputeCost", "ComputeTime", "MemoryTime", "IsFinal", "ControlInput" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.CostGraphDef.Types.Node.Types.InputInfo), global::Tensorflow.CostGraphDef.Types.Node.Types.InputInfo.Parser, new[]{ "PrecedingNode", "PrecedingPort" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.CostGraphDef.Types.Node.Types.OutputInfo), global::Tensorflow.CostGraphDef.Types.Node.Types.OutputInfo.Parser, new[]{ "Size", "AliasInputPort", "Shape", "Dtype" }, null, null, null)})})
           }));
     }
@@ -210,9 +210,9 @@ namespace Tensorflow {
           inputInfo_ = other.inputInfo_.Clone();
           outputInfo_ = other.outputInfo_.Clone();
           temporaryMemorySize_ = other.temporaryMemorySize_;
+          persistentMemorySize_ = other.persistentMemorySize_;
           hostTempMemorySize_ = other.hostTempMemorySize_;
           deviceTempMemorySize_ = other.deviceTempMemorySize_;
-          hostPersistentMemorySize_ = other.hostPersistentMemorySize_;
           devicePersistentMemorySize_ = other.devicePersistentMemorySize_;
           computeCost_ = other.computeCost_;
           computeTime_ = other.computeTime_;
@@ -304,9 +304,24 @@ namespace Tensorflow {
           }
         }
 
+        /// <summary>Field number for the "persistent_memory_size" field.</summary>
+        public const int PersistentMemorySizeFieldNumber = 12;
+        private long persistentMemorySize_;
+        /// <summary>
+        /// Persistent memory used by this node.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public long PersistentMemorySize {
+          get { return persistentMemorySize_; }
+          set {
+            persistentMemorySize_ = value;
+          }
+        }
+
         /// <summary>Field number for the "host_temp_memory_size" field.</summary>
         public const int HostTempMemorySizeFieldNumber = 10;
         private long hostTempMemorySize_;
+        [global::System.ObsoleteAttribute]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public long HostTempMemorySize {
           get { return hostTempMemorySize_; }
@@ -318,6 +333,7 @@ namespace Tensorflow {
         /// <summary>Field number for the "device_temp_memory_size" field.</summary>
         public const int DeviceTempMemorySizeFieldNumber = 11;
         private long deviceTempMemorySize_;
+        [global::System.ObsoleteAttribute]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public long DeviceTempMemorySize {
           get { return deviceTempMemorySize_; }
@@ -326,20 +342,10 @@ namespace Tensorflow {
           }
         }
 
-        /// <summary>Field number for the "host_persistent_memory_size" field.</summary>
-        public const int HostPersistentMemorySizeFieldNumber = 12;
-        private long hostPersistentMemorySize_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public long HostPersistentMemorySize {
-          get { return hostPersistentMemorySize_; }
-          set {
-            hostPersistentMemorySize_ = value;
-          }
-        }
-
         /// <summary>Field number for the "device_persistent_memory_size" field.</summary>
         public const int DevicePersistentMemorySizeFieldNumber = 16;
         private long devicePersistentMemorySize_;
+        [global::System.ObsoleteAttribute]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public long DevicePersistentMemorySize {
           get { return devicePersistentMemorySize_; }
@@ -439,9 +445,9 @@ namespace Tensorflow {
           if(!inputInfo_.Equals(other.inputInfo_)) return false;
           if(!outputInfo_.Equals(other.outputInfo_)) return false;
           if (TemporaryMemorySize != other.TemporaryMemorySize) return false;
+          if (PersistentMemorySize != other.PersistentMemorySize) return false;
           if (HostTempMemorySize != other.HostTempMemorySize) return false;
           if (DeviceTempMemorySize != other.DeviceTempMemorySize) return false;
-          if (HostPersistentMemorySize != other.HostPersistentMemorySize) return false;
           if (DevicePersistentMemorySize != other.DevicePersistentMemorySize) return false;
           if (ComputeCost != other.ComputeCost) return false;
           if (ComputeTime != other.ComputeTime) return false;
@@ -460,9 +466,9 @@ namespace Tensorflow {
           hash ^= inputInfo_.GetHashCode();
           hash ^= outputInfo_.GetHashCode();
           if (TemporaryMemorySize != 0L) hash ^= TemporaryMemorySize.GetHashCode();
+          if (PersistentMemorySize != 0L) hash ^= PersistentMemorySize.GetHashCode();
           if (HostTempMemorySize != 0L) hash ^= HostTempMemorySize.GetHashCode();
           if (DeviceTempMemorySize != 0L) hash ^= DeviceTempMemorySize.GetHashCode();
-          if (HostPersistentMemorySize != 0L) hash ^= HostPersistentMemorySize.GetHashCode();
           if (DevicePersistentMemorySize != 0L) hash ^= DevicePersistentMemorySize.GetHashCode();
           if (ComputeCost != 0L) hash ^= ComputeCost.GetHashCode();
           if (ComputeTime != 0L) hash ^= ComputeTime.GetHashCode();
@@ -517,9 +523,9 @@ namespace Tensorflow {
             output.WriteRawTag(88);
             output.WriteInt64(DeviceTempMemorySize);
           }
-          if (HostPersistentMemorySize != 0L) {
+          if (PersistentMemorySize != 0L) {
             output.WriteRawTag(96);
-            output.WriteInt64(HostPersistentMemorySize);
+            output.WriteInt64(PersistentMemorySize);
           }
           if (ComputeTime != 0L) {
             output.WriteRawTag(112);
@@ -555,14 +561,14 @@ namespace Tensorflow {
           if (TemporaryMemorySize != 0L) {
             size += 1 + pb::CodedOutputStream.ComputeInt64Size(TemporaryMemorySize);
           }
+          if (PersistentMemorySize != 0L) {
+            size += 1 + pb::CodedOutputStream.ComputeInt64Size(PersistentMemorySize);
+          }
           if (HostTempMemorySize != 0L) {
             size += 1 + pb::CodedOutputStream.ComputeInt64Size(HostTempMemorySize);
           }
           if (DeviceTempMemorySize != 0L) {
             size += 1 + pb::CodedOutputStream.ComputeInt64Size(DeviceTempMemorySize);
-          }
-          if (HostPersistentMemorySize != 0L) {
-            size += 1 + pb::CodedOutputStream.ComputeInt64Size(HostPersistentMemorySize);
           }
           if (DevicePersistentMemorySize != 0L) {
             size += 2 + pb::CodedOutputStream.ComputeInt64Size(DevicePersistentMemorySize);
@@ -605,14 +611,14 @@ namespace Tensorflow {
           if (other.TemporaryMemorySize != 0L) {
             TemporaryMemorySize = other.TemporaryMemorySize;
           }
+          if (other.PersistentMemorySize != 0L) {
+            PersistentMemorySize = other.PersistentMemorySize;
+          }
           if (other.HostTempMemorySize != 0L) {
             HostTempMemorySize = other.HostTempMemorySize;
           }
           if (other.DeviceTempMemorySize != 0L) {
             DeviceTempMemorySize = other.DeviceTempMemorySize;
-          }
-          if (other.HostPersistentMemorySize != 0L) {
-            HostPersistentMemorySize = other.HostPersistentMemorySize;
           }
           if (other.DevicePersistentMemorySize != 0L) {
             DevicePersistentMemorySize = other.DevicePersistentMemorySize;
@@ -687,7 +693,7 @@ namespace Tensorflow {
                 break;
               }
               case 96: {
-                HostPersistentMemorySize = input.ReadInt64();
+                PersistentMemorySize = input.ReadInt64();
                 break;
               }
               case 112: {

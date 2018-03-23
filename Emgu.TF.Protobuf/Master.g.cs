@@ -27,44 +27,48 @@ namespace Tensorflow {
             "CiV0ZW5zb3JmbG93L2NvcmUvcHJvdG9idWYvbWFzdGVyLnByb3RvEgp0ZW5z",
             "b3JmbG93GjF0ZW5zb3JmbG93L2NvcmUvZnJhbWV3b3JrL2RldmljZV9hdHRy",
             "aWJ1dGVzLnByb3RvGiV0ZW5zb3JmbG93L2NvcmUvZnJhbWV3b3JrL2dyYXBo",
-            "LnByb3RvGiV0ZW5zb3JmbG93L2NvcmUvcHJvdG9idWYvY29uZmlnLnByb3Rv",
-            "Git0ZW5zb3JmbG93L2NvcmUvcHJvdG9idWYvbmFtZWRfdGVuc29yLnByb3Rv",
-            "IngKFENyZWF0ZVNlc3Npb25SZXF1ZXN0EicKCWdyYXBoX2RlZhgBIAEoCzIU",
-            "LnRlbnNvcmZsb3cuR3JhcGhEZWYSJwoGY29uZmlnGAIgASgLMhcudGVuc29y",
-            "Zmxvdy5Db25maWdQcm90bxIOCgZ0YXJnZXQYAyABKAkiRgoVQ3JlYXRlU2Vz",
-            "c2lvblJlc3BvbnNlEhYKDnNlc3Npb25faGFuZGxlGAEgASgJEhUKDWdyYXBo",
-            "X3ZlcnNpb24YAiABKAMidgoURXh0ZW5kU2Vzc2lvblJlcXVlc3QSFgoOc2Vz",
-            "c2lvbl9oYW5kbGUYASABKAkSJwoJZ3JhcGhfZGVmGAIgASgLMhQudGVuc29y",
-            "Zmxvdy5HcmFwaERlZhIdChVjdXJyZW50X2dyYXBoX3ZlcnNpb24YAyABKAMi",
-            "MgoVRXh0ZW5kU2Vzc2lvblJlc3BvbnNlEhkKEW5ld19ncmFwaF92ZXJzaW9u",
-            "GAQgASgDIrgBCg5SdW5TdGVwUmVxdWVzdBIWCg5zZXNzaW9uX2hhbmRsZRgB",
-            "IAEoCRIqCgRmZWVkGAIgAygLMhwudGVuc29yZmxvdy5OYW1lZFRlbnNvclBy",
-            "b3RvEg0KBWZldGNoGAMgAygJEg4KBnRhcmdldBgEIAMoCRInCgdvcHRpb25z",
-            "GAUgASgLMhYudGVuc29yZmxvdy5SdW5PcHRpb25zEhoKEnBhcnRpYWxfcnVu",
-            "X2hhbmRsZRgGIAEoCSJqCg9SdW5TdGVwUmVzcG9uc2USLAoGdGVuc29yGAEg",
-            "AygLMhwudGVuc29yZmxvdy5OYW1lZFRlbnNvclByb3RvEikKCG1ldGFkYXRh",
-            "GAIgASgLMhcudGVuc29yZmxvdy5SdW5NZXRhZGF0YSJdChZQYXJ0aWFsUnVu",
-            "U2V0dXBSZXF1ZXN0EhYKDnNlc3Npb25faGFuZGxlGAEgASgJEgwKBGZlZWQY",
-            "AiADKAkSDQoFZmV0Y2gYAyADKAkSDgoGdGFyZ2V0GAQgAygJIjUKF1BhcnRp",
-            "YWxSdW5TZXR1cFJlc3BvbnNlEhoKEnBhcnRpYWxfcnVuX2hhbmRsZRgBIAEo",
-            "CSItChNDbG9zZVNlc3Npb25SZXF1ZXN0EhYKDnNlc3Npb25faGFuZGxlGAEg",
-            "ASgJIhYKFENsb3NlU2Vzc2lvblJlc3BvbnNlIjkKDFJlc2V0UmVxdWVzdBIR",
-            "Cgljb250YWluZXIYASADKAkSFgoOZGV2aWNlX2ZpbHRlcnMYAiADKAkiDwoN",
-            "UmVzZXRSZXNwb25zZSIsChJMaXN0RGV2aWNlc1JlcXVlc3QSFgoOc2Vzc2lv",
-            "bl9oYW5kbGUYASABKAkifgoTTGlzdERldmljZXNSZXNwb25zZRIyCgxsb2Nh",
-            "bF9kZXZpY2UYASADKAsyHC50ZW5zb3JmbG93LkRldmljZUF0dHJpYnV0ZXMS",
-            "MwoNcmVtb3RlX2RldmljZRgCIAMoCzIcLnRlbnNvcmZsb3cuRGV2aWNlQXR0",
-            "cmlidXRlc0I7ChpvcmcudGVuc29yZmxvdy5kaXN0cnVudGltZUIYRGlzdHJp",
-            "YnV0ZWRSdW50aW1lUHJvdG9zUAH4AQFiBnByb3RvMw=="));
+            "LnByb3RvGip0ZW5zb3JmbG93L2NvcmUvbGliL2NvcmUvZXJyb3JfY29kZXMu",
+            "cHJvdG8aJXRlbnNvcmZsb3cvY29yZS9wcm90b2J1Zi9jb25maWcucHJvdG8a",
+            "K3RlbnNvcmZsb3cvY29yZS9wcm90b2J1Zi9uYW1lZF90ZW5zb3IucHJvdG8i",
+            "eAoUQ3JlYXRlU2Vzc2lvblJlcXVlc3QSJwoJZ3JhcGhfZGVmGAEgASgLMhQu",
+            "dGVuc29yZmxvdy5HcmFwaERlZhInCgZjb25maWcYAiABKAsyFy50ZW5zb3Jm",
+            "bG93LkNvbmZpZ1Byb3RvEg4KBnRhcmdldBgDIAEoCSJGChVDcmVhdGVTZXNz",
+            "aW9uUmVzcG9uc2USFgoOc2Vzc2lvbl9oYW5kbGUYASABKAkSFQoNZ3JhcGhf",
+            "dmVyc2lvbhgCIAEoAyJ2ChRFeHRlbmRTZXNzaW9uUmVxdWVzdBIWCg5zZXNz",
+            "aW9uX2hhbmRsZRgBIAEoCRInCglncmFwaF9kZWYYAiABKAsyFC50ZW5zb3Jm",
+            "bG93LkdyYXBoRGVmEh0KFWN1cnJlbnRfZ3JhcGhfdmVyc2lvbhgDIAEoAyIy",
+            "ChVFeHRlbmRTZXNzaW9uUmVzcG9uc2USGQoRbmV3X2dyYXBoX3ZlcnNpb24Y",
+            "BCABKAMi3wEKDlJ1blN0ZXBSZXF1ZXN0EhYKDnNlc3Npb25faGFuZGxlGAEg",
+            "ASgJEioKBGZlZWQYAiADKAsyHC50ZW5zb3JmbG93Lk5hbWVkVGVuc29yUHJv",
+            "dG8SDQoFZmV0Y2gYAyADKAkSDgoGdGFyZ2V0GAQgAygJEicKB29wdGlvbnMY",
+            "BSABKAsyFi50ZW5zb3JmbG93LlJ1bk9wdGlvbnMSGgoScGFydGlhbF9ydW5f",
+            "aGFuZGxlGAYgASgJEiUKHXN0b3JlX2Vycm9yc19pbl9yZXNwb25zZV9ib2R5",
+            "GAcgASgIIrUBCg9SdW5TdGVwUmVzcG9uc2USLAoGdGVuc29yGAEgAygLMhwu",
+            "dGVuc29yZmxvdy5OYW1lZFRlbnNvclByb3RvEikKCG1ldGFkYXRhGAIgASgL",
+            "MhcudGVuc29yZmxvdy5SdW5NZXRhZGF0YRIrCgtzdGF0dXNfY29kZRgDIAEo",
+            "DjIWLnRlbnNvcmZsb3cuZXJyb3IuQ29kZRIcChRzdGF0dXNfZXJyb3JfbWVz",
+            "c2FnZRgEIAEoCSJdChZQYXJ0aWFsUnVuU2V0dXBSZXF1ZXN0EhYKDnNlc3Np",
+            "b25faGFuZGxlGAEgASgJEgwKBGZlZWQYAiADKAkSDQoFZmV0Y2gYAyADKAkS",
+            "DgoGdGFyZ2V0GAQgAygJIjUKF1BhcnRpYWxSdW5TZXR1cFJlc3BvbnNlEhoK",
+            "EnBhcnRpYWxfcnVuX2hhbmRsZRgBIAEoCSItChNDbG9zZVNlc3Npb25SZXF1",
+            "ZXN0EhYKDnNlc3Npb25faGFuZGxlGAEgASgJIhYKFENsb3NlU2Vzc2lvblJl",
+            "c3BvbnNlIjkKDFJlc2V0UmVxdWVzdBIRCgljb250YWluZXIYASADKAkSFgoO",
+            "ZGV2aWNlX2ZpbHRlcnMYAiADKAkiDwoNUmVzZXRSZXNwb25zZSIsChJMaXN0",
+            "RGV2aWNlc1JlcXVlc3QSFgoOc2Vzc2lvbl9oYW5kbGUYASABKAkifgoTTGlz",
+            "dERldmljZXNSZXNwb25zZRIyCgxsb2NhbF9kZXZpY2UYASADKAsyHC50ZW5z",
+            "b3JmbG93LkRldmljZUF0dHJpYnV0ZXMSMwoNcmVtb3RlX2RldmljZRgCIAMo",
+            "CzIcLnRlbnNvcmZsb3cuRGV2aWNlQXR0cmlidXRlc0I7ChpvcmcudGVuc29y",
+            "Zmxvdy5kaXN0cnVudGltZUIYRGlzdHJpYnV0ZWRSdW50aW1lUHJvdG9zUAH4",
+            "AQFiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Tensorflow.DeviceAttributesReflection.Descriptor, global::Tensorflow.GraphReflection.Descriptor, global::Tensorflow.ConfigReflection.Descriptor, global::Tensorflow.NamedTensorReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::Tensorflow.DeviceAttributesReflection.Descriptor, global::Tensorflow.GraphReflection.Descriptor, global::Tensorflow.Error.ErrorCodesReflection.Descriptor, global::Tensorflow.ConfigReflection.Descriptor, global::Tensorflow.NamedTensorReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.CreateSessionRequest), global::Tensorflow.CreateSessionRequest.Parser, new[]{ "GraphDef", "Config", "Target" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.CreateSessionResponse), global::Tensorflow.CreateSessionResponse.Parser, new[]{ "SessionHandle", "GraphVersion" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.ExtendSessionRequest), global::Tensorflow.ExtendSessionRequest.Parser, new[]{ "SessionHandle", "GraphDef", "CurrentGraphVersion" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.ExtendSessionResponse), global::Tensorflow.ExtendSessionResponse.Parser, new[]{ "NewGraphVersion" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.RunStepRequest), global::Tensorflow.RunStepRequest.Parser, new[]{ "SessionHandle", "Feed", "Fetch", "Target", "Options", "PartialRunHandle" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.RunStepResponse), global::Tensorflow.RunStepResponse.Parser, new[]{ "Tensor", "Metadata" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.RunStepRequest), global::Tensorflow.RunStepRequest.Parser, new[]{ "SessionHandle", "Feed", "Fetch", "Target", "Options", "PartialRunHandle", "StoreErrorsInResponseBody" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.RunStepResponse), global::Tensorflow.RunStepResponse.Parser, new[]{ "Tensor", "Metadata", "StatusCode", "StatusErrorMessage" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.PartialRunSetupRequest), global::Tensorflow.PartialRunSetupRequest.Parser, new[]{ "SessionHandle", "Feed", "Fetch", "Target" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.PartialRunSetupResponse), global::Tensorflow.PartialRunSetupResponse.Parser, new[]{ "PartialRunHandle" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.CloseSessionRequest), global::Tensorflow.CloseSessionRequest.Parser, new[]{ "SessionHandle" }, null, null, null),
@@ -824,6 +828,7 @@ namespace Tensorflow {
       target_ = other.target_.Clone();
       Options = other.options_ != null ? other.Options.Clone() : null;
       partialRunHandle_ = other.partialRunHandle_;
+      storeErrorsInResponseBody_ = other.storeErrorsInResponseBody_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -918,6 +923,24 @@ namespace Tensorflow {
       }
     }
 
+    /// <summary>Field number for the "store_errors_in_response_body" field.</summary>
+    public const int StoreErrorsInResponseBodyFieldNumber = 7;
+    private bool storeErrorsInResponseBody_;
+    /// <summary>
+    /// If true then some errors, e.g., execution errors that have long
+    /// error messages, may return an OK RunStepResponse with the actual
+    /// error saved in the status_code/status_error_message fields of the
+    /// response body. This is a workaround since the RPC subsystem may
+    /// truncate long metadata messages.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool StoreErrorsInResponseBody {
+      get { return storeErrorsInResponseBody_; }
+      set {
+        storeErrorsInResponseBody_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as RunStepRequest);
@@ -937,6 +960,7 @@ namespace Tensorflow {
       if(!target_.Equals(other.target_)) return false;
       if (!object.Equals(Options, other.Options)) return false;
       if (PartialRunHandle != other.PartialRunHandle) return false;
+      if (StoreErrorsInResponseBody != other.StoreErrorsInResponseBody) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -949,6 +973,7 @@ namespace Tensorflow {
       hash ^= target_.GetHashCode();
       if (options_ != null) hash ^= Options.GetHashCode();
       if (PartialRunHandle.Length != 0) hash ^= PartialRunHandle.GetHashCode();
+      if (StoreErrorsInResponseBody != false) hash ^= StoreErrorsInResponseBody.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -977,6 +1002,10 @@ namespace Tensorflow {
         output.WriteRawTag(50);
         output.WriteString(PartialRunHandle);
       }
+      if (StoreErrorsInResponseBody != false) {
+        output.WriteRawTag(56);
+        output.WriteBool(StoreErrorsInResponseBody);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -996,6 +1025,9 @@ namespace Tensorflow {
       }
       if (PartialRunHandle.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(PartialRunHandle);
+      }
+      if (StoreErrorsInResponseBody != false) {
+        size += 1 + 1;
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -1022,6 +1054,9 @@ namespace Tensorflow {
       }
       if (other.PartialRunHandle.Length != 0) {
         PartialRunHandle = other.PartialRunHandle;
+      }
+      if (other.StoreErrorsInResponseBody != false) {
+        StoreErrorsInResponseBody = other.StoreErrorsInResponseBody;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -1061,6 +1096,10 @@ namespace Tensorflow {
             PartialRunHandle = input.ReadString();
             break;
           }
+          case 56: {
+            StoreErrorsInResponseBody = input.ReadBool();
+            break;
+          }
         }
       }
     }
@@ -1094,6 +1133,8 @@ namespace Tensorflow {
     public RunStepResponse(RunStepResponse other) : this() {
       tensor_ = other.tensor_.Clone();
       Metadata = other.metadata_ != null ? other.Metadata.Clone() : null;
+      statusCode_ = other.statusCode_;
+      statusErrorMessage_ = other.statusErrorMessage_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -1130,6 +1171,34 @@ namespace Tensorflow {
       }
     }
 
+    /// <summary>Field number for the "status_code" field.</summary>
+    public const int StatusCodeFieldNumber = 3;
+    private global::Tensorflow.Error.Code statusCode_ = 0;
+    /// <summary>
+    /// If store_errors_in_response_body is true in the request, then
+    /// optionally the server may return an OK status for the RPC and
+    /// fill the true status into the fields below, to allow for messages
+    /// that are too long to fit in metadata.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Tensorflow.Error.Code StatusCode {
+      get { return statusCode_; }
+      set {
+        statusCode_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "status_error_message" field.</summary>
+    public const int StatusErrorMessageFieldNumber = 4;
+    private string statusErrorMessage_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string StatusErrorMessage {
+      get { return statusErrorMessage_; }
+      set {
+        statusErrorMessage_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as RunStepResponse);
@@ -1145,6 +1214,8 @@ namespace Tensorflow {
       }
       if(!tensor_.Equals(other.tensor_)) return false;
       if (!object.Equals(Metadata, other.Metadata)) return false;
+      if (StatusCode != other.StatusCode) return false;
+      if (StatusErrorMessage != other.StatusErrorMessage) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -1153,6 +1224,8 @@ namespace Tensorflow {
       int hash = 1;
       hash ^= tensor_.GetHashCode();
       if (metadata_ != null) hash ^= Metadata.GetHashCode();
+      if (StatusCode != 0) hash ^= StatusCode.GetHashCode();
+      if (StatusErrorMessage.Length != 0) hash ^= StatusErrorMessage.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1171,6 +1244,14 @@ namespace Tensorflow {
         output.WriteRawTag(18);
         output.WriteMessage(Metadata);
       }
+      if (StatusCode != 0) {
+        output.WriteRawTag(24);
+        output.WriteEnum((int) StatusCode);
+      }
+      if (StatusErrorMessage.Length != 0) {
+        output.WriteRawTag(34);
+        output.WriteString(StatusErrorMessage);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -1182,6 +1263,12 @@ namespace Tensorflow {
       size += tensor_.CalculateSize(_repeated_tensor_codec);
       if (metadata_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Metadata);
+      }
+      if (StatusCode != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) StatusCode);
+      }
+      if (StatusErrorMessage.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(StatusErrorMessage);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -1200,6 +1287,12 @@ namespace Tensorflow {
           metadata_ = new global::Tensorflow.RunMetadata();
         }
         Metadata.MergeFrom(other.Metadata);
+      }
+      if (other.StatusCode != 0) {
+        StatusCode = other.StatusCode;
+      }
+      if (other.StatusErrorMessage.Length != 0) {
+        StatusErrorMessage = other.StatusErrorMessage;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -1221,6 +1314,14 @@ namespace Tensorflow {
               metadata_ = new global::Tensorflow.RunMetadata();
             }
             input.ReadMessage(metadata_);
+            break;
+          }
+          case 24: {
+            statusCode_ = (global::Tensorflow.Error.Code) input.ReadEnum();
+            break;
+          }
+          case 34: {
+            StatusErrorMessage = input.ReadString();
             break;
           }
         }

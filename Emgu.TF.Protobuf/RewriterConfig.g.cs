@@ -26,7 +26,7 @@ namespace Tensorflow {
           string.Concat(
             "Ci50ZW5zb3JmbG93L2NvcmUvcHJvdG9idWYvcmV3cml0ZXJfY29uZmlnLnBy",
             "b3RvEgp0ZW5zb3JmbG93IjsKE0F1dG9QYXJhbGxlbE9wdGlvbnMSDgoGZW5h",
-            "YmxlGAEgASgIEhQKDG51bV9yZXBsaWNhcxgCIAEoBSKyBQoOUmV3cml0ZXJD",
+            "YmxlGAEgASgIEhQKDG51bV9yZXBsaWNhcxgCIAEoBSLNBQoOUmV3cml0ZXJD",
             "b25maWcSOwoQbGF5b3V0X29wdGltaXplchgBIAEoDjIhLnRlbnNvcmZsb3cu",
             "UmV3cml0ZXJDb25maWcuVG9nZ2xlEjsKEGNvbnN0YW50X2ZvbGRpbmcYAyAB",
             "KA4yIS50ZW5zb3JmbG93LlJld3JpdGVyQ29uZmlnLlRvZ2dsZRJCChdhcml0",
@@ -39,11 +39,12 @@ namespace Tensorflow {
             "eBgGIAEoCRI2Cg1hdXRvX3BhcmFsbGVsGAUgASgLMh8udGVuc29yZmxvdy5B",
             "dXRvUGFyYWxsZWxPcHRpb25zEhIKCm9wdGltaXplcnMYZCADKAkiNgoGVG9n",
             "Z2xlEgsKB0RFRkFVTFQQABIGCgJPThABEgcKA09GRhACEg4KCkFHR1JFU1NJ",
-            "VkUQAyKEAQoKTWVtT3B0VHlwZRITCg9ERUZBVUxUX01FTV9PUFQQABIOCgpO",
+            "VkUQAyKfAQoKTWVtT3B0VHlwZRITCg9ERUZBVUxUX01FTV9PUFQQABIOCgpO",
             "T19NRU1fT1BUEAESCgoGTUFOVUFMEAISFwoTU1dBUFBJTkdfSEVVUklTVElD",
-            "UxAEEhwKGFJFQ09NUFVUQVRJT05fSEVVUklTVElDUxAFEg4KCkhFVVJJU1RJ",
-            "Q1MQA0I1ChhvcmcudGVuc29yZmxvdy5mcmFtZXdvcmtCFFJld3JpdGVyQ29u",
-            "ZmlnUHJvdG9zUAH4AQFiBnByb3RvMw=="));
+            "UxAEEhwKGFJFQ09NUFVUQVRJT05fSEVVUklTVElDUxAFEhkKFVNDSEVEVUxJ",
+            "TkdfSEVVUklTVElDUxAGEg4KCkhFVVJJU1RJQ1MQA0I1ChhvcmcudGVuc29y",
+            "Zmxvdy5mcmFtZXdvcmtCFFJld3JpdGVyQ29uZmlnUHJvdG9zUAH4AQFiBnBy",
+            "b3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -648,6 +649,7 @@ namespace Tensorflow {
         /// </summary>
         [pbr::OriginalName("SWAPPING_HEURISTICS")] SwappingHeuristics = 4,
         [pbr::OriginalName("RECOMPUTATION_HEURISTICS")] RecomputationHeuristics = 5,
+        [pbr::OriginalName("SCHEDULING_HEURISTICS")] SchedulingHeuristics = 6,
         /// <summary>
         /// Use any combination of swapping and recomputation heuristics.
         /// </summary>

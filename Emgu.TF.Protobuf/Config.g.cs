@@ -30,64 +30,68 @@ namespace Tensorflow {
             "KnRlbnNvcmZsb3cvY29yZS9mcmFtZXdvcmsvc3RlcF9zdGF0cy5wcm90bxok",
             "dGVuc29yZmxvdy9jb3JlL3Byb3RvYnVmL2RlYnVnLnByb3RvGiZ0ZW5zb3Jm",
             "bG93L2NvcmUvcHJvdG9idWYvY2x1c3Rlci5wcm90bxoudGVuc29yZmxvdy9j",
-            "b3JlL3Byb3RvYnVmL3Jld3JpdGVyX2NvbmZpZy5wcm90byKJAgoKR1BVT3B0",
+            "b3JlL3Byb3RvYnVmL3Jld3JpdGVyX2NvbmZpZy5wcm90byLNAwoKR1BVT3B0",
             "aW9ucxInCh9wZXJfcHJvY2Vzc19ncHVfbWVtb3J5X2ZyYWN0aW9uGAEgASgB",
             "EhYKDmFsbG9jYXRvcl90eXBlGAIgASgJEh8KF2RlZmVycmVkX2RlbGV0aW9u",
             "X2J5dGVzGAMgASgDEhQKDGFsbG93X2dyb3d0aBgEIAEoCBIbChN2aXNpYmxl",
             "X2RldmljZV9saXN0GAUgASgJEiIKGnBvbGxpbmdfYWN0aXZlX2RlbGF5X3Vz",
             "ZWNzGAYgASgFEiQKHHBvbGxpbmdfaW5hY3RpdmVfZGVsYXlfbXNlY3MYByAB",
-            "KAUSHAoUZm9yY2VfZ3B1X2NvbXBhdGlibGUYCCABKAgihQMKEE9wdGltaXpl",
-            "ck9wdGlvbnMSKwojZG9fY29tbW9uX3N1YmV4cHJlc3Npb25fZWxpbWluYXRp",
-            "b24YASABKAgSGwoTZG9fY29uc3RhbnRfZm9sZGluZxgCIAEoCBIkChxtYXhf",
-            "Zm9sZGVkX2NvbnN0YW50X2luX2J5dGVzGAYgASgDEhwKFGRvX2Z1bmN0aW9u",
-            "X2lubGluaW5nGAQgASgIEjUKCW9wdF9sZXZlbBgDIAEoDjIiLnRlbnNvcmZs",
-            "b3cuT3B0aW1pemVyT3B0aW9ucy5MZXZlbBJFChBnbG9iYWxfaml0X2xldmVs",
-            "GAUgASgOMisudGVuc29yZmxvdy5PcHRpbWl6ZXJPcHRpb25zLkdsb2JhbEpp",
-            "dExldmVsIiAKBUxldmVsEgYKAkwxEAASDwoCTDAQ////////////ASJDCg5H",
-            "bG9iYWxKaXRMZXZlbBILCgdERUZBVUxUEAASEAoDT0ZGEP///////////wES",
-            "CAoET05fMRABEggKBE9OXzIQAiLuAgoMR3JhcGhPcHRpb25zEh4KFmVuYWJs",
-            "ZV9yZWN2X3NjaGVkdWxpbmcYAiABKAgSNwoRb3B0aW1pemVyX29wdGlvbnMY",
-            "AyABKAsyHC50ZW5zb3JmbG93Lk9wdGltaXplck9wdGlvbnMSGAoQYnVpbGRf",
-            "Y29zdF9tb2RlbBgEIAEoAxIeChZidWlsZF9jb3N0X21vZGVsX2FmdGVyGAkg",
-            "ASgDEhQKDGluZmVyX3NoYXBlcxgFIAEoCBIaChJwbGFjZV9wcnVuZWRfZ3Jh",
-            "cGgYBiABKAgSIAoYZW5hYmxlX2JmbG9hdDE2X3NlbmRyZWN2GAcgASgIEhUK",
-            "DXRpbWVsaW5lX3N0ZXAYCCABKAUSMwoPcmV3cml0ZV9vcHRpb25zGAogASgL",
-            "MhoudGVuc29yZmxvdy5SZXdyaXRlckNvbmZpZ0oECAEQAlIlc2tpcF9jb21t",
-            "b25fc3ViZXhwcmVzc2lvbl9lbGltaW5hdGlvbiJBChVUaHJlYWRQb29sT3B0",
-            "aW9uUHJvdG8SEwoLbnVtX3RocmVhZHMYASABKAUSEwoLZ2xvYmFsX25hbWUY",
-            "AiABKAkiMgoKUlBDT3B0aW9ucxIkChx1c2VfcnBjX2Zvcl9pbnByb2Nlc3Nf",
-            "bWFzdGVyGAEgASgIIp0FCgtDb25maWdQcm90bxI+CgxkZXZpY2VfY291bnQY",
-            "ASADKAsyKC50ZW5zb3JmbG93LkNvbmZpZ1Byb3RvLkRldmljZUNvdW50RW50",
-            "cnkSJAocaW50cmFfb3BfcGFyYWxsZWxpc21fdGhyZWFkcxgCIAEoBRIkChxp",
-            "bnRlcl9vcF9wYXJhbGxlbGlzbV90aHJlYWRzGAUgASgFEh8KF3VzZV9wZXJf",
-            "c2Vzc2lvbl90aHJlYWRzGAkgASgIEkcKHHNlc3Npb25faW50ZXJfb3BfdGhy",
-            "ZWFkX3Bvb2wYDCADKAsyIS50ZW5zb3JmbG93LlRocmVhZFBvb2xPcHRpb25Q",
-            "cm90bxIYChBwbGFjZW1lbnRfcGVyaW9kGAMgASgFEhYKDmRldmljZV9maWx0",
-            "ZXJzGAQgAygJEisKC2dwdV9vcHRpb25zGAYgASgLMhYudGVuc29yZmxvdy5H",
-            "UFVPcHRpb25zEhwKFGFsbG93X3NvZnRfcGxhY2VtZW50GAcgASgIEhwKFGxv",
-            "Z19kZXZpY2VfcGxhY2VtZW50GAggASgIEi8KDWdyYXBoX29wdGlvbnMYCiAB",
-            "KAsyGC50ZW5zb3JmbG93LkdyYXBoT3B0aW9ucxIfChdvcGVyYXRpb25fdGlt",
-            "ZW91dF9pbl9tcxgLIAEoAxIrCgtycGNfb3B0aW9ucxgNIAEoCzIWLnRlbnNv",
-            "cmZsb3cuUlBDT3B0aW9ucxIrCgtjbHVzdGVyX2RlZhgOIAEoCzIWLnRlbnNv",
-            "cmZsb3cuQ2x1c3RlckRlZhIdChVpc29sYXRlX3Nlc3Npb25fc3RhdGUYDyAB",
-            "KAgaMgoQRGV2aWNlQ291bnRFbnRyeRILCgNrZXkYASABKAkSDQoFdmFsdWUY",
-            "AiABKAU6AjgBItECCgpSdW5PcHRpb25zEjYKC3RyYWNlX2xldmVsGAEgASgO",
-            "MiEudGVuc29yZmxvdy5SdW5PcHRpb25zLlRyYWNlTGV2ZWwSFQoNdGltZW91",
-            "dF9pbl9tcxgCIAEoAxIcChRpbnRlcl9vcF90aHJlYWRfcG9vbBgDIAEoBRIf",
-            "ChdvdXRwdXRfcGFydGl0aW9uX2dyYXBocxgFIAEoCBIvCg1kZWJ1Z19vcHRp",
-            "b25zGAYgASgLMhgudGVuc29yZmxvdy5EZWJ1Z09wdGlvbnMSKgoicmVwb3J0",
-            "X3RlbnNvcl9hbGxvY2F0aW9uc191cG9uX29vbRgHIAEoCCJSCgpUcmFjZUxl",
-            "dmVsEgwKCE5PX1RSQUNFEAASEgoOU09GVFdBUkVfVFJBQ0UQARISCg5IQVJE",
-            "V0FSRV9UUkFDRRACEg4KCkZVTExfVFJBQ0UQA0oECAQQBSKWAQoLUnVuTWV0",
-            "YWRhdGESKQoKc3RlcF9zdGF0cxgBIAEoCzIVLnRlbnNvcmZsb3cuU3RlcFN0",
-            "YXRzEiwKCmNvc3RfZ3JhcGgYAiABKAsyGC50ZW5zb3JmbG93LkNvc3RHcmFw",
-            "aERlZhIuChBwYXJ0aXRpb25fZ3JhcGhzGAMgAygLMhQudGVuc29yZmxvdy5H",
-            "cmFwaERlZkItChhvcmcudGVuc29yZmxvdy5mcmFtZXdvcmtCDENvbmZpZ1By",
-            "b3Rvc1AB+AEBYgZwcm90bzM="));
+            "KAUSHAoUZm9yY2VfZ3B1X2NvbXBhdGlibGUYCCABKAgSOQoMZXhwZXJpbWVu",
+            "dGFsGAkgASgLMiMudGVuc29yZmxvdy5HUFVPcHRpb25zLkV4cGVyaW1lbnRh",
+            "bBqGAQoMRXhwZXJpbWVudGFsEksKD3ZpcnR1YWxfZGV2aWNlcxgBIAMoCzIy",
+            "LnRlbnNvcmZsb3cuR1BVT3B0aW9ucy5FeHBlcmltZW50YWwuVmlydHVhbERl",
+            "dmljZXMaKQoOVmlydHVhbERldmljZXMSFwoPbWVtb3J5X2xpbWl0X21iGAEg",
+            "AygCIoUDChBPcHRpbWl6ZXJPcHRpb25zEisKI2RvX2NvbW1vbl9zdWJleHBy",
+            "ZXNzaW9uX2VsaW1pbmF0aW9uGAEgASgIEhsKE2RvX2NvbnN0YW50X2ZvbGRp",
+            "bmcYAiABKAgSJAocbWF4X2ZvbGRlZF9jb25zdGFudF9pbl9ieXRlcxgGIAEo",
+            "AxIcChRkb19mdW5jdGlvbl9pbmxpbmluZxgEIAEoCBI1CglvcHRfbGV2ZWwY",
+            "AyABKA4yIi50ZW5zb3JmbG93Lk9wdGltaXplck9wdGlvbnMuTGV2ZWwSRQoQ",
+            "Z2xvYmFsX2ppdF9sZXZlbBgFIAEoDjIrLnRlbnNvcmZsb3cuT3B0aW1pemVy",
+            "T3B0aW9ucy5HbG9iYWxKaXRMZXZlbCIgCgVMZXZlbBIGCgJMMRAAEg8KAkww",
+            "EP///////////wEiQwoOR2xvYmFsSml0TGV2ZWwSCwoHREVGQVVMVBAAEhAK",
+            "A09GRhD///////////8BEggKBE9OXzEQARIICgRPTl8yEAIi7gIKDEdyYXBo",
+            "T3B0aW9ucxIeChZlbmFibGVfcmVjdl9zY2hlZHVsaW5nGAIgASgIEjcKEW9w",
+            "dGltaXplcl9vcHRpb25zGAMgASgLMhwudGVuc29yZmxvdy5PcHRpbWl6ZXJP",
+            "cHRpb25zEhgKEGJ1aWxkX2Nvc3RfbW9kZWwYBCABKAMSHgoWYnVpbGRfY29z",
+            "dF9tb2RlbF9hZnRlchgJIAEoAxIUCgxpbmZlcl9zaGFwZXMYBSABKAgSGgoS",
+            "cGxhY2VfcHJ1bmVkX2dyYXBoGAYgASgIEiAKGGVuYWJsZV9iZmxvYXQxNl9z",
+            "ZW5kcmVjdhgHIAEoCBIVCg10aW1lbGluZV9zdGVwGAggASgFEjMKD3Jld3Jp",
+            "dGVfb3B0aW9ucxgKIAEoCzIaLnRlbnNvcmZsb3cuUmV3cml0ZXJDb25maWdK",
+            "BAgBEAJSJXNraXBfY29tbW9uX3N1YmV4cHJlc3Npb25fZWxpbWluYXRpb24i",
+            "QQoVVGhyZWFkUG9vbE9wdGlvblByb3RvEhMKC251bV90aHJlYWRzGAEgASgF",
+            "EhMKC2dsb2JhbF9uYW1lGAIgASgJIjIKClJQQ09wdGlvbnMSJAocdXNlX3Jw",
+            "Y19mb3JfaW5wcm9jZXNzX21hc3RlchgBIAEoCCKdBQoLQ29uZmlnUHJvdG8S",
+            "PgoMZGV2aWNlX2NvdW50GAEgAygLMigudGVuc29yZmxvdy5Db25maWdQcm90",
+            "by5EZXZpY2VDb3VudEVudHJ5EiQKHGludHJhX29wX3BhcmFsbGVsaXNtX3Ro",
+            "cmVhZHMYAiABKAUSJAocaW50ZXJfb3BfcGFyYWxsZWxpc21fdGhyZWFkcxgF",
+            "IAEoBRIfChd1c2VfcGVyX3Nlc3Npb25fdGhyZWFkcxgJIAEoCBJHChxzZXNz",
+            "aW9uX2ludGVyX29wX3RocmVhZF9wb29sGAwgAygLMiEudGVuc29yZmxvdy5U",
+            "aHJlYWRQb29sT3B0aW9uUHJvdG8SGAoQcGxhY2VtZW50X3BlcmlvZBgDIAEo",
+            "BRIWCg5kZXZpY2VfZmlsdGVycxgEIAMoCRIrCgtncHVfb3B0aW9ucxgGIAEo",
+            "CzIWLnRlbnNvcmZsb3cuR1BVT3B0aW9ucxIcChRhbGxvd19zb2Z0X3BsYWNl",
+            "bWVudBgHIAEoCBIcChRsb2dfZGV2aWNlX3BsYWNlbWVudBgIIAEoCBIvCg1n",
+            "cmFwaF9vcHRpb25zGAogASgLMhgudGVuc29yZmxvdy5HcmFwaE9wdGlvbnMS",
+            "HwoXb3BlcmF0aW9uX3RpbWVvdXRfaW5fbXMYCyABKAMSKwoLcnBjX29wdGlv",
+            "bnMYDSABKAsyFi50ZW5zb3JmbG93LlJQQ09wdGlvbnMSKwoLY2x1c3Rlcl9k",
+            "ZWYYDiABKAsyFi50ZW5zb3JmbG93LkNsdXN0ZXJEZWYSHQoVaXNvbGF0ZV9z",
+            "ZXNzaW9uX3N0YXRlGA8gASgIGjIKEERldmljZUNvdW50RW50cnkSCwoDa2V5",
+            "GAEgASgJEg0KBXZhbHVlGAIgASgFOgI4ASLRAgoKUnVuT3B0aW9ucxI2Cgt0",
+            "cmFjZV9sZXZlbBgBIAEoDjIhLnRlbnNvcmZsb3cuUnVuT3B0aW9ucy5UcmFj",
+            "ZUxldmVsEhUKDXRpbWVvdXRfaW5fbXMYAiABKAMSHAoUaW50ZXJfb3BfdGhy",
+            "ZWFkX3Bvb2wYAyABKAUSHwoXb3V0cHV0X3BhcnRpdGlvbl9ncmFwaHMYBSAB",
+            "KAgSLwoNZGVidWdfb3B0aW9ucxgGIAEoCzIYLnRlbnNvcmZsb3cuRGVidWdP",
+            "cHRpb25zEioKInJlcG9ydF90ZW5zb3JfYWxsb2NhdGlvbnNfdXBvbl9vb20Y",
+            "ByABKAgiUgoKVHJhY2VMZXZlbBIMCghOT19UUkFDRRAAEhIKDlNPRlRXQVJF",
+            "X1RSQUNFEAESEgoOSEFSRFdBUkVfVFJBQ0UQAhIOCgpGVUxMX1RSQUNFEANK",
+            "BAgEEAUilgEKC1J1bk1ldGFkYXRhEikKCnN0ZXBfc3RhdHMYASABKAsyFS50",
+            "ZW5zb3JmbG93LlN0ZXBTdGF0cxIsCgpjb3N0X2dyYXBoGAIgASgLMhgudGVu",
+            "c29yZmxvdy5Db3N0R3JhcGhEZWYSLgoQcGFydGl0aW9uX2dyYXBocxgDIAMo",
+            "CzIULnRlbnNvcmZsb3cuR3JhcGhEZWZCLQoYb3JnLnRlbnNvcmZsb3cuZnJh",
+            "bWV3b3JrQgxDb25maWdQcm90b3NQAfgBAWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Tensorflow.CostGraphReflection.Descriptor, global::Tensorflow.GraphReflection.Descriptor, global::Tensorflow.StepStatsReflection.Descriptor, global::Tensorflow.DebugReflection.Descriptor, global::Tensorflow.ClusterReflection.Descriptor, global::Tensorflow.RewriterConfigReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.GPUOptions), global::Tensorflow.GPUOptions.Parser, new[]{ "PerProcessGpuMemoryFraction", "AllocatorType", "DeferredDeletionBytes", "AllowGrowth", "VisibleDeviceList", "PollingActiveDelayUsecs", "PollingInactiveDelayMsecs", "ForceGpuCompatible" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.GPUOptions), global::Tensorflow.GPUOptions.Parser, new[]{ "PerProcessGpuMemoryFraction", "AllocatorType", "DeferredDeletionBytes", "AllowGrowth", "VisibleDeviceList", "PollingActiveDelayUsecs", "PollingInactiveDelayMsecs", "ForceGpuCompatible", "Experimental" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.GPUOptions.Types.Experimental), global::Tensorflow.GPUOptions.Types.Experimental.Parser, new[]{ "VirtualDevices" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.GPUOptions.Types.Experimental.Types.VirtualDevices), global::Tensorflow.GPUOptions.Types.Experimental.Types.VirtualDevices.Parser, new[]{ "MemoryLimitMb" }, null, null, null)})}),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.OptimizerOptions), global::Tensorflow.OptimizerOptions.Parser, new[]{ "DoCommonSubexpressionElimination", "DoConstantFolding", "MaxFoldedConstantInBytes", "DoFunctionInlining", "OptLevel", "GlobalJitLevel" }, null, new[]{ typeof(global::Tensorflow.OptimizerOptions.Types.Level), typeof(global::Tensorflow.OptimizerOptions.Types.GlobalJitLevel) }, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.GraphOptions), global::Tensorflow.GraphOptions.Parser, new[]{ "EnableRecvScheduling", "OptimizerOptions", "BuildCostModel", "BuildCostModelAfter", "InferShapes", "PlacePrunedGraph", "EnableBfloat16Sendrecv", "TimelineStep", "RewriteOptions" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.ThreadPoolOptionProto), global::Tensorflow.ThreadPoolOptionProto.Parser, new[]{ "NumThreads", "GlobalName" }, null, null, null),
@@ -134,6 +138,7 @@ namespace Tensorflow {
       pollingActiveDelayUsecs_ = other.pollingActiveDelayUsecs_;
       pollingInactiveDelayMsecs_ = other.pollingInactiveDelayMsecs_;
       forceGpuCompatible_ = other.forceGpuCompatible_;
+      Experimental = other.experimental_ != null ? other.Experimental.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -218,18 +223,24 @@ namespace Tensorflow {
     /// A comma-separated list of GPU ids that determines the 'visible'
     /// to 'virtual' mapping of GPU devices.  For example, if TensorFlow
     /// can see 8 GPU devices in the process, and one wanted to map
-    /// visible GPU devices 5 and 3 as "/device:GPU:0", and "/device:GPU:1", then one
-    /// would specify this field as "5,3".  This field is similar in
+    /// visible GPU devices 5 and 3 as "/device:GPU:0", and "/device:GPU:1",
+    /// then one would specify this field as "5,3".  This field is similar in
     /// spirit to the CUDA_VISIBLE_DEVICES environment variable, except
     /// it applies to the visible GPU devices in the process.
     ///
-    /// NOTE: The GPU driver provides the process with the visible GPUs
-    /// in an order which is not guaranteed to have any correlation to
-    /// the *physical* GPU id in the machine.  This field is used for
-    /// remapping "visible" to "virtual", which means this operates only
-    /// after the process starts.  Users are required to use vendor
-    /// specific mechanisms (e.g., CUDA_VISIBLE_DEVICES) to control the
-    /// physical to visible device mapping prior to invoking TensorFlow.
+    /// NOTE:
+    /// 1. The GPU driver provides the process with the visible GPUs
+    ///    in an order which is not guaranteed to have any correlation to
+    ///    the *physical* GPU id in the machine.  This field is used for
+    ///    remapping "visible" to "virtual", which means this operates only
+    ///    after the process starts.  Users are required to use vendor
+    ///    specific mechanisms (e.g., CUDA_VISIBLE_DEVICES) to control the
+    ///    physical to visible device mapping prior to invoking TensorFlow.
+    /// 2. In the code, the ids in this list are also called "CUDA GPU id"s,
+    ///    and the 'virtual' ids of GPU devices (i.e. the ids in the device
+    ///    name "/device:GPU:&lt;id>") are also called "TF GPU id"s. Please
+    ///    refer to third_party/tensorflow/core/common_runtime/gpu/gpu_id.h
+    ///    for more information.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string VisibleDeviceList {
@@ -294,6 +305,17 @@ namespace Tensorflow {
       }
     }
 
+    /// <summary>Field number for the "experimental" field.</summary>
+    public const int ExperimentalFieldNumber = 9;
+    private global::Tensorflow.GPUOptions.Types.Experimental experimental_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Tensorflow.GPUOptions.Types.Experimental Experimental {
+      get { return experimental_; }
+      set {
+        experimental_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as GPUOptions);
@@ -315,6 +337,7 @@ namespace Tensorflow {
       if (PollingActiveDelayUsecs != other.PollingActiveDelayUsecs) return false;
       if (PollingInactiveDelayMsecs != other.PollingInactiveDelayMsecs) return false;
       if (ForceGpuCompatible != other.ForceGpuCompatible) return false;
+      if (!object.Equals(Experimental, other.Experimental)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -329,6 +352,7 @@ namespace Tensorflow {
       if (PollingActiveDelayUsecs != 0) hash ^= PollingActiveDelayUsecs.GetHashCode();
       if (PollingInactiveDelayMsecs != 0) hash ^= PollingInactiveDelayMsecs.GetHashCode();
       if (ForceGpuCompatible != false) hash ^= ForceGpuCompatible.GetHashCode();
+      if (experimental_ != null) hash ^= Experimental.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -374,6 +398,10 @@ namespace Tensorflow {
         output.WriteRawTag(64);
         output.WriteBool(ForceGpuCompatible);
       }
+      if (experimental_ != null) {
+        output.WriteRawTag(74);
+        output.WriteMessage(Experimental);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -405,6 +433,9 @@ namespace Tensorflow {
       }
       if (ForceGpuCompatible != false) {
         size += 1 + 1;
+      }
+      if (experimental_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Experimental);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -440,6 +471,12 @@ namespace Tensorflow {
       }
       if (other.ForceGpuCompatible != false) {
         ForceGpuCompatible = other.ForceGpuCompatible;
+      }
+      if (other.experimental_ != null) {
+        if (experimental_ == null) {
+          experimental_ = new global::Tensorflow.GPUOptions.Types.Experimental();
+        }
+        Experimental.MergeFrom(other.Experimental);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -484,9 +521,317 @@ namespace Tensorflow {
             ForceGpuCompatible = input.ReadBool();
             break;
           }
+          case 74: {
+            if (experimental_ == null) {
+              experimental_ = new global::Tensorflow.GPUOptions.Types.Experimental();
+            }
+            input.ReadMessage(experimental_);
+            break;
+          }
         }
       }
     }
+
+    #region Nested types
+    /// <summary>Container for nested types declared in the GPUOptions message type.</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static partial class Types {
+      /// <summary>
+      /// Everything inside Experimental is subject to change and is not subject
+      /// to API stability guarantees in
+      /// https://www.tensorflow.org/programmers_guide/version_compat.
+      /// </summary>
+      public sealed partial class Experimental : pb::IMessage<Experimental> {
+        private static readonly pb::MessageParser<Experimental> _parser = new pb::MessageParser<Experimental>(() => new Experimental());
+        private pb::UnknownFieldSet _unknownFields;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<Experimental> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor {
+          get { return global::Tensorflow.GPUOptions.Descriptor.NestedTypes[0]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor {
+          get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public Experimental() {
+          OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public Experimental(Experimental other) : this() {
+          virtualDevices_ = other.virtualDevices_.Clone();
+          _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public Experimental Clone() {
+          return new Experimental(this);
+        }
+
+        /// <summary>Field number for the "virtual_devices" field.</summary>
+        public const int VirtualDevicesFieldNumber = 1;
+        private static readonly pb::FieldCodec<global::Tensorflow.GPUOptions.Types.Experimental.Types.VirtualDevices> _repeated_virtualDevices_codec
+            = pb::FieldCodec.ForMessage(10, global::Tensorflow.GPUOptions.Types.Experimental.Types.VirtualDevices.Parser);
+        private readonly pbc::RepeatedField<global::Tensorflow.GPUOptions.Types.Experimental.Types.VirtualDevices> virtualDevices_ = new pbc::RepeatedField<global::Tensorflow.GPUOptions.Types.Experimental.Types.VirtualDevices>();
+        /// <summary>
+        /// The multi virtual device settings. If empty (not set), it will create
+        /// single virtual device on each visible GPU, according to the settings
+        /// in "visible_device_list" above. Otherwise, the number of elements in the
+        /// list must be the same as the number of visible GPUs (after
+        /// "visible_device_list" filtering if it is set), and the string represented
+        /// device names (e.g. /device:GPU:&lt;id>) will refer to the virtual
+        /// devices and have the &lt;id> field assigned sequentially starting from 0,
+        /// according to the order they appear in this list and the "memory_limit"
+        /// list inside each element. For example,
+        ///   visible_device_list = "1,0"
+        ///   virtual_devices { memory_limit: 1GB memory_limit: 2GB }
+        ///   virtual_devices {}
+        /// will create three virtual devices as:
+        ///   /device:GPU:0 -> visible GPU 1 with 1GB memory
+        ///   /device:GPU:1 -> visible GPU 1 with 2GB memory
+        ///   /device:GPU:2 -> visible GPU 0 with all available memory
+        ///
+        /// NOTE:
+        /// 1. It's invalid to set both this and "per_process_gpu_memory_fraction"
+        ///    at the same time.
+        /// 2. Currently this setting is per-process, not per-session. Using
+        ///    different settings in different sessions within same process will
+        ///    result in undefined behavior.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public pbc::RepeatedField<global::Tensorflow.GPUOptions.Types.Experimental.Types.VirtualDevices> VirtualDevices {
+          get { return virtualDevices_; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other) {
+          return Equals(other as Experimental);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(Experimental other) {
+          if (ReferenceEquals(other, null)) {
+            return false;
+          }
+          if (ReferenceEquals(other, this)) {
+            return true;
+          }
+          if(!virtualDevices_.Equals(other.virtualDevices_)) return false;
+          return Equals(_unknownFields, other._unknownFields);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode() {
+          int hash = 1;
+          hash ^= virtualDevices_.GetHashCode();
+          if (_unknownFields != null) {
+            hash ^= _unknownFields.GetHashCode();
+          }
+          return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString() {
+          return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output) {
+          virtualDevices_.WriteTo(output, _repeated_virtualDevices_codec);
+          if (_unknownFields != null) {
+            _unknownFields.WriteTo(output);
+          }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize() {
+          int size = 0;
+          size += virtualDevices_.CalculateSize(_repeated_virtualDevices_codec);
+          if (_unknownFields != null) {
+            size += _unknownFields.CalculateSize();
+          }
+          return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(Experimental other) {
+          if (other == null) {
+            return;
+          }
+          virtualDevices_.Add(other.virtualDevices_);
+          _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input) {
+          uint tag;
+          while ((tag = input.ReadTag()) != 0) {
+            switch(tag) {
+              default:
+                _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+                break;
+              case 10: {
+                virtualDevices_.AddEntriesFrom(input, _repeated_virtualDevices_codec);
+                break;
+              }
+            }
+          }
+        }
+
+        #region Nested types
+        /// <summary>Container for nested types declared in the Experimental message type.</summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static partial class Types {
+          /// <summary>
+          /// Configuration for breaking down a visible GPU into multiple "virtual"
+          /// devices.
+          /// </summary>
+          public sealed partial class VirtualDevices : pb::IMessage<VirtualDevices> {
+            private static readonly pb::MessageParser<VirtualDevices> _parser = new pb::MessageParser<VirtualDevices>(() => new VirtualDevices());
+            private pb::UnknownFieldSet _unknownFields;
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+            public static pb::MessageParser<VirtualDevices> Parser { get { return _parser; } }
+
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+            public static pbr::MessageDescriptor Descriptor {
+              get { return global::Tensorflow.GPUOptions.Types.Experimental.Descriptor.NestedTypes[0]; }
+            }
+
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+            pbr::MessageDescriptor pb::IMessage.Descriptor {
+              get { return Descriptor; }
+            }
+
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+            public VirtualDevices() {
+              OnConstruction();
+            }
+
+            partial void OnConstruction();
+
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+            public VirtualDevices(VirtualDevices other) : this() {
+              memoryLimitMb_ = other.memoryLimitMb_.Clone();
+              _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+            }
+
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+            public VirtualDevices Clone() {
+              return new VirtualDevices(this);
+            }
+
+            /// <summary>Field number for the "memory_limit_mb" field.</summary>
+            public const int MemoryLimitMbFieldNumber = 1;
+            private static readonly pb::FieldCodec<float> _repeated_memoryLimitMb_codec
+                = pb::FieldCodec.ForFloat(10);
+            private readonly pbc::RepeatedField<float> memoryLimitMb_ = new pbc::RepeatedField<float>();
+            /// <summary>
+            /// Per "virtual" device memory limit, in MB. The number of elements in
+            /// the list is the number of virtual devices to create on the
+            /// corresponding visible GPU (see "virtual_devices" below).
+            /// If empty, it will create single virtual device taking all available
+            /// memory from the device.
+            ///
+            /// For the concept of "visible" and "virtual" GPU, see the comments for
+            /// "visible_device_list" above for more information.
+            /// </summary>
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+            public pbc::RepeatedField<float> MemoryLimitMb {
+              get { return memoryLimitMb_; }
+            }
+
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+            public override bool Equals(object other) {
+              return Equals(other as VirtualDevices);
+            }
+
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+            public bool Equals(VirtualDevices other) {
+              if (ReferenceEquals(other, null)) {
+                return false;
+              }
+              if (ReferenceEquals(other, this)) {
+                return true;
+              }
+              if(!memoryLimitMb_.Equals(other.memoryLimitMb_)) return false;
+              return Equals(_unknownFields, other._unknownFields);
+            }
+
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+            public override int GetHashCode() {
+              int hash = 1;
+              hash ^= memoryLimitMb_.GetHashCode();
+              if (_unknownFields != null) {
+                hash ^= _unknownFields.GetHashCode();
+              }
+              return hash;
+            }
+
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+            public override string ToString() {
+              return pb::JsonFormatter.ToDiagnosticString(this);
+            }
+
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+            public void WriteTo(pb::CodedOutputStream output) {
+              memoryLimitMb_.WriteTo(output, _repeated_memoryLimitMb_codec);
+              if (_unknownFields != null) {
+                _unknownFields.WriteTo(output);
+              }
+            }
+
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+            public int CalculateSize() {
+              int size = 0;
+              size += memoryLimitMb_.CalculateSize(_repeated_memoryLimitMb_codec);
+              if (_unknownFields != null) {
+                size += _unknownFields.CalculateSize();
+              }
+              return size;
+            }
+
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+            public void MergeFrom(VirtualDevices other) {
+              if (other == null) {
+                return;
+              }
+              memoryLimitMb_.Add(other.memoryLimitMb_);
+              _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+            }
+
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+            public void MergeFrom(pb::CodedInputStream input) {
+              uint tag;
+              while ((tag = input.ReadTag()) != 0) {
+                switch(tag) {
+                  default:
+                    _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+                    break;
+                  case 10:
+                  case 13: {
+                    memoryLimitMb_.AddEntriesFrom(input, _repeated_memoryLimitMb_codec);
+                    break;
+                  }
+                }
+              }
+            }
+
+          }
+
+        }
+        #endregion
+
+      }
+
+    }
+    #endregion
 
   }
 
