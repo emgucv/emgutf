@@ -26,30 +26,32 @@ namespace Tensorflow {
           string.Concat(
             "Ci50ZW5zb3JmbG93L2NvcmUvcHJvdG9idWYvcmV3cml0ZXJfY29uZmlnLnBy",
             "b3RvEgp0ZW5zb3JmbG93IjsKE0F1dG9QYXJhbGxlbE9wdGlvbnMSDgoGZW5h",
-            "YmxlGAEgASgIEhQKDG51bV9yZXBsaWNhcxgCIAEoBSLNBQoOUmV3cml0ZXJD",
+            "YmxlGAEgASgIEhQKDG51bV9yZXBsaWNhcxgCIAEoBSLMBgoOUmV3cml0ZXJD",
             "b25maWcSOwoQbGF5b3V0X29wdGltaXplchgBIAEoDjIhLnRlbnNvcmZsb3cu",
             "UmV3cml0ZXJDb25maWcuVG9nZ2xlEjsKEGNvbnN0YW50X2ZvbGRpbmcYAyAB",
             "KA4yIS50ZW5zb3JmbG93LlJld3JpdGVyQ29uZmlnLlRvZ2dsZRJCChdhcml0",
             "aG1ldGljX29wdGltaXphdGlvbhgHIAEoDjIhLnRlbnNvcmZsb3cuUmV3cml0",
             "ZXJDb25maWcuVG9nZ2xlEkIKF2RlcGVuZGVuY3lfb3B0aW1pemF0aW9uGAgg",
-            "ASgOMiEudGVuc29yZmxvdy5SZXdyaXRlckNvbmZpZy5Ub2dnbGUSHQoVZGlz",
-            "YWJsZV9tb2RlbF9wcnVuaW5nGAIgASgIEkIKE21lbW9yeV9vcHRpbWl6YXRp",
-            "b24YBCABKA4yJS50ZW5zb3JmbG93LlJld3JpdGVyQ29uZmlnLk1lbU9wdFR5",
-            "cGUSMAoobWVtb3J5X29wdGltaXplcl90YXJnZXRfbm9kZV9uYW1lX3ByZWZp",
-            "eBgGIAEoCRI2Cg1hdXRvX3BhcmFsbGVsGAUgASgLMh8udGVuc29yZmxvdy5B",
-            "dXRvUGFyYWxsZWxPcHRpb25zEhIKCm9wdGltaXplcnMYZCADKAkiNgoGVG9n",
-            "Z2xlEgsKB0RFRkFVTFQQABIGCgJPThABEgcKA09GRhACEg4KCkFHR1JFU1NJ",
-            "VkUQAyKfAQoKTWVtT3B0VHlwZRITCg9ERUZBVUxUX01FTV9PUFQQABIOCgpO",
-            "T19NRU1fT1BUEAESCgoGTUFOVUFMEAISFwoTU1dBUFBJTkdfSEVVUklTVElD",
-            "UxAEEhwKGFJFQ09NUFVUQVRJT05fSEVVUklTVElDUxAFEhkKFVNDSEVEVUxJ",
-            "TkdfSEVVUklTVElDUxAGEg4KCkhFVVJJU1RJQ1MQA0I1ChhvcmcudGVuc29y",
-            "Zmxvdy5mcmFtZXdvcmtCFFJld3JpdGVyQ29uZmlnUHJvdG9zUAH4AQFiBnBy",
-            "b3RvMw=="));
+            "ASgOMiEudGVuc29yZmxvdy5SZXdyaXRlckNvbmZpZy5Ub2dnbGUSPAoRbG9v",
+            "cF9vcHRpbWl6YXRpb24YCSABKA4yIS50ZW5zb3JmbG93LlJld3JpdGVyQ29u",
+            "ZmlnLlRvZ2dsZRJAChVmdW5jdGlvbl9vcHRpbWl6YXRpb24YCiABKA4yIS50",
+            "ZW5zb3JmbG93LlJld3JpdGVyQ29uZmlnLlRvZ2dsZRIdChVkaXNhYmxlX21v",
+            "ZGVsX3BydW5pbmcYAiABKAgSQgoTbWVtb3J5X29wdGltaXphdGlvbhgEIAEo",
+            "DjIlLnRlbnNvcmZsb3cuUmV3cml0ZXJDb25maWcuTWVtT3B0VHlwZRIvCidt",
+            "ZW1vcnlfb3B0aW1pemVyX3RhcmdldF9ub2RlX25hbWVfc2NvcGUYBiABKAkS",
+            "NgoNYXV0b19wYXJhbGxlbBgFIAEoCzIfLnRlbnNvcmZsb3cuQXV0b1BhcmFs",
+            "bGVsT3B0aW9ucxISCgpvcHRpbWl6ZXJzGGQgAygJIjYKBlRvZ2dsZRILCgdE",
+            "RUZBVUxUEAASBgoCT04QARIHCgNPRkYQAhIOCgpBR0dSRVNTSVZFEAMinwEK",
+            "Ck1lbU9wdFR5cGUSEwoPREVGQVVMVF9NRU1fT1BUEAASDgoKTk9fTUVNX09Q",
+            "VBABEgoKBk1BTlVBTBACEhcKE1NXQVBQSU5HX0hFVVJJU1RJQ1MQBBIcChhS",
+            "RUNPTVBVVEFUSU9OX0hFVVJJU1RJQ1MQBRIZChVTQ0hFRFVMSU5HX0hFVVJJ",
+            "U1RJQ1MQBhIOCgpIRVVSSVNUSUNTEANCNQoYb3JnLnRlbnNvcmZsb3cuZnJh",
+            "bWV3b3JrQhRSZXdyaXRlckNvbmZpZ1Byb3Rvc1AB+AEBYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.AutoParallelOptions), global::Tensorflow.AutoParallelOptions.Parser, new[]{ "Enable", "NumReplicas" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.RewriterConfig), global::Tensorflow.RewriterConfig.Parser, new[]{ "LayoutOptimizer", "ConstantFolding", "ArithmeticOptimization", "DependencyOptimization", "DisableModelPruning", "MemoryOptimization", "MemoryOptimizerTargetNodeNamePrefix", "AutoParallel", "Optimizers" }, null, new[]{ typeof(global::Tensorflow.RewriterConfig.Types.Toggle), typeof(global::Tensorflow.RewriterConfig.Types.MemOptType) }, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.RewriterConfig), global::Tensorflow.RewriterConfig.Parser, new[]{ "LayoutOptimizer", "ConstantFolding", "ArithmeticOptimization", "DependencyOptimization", "LoopOptimization", "FunctionOptimization", "DisableModelPruning", "MemoryOptimization", "MemoryOptimizerTargetNodeNameScope", "AutoParallel", "Optimizers" }, null, new[]{ typeof(global::Tensorflow.RewriterConfig.Types.Toggle), typeof(global::Tensorflow.RewriterConfig.Types.MemOptType) }, null)
           }));
     }
     #endregion
@@ -246,9 +248,11 @@ namespace Tensorflow {
       constantFolding_ = other.constantFolding_;
       arithmeticOptimization_ = other.arithmeticOptimization_;
       dependencyOptimization_ = other.dependencyOptimization_;
+      loopOptimization_ = other.loopOptimization_;
+      functionOptimization_ = other.functionOptimization_;
       disableModelPruning_ = other.disableModelPruning_;
       memoryOptimization_ = other.memoryOptimization_;
-      memoryOptimizerTargetNodeNamePrefix_ = other.memoryOptimizerTargetNodeNamePrefix_;
+      memoryOptimizerTargetNodeNameScope_ = other.memoryOptimizerTargetNodeNameScope_;
       AutoParallel = other.autoParallel_ != null ? other.AutoParallel.Clone() : null;
       optimizers_ = other.optimizers_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -263,7 +267,8 @@ namespace Tensorflow {
     public const int LayoutOptimizerFieldNumber = 1;
     private global::Tensorflow.RewriterConfig.Types.Toggle layoutOptimizer_ = 0;
     /// <summary>
-    /// Optimize tensor layouts
+    /// Optimize tensor layouts (default is ON)
+    /// e.g. This will try to use NCHW layout on GPU which is faster.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Tensorflow.RewriterConfig.Types.Toggle LayoutOptimizer {
@@ -278,6 +283,8 @@ namespace Tensorflow {
     private global::Tensorflow.RewriterConfig.Types.Toggle constantFolding_ = 0;
     /// <summary>
     /// Fold constants (default is ON)
+    /// Statically infer the value of tensors when possible, and materialize the
+    /// result using constants.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Tensorflow.RewriterConfig.Types.Toggle ConstantFolding {
@@ -292,6 +299,7 @@ namespace Tensorflow {
     private global::Tensorflow.RewriterConfig.Types.Toggle arithmeticOptimization_ = 0;
     /// <summary>
     /// Arithmetic optimizations (default is ON)
+    /// e.g. Simplify arithmetic ops; merge ops with same value (like constants).
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Tensorflow.RewriterConfig.Types.Toggle ArithmeticOptimization {
@@ -306,12 +314,41 @@ namespace Tensorflow {
     private global::Tensorflow.RewriterConfig.Types.Toggle dependencyOptimization_ = 0;
     /// <summary>
     /// Control dependency optimizations (default is ON).
+    /// Remove redundant control dependencies, which may enable other optimization.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Tensorflow.RewriterConfig.Types.Toggle DependencyOptimization {
       get { return dependencyOptimization_; }
       set {
         dependencyOptimization_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "loop_optimization" field.</summary>
+    public const int LoopOptimizationFieldNumber = 9;
+    private global::Tensorflow.RewriterConfig.Types.Toggle loopOptimization_ = 0;
+    /// <summary>
+    /// Loop optimizations (default is OFF).
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Tensorflow.RewriterConfig.Types.Toggle LoopOptimization {
+      get { return loopOptimization_; }
+      set {
+        loopOptimization_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "function_optimization" field.</summary>
+    public const int FunctionOptimizationFieldNumber = 10;
+    private global::Tensorflow.RewriterConfig.Types.Toggle functionOptimization_ = 0;
+    /// <summary>
+    /// Function optimizations (default is OFF).
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Tensorflow.RewriterConfig.Types.Toggle FunctionOptimization {
+      get { return functionOptimization_; }
+      set {
+        functionOptimization_ = value;
       }
     }
 
@@ -345,25 +382,24 @@ namespace Tensorflow {
       }
     }
 
-    /// <summary>Field number for the "memory_optimizer_target_node_name_prefix" field.</summary>
-    public const int MemoryOptimizerTargetNodeNamePrefixFieldNumber = 6;
-    private string memoryOptimizerTargetNodeNamePrefix_ = "";
+    /// <summary>Field number for the "memory_optimizer_target_node_name_scope" field.</summary>
+    public const int MemoryOptimizerTargetNodeNameScopeFieldNumber = 6;
+    private string memoryOptimizerTargetNodeNameScope_ = "";
     /// <summary>
-    /// The prefix for nodes which are valid outputs of recomputations. Inputs to
-    /// nodes with this name prefix may be recomputed (subject either to manual
-    /// annotation of those input nodes or to manual annotation and heuristics
-    /// depending on memory_optimization), but the prefixed nodes themselves will
-    /// not be recomputed. Typically this will be "gradients/", indicating that
-    /// activations from the forward pass of a graph may be recomputed as inputs to
-    /// gradients, but may be adjusted if gradients are inside a name scope or if
-    /// inputs to non-gradients should be recomputed. Defaults to "gradients/" if
-    /// empty or not set.
+    /// A node name scope for node names which are valid outputs of recompuations.
+    /// Inputs to nodes that match this scope may be recomputed (subject either to
+    /// manual annotation of those input nodes or to manual annotation and
+    /// heuristics depending on memory_optimization), but the nodes themselves will
+    /// not be recomputed. This matches any sub-scopes as well, meaning the scope
+    /// can appear not just as a top-level scope. For example, if the value is
+    /// "gradients/", the default, it will match node name "gradients/foo",
+    /// "foo/gradients/bar", but not "foo_gradients/"
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string MemoryOptimizerTargetNodeNamePrefix {
-      get { return memoryOptimizerTargetNodeNamePrefix_; }
+    public string MemoryOptimizerTargetNodeNameScope {
+      get { return memoryOptimizerTargetNodeNameScope_; }
       set {
-        memoryOptimizerTargetNodeNamePrefix_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        memoryOptimizerTargetNodeNameScope_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -397,6 +433,9 @@ namespace Tensorflow {
     /// ("autoparallel"). Memory optimization passes ("memory") invoked here are
     /// not configurable (in contrast to memory optimization passes through the
     /// meta-optimizer) and act only on manual op annotations.
+    ///
+    /// Custom registered optimizers will be run after the base optimizers, in
+    /// the order that they are specified.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<string> Optimizers {
@@ -420,9 +459,11 @@ namespace Tensorflow {
       if (ConstantFolding != other.ConstantFolding) return false;
       if (ArithmeticOptimization != other.ArithmeticOptimization) return false;
       if (DependencyOptimization != other.DependencyOptimization) return false;
+      if (LoopOptimization != other.LoopOptimization) return false;
+      if (FunctionOptimization != other.FunctionOptimization) return false;
       if (DisableModelPruning != other.DisableModelPruning) return false;
       if (MemoryOptimization != other.MemoryOptimization) return false;
-      if (MemoryOptimizerTargetNodeNamePrefix != other.MemoryOptimizerTargetNodeNamePrefix) return false;
+      if (MemoryOptimizerTargetNodeNameScope != other.MemoryOptimizerTargetNodeNameScope) return false;
       if (!object.Equals(AutoParallel, other.AutoParallel)) return false;
       if(!optimizers_.Equals(other.optimizers_)) return false;
       return Equals(_unknownFields, other._unknownFields);
@@ -435,9 +476,11 @@ namespace Tensorflow {
       if (ConstantFolding != 0) hash ^= ConstantFolding.GetHashCode();
       if (ArithmeticOptimization != 0) hash ^= ArithmeticOptimization.GetHashCode();
       if (DependencyOptimization != 0) hash ^= DependencyOptimization.GetHashCode();
+      if (LoopOptimization != 0) hash ^= LoopOptimization.GetHashCode();
+      if (FunctionOptimization != 0) hash ^= FunctionOptimization.GetHashCode();
       if (DisableModelPruning != false) hash ^= DisableModelPruning.GetHashCode();
       if (MemoryOptimization != 0) hash ^= MemoryOptimization.GetHashCode();
-      if (MemoryOptimizerTargetNodeNamePrefix.Length != 0) hash ^= MemoryOptimizerTargetNodeNamePrefix.GetHashCode();
+      if (MemoryOptimizerTargetNodeNameScope.Length != 0) hash ^= MemoryOptimizerTargetNodeNameScope.GetHashCode();
       if (autoParallel_ != null) hash ^= AutoParallel.GetHashCode();
       hash ^= optimizers_.GetHashCode();
       if (_unknownFields != null) {
@@ -473,9 +516,9 @@ namespace Tensorflow {
         output.WriteRawTag(42);
         output.WriteMessage(AutoParallel);
       }
-      if (MemoryOptimizerTargetNodeNamePrefix.Length != 0) {
+      if (MemoryOptimizerTargetNodeNameScope.Length != 0) {
         output.WriteRawTag(50);
-        output.WriteString(MemoryOptimizerTargetNodeNamePrefix);
+        output.WriteString(MemoryOptimizerTargetNodeNameScope);
       }
       if (ArithmeticOptimization != 0) {
         output.WriteRawTag(56);
@@ -484,6 +527,14 @@ namespace Tensorflow {
       if (DependencyOptimization != 0) {
         output.WriteRawTag(64);
         output.WriteEnum((int) DependencyOptimization);
+      }
+      if (LoopOptimization != 0) {
+        output.WriteRawTag(72);
+        output.WriteEnum((int) LoopOptimization);
+      }
+      if (FunctionOptimization != 0) {
+        output.WriteRawTag(80);
+        output.WriteEnum((int) FunctionOptimization);
       }
       optimizers_.WriteTo(output, _repeated_optimizers_codec);
       if (_unknownFields != null) {
@@ -506,14 +557,20 @@ namespace Tensorflow {
       if (DependencyOptimization != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) DependencyOptimization);
       }
+      if (LoopOptimization != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) LoopOptimization);
+      }
+      if (FunctionOptimization != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) FunctionOptimization);
+      }
       if (DisableModelPruning != false) {
         size += 1 + 1;
       }
       if (MemoryOptimization != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) MemoryOptimization);
       }
-      if (MemoryOptimizerTargetNodeNamePrefix.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(MemoryOptimizerTargetNodeNamePrefix);
+      if (MemoryOptimizerTargetNodeNameScope.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(MemoryOptimizerTargetNodeNameScope);
       }
       if (autoParallel_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(AutoParallel);
@@ -542,14 +599,20 @@ namespace Tensorflow {
       if (other.DependencyOptimization != 0) {
         DependencyOptimization = other.DependencyOptimization;
       }
+      if (other.LoopOptimization != 0) {
+        LoopOptimization = other.LoopOptimization;
+      }
+      if (other.FunctionOptimization != 0) {
+        FunctionOptimization = other.FunctionOptimization;
+      }
       if (other.DisableModelPruning != false) {
         DisableModelPruning = other.DisableModelPruning;
       }
       if (other.MemoryOptimization != 0) {
         MemoryOptimization = other.MemoryOptimization;
       }
-      if (other.MemoryOptimizerTargetNodeNamePrefix.Length != 0) {
-        MemoryOptimizerTargetNodeNamePrefix = other.MemoryOptimizerTargetNodeNamePrefix;
+      if (other.MemoryOptimizerTargetNodeNameScope.Length != 0) {
+        MemoryOptimizerTargetNodeNameScope = other.MemoryOptimizerTargetNodeNameScope;
       }
       if (other.autoParallel_ != null) {
         if (autoParallel_ == null) {
@@ -593,7 +656,7 @@ namespace Tensorflow {
             break;
           }
           case 50: {
-            MemoryOptimizerTargetNodeNamePrefix = input.ReadString();
+            MemoryOptimizerTargetNodeNameScope = input.ReadString();
             break;
           }
           case 56: {
@@ -602,6 +665,14 @@ namespace Tensorflow {
           }
           case 64: {
             dependencyOptimization_ = (global::Tensorflow.RewriterConfig.Types.Toggle) input.ReadEnum();
+            break;
+          }
+          case 72: {
+            loopOptimization_ = (global::Tensorflow.RewriterConfig.Types.Toggle) input.ReadEnum();
+            break;
+          }
+          case 80: {
+            functionOptimization_ = (global::Tensorflow.RewriterConfig.Types.Toggle) input.ReadEnum();
             break;
           }
           case 802: {
@@ -630,7 +701,7 @@ namespace Tensorflow {
 
       public enum MemOptType {
         /// <summary>
-        /// The default setting (currently disabled)
+        /// The default setting (SCHEDULING and SWAPPING HEURISTICS only)
         /// </summary>
         [pbr::OriginalName("DEFAULT_MEM_OPT")] DefaultMemOpt = 0,
         /// <summary>
@@ -642,13 +713,19 @@ namespace Tensorflow {
         /// </summary>
         [pbr::OriginalName("MANUAL")] Manual = 2,
         /// <summary>
-        /// Driven by heuristics. The behavior of these heuristics is subject to
-        /// change. Currently includes an experimental recomputation and swapping
-        /// heuristics. Manual annotations are respected, but additional nodes are
-        /// selected automatically.
+        /// Swapping heuristic will move a tensor from the GPU to the CPU and move
+        /// it back when needed to reduce peak memory usage.
         /// </summary>
         [pbr::OriginalName("SWAPPING_HEURISTICS")] SwappingHeuristics = 4,
+        /// <summary>
+        /// Recomputation heuristics will recompute ops (such as Relu activation)
+        /// during backprop instead of storing them, reducing peak memory usage.
+        /// </summary>
         [pbr::OriginalName("RECOMPUTATION_HEURISTICS")] RecomputationHeuristics = 5,
+        /// <summary>
+        /// Scheduling will split big ops such as AddN and try to enforce a schedule
+        /// of the new computations that decreases peak memory usage.
+        /// </summary>
         [pbr::OriginalName("SCHEDULING_HEURISTICS")] SchedulingHeuristics = 6,
         /// <summary>
         /// Use any combination of swapping and recomputation heuristics.

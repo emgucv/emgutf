@@ -30,16 +30,16 @@ namespace Tensorflow {
             "cHJvdG8aJnRlbnNvcmZsb3cvY29yZS9mcmFtZXdvcmsvb3BfZGVmLnByb3Rv",
             "ImoKEkZ1bmN0aW9uRGVmTGlicmFyeRIpCghmdW5jdGlvbhgBIAMoCzIXLnRl",
             "bnNvcmZsb3cuRnVuY3Rpb25EZWYSKQoIZ3JhZGllbnQYAiADKAsyFy50ZW5z",
-            "b3JmbG93LkdyYWRpZW50RGVmIqoCCgtGdW5jdGlvbkRlZhIkCglzaWduYXR1",
+            "b3JmbG93LkdyYWRpZW50RGVmIrACCgtGdW5jdGlvbkRlZhIkCglzaWduYXR1",
             "cmUYASABKAsyES50ZW5zb3JmbG93Lk9wRGVmEi8KBGF0dHIYBSADKAsyIS50",
             "ZW5zb3JmbG93LkZ1bmN0aW9uRGVmLkF0dHJFbnRyeRIlCghub2RlX2RlZhgD",
             "IAMoCzITLnRlbnNvcmZsb3cuTm9kZURlZhItCgNyZXQYBCADKAsyIC50ZW5z",
             "b3JmbG93LkZ1bmN0aW9uRGVmLlJldEVudHJ5GkIKCUF0dHJFbnRyeRILCgNr",
             "ZXkYASABKAkSJAoFdmFsdWUYAiABKAsyFS50ZW5zb3JmbG93LkF0dHJWYWx1",
             "ZToCOAEaKgoIUmV0RW50cnkSCwoDa2V5GAEgASgJEg0KBXZhbHVlGAIgASgJ",
-            "OgI4ASI7CgtHcmFkaWVudERlZhIVCg1mdW5jdGlvbl9uYW1lGAEgASgJEhUK",
-            "DWdyYWRpZW50X2Z1bmMYAiABKAlCLwoYb3JnLnRlbnNvcmZsb3cuZnJhbWV3",
-            "b3JrQg5GdW5jdGlvblByb3Rvc1AB+AEBYgZwcm90bzM="));
+            "OgI4AUoECAIQAyI7CgtHcmFkaWVudERlZhIVCg1mdW5jdGlvbl9uYW1lGAEg",
+            "ASgJEhUKDWdyYWRpZW50X2Z1bmMYAiABKAlCLwoYb3JnLnRlbnNvcmZsb3cu",
+            "ZnJhbWV3b3JrQg5GdW5jdGlvblByb3Rvc1AB+AEBYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Tensorflow.AttrValueReflection.Descriptor, global::Tensorflow.NodeDefReflection.Descriptor, global::Tensorflow.OpDefReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {

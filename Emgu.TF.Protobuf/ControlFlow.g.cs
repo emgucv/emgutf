@@ -28,25 +28,31 @@ namespace Tensorflow {
             "Egp0ZW5zb3JmbG93IpYBCglWYWx1ZXNEZWYSDgoGdmFsdWVzGAEgAygJEkIK",
             "D2V4dGVybmFsX3ZhbHVlcxgCIAMoCzIpLnRlbnNvcmZsb3cuVmFsdWVzRGVm",
             "LkV4dGVybmFsVmFsdWVzRW50cnkaNQoTRXh0ZXJuYWxWYWx1ZXNFbnRyeRIL",
-            "CgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAk6AjgBIogBCg5Db25kQ29udGV4",
-            "dERlZhIUCgxjb250ZXh0X25hbWUYASABKAkSEQoJcHJlZF9uYW1lGAIgASgJ",
-            "EhIKCnBpdm90X25hbWUYAyABKAkSDgoGYnJhbmNoGAQgASgFEikKCnZhbHVl",
-            "c19kZWYYBSABKAsyFS50ZW5zb3JmbG93LlZhbHVlc0RlZiK5AgoPV2hpbGVD",
-            "b250ZXh0RGVmEhQKDGNvbnRleHRfbmFtZRgBIAEoCRIbChNwYXJhbGxlbF9p",
-            "dGVyYXRpb25zGAIgASgFEhEKCWJhY2tfcHJvcBgDIAEoCBITCgtzd2FwX21l",
-            "bW9yeRgEIAEoCBISCgpwaXZvdF9uYW1lGAUgASgJEhsKE3Bpdm90X2Zvcl9w",
-            "cmVkX25hbWUYBiABKAkSGwoTcGl2b3RfZm9yX2JvZHlfbmFtZRgHIAEoCRIX",
-            "Cg9sb29wX2V4aXRfbmFtZXMYCCADKAkSGAoQbG9vcF9lbnRlcl9uYW1lcxgK",
-            "IAMoCRIpCgp2YWx1ZXNfZGVmGAkgASgLMhUudGVuc29yZmxvdy5WYWx1ZXNE",
-            "ZWYSHwoXbWF4aW11bV9pdGVyYXRpb25zX25hbWUYCyABKAlCMgoYb3JnLnRl",
-            "bnNvcmZsb3cuZnJhbWV3b3JrQhFDb250cm9sRmxvd1Byb3Rvc1AB+AEBYgZw",
-            "cm90bzM="));
+            "CgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAk6AjgBIoMBChVDb250cm9sRmxv",
+            "d0NvbnRleHREZWYSLwoJY29uZF9jdHh0GAEgASgLMhoudGVuc29yZmxvdy5D",
+            "b25kQ29udGV4dERlZkgAEjEKCndoaWxlX2N0eHQYAiABKAsyGy50ZW5zb3Jm",
+            "bG93LldoaWxlQ29udGV4dERlZkgAQgYKBGN0eHQixAEKDkNvbmRDb250ZXh0",
+            "RGVmEhQKDGNvbnRleHRfbmFtZRgBIAEoCRIRCglwcmVkX25hbWUYAiABKAkS",
+            "EgoKcGl2b3RfbmFtZRgDIAEoCRIOCgZicmFuY2gYBCABKAUSKQoKdmFsdWVz",
+            "X2RlZhgFIAEoCzIVLnRlbnNvcmZsb3cuVmFsdWVzRGVmEjoKD25lc3RlZF9j",
+            "b250ZXh0cxgGIAMoCzIhLnRlbnNvcmZsb3cuQ29udHJvbEZsb3dDb250ZXh0",
+            "RGVmIvUCCg9XaGlsZUNvbnRleHREZWYSFAoMY29udGV4dF9uYW1lGAEgASgJ",
+            "EhsKE3BhcmFsbGVsX2l0ZXJhdGlvbnMYAiABKAUSEQoJYmFja19wcm9wGAMg",
+            "ASgIEhMKC3N3YXBfbWVtb3J5GAQgASgIEhIKCnBpdm90X25hbWUYBSABKAkS",
+            "GwoTcGl2b3RfZm9yX3ByZWRfbmFtZRgGIAEoCRIbChNwaXZvdF9mb3JfYm9k",
+            "eV9uYW1lGAcgASgJEhcKD2xvb3BfZXhpdF9uYW1lcxgIIAMoCRIYChBsb29w",
+            "X2VudGVyX25hbWVzGAogAygJEikKCnZhbHVlc19kZWYYCSABKAsyFS50ZW5z",
+            "b3JmbG93LlZhbHVlc0RlZhIfChdtYXhpbXVtX2l0ZXJhdGlvbnNfbmFtZRgL",
+            "IAEoCRI6Cg9uZXN0ZWRfY29udGV4dHMYDCADKAsyIS50ZW5zb3JmbG93LkNv",
+            "bnRyb2xGbG93Q29udGV4dERlZkIyChhvcmcudGVuc29yZmxvdy5mcmFtZXdv",
+            "cmtCEUNvbnRyb2xGbG93UHJvdG9zUAH4AQFiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.ValuesDef), global::Tensorflow.ValuesDef.Parser, new[]{ "Values", "ExternalValues" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.CondContextDef), global::Tensorflow.CondContextDef.Parser, new[]{ "ContextName", "PredName", "PivotName", "Branch", "ValuesDef" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.WhileContextDef), global::Tensorflow.WhileContextDef.Parser, new[]{ "ContextName", "ParallelIterations", "BackProp", "SwapMemory", "PivotName", "PivotForPredName", "PivotForBodyName", "LoopExitNames", "LoopEnterNames", "ValuesDef", "MaximumIterationsName" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.ControlFlowContextDef), global::Tensorflow.ControlFlowContextDef.Parser, new[]{ "CondCtxt", "WhileCtxt" }, new[]{ "Ctxt" }, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.CondContextDef), global::Tensorflow.CondContextDef.Parser, new[]{ "ContextName", "PredName", "PivotName", "Branch", "ValuesDef", "NestedContexts" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Tensorflow.WhileContextDef), global::Tensorflow.WhileContextDef.Parser, new[]{ "ContextName", "ParallelIterations", "BackProp", "SwapMemory", "PivotName", "PivotForPredName", "PivotForBodyName", "LoopExitNames", "LoopEnterNames", "ValuesDef", "MaximumIterationsName", "NestedContexts" }, null, null, null)
           }));
     }
     #endregion
@@ -204,6 +210,214 @@ namespace Tensorflow {
   }
 
   /// <summary>
+  /// Container for any kind of control flow context. Any other control flow
+  /// contexts that are added below should also be added here.
+  /// </summary>
+  public sealed partial class ControlFlowContextDef : pb::IMessage<ControlFlowContextDef> {
+    private static readonly pb::MessageParser<ControlFlowContextDef> _parser = new pb::MessageParser<ControlFlowContextDef>(() => new ControlFlowContextDef());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<ControlFlowContextDef> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Tensorflow.ControlFlowReflection.Descriptor.MessageTypes[1]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ControlFlowContextDef() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ControlFlowContextDef(ControlFlowContextDef other) : this() {
+      switch (other.CtxtCase) {
+        case CtxtOneofCase.CondCtxt:
+          CondCtxt = other.CondCtxt.Clone();
+          break;
+        case CtxtOneofCase.WhileCtxt:
+          WhileCtxt = other.WhileCtxt.Clone();
+          break;
+      }
+
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ControlFlowContextDef Clone() {
+      return new ControlFlowContextDef(this);
+    }
+
+    /// <summary>Field number for the "cond_ctxt" field.</summary>
+    public const int CondCtxtFieldNumber = 1;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Tensorflow.CondContextDef CondCtxt {
+      get { return ctxtCase_ == CtxtOneofCase.CondCtxt ? (global::Tensorflow.CondContextDef) ctxt_ : null; }
+      set {
+        ctxt_ = value;
+        ctxtCase_ = value == null ? CtxtOneofCase.None : CtxtOneofCase.CondCtxt;
+      }
+    }
+
+    /// <summary>Field number for the "while_ctxt" field.</summary>
+    public const int WhileCtxtFieldNumber = 2;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Tensorflow.WhileContextDef WhileCtxt {
+      get { return ctxtCase_ == CtxtOneofCase.WhileCtxt ? (global::Tensorflow.WhileContextDef) ctxt_ : null; }
+      set {
+        ctxt_ = value;
+        ctxtCase_ = value == null ? CtxtOneofCase.None : CtxtOneofCase.WhileCtxt;
+      }
+    }
+
+    private object ctxt_;
+    /// <summary>Enum of possible cases for the "ctxt" oneof.</summary>
+    public enum CtxtOneofCase {
+      None = 0,
+      CondCtxt = 1,
+      WhileCtxt = 2,
+    }
+    private CtxtOneofCase ctxtCase_ = CtxtOneofCase.None;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public CtxtOneofCase CtxtCase {
+      get { return ctxtCase_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void ClearCtxt() {
+      ctxtCase_ = CtxtOneofCase.None;
+      ctxt_ = null;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as ControlFlowContextDef);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(ControlFlowContextDef other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(CondCtxt, other.CondCtxt)) return false;
+      if (!object.Equals(WhileCtxt, other.WhileCtxt)) return false;
+      if (CtxtCase != other.CtxtCase) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (ctxtCase_ == CtxtOneofCase.CondCtxt) hash ^= CondCtxt.GetHashCode();
+      if (ctxtCase_ == CtxtOneofCase.WhileCtxt) hash ^= WhileCtxt.GetHashCode();
+      hash ^= (int) ctxtCase_;
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (ctxtCase_ == CtxtOneofCase.CondCtxt) {
+        output.WriteRawTag(10);
+        output.WriteMessage(CondCtxt);
+      }
+      if (ctxtCase_ == CtxtOneofCase.WhileCtxt) {
+        output.WriteRawTag(18);
+        output.WriteMessage(WhileCtxt);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (ctxtCase_ == CtxtOneofCase.CondCtxt) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(CondCtxt);
+      }
+      if (ctxtCase_ == CtxtOneofCase.WhileCtxt) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(WhileCtxt);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(ControlFlowContextDef other) {
+      if (other == null) {
+        return;
+      }
+      switch (other.CtxtCase) {
+        case CtxtOneofCase.CondCtxt:
+          if (CondCtxt == null) {
+            CondCtxt = new global::Tensorflow.CondContextDef();
+          }
+          CondCtxt.MergeFrom(other.CondCtxt);
+          break;
+        case CtxtOneofCase.WhileCtxt:
+          if (WhileCtxt == null) {
+            WhileCtxt = new global::Tensorflow.WhileContextDef();
+          }
+          WhileCtxt.MergeFrom(other.WhileCtxt);
+          break;
+      }
+
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            global::Tensorflow.CondContextDef subBuilder = new global::Tensorflow.CondContextDef();
+            if (ctxtCase_ == CtxtOneofCase.CondCtxt) {
+              subBuilder.MergeFrom(CondCtxt);
+            }
+            input.ReadMessage(subBuilder);
+            CondCtxt = subBuilder;
+            break;
+          }
+          case 18: {
+            global::Tensorflow.WhileContextDef subBuilder = new global::Tensorflow.WhileContextDef();
+            if (ctxtCase_ == CtxtOneofCase.WhileCtxt) {
+              subBuilder.MergeFrom(WhileCtxt);
+            }
+            input.ReadMessage(subBuilder);
+            WhileCtxt = subBuilder;
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  /// <summary>
   /// Protocol buffer representing a CondContext object.
   /// </summary>
   public sealed partial class CondContextDef : pb::IMessage<CondContextDef> {
@@ -214,7 +428,7 @@ namespace Tensorflow {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Tensorflow.ControlFlowReflection.Descriptor.MessageTypes[1]; }
+      get { return global::Tensorflow.ControlFlowReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -236,6 +450,7 @@ namespace Tensorflow {
       pivotName_ = other.pivotName_;
       branch_ = other.branch_;
       ValuesDef = other.valuesDef_ != null ? other.ValuesDef.Clone() : null;
+      nestedContexts_ = other.nestedContexts_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -314,6 +529,19 @@ namespace Tensorflow {
       }
     }
 
+    /// <summary>Field number for the "nested_contexts" field.</summary>
+    public const int NestedContextsFieldNumber = 6;
+    private static readonly pb::FieldCodec<global::Tensorflow.ControlFlowContextDef> _repeated_nestedContexts_codec
+        = pb::FieldCodec.ForMessage(50, global::Tensorflow.ControlFlowContextDef.Parser);
+    private readonly pbc::RepeatedField<global::Tensorflow.ControlFlowContextDef> nestedContexts_ = new pbc::RepeatedField<global::Tensorflow.ControlFlowContextDef>();
+    /// <summary>
+    /// Contexts contained inside this context (e.g. nested conds).
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::Tensorflow.ControlFlowContextDef> NestedContexts {
+      get { return nestedContexts_; }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as CondContextDef);
@@ -332,6 +560,7 @@ namespace Tensorflow {
       if (PivotName != other.PivotName) return false;
       if (Branch != other.Branch) return false;
       if (!object.Equals(ValuesDef, other.ValuesDef)) return false;
+      if(!nestedContexts_.Equals(other.nestedContexts_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -343,6 +572,7 @@ namespace Tensorflow {
       if (PivotName.Length != 0) hash ^= PivotName.GetHashCode();
       if (Branch != 0) hash ^= Branch.GetHashCode();
       if (valuesDef_ != null) hash ^= ValuesDef.GetHashCode();
+      hash ^= nestedContexts_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -376,6 +606,7 @@ namespace Tensorflow {
         output.WriteRawTag(42);
         output.WriteMessage(ValuesDef);
       }
+      nestedContexts_.WriteTo(output, _repeated_nestedContexts_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -399,6 +630,7 @@ namespace Tensorflow {
       if (valuesDef_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(ValuesDef);
       }
+      size += nestedContexts_.CalculateSize(_repeated_nestedContexts_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -428,6 +660,7 @@ namespace Tensorflow {
         }
         ValuesDef.MergeFrom(other.ValuesDef);
       }
+      nestedContexts_.Add(other.nestedContexts_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -462,6 +695,10 @@ namespace Tensorflow {
             input.ReadMessage(valuesDef_);
             break;
           }
+          case 50: {
+            nestedContexts_.AddEntriesFrom(input, _repeated_nestedContexts_codec);
+            break;
+          }
         }
       }
     }
@@ -479,7 +716,7 @@ namespace Tensorflow {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Tensorflow.ControlFlowReflection.Descriptor.MessageTypes[2]; }
+      get { return global::Tensorflow.ControlFlowReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -507,6 +744,7 @@ namespace Tensorflow {
       loopEnterNames_ = other.loopEnterNames_.Clone();
       ValuesDef = other.valuesDef_ != null ? other.ValuesDef.Clone() : null;
       maximumIterationsName_ = other.maximumIterationsName_;
+      nestedContexts_ = other.nestedContexts_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -667,6 +905,19 @@ namespace Tensorflow {
       }
     }
 
+    /// <summary>Field number for the "nested_contexts" field.</summary>
+    public const int NestedContextsFieldNumber = 12;
+    private static readonly pb::FieldCodec<global::Tensorflow.ControlFlowContextDef> _repeated_nestedContexts_codec
+        = pb::FieldCodec.ForMessage(98, global::Tensorflow.ControlFlowContextDef.Parser);
+    private readonly pbc::RepeatedField<global::Tensorflow.ControlFlowContextDef> nestedContexts_ = new pbc::RepeatedField<global::Tensorflow.ControlFlowContextDef>();
+    /// <summary>
+    /// Contexts contained inside this context (e.g. nested whiles).
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::Tensorflow.ControlFlowContextDef> NestedContexts {
+      get { return nestedContexts_; }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as WhileContextDef);
@@ -691,6 +942,7 @@ namespace Tensorflow {
       if(!loopEnterNames_.Equals(other.loopEnterNames_)) return false;
       if (!object.Equals(ValuesDef, other.ValuesDef)) return false;
       if (MaximumIterationsName != other.MaximumIterationsName) return false;
+      if(!nestedContexts_.Equals(other.nestedContexts_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -708,6 +960,7 @@ namespace Tensorflow {
       hash ^= loopEnterNames_.GetHashCode();
       if (valuesDef_ != null) hash ^= ValuesDef.GetHashCode();
       if (MaximumIterationsName.Length != 0) hash ^= MaximumIterationsName.GetHashCode();
+      hash ^= nestedContexts_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -759,6 +1012,7 @@ namespace Tensorflow {
         output.WriteRawTag(90);
         output.WriteString(MaximumIterationsName);
       }
+      nestedContexts_.WriteTo(output, _repeated_nestedContexts_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -796,6 +1050,7 @@ namespace Tensorflow {
       if (MaximumIterationsName.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(MaximumIterationsName);
       }
+      size += nestedContexts_.CalculateSize(_repeated_nestedContexts_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -839,6 +1094,7 @@ namespace Tensorflow {
       if (other.MaximumIterationsName.Length != 0) {
         MaximumIterationsName = other.MaximumIterationsName;
       }
+      nestedContexts_.Add(other.nestedContexts_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -895,6 +1151,10 @@ namespace Tensorflow {
           }
           case 90: {
             MaximumIterationsName = input.ReadString();
+            break;
+          }
+          case 98: {
+            nestedContexts_.AddEntriesFrom(input, _repeated_nestedContexts_codec);
             break;
           }
         }

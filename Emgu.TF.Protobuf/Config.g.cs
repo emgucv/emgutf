@@ -2627,7 +2627,7 @@ namespace Tensorflow {
     public const int ReportTensorAllocationsUponOomFieldNumber = 7;
     private bool reportTensorAllocationsUponOom_;
     /// <summary>
-    /// When enabled, causes tensor alllocation information to be included in
+    /// When enabled, causes tensor allocation information to be included in
     /// the error message when the Run() call fails because the allocator ran
     /// out of memory (OOM).
     ///
