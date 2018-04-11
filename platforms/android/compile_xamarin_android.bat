@@ -63,7 +63,7 @@ call %DEVENV% %BUILD_TYPE% tmp\Solution\Android\Emgu.TF.Android.sln /Project Emg
 GOTO END
 
 :TEST_INPLACE
-call %DEVENV% %BUILD_TYPE% Solution\Android\Emgu.TF.Android.sln
+call %DEVENV% %BUILD_TYPE% Solution\Android\Emgu.TF.Android.sln /Project Emgu.TF.World.Android
 
 
 :END

@@ -1,6 +1,6 @@
 #!/bin/sh
 cd ../../
-cp -r tfextern tensorflow/tensorflow
+#cp -r tfextern tensorflow/tensorflow
 #cp platforms/osx/libtensorflow.sh tensorflow/tensorflow/tools/ci_build/builds/
 
 cd tensorflow
