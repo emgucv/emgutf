@@ -15,10 +15,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinForms.Android", "..\
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Models.Shared", "..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.shproj", "{752279F0-17EF-4EC8-857C-8F5F897AF0E8}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite", "..\..\Emgu.TF.Lite\Emgu.TF.Lite.shproj", "{8F587FB9-BBA6-4C30-9329-8CBAC7020FE0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Lite.World.Android", "..\..\Emgu.TF.World\Emgu.TF.Lite.World.Android.csproj", "{7CE162D0-3729-4782-85A5-CFA7CC962A78}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms\XamarinForms.projitems*{26bdb58d-52d9-4ad1-9205-be5792781a98}*SharedItemsImports = 13
 		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{752279f0-17ef-4ec8-857c-8f5f897af0e8}*SharedItemsImports = 13
+		..\..\Emgu.TF.Lite\Emgu.TF.Lite.projitems*{7ce162d0-3729-4782-85a5-cfa7cc962a78}*SharedItemsImports = 4
+		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{7ce162d0-3729-4782-85a5-cfa7cc962a78}*SharedItemsImports = 4
+		..\..\Emgu.TF.Lite\Emgu.TF.Lite.projitems*{8f587fb9-bba6-4c30-9329-8cbac7020fe0}*SharedItemsImports = 13
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{98561642-5ec3-4244-baf9-6876d9ba5527}*SharedItemsImports = 13
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{b2f6d900-aa34-49d2-98ee-3c9f8dd896f2}*SharedItemsImports = 4
 		..\..\Emgu.TF\Emgu.TF.projitems*{b2f6d900-aa34-49d2-98ee-3c9f8dd896f2}*SharedItemsImports = 4
@@ -127,6 +134,38 @@ Global
 		{ED27FFDC-D1DA-4602-9F0E-AF775FCEC5E8}.Release|x86.ActiveCfg = Release|Any CPU
 		{ED27FFDC-D1DA-4602-9F0E-AF775FCEC5E8}.Release|x86.Build.0 = Release|Any CPU
 		{ED27FFDC-D1DA-4602-9F0E-AF775FCEC5E8}.Release|x86.Deploy.0 = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Ad-Hoc|Any CPU.ActiveCfg = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Ad-Hoc|Any CPU.Build.0 = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Ad-Hoc|ARM.ActiveCfg = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Ad-Hoc|ARM.Build.0 = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Ad-Hoc|x64.ActiveCfg = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Ad-Hoc|x64.Build.0 = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Ad-Hoc|x86.ActiveCfg = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Ad-Hoc|x86.Build.0 = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.AppStore|Any CPU.ActiveCfg = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.AppStore|Any CPU.Build.0 = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.AppStore|ARM.ActiveCfg = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.AppStore|ARM.Build.0 = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.AppStore|x64.ActiveCfg = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.AppStore|x64.Build.0 = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.AppStore|x86.ActiveCfg = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.AppStore|x86.Build.0 = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Debug|ARM.Build.0 = Debug|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Debug|x64.Build.0 = Debug|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Debug|x86.Build.0 = Debug|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Release|ARM.ActiveCfg = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Release|ARM.Build.0 = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Release|x64.ActiveCfg = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Release|x64.Build.0 = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Release|x86.ActiveCfg = Release|Any CPU
+		{7CE162D0-3729-4782-85A5-CFA7CC962A78}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

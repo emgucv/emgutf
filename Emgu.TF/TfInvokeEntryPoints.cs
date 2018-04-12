@@ -18,8 +18,8 @@ namespace Emgu.TF
       public const string ExternLibrary = "@executable_path/../Plugins/emgutf.bundle/Contents/MacOS/libtfextern.dylib";
 #elif (__IOS__ || UNITY_IPHONE) && (!UNITY_EDITOR_WIN)
       public const string ExternLibrary = "__Internal";
-#elif (!__IOS__) && __UNIFIED__
-      public const string ExternLibrary = "libtfextern.dylib";
+//#elif (!__IOS__) && __UNIFIED__
+//      public const string ExternLibrary = "libtfextern.dylib";
 #else
       public const string ExternLibrary = "tfextern";
 #endif
@@ -31,7 +31,6 @@ namespace Emgu.TF
 	  {       
         ExternLibrary
       };
-
-	  
+  
    }
 }
