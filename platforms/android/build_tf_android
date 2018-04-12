@@ -4,6 +4,8 @@ cd tensorflow
 
 bazel build -c opt //tensorflow/tfextern:libtfextern.so \
 --crosstool_top=external:android/crosstool \
+--cxxopt='--std=c++11' \
+--config monolithic \
 --host_crosstool_top=@bazel_tools//tools/cpp:toolchain \
 --cpu=$1 
 cd ..
