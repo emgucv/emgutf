@@ -1,0 +1,14 @@
+#!/bin/sh
+cd ../..
+
+cd tensorflow/
+tensorflow/contrib/lite/build_ios_universal_lib.sh 
+cd ..
+
+mkdir -p lib/ios
+
+#libtool -static -o ../lib/ios/libtfextern.a \
+#tensorflow/contrib/makefile/gen/lib/libtensorflow-core.a \
+#tensorflow/contrib/makefile/gen/protobuf_ios/lib/libprotobuf.a
+
+cp tensorflow/tensorflow/contrib/lite/gen/lib/libtensorflow-lite.a lib/ios/libtfliteextern.a
