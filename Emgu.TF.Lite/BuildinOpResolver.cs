@@ -34,7 +34,10 @@ namespace Emgu.TF.Lite
         protected override void DisposeObject()
         {
             if (IntPtr.Zero != _ptr)
+            {
                 TfLiteInvoke.tfeBuiltinOpResolverRelease(ref _ptr);
+                _opResolverPtr = IntPtr.Zero;
+            }
         }
     }
 

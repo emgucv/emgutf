@@ -5,16 +5,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-//using Emgu.TF;
 using System.IO;
 using System.Diagnostics;
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
 using UnityEngine;
 #endif
 
-namespace Emgu.TF.Models
+namespace Emgu.TF.Lite.Models
 {
-    public class DownloadableModels : Graph
+    public class DownloadableModels 
     {
         public DownloadableModels(String[] modelFiles, String downloadUrl)
         {

@@ -12,7 +12,8 @@ namespace Emgu.TF.XamarinForms
     {
         public AboutPage()
         {
-            String tensorflowVer = TfInvoke.Version;
+            //String tensorFlowVer = TfInvoke.Version;
+            String tensorflowVer = String.Empty;
 
             Content = new StackLayout
             {
