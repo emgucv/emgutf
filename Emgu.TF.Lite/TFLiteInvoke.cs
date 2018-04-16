@@ -18,8 +18,27 @@ namespace Emgu.TF.Lite
         Error = 1
     }
 
+
+
     public static partial class TfLiteInvoke
     {
+#if __IOS__
+      [ObjCRuntime.MonoPInvokeCallback(typeof(TfliteErrorCallback))]
+#endif
+        private static int TfliteErrorHandler(
+           int status,
+           IntPtr errMsg)
+        {
+            String msg = Marshal.PtrToStringAnsi(errMsg);
+            throw new Exception(msg);
+        }
+
+        [UnmanagedFunctionPointer(TFCallingConvention)]
+        public delegate int TfliteErrorCallback(int status, IntPtr errMsg);
+
+        [DllImport(ExternLibrary, CallingConvention = TFCallingConvention, EntryPoint = "cveRedirectError")]
+        public static extern void RedirectError(TfliteErrorCallback errorHandler);
+
         private static readonly bool _libraryLoaded;
 
         /// <summary>
@@ -429,7 +448,14 @@ namespace Emgu.TF.Lite
             modules.RemoveAll(String.IsNullOrEmpty);
 
             _libraryLoaded = DefaultLoadUnmanagedModules(modules.ToArray());
+
+#if !UNITY_IOS
+            //Use the custom error handler
+            RedirectError(TfliteErrorHandlerThrowException);
+#endif
         }
+
+        public static readonly TfliteErrorCallback TfliteErrorHandlerThrowException = (TfliteErrorCallback) TfliteErrorHandler;
 
 
     }
