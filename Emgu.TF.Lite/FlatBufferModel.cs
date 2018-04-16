@@ -32,6 +32,19 @@ namespace Emgu.TF.Lite
             }
         }
 
+        public bool Initialized
+        {
+            get
+            {
+                return TfLiteInvoke.tfeFlatBufferModelInitialized(_ptr);
+            }
+        }
+
+        public bool CheckModelIdentifier()
+        {
+            return TfLiteInvoke.tfeFlatBufferModelCheckModelIdentifier(_ptr);
+        }
+
         /// <summary>
         /// Release all the unmanaged memory associated with this model
         /// </summary>
@@ -54,6 +67,15 @@ namespace Emgu.TF.Lite
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
         internal static extern void tfeFlatBufferModelRelease(ref IntPtr model);
+
+
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [return: MarshalAs(BoolMarshalType)]
+        internal static extern bool tfeFlatBufferModelInitialized(IntPtr model);
+
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [return: MarshalAs(BoolMarshalType)]
+        internal static extern bool tfeFlatBufferModelCheckModelIdentifier(IntPtr model);
 
     }
 }

@@ -19,9 +19,9 @@ namespace Emgu.TF.Lite
             _ptr = TfLiteInvoke.tfeInterpreterBuilderCreate(flatBufferModel, resolver.OpResolverPtr);
         }
 
-        public void Build(Interpreter interpreter)
+        public Status Build(Interpreter interpreter)
         {
-            TfLiteInvoke.tfeInterpreterBuilderBuild(_ptr, interpreter);
+            return TfLiteInvoke.tfeInterpreterBuilderBuild(_ptr, interpreter);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Emgu.TF.Lite
         internal static extern void tfeInterpreterBuilderRelease(ref IntPtr builder);
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
-        internal static extern void tfeInterpreterBuilderBuild(IntPtr builder, IntPtr interpreter);
+        internal static extern Status tfeInterpreterBuilderBuild(IntPtr builder, IntPtr interpreter);
 
     }
 }

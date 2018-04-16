@@ -112,22 +112,26 @@ namespace Emgu.TF.XamarinForms
             String localFileName = DownloadableModels.GetLocalFileName(inceptionGraph._modelFiles[0]);
             System.Diagnostics.Debug.Assert(File.Exists(localFileName), "File doesn't exist");
             FileInfo file = new FileInfo(localFileName);
-             
-            
-            
-            Interpreter interpreter = new Interpreter();
-            FlatBufferModel model = new FlatBufferModel(localFileName);
-            BuildinOpResolver resolver = new BuildinOpResolver();
-            InterpreterBuilder interpreterBuilder = new InterpreterBuilder(model, resolver);
-            interpreterBuilder.Build(interpreter);
 
-            int[] input = interpreter.GetInput();
-            int[] output = interpreter.GetOutput();
-            String inputName = interpreter.GetInputName(input[0]);
-            String outputName = interpreter.GetOutputName(output[0]);
 
-            interpreter.AllocateTensors();
 
+            using (Interpreter interpreter = new Interpreter())
+            using (FlatBufferModel model = new FlatBufferModel(localFileName))
+            using (BuildinOpResolver resolver = new BuildinOpResolver())
+            using (InterpreterBuilder interpreterBuilder = new InterpreterBuilder(model, resolver))
+            {
+
+                Status buildStatus = interpreterBuilder.Build(interpreter);
+
+                bool check = model.CheckModelIdentifier();
+
+                int[] input = interpreter.GetInput();
+                int[] output = interpreter.GetOutput();
+                String inputName = interpreter.GetInputName(input[0]);
+                String outputName = interpreter.GetOutputName(output[0]);
+
+                interpreter.AllocateTensors();
+            }
         }
 
         private void OnButtonClicked(Object sender, EventArgs args)

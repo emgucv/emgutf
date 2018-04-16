@@ -36,7 +36,7 @@ namespace Emgu.TF.Lite
         [UnmanagedFunctionPointer(TFCallingConvention)]
         public delegate int TfliteErrorCallback(int status, IntPtr errMsg);
 
-        [DllImport(ExternLibrary, CallingConvention = TFCallingConvention, EntryPoint = "cveRedirectError")]
+        [DllImport(ExternLibrary, CallingConvention = TFCallingConvention, EntryPoint = "tfeRedirectError")]
         public static extern void RedirectError(TfliteErrorCallback errorHandler);
 
         private static readonly bool _libraryLoaded;
