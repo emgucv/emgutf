@@ -13,10 +13,15 @@ namespace Emgu.TF.Lite
     
     public class Interpreter : Emgu.TF.Util.UnmanagedObject
     {
-        
-        public Interpreter()
+        /*
+        private Interpreter()
         {
             _ptr = TfLiteInvoke.tfeInterpreterCreate();
+        }*/
+
+        public Interpreter(FlatBufferModel flatBufferModel, IOpResolver resolver)
+        {
+            _ptr = TfLiteInvoke.tfeInterpreterCreateFromModel(flatBufferModel.Ptr, resolver.OpResolverPtr);
         }
 
         public Status AllocateTensors()
@@ -101,6 +106,9 @@ namespace Emgu.TF.Lite
     {
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
         internal static extern IntPtr tfeInterpreterCreate();
+
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        internal static extern IntPtr tfeInterpreterCreateFromModel(IntPtr model, IntPtr opResolver);
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
         internal static extern Status tfeInterpreterAllocateTensors(IntPtr interpreter);

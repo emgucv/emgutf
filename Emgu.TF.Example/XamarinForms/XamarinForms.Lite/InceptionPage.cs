@@ -113,15 +113,13 @@ namespace Emgu.TF.XamarinForms
             System.Diagnostics.Debug.Assert(File.Exists(localFileName), "File doesn't exist");
             FileInfo file = new FileInfo(localFileName);
 
-
-
-            using (Interpreter interpreter = new Interpreter())
             using (FlatBufferModel model = new FlatBufferModel(localFileName))
             using (BuildinOpResolver resolver = new BuildinOpResolver())
-            using (InterpreterBuilder interpreterBuilder = new InterpreterBuilder(model, resolver))
+            using (Interpreter interpreter = new Interpreter(model, resolver))
+            //using (InterpreterBuilder interpreterBuilder = new InterpreterBuilder(model, resolver))
             {
 
-                Status buildStatus = interpreterBuilder.Build(interpreter);
+                //Status buildStatus = interpreterBuilder.Build(interpreter);
 
                 bool check = model.CheckModelIdentifier();
 
