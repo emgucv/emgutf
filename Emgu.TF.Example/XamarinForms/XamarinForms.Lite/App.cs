@@ -16,12 +16,15 @@ namespace Emgu.TF.XamarinForms
         public App()
         {
             Emgu.TF.Lite.TfLiteInvoke.CheckLibraryLoaded();
+
+            /*
             Button multiboxDetectionButton = new Button();
             multiboxDetectionButton.Text = "People Detection";
-            Button inceptionButton = new Button();
-            inceptionButton.Text = "Object recognition";
-            Button stylizeButton = new Button();
-            stylizeButton.Text = "Stylize";
+            */
+            Button mobilenetButton = new Button();
+            mobilenetButton.Text = "Object recognition";
+            Button smartReplyButton = new Button();
+            smartReplyButton.Text = "Smart Reply";
 
             // The root page of your application
             ContentPage page =
@@ -32,9 +35,9 @@ namespace Emgu.TF.XamarinForms
                        VerticalOptions = LayoutOptions.Start,
                        Children =
                      {
-                       multiboxDetectionButton,
-                       inceptionButton,
-                       stylizeButton
+                           mobilenetButton,
+                           smartReplyButton
+                       
                      }
                    }
                };
@@ -59,19 +62,20 @@ namespace Emgu.TF.XamarinForms
             );
             page.ToolbarItems.Add(aboutItem);
 
+            /*
             multiboxDetectionButton.Clicked += (sender, args) =>
             {
                 MainPage.Navigation.PushAsync(new MultiboxDetectionPage());
+            };*/
+
+            mobilenetButton.Clicked += (sender, args) =>
+            {
+                MainPage.Navigation.PushAsync(new MobilenetPage());
             };
 
-            inceptionButton.Clicked += (sender, args) =>
+            smartReplyButton.Clicked += (sender, args) =>
             {
-                MainPage.Navigation.PushAsync(new InceptionPage());
-            };
-
-            stylizeButton.Clicked += (sender, args) =>
-            {
-                MainPage.Navigation.PushAsync(new StylizePage());
+                MainPage.Navigation.PushAsync(new SmartReplyPage());
             };
         }
 

@@ -15,9 +15,8 @@
       <DependentUpon>ButtonTextImagePage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)InceptionPage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)MultiboxDetectionPage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)StylizePage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MobilenetPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SmartReply.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)ButtonTextImagePage.xaml">

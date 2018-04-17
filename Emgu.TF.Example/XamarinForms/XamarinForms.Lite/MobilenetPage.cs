@@ -31,13 +31,13 @@ using CoreGraphics;
 
 namespace Emgu.TF.XamarinForms
 {
-    public class InceptionPage : ButtonTextImagePage
+    public class MobilenetPage : ButtonTextImagePage
     {
         private Mobilenet _model;
 
         private string[] _image = null;
 
-        public InceptionPage()
+        public MobilenetPage()
            : base()
         {
             

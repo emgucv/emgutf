@@ -20,60 +20,109 @@ using AppKit;
 using CoreGraphics;
 #endif
 using Emgu.TF.Lite;
-//using Emgu.TF.Models;
+using Emgu.TF.Lite.Models;
 
+using Xamarin.Forms;
 
 namespace Emgu.TF.XamarinForms
 {
-    public class StylizePage : ButtonTextImagePage
+    public class SmartReplyPage : ContentPage
     {
-        public StylizePage()
+        private Entry _entry;
+        private Label _smartReplyLabel;
+        private SmartReply _model;
+
+        public SmartReplyPage()
             : base()
         {
-            /*
-            var button = this.GetButton();
-            button.Text = "Stylizing image";
-            button.Clicked += OnButtonClicked;
 
-            OnImagesLoaded += async (sender, image) =>
+            _entry = new Entry();
+            _entry.Placeholder = "Enter text here";
+            _smartReplyLabel = new Label();
+
+            _entry.TextChanged += Entry_TextChanged;
+            Content = new StackLayout
             {
-                SetMessage("Please wait...");
-                SetImage();
+                VerticalOptions = LayoutOptions.Start,
+                Children =
+                     {
+                           _entry,
+                           _smartReplyLabel
 
-                Task<Tuple<Tensor, string, long>> t = new Task<Tuple<Tensor, string, long>>(
-                    () =>
-                    {
-                        try
-                        {
-                            SetMessage("Please wait while we download the Stylize Model from internet.");
-                            StylizeGraph stylizeGraph = new StylizeGraph();
-                            SetMessage("Please wait...");
+                     }
+            };
 
-                            Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile(image[0], -1, -1, 0f, 1.0f/255f);
-                            Tensor stylizedImage = stylizeGraph.Stylize(imageTensor, 0);
-                            return new Tuple<Tensor, string, long>(stylizedImage, null, 0);
+            Task t = new Task(
+            () =>
+            {
+                try
+                {
+                    SetMessage("Please wait while we download the Mobilenet Model from internet.");
+                    _model = new SmartReply();
+                    _model.Init(onDownloadProgressChanged, onDownloadCompleted);
+                }
+                catch (Exception e)
+                {
+                    String msg = e.Message.Replace(System.Environment.NewLine, " ");
+                    SetMessage(msg);
+                }
 
-						}
-                        catch (Exception e)
-                        {
-                            String msg = e.Message.Replace(System.Environment.NewLine, " ");
-                            SetMessage(msg);
-                            return new Tuple<Tensor, string, long>(null, msg, 0);
-                        }
-                    });
-                t.Start();
-
-				var result = await t;
-                SetImage( Emgu.TF.Models.ImageIO.TensorToJpeg(t.Result.Item1, 255.0f) );
-				GetLabel().Text = t.Result.Item2;
-                
-            }; */
+            });
+            t.Start();
         }
 
-        private void OnButtonClicked(Object sender, EventArgs args)
+        private void onDownloadProgressChanged(object sender, System.Net.DownloadProgressChangedEventArgs e)
         {
-            LoadImages(new string[] { "surfers.jpg" });
+            SetMessage(String.Format("{0} of {1} downloaded ({2}%)", e.BytesReceived, e.TotalBytesToReceive, e.ProgressPercentage));
         }
 
+        private Interpreter _interpreter = null;
+        private Tensor _inputTensor = null;
+        private Tensor _outputTensor = null;
+
+        private void onDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            String localFileName = DownloadableModels.GetLocalFileName(_model._modelFiles[0]);
+
+            using (FlatBufferModel model = new FlatBufferModel(localFileName))
+            using (BuildinOpResolver resolver = new BuildinOpResolver())
+            {
+                _interpreter = new Interpreter(model, resolver);
+                bool check = model.CheckModelIdentifier();
+                Status allocateTensorStatus = _interpreter.AllocateTensors();
+
+                int[] input = _interpreter.GetInput();
+                int[] output = _interpreter.GetOutput();
+
+                String inputName = _interpreter.GetInputName(input[0]);
+                String outputName = _interpreter.GetOutputName(output[0]);
+
+                _inputTensor = _interpreter.GetTensor(input[0]);
+                _outputTensor = _interpreter.GetTensor(output[0]);
+
+            }
+        }
+
+        private void SetMessage(String msg)
+        {
+            _smartReplyLabel.Text = msg;
+        }
+
+        private void Entry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            String entryText = _entry.Text;
+                if (_interpreter != null)
+                {
+                    using (DynamicBuffer buffer = new DynamicBuffer())
+                    {
+                        buffer.AddString(entryText);
+                        buffer.WriteToTensor(_inputTensor);
+                        _interpreter.Invoke();
+                        var result = _outputTensor.GetData();
+
+                        SetMessage(String.Format("{0}", entryText.Length));
+                    }
+                }
+        }
     }
 }

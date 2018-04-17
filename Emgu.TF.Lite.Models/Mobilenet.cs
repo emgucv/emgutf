@@ -5,24 +5,24 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Emgu.TF.Lite;
+using Emgu.TF;
 using System.IO;
 
 namespace Emgu.TF.Lite.Models
 {
     
-    public class SmartReply : DownloadableModels
+    public class Mobilenet : DownloadableModels
     {
         private String _inputLayer;
         private String _outputLayer;
 
-        public SmartReply(            
+        public Mobilenet(            
             String[] modelFiles = null,
-            String downloadUrl = "https://github.com/emgucv/models/raw/master/smartreply_1.0_2017_11_01/",
+            String downloadUrl = "https://github.com/emgucv/models/raw/master/mobilenet_v1_1.0_224_float_2017_11_08/",
             String inputLayer = "input", 
             String outputLayer = "output")
             : base(
-                modelFiles ?? new string[] { "smartreply.tflite", "backoff_response.txt" },
+                modelFiles ?? new string[] { "mobilenet_v1_1.0_224.tflite", "labels.txt" },
                 downloadUrl)
         {
             _inputLayer = inputLayer;
