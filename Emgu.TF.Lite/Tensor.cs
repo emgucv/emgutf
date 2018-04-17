@@ -11,7 +11,7 @@ using Emgu.TF.Util;
 
 namespace Emgu.TF.Lite
 {
-    public enum Type
+    public enum DataType
     {
         NoType = 0,
         Float32 = 1,
@@ -51,7 +51,7 @@ namespace Emgu.TF.Lite
         /// The data type specification for data stored in `data`. This affects
         /// what member of `data` union should be used.
         /// </summary>
-        public Type Type
+        public DataType Type
         {
             get
             {
@@ -62,7 +62,7 @@ namespace Emgu.TF.Lite
         /// <summary>
         /// A raw data pointers. 
         /// </summary>
-        public IntPtr Data
+        public IntPtr DataPointer
         {
             get
             {
@@ -136,6 +136,29 @@ namespace Emgu.TF.Lite
         }
 
         /// <summary>
+        /// Get a copy of the tensor data as a managed array
+        /// </summary>
+        /// <returns>A copy of the tensor data as a managed array</returns>
+        public Array GetData()
+        {
+            DataType type = this.Type;
+            Type t = TfLiteInvoke.GetNativeType(type);
+            if (t == null)
+                return null;
+
+            int byteSize = ByteSize;
+            Array array;
+
+            int len = byteSize / Marshal.SizeOf(t);
+            array = Array.CreateInstance(t, len);
+
+            GCHandle handle = GCHandle.Alloc(array, GCHandleType.Pinned);
+            TfLiteInvoke.tfeMemcpy(handle.AddrOfPinnedObject(), DataPointer, byteSize);
+            handle.Free();
+            return array;
+        }
+
+        /// <summary>
         /// Release all the unmanaged memory associated with this model
         /// </summary>
         protected override void DisposeObject()
@@ -151,7 +174,7 @@ namespace Emgu.TF.Lite
     public static partial class TfLiteInvoke
     {
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
-        internal static extern Type tfeTensorGetType(IntPtr tensor);
+        internal static extern DataType tfeTensorGetType(IntPtr tensor);
 
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
@@ -169,5 +192,29 @@ namespace Emgu.TF.Lite
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
         internal static extern IntPtr tfeTensorGetName(IntPtr tensor);
 
+
+        /// <summary>
+        /// Get the equivalent native type from Tensorflow DataType
+        /// </summary>
+        /// <param name="dataType">The tensorflow DataType</param>
+        /// <returns>The equivalent native type</returns>
+        public static Type GetNativeType(DataType dataType)
+        {
+            switch (dataType)
+            {
+                case DataType.Float32:
+                    return typeof(float);
+                case DataType.Int32:
+                    return typeof(int);
+                case DataType.UInt8:
+                    return typeof(byte);
+                case DataType.Int64:
+                    return typeof(Int64);
+                case DataType.String:
+                    return typeof(Byte);
+                default:
+                    return null;
+            }
+        }
     }
 }

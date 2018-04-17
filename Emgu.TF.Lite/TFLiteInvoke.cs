@@ -439,6 +439,7 @@ namespace Emgu.TF.Lite
 
         public static readonly TfliteErrorCallback TfliteErrorHandlerThrowException = (TfliteErrorCallback)TfliteErrorHandler;
 
-
+        [DllImport(ExternLibrary, CallingConvention = TFCallingConvention)]
+        internal static extern void tfeMemcpy(IntPtr dst, IntPtr src, int length);
     }
 }

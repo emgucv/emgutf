@@ -33,7 +33,7 @@ namespace Emgu.TF.XamarinForms
 {
     public class InceptionPage : ButtonTextImagePage
     {
-        private Inception inceptionGraph;
+        private Mobilenet _model;
 
         private string[] _image = null;
 
@@ -56,8 +56,8 @@ namespace Emgu.TF.XamarinForms
                         try
                         {
                             SetMessage("Please wait while we download the Inception Model from internet.");
-                            inceptionGraph = new Inception();
-                            inceptionGraph.Init(onDownloadProgressChanged, onDownloadCompleted);
+                            _model = new Mobilenet();
+                            _model.Init(onDownloadProgressChanged, onDownloadCompleted);
                             SetMessage("Please wait...");
 
                             
@@ -113,7 +113,7 @@ namespace Emgu.TF.XamarinForms
 
         private void onDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-            String localFileName = DownloadableModels.GetLocalFileName(inceptionGraph._modelFiles[0]);
+            String localFileName = DownloadableModels.GetLocalFileName(_model._modelFiles[0]);
             System.Diagnostics.Debug.Assert(File.Exists(localFileName), "File doesn't exist");
             FileInfo file = new FileInfo(localFileName);
 
@@ -134,13 +134,14 @@ namespace Emgu.TF.XamarinForms
 
                 Status allocateTensorStatus = interpreter.AllocateTensors();
 
-                //IntPtr inputPtr = interpreter.GetInputTensorPtr(0);
                 Tensor inputTensor = interpreter.GetTensor(input[0]);
-                Emgu.TF.Lite.Models.ImageIO.ReadImageFileToTensor(_image[0], inputTensor.Data, 224, 224, 128.0f, 1.0f / 128.0f);
-
-                interpreter.Invoke();
                 Tensor outputTensor = interpreter.GetTensor(output[0]);
 
+                Emgu.TF.Lite.Models.ImageIO.ReadImageFileToTensor(_image[0], inputTensor.DataPointer, 224, 224, 128.0f, 1.0f / 128.0f);
+
+                interpreter.Invoke();
+                float probability = outputTensor.GetData() as float[];
+                string[] labels = _model.GetLabels();
             }
         }
 
