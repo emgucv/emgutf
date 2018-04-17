@@ -35,6 +35,8 @@ namespace Emgu.TF.XamarinForms
     {
         private Inception inceptionGraph;
 
+        private string[] _image = null;
+
         public InceptionPage()
            : base()
         {
@@ -47,7 +49,7 @@ namespace Emgu.TF.XamarinForms
             {
                 SetMessage("Please wait...");
                 SetImage();
-
+                _image = image;
                 Task<Tuple<string, string, long>> t = new Task<Tuple<string, string, long>>(
                     () =>
                     {
@@ -57,6 +59,8 @@ namespace Emgu.TF.XamarinForms
                             inceptionGraph = new Inception();
                             inceptionGraph.Init(onDownloadProgressChanged, onDownloadCompleted);
                             SetMessage("Please wait...");
+
+                            
                             /*
                             Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
                             Stopwatch watch = Stopwatch.StartNew();
@@ -118,7 +122,7 @@ namespace Emgu.TF.XamarinForms
             using (Interpreter interpreter = new Interpreter(model, resolver))
             //using (InterpreterBuilder interpreterBuilder = new InterpreterBuilder(model, resolver))
             {
-
+                
                 //Status buildStatus = interpreterBuilder.Build(interpreter);
 
                 bool check = model.CheckModelIdentifier();
@@ -128,7 +132,15 @@ namespace Emgu.TF.XamarinForms
                 String inputName = interpreter.GetInputName(input[0]);
                 String outputName = interpreter.GetOutputName(output[0]);
 
-                interpreter.AllocateTensors();
+                Status allocateTensorStatus = interpreter.AllocateTensors();
+
+                //IntPtr inputPtr = interpreter.GetInputTensorPtr(0);
+                Tensor inputTensor = interpreter.GetTensor(input[0]);
+                Emgu.TF.Lite.Models.ImageIO.ReadImageFileToTensor(_image[0], inputTensor.Data, 224, 224, 128.0f, 1.0f / 128.0f);
+
+                interpreter.Invoke();
+                Tensor outputTensor = interpreter.GetTensor(output[0]);
+
             }
         }
 

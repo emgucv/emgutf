@@ -22,9 +22,10 @@ using CoreGraphics;
 
 namespace Emgu.TF.Lite.Models
 {
-    /*
+    
     public class ImageIO
     {
+        /*
         /// <summary>
         /// Encode the tensor to JPEG image
         /// </summary>
@@ -344,8 +345,9 @@ namespace Emgu.TF.Lite.Models
             throw new NotImplementedException("Not Implemented");
 #endif
         }
+        */
 
-        public static Tensor ReadTensorFromImageFile(String fileName, int inputHeight = -1, int inputWidth = -1, float inputMean = 0.0f, float scale = 1.0f, Status status = null)
+        public static void ReadImageFileToTensor(String fileName, IntPtr dest, int inputHeight = -1, int inputWidth = -1, float inputMean = 0.0f, float scale = 1.0f)
         {
 #if __ANDROID__
             Android.Graphics.Bitmap bmp = BitmapFactory.DecodeFile(fileName);
@@ -367,10 +369,8 @@ namespace Emgu.TF.Lite.Models
                 floatValues[i * 3 + 2] = ((val & 0xFF) - inputMean) * scale;
             }
 
-            
-            Tensor t =  new Tensor(DataType.Float, new int[] {1, bmp.Height, bmp.Width, 3});
-            System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, t.DataPointer, floatValues.Length);
-            return t;
+            System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
+
 #elif __IOS__
             UIImage image = new UIImage("surfers.jpg");
 			if (inputHeight > 0 || inputWidth > 0)
@@ -455,6 +455,6 @@ namespace Emgu.TF.Lite.Models
             }
 #endif
         }
-#endif
-    }*/
+//#endif
+    }
 }

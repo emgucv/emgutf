@@ -18,8 +18,6 @@ namespace Emgu.TF.Lite
         Error = 1
     }
 
-
-
     public static partial class TfLiteInvoke
     {
 #if __IOS__
@@ -49,22 +47,6 @@ namespace Emgu.TF.Lite
         {
             return _libraryLoaded;
         }
-
-        /*
-        private static Status _defaultStatus = null;
-
-        
-        public static Status DefaultStatus
-        {
-            get
-            {
-                if (_defaultStatus == null)
-                {
-                    _defaultStatus = new Status();
-                }
-                return _defaultStatus;
-            }
-        }*/
 
         /// <summary>
         /// The Tensorflow native api calling convention
@@ -395,35 +377,35 @@ namespace Emgu.TF.Lite
             bool libraryLoaded = true;
 #if __ANDROID__ || (UNITY_ANDROID && !UNITY_EDITOR)
 
-         System.Reflection.Assembly asm = System.Reflection.Assembly.GetExecutingAssembly();
-         FileInfo file = new FileInfo(asm.Location);
-         DirectoryInfo directory = file.Directory;
+            System.Reflection.Assembly asm = System.Reflection.Assembly.GetExecutingAssembly();
+            FileInfo file = new FileInfo(asm.Location);
+            DirectoryInfo directory = file.Directory;
 
 #if (UNITY_ANDROID && !UNITY_EDITOR)
          UnityEngine.AndroidJavaObject jo = new UnityEngine.AndroidJavaObject("java.lang.System");
 #endif
-         foreach (String module in modules)
-         {
-            //IntPtr handle = Emgu.TF.Util.Toolbox.LoadLibrary(module);
-            //Debug.WriteLine(string.Format(handle == IntPtr.Zero ? "Failed to load {0}." : "Loaded {0}.", module));
-            try
+            foreach (String module in modules)
             {
+                //IntPtr handle = Emgu.TF.Util.Toolbox.LoadLibrary(module);
+                //Debug.WriteLine(string.Format(handle == IntPtr.Zero ? "Failed to load {0}." : "Loaded {0}.", module));
+                try
+                {
 
-               Console.WriteLine(string.Format("Trying to load {0}.", module));
+                    Console.WriteLine(string.Format("Trying to load {0}.", module));
 #if __ANDROID__
-               Java.Lang.JavaSystem.LoadLibrary(module);
+                    Java.Lang.JavaSystem.LoadLibrary(module);
 #else //(UNITY_ANDROID && !UNITY_EDITOR)
 
                jo.CallStatic("loadLibrary", module); 
 #endif
-               Console.WriteLine(string.Format("Loaded {0}.", module));
+                    Console.WriteLine(string.Format("Loaded {0}.", module));
+                }
+                catch (Exception e)
+                {
+                    libraryLoaded = false;
+                    Console.WriteLine(String.Format("Failed to load {0}: {1}", module, e.Message));
+                }
             }
-            catch (Exception e)
-            {
-               libraryLoaded = false;
-               Console.WriteLine(String.Format("Failed to load {0}: {1}", module, e.Message));
-            }
-         }
 #elif __IOS__ || UNITY_IOS || NETFX_CORE
 #else
             if (Emgu.TF.Util.Platform.OperationSystem != Emgu.TF.Util.TypeEnum.OS.MacOSX)
@@ -455,7 +437,7 @@ namespace Emgu.TF.Lite
 #endif
         }
 
-        public static readonly TfliteErrorCallback TfliteErrorHandlerThrowException = (TfliteErrorCallback) TfliteErrorHandler;
+        public static readonly TfliteErrorCallback TfliteErrorHandlerThrowException = (TfliteErrorCallback)TfliteErrorHandler;
 
 
     }

@@ -34,6 +34,7 @@ namespace Emgu.TF.Lite
             return TfLiteInvoke.tfeInterpreterInvoke(_ptr);
         }
 
+        /*
         public IntPtr GetInputTensorPtr(int index)
         {
             return TfLiteInvoke.tfeInterpreterInputTensor(_ptr, index);
@@ -42,7 +43,7 @@ namespace Emgu.TF.Lite
         public IntPtr GetOutputTensorPtr(int index)
         {
             return TfLiteInvoke.tfeInterpreterOuputTensor(_ptr, index);
-        }
+        }*/
 
         public int TensorSize
         {
@@ -58,6 +59,11 @@ namespace Emgu.TF.Lite
             {
                 return TfLiteInvoke.tfeInterpreterNodesSize(_ptr);
             }
+        }
+
+        public Tensor GetTensor(int index)
+        {
+            return new Tensor(TfLiteInvoke.tfeInterpreterGetTensor(_ptr, index), false);
         }
 
         public int[] GetInput()
@@ -116,11 +122,16 @@ namespace Emgu.TF.Lite
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
         internal static extern Status tfeInterpreterInvoke(IntPtr interpreter);
 
+        /*
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
         internal static extern IntPtr tfeInterpreterInputTensor(IntPtr interpreter, int index);
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
         internal static extern IntPtr tfeInterpreterOuputTensor(IntPtr interpreter, int index);
+        */
+
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        internal static extern IntPtr tfeInterpreterGetTensor(IntPtr interpreter, int index);
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
         internal static extern int tfeInterpreterTensorSize(IntPtr interpreter);
