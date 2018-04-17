@@ -107,25 +107,38 @@ namespace Emgu.TF.XamarinForms
 
         public void SetImage(String fileName)
         {
-            var imageSource = new FileImageSource();
-            imageSource.File = fileName;
-            this.DisplayImage.Source = imageSource;
+            if (!File.Exists(fileName))
+            {
+                throw new Exception(String.Format("File '{0}' do not exist.", fileName));
+            }
+
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(
+                () =>
+                {
+                    var imageSource = new FileImageSource();
+                    imageSource.File = fileName;
+                    this.DisplayImage.Source = imageSource;
+                });
         }
 
         public void SetImage(byte[] image = null, int widthRequest = -1, int heightRequest=-1)
         {
-            if (image == null)
-            {
-                this.DisplayImage.Source = null;
-                return;
-            }
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(
+                () =>
+                {
+                    if (image == null)
+                    {
+                        this.DisplayImage.Source = null;
+                        return;
+                    }
 
-            this.DisplayImage.Source = ImageSource.FromStream(() => new MemoryStream(image));
+                    this.DisplayImage.Source = ImageSource.FromStream(() => new MemoryStream(image));
 
-            if (widthRequest > 0)
-                this.DisplayImage.WidthRequest = widthRequest;
-            if (heightRequest > 0)
-                this.DisplayImage.HeightRequest = heightRequest;
+                    if (widthRequest > 0)
+                        this.DisplayImage.WidthRequest = widthRequest;
+                    if (heightRequest > 0)
+                        this.DisplayImage.HeightRequest = heightRequest;
+                });
         }
 
         public Label GetLabel()

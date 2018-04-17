@@ -55,10 +55,10 @@ namespace Emgu.TF.XamarinForms
                     {
                         try
                         {
-                            SetMessage("Please wait while we download the Inception Model from internet.");
+                            SetMessage("Please wait while we download the Mobilenet Model from internet.");
                             _model = new Mobilenet();
                             _model.Init(onDownloadProgressChanged, onDownloadCompleted);
-                            SetMessage("Please wait...");
+                            //SetMessage("Please wait...");
 
                             
                             /*
@@ -97,12 +97,6 @@ namespace Emgu.TF.XamarinForms
                     });
                 t.Start();
 
-#if !__IOS__
-                var result = await t;
-                SetImage(t.Result.Item1);
-                GetLabel().Text = t.Result.Item2;
-#endif
-
             };
         }
 
@@ -120,11 +114,8 @@ namespace Emgu.TF.XamarinForms
             using (FlatBufferModel model = new FlatBufferModel(localFileName))
             using (BuildinOpResolver resolver = new BuildinOpResolver())
             using (Interpreter interpreter = new Interpreter(model, resolver))
-            //using (InterpreterBuilder interpreterBuilder = new InterpreterBuilder(model, resolver))
             {
                 
-                //Status buildStatus = interpreterBuilder.Build(interpreter);
-
                 bool check = model.CheckModelIdentifier();
 
                 int[] input = interpreter.GetInput();
@@ -140,8 +131,29 @@ namespace Emgu.TF.XamarinForms
                 Emgu.TF.Lite.Models.ImageIO.ReadImageFileToTensor(_image[0], inputTensor.DataPointer, 224, 224, 128.0f, 1.0f / 128.0f);
 
                 interpreter.Invoke();
-                float probability = outputTensor.GetData() as float[];
-                string[] labels = _model.GetLabels();
+                float[] probability = outputTensor.GetData() as float[];
+                string[] labels = _model.Labels;
+
+                String resStr = String.Empty;
+                if (probability != null)
+                {
+                    float maxVal = 0;
+                    int maxIdx = 0;
+                    for (int i = 0; i < probability.Length; i++)
+                    {
+                        if (probability[i] > maxVal)
+                        {
+                            maxVal = probability[i];
+                            maxIdx = i;
+                        }
+                    }
+                    resStr = String.Format("Object is {0} with {1}% probability.", labels[maxIdx], maxVal * 100);
+                }
+                //return new Tuple<string, string, long>(_image[0], resStr, 0);
+
+                SetImage(_image[0]);
+                SetMessage(resStr);
+                
             }
         }
 

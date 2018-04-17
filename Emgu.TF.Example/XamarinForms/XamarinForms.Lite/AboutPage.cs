@@ -27,9 +27,9 @@ namespace Emgu.TF.XamarinForms
                             Html = String.Format(
                             @"<html>
                     <body>
-                    <H1> Emgu TF Examples </H1>
-                    <H3> Tensorflow version: {0} </H3>
-                    <H3> Tensorflow  <a href=https://github.com/tensorflow/tensorflow/blob/master/LICENSE > license</a> </H3>
+                    <H1> Emgu TF Lite Examples </H1>
+                    <H3> Tensorflow Lite version: {0} </H3>
+                    <H3> Tensorflow Lite <a href=https://github.com/tensorflow/tensorflow/blob/master/LICENSE > license</a> </H3>
                     <H3><a href=http://www.emgu.com/wiki/index.php/Emgu_TF >Visit our website</a> <br/><br/><H3>
                     <H3><a href=mailto:support@emgu.com>Email Support</a> <br/><br/><H3>"
                             + @"
