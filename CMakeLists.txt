@@ -439,7 +439,7 @@ IF(HAVE_ANDROID)
     DESTINATION Solution
     COMPONENT emgutf_source
     FILES_MATCHING 
-    PATTERN "*.sln"
+    PATTERN "Emgu.TF.Android.sln"
     PATTERN ".git" EXCLUDE
     PATTERN "bin" EXCLUDE
     )

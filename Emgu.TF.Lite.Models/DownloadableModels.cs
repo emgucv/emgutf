@@ -21,14 +21,24 @@ namespace Emgu.TF.Lite.Models
             _downloadUrl = downloadUrl;
         }
 
+        public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
+        public event System.ComponentModel.AsyncCompletedEventHandler OnDownloadCompleted;
         public String[] _modelFiles;
         public String _downloadUrl;
 
-        public void Download(int retry = 1,
+        public void Download(int retry = 1)
+        {
+            Download( _modelFiles, _downloadUrl, retry, this.OnDownloadProgressChanged, this.OnDownloadCompleted);
+        }
+
+        private static void Download(
+            String[] fileNames,
+            String downloadUrl,
+            int retry = 1,
             System.Net.DownloadProgressChangedEventHandler onDownloadProgressChanged = null,
             System.ComponentModel.AsyncCompletedEventHandler onDownloadFileCompleted = null)
         {
-            DownloadHelper(_modelFiles, _downloadUrl, retry, onDownloadProgressChanged, onDownloadFileCompleted);
+            DownloadHelper(fileNames, downloadUrl, retry, onDownloadProgressChanged, onDownloadFileCompleted);
         }
 
         private static void DownloadHelper(
@@ -57,11 +67,6 @@ namespace Emgu.TF.Lite.Models
                     }
                     );
             }
-            /*
-            foreach (var fileName in _modelFiles)
-            {
-                Download(fileName, retry, onDownloadProgressChanged, onDownloadFileCompleted);
-            }*/
         }
 
 #if __ANDROID__

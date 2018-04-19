@@ -18,21 +18,19 @@ namespace Emgu.TF.XamarinForms
         public ButtonTextImagePage()
         {
             InitializeComponent();
-
         }
-
 
         public virtual async void LoadImages(String[] imageNames, String[] labels = null)
         {
-#if __ANDROID__ || __IOS__			
-			await CrossMedia.Current.Initialize();
-#endif			
+#if __ANDROID__ || __IOS__
+            await CrossMedia.Current.Initialize();
+#endif
 
 #if (__MACOS__) //Xamarin Mac
             //use default images
             InvokeOnImagesLoaded(imageNames);
 #else
-            
+
             String[] mats = new String[imageNames.Length];
             for (int i = 0; i < mats.Length; i++)
             {
@@ -49,7 +47,8 @@ namespace Emgu.TF.XamarinForms
                 {
                     action = await DisplayActionSheet(pickImgString, "Cancel", null, "Default", "Photo Library",
                         "Camera");
-                } else if (havePickImgOption)
+                }
+                else if (havePickImgOption)
                 {
                     action = await DisplayActionSheet(pickImgString, "Cancel", null, "Default", "Photo Library");
                 }
@@ -57,7 +56,7 @@ namespace Emgu.TF.XamarinForms
                 {
                     action = "Default";
                 }
-                
+
 
                 if (action.Equals("Default"))
                 {
@@ -107,25 +106,33 @@ namespace Emgu.TF.XamarinForms
 
         public void SetImage(String fileName)
         {
-            var imageSource = new FileImageSource();
-            imageSource.File = fileName;
-            this.DisplayImage.Source = imageSource;
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(
+               () =>
+               {
+                   var imageSource = new FileImageSource();
+                   imageSource.File = fileName;
+                   this.DisplayImage.Source = imageSource;
+               });
         }
 
-        public void SetImage(byte[] image = null, int widthRequest = -1, int heightRequest=-1)
+        public void SetImage(byte[] image = null, int widthRequest = -1, int heightRequest = -1)
         {
-            if (image == null)
-            {
-                this.DisplayImage.Source = null;
-                return;
-            }
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(
+               () =>
+               {
+                   if (image == null)
+                   {
+                       this.DisplayImage.Source = null;
+                       return;
+                   }
 
-            this.DisplayImage.Source = ImageSource.FromStream(() => new MemoryStream(image));
+                   this.DisplayImage.Source = ImageSource.FromStream(() => new MemoryStream(image));
 
-            if (widthRequest > 0)
-                this.DisplayImage.WidthRequest = widthRequest;
-            if (heightRequest > 0)
-                this.DisplayImage.HeightRequest = heightRequest;
+                   if (widthRequest > 0)
+                       this.DisplayImage.WidthRequest = widthRequest;
+                   if (heightRequest > 0)
+                       this.DisplayImage.HeightRequest = heightRequest;
+               });
         }
 
         public Label GetLabel()

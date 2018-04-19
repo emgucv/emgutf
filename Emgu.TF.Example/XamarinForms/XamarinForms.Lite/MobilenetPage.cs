@@ -50,53 +50,21 @@ namespace Emgu.TF.XamarinForms
                 SetMessage("Please wait...");
                 SetImage();
                 _image = image;
-                Task<Tuple<string, string, long>> t = new Task<Tuple<string, string, long>>(
-                    () =>
-                    {
-                        try
-                        {
-                            SetMessage("Please wait while we download the Mobilenet Model from internet.");
-                            _model = new Mobilenet();
-                            _model.Init(onDownloadProgressChanged, onDownloadCompleted);
-                            //SetMessage("Please wait...");
 
-                            
-                            /*
-                            Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
-                            Stopwatch watch = Stopwatch.StartNew();
-                            float[] probability = inceptionGraph.Recognize(imageTensor);
-                            watch.Stop();
-
-                            String resStr = String.Empty;
-                            if (probability != null)
-                            {
-                                String[] labels = inceptionGraph.Labels;
-                                float maxVal = 0;
-                                int maxIdx = 0;
-                                for (int i = 0; i < probability.Length; i++)
-                                {
-                                    if (probability[i] > maxVal)
-                                    {
-                                        maxVal = probability[i];
-                                        maxIdx = i;
-                                    }
-                                }
-                                resStr = String.Format("Object is {0} with {1}% probability.", labels[maxIdx], maxVal * 100);
-                            }*/
-                            //return new Tuple<string, string, long>(image[0], resStr, 0);
-                            return new Tuple<string, string, long>(String.Empty, String.Empty, 0);
-                            //SetImage(t.Result.Item1);
-                            //GetLabel().Text = String.Format("Detected {0} in {1} milliseconds.", t.Result.Item2, t.Result.Item3);
-                        }
-                        catch (Exception e)
-                        {
-                            String msg = e.Message.Replace(System.Environment.NewLine, " ");
-                            SetMessage(msg);
-                            return new Tuple<string, string, long>(null, msg, 0);
-                        }
-                    });
-                t.Start();
-
+                try
+                {
+                    SetMessage("Please wait while we download the Mobilenet Model from internet.");
+                    _model = new Mobilenet();
+                    _model.OnDownloadProgressChanged += onDownloadProgressChanged;
+                    _model.OnDownloadCompleted += onDownloadCompleted;
+                    _model.Download();           
+                }
+                catch (Exception e)
+                {
+                    String msg = e.Message.Replace(System.Environment.NewLine, " ");
+                    SetMessage(msg);
+                           
+                }
             };
         }
 

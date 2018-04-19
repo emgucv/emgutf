@@ -10,7 +10,6 @@ using System.IO;
 
 namespace Emgu.TF.Lite.Models
 {
-    
     public class Mobilenet : DownloadableModels
     {
         private String _inputLayer;
@@ -28,31 +27,6 @@ namespace Emgu.TF.Lite.Models
             _inputLayer = inputLayer;
             _outputLayer = outputLayer;
         }
-
-        public void Init(
-            System.Net.DownloadProgressChangedEventHandler onDownloadProgressChanged = null,
-            System.ComponentModel.AsyncCompletedEventHandler onDownloadFileCompleted = null)
-        {
-            int retry = 1;
-            Download(
-                retry,
-                onDownloadProgressChanged,
-                (object sender, System.ComponentModel.AsyncCompletedEventArgs e) =>
-                {
-                    /*
-                    byte[] model = File.ReadAllBytes(GetLocalFileName(_modelFiles[0]));
-
-                    Buffer modelBuffer = Buffer.FromString(model);
-
-                    using (ImportGraphDefOptions options = new ImportGraphDefOptions())
-                        ImportGraphDef(modelBuffer, options, status);
-                    */
-                    if (onDownloadFileCompleted != null)
-                    {
-                        onDownloadFileCompleted(sender, e);
-                    }
-                });
-        }
         
 
         public String[] Labels
@@ -63,14 +37,6 @@ namespace Emgu.TF.Lite.Models
             }
         }
 
-        /*
-        public float[] Recognize(Tensor image)
-        {
-            Session inceptionSession = new Session(this);
-            Tensor[] finalTensor = inceptionSession.Run(new Output[] { this[_inputLayer] }, new Tensor[] { image },
-                new Output[] { this[_outputLayer] });
-            float[] probability = finalTensor[0].GetData(false) as float[];
-            return probability;
-        }*/
+
     }
 }

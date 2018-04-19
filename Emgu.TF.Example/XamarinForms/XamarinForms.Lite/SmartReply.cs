@@ -2,6 +2,7 @@
 //  Copyright (C) 2004-2018 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
+/*
 
 using System;
 using System.Collections.Generic;
@@ -57,8 +58,13 @@ namespace Emgu.TF.XamarinForms
             {
                 try
                 {
-                    SetMessage("Please wait while we download the Mobilenet Model from internet.");
+                    SetMessage("Please wait while we download the SmartReply Model from internet.");
                     _model = new SmartReply();
+
+                    //Uncomment the following 2 lines to force re-download of the SmartReply model
+                    //String localFileName = DownloadableModels.GetLocalFileName(_model._modelFiles[0]);
+                    //File.Delete(localFileName);
+
                     _model.Init(onDownloadProgressChanged, onDownloadCompleted);
                 }
                 catch (Exception e)
@@ -105,7 +111,12 @@ namespace Emgu.TF.XamarinForms
 
         private void SetMessage(String msg)
         {
-            _smartReplyLabel.Text = msg;
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(
+             () =>
+             {
+                 _smartReplyLabel.Text = msg;
+             }
+         );
         }
 
         private void Entry_TextChanged(object sender, TextChangedEventArgs e)
@@ -126,3 +137,4 @@ namespace Emgu.TF.XamarinForms
         }
     }
 }
+*/

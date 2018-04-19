@@ -23,9 +23,10 @@ namespace Emgu.TF.XamarinForms
             */
             Button mobilenetButton = new Button();
             mobilenetButton.Text = "Object recognition";
+            /*
             Button smartReplyButton = new Button();
             smartReplyButton.Text = "Smart Reply";
-
+            */
             // The root page of your application
             ContentPage page =
                new ContentPage
@@ -35,9 +36,8 @@ namespace Emgu.TF.XamarinForms
                        VerticalOptions = LayoutOptions.Start,
                        Children =
                      {
-                           mobilenetButton,
-                           smartReplyButton
-                       
+                           //smartReplyButton,
+                           mobilenetButton
                      }
                    }
                };
@@ -73,10 +73,11 @@ namespace Emgu.TF.XamarinForms
                 MainPage.Navigation.PushAsync(new MobilenetPage());
             };
 
+            /*
             smartReplyButton.Clicked += (sender, args) =>
             {
                 MainPage.Navigation.PushAsync(new SmartReplyPage());
-            };
+            };*/
         }
 
         public Page CurrentPage

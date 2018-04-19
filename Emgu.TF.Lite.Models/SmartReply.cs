@@ -2,6 +2,7 @@
 //  Copyright (C) 2004-2018 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
+/*
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -39,14 +40,7 @@ namespace Emgu.TF.Lite.Models
                 onDownloadProgressChanged,
                 (object sender, System.ComponentModel.AsyncCompletedEventArgs e) =>
                 {
-                    /*
-                    byte[] model = File.ReadAllBytes(GetLocalFileName(_modelFiles[0]));
-
-                    Buffer modelBuffer = Buffer.FromString(model);
-
-                    using (ImportGraphDefOptions options = new ImportGraphDefOptions())
-                        ImportGraphDef(modelBuffer, options, status);
-                    */
+                    
                     if (onDownloadFileCompleted != null)
                     {
                         onDownloadFileCompleted(sender, e);
@@ -63,14 +57,7 @@ namespace Emgu.TF.Lite.Models
             }
         }
 
-        /*
-        public float[] Recognize(Tensor image)
-        {
-            Session inceptionSession = new Session(this);
-            Tensor[] finalTensor = inceptionSession.Run(new Output[] { this[_inputLayer] }, new Tensor[] { image },
-                new Output[] { this[_outputLayer] });
-            float[] probability = finalTensor[0].GetData(false) as float[];
-            return probability;
-        }*/
+        
     }
 }
+*/
