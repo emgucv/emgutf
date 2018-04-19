@@ -16,6 +16,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)InceptionPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ModelButtonTextImagePage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MultiboxDetectionPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StylizePage.cs" />
   </ItemGroup>

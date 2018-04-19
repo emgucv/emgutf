@@ -30,12 +30,53 @@ using CoreGraphics;
 
 namespace Emgu.TF.XamarinForms
 {
-    public class MultiboxDetectionPage : ButtonTextImagePage
+    public class MultiboxDetectionPage : ModelButtonTextImagePage
     {
+        private MultiboxGraph _multiboxGraph;
+
+        public override String GetButtonName(ButtonMode mode)
+        {
+            switch (mode)
+            {
+                case ButtonMode.WaitingModelDownload:
+                    return "Download Model";
+                default:
+                    return "Detect People";
+            }
+        }
+
         public MultiboxDetectionPage()
            : base()
         {
+            _multiboxGraph = new MultiboxGraph();
+            _multiboxGraph.OnDownloadProgressChanged += onDownloadProgressChanged;
+            _multiboxGraph.OnDownloadCompleted += onDownloadCompleted;
 
+            OnImagesLoaded += (sender, image) =>
+            {
+                try
+                {
+                    SetMessage("Please wait...");
+                    SetImage();
+                    Stopwatch watch = Stopwatch.StartNew();
+                    Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
+                    MultiboxGraph.Result detectResult = _multiboxGraph.Detect(imageTensor);
+                    watch.Stop();
+
+                    byte[] jpeg = _multiboxGraph.DrawResultsToJpeg(image[0], detectResult);
+
+                    watch.Stop();
+                    SetImage(jpeg);
+                    SetMessage(String.Format("Detected in {0} milliseconds.", watch.ElapsedMilliseconds));
+                }
+                catch (Exception excpt)
+                {
+                    String msg = excpt.Message.Replace(System.Environment.NewLine, " ");
+                    SetMessage(msg);
+                }
+            };
+
+            /*
             var button = this.GetButton();
             button.Text = "Perform People Detection";
             button.Clicked += OnButtonClicked;
@@ -107,13 +148,27 @@ namespace Emgu.TF.XamarinForms
                 SetImage(t.Result.Item1);
                 GetLabel().Text = String.Format("Detection took {0} milliseconds.", t.Result.Item2);
 #endif
-            };
+            };*/
         }
 
+        public override void OnButtonClicked(Object sender, EventArgs args)
+        {
+            base.OnButtonClicked(sender, args);
+
+            if (_buttonMode == ButtonMode.WaitingModelDownload)
+            {
+                _multiboxGraph.Init();
+            }
+            else
+            {
+                LoadImages(new string[] { "surfers.jpg" });
+            }
+        }
+        /*
         private void OnButtonClicked(Object sender, EventArgs args)
         {
             LoadImages(new string[] { "surfers.jpg" });
-        }
+        }*/
 
     }
 }

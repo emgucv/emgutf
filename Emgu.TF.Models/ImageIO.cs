@@ -259,13 +259,13 @@ namespace Emgu.TF.Models
         public static byte[] TensorToJpeg(Tensor stylizedImage, float scale = 1.0f, Status status = null)
         {
 #if __ANDROID__
-                            byte[] rawPixel = TensorToPixel(stylizedImage, scale, 4);
-                            int[] dim = stylizedImage.Dim;
-                            return PixelToJpeg(rawPixel, dim[2], dim[1], 4);
+            byte[] rawPixel = TensorToPixel(stylizedImage, scale, 4);
+            int[] dim = stylizedImage.Dim;
+            return PixelToJpeg(rawPixel, dim[2], dim[1], 4);
 #elif __IOS__
-                            byte[] rawPixel = TensorToPixel(stylizedImage, scale, 3);
-                            int[] dim = stylizedImage.Dim;
-                            return PixelToJpeg(rawPixel, dim[2], dim[1], 3);
+            byte[] rawPixel = TensorToPixel(stylizedImage, scale, 3);
+            int[] dim = stylizedImage.Dim;
+            return PixelToJpeg(rawPixel, dim[2], dim[1], 3);
 #elif __UNIFIED__ //MAC OSX
             byte[] rawPixel = TensorToPixel(stylizedImage, scale, 4);
             int[] dim = stylizedImage.Dim;
@@ -366,7 +366,6 @@ namespace Emgu.TF.Models
                 floatValues[i * 3 + 2] = ((val & 0xFF) - inputMean) * scale;
             }
 
-            
             Tensor t =  new Tensor(DataType.Float, new int[] {1, bmp.Height, bmp.Width, 3});
             System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, t.DataPointer, floatValues.Length);
             return t;

@@ -145,7 +145,6 @@ namespace Emgu.TF
                 TfInvoke.tfeGraphToGraphDef(_ptr, outputGraphDef, checker.Status);
         }
 
-        
         public void Versions(Buffer versionDef, Status status = null)
         {
             using (StatusChecker checker = new StatusChecker(status))

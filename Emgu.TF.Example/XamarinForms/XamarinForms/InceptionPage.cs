@@ -10,7 +10,9 @@ using System.Drawing;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using Emgu.TF;
+using Emgu.Models;
 using Emgu.TF.Models;
+
 #if __ANDROID__
 using Android.App;
 using Android.Content;
@@ -30,77 +32,66 @@ using CoreGraphics;
 
 namespace Emgu.TF.XamarinForms
 {
-    public class InceptionPage : ButtonTextImagePage
+    public class InceptionPage : ModelButtonTextImagePage
     {
-        public InceptionPage()
-           : base()
+        private Inception _inceptionGraph;
+
+        public override String GetButtonName(ButtonMode mode)
         {
-
-            var button = this.GetButton();
-            button.Text = "Perform Image Recognition";
-            button.Clicked += OnButtonClicked;
-
-            OnImagesLoaded += async (sender, image) =>
+            switch (mode)
             {
-                SetMessage("Please wait...");
-                SetImage();
+                case ButtonMode.WaitingModelDownload:
+                    return "Download Model";
+                default:
+                    return "Recognize object";
+            }
+        }
 
-                Task<Tuple<string, string, long>> t = new Task<Tuple<string, string, long>>(
-                    () =>
-                    {
-                        try
-                        {
-                            SetMessage("Please wait while we download the Inception Model from internet.");
-                            Inception inceptionGraph = new Inception();
-                            SetMessage("Please wait...");
+        public InceptionPage()
+            : base()
+        {
+            _inceptionGraph = new Inception();
+            _inceptionGraph.OnDownloadProgressChanged += onDownloadProgressChanged;
+            _inceptionGraph.OnDownloadCompleted += onDownloadCompleted;
 
-                            Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
-                            Stopwatch watch = Stopwatch.StartNew();
-                            float[] probability = inceptionGraph.Recognize(imageTensor);
-                            watch.Stop();
+            OnImagesLoaded += (sender, image) =>
+            {
+                try
+                {
+                    SetMessage("Please wait...");
+                    SetImage();
+                    
 
-                            String resStr = String.Empty;
-                            if (probability != null)
-                            {
-                                String[] labels = inceptionGraph.Labels;
-                                float maxVal = 0;
-                                int maxIdx = 0;
-                                for (int i = 0; i < probability.Length; i++)
-                                {
-                                    if (probability[i] > maxVal)
-                                    {
-                                        maxVal = probability[i];
-                                        maxIdx = i;
-                                    }
-                                }
-                                resStr = String.Format("Object is {0} with {1}% probability.", labels[maxIdx], maxVal * 100);
-                            }
-                            return new Tuple<string, string, long>(image[0], resStr, 0);
-
-                            //SetImage(t.Result.Item1);
-                            //GetLabel().Text = String.Format("Detected {0} in {1} milliseconds.", t.Result.Item2, t.Result.Item3);
-                        }
-                        catch (Exception e)
-                        {
-                            String msg = e.Message.Replace(System.Environment.NewLine, " ");
-                            SetMessage(msg);
-                            return new Tuple<string, string, long>(null, msg, 0);
-                        }
-                    });
-                t.Start();
-
-#if !__IOS__
-                var result = await t;
-                SetImage(t.Result.Item1);
-                GetLabel().Text = t.Result.Item2;
-#endif
+                    Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
+                    Stopwatch watch = Stopwatch.StartNew();
+                    Inception.RecognitionResult result = _inceptionGraph.MostLikely(imageTensor);
+                    
+                    SetMessage(String.Format("Object is {0} with {1}% probability. Recognized in {2} milliseconds.", result.Label, result.Probability * 100, watch.ElapsedMilliseconds));
+                    
+                    SetImage(image[0]);
+                }
+                catch (Exception excpt)
+                {
+                    String msg = excpt.Message.Replace(System.Environment.NewLine, " ");
+                    SetMessage(msg);
+                }
             };
         }
 
-        private void OnButtonClicked(Object sender, EventArgs args)
+        public override void OnButtonClicked(Object sender, EventArgs args)
         {
-            LoadImages(new string[] { "grace_hopper.jpg" });
+            base.OnButtonClicked(sender, args);
+
+            if (_buttonMode == ButtonMode.WaitingModelDownload)
+            {
+                _inceptionGraph.Init();
+            }
+            else
+            {
+                LoadImages(new string[] { "grace_hopper.jpg" });
+            }
         }
 
+   
     }
 }

@@ -19,73 +19,68 @@ using AppKit;
 using CoreGraphics;
 #endif
 using Emgu.TF;
+using Emgu.Models;
 using Emgu.TF.Models;
-
+using System.Net;
+using System.ComponentModel;
+using System.Diagnostics;
 
 namespace Emgu.TF.XamarinForms
 {
-    public class StylizePage : ButtonTextImagePage
-    {
+    public class StylizePage : ModelButtonTextImagePage
+    {        
+        private StylizeGraph _stylizeGraph;
+        
+        public override String GetButtonName(ButtonMode mode)
+        {
+            switch(mode)
+            {
+                case ButtonMode.WaitingModelDownload:
+                    return "Download Model";
+                default:
+                    return "Stylize";
+            }
+        }
+
         public StylizePage()
             : base()
         {
+            _stylizeGraph = new StylizeGraph();
+            _stylizeGraph.OnDownloadProgressChanged += onDownloadProgressChanged;
+            _stylizeGraph.OnDownloadCompleted += onDownloadCompleted;
 
-            var button = this.GetButton();
-            button.Text = "Stylizing image";
-            button.Clicked += OnButtonClicked;
-
-            OnImagesLoaded += async (sender, image) =>
+            OnImagesLoaded += (sender, image) =>
             {
-                SetMessage("Please wait...");
-                SetImage();
-
-                Task<Tuple<Tensor, string, long>> t = new Task<Tuple<Tensor, string, long>>(
-                    () =>
-                    {
-                        try
-                        {
-                            SetMessage("Please wait while we download the Stylize Model from internet.");
-                            StylizeGraph stylizeGraph = new StylizeGraph();
-                            SetMessage("Please wait...");
-
-                            Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile(image[0], -1, -1, 0f, 1.0f/255f);
-                            Tensor stylizedImage = stylizeGraph.Stylize(imageTensor, 0);
-                            return new Tuple<Tensor, string, long>(stylizedImage, null, 0);
-
-						}
-                        catch (Exception e)
-                        {
-                            String msg = e.Message.Replace(System.Environment.NewLine, " ");
-                            SetMessage(msg);
-                            return new Tuple<Tensor, string, long>(null, msg, 0);
-                        }
-                    });
-                t.Start();
-
-				var result = await t;
-                SetImage( Emgu.TF.Models.ImageIO.TensorToJpeg(t.Result.Item1, 255.0f) );
-				GetLabel().Text = t.Result.Item2;
-                /*
-#if __ANDROID__
-                var result = await t;
-                SetImage(t.Result.Item1);
-                GetLabel().Text = t.Result.Item2;
-#elif __IOS__
-                var result = await t;
-                SetImage(t.Result.Item1);
-                GetLabel().Text = t.Result.Item2;
-#elif !(__UNIFIED__)
-                var result = await t;
-                //SetImage(t.Result.Item1);
-                GetLabel().Text = t.Result.Item2;
-#endif*/
+                try
+                {
+                    SetMessage("Please wait...");
+                    SetImage();
+                    Stopwatch watch = Stopwatch.StartNew();
+                    byte[] jpeg = _stylizeGraph.StylizeToJpeg(image[0], 1);
+                    watch.Stop();
+                    SetImage(jpeg);
+                    SetMessage(String.Format("Stylized in {0} milliseconds.", watch.ElapsedMilliseconds));
+                }
+                catch (Exception excpt)
+                {
+                    String msg = excpt.Message.Replace(System.Environment.NewLine, " ");
+                    SetMessage(msg);
+                }
             };
         }
 
-        private void OnButtonClicked(Object sender, EventArgs args)
+        public override void OnButtonClicked(Object sender, EventArgs args)
         {
-            LoadImages(new string[] { "surfers.jpg" });
-        }
+            base.OnButtonClicked(sender, args);
 
+            if (_buttonMode == ButtonMode.WaitingModelDownload)
+            {
+                _stylizeGraph.Init();
+            }
+            else
+            {
+                LoadImages(new string[] { "surfers.jpg" });
+            }
+        }
     }
 }

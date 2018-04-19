@@ -13,18 +13,18 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "XamarinForms.Lite", "..\..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinForms.Lite.Android", "..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite.Android\XamarinForms.Lite.Android.csproj", "{50CE0DEE-7D39-47A7-B913-5858897F38F4}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Models.Shared", "..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.shproj", "{8EDCE0C8-BA71-4396-9428-35D05877258C}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.Models.Shared", "..\..\Emgu.Models\Emgu.Models.Shared.shproj", "{8EDCE0C8-BA71-4396-9428-35D05877258C}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite\XamarinForms.Lite.projitems*{26f4d7af-57b6-4d2d-9a1c-aafa757ddc4a}*SharedItemsImports = 13
+		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{50ce0dee-7d39-47a7-b913-5858897f38f4}*SharedItemsImports = 4
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite\XamarinForms.Lite.projitems*{50ce0dee-7d39-47a7-b913-5858897f38f4}*SharedItemsImports = 4
-		..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems*{50ce0dee-7d39-47a7-b913-5858897f38f4}*SharedItemsImports = 4
 		..\..\Emgu.TF.Lite\Emgu.TF.Lite.projitems*{50ce0dee-7d39-47a7-b913-5858897f38f4}*SharedItemsImports = 4
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{50ce0dee-7d39-47a7-b913-5858897f38f4}*SharedItemsImports = 4
 		..\..\Emgu.TF.Lite\Emgu.TF.Lite.projitems*{7ce162d0-3729-4782-85a5-cfa7cc962a78}*SharedItemsImports = 4
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{7ce162d0-3729-4782-85a5-cfa7cc962a78}*SharedItemsImports = 4
-		..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems*{8edce0c8-ba71-4396-9428-35d05877258c}*SharedItemsImports = 13
+		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{8edce0c8-ba71-4396-9428-35d05877258c}*SharedItemsImports = 13
 		..\..\Emgu.TF.Lite\Emgu.TF.Lite.projitems*{8f587fb9-bba6-4c30-9329-8cbac7020fe0}*SharedItemsImports = 13
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{98561642-5ec3-4244-baf9-6876d9ba5527}*SharedItemsImports = 13
 	EndGlobalSection

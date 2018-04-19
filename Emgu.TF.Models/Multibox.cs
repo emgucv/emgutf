@@ -8,6 +8,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
+using Emgu.Models;
+using System.Net;
+using System.ComponentModel;
+
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
 using UnityEngine;
 #else
@@ -26,59 +30,69 @@ using CoreGraphics;
 
 namespace Emgu.TF.Models
 {
-    public class MultiboxGraph : DownloadableModels
+    public class MultiboxGraph 
     {
-        public MultiboxGraph(
-            String[] modelFiles = null, 
-            String downloadUrl = null)
-            : base(
-                  modelFiles ?? new string[] { "multibox_model.pb", "multibox_location_priors.txt" },
-                  downloadUrl ?? "https://github.com/emgucv/models/raw/master/mobile_multibox_v1a/")
-        {
-            /*
-            Download(1, onDownloadProgressChanged);
+        private FileDownloadManager _downloadManager;
+        private Graph _graph = null;
+        private Status _status = null;
 
-            byte[] model = File.ReadAllBytes( GetLocalFileName( _modelFiles[0] ));
-            
+        public MultiboxGraph(Status status = null)
+        {
+            _status = status;
+            _downloadManager = new FileDownloadManager();
+
+            _downloadManager.OnDownloadProgressChanged += onDownloadProgressChanged;
+            _downloadManager.OnDownloadCompleted += onDownloadCompleted;
+        }
+
+        private void onDownloadCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            ImportGraph();
+            if (OnDownloadCompleted != null)
+            {
+                OnDownloadCompleted(sender, e);
+            }
+        }
+
+        public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
+        public event System.ComponentModel.AsyncCompletedEventHandler OnDownloadCompleted;
+
+        public void Init(String[] modelFiles = null, String downloadUrl = null)
+        {
+            _downloadManager.Clear();
+            String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/mobile_multibox_v1a/" : downloadUrl;
+            String[] fileNames = modelFiles == null ? new string[] { "multibox_model.pb", "multibox_location_priors.txt" } : modelFiles;
+            for (int i = 0; i < fileNames.Length; i++)
+                _downloadManager.AddFile(url + fileNames[i]);
+            _downloadManager.Download();
+        }
+
+        private void onDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            if (OnDownloadProgressChanged != null)
+                OnDownloadProgressChanged(sender, e);
+        }
+
+        private void ImportGraph()
+        {
+            if (_graph != null)
+                _graph.Dispose();
+            _graph = new Graph();
+            String localFileName = _downloadManager.Files[0].LocalFile;
+            byte[] model = File.ReadAllBytes(localFileName);
+
             Buffer modelBuffer = Buffer.FromString(model);
 
             using (ImportGraphDefOptions options = new ImportGraphDefOptions())
-                ImportGraphDef(modelBuffer, options, status);*/
+                _graph.ImportGraphDef(modelBuffer, options, _status);
         }
-
-
-        public void Init(
-            Status status = null,
-            System.Net.DownloadProgressChangedEventHandler onDownloadProgressChanged = null,
-            System.ComponentModel.AsyncCompletedEventHandler onDownloadFileCompleted = null)
-        {
-            int retry = 1;
-            Download(
-                retry,
-                onDownloadProgressChanged,
-                (object sender, System.ComponentModel.AsyncCompletedEventArgs e) =>
-                {
-                    byte[] model = File.ReadAllBytes(GetLocalFileName(_modelFiles[0]));
-
-                    Buffer modelBuffer = Buffer.FromString(model);
-
-                    using (ImportGraphDefOptions options = new ImportGraphDefOptions())
-                        ImportGraphDef(modelBuffer, options, status);
-
-                    if (onDownloadFileCompleted != null)
-                    {
-                        onDownloadFileCompleted(sender, e);
-                    }
-                });
-        }
-
 
         public Result Detect(Tensor imageResults, SessionOptions sessionOptions = null)
         {
-            Session multiboxSession = new Session(this, sessionOptions);
+            Session multiboxSession = new Session(_graph, sessionOptions);
 
-            Tensor[] finalTensor = multiboxSession.Run(new Output[] { this["ResizeBilinear"] }, new Tensor[] { imageResults },
-                new Output[] { this["output_scores/Reshape"], this["output_locations/Reshape"] });
+            Tensor[] finalTensor = multiboxSession.Run(new Output[] { _graph["ResizeBilinear"] }, new Tensor[] { imageResults },
+                new Output[] { _graph["output_scores/Reshape"], _graph["output_locations/Reshape"] });
 
             int labelCount = finalTensor[0].Dim[1];
             Tensor[] topK = GetTopDetections(finalTensor, labelCount);
@@ -87,7 +101,7 @@ namespace Emgu.TF.Models
 
             float[] encodedLocations = finalTensor[1].Flat<float>();
 
-            float[] boxPriors = ReadBoxPriors( GetLocalFileName(_modelFiles[1]) );
+            float[] boxPriors = ReadBoxPriors( _downloadManager.Files[1].LocalFile );
 
             Result result = new Result();
             result.Scores = DecodeScoresEncoding(encodedScores);
@@ -176,6 +190,43 @@ namespace Emgu.TF.Models
             return scores;
         }
 
+        public byte[] DrawResultsToJpeg(String fileName, MultiboxGraph.Result detectResult, float scoreThreshold = 0.2f)
+        {
+#if __ANDROID__
+            byte[] jpeg = null;
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.InMutable = true;
+            Android.Graphics.Bitmap bmp = BitmapFactory.DecodeFile(fileName, options);
+            MultiboxGraph.DrawResults(bmp, detectResult, scoreThreshold);
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bmp.Compress(Bitmap.CompressFormat.Jpeg, 90, ms);
+                jpeg = ms.ToArray();
+            }
+#elif __MACOS__
+
+                    NSImage img = NSImage.ImageNamed(fileName);                        
+                    MultiboxGraph.DrawResults(img, detectResult, scoreThreshold);
+                    var imageData = img.AsTiff();
+                    var imageRep = NSBitmapImageRep.ImageRepsWithData(imageData)[0] as NSBitmapImageRep;
+                    var jpegData = imageRep.RepresentationUsingTypeProperties(NSBitmapImageFileType.Jpeg, null);
+                    byte[] jpeg = new byte[jpegData.Length];
+                    System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, raw, 0, (int)jpegData.Length);
+
+#elif __IOS__
+                    UIImage uiimage = new UIImage(fileName);
+
+					UIImage newImg = MultiboxGraph.DrawResults(uiimage, detectResult, scoreThreshold);
+	                var jpegData = newImg.AsJPEG();
+					byte[] jpeg = new byte[jpegData.Length];
+					System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, raw, 0, (int)jpegData.Length);
+#else
+                    throw new Exception("Not implemented")
+#endif
+            return jpeg;
+        }
+
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
         public static Rect[] ScaleLocation(float[] location, int imageWidth, int imageHeight)
         {
@@ -240,7 +291,7 @@ namespace Emgu.TF.Models
                 }
             }
         }
-#endregion
+        #endregion
 
         private static void DrawRect(Texture2D image, Rect rect, Color color)
         {

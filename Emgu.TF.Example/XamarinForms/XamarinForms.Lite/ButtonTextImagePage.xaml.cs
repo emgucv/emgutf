@@ -1,4 +1,9 @@
-﻿using System;
+﻿//----------------------------------------------------------------------------
+//  Copyright (C) 2004-2018 by EMGU Corporation. All rights reserved.       
+//----------------------------------------------------------------------------
+
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,17 +13,16 @@ using Xamarin.Forms;
 
 #if __ANDROID__ || __IOS__
 using Plugin.Media;
+using Plugin.CurrentActivity;
 #endif
 
 namespace Emgu.TF.XamarinForms
 {
     public partial class ButtonTextImagePage : ContentPage
     {
-
         public ButtonTextImagePage()
         {
             InitializeComponent();
-
         }
 
 
@@ -62,7 +66,7 @@ namespace Emgu.TF.XamarinForms
                 if (action.Equals("Default"))
                 {
 #if __ANDROID__
-                    FileInfo fi = Emgu.TF.Util.AndroidFileAsset.WritePermanantFileAsset(Forms.Context, imageNames[i], "tmp",
+                    FileInfo fi = Emgu.TF.Util.AndroidFileAsset.WritePermanantFileAsset(CrossCurrentActivity.Current.Activity, imageNames[i], "tmp",
                         Emgu.TF.Util.AndroidFileAsset.OverwriteMethod.AlwaysOverwrite);
 
                     mats[i] = fi.FullName;

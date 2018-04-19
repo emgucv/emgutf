@@ -11,102 +11,97 @@ using System.Diagnostics;
 using UnityEngine;
 #endif
 
-namespace Emgu.TF.Lite.Models
+namespace Emgu.Models
 {
-    public class DownloadableModels 
+    public class FileDownloadManager
     {
-        public DownloadableModels(String[] modelFiles, String downloadUrl)
+        public FileDownloadManager()
         {
-            _modelFiles = modelFiles;
-            _downloadUrl = downloadUrl;
         }
 
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
         public event System.ComponentModel.AsyncCompletedEventHandler OnDownloadCompleted;
-        public String[] _modelFiles;
-        public String _downloadUrl;
+
+
+        private List<DownloadableFile> _files = new List<DownloadableFile>();
+        
+        public void Clear()
+        {
+            _files.Clear();
+        }
+
+        public void AddFile(String url)
+        {
+            _files.Add(new DownloadableFile(url));
+        }
+
+        public DownloadableFile[] Files
+        {
+            get
+            {
+                return _files.ToArray();
+            }
+        }
 
         public void Download(int retry = 1)
         {
-            Download( _modelFiles, _downloadUrl, retry, this.OnDownloadProgressChanged, this.OnDownloadCompleted);
+            Download( _files.ToArray(), retry, this.OnDownloadProgressChanged, this.OnDownloadCompleted);
         }
 
         private static void Download(
-            String[] fileNames,
-            String downloadUrl,
+            DownloadableFile[] files,
             int retry = 1,
             System.Net.DownloadProgressChangedEventHandler onDownloadProgressChanged = null,
             System.ComponentModel.AsyncCompletedEventHandler onDownloadFileCompleted = null)
         {
-            DownloadHelper(fileNames, downloadUrl, retry, onDownloadProgressChanged, onDownloadFileCompleted);
+            DownloadHelper(files, retry, onDownloadProgressChanged, onDownloadFileCompleted);
         }
 
         private static void DownloadHelper(
-            String[] fileNames,
-            String downloadUrl,
+            DownloadableFile[] downloadableFiles,
             int retry = 1, 
             System.Net.DownloadProgressChangedEventHandler onDownloadProgressChanged = null,
             System.ComponentModel.AsyncCompletedEventHandler onDownloadFileCompleted = null)
         {
-            if (fileNames == null || fileNames.Length == 0)
+            if (downloadableFiles == null || downloadableFiles.Length == 0)
             {
                 if (onDownloadFileCompleted != null)
                     onDownloadFileCompleted(null, null);
-            } else if (fileNames.Length == 1)
+            } else if (downloadableFiles.Length == 1)
             {
-                DownloadHelper(fileNames[0], downloadUrl, retry, onDownloadProgressChanged, onDownloadFileCompleted);
+                DownloadHelper(downloadableFiles[0], retry, onDownloadProgressChanged, onDownloadFileCompleted);
             } else
             {
-                String currentFile = fileNames[0];
-                String[] remainingFiles = new String[fileNames.Length - 1];
-                Array.Copy(fileNames, 1, remainingFiles, 0, remainingFiles.Length);
-                DownloadHelper(currentFile, downloadUrl, retry, onDownloadProgressChanged,
+                DownloadableFile currentFile = downloadableFiles[0];
+                DownloadableFile[] remainingFiles = new DownloadableFile[downloadableFiles.Length - 1];
+                Array.Copy(downloadableFiles, 1, remainingFiles, 0, remainingFiles.Length);
+                DownloadHelper(currentFile, retry, onDownloadProgressChanged,
                     (object sender, System.ComponentModel.AsyncCompletedEventArgs e) =>
                     {
-                        DownloadHelper(remainingFiles, downloadUrl, retry, onDownloadProgressChanged, onDownloadFileCompleted);
+                        DownloadHelper(remainingFiles, retry, onDownloadProgressChanged, onDownloadFileCompleted);
                     }
                     );
             }
         }
 
-#if __ANDROID__
-        public static String PersistentDataPath = System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, Android.OS.Environment.DirectoryDownloads);
-#elif UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-        public static String PersistentDataPath = Application.persistentDataPath;
-#endif
-
-        public static String GetLocalFileName(String fileName)
-        {
-#if __ANDROID__
-            return System.IO.Path.Combine(PersistentDataPath, fileName);
-#elif UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-            return System.IO.Path.Combine(PersistentDataPath, fileName);
-#else
-            return fileName;
-#endif
-        }
-
-
         private static void DownloadHelper(
-            String fileName, 
-            String downloadUrl,
+            DownloadableFile downloadableFile,
             int retry = 1, 
             System.Net.DownloadProgressChangedEventHandler onDownloadProgressChanged = null,
             System.ComponentModel.AsyncCompletedEventHandler onDownloadFileCompleted = null
             )
         {
-            if (downloadUrl == null)
+            if (downloadableFile.Url == null)
                 return;
 
-            String localFile = GetLocalFileName(fileName);
-
-            if (!File.Exists(localFile) || !(new FileInfo(localFile).Length > 0))
+            //uncomment the following line to force re-download every time.
+            //File.Delete(downloadableFile.LocalFile);
+            if (!File.Exists(downloadableFile.LocalFile) || !(new FileInfo(downloadableFile.LocalFile).Length > 0))
             {
                 try
                 {
-                    //Download the tensorflow file
-                    String multiboxUrl = downloadUrl + fileName;
-                    Trace.WriteLine("downloading file from:" + multiboxUrl + " to: " + localFile);
+                    //Download the file
+                    Trace.WriteLine("downloading file from:" + downloadableFile.Url + " to: " + downloadableFile.LocalFile);
                     System.Net.WebClient downloadClient = new System.Net.WebClient();
                     
                     if (onDownloadProgressChanged != null)
@@ -114,18 +109,18 @@ namespace Emgu.TF.Lite.Models
                     if (onDownloadFileCompleted != null)
                         downloadClient.DownloadFileCompleted += onDownloadFileCompleted;
 
-                    downloadClient.DownloadFileAsync(new Uri( multiboxUrl ), localFile);
+                    downloadClient.DownloadFileAsync(new Uri(downloadableFile.Url), downloadableFile.LocalFile);
                     
                 }
                 catch (Exception e)
                 {
-                    if (File.Exists(localFile))
+                    if (File.Exists(downloadableFile.LocalFile))
                         //The downloaded file may be corrupted, should delete it
-                        File.Delete(localFile);
+                        File.Delete(downloadableFile.LocalFile);
 
                     if (retry > 0)
                     {
-                        DownloadHelper(fileName, downloadUrl, retry - 1);
+                        DownloadHelper( downloadableFile,  retry - 1);
                     }
                     else
                     {
