@@ -25,25 +25,18 @@ namespace InceptionObjectRecognition
             TfInvoke.CheckLibraryLoaded();
             messageLabel.Text = String.Empty;
 
-            //System.Net.ServicePointManager.Expect100Continue = true;
-            //System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
-
             DisableUI();
 
-            //Use the following code for the full inception model
+            
             inceptionGraph = new Inception();
+            inceptionGraph.OnDownloadProgressChanged += OnDownloadProgressChangedEventHandler;
+            inceptionGraph.OnDownloadCompleted += onDownloadCompleted;
 
-            //Recognize("space_shuttle.jpg");
-            inceptionGraph.Init(
-                onDownloadProgressChanged: OnDownloadProgressChangedEventHandler,
-                onDownloadFileCompleted:
-                (object sender, System.ComponentModel.AsyncCompletedEventArgs e) =>
-                {
-                    EnableUI();
-                    Recognize("space_shuttle.jpg");
-                }
-                );
+            //Use the following code for the full inception model
+            inceptionGraph.Init();
 
+            //Uncomment the following code to use a retrained model to recognize followers, downloaded from the internet
+            //inceptionGraph.Init(new string[] {"optimized_graph.pb", "output_labels.txt"}, "https://github.com/emgucv/models/raw/master/inception_flower_retrain/", "Mul", "final_result");
         }
 
         public void OnDownloadProgressChangedEventHandler(object sender, System.Net.DownloadProgressChangedEventArgs e)
@@ -62,6 +55,12 @@ namespace InceptionObjectRecognition
                 messageLabel.Text = msg;
 
             }
+        }
+
+        public void onDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            EnableUI();
+            Recognize("space_shuttle.jpg");
         }
 
         public void DisableUI()
@@ -96,18 +95,8 @@ namespace InceptionObjectRecognition
         }
 
         public void Recognize(String fileName)
-        {
-            
+        {            
             Tensor imageTensor = ImageIO.ReadTensorFromImageFile(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
-
-            //Uncomment the following code to use a retrained model to recognize followers, downloaded from the internet
-            //Inception inceptionGraph = new Inception(null, new string[] {"optimized_graph.pb", "output_labels.txt"}, "https://github.com/emgucv/models/raw/master/inception_flower_retrain/", "Mul", "final_result");
-            //Tensor imageTensor = ImageIO.ReadTensorFromImageFile(fileName, 299, 299, 128.0f, 1.0f / 128.0f);
-
-            //Uncomment the following code to use a retrained model to recognize followers, if you deployed the models with the application
-            //For ".pb" and ".txt" bundled with the application, set the url to null
-            //Inception inceptionGraph = new Inception(null, new string[] {"optimized_graph.pb", "output_labels.txt"}, null, "Mul", "final_result");
-            //Tensor imageTensor = ImageIO.ReadTensorFromImageFile(fileName, 299, 299, 128.0f, 1.0f / 128.0f);
 
             Stopwatch sw = Stopwatch.StartNew();
             float[] probability = inceptionGraph.Recognize(imageTensor);
@@ -145,8 +134,6 @@ namespace InceptionObjectRecognition
                 pictureBox.ImageLocation = fileName;
                 messageLabel.Text = resStr;
             }
-
-            
 
         }
 

@@ -26,20 +26,21 @@ namespace MultiboxPeopleDetection
             SetLabelText(String.Empty);
 
             graph = new MultiboxGraph();
-            graph.Init(
-                onDownloadProgressChanged: OnDownloadProgressChangedEventHandler,
-                onDownloadFileCompleted:
-                (object sender, System.ComponentModel.AsyncCompletedEventArgs e) =>
-                {
-                    Detect("surfers.jpg");
-                }
-                );
+            graph.OnDownloadProgressChanged += OnDownloadProgressChangedEventHandler;
+            graph.OnDownloadCompleted += onDownloadCompleted;
+
+            graph.Init();
         }
 
         public void OnDownloadProgressChangedEventHandler(object sender, System.Net.DownloadProgressChangedEventArgs e)
         {
             String msg = String.Format("Downloading models, please wait... {0} of {1} bytes ({2}%) downloaded.", e.BytesReceived, e.TotalBytesToReceive, e.ProgressPercentage);
             SetLabelText(msg);
+        }
+
+        public void onDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            Detect("surfers.jpg");
         }
 
         public void SetLabelText(String msg)

@@ -8,6 +8,9 @@ using Xamarin.Forms;
 
 #if __ANDROID__ || __IOS__
 using Plugin.Media;
+#if __ANDROID__
+using Plugin.CurrentActivity;
+#endif
 #endif
 
 namespace Emgu.TF.XamarinForms
@@ -61,7 +64,7 @@ namespace Emgu.TF.XamarinForms
                 if (action.Equals("Default"))
                 {
 #if __ANDROID__
-                    FileInfo fi = Emgu.TF.Util.AndroidFileAsset.WritePermanantFileAsset(Forms.Context, imageNames[i], "tmp",
+                    FileInfo fi = Emgu.TF.Util.AndroidFileAsset.WritePermanantFileAsset(CrossCurrentActivity.Current.Activity, imageNames[i], "tmp",
                         Emgu.TF.Util.AndroidFileAsset.OverwriteMethod.AlwaysOverwrite);
 
                     mats[i] = fi.FullName;

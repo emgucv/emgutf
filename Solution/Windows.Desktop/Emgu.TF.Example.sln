@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiboxPeopleDetection", "..\..\Emgu.TF.Example\MultiboxPeopleDetection\MultiboxPeopleDetection.csproj", "{A056234D-E585-4FFF-A2E0-E63688595509}"
 EndProject
@@ -15,17 +15,23 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InceptionObjectRecognition"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CVInterop", "..\..\Emgu.TF.Example\CVInterop\CVInterop.csproj", "{149E78F6-349D-42B7-8E03-3EDEB6EF348E}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.Models.Shared", "..\..\Emgu.Models\Emgu.Models.Shared.shproj", "{8EDCE0C8-BA71-4396-9428-35D05877258C}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
 		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
 		..\..\Emgu.TF\Emgu.TF.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
 		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{752279f0-17ef-4ec8-857c-8f5f897af0e8}*SharedItemsImports = 13
+		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{8edce0c8-ba71-4396-9428-35d05877258c}*SharedItemsImports = 13
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{98561642-5ec3-4244-baf9-6876d9ba5527}*SharedItemsImports = 13
+		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{a056234d-e585-4fff-a2e0-e63688595509}*SharedItemsImports = 4
 		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{a056234d-e585-4fff-a2e0-e63688595509}*SharedItemsImports = 4
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{a056234d-e585-4fff-a2e0-e63688595509}*SharedItemsImports = 4
 		..\..\Emgu.TF\Emgu.TF.projitems*{a056234d-e585-4fff-a2e0-e63688595509}*SharedItemsImports = 4
 		..\..\Emgu.TF\Emgu.TF.projitems*{d47d776e-9970-4552-bc8a-24cadcbea009}*SharedItemsImports = 13
+		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{dae2ef5c-ad22-473c-bc7b-75c3ce3d8eae}*SharedItemsImports = 4
 		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{dae2ef5c-ad22-473c-bc7b-75c3ce3d8eae}*SharedItemsImports = 4
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{dae2ef5c-ad22-473c-bc7b-75c3ce3d8eae}*SharedItemsImports = 4
 		..\..\Emgu.TF\Emgu.TF.projitems*{dae2ef5c-ad22-473c-bc7b-75c3ce3d8eae}*SharedItemsImports = 4
@@ -78,5 +84,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EF91EAF2-3F12-4F88-953B-881437D9B94C}
 	EndGlobalSection
 EndGlobal

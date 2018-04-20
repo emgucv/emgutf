@@ -18,6 +18,8 @@ namespace Emgu.TF.Models
         private FileDownloadManager _downloadManager;
         private Graph _graph = null;
         private Status _status = null;
+        private String _inputName = null;
+        private String _outputName = null;
 
         public Inception(Status status = null)
         {
@@ -46,8 +48,11 @@ namespace Emgu.TF.Models
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
         public event System.ComponentModel.AsyncCompletedEventHandler OnDownloadCompleted;
 
-        public void Init(String[] modelFiles = null, String downloadUrl = null)
+        public void Init(String[] modelFiles = null, String downloadUrl = null, String inputName = null, String outputName = null)
         {
+            _inputName = inputName == null ? "input" : inputName;
+            _outputName = outputName == null ? "output" : outputName;
+
             _downloadManager.Clear();
             String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/inception/" : downloadUrl;
             String[] fileNames = modelFiles == null ? new string[] { "tensorflow_inception_graph.pb", "imagenet_comp_graph_label_strings.txt" } : modelFiles;
@@ -81,8 +86,8 @@ namespace Emgu.TF.Models
         public float[] Recognize(Tensor image)
         {
             Session inceptionSession = new Session(_graph);
-            Tensor[] finalTensor = inceptionSession.Run(new Output[] { _graph["input"] }, new Tensor[] { image },
-                new Output[] { _graph["output"] });
+            Tensor[] finalTensor = inceptionSession.Run(new Output[] { _graph[_inputName] }, new Tensor[] { image },
+                new Output[] { _graph[_outputName] });
             float[] probability = finalTensor[0].GetData(false) as float[];
             return probability;
         }

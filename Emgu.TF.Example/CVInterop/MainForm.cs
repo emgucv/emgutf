@@ -31,16 +31,16 @@ namespace CVInterop
 
             //Use the following code for the full inception model
             inceptionGraph = new Inception();
+            inceptionGraph.OnDownloadProgressChanged += OnDownloadProgressChangedEventHandler;
+            inceptionGraph.OnDownloadCompleted += onDownloadCompleted;
 
-            inceptionGraph.Init(
-                onDownloadProgressChanged: OnDownloadProgressChangedEventHandler,
-                onDownloadFileCompleted: 
-                (object sender, System.ComponentModel.AsyncCompletedEventArgs e) =>
-                {
-                    EnableUI();                    
-                    Recognize("space_shuttle.jpg");
-                }
-                );
+            inceptionGraph.Init();
+        }
+
+        public void onDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            EnableUI();
+            Recognize("space_shuttle.jpg");
         }
 
         public void DisableUI()

@@ -193,7 +193,6 @@ namespace Emgu.TF.Models
         public byte[] DrawResultsToJpeg(String fileName, MultiboxGraph.Result detectResult, float scoreThreshold = 0.2f)
         {
 #if __ANDROID__
-            byte[] jpeg = null;
 
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.InMutable = true;
@@ -202,7 +201,7 @@ namespace Emgu.TF.Models
             using (MemoryStream ms = new MemoryStream())
             {
                 bmp.Compress(Bitmap.CompressFormat.Jpeg, 90, ms);
-                jpeg = ms.ToArray();
+                return ms.ToArray();
             }
 #elif __MACOS__
 
@@ -213,7 +212,7 @@ namespace Emgu.TF.Models
                     var jpegData = imageRep.RepresentationUsingTypeProperties(NSBitmapImageFileType.Jpeg, null);
                     byte[] jpeg = new byte[jpegData.Length];
                     System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, raw, 0, (int)jpegData.Length);
-
+                    return jpeg;
 #elif __IOS__
                     UIImage uiimage = new UIImage(fileName);
 
@@ -221,10 +220,11 @@ namespace Emgu.TF.Models
 	                var jpegData = newImg.AsJPEG();
 					byte[] jpeg = new byte[jpegData.Length];
 					System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, raw, 0, (int)jpegData.Length);
-#else
-                    throw new Exception("Not implemented")
-#endif
             return jpeg;
+#else
+            throw new Exception("Not implemented");
+#endif
+            
         }
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
