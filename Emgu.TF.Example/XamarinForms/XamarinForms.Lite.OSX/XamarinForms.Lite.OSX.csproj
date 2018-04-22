@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\Emgu.TF.Util\Emgu.TF.Util.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.TF.Util\Emgu.TF.Util.projitems')" />
+  <Import Project="..\XamarinForms.Lite\XamarinForms.Lite.projitems" Label="Shared" Condition="Exists('..\XamarinForms.Lite\XamarinForms.Lite.projitems')" />
+  <Import Project="..\..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.Models\Emgu.Models.Shared.projitems')" />
+  <Import Project="..\..\..\nugetpackages\Xamarin.Forms.2.5.1.444934\build\netstandard1.0\Xamarin.Forms.props" Condition="Exists('..\..\..\nugetpackages\Xamarin.Forms.2.5.1.444934\build\netstandard1.0\Xamarin.Forms.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
-    <ProjectGuid>{AC9F58C0-BD1D-4A90-831F-718933E76CF3}</ProjectGuid>
+    <ProjectGuid>{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}</ProjectGuid>
     <ProjectTypeGuids>{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Example.OSX</RootNamespace>
-    <AssemblyName>Example.OSX</AssemblyName>
+    <RootNamespace>XamarinForms.Lite.OSX</RootNamespace>
+    <AssemblyName>XamarinForms.Lite.OSX</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
@@ -78,8 +82,18 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.Mac" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Xamarin.Forms.Core">
+      <HintPath>..\..\..\nugetpackages\Xamarin.Forms.2.5.1.444934\lib\Xamarin.Mac\Xamarin.Forms.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Platform">
+      <HintPath>..\..\..\nugetpackages\Xamarin.Forms.2.5.1.444934\lib\Xamarin.Mac\Xamarin.Forms.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Platform.macOS">
+      <HintPath>..\..\..\nugetpackages\Xamarin.Forms.2.5.1.444934\lib\Xamarin.Mac\Xamarin.Forms.Platform.macOS.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Xaml">
+      <HintPath>..\..\..\nugetpackages\Xamarin.Forms.2.5.1.444934\lib\Xamarin.Mac\Xamarin.Forms.Xaml.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />
@@ -101,6 +115,7 @@
   <ItemGroup>
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -114,15 +129,12 @@
     <InterfaceDefinition Include="Main.storyboard" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\..\tensorflow\tensorflow\examples\multibox_detector\data\surfers.jpg">
-      <Link>surfers.jpg</Link>
-    </Content>
-    <Content Include="..\..\..\InceptionObjectRecognition\space_shuttle.jpg">
-      <Link>space_shuttle.jpg</Link>
+    <Content Include="..\..\..\tensorflow\tensorflow\examples\label_image\data\grace_hopper.jpg">
+      <Link>grace_hopper.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <Import Project="..\..\..\..\Emgu.TF.Util\Emgu.TF.Util.projitems" Label="Shared" Condition="Exists('..\..\..\..\Emgu.TF.Util\Emgu.TF.Util.projitems')" />
-  <Import Project="..\..\..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems')" />
-  <Import Project="..\..\..\..\Emgu.TF\Emgu.TF.projitems" Label="Shared" Condition="Exists('..\..\..\..\Emgu.TF\Emgu.TF.projitems')" />
+  <Import Project="..\..\..\Emgu.TF.Lite\Emgu.TF.Lite.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.TF.Lite\Emgu.TF.Lite.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
+  <Import Project="..\..\..\nugetpackages\Xamarin.Forms.2.5.1.444934\build\netstandard1.0\Xamarin.Forms.targets" Condition="Exists('..\..\..\nugetpackages\Xamarin.Forms.2.5.1.444934\build\netstandard1.0\Xamarin.Forms.targets')" />
 </Project>

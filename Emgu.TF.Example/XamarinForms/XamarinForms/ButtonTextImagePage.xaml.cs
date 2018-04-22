@@ -13,6 +13,11 @@ using Plugin.CurrentActivity;
 #endif
 #endif
 
+#if __MACOS__
+using AppKit;
+using CoreGraphics;
+#endif
+
 namespace Emgu.TF.XamarinForms
 {
     public partial class ButtonTextImagePage : ContentPage
@@ -115,6 +120,11 @@ namespace Emgu.TF.XamarinForms
                    var imageSource = new FileImageSource();
                    imageSource.File = fileName;
                    this.DisplayImage.Source = imageSource;
+#if __MACOS__
+                   NSImage image = new NSImage(fileName);
+                   this.DisplayImage.WidthRequest = image.Size.Width;
+                   this.DisplayImage.HeightRequest = image.Size.Height;
+#endif
                });
         }
 
@@ -158,6 +168,12 @@ namespace Emgu.TF.XamarinForms
         {
             //return null;
             return this.TopButton;
+        }
+
+        public Image GetImage()
+        {
+            //return null;
+            return this.DisplayImage;
         }
     }
 }

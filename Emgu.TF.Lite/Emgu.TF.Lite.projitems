@@ -86,12 +86,19 @@
       </ItemGroup>
     </When>
     <!-- Xamarin.Mac application -->
-    <When Condition="'$(TargetFrameworkIdentifier)'=='Xamarin.Mac' OR '$(ProjectTypeGuids)'=='{810C163F-4746-4721-8B8E-88A3673A62EA};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}'">
+    <When Condition="'$(TargetFrameworkIdentifier)'=='Xamarin.Mac' OR '$(ProjectTypeGuids)'=='{810C163F-4746-4721-8B8E-88A3673A62EA};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}' OR '$(ProjectTypeGuids)'=='{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}'">
       <PropertyGroup>
         <EmguTFLiteLinkTarget>Xamarin.Mac</EmguTFLiteLinkTarget>
         <EmguTFLiteNativeFile>$(MSBuildThisFileDirectory)..\lib\osx\libtfliteextern.dylib</EmguTFLiteNativeFile>
-		<EmguTFLiteErrorMessage>This package do not support $(EmguTFLiteLinkTarget).</EmguTFLiteErrorMessage>
+        <EmguTFLiteErrorMessage Condition="!Exists('$(EmguTFLiteNativeFile)')"> This package do not contain necessary binary for $(EmguTFLiteLinkTarget). Emgu TF Litefor Mac Commercial License is required. Missing $(EmguTFLiteNativeFile) </EmguTFLiteErrorMessage>
+        <EmguTFLiteDeployMessage Condition="Exists('$(EmguTFLiteNativeFile)')">$(EmguTFLiteDeployMessage)mac </EmguTFLiteDeployMessage>
       </PropertyGroup>
+      <ItemGroup>
+        <NativeReference Include="$(EmguTFLiteNativeFile)">
+          <Kind>Dynamic</Kind>
+          <SmartLink>False</SmartLink>
+        </NativeReference>
+      </ItemGroup>
     </When>
     <!-- IOS application (Note: do not work for Xamarin iOS for Visual Studio) -->
     <When Condition="(('$(TargetFrameworkIdentifier)'=='Xamarin.iOS' OR '$(ProjectTypeGuids)'=='{8FFB629D-F513-41CE-95D2-7ECE97B6EEEC};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}' OR '$(Platform)'=='iPhone' OR '$(Platform)'=='iPhoneSimulator') AND '$(OutputType)' == 'Exe')">
@@ -200,7 +207,7 @@
     </When>
   </Choose>
   <Target Name="EmguTFLitePackageBuildImports" BeforeTargets="PrepareForBuild">
-    <Error Condition="'$(EmguTFLiteLinkTarget)'==''" Text="Emgu TF Lite is not able to detect the project type, please use the pre-compiled Emgu.TF.Lite.World dll or send a bug report to support@emgu.com" />
+    <!-- <Error Condition="'$(EmguTFLiteLinkTarget)'==''" Text="Emgu TF Lite is not able to detect the project type, please use the pre-compiled Emgu.TF.Lite.World dll or send a bug report to support@emgu.com" /> -->
     <Message Condition="'$(EmguTFLiteLinkTarget)'!=''" Text="Emgu TF Lite shared project compiling against $(EmguTFLiteLinkTarget)" Importance="High" />
     <Error Text="'$(EmguTFLiteErrorMessage)'" Condition="'$(EmguTFLiteErrorMessage)'!=''" />
     <Message Text="Emgu TF Lite Compiling with $(EmguTFLiteDeployMessage)binary" Condition="'$(EmguTFLiteDeployMessage)'!=''" Importance="High" />

@@ -48,7 +48,7 @@ namespace Emgu.Models
             System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
 
 #elif __IOS__
-            UIImage image = new UIImage("surfers.jpg");
+            UIImage image = new UIImage(fileName);
 			if (inputHeight > 0 || inputWidth > 0)
 			{
                 UIImage resized = image.Scale(new CGSize(inputWidth, inputHeight));
@@ -83,6 +83,46 @@ namespace Emgu.Models
 				floatValues[i * 3 + 2] = ((val & 0xFF) - inputMean) * scale;
 			}
 			System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
+#elif __UNIFIED__
+            NSImage image = new NSImage(fileName);
+            if (inputHeight > 0 || inputWidth > 0)
+            {
+                NSImage resized = new NSImage(new CGSize(inputWidth, inputHeight));
+                resized.LockFocus();
+                image.DrawInRect(new CGRect(0, 0, inputWidth, inputHeight), CGRect.Empty, NSCompositingOperation.SourceOver, 1.0f);
+                resized.UnlockFocus();       
+                image.Dispose();
+                image = resized;
+            }
+            int[] intValues = new int[(int) (image.Size.Width * image.Size.Height)];
+            float[] floatValues = new float[(int) (image.Size.Width * image.Size.Height * 3)];
+            System.Runtime.InteropServices.GCHandle handle = System.Runtime.InteropServices.GCHandle.Alloc(intValues, System.Runtime.InteropServices.GCHandleType.Pinned);
+            using (CGImage cgimage = image.CGImage)
+            using (CGColorSpace cspace = CGColorSpace.CreateDeviceRGB())
+            using (CGBitmapContext context = new CGBitmapContext(
+                handle.AddrOfPinnedObject(),
+                (nint)image.Size.Width,
+                (nint)image.Size.Height,
+                8,
+                (nint)image.Size.Width * 4,
+                cspace,
+                CGImageAlphaInfo.PremultipliedLast
+                ))
+            {
+                context.DrawImage(new CGRect(new CGPoint(), image.Size), cgimage);
+
+            }
+            handle.Free();
+
+            for (int i = 0; i < intValues.Length; ++i)
+            {
+                int val = intValues[i];
+                floatValues[i * 3 + 0] = (((val >> 16) & 0xFF) - inputMean) * scale;
+                floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - inputMean) * scale;
+                floatValues[i * 3 + 2] = ((val & 0xFF) - inputMean) * scale;
+            }
+            System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
+
 #else
             throw new Exception("Not implemented");
 #endif

@@ -47,7 +47,7 @@ namespace Emgu.TF.XamarinForms
             button.Text = "Perform Image Recognition";
             button.Clicked += OnButtonClicked;
 
-            OnImagesLoaded += async (sender, image) =>
+            OnImagesLoaded += (sender, image) =>
             {
                 SetMessage("Please wait...");
                 SetImage();

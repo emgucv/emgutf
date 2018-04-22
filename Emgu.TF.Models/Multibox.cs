@@ -211,7 +211,7 @@ namespace Emgu.TF.Models
                     var imageRep = NSBitmapImageRep.ImageRepsWithData(imageData)[0] as NSBitmapImageRep;
                     var jpegData = imageRep.RepresentationUsingTypeProperties(NSBitmapImageFileType.Jpeg, null);
                     byte[] jpeg = new byte[jpegData.Length];
-                    System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, raw, 0, (int)jpegData.Length);
+                    System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, jpeg, 0, (int)jpegData.Length);
                     return jpeg;
 #elif __IOS__
                     UIImage uiimage = new UIImage(fileName);

@@ -59,6 +59,12 @@ namespace Emgu.TF.XamarinForms
                     byte[] jpeg = _stylizeGraph.StylizeToJpeg(image[0], 1);
                     watch.Stop();
                     SetImage(jpeg);
+#if __MACOS__
+                    NSImage img = new NSImage(image[0]);
+                    var displayImage = this.GetImage();
+                    displayImage.WidthRequest = img.Size.Width;
+                    displayImage.HeightRequest = img.Size.Height;
+#endif
                     SetMessage(String.Format("Stylized in {0} milliseconds.", watch.ElapsedMilliseconds));
                 }
                 catch (Exception excpt)
