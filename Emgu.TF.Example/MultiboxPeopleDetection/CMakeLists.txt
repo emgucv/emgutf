@@ -8,7 +8,9 @@ FILE(GLOB_RECURSE SRC_Example_MultiboxPeopleDetection RELATIVE ${CMAKE_CURRENT_S
 
 SET(SRC_Example_MultiboxPeopleDetection_ALL)
 LIST(APPEND SRC_Example_MultiboxPeopleDetection_ALL ${SRC_Example_MultiboxPeopleDetection})
-LIST(APPEND SRC_Example_MultiboxPeopleDetection_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.TF.Models/DownloadableModels.cs)
+LIST(APPEND SRC_Example_MultiboxPeopleDetection_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.Models/FileDownloadManager.cs)
+LIST(APPEND SRC_Example_MultiboxPeopleDetection_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.Models/DownloadableFile.cs)
+LIST(APPEND SRC_Example_MultiboxPeopleDetection_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.Models/NativeImageIO.cs)
 LIST(APPEND SRC_Example_MultiboxPeopleDetection_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.TF.Models/ImageIO.cs)
 LIST(APPEND SRC_Example_MultiboxPeopleDetection_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.TF.Models/Multibox.cs)
 

@@ -2,6 +2,10 @@
 cd ../..
 
 cd tensorflow/
+
+cd contrib/lite/
+download_dependencies.sh
+cd ../..
 tensorflow/contrib/lite/build_ios_universal_lib.sh 
 cd ..
 

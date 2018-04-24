@@ -55,5 +55,6 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\Emgu.TF.Models.Shared.projitems" Label="Shared" />
+  <Import Project="..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -9,7 +9,9 @@ FILE(GLOB_RECURSE SRC_Example_CVInterop RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.
 
 SET(SRC_Example_CVInterop_ALL)
 LIST(APPEND SRC_Example_CVInterop_ALL ${SRC_Example_CVInterop})
-LIST(APPEND SRC_Example_CVInterop_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.TF.Models/DownloadableModels.cs)
+LIST(APPEND SRC_Example_MultiboxPeopleDetection_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.Models/FileDownloadManager.cs)
+LIST(APPEND SRC_Example_MultiboxPeopleDetection_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.Models/DownloadableFile.cs)
+LIST(APPEND SRC_Example_MultiboxPeopleDetection_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.Models/NativeImageIO.cs)
 LIST(APPEND SRC_Example_CVInterop_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.TF.Models/ImageIO.cs)
 LIST(APPEND SRC_Example_CVInterop_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.TF.Models/Inception.cs)
 

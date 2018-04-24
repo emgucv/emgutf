@@ -23,13 +23,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Models", "..\..\Emg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Protobuf", "..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf\Emgu.TF.Protobuf.csproj", "{EBC5C3CC-6700-4A98-86D2-1E9E830DB73D}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.Models.Shared", "..\..\Emgu.Models\Emgu.Models.Shared.shproj", "{8EDCE0C8-BA71-4396-9428-35D05877258C}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{39821720-6afd-484c-9bea-85934de4f5ef}*SharedItemsImports = 4
 		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{39821720-6afd-484c-9bea-85934de4f5ef}*SharedItemsImports = 4
 		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{67a1a571-95e4-43a0-a67f-c6f210a71aae}*SharedItemsImports = 4
 		..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems*{67a1a571-95e4-43a0-a67f-c6f210a71aae}*SharedItemsImports = 4
 		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{752279f0-17ef-4ec8-857c-8f5f897af0e8}*SharedItemsImports = 13
 		..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems*{88fed2cb-ee86-4b5e-85a0-9f5fdf42111f}*SharedItemsImports = 13
+		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{8edce0c8-ba71-4396-9428-35d05877258c}*SharedItemsImports = 13
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{98561642-5ec3-4244-baf9-6876d9ba5527}*SharedItemsImports = 13
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{cf1433de-b607-479e-862d-8f4cb6783261}*SharedItemsImports = 4
 		..\..\Emgu.TF\Emgu.TF.projitems*{cf1433de-b607-479e-862d-8f4cb6783261}*SharedItemsImports = 4
