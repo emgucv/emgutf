@@ -105,9 +105,9 @@
       <PropertyGroup>
         <EmguTFLiteErrorMessage Condition="'$(BuildingInsideVisualStudio)'=='True' AND '$(OS)'=='Windows_NT'"> Direct reference of Emgu TF for Xamarin iOS is only available with Xamarin Studio or Visual Studio on Mac. When using Emgu TF in Visual Studio with Xamarin iOS plug in, please add the Emgu.TF.iOS.World reference instead.</EmguTFLiteErrorMessage>
         <EmguTFLiteLinkTarget>Xamarin iOS App</EmguTFLiteLinkTarget>
-        <EmguTFLiteNativeFile>$(MSBuildThisFileDirectory)..\lib\ios\liblitetfextern.a</EmguTFLiteNativeFile>
+        <EmguTFLiteNativeFile>$(MSBuildThisFileDirectory)..\lib\ios\libtfliteextern.a</EmguTFLiteNativeFile>
         <EmguTFLiteErrorMessage Condition="!Exists('$(EmguTFLiteNativeFile)')"> This package do not contain necessary binary for $(EmguTFLiteLinkTarget). Emgu TF Lite for iOS Commercial License is required. Missing $(EmguTFLiteNativeFile) </EmguTFLiteErrorMessage>
-        <MtouchExtraArgs>$(MtouchExtraArgs) -cxx -gcc_flags "-L$(MSBuildThisFileDirectory)..\lib\ios\ -ltfliteextern -framework Foundation -framework Accelerate -framework CoreFoundation -framework CoreGraphics -framework AssetsLibrary -framework AVFoundation -framework CoreImage -framework CoreMedia -framework CoreVideo -framework QuartzCore -framework ImageIO -force_load $(MSBuildThisFileDirectory)..\lib\ios\libtfextern.a"</MtouchExtraArgs>
+        <MtouchExtraArgs>$(MtouchExtraArgs) -cxx -gcc_flags "-L$(MSBuildThisFileDirectory)..\lib\ios\ -ltfliteextern -framework Foundation -framework Accelerate -framework CoreFoundation -framework CoreGraphics -framework AssetsLibrary -framework AVFoundation -framework CoreImage -framework CoreMedia -framework CoreVideo -framework QuartzCore -framework ImageIO -force_load $(MSBuildThisFileDirectory)..\lib\ios\libtfliteextern.a"</MtouchExtraArgs>
         <EmguTFLiteDeployMessage Condition="Exists('$(EmguTFLiteNativeFile)')">$(EmguTFLiteDeployMessage)ios </EmguTFLiteDeployMessage>
       </PropertyGroup>
     </When>

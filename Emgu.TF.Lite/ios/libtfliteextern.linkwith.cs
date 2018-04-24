@@ -8,11 +8,11 @@ using System;
 using ObjCRuntime;
 
 [assembly: LinkWith (
-   "libtfextern.a", 
+   "libtfliteextern.a", 
    LinkTarget.ArmV7s | LinkTarget.ArmV7 | LinkTarget.Simulator | LinkTarget.Arm64 | LinkTarget.Simulator64, 
-   ForceLoad = true, 
+   ForceLoad = true,
+   SmartLink = true, 
    Frameworks="Foundation Accelerate CoreFoundation CoreGraphics AssetsLibrary AVFoundation CoreImage CoreMedia CoreVideo QuartzCore ImageIO", 
-   SmartLink = true,
    LinkerFlags = "-stdlib=libc++ -ObjC -lc++", 
    IsCxx=true)]
 

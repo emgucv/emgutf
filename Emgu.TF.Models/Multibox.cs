@@ -193,7 +193,6 @@ namespace Emgu.TF.Models
         public byte[] DrawResultsToJpeg(String fileName, MultiboxGraph.Result detectResult, float scoreThreshold = 0.2f)
         {
 #if __ANDROID__
-
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.InMutable = true;
             Android.Graphics.Bitmap bmp = BitmapFactory.DecodeFile(fileName, options);
@@ -204,22 +203,21 @@ namespace Emgu.TF.Models
                 return ms.ToArray();
             }
 #elif __MACOS__
-
-                    NSImage img = NSImage.ImageNamed(fileName);                        
-                    MultiboxGraph.DrawResults(img, detectResult, scoreThreshold);
-                    var imageData = img.AsTiff();
-                    var imageRep = NSBitmapImageRep.ImageRepsWithData(imageData)[0] as NSBitmapImageRep;
-                    var jpegData = imageRep.RepresentationUsingTypeProperties(NSBitmapImageFileType.Jpeg, null);
-                    byte[] jpeg = new byte[jpegData.Length];
-                    System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, jpeg, 0, (int)jpegData.Length);
-                    return jpeg;
+            NSImage img = NSImage.ImageNamed(fileName);                        
+            MultiboxGraph.DrawResults(img, detectResult, scoreThreshold);
+            var imageData = img.AsTiff();
+            var imageRep = NSBitmapImageRep.ImageRepsWithData(imageData)[0] as NSBitmapImageRep;
+            var jpegData = imageRep.RepresentationUsingTypeProperties(NSBitmapImageFileType.Jpeg, null);
+            byte[] jpeg = new byte[jpegData.Length];
+            System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, jpeg, 0, (int)jpegData.Length);
+            return jpeg;
 #elif __IOS__
-                    UIImage uiimage = new UIImage(fileName);
+            UIImage uiimage = new UIImage(fileName);
 
-					UIImage newImg = MultiboxGraph.DrawResults(uiimage, detectResult, scoreThreshold);
-	                var jpegData = newImg.AsJPEG();
-					byte[] jpeg = new byte[jpegData.Length];
-					System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, raw, 0, (int)jpegData.Length);
+			UIImage newImg = MultiboxGraph.DrawResults(uiimage, detectResult, scoreThreshold);
+            var jpegData = newImg.AsJPEG();
+			byte[] jpeg = new byte[jpegData.Length];
+			System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, jpeg, 0, (int)jpegData.Length);
             return jpeg;
 #else
             throw new Exception("Not implemented");

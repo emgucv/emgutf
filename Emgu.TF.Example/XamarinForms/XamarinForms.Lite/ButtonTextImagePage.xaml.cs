@@ -13,7 +13,9 @@ using Xamarin.Forms;
 
 #if __ANDROID__ || __IOS__
 using Plugin.Media;
+#if __ANDROID__
 using Plugin.CurrentActivity;
+#endif
 #endif
 
 #if __MACOS__
