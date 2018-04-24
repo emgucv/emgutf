@@ -1,6 +1,7 @@
 #!/bin/sh
 cd ..
-cd tensorflow
+#cd tensorflow
+#git clean -d -fx "."
+#cd ..
 git clean -d -fx "."
-cd ..
-git clean -d -fx "."
+git submodule foreach --recursive git clean -fx "."

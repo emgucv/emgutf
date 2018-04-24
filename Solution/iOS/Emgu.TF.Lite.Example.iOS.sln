@@ -3,30 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF", "..\..\Emgu.TF\Emgu.TF.shproj", "{D47D776E-9970-4552-BC8A-24CADCBEA009}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Util", "..\..\Emgu.TF.Util\Emgu.TF.Util.shproj", "{98561642-5EC3-4244-BAF9-6876D9BA5527}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Models.Shared", "..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.shproj", "{752279F0-17EF-4EC8-857C-8F5F897AF0E8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinForms.Lite.iOS", "..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite.iOS\XamarinForms.Lite.iOS.csproj", "{FB5CF614-195E-4D5A-ABDB-1B831A5F8F79}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "XamarinForms", "..\..\Emgu.TF.Example\XamarinForms\XamarinForms\XamarinForms.shproj", "{26BDB58D-52D9-4AD1-9205-BE5792781A98}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinForms.iOS", "..\..\Emgu.TF.Example\XamarinForms\XamarinForms.iOS\XamarinForms.iOS.csproj", "{24A85BC6-BECC-4194-9B93-213B53E57127}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.World.iOS", "..\..\Emgu.TF.World\Emgu.TF.World.iOS.csproj", "{BFD51463-0DD6-4527-8354-4E36050C3568}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite", "..\..\Emgu.TF.Lite\Emgu.TF.Lite.shproj", "{8F587FB9-BBA6-4C30-9329-8CBAC7020FE0}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.Models.Shared", "..\..\Emgu.Models\Emgu.Models.Shared.shproj", "{8EDCE0C8-BA71-4396-9428-35D05877258C}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "XamarinForms.Lite", "..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite\XamarinForms.Lite.shproj", "{26F4D7AF-57B6-4D2D-9A1C-AAFA757DDC4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Lite.World.iOS", "..\..\Emgu.TF.World\Emgu.TF.Lite.World.iOS.csproj", "{A14504ED-D613-43D1-AD3D-AE3F411C51CE}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\Emgu.TF.Example\XamarinForms\XamarinForms\XamarinForms.projitems*{24a85bc6-becc-4194-9b93-213b53e57127}*SharedItemsImports = 4
-		..\..\Emgu.TF.Models\Emgu.TF.Models.projitems*{24a85bc6-becc-4194-9b93-213b53e57127}*SharedItemsImports = 4
-		..\..\Emgu.TF.Example\XamarinForms\XamarinForms\XamarinForms.projitems*{26bdb58d-52d9-4ad1-9205-be5792781a98}*SharedItemsImports = 13
-		..\..\Emgu.TF.Models\Emgu.TF.Models.projitems*{752279f0-17ef-4ec8-857c-8f5f897af0e8}*SharedItemsImports = 13
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{98561642-5ec3-4244-baf9-6876d9ba5527}*SharedItemsImports = 13
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{bfd51463-0dd6-4527-8354-4e36050c3568}*SharedItemsImports = 4
-		..\..\Emgu.TF\Emgu.TF.projitems*{bfd51463-0dd6-4527-8354-4e36050c3568}*SharedItemsImports = 4
-		..\..\Emgu.TF\Emgu.TF.projitems*{d47d776e-9970-4552-bc8a-24cadcbea009}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
