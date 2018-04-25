@@ -2,7 +2,7 @@
 #  Copyright (C) 2004-2018 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-PROJECT(Emgu.TF.Protobuf)
+PROJECT(Emgu.TF.Protobuf.Netstandard)
 
 #MESSAGE("In protobug project now. HAVE_WINDESKTOP_X64: ${HAVE_WINDESKTOP_X64}")
 
@@ -24,11 +24,11 @@ PATTERN "${PROJECT_NAME}.dir" EXCLUDE
 IF(HAVE_WINDESKTOP_X86 OR HAVE_WINDESKTOP_X64)
 
 #MESSAGE("Adding protobuf project")
-BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf/Emgu.TF.Protobuf.csproj" "" ALL)
+BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf.Netstandard/Emgu.TF.Protobuf.Netstandard.csproj" "" ALL)
 
 ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
 	PRE_BUILD
-	COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../miscellaneous/nuget.exe" restore "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf/packages.config") 
+	COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../miscellaneous/nuget.exe" restore "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf.Netstandard/Emgu.TF.Protobuf.Netstandard.csproj") 
 
 SET(PROTO_SOURCE)
 FILE(GLOB PROTO_SOURCE_FILES_FRAME_WORK RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/framework/" "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/framework/*.proto")
@@ -87,7 +87,7 @@ ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll
 DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
 COMPONENT emgutf_binary)
 
-ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.World Emgu.TF.CodeGen)
+ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.World)
 
 ENDIF()
 
