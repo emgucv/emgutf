@@ -54,9 +54,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Emgu.TF.Protobuf\Emgu.TF.Protobuf\Emgu.TF.Protobuf.csproj">
-      <Project>{ebc5c3cc-6700-4a98-86d2-1e9e830db73d}</Project>
-      <Name>Emgu.TF.Protobuf</Name>
+    <ProjectReference Include="..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Netstandard\Emgu.TF.Protobuf.Netstandard.csproj">
+      <Project>{01147797-9f30-4ab3-a86c-1c4509c88edb}</Project>
+      <Name>Emgu.TF.Protobuf.Netstandard</Name>
     </ProjectReference>
     <ProjectReference Include="..\Emgu.TF.World\Emgu.TF.World.csproj">
       <Project>{cf1433de-b607-479e-862d-8f4cb6783261}</Project>

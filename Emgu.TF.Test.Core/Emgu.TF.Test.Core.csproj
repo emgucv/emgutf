@@ -49,6 +49,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Netstandard\Emgu.TF.Protobuf.Netstandard.csproj">
+      <Project>{01147797-9f30-4ab3-a86c-1c4509c88edb}</Project>
+      <Name>Emgu.TF.Protobuf.Netstandard</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Emgu.TF.World\Emgu.TF.World.csproj">
       <Project>{cf1433de-b607-479e-862d-8f4cb6783261}</Project>
       <Name>Emgu.TF.World</Name>
@@ -57,8 +61,8 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <Import Project="..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems" Label="Shared" />
   <Import Project="..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems" Label="Shared" />
+  <Import Project="..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
