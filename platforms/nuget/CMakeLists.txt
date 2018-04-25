@@ -27,3 +27,7 @@ ENDIF()
 add_subdirectory(Models)
 add_subdirectory(Protobuf)
 ENDIF()
+
+IF ( HAVE_ANDROID )
+	add_subdirectory(Android)
+ENDIF()

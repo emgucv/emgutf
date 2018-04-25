@@ -352,6 +352,14 @@ IF(HAVE_WINDESKTOP_X64_CUDA)
 	SET(EMGUTF_PROTOBUF_NUGET_TITLE "${EMGUTF_MODEL_NUGET_TITLE} with CUDA support")
 ENDIF()
 
+IF(HAVE_ANDROID)
+	SET(EMGUTF_ANDROID_NUGET_ID "${EMGUTF_NUGET_ID}-ANDROID")
+	SET(EMGUTF_ANDROID_NUGET_TITLE "${EMGUTF_NUGET_TITLE} for Android")	
+	SET(EMGUTF_ANDROID_NUGET_FILE_LIST " 
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.World.Android.dll\" target=\"lib\\MonoAndroid50\" />
+	<file src=\"..\\..\\..\\lib\\Emgu.TF.World.Android.XML\" target=\"lib\\MonoAndroid50\" />")
+ENDIF()
+
 IF ("${LICENSE_TYPE}" EQUAL "Commercial")
 	SET(EMGUTF_NUGET_ID "${EMGUTF_NUGET_ID}-CR")
 	SET(EMGUTF_MODEL_NUGET_ID "${EMGUTF_MODEL_NUGET_ID}-CR")
@@ -403,7 +411,7 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Package.nuspec.in ${CMAKE_CURRE
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Models.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Models/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Protobuf.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Protobuf/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/XamarinForms.Android.AndroidManifest.xml.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Example/XamarinForms/XamarinForms.Android/Properties/AndroidManifest.xml)
-
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Android.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Android/Package.nuspec)
 # ----------------------------------------------------------------------------
 #  Generate readme file for Emgu TF project
 # ----------------------------------------------------------------------------
