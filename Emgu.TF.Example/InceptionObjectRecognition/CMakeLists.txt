@@ -8,9 +8,9 @@ FILE(GLOB_RECURSE SRC_Example_InceptionObjectRecognition RELATIVE ${CMAKE_CURREN
 
 SET(SRC_Example_InceptionObjectRecognition_ALL)
 LIST(APPEND SRC_Example_InceptionObjectRecognition_ALL ${SRC_Example_InceptionObjectRecognition})
-LIST(APPEND SRC_Example_MultiboxPeopleDetection_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.Models/FileDownloadManager.cs)
-LIST(APPEND SRC_Example_MultiboxPeopleDetection_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.Models/DownloadableFile.cs)
-LIST(APPEND SRC_Example_MultiboxPeopleDetection_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.Models/NativeImageIO.cs)
+LIST(APPEND SRC_Example_InceptionObjectRecognition_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.Models/FileDownloadManager.cs)
+LIST(APPEND SRC_Example_InceptionObjectRecognition_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.Models/DownloadableFile.cs)
+LIST(APPEND SRC_Example_InceptionObjectRecognition_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.Models/NativeImageIO.cs)
 LIST(APPEND SRC_Example_InceptionObjectRecognition_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.TF.Models/ImageIO.cs)
 LIST(APPEND SRC_Example_InceptionObjectRecognition_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.TF.Models/Inception.cs)
 
