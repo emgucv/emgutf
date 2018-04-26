@@ -38,24 +38,7 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //Warning: The following code is used to get around a https certification issue for downloading tesseract language files from Github
-        //Do not use this code in a production environment. Please make sure you understand the security implication from the following code before using it
-        ServicePointManager.ServerCertificateValidationCallback += delegate (object sender, X509Certificate cert, X509Chain chain, SslPolicyErrors sslPolicyErrors) {
-            HttpWebRequest webRequest = sender as HttpWebRequest;
-            if (webRequest != null)
-            {
-                String requestStr = webRequest.Address.AbsoluteUri;
-                if (
-                requestStr.StartsWith(@"https://github.com/") ||
-                requestStr.StartsWith(@"https://raw.githubusercontent.com/") ||
-                requestStr.StartsWith(@"https://s3.amazonaws.com/") )
-                
-                    return true;
-            }
-            return false;
-        };
-
-        DownloadableModels.PersistentDataPath = Application.persistentDataPath;
+        _multiboxGraph = new MultiboxGraph();
 
         bool loaded = TfInvoke.CheckLibraryLoaded();
         //DisplayText.text = String.Format("Tensorflow library loaded: {0}", loaded);
@@ -78,44 +61,19 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
             baseRotation = transform.rotation;
             webcamTexture.Play(); 
         }*/
-    }
 
-    private bool _loadingModel = false;
+        StartCoroutine(_multiboxGraph.Init());
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (_multiboxGraph == null)
+        if (!_multiboxGraph.Imported)
         {
-            if (_loadingModel)
-                return;
-            _loadingModel = true;
             DisplayText.text = String.Format("Loading Multibox model, please wait...");
-            System.Threading.ThreadPool.QueueUserWorkItem(
-                (o) =>
-                {
-                    try
-                    {
-                        _multiboxGraph = new MultiboxGraph();
-                    }
-                    catch (Exception e)
-                    {
-                        //DisplayText.text = e.Message;
-                        Debug.LogError(e);
-                        return;
-                        //throw;
-                    }
-  
-                    _loadingModel = false;
-                });
-        }
-
-        if (_multiboxGraph == null)
-            return;
-
-        if (_liveCameraView)
+            return; 
+        } else if (_liveCameraView)
         {
-
             if (webcamTexture != null && webcamTexture.didUpdateThisFrame)
             {
                 #region convert the webcam texture to RGBA bytes
@@ -176,8 +134,6 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
         }
         else if (!_staticViewRendered)
         {
-
-			
             Texture2D texture = Resources.Load<Texture2D>("surfers");
             Tensor imageTensor = ImageIO.ReadTensorFromTexture2D(texture, 224, 224, 128.0f, 1.0f / 128.0f, true);
 

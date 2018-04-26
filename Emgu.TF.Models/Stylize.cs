@@ -2,7 +2,7 @@
 //  Copyright (C) 2004-2018 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
-//#if !__UNIFIED__
+#if !(UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE)
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -118,4 +118,4 @@ namespace Emgu.TF.Models
         }
     }
 }
-//#endif
+#endif

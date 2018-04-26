@@ -3,6 +3,7 @@
 //----------------------------------------------------------------------------
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -57,20 +58,38 @@ namespace Emgu.TF.Models
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
         public event System.ComponentModel.AsyncCompletedEventHandler OnDownloadCompleted;
 
-        public void Init(String[] modelFiles = null, String downloadUrl = null)
+        public
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+            IEnumerator
+#else
+            void
+#endif
+            Init(String[] modelFiles = null, String downloadUrl = null)
         {
             _downloadManager.Clear();
             String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/mobile_multibox_v1a/" : downloadUrl;
             String[] fileNames = modelFiles == null ? new string[] { "multibox_model.pb", "multibox_location_priors.txt" } : modelFiles;
             for (int i = 0; i < fileNames.Length; i++)
                 _downloadManager.AddFile(url + fileNames[i]);
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+            yield return _downloadManager.Download();
+#else
             _downloadManager.Download();
+#endif
         }
 
         private void onDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             if (OnDownloadProgressChanged != null)
                 OnDownloadProgressChanged(sender, e);
+        }
+
+        public bool Imported
+        {
+            get
+            {
+                return _graph != null;
+            }
         }
 
         private void ImportGraph()

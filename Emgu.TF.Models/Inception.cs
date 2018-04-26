@@ -3,6 +3,7 @@
 //----------------------------------------------------------------------------
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Emgu.TF;
@@ -48,7 +49,14 @@ namespace Emgu.TF.Models
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
         public event System.ComponentModel.AsyncCompletedEventHandler OnDownloadCompleted;
 
-        public void Init(String[] modelFiles = null, String downloadUrl = null, String inputName = null, String outputName = null)
+
+        public
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+            IEnumerator
+#else
+            void
+#endif
+            Init(String[] modelFiles = null, String downloadUrl = null, String inputName = null, String outputName = null)
         {
             _inputName = inputName == null ? "input" : inputName;
             _outputName = outputName == null ? "output" : outputName;
@@ -58,7 +66,20 @@ namespace Emgu.TF.Models
             String[] fileNames = modelFiles == null ? new string[] { "tensorflow_inception_graph.pb", "imagenet_comp_graph_label_strings.txt" } : modelFiles;
             for (int i = 0; i < fileNames.Length; i++)
                 _downloadManager.AddFile(url + fileNames[i]);
+
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+            yield return _downloadManager.Download();
+#else
             _downloadManager.Download();
+#endif
+        }
+
+        public bool Imported
+        {
+            get
+            {
+                return _graph != null;
+            }
         }
 
         private void ImportGraph()

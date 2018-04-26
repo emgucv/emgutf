@@ -3,6 +3,7 @@
 //----------------------------------------------------------------------------
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
@@ -43,6 +44,44 @@ namespace Emgu.Models
             }
         }
 
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+        public IEnumerator Download()
+        {
+            foreach (DownloadableFile df in _files)
+            {
+                String localFileName = df.LocalFile;
+
+                //Uncomment the following to force redownload every time
+                //File.Delete(localFileName);
+                if (!System.IO.File.Exists(localFileName) || !(new FileInfo(localFileName).Length > 0))
+                {
+                    using (UnityEngine.Networking.UnityWebRequest webclient = new UnityEngine.Networking.UnityWebRequest(df.Url))
+                    {
+                        UnityEngine.Debug.Log(String.Format("Downloading file from '{0}' to '{1}'", df.Url, localFileName));
+
+                        webclient.downloadHandler = new UnityEngine.Networking.DownloadHandlerFile(localFileName);
+                        yield return webclient.SendWebRequest();
+                        if (webclient.isNetworkError || webclient.isHttpError)
+                        {
+                            UnityEngine.Debug.LogError(webclient.error);
+                        }
+
+                        if (!System.IO.File.Exists(localFileName) || !(new FileInfo(localFileName).Length > 0))
+                        {
+                            UnityEngine.Debug.LogError(String.Format("File {0} is empty, failed to download file.", localFileName));
+                        }
+
+                        UnityEngine.Debug.Log("File successfully downloaded and saved to " + localFileName);
+                        //Debug.Log(String.Format("Download completed"));
+                    }
+                }
+            }
+            if (OnDownloadCompleted != null)
+            {
+                OnDownloadCompleted(this, null);
+            }
+        }
+#else
         public void Download(int retry = 1)
         {
             Download( _files.ToArray(), retry, this.OnDownloadProgressChanged, this.OnDownloadCompleted);
@@ -124,8 +163,11 @@ namespace Emgu.Models
                     }
                     else
                     {
-
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+                        UnityEngine.Debug.Log(e.StackTrace);
+#else
                         Debug.WriteLine(e);
+#endif
                         throw;
                     }
                 }
@@ -135,5 +177,7 @@ namespace Emgu.Models
                      onDownloadFileCompleted(null, null);
             }
         }
+#endif
     }
+
 }

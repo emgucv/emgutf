@@ -53,7 +53,83 @@ namespace Emgu.TF.Models
             return raw[0].DecodeString();
         }
 
+        public static byte[] TensorToPixel(Tensor imageTensorF, float scale = 1.0f, int dstChannels = 3, Status status = null)
+        {
+            int[] dim = imageTensorF.Dim;
+            if (dim[3] != 3)
+            {
+                throw new NotImplementedException("Only 3 channel tensor input is supported.");
+            }
+
+            using (StatusChecker checker = new StatusChecker(status))
+            {
+                var graph = new Graph();
+                Operation input = graph.Placeholder(imageTensorF.Type);
+
+                //multiply with scale
+                Tensor scaleTensor = new Tensor(scale);
+                Operation scaleOp = graph.Const(scaleTensor, scaleTensor.Type, opName: "scale");
+                Operation scaled = graph.Mul(input, scaleOp);
+
+                //cast to byte
+                Operation byteCaster = graph.Cast(scaled, DstT: DataType.Uint8);
+
+                //run the graph
+                Session session = new Session(graph);
+                Tensor[] imageResults = session.Run(new Output[] { input }, new Tensor[] { imageTensorF },
+                    new Output[] { byteCaster });
+
+                //get the raw data
+                byte[] raw = imageResults[0].Flat<byte>();
+
+                if (dstChannels == 3)
+                {
+                    return raw;
+                }
+                else if (dstChannels == 4)
+                {
+
+                    int pixelCount = raw.Length / 3;
+                    byte[] colors = new byte[pixelCount * 4];
+                    for (int i = 0; i < pixelCount; i++)
+                    {
+                        colors[i * 4] = raw[i * 3];
+                        colors[i * 4 + 1] = raw[i * 3 + 1];
+                        colors[i * 4 + 2] = raw[i * 3 + 2];
+                        colors[i * 4 + 3] = (byte)255;
+                    }
+                    return colors;
+
+                }
+                else
+                {
+                    throw new Exception(String.Format("Output channel count of {0} is not supported", dstChannels));
+                }
+
+            }
+        }
+
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+        public static Texture2D ReadTexture2DFromFile(String fileName)
+        {
+            Texture2D texture = null;
+            byte[] fileData;
+
+            if (File.Exists(fileName))
+            {
+                fileData = File.ReadAllBytes(fileName);
+                texture = new Texture2D(2, 2, TextureFormat.BGRA32, false);
+                texture.LoadImage(fileData); //..this will auto-resize the texture dimensions.
+            }
+            return texture;
+        }
+
+        public static Tensor ReadTensorFromImageFile(String fileName, int inputHeight = -1, int inputWidth = -1, float inputMean = 0.0f, float scale = 1.0f, bool flipUpsideDown = false)
+        {
+            Texture2D texture = ReadTexture2DFromFile(fileName);
+            return ReadTensorFromTexture2D(texture, inputHeight, inputWidth, inputMean, scale, flipUpsideDown);
+        }
+
         public static Tensor ReadTensorFromTexture2D(
             Texture2D texture, int inputHeight = -1, int inputWidth = -1,
             float inputMean = 0.0f, float scale = 1.0f, bool flipUpsideDown = false)
@@ -147,6 +223,7 @@ namespace Emgu.TF.Models
             return nTex;
         }
 
+        /*
         public static Tensor ReadTensorFromTexture2D_V0(
             Texture2D texture, int inputHeight = -1, int inputWidth = -1,
             float inputMean = 0.0f, float scale = 1.0f, bool flipUpsideDown = false)
@@ -198,63 +275,8 @@ namespace Emgu.TF.Models
             System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, t.DataPointer, floatValues.Length);
 
             return t;
-        }
+        }*/
 #else
-
-        public static byte[] TensorToPixel(Tensor imageTensorF, float scale = 1.0f, int dstChannels = 3, Status status = null)
-        {
-            int[] dim = imageTensorF.Dim;
-            if (dim[3] != 3)
-            {
-                throw new NotImplementedException("Only 3 channel tensor input is supported.");
-            }
-
-            using (StatusChecker checker = new StatusChecker(status))
-            {
-                var graph = new Graph();
-                Operation input = graph.Placeholder(imageTensorF.Type);
-
-                //multiply with scale
-                Tensor scaleTensor = new Tensor(scale);
-                Operation scaleOp = graph.Const(scaleTensor, scaleTensor.Type, opName: "scale");
-                Operation scaled = graph.Mul(input, scaleOp);
-
-                //cast to byte
-                Operation byteCaster = graph.Cast(scaled, DstT: DataType.Uint8); 
-
-                //run the graph
-                Session session = new Session(graph);
-                Tensor[] imageResults = session.Run(new Output[] { input }, new Tensor[] { imageTensorF },
-                    new Output[] { byteCaster });
-
-                //get the raw data
-                byte[] raw = imageResults[0].Flat<byte>();
-
-                if (dstChannels == 3)
-                {
-                    return raw;
-                } else if (dstChannels == 4)
-                {
-
-                    int pixelCount = raw.Length / 3;
-                    byte[] colors = new byte[pixelCount * 4];
-                    for (int i = 0; i < pixelCount; i++)
-                    {
-                        colors[i * 4] = raw[i * 3];
-                        colors[i * 4 + 1] = raw[i * 3 + 1];
-                        colors[i * 4 + 2] = raw[i * 3 + 2];
-                        colors[i * 4 + 3] = (byte)255;
-                    }
-                    return colors;
-
-                }
-                else
-                {
-                    throw new Exception(String.Format("Output channel count of {0} is not supported", dstChannels));
-                }
-
-            }
-        }
 
         public static byte[] TensorToJpeg(Tensor stylizedImage, float scale = 1.0f, Status status = null)
         {

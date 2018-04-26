@@ -14,6 +14,7 @@ using System.Security.Cryptography.X509Certificates;
 using Emgu.TF;
 using Emgu.TF.Models;
 using UnityEngine.UI;
+using Emgu.Models;
 
 public class InceptionBehavior : MonoBehaviour
 {
@@ -31,58 +32,22 @@ public class InceptionBehavior : MonoBehaviour
     public Text DisplayText;
 
 	private Inception _inceptionGraph = null;
-    private String[] _inceptionLabels;
 
     private void RecognizeAndUpdateText(Texture2D texture)
     {
-		if (_inceptionGraph == null)
+		if (!_inceptionGraph.Imported)
 			return;
         Tensor imageTensor = ImageIO.ReadTensorFromTexture2D(texture, 224, 224, 128.0f, 1.0f, true);
-        float[] probability = _inceptionGraph.Recognize(imageTensor);
-
-        //String resStr = String.Empty;
-        if (probability != null)
-        {
-
-            float maxVal = 0;
-            int maxIdx = 0;
-            for (int i = 0; i < probability.Length; i++)
-            {
-                if (probability[i] > maxVal)
-                {
-                    maxVal = probability[i];
-                    maxIdx = i;
-                }
-            }
-            _displayMessage = String.Format("Object is {0} with {1}% probability.", _inceptionLabels[maxIdx], maxVal * 100);
-        }
+        Inception.RecognitionResult result =  _inceptionGraph.MostLikely(imageTensor);
+        _displayMessage = String.Format("Object is {0} with {1}% probability.", result.Label, result.Probability);
     }
+
 
     // Use this for initialization
     void Start()
     {
-        //Warning: The following code is used to get around a https certification issue for downloading tesseract language files from Github
-        //Do not use this code in a production environment. Please make sure you understand the security implication from the following code before using it
-        ServicePointManager.ServerCertificateValidationCallback += delegate (object sender, X509Certificate cert, X509Chain chain, SslPolicyErrors sslPolicyErrors) {
-            HttpWebRequest webRequest = sender as HttpWebRequest;
-            if (webRequest != null)
-            {
-                String requestStr = webRequest.Address.AbsoluteUri;
-                if (
-                requestStr.StartsWith(@"https://github.com/") ||
-                requestStr.StartsWith(@"https://raw.githubusercontent.com/") ||
-                requestStr.StartsWith(@"https://s3.amazonaws.com/") ||
-                requestStr.StartsWith(@"https://s3.amazonaws.com/emgu-public/inception/") 
-                )
-                    return true;
-            }
-            return false;
-        };
-
-        DownloadableModels.PersistentDataPath = Application.persistentDataPath;
-
+        _inceptionGraph = new Inception();
         bool loaded = TfInvoke.CheckLibraryLoaded();
-        //DisplayText.text = String.Format("Tensorflow library loaded: {0}", loaded);
 
         _liveCameraView = false;
         /*
@@ -102,9 +67,9 @@ public class InceptionBehavior : MonoBehaviour
             webcamTexture.Play();
             //data = new Color32[webcamTexture.width * webcamTexture.height];
         }*/
-    }
 
-    private bool _loadingModel = false;
+        StartCoroutine(_inceptionGraph.Init());
+    }
 
     private String _displayMessage = String.Empty;
 
@@ -112,30 +77,10 @@ public class InceptionBehavior : MonoBehaviour
     void Update()
     {
         DisplayText.text = _displayMessage;
-        if (_inceptionGraph == null)
+        if (!_inceptionGraph.Imported)
         {
-            if (_loadingModel)
-                return;
-            _loadingModel = true;
             _displayMessage = String.Format("Loading Inception Model, please wait...");
-
-            System.Threading.ThreadPool.QueueUserWorkItem(
-                (o) =>
-                {
-                    try
-                    {
-                        _inceptionGraph = new Inception();
-                        _inceptionLabels = _inceptionGraph.Labels;
-                    }
-                    catch (Exception e)
-                    {
-                        _displayMessage = e.Message;
-                        return;
-                    }
-
-                    _loadingModel = false;
-                });
-            //DisplayText.text = _displayMessage;
+            
             return;
         } else if (_liveCameraView)
         {
@@ -193,7 +138,7 @@ public class InceptionBehavior : MonoBehaviour
         else if(!_staticViewRendered)
             {
 
-            if (_inceptionGraph == null)
+            if (!_inceptionGraph.Imported)
                 return;
             Texture2D texture = Resources.Load<Texture2D>("space_shuttle");
 
@@ -204,8 +149,5 @@ public class InceptionBehavior : MonoBehaviour
             _staticViewRendered = true;
             //DisplayText.text = _displayMessage;
         }
-    
-
-
     }
 }
