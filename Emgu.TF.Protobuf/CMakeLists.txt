@@ -74,11 +74,11 @@ ENDFOREACH()
 SET(PROTO_GEN_COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../nugetpackages/Google.Protobuf.Tools.3.5.1/tools/windows_x86/protoc.exe" "--proto_path=." "--csharp_out=\"${CMAKE_CURRENT_SOURCE_DIR}\"" "--csharp_opt=file_extension=.g.cs" ${PROTO_SOURCE})
 #MESSAGE(STATUS "PROTO_GEN_COMMAND: ${PROTO_GEN_COMMAND}")
 
-ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
-	PRE_BUILD
-	COMMAND rm "*.g.cs" #remove all existing generated cs files
-	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-	)
+#ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
+#	PRE_BUILD
+#	COMMAND rm -f *.g.cs #remove all existing generated cs files
+#	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+#	)
 
 ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
 	PRE_BUILD
