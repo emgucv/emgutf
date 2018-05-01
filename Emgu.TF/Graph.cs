@@ -145,12 +145,21 @@ namespace Emgu.TF
                 TfInvoke.tfeGraphToGraphDef(_ptr, outputGraphDef, checker.Status);
         }
 
+        /// <summary>
+        /// Returns the serialized VersionDef proto for this graph.
+        /// </summary>
+        /// <param name="versionDef">The serialized VersionDef proto for this graph.</param>
+        /// <param name="status">The status</param>
         public void Versions(Buffer versionDef, Status status = null)
         {
             using (StatusChecker checker = new StatusChecker(status))
                 TfInvoke.tfeGraphVersions(_ptr, versionDef, checker.Status);
         }
 
+        /// <summary>
+        /// Get an enumerator of the Operations in this Graph
+        /// </summary>
+        /// <returns>An enumerator of the Operations in this Graph</returns>
         public IEnumerator<Operation> GetEnumerator()
         {
             IntPtr pos = IntPtr.Zero;

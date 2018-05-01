@@ -46,6 +46,9 @@ namespace Emgu.TF
             }
         }
 
+        /// <summary>
+        /// Get the number of comsumers
+        /// </summary>
         public int NumConsumers
         {
             get

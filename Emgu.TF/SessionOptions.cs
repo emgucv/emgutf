@@ -49,6 +49,13 @@ namespace Emgu.TF
             TfInvoke.tfeSetTarget(_ptr, target);
         }
 
+        /// <summary>
+        /// Set the config in TF_SessionOptions.options.
+        /// If config was not parsed successfully as a ConfigProto, record the
+        /// error information in <paramref name="status"/>.
+        /// </summary>
+        /// <param name="proto">Config should be a serialized tensorflow.ConfigProto proto.</param>
+        /// <param name="status">The status</param>
         public void SetConfig(byte[] proto, Status status = null)
         {
             using (StatusChecker checker = new StatusChecker(status))

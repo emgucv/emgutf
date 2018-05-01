@@ -214,6 +214,11 @@ namespace Emgu.TF
             }
         }
 
+        /// <summary>
+        /// Decode a string encoded
+        /// </summary>
+        /// <param name="status">The status</param>
+        /// <returns>The decoded string.</returns>
         public byte[] DecodeString(Status status = null)
         {
             using (StatusChecker checker = new StatusChecker(status))

@@ -138,6 +138,11 @@ namespace Emgu.TF
 
         }
 
+        /// <summary>
+        /// Lists all devices in a session
+        /// </summary>
+        /// <param name="status">The status</param>
+        /// <returns>All devices in the current session</returns>
         public Device[] ListDevices(Status status = null)
         {
             using (StatusChecker checker = new StatusChecker(status))
@@ -179,12 +184,27 @@ namespace Emgu.TF
             }
         }
 
+        /// <summary>
+        /// The device for a session.
+        /// </summary>
         public class Device
         {
+            /// <summary>
+            /// The name of the device
+            /// </summary>
             public String Name { get; set; }
+            /// <summary>
+            /// The type of the device
+            /// </summary>
             public String Type { get; set; }
+            /// <summary>
+            /// The amount of memory associated with a given device, in bytes.
+            /// </summary>
             public Int64 MemoryBytes { get; set; }
 
+            /// <summary>
+            /// The amount of memory associated with a given device, in GB.
+            /// </summary>
             public double MemoryGB { get { return MemoryBytes / (1024.0 * 1024.0 * 1024.0); } }
         }
     }

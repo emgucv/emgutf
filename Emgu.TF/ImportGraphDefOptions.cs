@@ -44,6 +44,13 @@ namespace Emgu.TF
             TfInvoke.tfeImportGraphDefOptionsSetPrefix(_ptr, prefix);
         }
 
+        /// <summary>
+        /// Set any imported nodes with input <paramref name="srcName"/>:<paramref name="srcIndex"/> to have that input
+        /// replaced with <paramref name="dst"/>.
+        /// </summary>
+        /// <param name="srcName">Refers to a node in the graph to be imported</param>
+        /// <param name="srcIndex">The source node index.</param>
+        /// <param name="dst">References a node already existing in the graph being imported into</param>
         public void AddInputMapping(String srcName, int srcIndex, Output dst)
         {
             TfInvoke.tfeImportGraphDefOptionsAddInputMapping(
@@ -54,21 +61,41 @@ namespace Emgu.TF
                 dst.Index);
         }
 
+        /// <summary>
+        /// Set any imported nodes with control input <paramref name="srcName"/> to have that input
+        /// replaced with <paramref name="dst"/>
+        /// </summary>
+        /// <param name="srcName">Refers to a node in the graph to be imported</param>
+        /// <param name="dst">References an operation already existing in the graph being imported into</param>
         public void RemapControlDependency(String srcName, Operation dst)
         {
             TfInvoke.tfeImportGraphDefOptionsRemapControlDependency(_ptr, srcName, dst);
         }
 
+        /// <summary>
+        /// Cause the imported graph to have a control dependency on <paramref name="oper"/>
+        /// </summary>
+        /// <param name="oper">The opration that the graph will have a control dependecy on. Should exist in the graph being imported into.</param>
         public void AddControlDependency(Operation oper)
         {
             TfInvoke.tfeImportGraphDefOptionsAddControlDependency(_ptr, oper);
         }
 
+        /// <summary>
+        /// Add an output in graph_def to be returned via the `return_outputs` output
+        /// parameter. If the output is remapped via an input
+        /// mapping, the corresponding existing tensor in graph will be returned.
+        /// </summary>
+        /// <param name="operName">The name of the operation</param>
+        /// <param name="index">The index</param>
         public void AddReturnOutput(String operName, int index)
         {
             TfInvoke.tfeImportGraphDefOptionsAddReturnOutput(_ptr, operName, index);
         }
 
+        /// <summary>
+        /// Get the number of return outputs
+        /// </summary>
         public int NumReturnOutputs
         {
             get { return TfInvoke.tfeImportGraphDefOptionsNumReturnOutputs(_ptr); }

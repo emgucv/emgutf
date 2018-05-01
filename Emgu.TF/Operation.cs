@@ -22,6 +22,9 @@ namespace Emgu.TF
             _ptr = ptr;
         }
 
+        /// <summary>
+        /// Return true if the operation is empty
+        /// </summary>
         public bool Empty
         {
             get
@@ -123,6 +126,9 @@ namespace Emgu.TF
             }
         }
 
+        /// <summary>
+        /// Get the inputs
+        /// </summary>
         public Input[] Inputs
         {
             get
@@ -137,6 +143,9 @@ namespace Emgu.TF
             }
         }
 
+        /// <summary>
+        /// Get the outputs
+        /// </summary>
         public Output[] Outputs
         {
             get
@@ -151,6 +160,9 @@ namespace Emgu.TF
             }
         }
 
+        /// <summary>
+        /// Get the number of control inputs
+        /// </summary>
         public int NumControlInputs
         {
             get
@@ -161,6 +173,9 @@ namespace Emgu.TF
             }
         }
 
+        /// <summary>
+        /// Get the number of control outputs.
+        /// </summary>
         public int NumControlOutputs
         {
             get

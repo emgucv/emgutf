@@ -69,6 +69,9 @@ namespace Emgu.TF
             return new MemoryStream(Data);
         }
 
+        /// <summary>
+        /// Get the raw data as an array of byte.
+        /// </summary>
         public byte[] Data
         {
             get

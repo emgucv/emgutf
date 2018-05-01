@@ -108,7 +108,7 @@ namespace Emgu.TF
 
         private static String CleanUpDescription(String description)
         {
-            return description.Replace("<", "&lt;").Replace(">", "&gt;").Replace("\n", " ").Replace("&&", "&amp;&amp;");
+            return description.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;").Replace("\n", " ");
         }
 
         private static String _sixSpaces = "      ";

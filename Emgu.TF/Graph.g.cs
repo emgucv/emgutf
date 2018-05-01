@@ -585,7 +585,7 @@ namespace Emgu.TF
       ///<summary>
       ///Find the split that has the best gain for the accumulated stats.
       ///</summary>
-      ///<param name="num_minibatches">Input to the operation: A scalar, the number of times per example gradients & hessians were accumulated. The stats are divided by this to get per example stats.</param>
+      ///<param name="num_minibatches">Input to the operation: A scalar, the number of times per example gradients &amp; hessians were accumulated. The stats are divided by this to get per example stats.</param>
       ///<param name="partition_ids">Input to the operation: A rank 1 tensor of partition IDs.</param>
       ///<param name="feature_ids">Input to the operation: A rank 2 tensor of feature IDs and dimensions.</param>
       ///<param name="gradients">Input to the operation: A rank 1 tensor of gradients.</param>
@@ -1972,7 +1972,7 @@ namespace Emgu.TF
       ///<summary>
       ///Find the split that has the best gain for the accumulated stats.
       ///</summary>
-      ///<param name="num_minibatches">Input to the operation: A scalar, the number of times per example gradients & hessians were accumulated. The stats are divided by this to get per example stats.</param>
+      ///<param name="num_minibatches">Input to the operation: A scalar, the number of times per example gradients &amp; hessians were accumulated. The stats are divided by this to get per example stats.</param>
       ///<param name="partition_ids">Input to the operation: A rank 1 tensor of partition IDs.</param>
       ///<param name="bucket_ids">Input to the operation: A rank 2 tensor of buckets IDs and dimensions.</param>
       ///<param name="gradients">Input to the operation: A rank 1 tensor of gradients.</param>
@@ -2040,7 +2040,7 @@ namespace Emgu.TF
       ///<summary>
       ///Find the split that has the best gain for the accumulated stats for a particular
       ///</summary>
-      ///<param name="num_minibatches">Input to the operation: A scalar, the number of times per example gradients & hessians were accumulated. The stats are divided by this to get per example stats.</param>
+      ///<param name="num_minibatches">Input to the operation: A scalar, the number of times per example gradients &amp; hessians were accumulated. The stats are divided by this to get per example stats.</param>
       ///<param name="partition_ids">Input to the operation: A rank 2 tensor of partition IDs for each dimension of feature column.</param>
       ///<param name="bucket_ids">Input to the operation: A rank 2 tensor of buckets IDs and dimensions.</param>
       ///<param name="gradients">Input to the operation: A rank 1 tensor of gradients.</param>
@@ -3326,7 +3326,7 @@ namespace Emgu.TF
       ///<param name="normalize_max">Fix MAX value for Normalization - if &lt; MIN, autoscale</param>
       ///<param name="normalize_min">Fix MIN value for Normalization - if &gt; MAX, autoscale</param>
       ///<param name="border_level">Value of border depth 0.0 {far} to 1.0 {near}</param>
-      ///<param name="number_colors">2 (Black & White),256 (grayscale), and Numbers &gt; 256 (Full Color) are all that are supported currently</param>
+      ///<param name="number_colors">2 (Black &amp; White),256 (grayscale), and Numbers &gt; 256 (Full Color) are all that are supported currently</param>
       ///<param name="output_image_shape">Output size of returned image in X,Y, Channels 1-grayscale, 3 color (1024, 768, 1), channels will be updated to 3 if 'number_colors' &gt; 256</param>
       ///<param name="output_data_window">Size of "DATA" window, must be equal to or smaller than 'output_image_shape', will be centered and use 'convergence_dots_size' for best fit to avoid overlap if possible</param>
       ///<param name="opName">The name of the operation</param>

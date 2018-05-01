@@ -11,9 +11,17 @@ using System.Runtime.InteropServices;
 
 namespace Emgu.TF
 {
-
+    /// <summary>
+    /// A tensorflow function
+    /// </summary>
     public class Function : UnmanagedObject
     {
+        /// <summary>
+        /// Construct and return the function whose FunctionDef representation is
+        /// serialized in <paramref name="proto"/>
+        /// </summary>
+        /// <param name="proto">Serialized FunctionDef</param>
+        /// <param name="status">The status</param>
         public Function(byte[] proto, Status status = null)
         {
             using (StatusChecker checker = new StatusChecker(status))
@@ -33,6 +41,12 @@ namespace Emgu.TF
                 TfInvoke.tfeDeleteBuffer(ref _ptr);
         }
 
+        /// <summary>
+        /// Write out a serialized representation of this Function (as a FunctionDef protocol
+        /// message) 
+        /// </summary>
+        /// <param name="outputFuncDef">a serialized representation of this Function (as a FunctionDef protocol message) </param>
+        /// <param name="status">The status</param>
         public void ToFunctionDef(Buffer outputFuncDef, Status status = null)
         {
             using (StatusChecker checker = new StatusChecker(status))
