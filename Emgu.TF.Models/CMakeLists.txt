@@ -9,15 +9,16 @@ INSTALL(
   ${CMAKE_CURRENT_SOURCE_DIR}
   DESTINATION .
   COMPONENT emgutf_source
-FILES_MATCHING 
-PATTERN "*.cs"
-PATTERN "*.projitems"
-PATTERN "*.shproj"
-PATTERN "*.csproj"
-PATTERN ".svn" EXCLUDE
-PATTERN "obj" EXCLUDE
-PATTERN "CMakeFiles" EXCLUDE
-PATTERN "${PROJECT_NAME}.dir" EXCLUDE
+	FILES_MATCHING 
+	PATTERN "*.cs"
+	PATTERN "*.projitems"
+	PATTERN "*.shproj"
+	PATTERN "*.csproj"
+	PATTERN ".svn" EXCLUDE
+	PATTERN "obj" EXCLUDE
+	PATTERN "CMakeFiles" EXCLUDE
+	PATTERN "x64" EXCLUDE #exclude build artifacts from Visual Studio build process
+	PATTERN "${PROJECT_NAME}.dir" EXCLUDE
 )
 
 FILE(GLOB SRC_EMGU_TF_MODEL RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.cs")
