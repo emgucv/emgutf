@@ -374,10 +374,22 @@ SET(EMGUTF_NUGET_DEPENDENCY "")
 SET(EMGUTF_PROTOBUF_NUGET_DEPENDENCY "")
 IF(HAVE_WINDESKTOP_X64)
 	IF(HAVE_WINDESKTOP_X64_CUDA)
+	    FILE(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/tensorflow/contrib/cmake/emgu.tf.cufft.version.txt" EMGU_TF_CUFFT_VERSION)
+		STRING(REPLACE "." "" EMGU_TF_CUFFT_FILE_VERSION "${EMGU_TF_CUFFT_VERSION}")
+		MESSAGE(STATUS "CUDA release using CUFFT: ${EMGU_TF_CUFFT_VERSION}; File Version: ${EMGU_TF_CUFFT_FILE_VERSION}")	
+		FILE(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/tensorflow/contrib/cmake/emgu.tf.dnn.version.txt" EMGU_TF_DNN_VERSION)
+		STRING(REPLACE "." ";" EMGU_TF_DNN_VERSION_LIST ${EMGU_TF_DNN_VERSION})
+		#list(LENGTH EMGU_TF_DNN_VERSION_LIST len)
+		LIST(GET EMGU_TF_DNN_VERSION_LIST 0 EMGU_TF_DNN_FILE_VERSION)
+		MESSAGE(STATUS "CUDA release using DNN: ${EMGU_TF_DNN_VERSION}; File Version: ${EMGU_TF_DNN_FILE_VERSION}")
+		CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Dnn.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Dnn/Package.nuspec)
+		CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Dnn.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Dnn/Emgu.TF.Dnn.targets)
+		CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Cufft.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Cufft/Package.nuspec)
+		CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Cufft.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Cufft/Emgu.TF.Cufft.targets)
 		SET(EMGUTF_NUGET_DEPENDENCY "${EMGUTF_NUGET_DEPENDENCY}
 		<dependencies>
-			<dependency id=\"EMGU.DNN\" version=\"7.0\" />
-			<dependency id=\"EMGU.CUFFT\" version=\"9.0\" />
+			<dependency id=\"EMGU.TF.DNN\" version=\"[${EMGU_TF_DNN_VERSION}]\" />
+			<dependency id=\"EMGU.TF.CUFFT\" version=\"[${EMGU_TF_CUFFT_VERSION}]\" />
 		</dependencies>")
 		SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
 		<file src=\"..\\..\\lib\\x64\\*.dll\" exclude=\"..\\..\\lib\\x64\\cudnn*.dll;..\\..\\lib\\x64\\cufft*.dll\" target=\"build\\x64\" />")
