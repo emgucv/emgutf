@@ -31,7 +31,10 @@ BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf.Netst
 
 ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
 	PRE_BUILD
-	COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../miscellaneous/nuget.exe" restore "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf.Netstandard/Emgu.TF.Protobuf.Netstandard.csproj") 
+	COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../miscellaneous/nuget.exe" restore "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf.Netstandard/Emgu.TF.Protobuf.Netstandard.csproj"
+	#Restore Google.Protobuf.Tools.3.5.1 so we can generated protobuf code
+	COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../miscellaneous/nuget.exe" restore "${CMAKE_CURRENT_SOURCE_DIR}/../Emgu.TF.CodeGen/Emgu.TF.CodeGen.csproj" 
+	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 
 SET(PROTO_SOURCE)
 FILE(GLOB PROTO_SOURCE_FILES_FRAME_WORK RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/framework/" "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/framework/*.proto")
