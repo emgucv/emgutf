@@ -15,7 +15,7 @@ IF(HAVE_WINDESKTOP_X86 OR HAVE_WINDESKTOP_X64)
     PATTERN ".svn" EXCLUDE
     PATTERN "obj" EXCLUDE
     PATTERN "CMakeFiles" EXCLUDE
-	PATTERN "x64" EXCLUDE #exclude build artifacts from Visual Studio build process
+    PATTERN "x64" EXCLUDE #exclude build artifacts from Visual Studio build process
     PATTERN "${PROJECT_NAME}.dir" EXCLUDE
     )
   SET(SRC_EMGU_TF_WORLD)
@@ -37,8 +37,7 @@ IF(HAVE_WINDESKTOP_X86 OR HAVE_WINDESKTOP_X64)
     ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.xml
     ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll 
     DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
-    COMPONENT emgutf_binary)
-  
+    COMPONENT emgutf_binary)  
 ENDIF()
 
 
@@ -67,7 +66,7 @@ IF(HAVE_IOS)
     DESTINATION .
     COMPONENT emgutf_source
     FILES_MATCHING 
-    PATTERN "${PROJECT_NAME}.iOS.csproj"
+    PATTERN "Emgu.TF.World.iOS.csproj"
     PATTERN ".svn" EXCLUDE
     PATTERN "obj" EXCLUDE
     PATTERN "CMakeFiles" EXCLUDE
@@ -93,7 +92,7 @@ IF(HAVE_OSX)
     DESTINATION .
     COMPONENT emgutf_source
     FILES_MATCHING 
-    PATTERN "${PROJECT_NAME}.Unified.csproj"
+    PATTERN "Emgu.TF.World.Unified.csproj"
     PATTERN ".svn" EXCLUDE
     PATTERN "obj" EXCLUDE
     PATTERN "CMakeFiles" EXCLUDE
@@ -120,7 +119,7 @@ IF(HAVE_ANDROID)
     DESTINATION .
     COMPONENT emgutf_source
     FILES_MATCHING 
-    PATTERN "*.Android.csproj"
+    PATTERN "Emgu.TF.World.Android.csproj"
     PATTERN ".svn" EXCLUDE
     PATTERN "obj" EXCLUDE
     PATTERN "CMakeFiles" EXCLUDE

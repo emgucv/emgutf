@@ -120,6 +120,31 @@ IF(HAVE_OSX)
     PATTERN "Debug" EXCLUDE
     PATTERN "Release" EXCLUDE
     )
+	
+  INSTALL(
+    DIRECTORY
+    "${CMAKE_CURRENT_SOURCE_DIR}/Mac/"
+    DESTINATION Emgu.TF.Example/Mac/
+    COMPONENT emgutf_example_source
+    FILES_MATCHING
+    PATTERN "*.cs"
+    PATTERN "*.csproj"
+    PATTERN "*.config"
+    PATTERN "*.Xamarin"
+    PATTERN "*.axml"
+    PATTERN "*.xaml"
+    PATTERN "*.xml"
+    PATTERN "*.txt"
+    PATTERN "*.png"
+    PATTERN "*.dll"
+    PATTERN "*.json"
+    PATTERN "*.plist"
+    PATTERN "iTunesArtwork*"
+    PATTERN "*.storyboard"
+    PATTERN ".git" EXCLUDE
+    PATTERN "Debug" EXCLUDE
+    PATTERN "Release" EXCLUDE
+    )
 ENDIF()
 
 

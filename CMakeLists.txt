@@ -473,7 +473,7 @@ IF(HAVE_IOS)
     DESTINATION Solution
     COMPONENT emgutf_source
     FILES_MATCHING 
-    PATTERN "*.sln"
+    PATTERN "Emgu.TF.Example.iOS.sln"
     PATTERN ".git" EXCLUDE
     PATTERN "bin" EXCLUDE
     )
@@ -486,7 +486,7 @@ IF(HAVE_OSX)
     DESTINATION Solution
     COMPONENT emgutf_source
     FILES_MATCHING 
-    PATTERN "*.sln"
+    PATTERN "Emgu.TF.OSX.sln"
     PATTERN ".git" EXCLUDE
     PATTERN "bin" EXCLUDE
     )
@@ -547,6 +547,8 @@ INSTALL(
   COMPONENT emgutf_binary
   FILES_MATCHING 
   PATTERN "*.dll"
+  PATTERN "*.dylib"
+  PATTERN "*.so"
   PATTERN "*.txt"
   PATTERN "*.xml"
   PATTERN ".git" EXCLUDE
