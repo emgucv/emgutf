@@ -121,6 +121,7 @@
       <Link>space_shuttle.jpg</Link>
     </Content>
   </ItemGroup>
+  <Import Project="..\..\..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\..\..\Emgu.Models\Emgu.Models.Shared.projitems')" />
   <Import Project="..\..\..\..\Emgu.TF.Util\Emgu.TF.Util.projitems" Label="Shared" Condition="Exists('..\..\..\..\Emgu.TF.Util\Emgu.TF.Util.projitems')" />
   <Import Project="..\..\..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems')" />
   <Import Project="..\..\..\..\Emgu.TF\Emgu.TF.projitems" Label="Shared" Condition="Exists('..\..\..\..\Emgu.TF\Emgu.TF.projitems')" />
