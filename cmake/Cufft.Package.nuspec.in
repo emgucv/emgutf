@@ -7,14 +7,14 @@
     <authors>${CPACK_PACKAGE_VENDOR}</authors>
     <owners>${CPACK_PACKAGE_VENDOR}</owners>
     <licenseUrl>http://docs.nvidia.com/cuda/eula/index.html</licenseUrl>
-    <projectUrl>http://www.emgu.com/wiki/index.php</projectUrl>
-	<iconUrl>http://www.emgu.com/wiki/files/EmguCVLogo.gif</iconUrl>
+    <projectUrl>${EMGUTF_MAIN_WEB_URL}</projectUrl>
+	<iconUrl>http://www.emgu.com/wiki/files/EmguTFLogo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
 	<summary>This package provides the native CUDA FFT dependencies for EMGU TF software libraries</summary>
     <description>This package provides the native CUDA FFT dependencies for EMGU TF software libraries</description>
     <releaseNotes>This is the ${EMGU_TF_CUFFT_VERSION} release of CUDA. </releaseNotes>
     <copyright>${CPACK_PACKAGE_VENDOR}, All Rights Reserved.</copyright>
-    <tags>emgu tensorflow cufft</tags>
+    <tags>emgu tensorflow cuda</tags>
   </metadata>
   <files>
 	<file src="Emgu.TF.Cufft.targets" target="build\EMGU.TF.CUFFT.targets" />

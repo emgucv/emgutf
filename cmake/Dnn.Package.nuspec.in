@@ -7,14 +7,14 @@
     <authors>${CPACK_PACKAGE_VENDOR}</authors>
     <owners>${CPACK_PACKAGE_VENDOR}</owners>
     <licenseUrl>http://docs.nvidia.com/deeplearning/sdk/cudnn-sla/index.html</licenseUrl>
-    <projectUrl>http://www.emgu.com/wiki/index.php</projectUrl>
-	<iconUrl>http://www.emgu.com/wiki/files/EmguCVLogo.gif</iconUrl>
+    <projectUrl>${EMGUTF_MAIN_WEB_URL}</projectUrl>
+	<iconUrl>http://www.emgu.com/wiki/files/EmguTFLogo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
 	<summary>This package provides the native DNN dependencies for EMGU TF software libraries</summary>
     <description>This package provides the native DNN dependencies for EMGU TF software libraries</description>
     <releaseNotes>This is the ${EMGU_TF_DNN_VERSION} release of DNN for CUDA ${EMGU_TF_CUFFT_VERSION}. </releaseNotes>
     <copyright>${CPACK_PACKAGE_VENDOR}, All Rights Reserved.</copyright>
-    <tags>emgu tensorflow dnn</tags>
+    <tags>emgu tensorflow dnn cuda</tags>
   </metadata>
   <files>
 	<file src="Emgu.TF.Dnn.targets" target="build\EMGU.TF.DNN.targets" />

@@ -75,6 +75,8 @@ MACRO(CHECK_LICENSE_TYPE)
 	MESSAGE(STATUS "LICENSE_TYPE: ${LICENSE_TYPE}")
 ENDMACRO()
 CHECK_LICENSE_TYPE()
+SET(EMGUTF_MAIN_WEB_URL "http://www.emgu.com/wiki/index.php/Emgu_TF")
+
 
 IF(MSVC)
   set(ENABLE_SOLUTION_FOLDERS ON CACHE BOOL "Solution folder in Visual Studio")
@@ -263,6 +265,8 @@ SET(PACKAGE "${PROJECT_NAME}")
 SET(CPACK_PACKAGE_CONTACT "Emgu TF SUPPORT <support@emgu.com>")
 SET(PACKAGE_BUGREPORT "${CPACK_PACKAGE_CONTACT}")
 SET(PACKAGE_NAME "${PROJECT_NAME}")
+
+
 
 SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Emgu TF is a cross platform .Net wrapper to the Google Tensorflow library.")
 
@@ -608,7 +612,7 @@ IF (WIN32)
   # ----------------------------------------------------------------------------
   #  Add menu link for web sites
   # ----------------------------------------------------------------------------
-  LIST(APPEND CPACK_NSIS_MENU_LINKS "http://www.emgu.com/wiki/index.php/Emgu_TF" "Emgu TF wiki")
+  LIST(APPEND CPACK_NSIS_MENU_LINKS "${EMGUTF_MAIN_WEB_URL}" "Emgu TF wiki")
   #LIST(APPEND CPACK_NSIS_MENU_LINKS "http://www.emgu.com/forum" "Emgu TF Discussion Forums")
   LIST(APPEND CPACK_NSIS_MENU_LINKS "https://github.com/emgucv/emgutf/issues" "Emgu TF Bug Tracking")
   
