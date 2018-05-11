@@ -145,6 +145,12 @@ IF(HAVE_OSX)
     PATTERN "Debug" EXCLUDE
     PATTERN "Release" EXCLUDE
     )
+
+  INSTALL(FILES
+    "${CMAKE_CURRENT_SOURCE_DIR}/InceptionObjectRecognition/space_shuttle.jpg"
+    DESTINATION Emgu.TF.Example/InceptionObjectRecognition
+    COMPONENT emgutf_example_source)
+
 ENDIF()
 
 
