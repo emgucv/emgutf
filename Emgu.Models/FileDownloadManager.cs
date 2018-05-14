@@ -45,6 +45,8 @@ namespace Emgu.Models
         }
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+        public UnityEngine.Networking.UnityWebRequest CurrentWebClient = null;
+
         public IEnumerator Download()
         {
             foreach (DownloadableFile df in _files)
@@ -57,6 +59,7 @@ namespace Emgu.Models
                 {
                     using (UnityEngine.Networking.UnityWebRequest webclient = new UnityEngine.Networking.UnityWebRequest(df.Url))
                     {
+                        CurrentWebClient = webclient;
                         UnityEngine.Debug.Log(String.Format("Downloading file from '{0}' to '{1}'", df.Url, localFileName));
 
                         webclient.downloadHandler = new UnityEngine.Networking.DownloadHandlerFile(localFileName);
@@ -72,12 +75,14 @@ namespace Emgu.Models
                         }
 
                         UnityEngine.Debug.Log("File successfully downloaded and saved to " + localFileName);
-                        //Debug.Log(String.Format("Download completed"));
+                        CurrentWebClient = null;
+
                     }
                 }
             }
             if (OnDownloadCompleted != null)
             {
+                UnityEngine.Debug.Log("All download completed.");
                 OnDownloadCompleted(this, null);
             }
         }

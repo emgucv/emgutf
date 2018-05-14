@@ -65,13 +65,15 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
         StartCoroutine(_multiboxGraph.Init());
     }
 
+    private String _displayMessage = String.Empty;
+
     // Update is called once per frame
     void Update()
     {
+
         if (!_multiboxGraph.Imported)
         {
-            DisplayText.text = String.Format("Loading Multibox model, please wait...");
-            return; 
+            _displayMessage = String.Format("Downloading multibox model files, {0} % of file {1}...", _multiboxGraph.DownloadProgress * 100, _multiboxGraph.DownloadFileName);
         } else if (_liveCameraView)
         {
             if (webcamTexture != null && webcamTexture.didUpdateThisFrame)
@@ -150,8 +152,10 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
             this.GetComponent<GUITexture>().texture = drawableTexture;
             this.GetComponent<GUITexture>().pixelInset = new Rect(-texture.width / 2, -texture.height / 2, texture.width, texture.height);
 
-            DisplayText.text = String.Empty;
+            _displayMessage = String.Empty;
             _staticViewRendered = true;
         }
+
+        DisplayText.text = _displayMessage;
     }
 }

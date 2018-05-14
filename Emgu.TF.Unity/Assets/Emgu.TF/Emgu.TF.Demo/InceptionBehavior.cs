@@ -31,14 +31,14 @@ public class InceptionBehavior : MonoBehaviour
 
     public Text DisplayText;
 
-	private Inception _inceptionGraph = null;
+    private Inception _inceptionGraph = null;
 
     private void RecognizeAndUpdateText(Texture2D texture)
     {
-		if (!_inceptionGraph.Imported)
-			return;
+        if (!_inceptionGraph.Imported)
+            return;
         Tensor imageTensor = ImageIO.ReadTensorFromTexture2D(texture, 224, 224, 128.0f, 1.0f, true);
-        Inception.RecognitionResult result =  _inceptionGraph.MostLikely(imageTensor);
+        Inception.RecognitionResult result = _inceptionGraph.MostLikely(imageTensor);
         _displayMessage = String.Format("Object is {0} with {1}% probability.", result.Label, result.Probability);
     }
 
@@ -46,9 +46,8 @@ public class InceptionBehavior : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        _inceptionGraph = new Inception();
         bool loaded = TfInvoke.CheckLibraryLoaded();
-
+        _inceptionGraph = new Inception();
         _liveCameraView = false;
         /*
         WebCamDevice[] devices = WebCamTexture.devices;
@@ -76,13 +75,12 @@ public class InceptionBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DisplayText.text = _displayMessage;
+
         if (!_inceptionGraph.Imported)
         {
-            _displayMessage = String.Format("Loading Inception Model, please wait...");
-            
-            return;
-        } else if (_liveCameraView)
+            _displayMessage = String.Format("Downloading Inception model files, {0} % of file {1}...", _inceptionGraph.DownloadProgress*100, _inceptionGraph.DownloadFileName);
+        }
+        else if (_liveCameraView)
         {
             if (webcamTexture != null && webcamTexture.didUpdateThisFrame)
             {
@@ -135,19 +133,23 @@ public class InceptionBehavior : MonoBehaviour
             }
             //DisplayText.text = _displayMessage;
         }
-        else if(!_staticViewRendered)
-            {
+        else if (!_staticViewRendered)
+        {
+            UnityEngine.Debug.Log("Reading texture for recognition");
 
-            if (!_inceptionGraph.Imported)
-                return;
             Texture2D texture = Resources.Load<Texture2D>("space_shuttle");
+            UnityEngine.Debug.Log("Starting recognition");
 
             RecognizeAndUpdateText(texture);
+
+            UnityEngine.Debug.Log("Rendering result");
 
             this.GetComponent<GUITexture>().texture = texture;
             this.GetComponent<GUITexture>().pixelInset = new Rect(-texture.width / 2, -texture.height / 2, texture.width, texture.height);
             _staticViewRendered = true;
             //DisplayText.text = _displayMessage;
         }
+
+        DisplayText.text = _displayMessage;
     }
 }

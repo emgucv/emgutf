@@ -22,6 +22,32 @@ namespace Emgu.TF.Models
         private String _inputName = null;
         private String _outputName = null;
 
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+        public double DownloadProgress
+        {
+            get
+            {
+                if (_downloadManager == null)
+                    return 0;
+                if (_downloadManager.CurrentWebClient == null)
+                    return 1;
+                return _downloadManager.CurrentWebClient.downloadProgress;
+            }
+        }
+
+        public String DownloadFileName
+        {
+            get
+            {
+                if (_downloadManager == null)
+                    return null;
+                if (_downloadManager.CurrentWebClient == null)
+                    return null;
+                return _downloadManager.CurrentWebClient.url;
+            }
+        }
+#endif
+
         public Inception(Status status = null)
         {
             _status = status;
@@ -86,14 +112,25 @@ namespace Emgu.TF.Models
         {
             if (_graph != null)
                 _graph.Dispose();
+
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+            UnityEngine.Debug.Log("Reading model definition");
+#endif
             _graph = new Graph();
             String localFileName = _downloadManager.Files[0].LocalFile;
             byte[] model = File.ReadAllBytes(localFileName);
 
             Buffer modelBuffer = Buffer.FromString(model);
 
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+            UnityEngine.Debug.Log("Importing model");
+#endif
             using (ImportGraphDefOptions options = new ImportGraphDefOptions())
                 _graph.ImportGraphDef(modelBuffer, options, _status);
+
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+            UnityEngine.Debug.Log("Model imported");
+#endif
         }
 
         public String[] Labels

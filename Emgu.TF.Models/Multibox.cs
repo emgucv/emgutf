@@ -37,6 +37,32 @@ namespace Emgu.TF.Models
         private Graph _graph = null;
         private Status _status = null;
 
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+        public double DownloadProgress
+        {
+            get
+            {
+                if (_downloadManager == null)
+                    return 0;
+                if (_downloadManager.CurrentWebClient == null)
+                    return 1;
+                return _downloadManager.CurrentWebClient.downloadProgress;
+            }
+        }
+
+        public String DownloadFileName
+        {
+            get
+            {
+                if (_downloadManager == null)
+                    return null;
+                if (_downloadManager.CurrentWebClient == null)
+                    return null;
+                return _downloadManager.CurrentWebClient.url;
+            }
+        }
+#endif
+
         public MultiboxGraph(Status status = null)
         {
             _status = status;
