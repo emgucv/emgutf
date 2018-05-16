@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+rm -rf emgutflite.bundle
+mkdir emgutflite.bundle
+mkdir emgutflite.bundle/Contents
+mkdir emgutflite.bundle/Contents/MacOS
+mkdir emgutflite.bundle/Contents/Resources
+cp ../../lib/osx/libtfliteextern.dylib emgutflite.bundle/Contents/MacOS/
+cp Info.lite.plist emgutflite.bundle/Contents/Info.plist
+iconutil -c icns icons.iconset/
+cp icons.icns emgutflite.bundle/Contents/Resources/

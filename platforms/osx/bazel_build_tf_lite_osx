@@ -2,8 +2,8 @@
 #mkdir -p darwin_x86_64
 #mkdir -p darwin
 cd ../../
-cd tensorflow
 mkdir -p lib/osx
+cd tensorflow
 bazel build -c opt --cpu=darwin_x86_64 --cxxopt='--std=c++11' //tensorflow/tfliteextern:libtfliteextern.so
 cp -f bazel-bin/tensorflow/tfliteextern/libtfliteextern.so ../lib/osx/libtfliteextern.dylib
 #cp -f bazel-bin/tensorflow/tfliteextern/libtfliteextern.so ../platforms/osx/darwin_x86_64/libtfliteextern.dylib
