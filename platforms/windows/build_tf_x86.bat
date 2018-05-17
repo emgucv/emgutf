@@ -85,10 +85,10 @@ REM IF NOT "%3%"=="WindowsStore10" GOTO SET_BUILD_TYPE
 
 
 :SET_BUILD_TYPE
-IF %DEVENV%=="%MSBUILD35%" SET BUILD_TYPE=/property:Configuration=Release %MSBUILD_MULTIPROCESS% /t:%PROJECT% 
-IF %DEVENV%=="%MSBUILD40%" SET BUILD_TYPE=/property:Configuration=Release %MSBUILD_MULTIPROCESS% /t:%PROJECT% 
-IF %DEVENV%=="%MSBUILD140%" SET BUILD_TYPE=/property:Configuration=Release %MSBUILD_MULTIPROCESS% /t:%PROJECT% 
-IF %DEVENV%=="%MSBUILD150%" SET BUILD_TYPE=/property:Configuration=Release %MSBUILD_MULTIPROCESS% /t:%PROJECT% 
+IF %DEVENV%=="%MSBUILD35%" SET BUILD_TYPE=/property:Configuration=Release /p:PreferredToolArchitecture=x64 %MSBUILD_MULTIPROCESS% /t:%PROJECT% 
+IF %DEVENV%=="%MSBUILD40%" SET BUILD_TYPE=/property:Configuration=Release /p:PreferredToolArchitecture=x64 %MSBUILD_MULTIPROCESS% /t:%PROJECT% 
+IF %DEVENV%=="%MSBUILD140%" SET BUILD_TYPE=/property:Configuration=Release /p:PreferredToolArchitecture=x64 %MSBUILD_MULTIPROCESS% /t:%PROJECT% 
+IF %DEVENV%=="%MSBUILD150%" SET BUILD_TYPE=/property:Configuration=Release /p:PreferredToolArchitecture=x64 %MSBUILD_MULTIPROCESS% /t:%PROJECT% 
 IF %DEVENV%==%VS2005% SET BUILD_TYPE=/Build Release /project %PROJECT%
 IF %DEVENV%==%VS2008% SET BUILD_TYPE=/Build Release /project %PROJECT%
 IF %DEVENV%==%VS2010% SET BUILD_TYPE=/Build Release /project %PROJECT%
