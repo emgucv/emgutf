@@ -11,14 +11,23 @@ using Emgu.TF.Util;
 
 namespace Emgu.TF.Lite
 {
-
+    /// <summary>
+    /// DynamicBuffer holds temporary buffer that will be used to create a dynamic tensor. 
+    /// </summary>
     public class DynamicBuffer : Emgu.TF.Util.UnmanagedObject
     {
+        /// <summary>
+        /// Create a new dynamic buffer.
+        /// </summary>
         public DynamicBuffer()
         {
             _ptr = TfLiteInvoke.tfeDynamicBufferCreate();
         }
 
+        /// <summary>
+        /// Add string to dynamic buffer by resizing the buffer and copying the data.
+        /// </summary>
+        /// <param name="str">The string to add to the dynamic buffer</param>
         public void AddString(String str)
         {
             byte[] rawString = Encoding.ASCII.GetBytes(str);
@@ -27,6 +36,10 @@ namespace Emgu.TF.Lite
             handle.Free();
         }
 
+        /// <summary>
+        /// Fill content into a string tensor.
+        /// </summary>
+        /// <param name="tensor">The string tensor</param>
         public void WriteToTensor(Tensor tensor)
         {
             TfLiteInvoke.tfeDynamicBufferWriteToTensor(_ptr, tensor);

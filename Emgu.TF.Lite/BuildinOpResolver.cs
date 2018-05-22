@@ -10,11 +10,16 @@ using Emgu.TF.Util;
 
 namespace Emgu.TF.Lite
 {
-    
+    /// <summary>
+    /// The default tensor flow lite buildin op resolver.
+    /// </summary>
     public class BuildinOpResolver : Emgu.TF.Util.UnmanagedObject, IOpResolver
     {
         private IntPtr _opResolverPtr;
         
+        /// <summary>
+        /// Create a default buildin op resolver.
+        /// </summary>
         public BuildinOpResolver()
         {
             _ptr = TfLiteInvoke.tfeBuiltinOpResolverCreate(ref _opResolverPtr);

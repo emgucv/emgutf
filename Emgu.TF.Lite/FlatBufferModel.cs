@@ -10,28 +10,48 @@ using Emgu.TF.Util;
 
 namespace Emgu.TF.Lite
 {
-    
+    /// <summary>
+    /// An RAII object that represents a read-only tflite model, copied from disk,
+    /// or mmapped. This uses flatbuffers as the serialization format.
+    /// </summary>   
     public class FlatBufferModel : Emgu.TF.Util.UnmanagedObject
     {
-        
+        /// <summary>
+        /// Builds a model based on a file.
+        /// </summary>   
+        /// <param name="filename">The name of the file where the FlatBufferModel will be loaded from.</param>
         public FlatBufferModel(String filename)
         {
             _ptr = TfLiteInvoke.tfeFlatBufferModelBuildFromFile(filename);
         }
 
+        private byte[] _buffer = null;
+        private GCHandle _handle;
+
+        /// <summary>
+        /// Builds a model based on a pre-loaded flatbuffer.
+        /// </summary>   
+        /// <param name="buffer">The buffer where the FlatBufferModel will be loaded from.</param>
         public FlatBufferModel(byte[] buffer)
         {
-            GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
+            _buffer = new byte[buffer.Length];
+            Array.Copy(buffer, _buffer, _buffer.Length);
+            _handle = GCHandle.Alloc(_buffer, GCHandleType.Pinned);
             try
             {
-                _ptr = TfLiteInvoke.tfeFlatBufferModelBuildFromBuffer(handle.AddrOfPinnedObject(), buffer.Length);
-            }
-            finally
+                _ptr = TfLiteInvoke.tfeFlatBufferModelBuildFromBuffer(_handle.AddrOfPinnedObject(), buffer.Length);
+            } catch
             {
-                handle.Free();
+                _handle.Free();
+                _buffer = null;
+                throw;
             }
+
         }
 
+        /// <summary>
+        /// Returns true if the model is initialized
+        /// </summary>   
         public bool Initialized
         {
             get
@@ -40,6 +60,10 @@ namespace Emgu.TF.Lite
             }
         }
 
+        /// <summary>
+        ///Returns true if the model identifier is correct (otherwise false and
+        /// reports an error).
+        /// </summary> 
         public bool CheckModelIdentifier()
         {
             return TfLiteInvoke.tfeFlatBufferModelCheckModelIdentifier(_ptr);
@@ -52,6 +76,12 @@ namespace Emgu.TF.Lite
         {
             if (IntPtr.Zero != _ptr)
                 TfLiteInvoke.tfeFlatBufferModelRelease(ref _ptr);
+            if (_buffer != null)
+            {
+                _handle.Free();
+                _buffer = null;
+
+            }
         }
     }
 

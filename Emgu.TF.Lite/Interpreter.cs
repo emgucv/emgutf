@@ -10,7 +10,9 @@ using Emgu.TF.Util;
 
 namespace Emgu.TF.Lite
 {
-    
+    /// <summary>
+    /// The tensorflow lite interpreter.
+    /// </summary>
     public class Interpreter : Emgu.TF.Util.UnmanagedObject
     {
         /*
@@ -19,16 +21,35 @@ namespace Emgu.TF.Lite
             _ptr = TfLiteInvoke.tfeInterpreterCreate();
         }*/
 
+        /// <summary>
+        /// Create an interpreter from a flatbuffer model
+        /// </summary>
+        /// <param name="flatBufferModel">The flat buffer model.</param>
+        /// <param name="resolver">An instance that implements the Resolver interface which maps custom op names and builtin op codes to op registrations.</param>
         public Interpreter(FlatBufferModel flatBufferModel, IOpResolver resolver)
         {
             _ptr = TfLiteInvoke.tfeInterpreterCreateFromModel(flatBufferModel.Ptr, resolver.OpResolverPtr);
         }
 
+        /// <summary>
+        /// Update allocations for all tensors. This will redim dependent tensors using
+        /// the input tensor dimensionality as given. This is relatively expensive.
+        /// If you know that your sizes are not changing, you need not call this.
+        /// </summary>
+        /// <returns>Status of success or failure.</returns>
         public Status AllocateTensors()
         {
             return TfLiteInvoke.tfeInterpreterAllocateTensors(_ptr);
         }
 
+        /// <summary>
+        /// Invoke the interpreter (run the whole graph in dependency order).
+        /// </summary>
+        /// <returns>Status of success or failure.</returns>
+        /// <remarks>It is possible that the interpreter is not in a ready state
+        /// to evaluate (i.e. if a ResizeTensor() has been performed without an
+        /// AllocateTensors().
+        /// </remarks>
         public Status Invoke()
         {
             return TfLiteInvoke.tfeInterpreterInvoke(_ptr);
@@ -45,6 +66,9 @@ namespace Emgu.TF.Lite
             return TfLiteInvoke.tfeInterpreterOuputTensor(_ptr, index);
         }*/
 
+        /// <summary>
+        /// Get the number of tensors in the model.
+        /// </summary>
         public int TensorSize
         {
             get
@@ -53,6 +77,9 @@ namespace Emgu.TF.Lite
             }
         }
 
+        /// <summary>
+        /// Get the number of ops in the model.
+        /// </summary>
         public int NodeSize
         {
             get
@@ -61,11 +88,20 @@ namespace Emgu.TF.Lite
             }
         }
 
+        /// <summary>
+        /// Get a tensor data structure.
+        /// </summary>
+        /// <param name="index">The index of the tensor</param>
+        /// <returns>The tensor in the specific index</returns>
         public Tensor GetTensor(int index)
         {
             return new Tensor(TfLiteInvoke.tfeInterpreterGetTensor(_ptr, index), false);
         }
 
+        /// <summary>
+        /// Get the list of tensor index of the inputs tensors.
+        /// </summary>
+        /// <returns>The list of tensor index of the inputs tensors.</returns>
         public int[] GetInput()
         {
             int size = TfLiteInvoke.tfeInterpreterGetInputSize(_ptr);
@@ -76,6 +112,10 @@ namespace Emgu.TF.Lite
             return input;
         }
 
+        /// <summary>
+        /// Get the list of tensor index of the outputs tensors.
+        /// </summary>
+        /// <returns>The list of tensor index of the outputs tensors.</returns>
         public int[] GetOutput()
         {
             int size = TfLiteInvoke.tfeInterpreterGetOutputSize(_ptr);
@@ -86,12 +126,22 @@ namespace Emgu.TF.Lite
             return output;
         }
 
+        /// <summary>
+        /// Return the name of a given input
+        /// </summary>
+        /// <param name="index">The input tensor index</param>
+        /// <returns>The name of the input tesnsor at the index</returns>
         public String GetInputName(int index)
         {
             IntPtr namePtr = TfLiteInvoke.tfeInterpreterGetInputName(_ptr, index);
             return Marshal.PtrToStringAnsi(namePtr);
         }
 
+        /// <summary>
+        /// Return the name of a given output
+        /// </summary>
+        /// <param name="index">The output tensor index</param>
+        /// <returns>The name of the output tesnsor at the index</returns>
         public String GetOutputName(int index)
         {
             IntPtr namePtr = TfLiteInvoke.tfeInterpreterGetOutputName(_ptr, index);

@@ -34,10 +34,10 @@
     <CppCommentsFixup>False</CppCommentsFixup>
     <FrameworkVersion>.NET Framework 3.5</FrameworkVersion>
     <HelpTitle>Emgu TF Library Documentation</HelpTitle>
-    <CopyrightText>2017 Emgu Corporation, All Rights Reserved,</CopyrightText>
+    <CopyrightText>2018 Emgu Corporation, All Rights Reserved,</CopyrightText>
     <FeedbackEMailAddress>support%40emgu.com</FeedbackEMailAddress>
     <HeaderText>http://www.emgu.com</HeaderText>
-    <FooterText>For questions and discussions please visit http://www.emgu.com/forum</FooterText>
+    <FooterText>For questions and discussions please visit https://github.com/emgucv/emgutf/issues</FooterText>
     <PresentationStyle>VS2013</PresentationStyle>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\Solution\Windows.Desktop\Emgu.TF.sln" />

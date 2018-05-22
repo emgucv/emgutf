@@ -12,9 +12,18 @@ using Emgu.TF.Util;
 
 namespace Emgu.TF.Lite
 {
+    /// <summary>
+    /// Tensorflow lite status
+    /// </summary>
     public enum Status
     {
+        /// <summary>
+        /// Ok
+        /// </summary>
         Ok = 0,
+        /// <summary>
+        /// Error
+        /// </summary>
         Error = 1
     }
 
@@ -31,9 +40,19 @@ namespace Emgu.TF.Lite
             throw new Exception(msg);
         }
 
+        /// <summary>
+        /// Define the funtional interface for the error callback
+        /// </summary>
+        /// <param name="status">The status code</param>
+        /// <param name="errMsg">The pointer to the error message</param>
+        /// <returns></returns>
         [UnmanagedFunctionPointer(TFCallingConvention)]
         public delegate int TfliteErrorCallback(int status, IntPtr errMsg);
 
+        /// <summary>
+        /// Redirect tensorflow lite error.
+        /// </summary>
+        /// <param name="errorHandler">The error handler</param>
         [DllImport(ExternLibrary, CallingConvention = TFCallingConvention, EntryPoint = "tfeRedirectError")]
         public static extern void RedirectError(TfliteErrorCallback errorHandler);
 
@@ -437,6 +456,9 @@ namespace Emgu.TF.Lite
 #endif
         }
 
+        /// <summary>
+        /// The default error handler for tensorflow lite
+        /// </summary>
         public static readonly TfliteErrorCallback TfliteErrorHandlerThrowException = (TfliteErrorCallback)TfliteErrorHandler;
 
         [DllImport(ExternLibrary, CallingConvention = TFCallingConvention)]

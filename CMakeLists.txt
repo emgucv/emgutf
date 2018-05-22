@@ -569,6 +569,7 @@ IF(HAVE_ANDROID_LITE)
     COMPONENT emgutf_source
     FILES_MATCHING 
     PATTERN "Emgu.TF.Lite.Android.sln"
+	PATTERN "Emgu.TF.Lite.Example.Android.sln"
     PATTERN ".git" EXCLUDE
     PATTERN "bin" EXCLUDE
     )

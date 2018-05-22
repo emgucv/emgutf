@@ -11,36 +11,95 @@ using Emgu.TF.Util;
 
 namespace Emgu.TF.Lite
 {
+    /// <summary>
+    /// Types supported by tensor
+    /// </summary>
     public enum DataType
     {
+        /// <summary>
+        /// No type
+        /// </summary>
         NoType = 0,
+        /// <summary>
+        /// single precision float
+        /// </summary>
         Float32 = 1,
+        /// <summary>
+        /// Int32
+        /// </summary>
         Int32 = 2,
+        /// <summary>
+        /// UInt8
+        /// </summary>
         UInt8 = 3,
+        /// <summary>
+        /// Int64
+        /// </summary>
         Int64 = 4,
+        /// <summary>
+        /// String
+        /// </summary>
         String = 5,
     }
 
+    /// <summary>
+    /// Parameters for asymmetric quantization.
+    /// </summary>
+    /// <remarks>
+    /// Quantized values can be converted back to float using:
+    ///    real_value = scale * (quantized_value - zero_point);
+    /// </remarks>
     public struct QuantizationParams
     {
+        /// <summary>
+        /// The scale
+        /// </summary>
         float Scale;
+        /// <summary>
+        /// The zero point
+        /// </summary>
         Int32 ZeroPoint;
     }
 
-
+    /// <summary>
+    /// Memory allocation strategies.
+    /// </summary>
     public enum AllocationType
     {
+        /// <summary>
+        /// None
+        /// </summary>
         MemNone = 0,
+        /// <summary>
+        ///  Read-only memory-mapped data (or data externally allocated).
+        /// </summary>
         MmapRo,
+        /// <summary>
+        /// Arena allocated data
+        /// </summary>
         ArenaRw,
+        /// <summary>
+        /// Arena allocated persistent data
+        /// </summary>
         ArenaRwPersistent,
+        /// <summary>
+        /// Tensors that are allocated during evaluation
+        /// </summary>
         Dynamic,
     }
 
+    /// <summary>
+    /// A tensorflow lite tensor
+    /// </summary>
     public class Tensor : Emgu.TF.Util.UnmanagedObject
     {
         private readonly bool _needDispose;
 
+        /// <summary>
+        /// Create a Tensor from the native tensorflow lite tensor pointer
+        /// </summary>
+        /// <param name="ptr">A native tensorflow lite tensor pointer</param>
+        /// <param name="needDispose">If true, we need to dispose the tensor upon object disposal. If false, we assume the tensor will be freed by the parent object.</param>
         public Tensor(IntPtr ptr, bool needDispose)
         {
             _ptr = ptr;
@@ -165,7 +224,8 @@ namespace Emgu.TF.Lite
         {
             if (_needDispose && IntPtr.Zero != _ptr)
             {
-                //To be implemented
+                //This should not be called, _needDisposed should always be false in the constructor, it should be managed by the interpretor.
+                throw new Exception("_needDispose == true is not supported in the constructor");
             }
         }
     }
