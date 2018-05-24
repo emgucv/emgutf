@@ -3,7 +3,7 @@ cd Emgu.TF
 mkdir Assets
 cd Assets
 mkdir Scripts
-cs Scripts
+cd Scripts
 rm -rf Emgu.TF.Util
 mkdir Emgu.TF.Util
 rm -rf Emgu.TF
@@ -17,7 +17,7 @@ cd ..
 cd ..
 cd ..
 
-cp ../tensorflow/LICENSE Assets/Emgu.TF/Assets/Scripts/tensorflow.license.txt
+cp ../tensorflow/LICENSE Assets/Emgu.TF/Assets/Documentation/tensorflow.license.txt
 
 cp ../Emgu.TF.Util/*.cs Assets/Emgu.TF/Assets/Scripts/Emgu.TF.Util/
 cp ../Emgu.TF/*.cs Assets/Emgu.TF/Assets/Scripts/Emgu.TF/
