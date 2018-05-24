@@ -2,7 +2,7 @@ EMGU TF
 --------------------------------------------
 Emgu TF is a .NET wrapper to the Google Tensorflow library. Allowing Tensorflow functions to be called from Unity. 
 
-Demo scene can be found under the Emgu.TF.Demo folder.
+Demo scene can be found under the Demo folder.
 
 For information & tutorials please visit http://www.emgu.com
 
