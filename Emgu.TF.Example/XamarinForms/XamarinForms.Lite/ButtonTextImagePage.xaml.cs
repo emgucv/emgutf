@@ -16,11 +16,11 @@ using Plugin.Media;
 #if __ANDROID__
 using Plugin.CurrentActivity;
 #endif
-#endif
-
-#if __MACOS__
+#elif __MACOS__
 using AppKit;
 using CoreGraphics;
+#else
+using Plugin.Media;
 #endif
 
 namespace Emgu.TF.XamarinForms

@@ -1,0 +1,29 @@
+﻿<Application x:Class="XamarinForms.Lite.WPF.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:XamarinForms.Lite.WPF"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary Source="/WPFLightToolkit;component/Assets/Default.xaml" />
+        </ResourceDictionary.MergedDictionaries>
+        <!-- Default Global Color -->
+        <SolidColorBrush x:Key="WindowBackgroundColor" Color="White" />
+        <SolidColorBrush x:Key="AccentColor" Color="#F5C210" />
+
+        <!-- Default Command Bar Color -->
+        <SolidColorBrush x:Key="CommandBarBackgroundColor" Color="#151C25" />
+        <SolidColorBrush x:Key="CommandBarTextColor" Color="White" />
+
+        <!-- Default Title Bar Color -->
+        <SolidColorBrush x:Key="DefaultTitleBarBackgroundColor" Color="#151C25" />
+        <SolidColorBrush x:Key="DefaultTitleBarTextColor" Color="White" />
+
+        <!-- Default Tabbed Bar Color -->
+        <SolidColorBrush x:Key="DefaultTabbedBarBackgroundColor" Color="#151C25" />
+        <SolidColorBrush x:Key="DefaultTabbedBarTextColor" Color="White" />
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
