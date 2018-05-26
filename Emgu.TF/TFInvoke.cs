@@ -10,6 +10,17 @@ using System.Text;
 using System.Runtime.InteropServices;
 using Emgu.TF.Util;
 
+/// <summary>
+/// Software developed by Emgu Corporation
+/// </summary>
+namespace Emgu
+{
+
+}
+
+/// <summary>
+/// Wrapper of Tensorflow functions.
+/// </summary>
 namespace Emgu.TF
 {
     public static partial class TfInvoke

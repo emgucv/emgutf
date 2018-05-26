@@ -29,8 +29,14 @@ using CoreGraphics;
 #endif
 #endif
 
+/// <summary>
+/// Utilities for downloading tensorflow models
+/// </summary>
 namespace Emgu.TF.Models
 {
+    /// <summary>
+    /// Multibox graph
+    /// </summary>
     public class MultiboxGraph 
     {
         private FileDownloadManager _downloadManager;

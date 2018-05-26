@@ -4,6 +4,9 @@
 
 using System;
 
+/// <summary>
+/// Utilities for Emgu TF library
+/// </summary>
 namespace Emgu.TF.Util
 {
    /// <summary>

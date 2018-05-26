@@ -3,6 +3,9 @@
 //----------------------------------------------------------------------------
 using System;
 
+/// <summary>
+/// Type enumerations for Emgu TF utilities
+/// </summary>
 namespace Emgu.TF.Util.TypeEnum
 {
    /// <summary>

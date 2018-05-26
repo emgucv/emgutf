@@ -11,6 +11,9 @@ using System.Diagnostics;
 using UnityEngine;
 #endif
 
+/// <summary>
+/// Utilities for downloading model files.
+/// </summary>
 namespace Emgu.Models
 {
     public class DownloadableFile
