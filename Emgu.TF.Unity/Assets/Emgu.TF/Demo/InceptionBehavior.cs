@@ -118,8 +118,7 @@ public class InceptionBehavior : MonoBehaviour
 
                 if (!_textureResized)
                 {
-                    this.GetComponent<GUITexture>().pixelInset = new Rect(-webcamTexture.width / 2,
-                        -webcamTexture.height / 2, webcamTexture.width, webcamTexture.height);
+                    ResizeTexture(resultTexture);
                     _textureResized = true;
                 }
 
@@ -127,7 +126,8 @@ public class InceptionBehavior : MonoBehaviour
 
                 RecognizeAndUpdateText(resultTexture);
 
-                this.GetComponent<GUITexture>().texture = resultTexture;
+                RenderTexture(resultTexture);
+                
                 //count++;
 
             }
@@ -144,12 +144,35 @@ public class InceptionBehavior : MonoBehaviour
 
             UnityEngine.Debug.Log("Rendering result");
 
-            this.GetComponent<GUITexture>().texture = texture;
-            this.GetComponent<GUITexture>().pixelInset = new Rect(-texture.width / 2, -texture.height / 2, texture.width, texture.height);
+            RenderTexture(texture);
+            ResizeTexture(texture);
+            /*
+            Image image = this.GetComponent<Image>();
+            image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            var transform = image.rectTransform;
+            transform.sizeDelta = new Vector2(texture.width, texture.height);
+            transform.position = new Vector3(-texture.width / 2, -texture.height / 2);
+            transform.anchoredPosition = new Vector2(0, 0);            //this.GetComponent<Image>().pixelInset = new Rect(-texture.width / 2, -texture.height / 2, texture.width, texture.height);
+            */
             _staticViewRendered = true;
             //DisplayText.text = _displayMessage;
         }
 
         DisplayText.text = _displayMessage;
+    }
+
+    private void RenderTexture(Texture2D texture)
+    {
+        Image image = this.GetComponent<Image>();
+        image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+    }
+
+    private void ResizeTexture(Texture2D texture)
+    {
+        Image image = this.GetComponent<Image>();
+        var transform = image.rectTransform;
+        transform.sizeDelta = new Vector2(texture.width, texture.height);
+        transform.position = new Vector3(-texture.width / 2, -texture.height / 2);
+        transform.anchoredPosition = new Vector2(0, 0);
     }
 }

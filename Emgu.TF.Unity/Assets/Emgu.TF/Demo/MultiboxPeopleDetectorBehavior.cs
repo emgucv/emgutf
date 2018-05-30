@@ -110,16 +110,8 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
 
                 #endregion
 
-                if (!_textureResized)
-                {
-                    this.GetComponent<GUITexture>().pixelInset = new Rect(-webcamTexture.width / 2,
-                        -webcamTexture.height / 2, webcamTexture.width, webcamTexture.height);
-                    _textureResized = true;
-                }
-
                 transform.rotation = baseRotation * Quaternion.AngleAxis(webcamTexture.videoRotationAngle, Vector3.up);
 
-                
                 Tensor imageTensor = ImageIO.ReadTensorFromTexture2D(resultTexture, 224, 224, 128.0f, 1.0f / 128.0f, true);
                 MultiboxGraph.Result results = _multiboxGraph.Detect(imageTensor);
 
@@ -129,7 +121,12 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
                 drawableTexture.SetPixels(resultTexture.GetPixels());
                 MultiboxGraph.DrawResults(drawableTexture, results, 0.2f);
 
-                this.GetComponent<GUITexture>().texture = drawableTexture;
+                if (!_textureResized)
+                {
+                    ResizeTexture(drawableTexture);
+                    _textureResized = true;
+                }
+                RenderTexture(drawableTexture);
                 //count++;
 
             }
@@ -149,13 +146,28 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
             drawableTexture.SetPixels(texture.GetPixels());
             MultiboxGraph.DrawResults(drawableTexture, results, 0.1f);
 
-            this.GetComponent<GUITexture>().texture = drawableTexture;
-            this.GetComponent<GUITexture>().pixelInset = new Rect(-texture.width / 2, -texture.height / 2, texture.width, texture.height);
+            RenderTexture(drawableTexture);
+            ResizeTexture(drawableTexture);
 
             _displayMessage = String.Empty;
             _staticViewRendered = true;
         }
 
         DisplayText.text = _displayMessage;
+    }
+
+    private void RenderTexture(Texture2D texture)
+    {
+        Image image = this.GetComponent<Image>();
+        image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+    }
+
+    private void ResizeTexture(Texture2D texture)
+    {
+        Image image = this.GetComponent<Image>();
+        var transform = image.rectTransform;
+        transform.sizeDelta = new Vector2(texture.width, texture.height);
+        transform.position = new Vector3(-texture.width / 2, -texture.height / 2);
+        transform.anchoredPosition = new Vector2(0, 0);
     }
 }
