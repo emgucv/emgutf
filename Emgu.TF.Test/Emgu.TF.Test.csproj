@@ -64,6 +64,10 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Netstandard\Emgu.TF.Protobuf.Netstandard.csproj">
+      <Project>{01147797-9f30-4ab3-a86c-1c4509c88edb}</Project>
+      <Name>Emgu.TF.Protobuf.Netstandard</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Emgu.TF.Test.Core\Emgu.TF.Test.Core.csproj">
       <Project>{67a1a571-95e4-43a0-a67f-c6f210a71aae}</Project>
       <Name>Emgu.TF.Test.Core</Name>

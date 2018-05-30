@@ -31,11 +31,12 @@ namespace Emgu.TF.Test
             Trace.WriteLine(String.Format("Tensorflow version: {0}", version));
         }
 
+        /*
         [TestMethod]
         public void TestLoadLargeGraph()
         {
             Inception inceptionGraph = new Inception(null, new string[] { "optimized_graph.pb", "output_labels.txt" }, "https://github.com/emgucv/models/raw/master/inception_flower_retrain/", "Mul", "final_result");
-        }
+        }*/
 
         [TestMethod]
         public void TestInception()
@@ -141,11 +142,18 @@ namespace Emgu.TF.Test
 
         public static int Add(int a, int b, SessionOptions sessionOptions = null)
         {
+            //Create a Tensor from value "a"
             Tensor tensorA = new Tensor(a);
+            //Create a Tensor from value "b"
             Tensor tensorB = new Tensor(b);
+
+            //create a new Graph
             Graph graph = new Graph();
+            //place holder for tensorA
             Operation opA = graph.Placeholder(DataType.Int32, null, "valA");
+            //place holder for tensorB
             Operation opB = graph.Placeholder(DataType.Int32, null, "valB");
+            //The actual operation
             Operation sumOp = graph.Add(opA, opB, "sum");
 
             using (Buffer versionDef = new Buffer())

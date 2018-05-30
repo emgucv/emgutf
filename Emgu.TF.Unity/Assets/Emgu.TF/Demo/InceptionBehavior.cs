@@ -10,7 +10,6 @@ using System.Net;
 using System.Net.Security;
 using System.Text;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
 using Emgu.TF;
 using Emgu.TF.Models;
 using UnityEngine.UI;
