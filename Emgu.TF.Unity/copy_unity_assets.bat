@@ -24,3 +24,4 @@ cp ../Emgu.TF/*.cs Assets/Emgu.TF/Assets/Scripts/Emgu.TF/
 cp ../Emgu.TF.Models/*.cs Assets/Emgu.TF/Assets/Scripts/Emgu.TF.Models/
 cp ../Emgu.Models/*.cs Assets/Emgu.TF/Assets/Scripts/Emgu.Models/
 
+

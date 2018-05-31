@@ -21,6 +21,9 @@ using CoreGraphics;
 
 namespace Emgu.Models
 {
+    /// <summary>
+    /// Platform specific implementation of Image IO
+    /// </summary>
     public class NativeImageIO
     {
         public static void ReadImageFileToTensor(String fileName, IntPtr dest, int inputHeight = -1, int inputWidth = -1, float inputMean = 0.0f, float scale = 1.0f)
