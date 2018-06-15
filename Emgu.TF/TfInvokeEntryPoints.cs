@@ -25,7 +25,7 @@ namespace Emgu.TF
 #endif
 	  	  
       /// <summary>
-      /// The List of the opencv modules
+      /// The List of the tensorflow modules
       /// </summary>
 	  public static List<String> TensorflowModuleList = new List<String>
 	  {       

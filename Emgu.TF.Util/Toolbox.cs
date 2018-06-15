@@ -17,7 +17,6 @@ namespace Emgu.TF.Util
    public static class Toolbox
    {
 
-
       /// <summary>
       /// Similar to Marshal.SizeOf function
       /// </summary>

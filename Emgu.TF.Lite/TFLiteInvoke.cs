@@ -450,7 +450,7 @@ namespace Emgu.TF.Lite
 
             _libraryLoaded = DefaultLoadUnmanagedModules(modules.ToArray());
 
-#if !UNITY_IOS
+#if (!UNITY_IOS) || UNITY_EDITOR
             //Use the custom error handler
             RedirectError(TfliteErrorHandlerThrowException);
 #endif

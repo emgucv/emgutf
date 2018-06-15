@@ -16,6 +16,9 @@ namespace Emgu.TF.Lite
     /// </summary>   
     public class FlatBufferModel : Emgu.TF.Util.UnmanagedObject
     {
+        private byte[] _buffer = null;
+        private GCHandle _handle;
+
         /// <summary>
         /// Builds a model based on a file.
         /// </summary>   
@@ -24,9 +27,6 @@ namespace Emgu.TF.Lite
         {
             _ptr = TfLiteInvoke.tfeFlatBufferModelBuildFromFile(filename);
         }
-
-        private byte[] _buffer = null;
-        private GCHandle _handle;
 
         /// <summary>
         /// Builds a model based on a pre-loaded flatbuffer.

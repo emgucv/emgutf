@@ -46,6 +46,9 @@ namespace Emgu.TF.Lite
         }
     }
 
+    /// <summary>
+    /// Class that provide access to native tensorflow lite functions
+    /// </summary>
     public static partial class TfLiteInvoke
     {
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]

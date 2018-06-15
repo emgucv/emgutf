@@ -10,7 +10,7 @@ namespace Emgu.TF.Lite
     public partial class TfLiteInvoke
     {
         /// <summary>
-        /// The file name of the tfextern library
+        /// The file name of the tfliteextern library
         /// </summary>
 #if UNITY_EDITOR_OSX
       public const string ExternLibrary = "Assets/Emgu.TF/Plugins/emgutf.bundle/Contents/MacOS/libtfliteextern.dylib";
@@ -25,7 +25,7 @@ namespace Emgu.TF.Lite
 #endif
 
         /// <summary>
-        /// The List of the opencv modules
+        /// The List of the tensorflow lite modules
         /// </summary>
         public static List<String> TensorflowModuleList = new List<String>
         {
