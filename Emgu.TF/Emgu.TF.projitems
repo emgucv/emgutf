@@ -189,7 +189,7 @@
       </ItemGroup>
     </When>
     <!-- Windows Form Application -->
-    <When Condition="'$(EmguTFLinkTarget)'=='' AND ('$(TargetFrameworkVersion)'=='v2.0' OR '$(TargetFrameworkVersion)'=='v3.0' OR '$(TargetFrameworkVersion)'=='v3.5' OR '$(TargetFrameworkVersion)'=='v4.0' OR '$(TargetFrameworkVersion)'=='v4.5' OR '$(TargetFrameworkVersion)'=='v4.5.1' OR '$(TargetFrameworkVersion)'=='v4.5.2' OR '$(TargetFrameworkVersion)'=='v4.6' OR '$(TargetFrameworkVersion)'=='v4.6.1')">
+    <When Condition="'$(EmguTFLinkTarget)'=='' AND ('$(TargetFrameworkVersion)'=='v2.0' OR '$(TargetFrameworkVersion)'=='v3.0' OR '$(TargetFrameworkVersion)'=='v3.5' OR '$(TargetFrameworkVersion)'=='v4.0' OR '$(TargetFrameworkVersion)'=='v4.5' OR '$(TargetFrameworkVersion)'=='v4.5.1' OR '$(TargetFrameworkVersion)'=='v4.5.2' OR '$(TargetFrameworkVersion)'=='v4.6' OR '$(TargetFrameworkVersion)'=='v4.6.1' OR '$(TargetFrameworkVersion)'=='v4.7.1')">
       <PropertyGroup>
         <EmguTFLinkTarget>WindowsForms</EmguTFLinkTarget>
         <EmguTFBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguTFBuildX64>
