@@ -2,13 +2,16 @@ REM @echo off
 pushd %~p0
 cd ..\..
 
-IF "%1%"=="64" ECHO "BUILDING 64bit solution" 
-IF "%1%"=="ARM" ECHO "BUILDING ARM solution"
-IF "%1%"=="32" ECHO "BUILDING 32bit solution"
+SET TF_TYPE=FULL
+IF "%1%"=="lite" SET TF_TYPE=LITE
+
+IF "%2%"=="64" ECHO "BUILDING 64bit solution" 
+IF "%2%"=="ARM" ECHO "BUILDING ARM solution"
+IF "%2%"=="32" ECHO "BUILDING 32bit solution"
 
 SET OS_MODE=
-IF "%1%"=="64" SET OS_MODE= Win64
-IF "%1%"=="ARM" SET OS_MODE= ARM
+IF "%2%"=="64" SET OS_MODE= Win64
+IF "%2%"=="ARM" SET OS_MODE= ARM
 
 SET PROGRAMFILES_DIR_X86=%programfiles(x86)%
 if NOT EXIST "%PROGRAMFILES_DIR_X86%" SET PROGRAMFILES_DIR_X86=%programfiles%
@@ -68,24 +71,39 @@ IF %DEVENV%==%VS2017% SET CMAKE_CONF="Visual Studio 15%OS_MODE%"
 
 REM build EMGU TF
 SET BUILD_PROJECT=
-IF "%3%"=="package" SET BUILD_PROJECT= /project PACKAGE 
+IF "%4%"=="package" SET BUILD_PROJECT= /project PACKAGE 
 
-IF "%2%"=="doc" ^
+IF "%3%"=="doc" ^
 SET CMAKE_CONF_FLAGS=%CMAKE_CONF_FLAGS% -DEMGU_TF_DOCUMENTATION_BUILD:BOOL=TRUE 
-IF "%2%"=="htmldoc" ^
+IF "%3%"=="htmldoc" ^
 SET CMAKE_CONF_FLAGS=%CMAKE_CONF_FLAGS% -DEMGU_TF_DOCUMENTATION_BUILD:BOOL=TRUE 
 %CMAKE% . ^
 -G %CMAKE_CONF% ^
 -DCMAKE_BUILD_TYPE=Release ^
 %CMAKE_CONF_FLAGS% 
 
+IF "%TF_TYPE%"=="LITE" goto BUILD_TF_LITE
+
+:BUILD_TF_FULL
 call %DEVENV% %BUILD_TYPE% emgutf.sln %BUILD_PROJECT% 
-IF "%2%"=="htmldoc" ^
+IF "%3%"=="htmldoc" ^
 call %DEVENV% %BUILD_TYPE% emgutf.sln /project Emgu.TF.Document.Html 
 
-IF "%4%"=="nuget" ^
+IF "%5%"=="nuget" ^
 call %DEVENV% %BUILD_TYPE% emgutf.sln /project Emgu.TF.Models.nuget 
-IF "%4%"=="nuget" ^
+IF "%5%"=="nuget" ^
 call %DEVENV% %BUILD_TYPE% emgutf.sln /project Emgu.TF.Protobuf.nuget 
+goto END_OF_SCRIPT
 
+:BUILD_TF_LITE
+call %DEVENV% %BUILD_TYPE% emgutf.sln %BUILD_PROJECT% 
+IF "%3%"=="htmldoc" ^
+call %DEVENV% %BUILD_TYPE% emgutf.sln /project Emgu.TF.Lite.Document.Html 
+
+REM IF "%5%"=="nuget" ^
+REM call %DEVENV% %BUILD_TYPE% emgutf.sln /project Emgu.TF.Models.nuget 
+REM IF "%5%"=="nuget" ^
+REM call %DEVENV% %BUILD_TYPE% emgutf.sln /project Emgu.TF.Protobuf.nuget 
+
+:END_OF_SCRIPT
 popd

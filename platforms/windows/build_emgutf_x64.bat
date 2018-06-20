@@ -1,1 +1,1 @@
-call build_emgutf 64 nodoc
+call build_emgutf full 64 nodoc
