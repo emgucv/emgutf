@@ -88,16 +88,23 @@ namespace Emgu.TF.XamarinForms
 
         private void onDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-            String localFileName = _downloadManager.Files[0].LocalFile;
+            String modelFileName = _downloadManager.Files[0].LocalFile;
+            String labelFileName = _downloadManager.Files[1].LocalFile;
+
+            System.Diagnostics.Debug.Assert(File.Exists(modelFileName), String.Format("File {0} doesn't exist", modelFileName));
+            System.Diagnostics.Debug.Assert(File.Exists(labelFileName), String.Format("File {0} doesn't exist", labelFileName));
+
+            if (!File.Exists(modelFileName) || !File.Exists(labelFileName))
+                return;
+
+            //FileInfo file = new FileInfo(modelFileName);
+
             if (_labels == null)
-                _labels = File.ReadAllLines(_downloadManager.Files[1].LocalFile);
-
-            System.Diagnostics.Debug.Assert(File.Exists(localFileName), "File doesn't exist");
-            FileInfo file = new FileInfo(localFileName);
-
+                _labels = File.ReadAllLines(labelFileName);
+            
             if (_model == null)
             {
-                _model = new FlatBufferModel(localFileName);
+                _model = new FlatBufferModel(modelFileName);
                 if (!_model.CheckModelIdentifier())
                     throw new Exception("Model indentifier check failed");
             }
