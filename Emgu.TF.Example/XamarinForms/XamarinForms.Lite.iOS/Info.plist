@@ -5,7 +5,7 @@
 	<key>CFBundleName</key>
 	<string>Emgu TF Lite</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.emgu.tf.lite.demo.Emgu-TF-Lite</string>
+	<string>com.emgu.tf.lite.demo</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
