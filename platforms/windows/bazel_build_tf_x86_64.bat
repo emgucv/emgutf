@@ -76,17 +76,20 @@ cd tensorflow\tensorflow\tools\ci_build\windows
 
 IF "%2%" == "gpu" GOTO BUILD_GPU
 
+SET MSYS64_PATH=c:\tools\msys64
+SET MSYS64_BIN=%MSYS64_PATH%\usr\bin
+
 :BUILD_CPU
-cmd.exe /v /c "set PATH=c:\tools\msys64\usr\bin;%PATH% & c:\tools\msys64\usr\bin\bash.exe libtensorflow_cpu.sh"
+cmd.exe /v /c "set PATH=%MSYS64_BIN%;%PATH% & %MSYS64_BIN%\bash.exe libtensorflow_cpu.sh"
 GOTO END_OF_BUILD
 
 :BUILD_GPU
-cmd.exe /v /c "set PATH=c:\tools\msys64\usr\bin;%PATH% & c:\tools\msys64\usr\bin\bash.exe libtensorflow_gpu.sh"
+cmd.exe /v /c "set PATH=%MSYS64_BIN%;%PATH% & %MSYS64_BIN%\bash.exe libtensorflow_gpu.sh"
 
 :END_OF_BUILD
 
-set PATH=c:\tools\msys64\usr\bin;%PATH%
-REM c:\tools\msys64\usr\bin\bash.exe libtensorflow_cpu.sh
+set PATH=%MSYS64_BIN%;%PATH%
+REM %MSYS64_PATH%\usr\bin\bash.exe libtensorflow_cpu.sh
 
 cd ../../../../../
 IF NOT EXIST lib\x64 mkdir lib\x64
