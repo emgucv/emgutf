@@ -478,15 +478,89 @@ ENDIF()
 SET(EMGUTF_NUGET_DEPENDENCY "")
 SET(EMGUTF_PROTOBUF_NUGET_DEPENDENCY "")
 IF(HAVE_WINDESKTOP_X64)
+	MESSAGE("-- HAVE_WINDESKTOP_X64: ${HAVE_WINDESKTOP_X64}")
+	SET(BAZEL_GENERATED_CUFFT_VERSION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/bazel-genfiles/external/local_config_cuda/cuda/cuda/include/nppversion.h")
+	SET(BAZEL_GENERATED_DNN_VERSION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/bazel-genfiles/external/local_config_cuda/cuda/cuda/include/cudnn.h")
+	SET(TFEXTERN_DEPENDENCY_DLLS)
+	SET(CUDA_TOOLKIT_ROOT_DIR "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v9.0")
+	IF(EXISTS ${BAZEL_GENERATED_CUFFT_VERSION_FILE})
+		SET(HAVE_WINDESKTOP_X64_CUDA ON)
+	ENDIF()
+	
 	IF(HAVE_WINDESKTOP_X64_CUDA)
-	    FILE(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/tensorflow/contrib/cmake/emgu.tf.cufft.version.txt" EMGU_TF_CUFFT_VERSION)
+		SET(CUDA_POSTFIX 64)
+		SET(CMAKE_GENERATED_CUFFT_VERSION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/tensorflow/contrib/cmake/emgu.tf.cufft.version.txt")	
+		IF(EXISTS ${CMAKE_GENERATED_CUFFT_VERSION_FILE})
+			#The native binary is built with CMAKE
+			MESSAGE("-- Native tensorflow is build with cuda and cmake")
+			FILE(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/tensorflow/contrib/cmake/emgu.tf.cufft.version.txt" EMGU_TF_CUFFT_VERSION)
+		ELSEIF(EXISTS ${BAZEL_GENERATED_CUFFT_VERSION_FILE})	
+			#The native binary is built with bazel
+			MESSAGE("-- Native tensorflow is build with cuda and bazel")
+			file( STRINGS "${BAZEL_GENERATED_CUFFT_VERSION_FILE}" npp_major REGEX "#define NPP_VERSION_MAJOR.*")
+			file( STRINGS "${BAZEL_GENERATED_CUFFT_VERSION_FILE}" npp_minor REGEX "#define NPP_VERSION_MINOR.*")
+			file( STRINGS "${BAZEL_GENERATED_CUFFT_VERSION_FILE}" npp_build REGEX "#define NPP_VERSION_BUILD.*")
+			
+			string( REGEX REPLACE "#define NPP_VERSION_MAJOR[ \t]+|//.*" "" npp_major ${npp_major})
+			string( REGEX REPLACE "#define NPP_VERSION_MINOR[ \t]+|//.*" "" npp_minor ${npp_minor})
+			string( REGEX REPLACE "#define NPP_VERSION_BUILD[ \t]+|//.*" "" npp_build ${npp_build})
+			
+			string( REGEX MATCH "[0-9]+" npp_major ${npp_major} ) 
+			string( REGEX MATCH "[0-9]+" npp_minor ${npp_minor} ) 
+			string( REGEX MATCH "[0-9]+" npp_build ${npp_build} )
+			SET(EMGU_TF_CUFFT_VERSION "${npp_major}.${npp_minor}.${npp_build}") 
+			LIST(APPEND TFEXTERN_DEPENDENCY_DLLS 
+				"${CUDA_TOOLKIT_ROOT_DIR}/bin/cudart${CUDA_POSTFIX}_${npp_major}${npp_minor}.dll"
+				"${CUDA_TOOLKIT_ROOT_DIR}/bin/cufft${CUDA_POSTFIX}_${npp_major}${npp_minor}.dll"
+				"${CUDA_TOOLKIT_ROOT_DIR}/bin/cublas${CUDA_POSTFIX}_${npp_major}${npp_minor}.dll"
+				"${CUDA_TOOLKIT_ROOT_DIR}/bin/curand${CUDA_POSTFIX}_${npp_major}${npp_minor}.dll"
+				"${CUDA_TOOLKIT_ROOT_DIR}/bin/cusolver${CUDA_POSTFIX}_${npp_major}${npp_minor}.dll"
+				)
+		ENDIF()
 		STRING(REPLACE "." "" EMGU_TF_CUFFT_FILE_VERSION "${EMGU_TF_CUFFT_VERSION}")
 		MESSAGE(STATUS "CUDA release using CUFFT: ${EMGU_TF_CUFFT_VERSION}; File Version: ${EMGU_TF_CUFFT_FILE_VERSION}")	
-		FILE(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/tensorflow/contrib/cmake/emgu.tf.dnn.version.txt" EMGU_TF_DNN_VERSION)
+		
+		SET(CMAKE_GENERATED_DNN_VERSION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/tensorflow/contrib/cmake/emgu.tf.dnn.version.txt")
+		
+		IF(EXISTS ${CMAKE_GENERATED_DNN_VERSION_FILE})
+			#The native binary is built with CMake
+		    MESSAGE(STATUS "-- Native tensorflow is build with cudnn and cmake")
+			FILE(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/tensorflow/contrib/cmake/emgu.tf.dnn.version.txt" EMGU_TF_DNN_VERSION)
+		ELSEIF(EXISTS ${BAZEL_GENERATED_DNN_VERSION_FILE})
+			#The native binary is built with bazel
+			MESSAGE(STATUS "-- Native tensorflow is build with cudnn and bazel")
+			file( STRINGS "${BAZEL_GENERATED_DNN_VERSION_FILE}" dnn_major REGEX "#define CUDNN_MAJOR.*")
+			file( STRINGS "${BAZEL_GENERATED_DNN_VERSION_FILE}" dnn_minor REGEX "#define CUDNN_MINOR.*")
+			file( STRINGS "${BAZEL_GENERATED_DNN_VERSION_FILE}" dnn_patchlevel REGEX "#define CUDNN_PATCHLEVEL.*")
+
+			string( REGEX REPLACE "#define CUDNN_MAJOR[ \t]+|//.*" "" dnn_major ${dnn_major})
+			string( REGEX REPLACE "#define CUDNN_MINOR[ \t]+|//.*" "" dnn_minor ${dnn_minor})
+			string( REGEX REPLACE "#define CUDNN_PATCHLEVEL[ \t]+|//.*" "" dnn_patchlevel ${dnn_patchlevel})
+
+			string( REGEX MATCH "[0-9]+" dnn_major ${dnn_major} ) 
+			string( REGEX MATCH "[0-9]+" dnn_minor ${dnn_minor} ) 
+			string( REGEX MATCH "[0-9]+" dnn_patchlevel ${dnn_patchlevel} ) 	
+			SET(EMGU_TF_DNN_VERSION "${dnn_major}.${dnn_minor}.${dnn_patchlevel}")
+			LIST(APPEND TFEXTERN_DEPENDENCY_DLLS "${CUDA_TOOLKIT_ROOT_DIR}/bin/cudnn${CUDA_POSTFIX}_${dnn_major}.dll")
+		ENDIF()
+		
 		STRING(REPLACE "." ";" EMGU_TF_DNN_VERSION_LIST ${EMGU_TF_DNN_VERSION})
 		#list(LENGTH EMGU_TF_DNN_VERSION_LIST len)
 		LIST(GET EMGU_TF_DNN_VERSION_LIST 0 EMGU_TF_DNN_FILE_VERSION)
 		MESSAGE(STATUS "CUDA release using DNN: ${EMGU_TF_DNN_VERSION}; File Version: ${EMGU_TF_DNN_FILE_VERSION}")
+		
+		IF(DEFINED TFEXTERN_DEPENDENCY_DLLS)
+		  FOREACH(TFEXTERN_DEPENDENCY_DLL ${TFEXTERN_DEPENDENCY_DLLS})
+			#LIST(APPEND TFEXTERN_DEPENDENCY_DLL_DEPLOY_COMMAND COMMAND ${CMAKE_COMMAND} -E copy "${TFEXTERN_DEPENDENCY_DLL}" "${tensorflow_source_dir}/../lib/${TF_LIB_SUBFOLDER}")
+			GET_FILENAME_COMPONENT(TFEXTERN_DEPENDENCT_DLL_NAME ${TFEXTERN_DEPENDENCY_DLL} NAME_WE)
+			file(COPY "${TFEXTERN_DEPENDENCY_DLL}" DESTINATION "${UNMANAGED_LIBRARY_OUTPUT_PATH}")
+			MESSAGE(STATUS "Copying ${TFEXTERN_DEPENDENCY_DLL} to ${UNMANAGED_LIBRARY_OUTPUT_PATH}")
+			file(COPY "${TFEXTERN_DEPENDENCY_DLL}" DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF${UNMANAGED_LIBRARY_OUTPUT_SUBFOLDER}")
+			MESSAGE(STATUS "Copying ${TFEXTERN_DEPENDENCY_DLL} to ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF${UNMANAGED_LIBRARY_OUTPUT_SUBFOLDER}")
+			#LIST(APPEND TFEXTERN_DEPENDENCY_DLL_NAMES ${TFEXTERN_DEPENDENCT_DLL_NAME})
+		  ENDFOREACH()
+		ENDIF()
+		
 		CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Dnn.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Dnn/Package.nuspec)
 		CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Dnn.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Dnn/Emgu.TF.Dnn.targets)
 		CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Cufft.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Cufft/Package.nuspec)

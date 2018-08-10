@@ -76,7 +76,7 @@ cd tensorflow\tensorflow\tools\ci_build\windows
 
 IF "%2%" == "gpu" GOTO BUILD_GPU
 
-SET MSYS64_PATH=c:\tools\msys64
+SET MSYS64_PATH=c:\msys64
 SET MSYS64_BIN=%MSYS64_PATH%\usr\bin
 
 :BUILD_CPU
@@ -93,7 +93,13 @@ REM %MSYS64_PATH%\usr\bin\bash.exe libtensorflow_cpu.sh
 
 cd ../../../../../
 IF NOT EXIST lib\x64 mkdir lib\x64
-cp tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so lib/x64/tfextern.dll
+cp -f tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so lib/x64/tfextern.dll
+
+IF "%2%" == "gpu" GOTO DEPLOY_DEPENDENCY_GPU
+GOTO END_OF_DEPLOY_DEPENDENCY_GPU
+:DEPLOY_DEPENDENCY_GPU
+
+:END_OF_DEPLOY_DEPENDENCY_GPU
 
 IF "%3%"=="dev" GOTO END_OF_CLEAN
 
