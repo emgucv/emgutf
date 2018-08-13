@@ -74,11 +74,10 @@ REM cp -r tfextern tensorflow/tensorflow
 REM cp platforms/windows/libtensorflow_cpu.sh tensorflow/tensorflow/tools/ci_build/windows/
 cd tensorflow\tensorflow\tools\ci_build\windows
 
-IF "%2%" == "gpu" GOTO BUILD_GPU
-
 SET MSYS64_PATH=c:\msys64
 SET MSYS64_BIN=%MSYS64_PATH%\usr\bin
 
+IF "%2%" == "gpu" GOTO BUILD_GPU
 :BUILD_CPU
 cmd.exe /v /c "set PATH=%MSYS64_BIN%;%PATH% & %MSYS64_BIN%\bash.exe libtensorflow_cpu.sh"
 GOTO END_OF_BUILD
