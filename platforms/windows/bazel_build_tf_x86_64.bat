@@ -107,6 +107,7 @@ cd tensorflow
 bazel clean
 bazel shutdown
 rm -rf c:\tmp\_bazel_canming
+rm -rf c:\tmp\install\*
 :END_OF_CLEAN
 
 popd
