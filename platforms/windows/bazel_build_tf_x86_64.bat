@@ -79,11 +79,11 @@ SET MSYS64_BIN=%MSYS64_PATH%\usr\bin
 
 IF "%2%" == "gpu" GOTO BUILD_GPU
 :BUILD_CPU
-cmd.exe /v /c "set PATH=%MSYS64_BIN%;%PATH% & %MSYS64_BIN%\bash.exe libtensorflow_cpu.sh"
+call cmd.exe /v /c "set PATH=%MSYS64_BIN%;%PATH% & %MSYS64_BIN%\bash.exe libtensorflow_cpu.sh"
 GOTO END_OF_BUILD
 
 :BUILD_GPU
-cmd.exe /v /c "set PATH=%MSYS64_BIN%;%PATH% & %MSYS64_BIN%\bash.exe libtensorflow_gpu.sh"
+call cmd.exe /v /c "set PATH=%MSYS64_BIN%;%PATH% & %MSYS64_BIN%\bash.exe libtensorflow_gpu.sh"
 
 :END_OF_BUILD
 
