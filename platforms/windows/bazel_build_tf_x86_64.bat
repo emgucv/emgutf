@@ -83,6 +83,13 @@ call cmd.exe /v /c "set PATH=%MSYS64_BIN%;%PATH% & %MSYS64_BIN%\bash.exe libtens
 GOTO END_OF_BUILD
 
 :BUILD_GPU
+SET TF_CUDA_VERSION=9.0
+SET TF_CUDNN_VERSION=7.0
+REM SET TF_CUDA_COMPUTE_CAPABILITIES=3.5,7.0
+SET TF_CUDA_COMPUTE_CAPABILITIES=3.7
+SET CUDA_TOOLKIT_PATH=C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v%TF_CUDA_VERSION%
+SET CUDNN_INSTALL_PATH=%CUDA_TOOLKIT_PATH%
+
 call cmd.exe /v /c "set PATH=%MSYS64_BIN%;%PATH% & %MSYS64_BIN%\bash.exe libtensorflow_gpu.sh"
 
 :END_OF_BUILD
@@ -97,7 +104,13 @@ cp -f tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so lib/x64/tfextern.d
 IF "%2%" == "gpu" GOTO DEPLOY_DEPENDENCY_GPU
 GOTO END_OF_DEPLOY_DEPENDENCY_GPU
 :DEPLOY_DEPENDENCY_GPU
-
+SET CUDA_TOOLKIT_BIN_PATH=%CUDA_TOOLKIT_PATH%/bin
+cp "%CUDA_TOOLKIT_BIN_PATH:/=\%\cusolver64_*.dll" lib/x64/
+cp "%CUDA_TOOLKIT_BIN_PATH:/=\%\cublas64_*.dll" lib/x64/
+cp "%CUDA_TOOLKIT_BIN_PATH:/=\%\cudnn64_*.dll" lib/x64/
+cp "%CUDA_TOOLKIT_BIN_PATH:/=\%\cufft64_*.dll" lib/x64/
+cp "%CUDA_TOOLKIT_BIN_PATH:/=\%\curand64_*.dll" lib/x64/
+cp "%CUDA_TOOLKIT_BIN_PATH:/=\%\cudart64_*.dll" lib/x64/
 :END_OF_DEPLOY_DEPENDENCY_GPU
 
 IF "%3%"=="dev" GOTO END_OF_CLEAN
