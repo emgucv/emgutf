@@ -482,7 +482,7 @@ IF(HAVE_WINDESKTOP_X64)
 	SET(BAZEL_GENERATED_CUFFT_VERSION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/bazel-genfiles/external/local_config_cuda/cuda/cuda/include/nppversion.h")
 	SET(BAZEL_GENERATED_DNN_VERSION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/bazel-genfiles/external/local_config_cuda/cuda/cuda/include/cudnn.h")
 	SET(TFEXTERN_DEPENDENCY_DLLS)
-	SET(CUDA_TOOLKIT_ROOT_DIR "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v9.0")
+	
 	IF(EXISTS ${BAZEL_GENERATED_CUFFT_VERSION_FILE})
 		SET(HAVE_WINDESKTOP_X64_CUDA ON)
 	ENDIF()
@@ -509,6 +509,7 @@ IF(HAVE_WINDESKTOP_X64)
 			string( REGEX MATCH "[0-9]+" npp_minor ${npp_minor} ) 
 			string( REGEX MATCH "[0-9]+" npp_build ${npp_build} )
 			SET(EMGU_TF_CUFFT_VERSION "${npp_major}.${npp_minor}.${npp_build}") 
+			SET(CUDA_TOOLKIT_ROOT_DIR "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v${npp_major}.${npp_minor}")
 			LIST(APPEND TFEXTERN_DEPENDENCY_DLLS 
 				"${CUDA_TOOLKIT_ROOT_DIR}/bin/cudart${CUDA_POSTFIX}_${npp_major}${npp_minor}.dll"
 				"${CUDA_TOOLKIT_ROOT_DIR}/bin/cufft${CUDA_POSTFIX}_${npp_major}${npp_minor}.dll"
@@ -541,6 +542,7 @@ IF(HAVE_WINDESKTOP_X64)
 			string( REGEX MATCH "[0-9]+" dnn_minor ${dnn_minor} ) 
 			string( REGEX MATCH "[0-9]+" dnn_patchlevel ${dnn_patchlevel} ) 	
 			SET(EMGU_TF_DNN_VERSION "${dnn_major}.${dnn_minor}.${dnn_patchlevel}")
+			SET(CUDA_TOOLKIT_ROOT_DIR "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v${npp_major}.${npp_minor}")
 			LIST(APPEND TFEXTERN_DEPENDENCY_DLLS "${CUDA_TOOLKIT_ROOT_DIR}/bin/cudnn${CUDA_POSTFIX}_${dnn_major}.dll")
 		ENDIF()
 		
