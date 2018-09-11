@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Plugin.CurrentActivity;
 
 namespace XamarinForms.Droid
 {
@@ -24,10 +25,11 @@ namespace XamarinForms.Droid
 			base.OnCreate (bundle);
 
 			global::Xamarin.Forms.Forms.Init (this, bundle);
-		    CheckAppPermissions();
+		    CrossCurrentActivity.Current.Init(this, bundle);
+
+            CheckAppPermissions();
             LoadApplication (new Emgu.TF.XamarinForms.App ());
 
-            
 		}
 
 	    private void CheckAppPermissions()
@@ -39,12 +41,18 @@ namespace XamarinForms.Droid
 	        else
 	        {
 	            if (PackageManager.CheckPermission(Manifest.Permission.ReadExternalStorage, PackageName) != Permission.Granted
-	                && PackageManager.CheckPermission(Manifest.Permission.WriteExternalStorage, PackageName) != Permission.Granted)
+	                && PackageManager.CheckPermission(Manifest.Permission.WriteExternalStorage, PackageName) != Permission.Granted
+	                && PackageManager.CheckPermission(Manifest.Permission.Camera, PackageName) != Permission.Granted)
 	            {
-	                var permissions = new string[] { Manifest.Permission.ReadExternalStorage, Manifest.Permission.WriteExternalStorage };
+	                var permissions = new string[] { Manifest.Permission.ReadExternalStorage, Manifest.Permission.WriteExternalStorage, Manifest.Permission.Camera };
 	                RequestPermissions(permissions, 1);
 	            }
 	        }
+	    }
+
+	    public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
+	    {
+	        Plugin.Permissions.PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 	    }
     }
 }
