@@ -25,6 +25,8 @@ namespace XamarinForms.Droid
             base.OnCreate();
             RegisterActivityLifecycleCallbacks(this);
             //A great place to initialize Xamarin.Insights and Dependency Services!
+
+            CrossCurrentActivity.Current.Init(this);
         }
 
         public override void OnTerminate()
@@ -35,7 +37,7 @@ namespace XamarinForms.Droid
 
         public void OnActivityCreated(Activity activity, Bundle savedInstanceState)
         {
-            CrossCurrentActivity.Current.Activity = activity;
+            
         }
 
         public void OnActivityDestroyed(Activity activity)
@@ -48,7 +50,7 @@ namespace XamarinForms.Droid
 
         public void OnActivityResumed(Activity activity)
         {
-            CrossCurrentActivity.Current.Activity = activity;
+            
         }
 
         public void OnActivitySaveInstanceState(Activity activity, Bundle outState)
