@@ -494,6 +494,7 @@ IF(HAVE_WINDESKTOP_X64)
 			#The native binary is built with CMAKE
 			MESSAGE("-- Native tensorflow is build with cuda and cmake")
 			FILE(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/tensorflow/contrib/cmake/emgu.tf.cufft.version.txt" EMGU_TF_CUFFT_VERSION)
+			STRING(REPLACE "." "" EMGU_TF_CUFFT_FILE_VERSION "${EMGU_TF_CUFFT_VERSION}")
 		ELSEIF(EXISTS ${BAZEL_GENERATED_CUFFT_VERSION_FILE})	
 			#The native binary is built with bazel
 			MESSAGE("-- Native tensorflow is build with cuda and bazel")
@@ -517,8 +518,9 @@ IF(HAVE_WINDESKTOP_X64)
 				"${CUDA_TOOLKIT_ROOT_DIR}/bin/curand${CUDA_POSTFIX}_${npp_major}${npp_minor}.dll"
 				"${CUDA_TOOLKIT_ROOT_DIR}/bin/cusolver${CUDA_POSTFIX}_${npp_major}${npp_minor}.dll"
 				)
+			SET(EMGU_TF_CUFFT_FILE_VERSION "${npp_major}${npp_minor}") 
 		ENDIF()
-		STRING(REPLACE "." "" EMGU_TF_CUFFT_FILE_VERSION "${EMGU_TF_CUFFT_VERSION}")
+		
 		MESSAGE(STATUS "CUDA release using CUFFT: ${EMGU_TF_CUFFT_VERSION}; File Version: ${EMGU_TF_CUFFT_FILE_VERSION}")	
 		
 		SET(CMAKE_GENERATED_DNN_VERSION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/tensorflow/contrib/cmake/emgu.tf.dnn.version.txt")
