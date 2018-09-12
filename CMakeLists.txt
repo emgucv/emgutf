@@ -597,7 +597,7 @@ SET(EMGUTF_PROTOBUF_NUGET_FILE_LIST "
 SET(EMGUTF_PROTOBUF_NUGET_DEPENDENCY "${EMGUTF_PROTOBUF_NUGET_DEPENDENCY}
     <dependencies>
 		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
-		<dependency id=\"Google.Protobuf\" version=\"3.5.1\" />
+		<dependency id=\"Google.Protobuf\" version=\"[3.6.1]\" />
     </dependencies>")
 	
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Package.nuspec)

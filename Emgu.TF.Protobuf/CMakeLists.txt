@@ -32,7 +32,7 @@ BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf.Netst
 ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
 	PRE_BUILD
 	COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../miscellaneous/nuget.exe" restore "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf.Netstandard/Emgu.TF.Protobuf.Netstandard.csproj"
-	#Restore Google.Protobuf.Tools.3.5.1 so we can generated protobuf code
+	#Restore Google.Protobuf.Tools.3.6.1 so we can generated protobuf code
 	COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../miscellaneous/nuget.exe" restore "${CMAKE_CURRENT_SOURCE_DIR}/../Emgu.TF.CodeGen/Emgu.TF.CodeGen.csproj" 
 	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 
@@ -77,7 +77,7 @@ ENDFOREACH()
 #  "tensorflow\\core\\protobuf\\debug.proto" 
 #  "tensorflow\\core\\protobuf\\rewriter_config.proto" )
 
-SET(PROTO_GEN_COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../nugetpackages/Google.Protobuf.Tools.3.5.1/tools/windows_x86/protoc.exe" "--proto_path=." "--csharp_out=\"${CMAKE_CURRENT_SOURCE_DIR}\"" "--csharp_opt=file_extension=.g.cs" ${PROTO_SOURCE})
+SET(PROTO_GEN_COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../nugetpackages/Google.Protobuf.Tools.3.6.1/tools/windows_x86/protoc.exe" "--proto_path=." "--csharp_out=\"${CMAKE_CURRENT_SOURCE_DIR}\"" "--csharp_opt=file_extension=.g.cs" ${PROTO_SOURCE})
 #MESSAGE(STATUS "PROTO_GEN_COMMAND: ${PROTO_GEN_COMMAND}")
 
 #ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
