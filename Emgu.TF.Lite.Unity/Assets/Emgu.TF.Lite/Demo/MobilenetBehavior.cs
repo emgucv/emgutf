@@ -41,6 +41,75 @@ public class MobilenetBehavior : MonoBehaviour
 
     //private Inception _inceptionGraph = null;
 
+    public static Texture2D Resize(Texture2D source, int newWidth, int newHeight)
+    {
+        source.filterMode = FilterMode.Bilinear;
+        UnityEngine.RenderTexture rt = UnityEngine.RenderTexture.GetTemporary(newWidth, newHeight);
+        rt.filterMode = FilterMode.Bilinear;
+
+        UnityEngine.RenderTexture.active = rt;
+        Graphics.Blit(source, rt);
+        var nTex = new Texture2D(newWidth, newHeight);
+        nTex.ReadPixels(new Rect(0, 0, newWidth, newHeight), 0, 0);
+        nTex.Apply();
+        UnityEngine.RenderTexture.active = null;
+        UnityEngine.RenderTexture.ReleaseTemporary(rt);
+        return nTex;
+    }
+
+    public static Tensor ReadTensorFromTexture2D(
+        Tensor t, Texture2D texture, int inputHeight = -1, int inputWidth = -1,
+        float inputMean = 0.0f, float scale = 1.0f, bool flipUpsideDown = false)
+    {
+        Color32[] colors;
+
+        int width, height;
+        if (inputHeight > 0 || inputWidth > 0)
+        {
+            Texture2D small = Resize(texture, inputWidth, inputHeight);
+            colors = small.GetPixels32();
+            width = inputWidth;
+            height = inputHeight;
+        }
+        else
+        {
+            width = texture.width;
+            height = texture.height;
+            colors = texture.GetPixels32();
+        }
+        //t = new Tensor(DataType.Float, new int[] { 1, height, width, 3 });
+
+        float[] floatValues = new float[colors.Length*3];
+
+        if (flipUpsideDown)
+        {
+            for (int i = 0; i < height; i++)
+            for (int j = 0; j < width; j++)
+            {
+                Color32 val = colors[(height - i - 1) * width + j];
+                int idx = i * width + j;
+                floatValues[idx * 3 + 0] = (val.r - inputMean) * scale;
+                floatValues[idx * 3 + 1] = (val.g - inputMean) * scale;
+                floatValues[idx * 3 + 2] = (val.b - inputMean) * scale;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < colors.Length; ++i)
+            {
+                Color32 val = colors[i];
+                floatValues[i * 3 + 0] = (val.r - inputMean) * scale;
+                floatValues[i * 3 + 1] = (val.g - inputMean) * scale;
+                floatValues[i * 3 + 2] = (val.b - inputMean) * scale;
+            }
+        }
+
+
+        System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, t.DataPointer, floatValues.Length);
+
+        return t;
+    }
+
     private void RecognizeAndUpdateText(Texture2D texture)
     {
         int[] input = _interpreter.GetInput();
@@ -49,7 +118,7 @@ public class MobilenetBehavior : MonoBehaviour
         Tensor inputTensor = _interpreter.GetTensor(input[0]);
         Tensor outputTensor = _interpreter.GetTensor(output[0]);
 
-        NativeImageIO.ReadImageFileToTensor(_image[0], inputTensor.DataPointer, 224, 224, 128.0f, 1.0f / 128.0f);
+        ReadTensorFromTexture2D(inputTensor, texture, 224, 224, 128.0f, 1.0f / 128.0f);
         Stopwatch watch = Stopwatch.StartNew();
         _interpreter.Invoke();
         watch.Stop();
