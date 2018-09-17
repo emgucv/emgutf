@@ -146,11 +146,9 @@ public class MobilenetBehavior : MonoBehaviour
 
     }
 
-
-    // Use this for initialization
-    void Start()
+    public IEnumerator DownloadModel()
     {
-        _downloadManager = new FileDownloadManager();
+       
         String downloadUrl = "https://github.com/emgucv/models/raw/master/mobilenet_v1_1.0_224_float_2017_11_08/";
         String[] fileNames = new string[] { "mobilenet_v1_1.0_224.tflite", "labels.txt" };
 
@@ -161,8 +159,14 @@ public class MobilenetBehavior : MonoBehaviour
 
         _downloadManager.OnDownloadProgressChanged += onDownloadProgressChanged;
         _downloadManager.OnDownloadCompleted += onDownloadCompleted;
-        _downloadManager.Download();
+        yield return _downloadManager.Download();
 
+    }
+
+    // Use this for initialization
+    void Start()
+    {
+        _downloadManager = new FileDownloadManager();
         //bool loaded = TfInvoke.CheckLibraryLoaded();
         //_inceptionGraph = new Inception();
         _liveCameraView = false;
@@ -183,8 +187,8 @@ public class MobilenetBehavior : MonoBehaviour
             webcamTexture.Play();
             //data = new Color32[webcamTexture.width * webcamTexture.height];
         }*/
-
-        //StartCoroutine(_inceptionGraph.Init());
+        DisplayText.text = "Downloading model, please wait...";
+        StartCoroutine(DownloadModel());
     }
 
     private String _displayMessage = String.Empty;
@@ -221,8 +225,6 @@ public class MobilenetBehavior : MonoBehaviour
             if (allocateTensorStatus == Status.Error)
                 throw new Exception("Failed to allocate tensor");
         }
-
-
 
     }
 
