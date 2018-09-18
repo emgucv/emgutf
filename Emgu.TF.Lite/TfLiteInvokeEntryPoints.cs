@@ -13,9 +13,9 @@ namespace Emgu.TF.Lite
         /// The file name of the tfliteextern library
         /// </summary>
 #if UNITY_EDITOR_OSX
-      public const string ExternLibrary = "Assets/Emgu.TF/Plugins/emgutf.bundle/Contents/MacOS/libtfliteextern.dylib";
+      public const string ExternLibrary = "Assets/Emgu.TF.Lite/Plugins/emgutflite.bundle/Contents/MacOS/libtfliteextern.dylib";
 #elif UNITY_STANDALONE_OSX
-      public const string ExternLibrary = "@executable_path/../Plugins/emgutf.bundle/Contents/MacOS/libtfliteextern.dylib";
+      public const string ExternLibrary = "@executable_path/../Plugins/emgutflite.bundle/Contents/MacOS/libtfliteextern.dylib";
 #elif (__IOS__ || UNITY_IPHONE) && (!UNITY_EDITOR_WIN)
       public const string ExternLibrary = "__Internal";
 //#elif (!__IOS__) && __UNIFIED__

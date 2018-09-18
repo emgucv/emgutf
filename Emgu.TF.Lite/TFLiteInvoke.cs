@@ -292,7 +292,7 @@ namespace Emgu.TF.Lite
                      String unityAltFolder =
                         Path.Combine(Path.Combine(Path.Combine(
                            Path.Combine(Path.Combine(directory.Parent.Parent.FullName, "Assets"), "Plugins"),
-                           "emgucv.bundle"), "Contents"), "MacOS");
+                           "emgutflite.bundle"), "Contents"), "MacOS");
                      
                      if (Directory.Exists(unityAltFolder))
                      {
