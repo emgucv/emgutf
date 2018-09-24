@@ -14,7 +14,7 @@ using System.Net;
 
 namespace Emgu.TF.Models
 {
-    public class Inception 
+    public class Inception : Emgu.TF.Util.UnmanagedObject
     {
         private FileDownloadManager _downloadManager;
         private Graph _graph = null;
@@ -180,6 +180,12 @@ namespace Emgu.TF.Models
         {
             public String Label;
             public double Probability;
+        }
+
+        protected override void DisposeObject()
+        {
+            if (_graph != null)
+                _graph.Dispose();
         }
     }
 }
