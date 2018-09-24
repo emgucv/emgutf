@@ -37,7 +37,7 @@ namespace Emgu.TF.Models
     /// <summary>
     /// Multibox graph
     /// </summary>
-    public class MultiboxGraph 
+    public class MultiboxGraph : Emgu.TF.Util.UnmanagedObject
     {
         private FileDownloadManager _downloadManager;
         private Graph _graph = null;
@@ -504,5 +504,10 @@ namespace Emgu.TF.Models
         }
 #endif
 #endif
+        protected override void DisposeObject()
+        {
+            if (_graph != null)
+                _graph.Dispose();
+        }
     }
 }
