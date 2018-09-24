@@ -41,7 +41,10 @@ namespace Emgu.TF.Models
     {
         private FileDownloadManager _downloadManager;
         private Graph _graph = null;
+        private SessionOptions _sessionOptions = null;
+        private Session _session = null;
         private Status _status = null;
+        private float[] _boxPriors = null;
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
         public double DownloadProgress
@@ -69,9 +72,10 @@ namespace Emgu.TF.Models
         }
 #endif
 
-        public MultiboxGraph(Status status = null)
+        public MultiboxGraph(Status status = null, SessionOptions sessionOptions = null)
         {
             _status = status;
+            _sessionOptions = sessionOptions;
             _downloadManager = new FileDownloadManager();
 
             _downloadManager.OnDownloadProgressChanged += onDownloadProgressChanged;
@@ -136,13 +140,18 @@ namespace Emgu.TF.Models
 
             using (ImportGraphDefOptions options = new ImportGraphDefOptions())
                 _graph.ImportGraphDef(modelBuffer, options, _status);
+
+            if (_session != null)
+                _session.Dispose();
+
+            _session = new Session(_graph, _sessionOptions);
+
+            _boxPriors = ReadBoxPriors(_downloadManager.Files[1].LocalFile);
         }
 
-        public Result Detect(Tensor imageResults, SessionOptions sessionOptions = null)
+        public Result Detect(Tensor imageResults)
         {
-            Session multiboxSession = new Session(_graph, sessionOptions);
-
-            Tensor[] finalTensor = multiboxSession.Run(new Output[] { _graph["ResizeBilinear"] }, new Tensor[] { imageResults },
+            Tensor[] finalTensor = _session.Run(new Output[] { _graph["ResizeBilinear"] }, new Tensor[] { imageResults },
                 new Output[] { _graph["output_scores/Reshape"], _graph["output_locations/Reshape"] });
 
             int labelCount = finalTensor[0].Dim[1];
@@ -152,12 +161,10 @@ namespace Emgu.TF.Models
 
             float[] encodedLocations = finalTensor[1].Flat<float>();
 
-            float[] boxPriors = ReadBoxPriors( _downloadManager.Files[1].LocalFile );
-
             Result result = new Result();
             result.Scores = DecodeScoresEncoding(encodedScores);
             result.Indices = topK[1].Flat<int>();
-            result.DecodedLocations = MultiboxGraph.DecodeLocationsEncoding(encodedLocations, boxPriors);
+            result.DecodedLocations = MultiboxGraph.DecodeLocationsEncoding(encodedLocations, _boxPriors);
             return result;
 
         }
@@ -507,7 +514,16 @@ namespace Emgu.TF.Models
         protected override void DisposeObject()
         {
             if (_graph != null)
+            {
                 _graph.Dispose();
+                _graph = null;
+            }
+
+            if (_session != null)
+            {
+                _session.Dispose();
+                _session = null;
+            }
         }
     }
 }
