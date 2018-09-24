@@ -98,8 +98,14 @@ namespace InceptionObjectRecognition
         {            
             Tensor imageTensor = ImageIO.ReadTensorFromImageFile(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
 
-            Stopwatch sw = Stopwatch.StartNew();
+            //First run of the recognition graph, here we will compile the graph and initialize the session
+            //This is expected to take much longer time than consecutive runs.
             float[] probability = inceptionGraph.Recognize(imageTensor);
+
+            //Here we are trying to time the execution of the graph after it is loaded
+            //If we are not interest in the performance, we can skip the 3 lines that follows
+            Stopwatch sw = Stopwatch.StartNew();
+            probability = inceptionGraph.Recognize(imageTensor);
             sw.Stop();
 
             String resStr = String.Empty;
@@ -116,7 +122,7 @@ namespace InceptionObjectRecognition
                         maxIdx = i;
                     }
                 }
-                resStr = String.Format("Object is {0} with {1}% probability. Recognition done in {2} milliseconds.", labels[maxIdx], maxVal * 100, sw.ElapsedMilliseconds);
+                resStr = String.Format("Object is {0} with {1}% probability. Recognition done in {2} in {3} milliseconds.", labels[maxIdx], maxVal * 100, TfInvoke.IsGoogleCudaEnabled ? "GPU" : "CPU", sw.ElapsedMilliseconds);
             }
 
             if (InvokeRequired)

@@ -62,11 +62,16 @@ namespace MultiboxPeopleDetection
 
         public void Detect(String fileName)
         {
-
             Tensor imageTensor = ImageIO.ReadTensorFromImageFile(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
 
-            Stopwatch watch = Stopwatch.StartNew();           
+            //First run of the detection, here we will compile the graph and initialize the session
+            //This is expected to take much longer time than consecutive runs.
             MultiboxGraph.Result result = graph.Detect(imageTensor);
+
+            //Here we are trying to time the execution of the graph after it is loaded
+            //If we are not interest in the performance, we can skip the 3 lines that follows
+            Stopwatch watch = Stopwatch.StartNew();           
+            result = graph.Detect(imageTensor);
             watch.Stop();
 
             Bitmap bmp = new Bitmap(fileName);
@@ -77,16 +82,21 @@ namespace MultiboxPeopleDetection
             {
                 this.Invoke((MethodInvoker)(() =>
                 {
-                    resultPictureBox.Image = bmp;
-                    messageLabel.Text = String.Format("Detection completed in {0} milliseconds", watch.ElapsedMilliseconds);
+                    RenderResult(bmp, watch.ElapsedMilliseconds);
                 }));
             }
             else
             {
-                resultPictureBox.Image = bmp;
-                messageLabel.Text = String.Format("Detection completed in {0} milliseconds", watch.ElapsedMilliseconds);
+                RenderResult(bmp, watch.ElapsedMilliseconds);
             }
             
+        }
+
+        public void RenderResult(Bitmap bmp, long elaspseMilliseonds)
+        {
+            resultPictureBox.Image = bmp;
+
+            messageLabel.Text = String.Format("Detection completed with {0} in {1} milliseconds", TfInvoke.IsGoogleCudaEnabled ? "GPU" : "CPU", elaspseMilliseonds);
         }
     }
 }

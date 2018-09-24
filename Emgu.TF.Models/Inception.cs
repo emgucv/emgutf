@@ -18,9 +18,12 @@ namespace Emgu.TF.Models
     {
         private FileDownloadManager _downloadManager;
         private Graph _graph = null;
+        private SessionOptions _sessionOptions = null;
+        private Session _session = null;
         private Status _status = null;
         private String _inputName = null;
         private String _outputName = null;
+        private String[] _labels = null;
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
         public double DownloadProgress
@@ -48,9 +51,10 @@ namespace Emgu.TF.Models
         }
 #endif
 
-        public Inception(Status status = null)
+        public Inception(Status status = null, SessionOptions sessionOptions = null)
         {
             _status = status;
+            _sessionOptions = sessionOptions;
             _downloadManager = new FileDownloadManager();
 
             _downloadManager.OnDownloadProgressChanged += onDownloadProgressChanged;
@@ -131,20 +135,18 @@ namespace Emgu.TF.Models
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             UnityEngine.Debug.Log("Model imported");
 #endif
+            _session = new Session(_graph, _sessionOptions, _status);
+            _labels = File.ReadAllLines(_downloadManager.Files[1].LocalFile);
         }
 
         public String[] Labels
         {
-            get
-            {
-                return File.ReadAllLines(_downloadManager.Files[1].LocalFile);
-            }
+            get { return _labels; }
         }
 
         public float[] Recognize(Tensor image)
         {
-            Session inceptionSession = new Session(_graph);
-            Tensor[] finalTensor = inceptionSession.Run(new Output[] { _graph[_inputName] }, new Tensor[] { image },
+            Tensor[] finalTensor = _session.Run(new Output[] { _graph[_inputName] }, new Tensor[] { image },
                 new Output[] { _graph[_outputName] });
             float[] probability = finalTensor[0].GetData(false) as float[];
             return probability;
@@ -159,7 +161,6 @@ namespace Emgu.TF.Models
 
             if (probability != null)
             {
-                String[] labels = Labels;
                 float maxVal = 0;
                 int maxIdx = 0;
                 for (int i = 0; i < probability.Length; i++)
@@ -170,7 +171,7 @@ namespace Emgu.TF.Models
                         maxIdx = i;
                     }
                 }
-                result.Label = labels[maxIdx];
+                result.Label = _labels[maxIdx];
                 result.Probability = maxVal;
             }
             return result;
@@ -185,7 +186,16 @@ namespace Emgu.TF.Models
         protected override void DisposeObject()
         {
             if (_graph != null)
+            {
                 _graph.Dispose();
+                _graph = null;
+            }
+
+            if (_session != null)
+            {
+                _session.Dispose();
+                _session = null;
+            }
         }
     }
 }

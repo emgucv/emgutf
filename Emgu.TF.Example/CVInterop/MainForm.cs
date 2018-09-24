@@ -17,7 +17,7 @@ namespace CVInterop
 {
     public partial class MainForm : Form
     {
-        private Inception inceptionGraph;
+        private Inception _inceptionGraph;
 
         public MainForm()
         {
@@ -30,11 +30,11 @@ namespace CVInterop
             DisableUI();
 
             //Use the following code for the full inception model
-            inceptionGraph = new Inception();
-            inceptionGraph.OnDownloadProgressChanged += OnDownloadProgressChangedEventHandler;
-            inceptionGraph.OnDownloadCompleted += onDownloadCompleted;
+            _inceptionGraph = new Inception();
+            _inceptionGraph.OnDownloadProgressChanged += OnDownloadProgressChangedEventHandler;
+            _inceptionGraph.OnDownloadCompleted += onDownloadCompleted;
 
-            inceptionGraph.Init();
+            _inceptionGraph.Init();
         }
 
         public void onDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
@@ -101,22 +101,28 @@ namespace CVInterop
             Tensor imageTensor = Emgu.TF.TensorConvert.ReadTensorFromMatBgr(m, 224, 224, 128.0f, 1.0f / 128.0f);
 
             //Uncomment the following code to use a retrained model to recognize followers, downloaded from the internet
-            //Inception inceptionGraph = new Inception(null, new string[] {"optimized_graph.pb", "output_labels.txt"}, "https://github.com/emgucv/models/raw/master/inception_flower_retrain/", "Mul", "final_result");
+            //Inception _inceptionGraph = new Inception(null, new string[] {"optimized_graph.pb", "output_labels.txt"}, "https://github.com/emgucv/models/raw/master/inception_flower_retrain/", "Mul", "final_result");
             //Tensor imageTensor = ImageIO.ReadTensorFromMatBgr(fileName, 299, 299, 128.0f, 1.0f / 128.0f);
 
             //Uncomment the following code to use a retrained model to recognize followers, if you deployed the models with the application
             //For ".pb" and ".txt" bundled with the application, set the url to null
-            //Inception inceptionGraph = new Inception(null, new string[] {"optimized_graph.pb", "output_labels.txt"}, null, "Mul", "final_result");
+            //Inception _inceptionGraph = new Inception(null, new string[] {"optimized_graph.pb", "output_labels.txt"}, null, "Mul", "final_result");
             //Tensor imageTensor = ImageIO.ReadTensorFromMatBgr(fileName, 299, 299, 128.0f, 1.0f / 128.0f);
 
+            //First run of the recognition graph, here we will compile the graph and initialize the session
+            //This is expected to take much longer time than consecutive runs.
+            float[] probability = _inceptionGraph.Recognize(imageTensor);
+
+            //Here we are trying to time the execution of the graph after it is loaded
+            //If we are not interest in the performance, we can skip the 3 lines that follows
             Stopwatch sw = Stopwatch.StartNew();
-            float[] probability = inceptionGraph.Recognize(imageTensor);
+            probability = _inceptionGraph.Recognize(imageTensor);
             sw.Stop();
 
             String resStr = String.Empty;
             if (probability != null)
             {
-                String[] labels = inceptionGraph.Labels;
+                String[] labels = _inceptionGraph.Labels;
                 float maxVal = 0;
                 int maxIdx = 0;
                 for (int i = 0; i < probability.Length; i++)
