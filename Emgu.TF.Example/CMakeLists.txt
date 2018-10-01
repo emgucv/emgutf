@@ -266,6 +266,32 @@ IF(HAVE_OSX_LITE)
     )	
 ENDIF()
 
+IF(HAVE_WINDESKTOP_LITE)
+  INSTALL(
+    DIRECTORY
+    "${CMAKE_CURRENT_SOURCE_DIR}/XamarinForms/XamarinForms.Lite.WPF/"
+    DESTINATION Emgu.TF.Example/XamarinForms/XamarinForms.Lite.WPF/
+    COMPONENT emgutf_example_source
+    FILES_MATCHING 
+    PATTERN "*.cs"
+    PATTERN "*.csproj"
+    PATTERN "*.config"
+    PATTERN "*.shproj"
+    PATTERN "*.Xamarin"
+    PATTERN "*.projitems"
+    PATTERN "*.axml"
+    PATTERN "*.xaml"
+    PATTERN "*.xml"
+    PATTERN "*.txt"
+    PATTERN "*.png"
+    PATTERN "*.dll"
+    PATTERN "*.json"
+    PATTERN ".git" EXCLUDE
+    PATTERN "Debug" EXCLUDE
+    PATTERN "Release" EXCLUDE  
+    )
+ENDIF()
+
 
 IF(NOT (NETFX_CORE OR ANDROID OR (APPLE AND (NOT IOS))))
   SET(EMGU_TF_REFERENCE 
