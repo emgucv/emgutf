@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -50,10 +51,22 @@ namespace Emgu.TF.XamarinForms
                 String pickImgString = "Use Image from";
                 if (labels != null && labels.Length > i)
                     pickImgString = labels[i];
-                bool haveCameraOption =
-                    (CrossMedia.Current.IsCameraAvailable && CrossMedia.Current.IsTakePhotoSupported);
-                bool havePickImgOption =
-                    CrossMedia.Current.IsPickVideoSupported;
+
+                bool haveCameraOption;
+                bool havePickImgOption;
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    //CrossMedia is not implemented on Windows.
+                    haveCameraOption = false;
+                    havePickImgOption = false;
+                }
+                else
+                {
+                    haveCameraOption =
+                        (CrossMedia.Current.IsCameraAvailable && CrossMedia.Current.IsTakePhotoSupported);
+                    havePickImgOption =
+                        CrossMedia.Current.IsPickVideoSupported;
+                }
 
                 String action;
                 if (haveCameraOption & havePickImgOption)

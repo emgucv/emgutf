@@ -4,6 +4,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Text;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -127,7 +129,40 @@ namespace Emgu.Models
             System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
 
 #else
-            throw new Exception("Not implemented");
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                //Do something for Windows
+                System.Drawing.Bitmap bmp = new Bitmap(fileName);
+
+                if (inputHeight > 0 || inputWidth > 0)
+                {
+                    //resize bmp
+                    System.Drawing.Bitmap newBmp = new Bitmap(bmp, inputWidth, inputHeight);
+                    bmp.Dispose();
+                    bmp = newBmp;
+                    //bmp.Save("tmp.png");
+                }
+
+                byte[] byteValues = new byte[bmp.Width * bmp.Height * 3];
+                BitmapData bd = new BitmapData();
+
+                bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly,
+                    PixelFormat.Format24bppRgb, bd);
+                System.Runtime.InteropServices.Marshal.Copy(bd.Scan0, byteValues, 0, byteValues.Length);
+                bmp.UnlockBits(bd);
+
+                float[] floatValues = new float[bmp.Width * bmp.Height * 3];
+                for (int i = 0; i < byteValues.Length; ++i)
+                {
+                    floatValues[i] = ((float)byteValues[i] - inputMean) * scale;
+                }
+
+                System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
+            }
+            else
+            {
+                throw new Exception("Not implemented");
+            }
 #endif
         }
     }
