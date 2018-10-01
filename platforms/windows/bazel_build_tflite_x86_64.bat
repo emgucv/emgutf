@@ -16,6 +16,6 @@ IF NOT "%BAZEL_VS%"=="" SET BAZEL_VC=%BAZEL_VS%\VC
       
 cd ..
 
-REM mkdir -p lib/android/$1
-REM cp tensorflow/bazel-bin/tensorflow/tfliteextern/*.so lib/android/$1
+mkdir -p lib/x64
+cp tensorflow/bazel-bin/tensorflow/tfliteextern/libtfliteextern.so lib/x64/tfliteextern.dll
 popd
