@@ -16,6 +16,6 @@ IF NOT "%BAZEL_VS%"=="" SET BAZEL_VC=%BAZEL_VS%\VC
       
 cd ..
 
-mkdir -p lib/x64
-cp tensorflow/bazel-bin/tensorflow/tfliteextern/libtfliteextern.so lib/x64/tfliteextern.dll
+IF NOT EXIST lib\x64 mkdir lib\x64
+cp -f tensorflow/bazel-bin/tensorflow/tfliteextern/libtfliteextern.so lib/x64/tfliteextern.dll
 popd
