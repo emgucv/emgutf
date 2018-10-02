@@ -54,7 +54,7 @@ namespace Emgu.TF.XamarinForms
 
                 bool haveCameraOption;
                 bool havePickImgOption;
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                if (Emgu.TF.Util.Platform.OperationSystem == OS.Windows)
                 {
                     //CrossMedia is not implemented on Windows.
                     haveCameraOption = false;

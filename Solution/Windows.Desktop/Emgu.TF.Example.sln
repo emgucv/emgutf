@@ -17,12 +17,22 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CVInterop", "..\..\Emgu.TF.
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.Models.Shared", "..\..\Emgu.Models\Emgu.Models.Shared.shproj", "{8EDCE0C8-BA71-4396-9428-35D05877258C}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "XamarinForms", "..\..\Emgu.TF.Example\XamarinForms\XamarinForms\XamarinForms.shproj", "{26BDB58D-52D9-4AD1-9205-BE5792781A98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinForms.WPF", "..\..\Emgu.TF.Example\XamarinForms\XamarinForms.WPF\XamarinForms.WPF.csproj", "{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{0a7a7b86-35e5-4887-b337-96c2f1b1fcf8}*SharedItemsImports = 4
+		..\..\Emgu.TF.Example\XamarinForms\XamarinForms\XamarinForms.projitems*{0a7a7b86-35e5-4887-b337-96c2f1b1fcf8}*SharedItemsImports = 4
+		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{0a7a7b86-35e5-4887-b337-96c2f1b1fcf8}*SharedItemsImports = 4
+		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{0a7a7b86-35e5-4887-b337-96c2f1b1fcf8}*SharedItemsImports = 4
+		..\..\Emgu.TF\Emgu.TF.projitems*{0a7a7b86-35e5-4887-b337-96c2f1b1fcf8}*SharedItemsImports = 4
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
 		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
 		..\..\Emgu.TF\Emgu.TF.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
+		..\..\Emgu.TF.Example\XamarinForms\XamarinForms\XamarinForms.projitems*{26bdb58d-52d9-4ad1-9205-be5792781a98}*SharedItemsImports = 13
 		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{752279f0-17ef-4ec8-857c-8f5f897af0e8}*SharedItemsImports = 13
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{8edce0c8-ba71-4396-9428-35d05877258c}*SharedItemsImports = 13
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{98561642-5ec3-4244-baf9-6876d9ba5527}*SharedItemsImports = 13
@@ -81,6 +91,18 @@ Global
 		{149E78F6-349D-42B7-8E03-3EDEB6EF348E}.Release|iPhone.Build.0 = Release|iPhone
 		{149E78F6-349D-42B7-8E03-3EDEB6EF348E}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{149E78F6-349D-42B7-8E03-3EDEB6EF348E}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Release|iPhone.Build.0 = Release|Any CPU
+		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
