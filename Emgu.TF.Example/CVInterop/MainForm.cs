@@ -96,6 +96,8 @@ namespace CVInterop
             }
         }
 
+        private bool _coldSession = true;
+
         public void Recognize(Mat m)
         {
             Tensor imageTensor = Emgu.TF.TensorConvert.ReadTensorFromMatBgr(m, 224, 224, 128.0f, 1.0f / 128.0f);
@@ -109,9 +111,14 @@ namespace CVInterop
             //Inception _inceptionGraph = new Inception(null, new string[] {"optimized_graph.pb", "output_labels.txt"}, null, "Mul", "final_result");
             //Tensor imageTensor = ImageIO.ReadTensorFromMatBgr(fileName, 299, 299, 128.0f, 1.0f / 128.0f);
 
-            //First run of the recognition graph, here we will compile the graph and initialize the session
-            //This is expected to take much longer time than consecutive runs.
-            float[] probability = _inceptionGraph.Recognize(imageTensor);
+            float[] probability;
+            if (_coldSession)
+            {
+                //First run of the recognition graph, here we will compile the graph and initialize the session
+                //This is expected to take much longer time than consecutive runs.
+                probability = _inceptionGraph.Recognize(imageTensor);
+                _coldSession = false;
+            }
 
             //Here we are trying to time the execution of the graph after it is loaded
             //If we are not interest in the performance, we can skip the 3 lines that follows

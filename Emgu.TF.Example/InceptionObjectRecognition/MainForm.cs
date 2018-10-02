@@ -94,13 +94,21 @@ namespace InceptionObjectRecognition
 
         }
 
+        private bool _coldSession = true;
+
         public void Recognize(String fileName)
         {            
             Tensor imageTensor = ImageIO.ReadTensorFromImageFile(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
 
-            //First run of the recognition graph, here we will compile the graph and initialize the session
-            //This is expected to take much longer time than consecutive runs.
-            float[] probability = inceptionGraph.Recognize(imageTensor);
+            float[] probability;
+            if (_coldSession)
+            {
+                //First run of the recognition graph, here we will compile the graph and initialize the session
+                //This is expected to take much longer time than consecutive runs.
+                probability = inceptionGraph.Recognize(imageTensor);
+                _coldSession = false;
+            }
+
 
             //Here we are trying to time the execution of the graph after it is loaded
             //If we are not interest in the performance, we can skip the 3 lines that follows
