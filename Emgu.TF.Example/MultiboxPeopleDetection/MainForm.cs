@@ -60,13 +60,20 @@ namespace MultiboxPeopleDetection
             }
         }
 
+        private bool _coldSession = true;
+
         public void Detect(String fileName)
         {
             Tensor imageTensor = ImageIO.ReadTensorFromImageFile(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
 
-            //First run of the detection, here we will compile the graph and initialize the session
-            //This is expected to take much longer time than consecutive runs.
-            MultiboxGraph.Result result = graph.Detect(imageTensor);
+            MultiboxGraph.Result result;
+            if (_coldSession)
+            {
+                //First run of the detection, here we will compile the graph and initialize the session
+                //This is expected to take much longer time than consecutive runs.
+                result = graph.Detect(imageTensor);
+                _coldSession = false;
+            }
 
             //Here we are trying to time the execution of the graph after it is loaded
             //If we are not interest in the performance, we can skip the 3 lines that follows
@@ -76,7 +83,6 @@ namespace MultiboxPeopleDetection
 
             Bitmap bmp = new Bitmap(fileName);
             MultiboxGraph.DrawResults(bmp, result, 0.1f);
-
 
             if (InvokeRequired)
             {
