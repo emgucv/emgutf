@@ -6,7 +6,7 @@
 #XamarinForms
 
 
-IF (HAVE_ANDROID OR HAVE_IOS OR HAVE_OSX) 
+IF (HAVE_ANDROID OR HAVE_IOS OR HAVE_OSX OR HAVE_WINDESKTOP_X64) 
   INSTALL(
     DIRECTORY
     "${CMAKE_CURRENT_SOURCE_DIR}/XamarinForms/XamarinForms/"
@@ -32,7 +32,7 @@ IF (HAVE_ANDROID OR HAVE_IOS OR HAVE_OSX)
     )
 ENDIF()
 
-IF (HAVE_ANDROID OR HAVE_IOS OR HAVE_OSX OR HAVE_ANDROID_LITE OR HAVE_IOS_LITE OR HAVE_OSX_LITE OR HAVE_WINDESKTOP_LITE) 	
+IF (HAVE_ANDROID OR HAVE_IOS OR HAVE_OSX OR HAVE_ANDROID_LITE OR HAVE_IOS_LITE OR HAVE_OSX_LITE OR HAVE_WINDESKTOP_LITE OR HAVE_WINDESKTOP_X64) 	
   INSTALL(FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/examples/multibox_detector/data/surfers.jpg"
     DESTINATION tensorflow/tensorflow/examples/multibox_detector/data 
@@ -44,7 +44,7 @@ IF (HAVE_ANDROID OR HAVE_IOS OR HAVE_OSX OR HAVE_ANDROID_LITE OR HAVE_IOS_LITE O
 	COMPONENT emgutf_example_source)
 ENDIF()
 
-IF (HAVE_ANDROID_LITE OR HAVE_IOS_LITE OR HAVE_OSX_LITE OR HAVE_WINDESKTOP_LITE) 
+IF (HAVE_ANDROID_LITE OR HAVE_IOS_LITE OR HAVE_OSX_LITE OR HAVE_WINDESKTOP_LITE OR HAVE_WINDESKTOP_X64) 
   INSTALL(
     DIRECTORY
     "${CMAKE_CURRENT_SOURCE_DIR}/XamarinForms/XamarinForms.Lite/"
@@ -271,6 +271,32 @@ IF(HAVE_WINDESKTOP_LITE)
     DIRECTORY
     "${CMAKE_CURRENT_SOURCE_DIR}/XamarinForms/XamarinForms.Lite.WPF/"
     DESTINATION Emgu.TF.Example/XamarinForms/XamarinForms.Lite.WPF/
+    COMPONENT emgutf_example_source
+    FILES_MATCHING 
+    PATTERN "*.cs"
+    PATTERN "*.csproj"
+    PATTERN "*.config"
+    PATTERN "*.shproj"
+    PATTERN "*.Xamarin"
+    PATTERN "*.projitems"
+    PATTERN "*.axml"
+    PATTERN "*.xaml"
+    PATTERN "*.xml"
+    PATTERN "*.txt"
+    PATTERN "*.png"
+    PATTERN "*.dll"
+    PATTERN "*.json"
+    PATTERN ".git" EXCLUDE
+    PATTERN "Debug" EXCLUDE
+    PATTERN "Release" EXCLUDE  
+    )
+ENDIF()
+
+IF(HAVE_WINDESKTOP_X64)
+  INSTALL(
+    DIRECTORY
+    "${CMAKE_CURRENT_SOURCE_DIR}/XamarinForms/XamarinForms.WPF/"
+    DESTINATION Emgu.TF.Example/XamarinForms/XamarinForms.WPF/
     COMPONENT emgutf_example_source
     FILES_MATCHING 
     PATTERN "*.cs"

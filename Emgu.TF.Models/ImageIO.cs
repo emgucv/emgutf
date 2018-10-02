@@ -7,7 +7,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Runtime.InteropServices;
+using Emgu.Models;
 using Emgu.TF;
+using Emgu.TF.Util.TypeEnum;
+
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
 using UnityEngine;
 #elif __ANDROID__
@@ -88,7 +91,6 @@ namespace Emgu.TF.Models
                 }
                 else if (dstChannels == 4)
                 {
-
                     int pixelCount = raw.Length / 3;
                     byte[] colors = new byte[pixelCount * 4];
                     for (int i = 0; i < pixelCount; i++)
@@ -283,88 +285,20 @@ namespace Emgu.TF.Models
 #if __ANDROID__
             byte[] rawPixel = TensorToPixel(stylizedImage, scale, 4);
             int[] dim = stylizedImage.Dim;
-            return PixelToJpeg(rawPixel, dim[2], dim[1], 4);
+            return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 4);
 #elif __IOS__
             byte[] rawPixel = TensorToPixel(stylizedImage, scale, 3);
             int[] dim = stylizedImage.Dim;
-            return PixelToJpeg(rawPixel, dim[2], dim[1], 3);
-#elif __UNIFIED__ //MAC OSX
+            return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 3);
+#elif __UNIFIED__ //Mac OSX
             byte[] rawPixel = TensorToPixel(stylizedImage, scale, 4);
             int[] dim = stylizedImage.Dim;
-            return PixelToJpeg(rawPixel, dim[2], dim[1], 4);
+            return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 4);
 #else
             return null;
 #endif
         }
 
-        public static byte[] PixelToJpeg(byte[] rawPixel, int width, int height, int channels)
-        {
-#if __ANDROID__
-            if (channels != 4)
-                throw new NotImplementedException("Only 4 channel pixel input is supported.");
-            using (Bitmap bitmap = Bitmap.CreateBitmap(width, height, Bitmap.Config.Argb8888))
-            using (MemoryStream ms = new MemoryStream())
-            {
-                IntPtr ptr = bitmap.LockPixels();
-                //GCHandle handle = GCHandle.Alloc(colors, GCHandleType.Pinned);
-                Marshal.Copy(rawPixel, 0, ptr, rawPixel.Length);
-
-                bitmap.UnlockPixels();
-
-                bitmap.Compress(Bitmap.CompressFormat.Jpeg, 90, ms);
-                return ms.ToArray();
-            }
-#elif __IOS__
-            if (channels != 3)
-                throw new NotImplementedException("Only 3 channel pixel input is supported.");
-            System.Drawing.Size sz = new System.Drawing.Size(width, height);
-            GCHandle handle = GCHandle.Alloc(rawPixel, GCHandleType.Pinned);
-            using (CGColorSpace cspace = CGColorSpace.CreateDeviceRGB())
-            using (CGBitmapContext context = new CGBitmapContext(
-                handle.AddrOfPinnedObject(),
-                sz.Width, sz.Height,
-                8,
-                sz.Width * 3,
-                cspace,
-                CGImageAlphaInfo.PremultipliedLast))
-            using (CGImage cgImage = context.ToImage())
-            using (UIImage newImg = new UIImage(cgImage))
-            {
-                handle.Free();
-                var jpegData = newImg.AsJPEG();
-                byte[] raw = new byte[jpegData.Length];
-                System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, raw, 0,
-                    (int)jpegData.Length);
-                return raw;
-            }
-#elif __UNIFIED__ //OSX
-                    if (channels != 4)
-                throw new NotImplementedException("Only 4 channel pixel input is supported.");
-                                    System.Drawing.Size sz = new System.Drawing.Size(width, height);
-
-            using (CGColorSpace cspace = CGColorSpace.CreateDeviceRGB())
-            using (CGBitmapContext context = new CGBitmapContext(
-                rawPixel,
-                sz.Width, sz.Height,
-                8,
-                sz.Width * 4,
-                cspace,
-                CGBitmapFlags.PremultipliedLast | CGBitmapFlags.ByteOrder32Big))
-            using (CGImage cgImage = context.ToImage())
-
-            using (NSBitmapImageRep newImg = new NSBitmapImageRep(cgImage))
-            {
-                var jpegData = newImg.RepresentationUsingTypeProperties(NSBitmapImageFileType.Jpeg);
-
-                byte[] raw = new byte[jpegData.Length];
-                System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, raw, 0,
-                    (int)jpegData.Length);
-                return raw;
-            }
-#else
-            throw new NotImplementedException("Not Implemented");
-#endif
-        }
 
         public static Tensor ReadTensorFromImageFile(String fileName, int inputHeight = -1, int inputWidth = -1, float inputMean = 0.0f, float scale = 1.0f, Status status = null)
         {
@@ -392,7 +326,7 @@ namespace Emgu.TF.Models
             System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, t.DataPointer, floatValues.Length);
             return t;
 #elif __IOS__
-            UIImage image = new UIImage("surfers.jpg");
+            UIImage image = new UIImage(fileName);
 			if (inputHeight > 0 || inputWidth > 0)
 			{
                 UIImage resized = image.Scale(new CGSize(inputWidth, inputHeight));
@@ -431,47 +365,55 @@ namespace Emgu.TF.Models
 			System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, t.DataPointer, floatValues.Length);
 			return t;
 #else
-            using (StatusChecker checker = new StatusChecker(status))
+            if (Emgu.TF.Util.Platform.OperationSystem == OS.Windows)
             {
-                var graph = new Graph();
-                Operation input = graph.Placeholder(DataType.String);
-
-                Operation jpegDecoder = graph.DecodeJpeg(input, 3); //dimension 3
-
-                Operation floatCaster = graph.Cast(jpegDecoder, DstT: DataType.Float); //cast to float
-
-                Tensor axis = new Tensor(0);
-                Operation axisOp = graph.Const(axis, axis.Type, opName: "axis");
-                Operation dimsExpander = graph.ExpandDims(floatCaster, axisOp); //turn it to dimension [1,3]
-
-                Operation resized;
-                bool resizeRequired = (inputHeight > 0) && (inputWidth > 0);
-                if (resizeRequired)
+                Tensor t = new Tensor(DataType.Float, new int[] { 1, (int)inputHeight, (int)inputWidth, 3 });
+                NativeImageIO.ReadImageFileToTensor(fileName, t.DataPointer, inputHeight, inputWidth, inputMean, scale);
+                return t;
+            }
+            else
+            {
+                using (StatusChecker checker = new StatusChecker(status))
                 {
-                    Tensor size = new Tensor(new int[] { inputHeight, inputWidth }); // new size;
-                    Operation sizeOp = graph.Const(size, size.Type, opName: "size");
-                    resized = graph.ResizeBilinear(dimsExpander, sizeOp); //resize image
+                    var graph = new Graph();
+                    Operation input = graph.Placeholder(DataType.String);
+
+                    Operation jpegDecoder = graph.DecodeJpeg(input, 3); //dimension 3
+
+                    Operation floatCaster = graph.Cast(jpegDecoder, DstT: DataType.Float); //cast to float
+
+                    Tensor axis = new Tensor(0);
+                    Operation axisOp = graph.Const(axis, axis.Type, opName: "axis");
+                    Operation dimsExpander = graph.ExpandDims(floatCaster, axisOp); //turn it to dimension [1,3]
+
+                    Operation resized;
+                    bool resizeRequired = (inputHeight > 0) && (inputWidth > 0);
+                    if (resizeRequired)
+                    {
+                        Tensor size = new Tensor(new int[] {inputHeight, inputWidth}); // new size;
+                        Operation sizeOp = graph.Const(size, size.Type, opName: "size");
+                        resized = graph.ResizeBilinear(dimsExpander, sizeOp); //resize image
+                    }
+                    else
+                    {
+                        resized = dimsExpander;
+                    }
+
+                    Tensor mean = new Tensor(inputMean);
+                    Operation meanOp = graph.Const(mean, mean.Type, opName: "mean");
+                    Operation substracted = graph.Sub(resized, meanOp);
+
+                    Tensor scaleTensor = new Tensor(scale);
+                    Operation scaleOp = graph.Const(scaleTensor, scaleTensor.Type, opName: "scale");
+                    Operation scaled = graph.Mul(substracted, scaleOp);
+
+                    Session session = new Session(graph);
+                    Tensor imageTensor = Tensor.FromString(File.ReadAllBytes(fileName), status);
+                    Tensor[] imageResults = session.Run(new Output[] {input}, new Tensor[] {imageTensor},
+                        new Output[] {scaled});
+                    return imageResults[0];
+
                 }
-                else
-                {
-                    resized = dimsExpander;
-                }
-
-                Tensor mean = new Tensor(inputMean);
-                Operation meanOp = graph.Const(mean, mean.Type, opName: "mean");
-                Operation substracted = graph.Sub(resized, meanOp);
-
-                Tensor scaleTensor = new Tensor(scale);
-                Operation scaleOp = graph.Const(scaleTensor, scaleTensor.Type, opName: "scale");
-                Operation scaled = graph.Mul(substracted, scaleOp);
-
-                //Operation scaled = graph.
-                Session session = new Session(graph);
-                Tensor imageTensor = Tensor.FromString(File.ReadAllBytes(fileName), status);
-                Tensor[] imageResults = session.Run(new Output[] { input }, new Tensor[] { imageTensor },
-                    new Output[] { scaled });
-                return imageResults[0];
-
             }
 #endif
         }
