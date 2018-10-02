@@ -12,7 +12,7 @@ using System.Text;
 using Emgu.Models;
 using System.Net;
 using System.ComponentModel;
-
+using Emgu.TF.Util.TypeEnum;
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
 using UnityEngine;
 #else
@@ -278,7 +278,20 @@ namespace Emgu.TF.Models
 			System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, jpeg, 0, (int)jpegData.Length);
             return jpeg;
 #else
-            throw new Exception("Not implemented");
+            if (Emgu.TF.Util.Platform.OperationSystem == OS.Windows)
+            {
+                Bitmap img = new Bitmap(fileName);
+                MultiboxGraph.DrawResults(img, detectResult, scoreThreshold);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    return ms.ToArray();
+                }
+            }
+            else
+            {
+                throw new Exception("DrawResultsToJpeg Not implemented for this platform");
+            }
 #endif
             
         }
