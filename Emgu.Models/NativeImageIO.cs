@@ -9,6 +9,8 @@ using System.Drawing.Imaging;
 using System.Text;
 using System.IO;
 using System.Runtime.InteropServices;
+using Emgu.TF.Util.TypeEnum;
+
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
 using UnityEngine;
 #elif __ANDROID__
@@ -129,7 +131,7 @@ namespace Emgu.Models
             System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
 
 #else
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            if (Emgu.TF.Util.Platform.OperationSystem ==  OS.Windows)
             {
                 //Do something for Windows
                 System.Drawing.Bitmap bmp = new Bitmap(fileName);
