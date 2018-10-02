@@ -3,10 +3,10 @@ cd ../..
 
 cd tensorflow/
 
-cd tensorflow/contrib/lite/
+cd tensorflow/contrib/lite/tools/make
 ./download_dependencies.sh
-cd ../../..
-tensorflow/contrib/lite/build_ios_universal_lib.sh 
+cd ../../../../..
+tensorflow/contrib/lite/tools/make/build_ios_universal_lib.sh 
 cd ..
 
 mkdir -p lib/ios
