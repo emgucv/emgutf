@@ -167,5 +167,74 @@ namespace Emgu.Models
             }
 #endif
         }
+
+        public static byte[] PixelToJpeg(byte[] rawPixel, int width, int height, int channels)
+        {
+#if __ANDROID__
+            if (channels != 4)
+                throw new NotImplementedException("Only 4 channel pixel input is supported.");
+            using (Bitmap bitmap = Bitmap.CreateBitmap(width, height, Bitmap.Config.Argb8888))
+            using (MemoryStream ms = new MemoryStream())
+            {
+                IntPtr ptr = bitmap.LockPixels();
+                //GCHandle handle = GCHandle.Alloc(colors, GCHandleType.Pinned);
+                Marshal.Copy(rawPixel, 0, ptr, rawPixel.Length);
+
+                bitmap.UnlockPixels();
+
+                bitmap.Compress(Bitmap.CompressFormat.Jpeg, 90, ms);
+                return ms.ToArray();
+            }
+#elif __IOS__
+            if (channels != 3)
+                throw new NotImplementedException("Only 3 channel pixel input is supported.");
+            System.Drawing.Size sz = new System.Drawing.Size(width, height);
+            GCHandle handle = GCHandle.Alloc(rawPixel, GCHandleType.Pinned);
+            using (CGColorSpace cspace = CGColorSpace.CreateDeviceRGB())
+            using (CGBitmapContext context = new CGBitmapContext(
+                handle.AddrOfPinnedObject(),
+                sz.Width, sz.Height,
+                8,
+                sz.Width * 3,
+                cspace,
+                CGImageAlphaInfo.PremultipliedLast))
+            using (CGImage cgImage = context.ToImage())
+            using (UIImage newImg = new UIImage(cgImage))
+            {
+                handle.Free();
+                var jpegData = newImg.AsJPEG();
+                byte[] raw = new byte[jpegData.Length];
+                System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, raw, 0,
+                    (int)jpegData.Length);
+                return raw;
+            }
+#elif __UNIFIED__ //OSX
+                    if (channels != 4)
+                throw new NotImplementedException("Only 4 channel pixel input is supported.");
+                                    System.Drawing.Size sz = new System.Drawing.Size(width, height);
+
+            using (CGColorSpace cspace = CGColorSpace.CreateDeviceRGB())
+            using (CGBitmapContext context = new CGBitmapContext(
+                rawPixel,
+                sz.Width, sz.Height,
+                8,
+                sz.Width * 4,
+                cspace,
+                CGBitmapFlags.PremultipliedLast | CGBitmapFlags.ByteOrder32Big))
+            using (CGImage cgImage = context.ToImage())
+
+            using (NSBitmapImageRep newImg = new NSBitmapImageRep(cgImage))
+            {
+                var jpegData = newImg.RepresentationUsingTypeProperties(NSBitmapImageFileType.Jpeg);
+
+                byte[] raw = new byte[jpegData.Length];
+                System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, raw, 0,
+                    (int)jpegData.Length);
+                return raw;
+            }
+#else
+            throw new NotImplementedException("Not Implemented");
+#endif
+        }
     }
 }
