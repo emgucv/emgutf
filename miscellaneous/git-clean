@@ -1,7 +1,10 @@
 #!/bin/sh
 cd ..
-#cd tensorflow
-#git clean -d -fx "."
-#cd ..
 git clean -d -fx "."
 git submodule foreach --recursive git clean -fx "."
+
+#If the submodule approach above doesn't work, (e.g. not working on Mac) 
+#the code below will have a second attempt to clean up tensorflow folder
+cd tensorflow
+git clean -d -fx "."
+cd ..

@@ -15,4 +15,4 @@ mkdir -p lib/ios
 #tensorflow/contrib/makefile/gen/lib/libtensorflow-core.a \
 #tensorflow/contrib/makefile/gen/protobuf_ios/lib/libprotobuf.a
 
-cp tensorflow/tensorflow/contrib/lite/gen/lib/libtensorflow-lite.a lib/ios/libtfliteextern.a
+cp tensorflow/tensorflow/contrib/lite/tools/make/gen/lib/libtensorflow-lite.a lib/ios/libtfliteextern.a
