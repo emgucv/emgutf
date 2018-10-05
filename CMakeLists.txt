@@ -596,11 +596,18 @@ SET(EMGUTF_PROTOBUF_NUGET_FILE_LIST "
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.Netstandard.dll\" target=\"lib\\netstandard1.0\" />
 	<file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.Netstandard.XML\" target=\"lib\\netstandard1.0\" />")
 
+	MESSAGE(STATUS "+++++++++++++++++++++++++++++++++++++++++")
+SET(EMGUTF_PROTOBUF_PROJECT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf/Emgu.TF.Protobuf.Netstandard/Emgu.TF.Protobuf.Netstandard.csproj")
+file(STRINGS "${EMGUTF_PROTOBUF_PROJECT_FILE}" EMGUTF_PROTOBUF_PROJECT_PARTS REGEX "Google.Protobuf" )
+string(REGEX REPLACE ".+Version=\"([0-9]+.[0-9]+.[0-9]+)\".*" "\\1" PROTOBUF_VERSION "${EMGUTF_PROTOBUF_PROJECT_PARTS}")
+#MESSAGE(STATUS "EMGUTF_PROTOBUF_PROJECT_PARTS: ${EMGUTF_PROTOBUF_PROJECT_PARTS}" )	
+#MESSAGE(STATUS "PROTOBUF_VERSION: ${PROTOBUF_VERSION}" )	
+	
 SET(EMGUTF_PROTOBUF_NUGET_DEPENDENCY "${EMGUTF_PROTOBUF_NUGET_DEPENDENCY}
     <dependencies>
 		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
-		<dependency id=\"Google.Protobuf\" version=\"[3.6.1]\" />
-    </dependencies>")
+		<dependency id=\"Google.Protobuf\" version=\"[${PROTOBUF_VERSION}]\" />
+    </dependencies>") 
 	
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Models.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Models/Package.nuspec)

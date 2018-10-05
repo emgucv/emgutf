@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>${EMGUTF_LITE_NUGET_ID}</id>
+	<title>${EMGUTF_LITE_NUGET_TITLE}</title>
+    <version>${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}</version>
+    <authors>${CPACK_PACKAGE_VENDOR}</authors>
+    <owners>${CPACK_PACKAGE_VENDOR}</owners>
+    <licenseUrl>${EMGUTF_LICENSE_URL}</licenseUrl>
+    <projectUrl>${EMGUTF_MAIN_WEB_URL}</projectUrl>
+	<iconUrl>http://www.emgu.com/wiki/files/EmguTFLogo.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+	<summary>Emgu TF Lite is a cross platform .Net wrapper for the Google Tensorflow Lite library.</summary>
+    <description>Emgu TF Lite is a cross platform .Net wrapper for the Google Tensorflow Lite library. Allows Tensorflow Lite functions to be called from .NET compatible languages such as C#, VB, VC++, IronPython.</description>
+    <releaseNotes>This is the ${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX} release of Emgu TF Lite. For online documentation please visit
+http://www.emgu.com/wiki/files/emgutflite/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}/document/</releaseNotes>
+	${EMGUTF_LITE_NUGET_DEPENDENCY}
+    <copyright>${CURRENT_YEAR} ${CPACK_PACKAGE_VENDOR}, all rights reserved</copyright>
+    <tags>tensorflow lite emgu emgutflite ai </tags>
+  </metadata>
+  <files>
+  ${EMGUTF_LITE_NUGET_FILE_LIST}
+  </files>
+</package>
