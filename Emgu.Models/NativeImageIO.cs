@@ -145,10 +145,12 @@ namespace Emgu.Models
                 }
 
                 byte[] byteValues = new byte[bmp.Width * bmp.Height * 3];
-                BitmapData bd = new BitmapData();
+                System.Drawing.Imaging.BitmapData bd = new System.Drawing.Imaging.BitmapData();
 
-                bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly,
-                    PixelFormat.Format24bppRgb, bd);
+                bmp.LockBits(
+                    new Rectangle(0, 0, bmp.Width, bmp.Height), 
+                    System.Drawing.Imaging.ImageLockMode.ReadOnly,
+                    System.Drawing.Imaging.PixelFormat.Format24bppRgb, bd);
                 System.Runtime.InteropServices.Marshal.Copy(bd.Scan0, byteValues, 0, byteValues.Length);
                 bmp.UnlockBits(bd);
 
