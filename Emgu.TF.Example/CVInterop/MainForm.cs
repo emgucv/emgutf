@@ -121,7 +121,6 @@ namespace CVInterop
             }
 
             //Here we are trying to time the execution of the graph after it is loaded
-            //If we are not interest in the performance, we can skip the 3 lines that follows
             Stopwatch sw = Stopwatch.StartNew();
             probability = _inceptionGraph.Recognize(imageTensor);
             sw.Stop();

@@ -65,6 +65,7 @@ namespace Emgu.TF.XamarinForms
             _buttonMode = ButtonMode.Ready;
             button.Text = GetButtonName(_buttonMode);
             button.IsEnabled = true;
+
         }
 
         protected void onDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)

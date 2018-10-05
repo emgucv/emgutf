@@ -48,9 +48,16 @@ namespace Emgu.TF.XamarinForms
         public MultiboxDetectionPage()
            : base()
         {
-            _multiboxGraph = new MultiboxGraph();
-            _multiboxGraph.OnDownloadProgressChanged += onDownloadProgressChanged;
-            _multiboxGraph.OnDownloadCompleted += onDownloadCompleted;
+            if (_multiboxGraph == null)
+            {
+                _multiboxGraph = new MultiboxGraph();
+                _multiboxGraph.OnDownloadProgressChanged += onDownloadProgressChanged;
+                _multiboxGraph.OnDownloadCompleted += onDownloadCompleted;
+                _multiboxGraph.OnDownloadCompleted += (sender, e) =>
+                {
+                    OnButtonClicked(sender, e);
+                };
+            }
 
             OnImagesLoaded += (sender, image) =>
             {

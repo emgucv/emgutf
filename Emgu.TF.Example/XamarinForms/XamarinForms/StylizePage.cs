@@ -45,9 +45,16 @@ namespace Emgu.TF.XamarinForms
         public StylizePage()
             : base()
         {
-            _stylizeGraph = new StylizeGraph();
-            _stylizeGraph.OnDownloadProgressChanged += onDownloadProgressChanged;
-            _stylizeGraph.OnDownloadCompleted += onDownloadCompleted;
+            if (_stylizeGraph == null)
+            {
+                _stylizeGraph = new StylizeGraph();
+                _stylizeGraph.OnDownloadProgressChanged += onDownloadProgressChanged;
+                _stylizeGraph.OnDownloadCompleted += onDownloadCompleted;
+                _stylizeGraph.OnDownloadCompleted += (sender, e) =>
+                {
+                    OnButtonClicked(sender, e);
+                };
+            }
 
             OnImagesLoaded += (sender, image) =>
             {
