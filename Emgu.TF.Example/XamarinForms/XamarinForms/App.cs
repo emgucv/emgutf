@@ -16,31 +16,55 @@ namespace Emgu.TF.XamarinForms
         public App()
         {
             Emgu.TF.TfInvoke.CheckLibraryLoaded();
+
+            List<View> buttons = new List<View>();
+
             Button multiboxDetectionButton = new Button();
             multiboxDetectionButton.Text = "People Detection";
+            multiboxDetectionButton.Clicked += (sender, args) =>
+            {
+                MainPage.Navigation.PushAsync(new MultiboxDetectionPage());
+            };
+            buttons.Add(multiboxDetectionButton);
+
             Button inceptionButton = new Button();
             inceptionButton.Text = "Object recognition";
+            inceptionButton.Clicked += (sender, args) =>
+            {
+                MainPage.Navigation.PushAsync(new InceptionPage());
+            };
+            buttons.Add(inceptionButton);
+
+#if __ANDROID__ || __UNIFIED__
+            //Only add stylize for Android, iOS and Mac.
+            //Quantization is not available on Windows
             Button stylizeButton = new Button();
             stylizeButton.Text = "Stylize";
+            stylizeButton.Clicked += (sender, args) =>
+            {
+                MainPage.Navigation.PushAsync(new StylizePage());
+            };
+            buttons.Add(stylizeButton);
+#endif
+            StackLayout layout = new StackLayout
+            {
+                VerticalOptions = LayoutOptions.Start,
+                Children = { }
+            };
+            foreach(View v in buttons)
+            {
+                layout.Children.Add(v);
+            }
 
             // The root page of your application
             ContentPage page =
                new ContentPage
                {
-                   Content = new StackLayout
-                   {
-                       VerticalOptions = LayoutOptions.Start,
-                       Children =
-                     {
-                       multiboxDetectionButton,
-                       inceptionButton,
-                       stylizeButton
-                     }
-                   }
+                   Content = layout
                };
-
+            
 #if NETFX_CORE
-		   String aboutIcon = "questionmark.png";
+		    String aboutIcon = "questionmark.png";
 #else
             String aboutIcon = null;
 #endif
@@ -54,25 +78,10 @@ namespace Emgu.TF.XamarinForms
                () =>
                {
                    MainPage.Navigation.PushAsync(new AboutPage());
-                   //page.DisplayAlert("Emgu TF Examples", "App version: ...", "Ok");
                }
             );
             page.ToolbarItems.Add(aboutItem);
 
-            multiboxDetectionButton.Clicked += (sender, args) =>
-            {
-                MainPage.Navigation.PushAsync(new MultiboxDetectionPage());
-            };
-
-            inceptionButton.Clicked += (sender, args) =>
-            {
-                MainPage.Navigation.PushAsync(new InceptionPage());
-            };
-
-            stylizeButton.Clicked += (sender, args) =>
-            {
-                MainPage.Navigation.PushAsync(new StylizePage());
-            };
         }
 
         public Page CurrentPage

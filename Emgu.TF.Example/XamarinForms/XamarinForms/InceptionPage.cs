@@ -50,10 +50,16 @@ namespace Emgu.TF.XamarinForms
         public InceptionPage()
             : base()
         {
-            _inceptionGraph = new Inception();
-            _inceptionGraph.OnDownloadProgressChanged += onDownloadProgressChanged;
-            _inceptionGraph.OnDownloadCompleted += onDownloadCompleted;
-
+            if (_inceptionGraph == null)
+            {
+                _inceptionGraph = new Inception();
+                _inceptionGraph.OnDownloadProgressChanged += onDownloadProgressChanged;
+                _inceptionGraph.OnDownloadCompleted += onDownloadCompleted;
+                _inceptionGraph.OnDownloadCompleted += (sender, e) => 
+                {
+                    OnButtonClicked(sender, e);
+                };
+            }
             OnImagesLoaded += (sender, image) =>
             {
                 try
@@ -76,6 +82,8 @@ namespace Emgu.TF.XamarinForms
                     SetMessage(msg);
                 }
             };
+
+           
         }
 
         public override void OnButtonClicked(Object sender, EventArgs args)
