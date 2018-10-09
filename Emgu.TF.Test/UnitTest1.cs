@@ -44,23 +44,44 @@ namespace Emgu.TF.Test
             Tensor imageTensor = ImageIO.ReadTensorFromImageFile("grace_hopper.jpg", 224, 224, 128.0f, 1.0f);
 
             Inception inceptionGraph = new Inception();
-
-            float[] probability = inceptionGraph.Recognize(imageTensor);
-            if (probability != null)
+            bool processCompleted = false;
+            inceptionGraph.OnDownloadCompleted += (sender, e) =>
             {
-                String[] labels = inceptionGraph.Labels;
-                float maxVal = 0;
-                int maxIdx = 0;
-                for (int i = 0; i < probability.Length; i++)
-                {
-                    if (probability[i] > maxVal)
+                HashSet<string> outputNames = new HashSet<string>();
+                foreach (Operation op in inceptionGraph.Graph)
+                    foreach (Output o in op.Outputs)
                     {
-                        maxVal = probability[i];
-                        maxIdx = i;
+                        String name = o.Operation.Name;
+                        if (!outputNames.Contains(name))
+                            outputNames.Add(name);
                     }
+               
+
+                float[] probability = inceptionGraph.Recognize(imageTensor);
+                if (probability != null)
+                {
+                    String[] labels = inceptionGraph.Labels;
+                    float maxVal = 0;
+                    int maxIdx = 0;
+                    for (int i = 0; i < probability.Length; i++)
+                    {
+                        if (probability[i] > maxVal)
+                        {
+                            maxVal = probability[i];
+                            maxIdx = i;
+                        }
+                    }
+                    Trace.WriteLine(String.Format("Object is {0} with {1}% probability", labels[maxIdx], maxVal * 100));
                 }
-                Trace.WriteLine(String.Format("Object is {0} with {1}% probability", labels[maxIdx], maxVal * 100));
+                processCompleted = true;
+            };
+
+            inceptionGraph.Init();
+            while (!processCompleted)
+            {
+                Thread.Sleep(1000);
             }
+            
         }
 
         [TestMethod]
@@ -70,14 +91,27 @@ namespace Emgu.TF.Test
             Tensor imageResults = ImageIO.ReadTensorFromImageFile("surfers.jpg", 224, 224, 128.0f, 1.0f / 128.0f);
 
             MultiboxGraph multiboxGraph = new MultiboxGraph();
+            bool processCompleted = false;
 
-            MultiboxGraph.Result result = multiboxGraph.Detect(imageResults);
+            multiboxGraph.OnDownloadCompleted += (sender, e) =>
+            {
+                MultiboxGraph.Result result = multiboxGraph.Detect(imageResults);
 
-            Bitmap bmp = new Bitmap("surfers.jpg");
-            MultiboxGraph.DrawResults(bmp, result, 0.1f);
-            bmp.Save("surfers_result.jpg");
+                Bitmap bmp = new Bitmap("surfers.jpg");
+                MultiboxGraph.DrawResults(bmp, result, 0.1f);
+                bmp.Save("surfers_result.jpg");
+                processCompleted = true;
+            };
+
+            multiboxGraph.Init();
+
+            while (!processCompleted)
+            {
+                Thread.Sleep(1000);
+            }
         }
 
+        
 
         [TestMethod]
         public void TestStylize()

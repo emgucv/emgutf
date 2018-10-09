@@ -140,7 +140,7 @@ namespace Emgu.Models
 
             //uncomment the following line to force re-download every time.
             //File.Delete(downloadableFile.LocalFile);
-            if (!File.Exists(downloadableFile.LocalFile) || !(new FileInfo(downloadableFile.LocalFile).Length > 0))
+            if (!File.Exists(downloadableFile.LocalFile) || new FileInfo(downloadableFile.LocalFile).Length == 0)
             {
                 try
                 {
