@@ -123,7 +123,8 @@ namespace Emgu.TF.Models
             _graph = new Graph();
             String localFileName = _downloadManager.Files[0].LocalFile;
             byte[] model = File.ReadAllBytes(localFileName);
-
+            if (model.Length == 0)
+                throw new FileNotFoundException(String.Format("Unable to load file {0}", localFileName));
             Buffer modelBuffer = Buffer.FromString(model);
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
@@ -137,6 +138,14 @@ namespace Emgu.TF.Models
 #endif
             _session = new Session(_graph, _sessionOptions, _status);
             _labels = File.ReadAllLines(_downloadManager.Files[1].LocalFile);
+        }
+
+        public Graph Graph
+        {
+            get
+            {
+                return _graph;
+            }
         }
 
         public String[] Labels
