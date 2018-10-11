@@ -41,47 +41,58 @@ namespace Emgu.TF.Test
         [TestMethod]
         public void TestInception()
         {
-            Tensor imageTensor = ImageIO.ReadTensorFromImageFile("grace_hopper.jpg", 224, 224, 128.0f, 1.0f);
-
-            Inception inceptionGraph = new Inception();
-            bool processCompleted = false;
-            inceptionGraph.OnDownloadCompleted += (sender, e) =>
+            using (Tensor imageTensor = ImageIO.ReadTensorFromImageFile("grace_hopper.jpg", 224, 224, 128.0f, 1.0f))
+            using (Inception inceptionGraph = new Inception())
             {
-                HashSet<string> outputNames = new HashSet<string>();
-                foreach (Operation op in inceptionGraph.Graph)
-                    foreach (Output o in op.Outputs)
-                    {
-                        String name = o.Operation.Name;
-                        if (!outputNames.Contains(name))
-                            outputNames.Add(name);
-                    }
-               
-
-                float[] probability = inceptionGraph.Recognize(imageTensor);
-                if (probability != null)
+                bool processCompleted = false;
+                inceptionGraph.OnDownloadCompleted += (sender, e) =>
                 {
-                    String[] labels = inceptionGraph.Labels;
-                    float maxVal = 0;
-                    int maxIdx = 0;
-                    for (int i = 0; i < probability.Length; i++)
+                    HashSet<string> opNames = new HashSet<string>();
+                    HashSet<string> couldBeInputs = new HashSet<string>();
+                    HashSet<string> couldBeOutputs = new HashSet<string>();
+                    foreach (Operation op in inceptionGraph.Graph)
                     {
-                        if (probability[i] > maxVal)
+                        String name = op.Name;
+                        opNames.Add(name);
+
+                        if (op.NumInputs == 0 && op.OpType.Equals("Placeholder"))
+                            couldBeInputs.Add(op.Name);
+                        
+                        foreach (Output output in op.Outputs)
                         {
-                            maxVal = probability[i];
-                            maxIdx = i;
+                            if (output.NumConsumers == 0)
+                            {
+                                couldBeOutputs.Add(name);
+                            }
                         }
                     }
-                    Trace.WriteLine(String.Format("Object is {0} with {1}% probability", labels[maxIdx], maxVal * 100));
-                }
-                processCompleted = true;
-            };
+                    
 
-            inceptionGraph.Init();
-            while (!processCompleted)
-            {
-                Thread.Sleep(1000);
+                    float[] probability = inceptionGraph.Recognize(imageTensor);
+                    if (probability != null)
+                    {
+                        String[] labels = inceptionGraph.Labels;
+                        float maxVal = 0;
+                        int maxIdx = 0;
+                        for (int i = 0; i < probability.Length; i++)
+                        {
+                            if (probability[i] > maxVal)
+                            {
+                                maxVal = probability[i];
+                                maxIdx = i;
+                            }
+                        }
+                        Trace.WriteLine(String.Format("Object is {0} with {1}% probability", labels[maxIdx], maxVal * 100));
+                    }
+                    processCompleted = true;
+                };
+
+                inceptionGraph.Init();
+                while (!processCompleted)
+                {
+                    Thread.Sleep(1000);
+                }
             }
-            
         }
 
         [TestMethod]
@@ -111,7 +122,7 @@ namespace Emgu.TF.Test
             }
         }
 
-        
+
 
         [TestMethod]
         public void TestStylize()
@@ -164,9 +175,9 @@ namespace Emgu.TF.Test
             config.GpuOptions.VisibleDeviceList = "0";
             //config.GpuOptions.VisibleDeviceList = "0, 1";
             //var devicesList = config.GpuOptions.VisibleDeviceList;
-            
+
             //config.LogDevicePlacement = true;
-            
+
             if (TfInvoke.IsGoogleCudaEnabled)
                 so.SetConfig(config.ToProtobuf());
 
@@ -194,11 +205,11 @@ namespace Emgu.TF.Test
             using (Buffer graphDef = new Buffer())
             {
                 graph.Versions(versionDef);
-                
+
                 Tensorflow.VersionDef vdef = Tensorflow.VersionDef.Parser.ParseFrom(versionDef.Data);
 
                 graph.ToGraphDef(graphDef);
-                
+
                 Tensorflow.GraphDef gdef = Tensorflow.GraphDef.Parser.ParseFrom(graphDef.Data);
 
                 using (MemoryStream ms = new MemoryStream())
@@ -216,7 +227,7 @@ namespace Emgu.TF.Test
                         if (serializedGraphDef1[i] != serializedGraphDef2[i])
                             equal = false;
                     }
-                    
+
                 }
 
                 foreach (Operation op in graph)
