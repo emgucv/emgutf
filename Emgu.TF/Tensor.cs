@@ -99,7 +99,19 @@ namespace Emgu.TF
         /// <summary>
         /// Resource
         /// </summary>
-        Resource = 20
+        Resource = 20,
+        /// <summary>
+        /// Variant
+        /// </summary>
+        Variant = 21,
+        /// <summary>
+        /// Uint32
+        /// </summary>
+        Uint32 = 22,
+        /// <summary>
+        /// Uint64
+        /// </summary>
+        Uint64 = 23,
     }
 
     public static partial class TfInvoke
