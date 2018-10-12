@@ -60,13 +60,17 @@ namespace Emgu.TF.Test
                         
                         foreach (Output output in op.Outputs)
                         {
+                            int[] shape = inceptionGraph.Graph.GetTensorShape(output);
                             if (output.NumConsumers == 0)
                             {
                                 couldBeOutputs.Add(name);
                             }
                         }
                     }
-                    
+                    using (Buffer versionDef = inceptionGraph.Graph.Versions())
+                    {
+                        int l = versionDef.Length;
+                    }
 
                     float[] probability = inceptionGraph.Recognize(imageTensor);
                     if (probability != null)
@@ -201,11 +205,9 @@ namespace Emgu.TF.Test
             //The actual operation
             Operation sumOp = graph.Add(opA, opB, "sum");
 
-            using (Buffer versionDef = new Buffer())
+            using (Buffer versionDef = graph.Versions())
             using (Buffer graphDef = new Buffer())
             {
-                graph.Versions(versionDef);
-
                 Tensorflow.VersionDef vdef = Tensorflow.VersionDef.Parser.ParseFrom(versionDef.Data);
 
                 graph.ToGraphDef(graphDef);
@@ -261,7 +263,7 @@ namespace Emgu.TF.Test
             Tensor[] results = session.Run(new Output[] { }, new Tensor[] { }, new Output[] { helloOp });
             byte[] data = results[0].DecodeString();
             String output = System.Text.Encoding.Default.GetString(data);
-
+            Assert.IsTrue(output.Equals(h));
         }
     }
 }
