@@ -269,7 +269,7 @@ namespace Emgu.TF
                 if (!String.IsNullOrEmpty(inputsStr)) paramList.Add(inputsStr);
                 if (!String.IsNullOrEmpty(requiredStr)) paramList.Add(requiredStr);
                 if (!String.IsNullOrEmpty(optionalStr)) paramList.Add(optionalStr);
-                paramList.Add(String.Format("String opName= \"{0}\"", op.Name));
+                paramList.Add(String.Format(" String opName= \"{0}\"", op.Name));
                 String paramStr = String.Join(",", paramList);
 
                 StringBuilder body = new StringBuilder(String.Format(
