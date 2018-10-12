@@ -43,17 +43,24 @@ namespace Emgu.TF
         /// Returns the shape of the Tensor
         /// </summary>
         /// <param name="output">The output</param>
-        /// <param name="numDim">The rank of the tensor</param>
         /// <param name="status">The status</param>
         /// <returns>The shape of the Tensor</returns>
-        public int[] GetTensorShape(Output output, int numDim, Status status = null)
+        public int[] GetTensorShape(Output output, Status status = null)
         {
-            int[] dims = new int[numDim];
-            GCHandle handle = GCHandle.Alloc(dims, GCHandleType.Pinned);
             using (StatusChecker checker = new StatusChecker(status))
+            {
+                int numDim = TfInvoke.tfeGraphGetTensorNumDims(_ptr, output.Operation, output.Index, checker.Status);
+                if (numDim < 0)
+                    return null;
+                else if (numDim == 0)
+                    return new int[0];
+
+                int[] dims = new int[numDim];
+                GCHandle handle = GCHandle.Alloc(dims, GCHandleType.Pinned);
                 TfInvoke.tfeGraphGetTensorShape(_ptr, output.Operation, output.Index, handle.AddrOfPinnedObject(), numDim, checker.Status);
-            handle.Free();
-            return dims;
+                handle.Free();
+                return dims;
+            }
         }
 
         /// <summary>
@@ -148,12 +155,27 @@ namespace Emgu.TF
         /// <summary>
         /// Returns the serialized VersionDef proto for this graph.
         /// </summary>
-        /// <param name="versionDef">The serialized VersionDef proto for this graph.</param>
+        /// <return>The serialized VersionDef proto for this graph.</return>
         /// <param name="status">The status</param>
-        public void Versions(Buffer versionDef, Status status = null)
+        public Buffer Versions(Status status = null)
         {
             using (StatusChecker checker = new StatusChecker(status))
-                TfInvoke.tfeGraphVersions(_ptr, versionDef, checker.Status);
+            {
+                return new Buffer(
+                    TfInvoke.tfeGraphVersions(_ptr, checker.Status),
+                    true);
+            }
+        }
+
+        /// <summary>
+        /// Returns the number of TF_Functions registered in the graph
+        /// </summary>
+        public int NumFunctions
+        {
+            get
+            {
+                return TfInvoke.tfeGraphNumFunctions(_ptr);
+            }
         }
 
         /// <summary>
@@ -213,9 +235,15 @@ namespace Emgu.TF
         internal static extern void tfeGraphSetTensorShape(IntPtr graph, IntPtr outputOperation, int idx, IntPtr dims, int numDims, IntPtr status);
 
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        internal static extern int tfeGraphGetTensorNumDims(IntPtr graph, IntPtr outputOperation, int idx, IntPtr status);
+
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         internal static extern void tfeGraphGetTensorShape(IntPtr graph, IntPtr outputOperation, int idx, IntPtr dims, int numDims, IntPtr status);
 
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
-        internal static extern void tfeGraphVersions(IntPtr graph, IntPtr output_version_def, IntPtr status);
+        internal static extern IntPtr tfeGraphVersions(IntPtr graph, IntPtr status);
+
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        internal static extern int tfeGraphNumFunctions(IntPtr g);
     }
 }
