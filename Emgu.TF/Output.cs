@@ -56,6 +56,31 @@ namespace Emgu.TF
                 return TfInvoke.tfeOperationOutputNumConsumers(Operation.Ptr, Index);
             }
         }
+
+        /// <summary>
+        /// Get the consumers for this Output
+        /// </summary>
+        public Input[] Consumers
+        {
+            get
+            {
+                int numComsumers = NumConsumers;
+                IntPtr[] operations = new IntPtr[numComsumers];
+                int[] inputIdx = new int[numComsumers];
+                GCHandle opHandle = GCHandle.Alloc(operations, GCHandleType.Pinned);
+                GCHandle idxHandle = GCHandle.Alloc(inputIdx, GCHandleType.Pinned);
+                TfInvoke.tfeOperationOutputConsumers(Operation.Ptr, Index, opHandle.AddrOfPinnedObject(), idxHandle.AddrOfPinnedObject(), numComsumers);
+                opHandle.Free();
+                idxHandle.Free();
+
+                Input[] result = new Input[numComsumers];
+                for (int i = 0; i < numComsumers; i++)
+                {
+                    result[i] = new Input(new Operation(operations[i]), inputIdx[i]);
+                }
+                return result;
+            }
+        }
     }
 
     public static partial class TfInvoke
@@ -66,5 +91,8 @@ namespace Emgu.TF
 
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         internal static extern int tfeOperationOutputNumConsumers(IntPtr oper, int idx);
+
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        internal static extern int tfeOperationOutputConsumers(IntPtr operOut, int outIdx, IntPtr consumers, IntPtr inputIdx, int maxConsumers);
     }
 }
