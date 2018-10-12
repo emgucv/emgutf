@@ -174,6 +174,29 @@ namespace Emgu.TF
         }
 
         /// <summary>
+        /// Get list of all control inputs to an operation.
+        /// </summary>
+        public Operation[] ControlInputs
+        {
+            get
+            {
+                int numControlInputs = NumControlInputs;
+                if (numControlInputs == 0)
+                    return new Operation[0];
+
+                IntPtr[] ops = new IntPtr[numControlInputs];
+                GCHandle opsHandle = GCHandle.Alloc(ops, GCHandleType.Pinned);
+                TfInvoke.tfeOperationGetControlInputs(_ptr, opsHandle.AddrOfPinnedObject(), NumControlInputs);
+                opsHandle.Free();
+
+                Operation[] operations = new Operation[numControlInputs];
+                for (int i = 0; i < numControlInputs; i++)
+                    operations[i] = new Operation(ops[i]);
+                return operations;
+            }
+        }
+
+        /// <summary>
         /// Get the number of control outputs.
         /// </summary>
         public int NumControlOutputs
@@ -183,6 +206,29 @@ namespace Emgu.TF
                 if (Empty)
                     return 0;
                 return TfInvoke.tfeOperationNumControlOutputs(_ptr);
+            }
+        }
+
+        /// <summary>
+        /// Get the list of operations that have the current operation as a control input.
+        /// </summary>
+        public Operation[] ControlOutputs
+        {
+            get
+            {
+                int numControlOutputs = NumControlOutputs;
+                if (numControlOutputs == 0)
+                    return new Operation[0];
+
+                IntPtr[] ops = new IntPtr[numControlOutputs];
+                GCHandle opsHandle = GCHandle.Alloc(ops, GCHandleType.Pinned);
+                TfInvoke.tfeOperationGetControlOutputs(_ptr, opsHandle.AddrOfPinnedObject(), NumControlOutputs);
+                opsHandle.Free();
+
+                Operation[] operations = new Operation[numControlOutputs];
+                for (int i = 0; i < numControlOutputs; i++)
+                    operations[i] = new Operation(ops[i]);
+                return operations;
             }
         }
     }
@@ -210,6 +256,12 @@ namespace Emgu.TF
         internal static extern int tfeOperationNumControlInputs(IntPtr oper);
 
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        internal static extern int tfeOperationGetControlInputs(IntPtr oper, IntPtr controlInputs, int maxControlInputs);
+
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         internal static extern int tfeOperationNumControlOutputs(IntPtr oper);
+
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        internal static extern int tfeOperationGetControlOutputs(IntPtr oper, IntPtr controlOutputs, int maxControlOutputs);
     }
 }
