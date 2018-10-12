@@ -38,7 +38,7 @@ namespace Emgu.TF
         protected override void DisposeObject()
         {
             if (IntPtr.Zero != _ptr)
-                TfInvoke.tfeDeleteBuffer(ref _ptr);
+                TfInvoke.tfeDeleteFunction(ref _ptr);
         }
 
         /// <summary>
