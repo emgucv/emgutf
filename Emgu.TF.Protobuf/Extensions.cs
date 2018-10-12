@@ -11,18 +11,19 @@ using System.IO;
 
 namespace Tensorflow
 {
-    public sealed partial class ConfigProto : pb::IMessage<ConfigProto>
+    public static class Extensions
     {
-        public byte[] ToProtobuf()
+        public static byte[] ToProtobuf(this ConfigProto cp)
         {
             using (MemoryStream ms = new MemoryStream())
             using (pb::CodedOutputStream stream = new pb::CodedOutputStream(ms))
             {
-                WriteTo(stream);
+                cp.WriteTo(stream);
                 stream.Flush();
                 return ms.ToArray();
             }
         }
+
     }
 }
 
