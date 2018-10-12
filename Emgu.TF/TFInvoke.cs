@@ -454,7 +454,7 @@ namespace Emgu.TF
         /// <returns></returns>
         public static Buffer GetAllOpList()
         {
-            return new Buffer(tfeGetAllOpList());
+            return new Buffer(tfeGetAllOpList(), true);
         }
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         private static extern IntPtr tfeGetAllOpList();

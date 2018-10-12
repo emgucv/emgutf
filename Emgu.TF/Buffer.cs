@@ -18,17 +18,21 @@ namespace Emgu.TF
     /// </summary>
     public class Buffer : UnmanagedObject
     {
+        private bool _needDispose;
+
         /// <summary>
         /// Create a new empty buffer
         /// </summary>
         public Buffer()
         {
+            _needDispose = true;
             _ptr = TfInvoke.tfeNewBuffer();
         }
 
-        internal Buffer(IntPtr ptr)
+        internal Buffer(IntPtr ptr, bool needDispose)
         {
             _ptr = ptr;
+            _needDispose = needDispose;
         }
 
         /// <summary>
@@ -39,7 +43,7 @@ namespace Emgu.TF
         public static Buffer FromString(byte[] rawProtoBuf)
         {
             GCHandle handle = GCHandle.Alloc(rawProtoBuf, GCHandleType.Pinned);
-            Buffer buffer = new Buffer(TfInvoke.tfeNewBufferFromString(handle.AddrOfPinnedObject(), rawProtoBuf.Length));
+            Buffer buffer = new Buffer(TfInvoke.tfeNewBufferFromString(handle.AddrOfPinnedObject(), rawProtoBuf.Length), true);
             handle.Free();
             return buffer;
         }
@@ -88,9 +92,13 @@ namespace Emgu.TF
         protected override void DisposeObject()
         {
             if (IntPtr.Zero != _ptr)
-                TfInvoke.tfeDeleteBuffer(ref _ptr);
+            {
+                if (_needDispose)
+                    TfInvoke.tfeDeleteBuffer(ref _ptr);
+                else
+                    _ptr = IntPtr.Zero;
+            }
         }
-
     }
 
     /// <summary>
