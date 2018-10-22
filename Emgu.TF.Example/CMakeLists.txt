@@ -286,6 +286,8 @@ IF(HAVE_WINDESKTOP_LITE)
     PATTERN "*.png"
     PATTERN "*.dll"
     PATTERN "*.json"
+	PATTERN "*.resx"
+	PATTERN "*.settings"
     PATTERN ".git" EXCLUDE
     PATTERN "Debug" EXCLUDE
     PATTERN "Release" EXCLUDE  

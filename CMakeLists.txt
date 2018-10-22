@@ -418,7 +418,7 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CommonAssemblyInfo.cs.in ${CMAK
 # ----------------------------------------------------------------------------
 #  Generate xamarin component configuration file
 # ----------------------------------------------------------------------------
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/component.yaml.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/xamarin/emgutf_v1/component/component.yaml)
+#CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/component.yaml.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/xamarin/emgutf_v1/component/component.yaml)
 
 SET(EMGUTF_NUGET_FILE_LIST "")
 #IF(HAVE_WINDESKTOP_X64)
@@ -465,20 +465,41 @@ IF(HAVE_ANDROID)
 	<file src=\"..\\..\\..\\lib\\Emgu.TF.World.Android.XML\" target=\"lib\\MonoAndroid50\" />")
 ENDIF()
 
-IF ("${LICENSE_TYPE}" EQUAL "Commercial")
-	SET(EMGUTF_NUGET_ID "${EMGUTF_NUGET_ID}-CR")
-	SET(EMGUTF_MODEL_NUGET_ID "${EMGUTF_MODEL_NUGET_ID}-CR")
-	SET(EMGUTF_PROTOBUF_NUGET_ID "${EMGUTF_PROTOBUF_NUGET_ID}-CR")
+IF(HAVE_WINDESKTOP_LITE)
+	SET(EMGUTF_LITE_NUGET_ID "${EMGUTF_NUGET_ID}-LITE")
+	SET(EMGUTF_LITE_NUGET_TITLE "${EMGUTF_NUGET_ID} Lite")
+	IF ("${LICENSE_TYPE}" EQUAL "Commercial")
+		SET(EMGUTF_LITE_NUGET_ID "${EMGUTF_NUGET_ID}-CR")
+		SET(EMGUTF_LITE_NUGET_TITLE "${EMGUTF_LITE_NUGET_TITLE} Commercial Release")
+	ENDIF()
 	
-	SET(EMGUTF_NUGET_TITLE "${EMGUTF_NUGET_TITLE} Commercial Release")
-	SET(EMGUTF_MODEL_NUGET_TITLE "${EMGUTF_MODEL_NUGET_TITLE} Commercial Release")
-	SET(EMGUTF_PROTOBUF_NUGET_TITLE "${EMGUTF_PROTOBUF_NUGET_TITLE} Commercial Release")
+	SET(EMGUTF_LITE_NUGET_FILE_LIST "
+	<file src=\"..\\..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />")
+	SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.World.dll\" target=\"lib\\net35\" />
+	<file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.World.XML\" target=\"lib\\net35\" />")
+	
+	SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
+	<file src=\"Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_NUGET_ID}.targets\" />")
 ENDIF()
+
+
 
 SET(EMGUTF_NUGET_DEPENDENCY "")
 SET(EMGUTF_PROTOBUF_NUGET_DEPENDENCY "")
 IF(HAVE_WINDESKTOP_X64)
-	MESSAGE("-- HAVE_WINDESKTOP_X64: ${HAVE_WINDESKTOP_X64}")
+	MESSAGE(STATUS "-- HAVE_WINDESKTOP_X64: ${HAVE_WINDESKTOP_X64}")
+	
+	IF ("${LICENSE_TYPE}" EQUAL "Commercial")
+		SET(EMGUTF_NUGET_ID "${EMGUTF_NUGET_ID}-CR")
+		SET(EMGUTF_MODEL_NUGET_ID "${EMGUTF_MODEL_NUGET_ID}-CR")
+		SET(EMGUTF_PROTOBUF_NUGET_ID "${EMGUTF_PROTOBUF_NUGET_ID}-CR")
+		
+		SET(EMGUTF_NUGET_TITLE "${EMGUTF_NUGET_TITLE} Commercial Release")
+		SET(EMGUTF_MODEL_NUGET_TITLE "${EMGUTF_MODEL_NUGET_TITLE} Commercial Release")
+		SET(EMGUTF_PROTOBUF_NUGET_TITLE "${EMGUTF_PROTOBUF_NUGET_TITLE} Commercial Release")
+	ENDIF()
+	
 	SET(BAZEL_GENERATED_CUFFT_VERSION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/bazel-genfiles/external/local_config_cuda/cuda/cuda/include/nppversion.h")
 	SET(BAZEL_GENERATED_DNN_VERSION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/bazel-genfiles/external/local_config_cuda/cuda/cuda/include/cudnn.h")
 	SET(TFEXTERN_DEPENDENCY_DLLS)
@@ -595,8 +616,7 @@ SET(EMGUTF_MODEL_NUGET_FILE_LIST "
 SET(EMGUTF_PROTOBUF_NUGET_FILE_LIST "
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.Netstandard.dll\" target=\"lib\\netstandard1.0\" />
 	<file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.Netstandard.XML\" target=\"lib\\netstandard1.0\" />")
-
-	MESSAGE(STATUS "+++++++++++++++++++++++++++++++++++++++++")
+#MESSAGE(STATUS "+++++++++++++++++++++++++++++++++++++++++")
 SET(EMGUTF_PROTOBUF_PROJECT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf/Emgu.TF.Protobuf.Netstandard/Emgu.TF.Protobuf.Netstandard.csproj")
 file(STRINGS "${EMGUTF_PROTOBUF_PROJECT_FILE}" EMGUTF_PROTOBUF_PROJECT_PARTS REGEX "Google.Protobuf" )
 string(REGEX REPLACE ".+Version=\"([0-9]+.[0-9]+.[0-9]+)\".*" "\\1" PROTOBUF_VERSION "${EMGUTF_PROTOBUF_PROJECT_PARTS}")
@@ -614,6 +634,8 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Models.Package.nuspec.in ${CMAK
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Protobuf.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Protobuf/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/XamarinForms.Android.AndroidManifest.xml.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Example/XamarinForms/XamarinForms.Android/Properties/AndroidManifest.xml)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Android.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Android/Package.nuspec)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Lite.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Lite/Package.nuspec)
+
 # ----------------------------------------------------------------------------
 #  Generate readme file for Emgu TF project
 # ----------------------------------------------------------------------------
@@ -643,7 +665,7 @@ ADD_SUBDIRECTORY(Emgu.TF.Example)
 #ADD_SUBDIRECTORY(Emgu.TF.Test)
 ADD_SUBDIRECTORY(Emgu.TF.World)
 ADD_SUBDIRECTORY(Emgu.Models)
-IF(HAS_FULL_BUILD)
+IF(HAS_FULL_BUILD OR HAS_LITE_BUILD)
   ADD_SUBDIRECTORY(Emgu.TF.Models)
   ADD_SUBDIRECTORY(Emgu.TF.CodeGen)
   ADD_SUBDIRECTORY(Emgu.TF.Protobuf)
@@ -747,6 +769,29 @@ IF (HAVE_WINDESKTOP_X86 OR HAVE_WINDESKTOP_X64)
     COMPONENT emgutf_example_source
     FILES_MATCHING 
     PATTERN "Emgu.TF.Example.sln"
+    PATTERN ".git" EXCLUDE
+    PATTERN "bin" EXCLUDE
+    )
+ENDIF()
+
+IF(HAVE_WINDESKTOP_LITE)
+  INSTALL(
+    DIRECTORY
+    ${CMAKE_CURRENT_SOURCE_DIR}/Solution/Windows.Desktop
+    DESTINATION Solution
+    COMPONENT emgutf_source
+    FILES_MATCHING 
+    PATTERN "Emgu.TF.Lite.sln"
+    PATTERN ".git" EXCLUDE
+    PATTERN "bin" EXCLUDE
+    )
+  INSTALL(
+    DIRECTORY
+    ${CMAKE_CURRENT_SOURCE_DIR}/Solution/Windows.Desktop
+    DESTINATION Solution
+    COMPONENT emgutf_example_source
+    FILES_MATCHING 
+    PATTERN "Emgu.TF.Lite.Example.sln"
     PATTERN ".git" EXCLUDE
     PATTERN "bin" EXCLUDE
     )
