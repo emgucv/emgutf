@@ -752,6 +752,29 @@ IF (HAVE_WINDESKTOP_X86 OR HAVE_WINDESKTOP_X64)
     )
 ENDIF()
 
+IF(HAVE_WINDESKTOP_LITE)
+  INSTALL(
+    DIRECTORY
+    ${CMAKE_CURRENT_SOURCE_DIR}/Solution/Windows.Desktop
+    DESTINATION Solution
+    COMPONENT emgutf_source
+    FILES_MATCHING 
+    PATTERN "Emgu.TF.Lite.sln"
+    PATTERN ".git" EXCLUDE
+    PATTERN "bin" EXCLUDE
+    )
+  INSTALL(
+    DIRECTORY
+    ${CMAKE_CURRENT_SOURCE_DIR}/Solution/Windows.Desktop
+    DESTINATION Solution
+    COMPONENT emgutf_example_source
+    FILES_MATCHING 
+    PATTERN "Emgu.TF.Lite.Example.sln"
+    PATTERN ".git" EXCLUDE
+    PATTERN "bin" EXCLUDE
+    )
+ENDIF()
+
 INSTALL(
   FILES
   "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.snk"
