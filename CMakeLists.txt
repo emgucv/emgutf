@@ -341,7 +341,7 @@ ENDIF()
 if ("${LICENSE_TYPE}" STREQUAL "OpenSource")
 	SET(LICENSE_LABEL "")
 ELSE()
-	SET(LICENSE_LABEL "c")
+	SET(LICENSE_LABEL "-cr")
 ENDIF()
 	
 # ----------------------------------------------------------------------------
