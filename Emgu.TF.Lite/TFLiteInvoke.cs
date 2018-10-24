@@ -463,5 +463,16 @@ namespace Emgu.TF.Lite
 
         [DllImport(ExternLibrary, CallingConvention = TFCallingConvention)]
         internal static extern void tfeMemcpy(IntPtr dst, IntPtr src, int length);
+
+        public static String Version
+        {
+            get
+            {
+                return Marshal.PtrToStringAnsi(tfeGetLiteVersion());
+            }
+        }
+
+        [DllImport(ExternLibrary, CallingConvention = TFCallingConvention)]
+        internal static extern IntPtr tfeGetLiteVersion();
     }
 }

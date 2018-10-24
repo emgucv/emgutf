@@ -40,6 +40,33 @@ namespace Emgu.TF.Lite
         /// String
         /// </summary>
         String = 5,
+        /// <summary>
+        /// Bool
+        /// </summary>
+        Bool = 6,
+        /// <summary>
+        /// Bool
+        /// </summary>
+        Int16 = 7,
+        /// <summary>
+        /// Complex64
+        /// </summary>
+        Complex64
+    }
+
+    /// <summary>
+    /// Complex number
+    /// </summary>
+    public struct Complex64
+    {
+        /// <summary>
+        /// Real
+        /// </summary>
+        public float Re;
+        /// <summary>
+        /// Imaginary
+        /// </summary>
+        public float Im;
     }
 
     /// <summary>
@@ -217,6 +244,17 @@ namespace Emgu.TF.Lite
             return array;
         }
 
+        public int[] Dims
+        {
+            get
+            {
+                using (IntArray ia = new IntArray(TfLiteInvoke.tfeTensorGetDims(_ptr), false))
+                {
+                    return ia.Data;
+                }
+            }
+        }
+
         /// <summary>
         /// Release all the unmanaged memory associated with this model
         /// </summary>
@@ -252,6 +290,8 @@ namespace Emgu.TF.Lite
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
         internal static extern IntPtr tfeTensorGetName(IntPtr tensor);
 
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        internal static extern IntPtr tfeTensorGetDims(IntPtr tensor);
 
         /// <summary>
         /// Get the equivalent native type from Tensorflow DataType
@@ -272,6 +312,12 @@ namespace Emgu.TF.Lite
                     return typeof(Int64);
                 case DataType.String:
                     return typeof(Byte);
+                case DataType.Bool:
+                    return typeof(bool);
+                case DataType.Int16:
+                    return typeof(Int16);
+                case DataType.Complex64:
+                    return typeof(Complex64);
                 default:
                     return null;
             }

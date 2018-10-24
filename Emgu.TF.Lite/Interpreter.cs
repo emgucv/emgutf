@@ -26,9 +26,16 @@ namespace Emgu.TF.Lite
         /// </summary>
         /// <param name="flatBufferModel">The flat buffer model.</param>
         /// <param name="resolver">An instance that implements the Resolver interface which maps custom op names and builtin op codes to op registrations.</param>
-        public Interpreter(FlatBufferModel flatBufferModel, IOpResolver resolver)
+        public Interpreter(FlatBufferModel flatBufferModel, IOpResolver resolver = null)
         {
-            _ptr = TfLiteInvoke.tfeInterpreterCreateFromModel(flatBufferModel.Ptr, resolver.OpResolverPtr);
+            if (resolver == null)
+            {
+                using (BuildinOpResolver buildinResolver = new BuildinOpResolver())
+                {
+                    _ptr = TfLiteInvoke.tfeInterpreterCreateFromModel(flatBufferModel.Ptr, ((IOpResolver) buildinResolver).OpResolverPtr);
+                }
+            } else
+                _ptr = TfLiteInvoke.tfeInterpreterCreateFromModel(flatBufferModel.Ptr, resolver.OpResolverPtr);
         }
 
         /// <summary>
@@ -98,11 +105,36 @@ namespace Emgu.TF.Lite
             return new Tensor(TfLiteInvoke.tfeInterpreterGetTensor(_ptr, index), false);
         }
 
+        public Tensor[] Inputs
+        {
+            get
+            {
+                int[] inputIdx = GetInput();
+                Tensor[] inputs = new Tensor[inputIdx.Length];
+                for (int i = 0; i < inputs.Length; i++)
+                    inputs[i] = GetTensor(inputIdx[i]);
+                return inputs;
+            }
+        }
+
+        public Tensor[] Outputs
+        {
+            get
+            {
+                int[] outputIdx = GetOutput();
+                Tensor[] inputs = new Tensor[outputIdx.Length];
+                for (int i = 0; i < inputs.Length; i++)
+                    inputs[i] = GetTensor(outputIdx[i]);
+                return inputs;
+            }
+
+        }
+
         /// <summary>
         /// Get the list of tensor index of the inputs tensors.
         /// </summary>
         /// <returns>The list of tensor index of the inputs tensors.</returns>
-        public int[] GetInput()
+        private int[] GetInput()
         {
             int size = TfLiteInvoke.tfeInterpreterGetInputSize(_ptr);
             int[] input = new int[size];
@@ -116,7 +148,7 @@ namespace Emgu.TF.Lite
         /// Get the list of tensor index of the outputs tensors.
         /// </summary>
         /// <returns>The list of tensor index of the outputs tensors.</returns>
-        public int[] GetOutput()
+        private int[] GetOutput()
         {
             int size = TfLiteInvoke.tfeInterpreterGetOutputSize(_ptr);
             int[] output = new int[size];
@@ -126,6 +158,25 @@ namespace Emgu.TF.Lite
             return output;
         }
 
+        /// <summary>
+        /// Enable or disable the NN API (Android Neural Network API)
+        /// </summary>
+        /// <param name="enable"></param>
+        private void UseNNAPI(bool enable)
+        {
+            TfLiteInvoke.tfeInterpreterUseNNAPI(_ptr, enable);
+        }
+
+        /// <summary>
+        /// Set the number of threads available to the interpreter.
+        /// </summary>
+        /// <param name="numThreads"></param>
+        private void SetNumThreads(int numThreads)
+        {
+            TfLiteInvoke.tfeInterpreterSetNumThreads(_ptr, numThreads);
+        }
+
+        /*
         /// <summary>
         /// Return the name of a given input
         /// </summary>
@@ -146,7 +197,7 @@ namespace Emgu.TF.Lite
         {
             IntPtr namePtr = TfLiteInvoke.tfeInterpreterGetOutputName(_ptr, index);
             return Marshal.PtrToStringAnsi(namePtr);
-        }
+        }*/
 
         /// <summary>
         /// Release all the unmanaged memory associated with this interpreter
@@ -208,6 +259,13 @@ namespace Emgu.TF.Lite
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
         internal static extern void tfeInterpreterRelease(ref IntPtr interpreter);
 
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        internal static extern void tfeInterpreterUseNNAPI(
+            IntPtr interpreter, 
+            [MarshalAs(TfLiteInvoke.BoolMarshalType)]
+            bool enable);
 
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        internal static extern void tfeInterpreterSetNumThreads(IntPtr interpreter, int numThreads);
     }
 }
