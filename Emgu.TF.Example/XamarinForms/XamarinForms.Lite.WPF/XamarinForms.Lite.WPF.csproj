@@ -195,6 +195,7 @@
   <Import Project="..\..\..\Emgu.TF.Lite\Emgu.TF.Lite.projitems" Label="Shared" />
   <Import Project="..\..\..\Emgu.TF.Util\Emgu.TF.Util.projitems" Label="Shared" />
   <Import Project="..\XamarinForms.Lite\XamarinForms.Lite.projitems" Label="Shared" />
+  <Import Project="..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
