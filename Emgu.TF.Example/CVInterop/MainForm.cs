@@ -17,7 +17,7 @@ namespace CVInterop
 {
     public partial class MainForm : Form
     {
-        private Inception _inceptionGraph;
+        private MaskRcnnInceptionV2Coco _inceptionGraph;
 
         public MainForm()
         {
@@ -30,7 +30,7 @@ namespace CVInterop
             DisableUI();
 
             //Use the following code for the full inception model
-            _inceptionGraph = new Inception();
+            _inceptionGraph = new MaskRcnnInceptionV2Coco();
             _inceptionGraph.OnDownloadProgressChanged += OnDownloadProgressChangedEventHandler;
             _inceptionGraph.OnDownloadCompleted += onDownloadCompleted;
 
@@ -40,7 +40,11 @@ namespace CVInterop
         public void onDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             EnableUI();
-            Recognize("space_shuttle.jpg");
+
+            // Image file from
+            // https://github.com/opencv/opencv_extra/blob/master/testdata/dnn/dog416.png
+            Recognize("dog416.png");
+
         }
 
         public void DisableUI()
@@ -100,7 +104,7 @@ namespace CVInterop
 
         public void Recognize(Mat m)
         {
-            Tensor imageTensor = Emgu.TF.TensorConvert.ReadTensorFromMatBgr(m, 224, 224, 128.0f, 1.0f / 128.0f);
+            Tensor imageTensor = Emgu.TF.TensorConvert.ReadTensorFromMatBgr(m, DataType.Uint8);
 
             //Uncomment the following code to use a retrained model to recognize followers, downloaded from the internet
             //Inception _inceptionGraph = new Inception(null, new string[] {"optimized_graph.pb", "output_labels.txt"}, "https://github.com/emgucv/models/raw/master/inception_flower_retrain/", "Mul", "final_result");
@@ -111,21 +115,38 @@ namespace CVInterop
             //Inception _inceptionGraph = new Inception(null, new string[] {"optimized_graph.pb", "output_labels.txt"}, null, "Mul", "final_result");
             //Tensor imageTensor = ImageIO.ReadTensorFromMatBgr(fileName, 299, 299, 128.0f, 1.0f / 128.0f);
 
-            float[] probability;
+            MaskRcnnInceptionV2Coco.RecognitionResult[] results;
             if (_coldSession)
             {
                 //First run of the recognition graph, here we will compile the graph and initialize the session
                 //This is expected to take much longer time than consecutive runs.
-                probability = _inceptionGraph.Recognize(imageTensor);
+                results = _inceptionGraph.Recognize(imageTensor);
                 _coldSession = false;
             }
 
             //Here we are trying to time the execution of the graph after it is loaded
             Stopwatch sw = Stopwatch.StartNew();
-            probability = _inceptionGraph.Recognize(imageTensor);
+            results = _inceptionGraph.Recognize(imageTensor);
             sw.Stop();
 
+            foreach (var r in results)
+            {
+                if (r.Probability > 0.5)
+                {
+                    float x1 = r.Region[0] * m.Width;
+                    float y1 = r.Region[1] * m.Height;
+                    float x2 = r.Region[2] * m.Width;
+                    float y2 = r.Region[3] * m.Height;
+                    RectangleF rect = new RectangleF(y1, x1, y2 - y1, x2 - x1);
+
+                    CvInvoke.Rectangle(m, Rectangle.Round(rect), new Emgu.CV.Structure.MCvScalar(0, 0, 255), 2);
+                    CvInvoke.PutText(m, r.Label, Point.Round(rect.Location), Emgu.CV.CvEnum.FontFace.HersheyComplex, 1.0, new Emgu.CV.Structure.MCvScalar(0, 255, 0), 1);
+                }
+            }
+            
             String resStr = String.Empty;
+            resStr = String.Format("{0} objects detected in {1} milliseconds.", results.Length, sw.ElapsedMilliseconds);
+            /*
             if (probability != null)
             {
                 String[] labels = _inceptionGraph.Labels;
@@ -140,7 +161,7 @@ namespace CVInterop
                     }
                 }
                 resStr = String.Format("Object is {0} with {1}% probability. Recognized in {2} milliseconds.", labels[maxIdx], maxVal * 100, sw.ElapsedMilliseconds);
-            }
+            }*/
 
             if (InvokeRequired)
             {

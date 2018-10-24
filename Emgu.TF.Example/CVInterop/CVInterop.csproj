@@ -78,8 +78,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\InceptionObjectRecognition\space_shuttle.jpg">
-      <Link>space_shuttle.jpg</Link>
+    <Content Include="dog416.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="License-LGPL.txt" />
