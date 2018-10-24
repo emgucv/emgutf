@@ -15,10 +15,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinForms.Lite.WPF", "..
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Lite.Test", "..\..\Emgu.TF.Test\Emgu.TF.Lite.Test\Emgu.TF.Lite.Test.csproj", "{D1F84983-691B-4E10-B202-448229F6564E}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Models", "..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.shproj", "{E956DD26-1294-4731-8A90-C4CBA9F291B6}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{2475c64a-227a-442f-a1c8-8d488ce2fd08}*SharedItemsImports = 4
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite\XamarinForms.Lite.projitems*{2475c64a-227a-442f-a1c8-8d488ce2fd08}*SharedItemsImports = 4
+		..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.projitems*{2475c64a-227a-442f-a1c8-8d488ce2fd08}*SharedItemsImports = 4
 		..\..\Emgu.TF.Lite\Emgu.TF.Lite.projitems*{2475c64a-227a-442f-a1c8-8d488ce2fd08}*SharedItemsImports = 4
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{2475c64a-227a-442f-a1c8-8d488ce2fd08}*SharedItemsImports = 4
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite\XamarinForms.Lite.projitems*{26f4d7af-57b6-4d2d-9a1c-aafa757ddc4a}*SharedItemsImports = 13
@@ -26,8 +29,10 @@ Global
 		..\..\Emgu.TF.Lite\Emgu.TF.Lite.projitems*{8f587fb9-bba6-4c30-9329-8cbac7020fe0}*SharedItemsImports = 13
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{98561642-5ec3-4244-baf9-6876d9ba5527}*SharedItemsImports = 13
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{d1f84983-691b-4e10-b202-448229f6564e}*SharedItemsImports = 4
+		..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.projitems*{d1f84983-691b-4e10-b202-448229f6564e}*SharedItemsImports = 4
 		..\..\Emgu.TF.Lite\Emgu.TF.Lite.projitems*{d1f84983-691b-4e10-b202-448229f6564e}*SharedItemsImports = 4
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{d1f84983-691b-4e10-b202-448229f6564e}*SharedItemsImports = 4
+		..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.projitems*{e956dd26-1294-4731-8a90-c4cba9f291b6}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
