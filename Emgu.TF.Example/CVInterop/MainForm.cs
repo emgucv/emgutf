@@ -12,6 +12,7 @@ using Emgu.TF;
 using Emgu.TF.Models;
 using Emgu.CV;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace CVInterop
 {
@@ -102,18 +103,11 @@ namespace CVInterop
 
         private bool _coldSession = true;
 
+        private Mat _renderMat;
+
         public void Recognize(Mat m)
         {
             Tensor imageTensor = Emgu.TF.TensorConvert.ReadTensorFromMatBgr(m, DataType.Uint8);
-
-            //Uncomment the following code to use a retrained model to recognize followers, downloaded from the internet
-            //Inception _inceptionGraph = new Inception(null, new string[] {"optimized_graph.pb", "output_labels.txt"}, "https://github.com/emgucv/models/raw/master/inception_flower_retrain/", "Mul", "final_result");
-            //Tensor imageTensor = ImageIO.ReadTensorFromMatBgr(fileName, 299, 299, 128.0f, 1.0f / 128.0f);
-
-            //Uncomment the following code to use a retrained model to recognize followers, if you deployed the models with the application
-            //For ".pb" and ".txt" bundled with the application, set the url to null
-            //Inception _inceptionGraph = new Inception(null, new string[] {"optimized_graph.pb", "output_labels.txt"}, null, "Mul", "final_result");
-            //Tensor imageTensor = ImageIO.ReadTensorFromMatBgr(fileName, 299, 299, 128.0f, 1.0f / 128.0f);
 
             MaskRcnnInceptionV2Coco.RecognitionResult[] results;
             if (_coldSession)
@@ -133,47 +127,67 @@ namespace CVInterop
             {
                 if (r.Probability > 0.5)
                 {
-                    float x1 = r.Region[0] * m.Width;
-                    float y1 = r.Region[1] * m.Height;
-                    float x2 = r.Region[2] * m.Width;
-                    float y2 = r.Region[3] * m.Height;
-                    RectangleF rect = new RectangleF(y1, x1, y2 - y1, x2 - x1);
+                    float x1 = r.Region[0] * m.Height;
+                    float y1 = r.Region[1] * m.Width;
+                    float x2 = r.Region[2] * m.Height;
+                    float y2 = r.Region[3] * m.Width;
+                    RectangleF rectf = new RectangleF(y1, x1, y2 - y1, x2 - x1);
+                    Rectangle rect = Rectangle.Round(rectf);
+                    rect.Intersect(new Rectangle(Point.Empty, m.Size));
 
-                    CvInvoke.Rectangle(m, Rectangle.Round(rect), new Emgu.CV.Structure.MCvScalar(0, 0, 255), 2);
+                    if (rect.IsEmpty)
+                        continue;
+                    CvInvoke.Rectangle(m, rect, new Emgu.CV.Structure.MCvScalar(0, 0, 255), 2);
+
+                    float[,] mask = r.Mask;
+                    GCHandle handle = GCHandle.Alloc(mask, GCHandleType.Pinned);
+                    using (Mat mk = new Mat(new Size(mask.GetLength(1), mask.GetLength(0)), Emgu.CV.CvEnum.DepthType.Cv32F, 1, handle.AddrOfPinnedObject(), mask.GetLength(1) * sizeof(float)))
+                    using (Mat subRegion = new Mat(m, rect))
+                    using (Mat maskLarge = new Mat())
+                    using (Mat maskLargeInv = new Mat())
+                    using (Mat largeColor = new Mat(subRegion.Size, Emgu.CV.CvEnum.DepthType.Cv8U, 3))
+                    {
+                        CvInvoke.Resize(mk, maskLarge, subRegion.Size);
+
+                        //give the mask at least 30% transparency
+                        using (ScalarArray sa = new ScalarArray(0.7))
+                            CvInvoke.Min(sa, maskLarge, maskLarge);
+
+                        //Create the inverse mask for the original image
+                        using (ScalarArray sa = new ScalarArray(1.0))
+                            CvInvoke.Subtract(sa, maskLarge, maskLargeInv);
+
+                        //The mask color
+                        largeColor.SetTo(new Emgu.CV.Structure.MCvScalar(255, 0, 0));
+
+                        CvInvoke.BlendLinear(largeColor, subRegion, maskLarge, maskLargeInv, subRegion);
+                        
+                    }
+                    handle.Free();
+
                     CvInvoke.PutText(m, r.Label, Point.Round(rect.Location), Emgu.CV.CvEnum.FontFace.HersheyComplex, 1.0, new Emgu.CV.Structure.MCvScalar(0, 255, 0), 1);
                 }
             }
             
-            String resStr = String.Empty;
-            resStr = String.Format("{0} objects detected in {1} milliseconds.", results.Length, sw.ElapsedMilliseconds);
-            /*
-            if (probability != null)
-            {
-                String[] labels = _inceptionGraph.Labels;
-                float maxVal = 0;
-                int maxIdx = 0;
-                for (int i = 0; i < probability.Length; i++)
-                {
-                    if (probability[i] > maxVal)
-                    {
-                        maxVal = probability[i];
-                        maxIdx = i;
-                    }
-                }
-                resStr = String.Format("Object is {0} with {1}% probability. Recognized in {2} milliseconds.", labels[maxIdx], maxVal * 100, sw.ElapsedMilliseconds);
-            }*/
+            String resStr = String.Format("{0} objects detected in {1} milliseconds.", results.Length, sw.ElapsedMilliseconds);
+
+            if (_renderMat == null)
+                _renderMat = new Mat();
+            m.CopyTo(_renderMat);
+            
+            Bitmap bmp = _renderMat.Bitmap;
 
             if (InvokeRequired)
             {
                 this.Invoke( (MethodInvoker)  (() =>
                    {
                        messageLabel.Text = resStr;
-                       pictureBox.Image = m.Bitmap;
+                       pictureBox.Image = bmp;
                    }));
             } else
             {
                 messageLabel.Text = resStr;
-                pictureBox.Image = m.Bitmap;
+                pictureBox.Image = bmp;
             }
         }
 
