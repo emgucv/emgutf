@@ -184,7 +184,7 @@ namespace Emgu.TF.Lite.Models
 
         public float[] Recognize(String imageFile)
         {
-            NativeImageIO.ReadImageFileToTensor(imageFile, _inputTensor.DataPointer, 224, 224, 128.0f, 1.0f / 128.0f);
+            NativeImageIO.ReadImageFileToTensor<float>(imageFile, _inputTensor.DataPointer, 224, 224, 128.0f, 1.0f / 128.0f);
 
             _interpreter.Invoke();
 

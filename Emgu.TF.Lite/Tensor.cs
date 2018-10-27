@@ -81,11 +81,11 @@ namespace Emgu.TF.Lite
         /// <summary>
         /// The scale
         /// </summary>
-        float Scale;
+        public float Scale;
         /// <summary>
         /// The zero point
         /// </summary>
-        Int32 ZeroPoint;
+        public Int32 ZeroPoint;
     }
 
     /// <summary>
