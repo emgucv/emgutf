@@ -64,7 +64,7 @@
   </ItemGroup>
   <Import Project="..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" />
   <Import Project="..\..\Emgu.TF.Lite\Emgu.TF.Lite.projitems" Label="Shared" />
-  <Import Project="..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.projitems" Label="Shared" />
+  <Import Project="..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems" Label="Shared" />
   <Import Project="..\..\Emgu.TF.Util\Emgu.TF.Util.projitems" Label="Shared" />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
