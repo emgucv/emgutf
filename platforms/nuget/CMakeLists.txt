@@ -33,4 +33,5 @@ ENDIF()
 
 IF (HAVE_WINDESKTOP_X64_LITE)
 	add_subdirectory(Lite)
+	add_subdirectory(Lite.Models)
 ENDIF()
