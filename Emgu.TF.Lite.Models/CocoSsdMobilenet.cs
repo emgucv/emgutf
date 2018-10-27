@@ -14,16 +14,16 @@ using System.Net;
 
 namespace Emgu.TF.Lite.Models
 {
-    public class Mobilenet : Emgu.TF.Util.UnmanagedObject
+    public class CocoSsdMobilenet : Emgu.TF.Util.UnmanagedObject
     {
         private FileDownloadManager _downloadManager;
 
-        //private BuildinOpResolver _resolver = null;
+
         private Interpreter _interpreter = null;
         private String[] _labels = null;
         private FlatBufferModel _model = null;
         private Tensor _inputTensor;
-        private Tensor _outputTensor;
+        private Tensor[] _outputTensors;
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
         public double DownloadProgress
@@ -51,13 +51,12 @@ namespace Emgu.TF.Lite.Models
         }
 #endif
 
-        public Mobilenet()
+        public CocoSsdMobilenet()
         {
             _downloadManager = new FileDownloadManager();
 
             _downloadManager.OnDownloadProgressChanged += onDownloadProgressChanged;
             _downloadManager.OnDownloadCompleted += onDownloadCompleted;
-
                 
         }
 
@@ -90,8 +89,8 @@ namespace Emgu.TF.Lite.Models
         {
 
             _downloadManager.Clear();
-            String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/mobilenet_v1_1.0_224_float_2017_11_08/" : downloadUrl;
-            String[] fileNames = modelFiles == null ? new string[] { "mobilenet_v1_1.0_224.tflite", "labels.txt" } : modelFiles;
+            String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/coco_ssd_mobilenet_v1_1.0_quant_2018_06_29/" : downloadUrl;
+            String[] fileNames = modelFiles == null ? new string[] { "detect.tflite", "labelmap.txt" } : modelFiles;
             for (int i = 0; i < fileNames.Length; i++)
                 _downloadManager.AddFile(url + fileNames[i]);
 
@@ -138,9 +137,6 @@ namespace Emgu.TF.Lite.Models
                     throw new Exception("Model indentifier check failed");
             }
 
-            //if (_resolver == null)
-            //    _resolver = new BuildinOpResolver();
-
             if (_interpreter == null)
             {
                 _interpreter = new Interpreter(_model);
@@ -151,18 +147,12 @@ namespace Emgu.TF.Lite.Models
 
             if (_inputTensor == null)
             {
-                /*
-                int[] input = _interpreter.GetInput();
-                _inputTensor = _interpreter.GetTensor(input[0]);*/
                 _inputTensor = _interpreter.Inputs[0];
             }
 
-            if (_outputTensor == null)
+            if (_outputTensors == null)
             {
-                /*
-                int[] output = _interpreter.GetOutput();
-                _outputTensor = _interpreter.GetTensor(output[0]);*/
-                _outputTensor = _interpreter.Outputs[0];
+                _outputTensors = _interpreter.Outputs;
             }
 
 
@@ -188,9 +178,10 @@ namespace Emgu.TF.Lite.Models
 
             _interpreter.Invoke();
 
-            float[] probability = _outputTensor.Data as float[];
-            return probability;
 
+            //float[] probability = _outputTensor.GetData() as float[];
+            //return probability;
+            return null;
         }
 
         public RecognitionResult MostLikely(String imageFile)

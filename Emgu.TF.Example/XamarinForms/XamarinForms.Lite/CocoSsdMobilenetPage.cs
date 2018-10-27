@@ -32,21 +32,21 @@ using CoreGraphics;
 
 namespace Emgu.TF.XamarinForms
 {
-    public class MobilenetPage : ButtonTextImagePage
+    public class CocoSsdMobilenetPage : ButtonTextImagePage
     {
 
-        private Mobilenet _mobilenet;
+        private CocoSsdMobilenet _mobilenet;
         private string[] _image = null;
 
-        public MobilenetPage()
+        public CocoSsdMobilenetPage()
            : base()
         {
 
             var button = this.GetButton();
-            button.Text = "Perform Image Classification";
+            button.Text = "Perform Object Detection";
             button.Clicked += OnButtonClicked;
 
-            _mobilenet = new Mobilenet();
+            _mobilenet = new CocoSsdMobilenet();
 
             OnImagesLoaded += (sender, image) =>
             {
@@ -64,7 +64,7 @@ namespace Emgu.TF.XamarinForms
                     }
                     else
                     {
-                        SetMessage("Please wait while the Mobilenet Model is being downloaded...");
+                        SetMessage("Please wait while the Coco SSD Mobilenet Model is being downloaded...");
                         _mobilenet.OnDownloadProgressChanged += onDownloadProgressChanged;
                         _mobilenet.OnDownloadCompleted += onDownloadCompleted;
                         _mobilenet.Init();
@@ -103,7 +103,7 @@ namespace Emgu.TF.XamarinForms
 
         private void OnButtonClicked(Object sender, EventArgs args)
         {
-            LoadImages(new string[] { "grace_hopper.jpg" });
+            LoadImages(new string[] { "dog416.png" });
         }
 
     }

@@ -190,6 +190,10 @@
       <Link>grace_hopper.jpg</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\..\CVInterop\dog416.png">
+      <Link>dog416.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="..\..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" />
   <Import Project="..\..\..\Emgu.TF.Lite\Emgu.TF.Lite.projitems" Label="Shared" />

@@ -225,23 +225,26 @@ namespace Emgu.TF.Lite
         /// Get a copy of the tensor data as a managed array
         /// </summary>
         /// <returns>A copy of the tensor data as a managed array</returns>
-        public Array GetData()
+        public Array Data
         {
-            DataType type = this.Type;
-            Type t = TfLiteInvoke.GetNativeType(type);
-            if (t == null)
-                return null;
+            get
+            {
+                DataType type = this.Type;
+                Type t = TfLiteInvoke.GetNativeType(type);
+                if (t == null)
+                    return null;
 
-            int byteSize = ByteSize;
-            Array array;
+                int byteSize = ByteSize;
+                Array array;
 
-            int len = byteSize / Marshal.SizeOf(t);
-            array = Array.CreateInstance(t, len);
+                int len = byteSize / Marshal.SizeOf(t);
+                array = Array.CreateInstance(t, len);
 
-            GCHandle handle = GCHandle.Alloc(array, GCHandleType.Pinned);
-            TfLiteInvoke.tfeMemcpy(handle.AddrOfPinnedObject(), DataPointer, byteSize);
-            handle.Free();
-            return array;
+                GCHandle handle = GCHandle.Alloc(array, GCHandleType.Pinned);
+                TfLiteInvoke.tfeMemcpy(handle.AddrOfPinnedObject(), DataPointer, byteSize);
+                handle.Free();
+                return array;
+            }
         }
 
         public int[] Dims
