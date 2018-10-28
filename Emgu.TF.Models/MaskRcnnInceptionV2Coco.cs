@@ -153,6 +153,27 @@ namespace Emgu.TF.Models
         
         public RecognitionResult[] Recognize(Tensor image)
         {
+            HashSet<string> opNames = new HashSet<string>();
+            HashSet<string> couldBeInputs = new HashSet<string>();
+            HashSet<string> couldBeOutputs = new HashSet<string>();
+            foreach (Operation op in _graph)
+            {
+                String name = op.Name;
+                opNames.Add(name);
+
+                if (op.NumInputs == 0 && op.OpType.Equals("Placeholder"))
+                    couldBeInputs.Add(op.Name);
+
+                foreach (Output output in op.Outputs)
+                {
+                    int[] shape = _graph.GetTensorShape(output);
+                    if (output.NumConsumers == 0)
+                    {
+                        couldBeOutputs.Add(name);
+                    }
+                }
+            }
+
             Output input = _graph["image_tensor"];
             Output[] outputs = new Output[] { _graph["detection_boxes"], _graph["detection_scores"], _graph["detection_classes"], _graph["num_detections"], _graph["detection_masks"] };
 
@@ -161,7 +182,7 @@ namespace Emgu.TF.Models
             float[,,] detectinBoxes = finalTensor[0].Data as float[,,];
             float[,] detectionScores = finalTensor[1].Data as float[,];
             float[,] detectionClasses = finalTensor[2].Data as float[,];
-
+            float[,,,] detectionMask = finalTensor[4].Data as float[,,,]; 
             List<RecognitionResult> results = new List<RecognitionResult>();
             int numberOfClasses = detectionScores.GetLength(1);
             for (int i = 0; i < numDetections; i++)
@@ -172,7 +193,14 @@ namespace Emgu.TF.Models
                 r.Probability = detectionScores[0,i];
                 r.Region = new float[] { detectinBoxes[0, i, 0], detectinBoxes[0, i, 1], detectinBoxes[0, i, 2], detectinBoxes[0, i, 3] };
                 results.Add(r);
-                
+
+                float[,] m = new float[detectionMask.GetLength(2), detectionMask.GetLength(3)];
+                for (int j = 0; j < m.GetLength(0); j++)
+                    for (int k = 0; k < m.GetLength(1); k++)
+                    {
+                        m[j, k] = detectionMask[0, i, j, k];
+                    }
+                r.Mask = m;
             }
             return results.ToArray();
         }
@@ -183,6 +211,7 @@ namespace Emgu.TF.Models
             public String Label;
             public double Probability;
             public float[] Region;
+            public float[,] Mask;
         }
         
         protected override void DisposeObject()
