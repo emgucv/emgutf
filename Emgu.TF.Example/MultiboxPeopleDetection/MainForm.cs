@@ -66,7 +66,7 @@ namespace MultiboxPeopleDetection
         {
             Tensor imageTensor = ImageIO.ReadTensorFromImageFile(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
 
-            MultiboxGraph.Result result;
+            MultiboxGraph.Result[] result;
             if (_coldSession)
             {
                 //First run of the detection, here we will compile the graph and initialize the session

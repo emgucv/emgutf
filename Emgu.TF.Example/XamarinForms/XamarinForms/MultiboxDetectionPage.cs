@@ -67,7 +67,7 @@ namespace Emgu.TF.XamarinForms
                     SetImage();
                     Stopwatch watch = Stopwatch.StartNew();
                     Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
-                    MultiboxGraph.Result detectResult = _multiboxGraph.Detect(imageTensor);
+                    MultiboxGraph.Result[] detectResult = _multiboxGraph.Detect(imageTensor);
                     watch.Stop();
 
                     byte[] jpeg = _multiboxGraph.DrawResultsToJpeg(image[0], detectResult);

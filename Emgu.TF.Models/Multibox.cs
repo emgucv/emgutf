@@ -150,34 +150,49 @@ namespace Emgu.TF.Models
             _boxPriors = ReadBoxPriors(_downloadManager.Files[1].LocalFile);
         }
 
-        public Result Detect(Tensor imageResults)
+        public Result[] Detect(Tensor imageResults)
         {
             Tensor[] finalTensor = _session.Run(new Output[] { _graph["ResizeBilinear"] }, new Tensor[] { imageResults },
                 new Output[] { _graph["output_scores/Reshape"], _graph["output_locations/Reshape"] });
 
             int labelCount = finalTensor[0].Dim[1];
-            Tensor[] topK = GetTopDetections(finalTensor, labelCount);
+            Tensor[] topK = GetTopDetections(finalTensor[0], labelCount);
 
             float[] encodedScores = topK[0].Flat<float>();
-
             float[] encodedLocations = finalTensor[1].Flat<float>();
 
-            Result result = new Result();
-            result.Scores = DecodeScoresEncoding(encodedScores);
-            result.Indices = topK[1].Flat<int>();
-            result.DecodedLocations = MultiboxGraph.DecodeLocationsEncoding(encodedLocations, _boxPriors);
-            return result;
+            int[] indices = topK[1].Flat<int>();
+            float[] scores = DecodeScoresEncoding(encodedScores);
+            Result[] results = new Result[indices.Length];
+            float[][] locations = MultiboxGraph.DecodeLocationsEncoding(encodedLocations, _boxPriors);
+            for (int i = 0; i < indices.Length; i++)
+            {
+                results[i] = new Result();
+                results[i].Scores = scores[i];
+                results[i].DecodedLocations = locations[indices[i]];
+            }
+            
+            return results;
 
         }
 
+        /// <summary>
+        /// A detection result;
+        /// </summary>
         public class Result
         {
-            public float[] Scores;
-            public int[] Indices;
-            public float[][] DecodedLocations;
+            /// <summary>
+            /// The score for the detection
+            /// </summary>
+            public float Scores;
+
+            /// <summary>
+            /// The location for the detection
+            /// </summary>
+            public float[] DecodedLocations;
         }
 
-        public static Tensor[] GetTopDetections(Tensor[] outputs, int labelsCount)
+        public static Tensor[] GetTopDetections(Tensor scoreTensor, int labelsCount)
         {
             var graph = new Graph();
             Operation input = graph.Placeholder(DataType.Float);
@@ -185,7 +200,7 @@ namespace Emgu.TF.Models
             Operation countOp = graph.Const(countTensor, countTensor.Type, opName: "count");
             Operation topK = graph.TopKV2(input, countOp, opName: "TopK");
             Session session = new Session(graph);
-            Tensor[] topKResult = session.Run(new Output[] { input }, new Tensor[] { outputs[0] },
+            Tensor[] topKResult = session.Run(new Output[] { input }, new Tensor[] { scoreTensor },
                 new Output[] { new Output(topK, 0), new Output(topK, 1) });
             return topKResult;
         }
@@ -250,7 +265,9 @@ namespace Emgu.TF.Models
             return scores;
         }
 
-        public byte[] DrawResultsToJpeg(String fileName, MultiboxGraph.Result detectResult, float scoreThreshold = 0.2f)
+        
+
+        public byte[] DrawResultsToJpeg(String fileName, MultiboxGraph.Result[] detectResult, float scoreThreshold = 0.2f)
         {
 #if __ANDROID__
             BitmapFactory.Options options = new BitmapFactory.Options();
@@ -408,35 +425,14 @@ namespace Emgu.TF.Models
             }*/
         }
 #else
-        public static float[][] ScaleLocation(float[][] location, int imageWidth, int imageHeight)
+        public static float[] ScaleLocation(float[] location, int imageWidth, int imageHeight)
         {
-            float[][] scaledLocation = new float[location.Length][];
-            for (int i = 0; i < scaledLocation.Length; i++)
-            {
-                float left = location[i][0] * imageWidth;
-                float top = location[i][1] * imageHeight;
-                float right = location[i][2] * imageWidth;
-                float bottom = location[i][3] * imageHeight;
-                scaledLocation[i] = new float[] { left, top, right, bottom };
-            }
-            return scaledLocation;
+                float left = location[0] * imageWidth;
+                float top = location[1] * imageHeight;
+                float right = location[2] * imageWidth;
+                float bottom = location[3] * imageHeight;
+                return new float[] { left, top, right, bottom };
         }
-
-        /*
-        public static Rectangle[] ScaleLocation(float[] location, int imageWidth, int imageHeight)
-        {
-            Rectangle[] scaledLocation = new Rectangle[location.Length / 4];
-            for (int i = 0; i < scaledLocation.Length; i++)
-            {
-                float left = location[i * 4] * imageWidth;
-                float top = location[i * 4 + 1] * imageHeight;
-                float right = location[i * 4 + 2] * imageWidth;
-                float bottom = location[i * 4 + 3] * imageHeight;
-
-                scaledLocation[i] = Rectangle.Round(new RectangleF(left, top, right - left, bottom - top));
-            }
-            return scaledLocation;
-        }*/
 
 #if __ANDROID__
         public static void DrawResults(Android.Graphics.Bitmap bmp, MultiboxGraph.Result result, float scoreThreshold)
@@ -520,18 +516,17 @@ namespace Emgu.TF.Models
             return imgWithRect;
         }
 #else
-
-        public static void DrawResults(Bitmap bmp, MultiboxGraph.Result result, float scoreThreshold)
+        
+        public static void DrawResults(Bitmap bmp, MultiboxGraph.Result[] results, float scoreThreshold)
         {
-            float[][] scaledLocation = ScaleLocation(result.DecodedLocations, bmp.Width, bmp.Height);
             
             using (Graphics g = Graphics.FromImage(bmp))
             {
-                for (int i = 0; i < result.Scores.Length; i++)
+                for (int i = 0; i < results.Length; i++)
                 {
-                    if (result.Scores[i] > scoreThreshold)
+                    if (results[i].Scores > scoreThreshold)
                     {
-                        float[] rects = scaledLocation[result.Indices[i]];
+                        float[] rects = ScaleLocation(results[i].DecodedLocations, bmp.Width, bmp.Height); 
                         RectangleF rect = new RectangleF(rects[0], rects[1], rects[2] - rects[0], rects[3] - rects[1]);
                         Pen redPen = new Pen(Color.Red, 3);
 
