@@ -467,7 +467,9 @@ ENDIF()
 
 IF(HAVE_WINDESKTOP_LITE)
 	SET(EMGUTF_LITE_NUGET_ID "${EMGUTF_NUGET_ID}.LITE")
+	SET(EMGUTF_LITE_MODEL_NUGET_ID "${EMGUTF_NUGET_ID}.LITE.MODELS")
 	SET(EMGUTF_LITE_NUGET_TITLE "${EMGUTF_NUGET_ID} Lite")
+	SET(EMGUTF_LITE_MODEL_NUGET_TITLE "EMGU TF LITE MODELS")
 	IF ("${LICENSE_TYPE}" EQUAL "Commercial")
 		SET(EMGUTF_LITE_NUGET_ID "${EMGUTF_NUGET_ID}-CR")
 		SET(EMGUTF_LITE_NUGET_TITLE "${EMGUTF_LITE_NUGET_TITLE} Commercial Release")
@@ -478,9 +480,12 @@ IF(HAVE_WINDESKTOP_LITE)
 	SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.World.dll\" target=\"lib\\net35\" />
 	<file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.World.XML\" target=\"lib\\net35\" />")
-	
 	SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
 	<file src=\"Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_NUGET_ID}.targets\" />")
+	
+	SET(EMGUTF_LITE_MODEL_NUGET_FILE_LIST "${EMGUTF_LITE_MODEL_NUGET_FILE_LIST} 
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.dll\" target=\"lib\\net35\" />
+	<file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.XML\" target=\"lib\\net35\" />")
 ENDIF()
 
 
@@ -635,6 +640,7 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Protobuf.Package.nuspec.in ${CM
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/XamarinForms.Android.AndroidManifest.xml.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Example/XamarinForms/XamarinForms.Android/Properties/AndroidManifest.xml)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Android.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Android/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Lite.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Lite/Package.nuspec)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Lite.Models.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Lite.Models/Package.nuspec)
 
 # ----------------------------------------------------------------------------
 #  Generate readme file for Emgu TF project
@@ -665,10 +671,14 @@ ADD_SUBDIRECTORY(Emgu.TF.Example)
 #ADD_SUBDIRECTORY(Emgu.TF.Test)
 ADD_SUBDIRECTORY(Emgu.TF.World)
 ADD_SUBDIRECTORY(Emgu.Models)
-IF(HAS_FULL_BUILD OR HAS_LITE_BUILD)
+IF(HAS_FULL_BUILD)
   ADD_SUBDIRECTORY(Emgu.TF.Models)
   ADD_SUBDIRECTORY(Emgu.TF.CodeGen)
   ADD_SUBDIRECTORY(Emgu.TF.Protobuf)
+  ADD_SUBDIRECTORY(platforms)
+ENDIF()
+IF(HAS_LITE_BUILD)
+  ADD_SUBDIRECTORY(Emgu.TF.Lite.Models)
   ADD_SUBDIRECTORY(platforms)
 ENDIF()
 
