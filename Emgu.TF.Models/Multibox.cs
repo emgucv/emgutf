@@ -174,9 +174,9 @@ namespace Emgu.TF.Models
         {
             public float[] Scores;
             public int[] Indices;
-            public float[] DecodedLocations;
+            public float[][] DecodedLocations;
         }
-        
+
         public static Tensor[] GetTopDetections(Tensor[] outputs, int labelsCount)
         {
             var graph = new Graph();
@@ -193,11 +193,11 @@ namespace Emgu.TF.Models
         public static float[] ReadBoxPriors(String fileName)
         {
             List<float> priors = new List<float>();
-//#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-//            foreach (String line in File.ReadAllLines(fileName))
-//#else
+            //#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+            //            foreach (String line in File.ReadAllLines(fileName))
+            //#else
             foreach (String line in File.ReadAllLines(fileName))
-//#endif
+            //#endif
             {
                 String[] tokens = line.Split(',');
                 foreach (var token in tokens)
@@ -210,14 +210,15 @@ namespace Emgu.TF.Models
             return priors.ToArray();
         }
 
-        public static float[] DecodeLocationsEncoding(float[] locationEncoding, float[] boxPriors)
+        public static float[][] DecodeLocationsEncoding(float[] locationEncoding, float[] boxPriors)
         {
             int numLocations = locationEncoding.Length / 4;
 
-            float[] locations = new float[locationEncoding.Length];
+            float[][] locations = new float[numLocations][];
             bool nonZero = false;
             for (int i = 0; i < numLocations; ++i)
             {
+                locations[i] = new float[4];
                 for (int j = 0; j < 4; ++j)
                 {
                     float currEncoding = locationEncoding[4 * i + j];
@@ -228,7 +229,7 @@ namespace Emgu.TF.Models
                     float currentLocation = currEncoding * stdDev + mean;
                     currentLocation = Math.Max(currentLocation, 0.0f);
                     currentLocation = Math.Min(currentLocation, 1.0f);
-                    locations[4 * i + j] = currentLocation;
+                    locations[i][j] = currentLocation;
                 }
             }
 
@@ -294,7 +295,7 @@ namespace Emgu.TF.Models
                 throw new Exception("DrawResultsToJpeg Not implemented for this platform");
             }
 #endif
-            
+
         }
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
@@ -407,6 +408,21 @@ namespace Emgu.TF.Models
             }*/
         }
 #else
+        public static float[][] ScaleLocation(float[][] location, int imageWidth, int imageHeight)
+        {
+            float[][] scaledLocation = new float[location.Length][];
+            for (int i = 0; i < scaledLocation.Length; i++)
+            {
+                float left = location[i][0] * imageWidth;
+                float top = location[i][1] * imageHeight;
+                float right = location[i][2] * imageWidth;
+                float bottom = location[i][3] * imageHeight;
+                scaledLocation[i] = new float[] { left, top, right, bottom };
+            }
+            return scaledLocation;
+        }
+
+        /*
         public static Rectangle[] ScaleLocation(float[] location, int imageWidth, int imageHeight)
         {
             Rectangle[] scaledLocation = new Rectangle[location.Length / 4];
@@ -420,7 +436,7 @@ namespace Emgu.TF.Models
                 scaledLocation[i] = Rectangle.Round(new RectangleF(left, top, right - left, bottom - top));
             }
             return scaledLocation;
-        }
+        }*/
 
 #if __ANDROID__
         public static void DrawResults(Android.Graphics.Bitmap bmp, MultiboxGraph.Result result, float scoreThreshold)
@@ -504,20 +520,22 @@ namespace Emgu.TF.Models
             return imgWithRect;
         }
 #else
+
         public static void DrawResults(Bitmap bmp, MultiboxGraph.Result result, float scoreThreshold)
         {
-            Rectangle[] locations = ScaleLocation(result.DecodedLocations, bmp.Width, bmp.Height);
-
+            float[][] scaledLocation = ScaleLocation(result.DecodedLocations, bmp.Width, bmp.Height);
+            
             using (Graphics g = Graphics.FromImage(bmp))
             {
                 for (int i = 0; i < result.Scores.Length; i++)
                 {
                     if (result.Scores[i] > scoreThreshold)
                     {
-                        Rectangle rect = locations[result.Indices[i]];
+                        float[] rects = scaledLocation[result.Indices[i]];
+                        RectangleF rect = new RectangleF(rects[0], rects[1], rects[2] - rects[0], rects[3] - rects[1]);
                         Pen redPen = new Pen(Color.Red, 3);
 
-                        g.DrawRectangle(redPen, rect);
+                        g.DrawRectangle(redPen, Rectangle.Round(rect));
                     }
                 }
                 g.Save();
