@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using Emgu.TF.Util;
+using System.Diagnostics;
 
 namespace Emgu.TF.Lite
 {
@@ -153,7 +154,8 @@ namespace Emgu.TF.Lite
             int size = TfLiteInvoke.tfeInterpreterGetOutputSize(_ptr);
             int[] output = new int[size];
             GCHandle handle = GCHandle.Alloc(output, GCHandleType.Pinned);
-            TfLiteInvoke.tfeInterpreterGetOutput(_ptr, handle.AddrOfPinnedObject());
+            int outputSize = TfLiteInvoke.tfeInterpreterGetOutput(_ptr, handle.AddrOfPinnedObject());
+            Debug.Assert(outputSize == size, "Output size do not match!");
             handle.Free();
             return output;
         }
@@ -251,7 +253,7 @@ namespace Emgu.TF.Lite
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
         internal static extern int tfeInterpreterGetOutputSize(IntPtr interpreter);
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
-        internal static extern void tfeInterpreterGetOutput(IntPtr interpreter, IntPtr output);
+        internal static extern int tfeInterpreterGetOutput(IntPtr interpreter, IntPtr output);
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
         internal static extern IntPtr tfeInterpreterGetOutputName(IntPtr interpreter, int index);

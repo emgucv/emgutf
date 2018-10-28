@@ -411,9 +411,17 @@ namespace Emgu.TF
         /// <summary>
         /// Get the tensor data as a jagged array
         /// </summary>
+        public Array JaggedData
+        {
+            get { return GetData( true ); }
+        }
+
+        /// <summary>
+        /// Get the tensor data as an array
+        /// </summary>
         public Array Data
         {
-            get { return GetData(); }
+            get { return GetData( false ); }
         }
 
         /// <summary>
@@ -443,6 +451,20 @@ namespace Emgu.TF
             if (t == null)
                 return null;
 
+            Array array;
+            int byteSize = ByteSize;
+
+            if (jagged)
+            {
+                int[] dim = this.Dims;
+                array = Array.CreateInstance(t, dim);
+            }
+            else
+            {
+                int len = byteSize / Marshal.SizeOf(t);
+                array = Array.CreateInstance(t, len);
+            }
+            /*
             int[] dim = Dim;
             int byteSize = ByteSize;
             Array array;
@@ -461,7 +483,7 @@ namespace Emgu.TF
                 for (int i = 1; i < dim.Length; i++)
                     len *= dim[i];
                 array = Array.CreateInstance(t, len);
-            }
+            }*/
             GCHandle handle = GCHandle.Alloc(array, GCHandleType.Pinned);
             TfInvoke.tfeMemcpy(handle.AddrOfPinnedObject(), DataPointer, byteSize);
             handle.Free();

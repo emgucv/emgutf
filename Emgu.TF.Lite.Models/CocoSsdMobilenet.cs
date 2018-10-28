@@ -172,19 +172,34 @@ namespace Emgu.TF.Lite.Models
             get { return _labels; }
         }
 
-        public float[] Recognize(String imageFile)
+        public RecognitionResult[] Recognize(String imageFile)
         {
             //NativeImageIO.ReadImageFileToTensor<byte>(imageFile, _inputTensor.DataPointer, _inputTensor.Dims[1], _inputTensor.Dims[2], _inputTensor.QuantizationParams.ZeroPoint, _inputTensor.QuantizationParams.Scale);
             NativeImageIO.ReadImageFileToTensor<byte>(imageFile, _inputTensor.DataPointer, _inputTensor.Dims[1], _inputTensor.Dims[2], 0.0f, 1.0f);
 
             _interpreter.Invoke();
 
+            float[,,] outputLocations = _interpreter.Outputs[0].JaggedData as float[,,];
+            float[] classes = _interpreter.Outputs[1].Data as float[];
+            float[] scores = _interpreter.Outputs[2].Data as float[];
+            int numDetections = (int) Math.Round( (_interpreter.Outputs[3].Data as float[])[0]);
 
-            //float[] probability = _outputTensor.GetData() as float[];
-            //return probability;
-            return null;
+            // SSD Mobilenet V1 Model assumes class 0 is background class
+            // in label file and class labels start from 1 to number_of_classes+1,
+            // while outputClasses correspond to class index from 0 to number_of_classes
+            List<RecognitionResult> results = new List<RecognitionResult>();
+            for (int i = 0; i < numDetections; i++)
+            {
+                RecognitionResult r = new RecognitionResult();
+                r.Class = (int)Math.Round(classes[i]);
+                r.Label = _labels[r.Class];
+
+            }
+
+            return results.ToArray() ;
         }
 
+        /*
         public RecognitionResult MostLikely(String imageFile)
         {
             float[] probability = Recognize(imageFile);
@@ -208,12 +223,26 @@ namespace Emgu.TF.Lite.Models
                 result.Probability = maxVal;
             }
             return result;
-        }
+        }*/
 
         public class RecognitionResult
         {
+            /// <summary>
+            /// Rectangles will be in the format of (x, y, width, height) in the original image corrdinate
+            /// </summary>
+            public float[][] Rectangles;
+            /// <summary>
+            /// The object label
+            /// </summary>
             public String Label;
-            public double Probability;
+            /// <summary>
+            /// The score of the matching
+            /// </summary>
+            public double Score;
+            /// <summary>
+            /// The class index
+            /// </summary>
+            public int Class;
         }
 
         protected override void DisposeObject()

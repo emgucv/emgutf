@@ -106,15 +106,6 @@ namespace CVInterop
         {
             Tensor imageTensor = Emgu.TF.TensorConvert.ReadTensorFromMatBgr(m, DataType.Uint8);
 
-            //Uncomment the following code to use a retrained model to recognize followers, downloaded from the internet
-            //Inception _inceptionGraph = new Inception(null, new string[] {"optimized_graph.pb", "output_labels.txt"}, "https://github.com/emgucv/models/raw/master/inception_flower_retrain/", "Mul", "final_result");
-            //Tensor imageTensor = ImageIO.ReadTensorFromMatBgr(fileName, 299, 299, 128.0f, 1.0f / 128.0f);
-
-            //Uncomment the following code to use a retrained model to recognize followers, if you deployed the models with the application
-            //For ".pb" and ".txt" bundled with the application, set the url to null
-            //Inception _inceptionGraph = new Inception(null, new string[] {"optimized_graph.pb", "output_labels.txt"}, null, "Mul", "final_result");
-            //Tensor imageTensor = ImageIO.ReadTensorFromMatBgr(fileName, 299, 299, 128.0f, 1.0f / 128.0f);
-
             MaskRcnnInceptionV2Coco.RecognitionResult[] results;
             if (_coldSession)
             {

@@ -224,27 +224,52 @@ namespace Emgu.TF.Lite
         /// <summary>
         /// Get a copy of the tensor data as a managed array
         /// </summary>
-        /// <returns>A copy of the tensor data as a managed array</returns>
         public Array Data
         {
             get
             {
-                DataType type = this.Type;
-                Type t = TfLiteInvoke.GetNativeType(type);
-                if (t == null)
-                    return null;
+                return GetData(false);
+            }
+        }
 
-                int byteSize = ByteSize;
-                Array array;
+        /// <summary>
+        /// Get the tensor data as a jagged array
+        /// </summary>
+        public Array JaggedData
+        {
+            get { return GetData(true); }
+        }
 
+        /// <summary>
+        /// Get a copy of the tensor data as a managed array
+        /// </summary>
+        /// <returns>A copy of the tensor data as a managed array</returns>
+        public Array GetData(bool jagged = true)
+        {
+
+            DataType type = this.Type;
+            Type t = TfLiteInvoke.GetNativeType(type);
+            if (t == null)
+                return null;
+
+            Array array;
+            int byteSize = ByteSize;
+            
+            if (jagged)
+            {
+                int[] dim = this.Dims;
+                array = Array.CreateInstance(t, dim);
+            }
+            else
+            {
                 int len = byteSize / Marshal.SizeOf(t);
                 array = Array.CreateInstance(t, len);
-
-                GCHandle handle = GCHandle.Alloc(array, GCHandleType.Pinned);
-                TfLiteInvoke.tfeMemcpy(handle.AddrOfPinnedObject(), DataPointer, byteSize);
-                handle.Free();
-                return array;
             }
+
+            GCHandle handle = GCHandle.Alloc(array, GCHandleType.Pinned);
+            TfLiteInvoke.tfeMemcpy(handle.AddrOfPinnedObject(), DataPointer, byteSize);
+            handle.Free();
+            return array;
         }
 
         public int[] Dims
