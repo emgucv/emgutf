@@ -81,11 +81,11 @@ namespace Emgu.TF.Lite
         /// <summary>
         /// The scale
         /// </summary>
-        float Scale;
+        public float Scale;
         /// <summary>
         /// The zero point
         /// </summary>
-        Int32 ZeroPoint;
+        public Int32 ZeroPoint;
     }
 
     /// <summary>
@@ -224,19 +224,47 @@ namespace Emgu.TF.Lite
         /// <summary>
         /// Get a copy of the tensor data as a managed array
         /// </summary>
-        /// <returns>A copy of the tensor data as a managed array</returns>
-        public Array GetData()
+        public Array Data
         {
+            get
+            {
+                return GetData(false);
+            }
+        }
+
+        /// <summary>
+        /// Get the tensor data as a jagged array
+        /// </summary>
+        public Array JaggedData
+        {
+            get { return GetData(true); }
+        }
+
+        /// <summary>
+        /// Get a copy of the tensor data as a managed array
+        /// </summary>
+        /// <returns>A copy of the tensor data as a managed array</returns>
+        public Array GetData(bool jagged = true)
+        {
+
             DataType type = this.Type;
             Type t = TfLiteInvoke.GetNativeType(type);
             if (t == null)
                 return null;
 
-            int byteSize = ByteSize;
             Array array;
-
-            int len = byteSize / Marshal.SizeOf(t);
-            array = Array.CreateInstance(t, len);
+            int byteSize = ByteSize;
+            
+            if (jagged)
+            {
+                int[] dim = this.Dims;
+                array = Array.CreateInstance(t, dim);
+            }
+            else
+            {
+                int len = byteSize / Marshal.SizeOf(t);
+                array = Array.CreateInstance(t, len);
+            }
 
             GCHandle handle = GCHandle.Alloc(array, GCHandleType.Pinned);
             TfLiteInvoke.tfeMemcpy(handle.AddrOfPinnedObject(), DataPointer, byteSize);

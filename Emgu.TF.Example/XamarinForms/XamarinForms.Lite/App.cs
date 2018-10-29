@@ -17,10 +17,10 @@ namespace Emgu.TF.XamarinForms
         {
             Emgu.TF.Lite.TfLiteInvoke.CheckLibraryLoaded();
 
-            /*
+            
             Button multiboxDetectionButton = new Button();
-            multiboxDetectionButton.Text = "People Detection";
-            */
+            multiboxDetectionButton.Text = "Coco SSD Mobilenet";
+            
             Button mobilenetButton = new Button();
             mobilenetButton.Text = "Object recognition";
             /*
@@ -36,6 +36,7 @@ namespace Emgu.TF.XamarinForms
                        VerticalOptions = LayoutOptions.Start,
                        Children =
                      {
+                           multiboxDetectionButton,
                            //smartReplyButton,
                            mobilenetButton
                      }
@@ -62,11 +63,11 @@ namespace Emgu.TF.XamarinForms
             );
             page.ToolbarItems.Add(aboutItem);
 
-            /*
+            
             multiboxDetectionButton.Clicked += (sender, args) =>
             {
-                MainPage.Navigation.PushAsync(new MultiboxDetectionPage());
-            };*/
+                MainPage.Navigation.PushAsync(new CocoSsdMobilenetPage());
+            };
 
             mobilenetButton.Clicked += (sender, args) =>
             {

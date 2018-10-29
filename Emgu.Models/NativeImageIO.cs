@@ -29,7 +29,7 @@ namespace Emgu.Models
     /// </summary>
     public class NativeImageIO
     {
-        public static void ReadImageFileToTensor(String fileName, IntPtr dest, int inputHeight = -1, int inputWidth = -1, float inputMean = 0.0f, float scale = 1.0f)
+        public static void ReadImageFileToTensor<T>(String fileName, IntPtr dest, int inputHeight = -1, int inputWidth = -1, float inputMean = 0.0f, float scale = 1.0f)
         {
 #if __ANDROID__
             Android.Graphics.Bitmap bmp = BitmapFactory.DecodeFile(fileName);
@@ -154,13 +154,26 @@ namespace Emgu.Models
                 System.Runtime.InteropServices.Marshal.Copy(bd.Scan0, byteValues, 0, byteValues.Length);
                 bmp.UnlockBits(bd);
 
-                float[] floatValues = new float[bmp.Width * bmp.Height * 3];
-                for (int i = 0; i < byteValues.Length; ++i)
+                if (typeof(T) == typeof(float))
                 {
-                    floatValues[i] = ((float)byteValues[i] - inputMean) * scale;
+                    float[] floatValues = new float[bmp.Width * bmp.Height * 3];
+                    for (int i = 0; i < byteValues.Length; ++i)
+                    {
+                        floatValues[i] = ((float)byteValues[i] - inputMean) * scale;
+                    }
+                    System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
+                } else if (typeof(T) == typeof(byte))
+                {
+                    byte[] bValues = new byte[bmp.Width * bmp.Height * 3];
+                    for (int i = 0; i < bValues.Length; ++i)
+                    {
+                        bValues[i] = (byte) ( ((float)bValues[i] - inputMean) * scale );
+                    }
+                    System.Runtime.InteropServices.Marshal.Copy(bValues, 0, dest, bValues.Length);
+                } else
+                {
+                    throw new Exception(String.Format("Destination data type {0} is not supported.", typeof(T).ToString()));
                 }
-
-                System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
             }
             else
             {

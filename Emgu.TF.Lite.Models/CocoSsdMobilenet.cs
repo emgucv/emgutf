@@ -14,16 +14,16 @@ using System.Net;
 
 namespace Emgu.TF.Lite.Models
 {
-    public class Mobilenet : Emgu.TF.Util.UnmanagedObject
+    public class CocoSsdMobilenet : Emgu.TF.Util.UnmanagedObject
     {
         private FileDownloadManager _downloadManager;
 
-        //private BuildinOpResolver _resolver = null;
+
         private Interpreter _interpreter = null;
         private String[] _labels = null;
         private FlatBufferModel _model = null;
         private Tensor _inputTensor;
-        private Tensor _outputTensor;
+        private Tensor[] _outputTensors;
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
         public double DownloadProgress
@@ -51,13 +51,12 @@ namespace Emgu.TF.Lite.Models
         }
 #endif
 
-        public Mobilenet()
+        public CocoSsdMobilenet()
         {
             _downloadManager = new FileDownloadManager();
 
             _downloadManager.OnDownloadProgressChanged += onDownloadProgressChanged;
             _downloadManager.OnDownloadCompleted += onDownloadCompleted;
-
                 
         }
 
@@ -90,8 +89,8 @@ namespace Emgu.TF.Lite.Models
         {
 
             _downloadManager.Clear();
-            String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/mobilenet_v1_1.0_224_float_2017_11_08/" : downloadUrl;
-            String[] fileNames = modelFiles == null ? new string[] { "mobilenet_v1_1.0_224.tflite", "labels.txt" } : modelFiles;
+            String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/coco_ssd_mobilenet_v1_1.0_quant_2018_06_29/" : downloadUrl;
+            String[] fileNames = modelFiles == null ? new string[] { "detect.tflite", "labelmap.txt" } : modelFiles;
             for (int i = 0; i < fileNames.Length; i++)
                 _downloadManager.AddFile(url + fileNames[i]);
 
@@ -138,9 +137,6 @@ namespace Emgu.TF.Lite.Models
                     throw new Exception("Model indentifier check failed");
             }
 
-            //if (_resolver == null)
-            //    _resolver = new BuildinOpResolver();
-
             if (_interpreter == null)
             {
                 _interpreter = new Interpreter(_model);
@@ -151,18 +147,12 @@ namespace Emgu.TF.Lite.Models
 
             if (_inputTensor == null)
             {
-                /*
-                int[] input = _interpreter.GetInput();
-                _inputTensor = _interpreter.GetTensor(input[0]);*/
                 _inputTensor = _interpreter.Inputs[0];
             }
 
-            if (_outputTensor == null)
+            if (_outputTensors == null)
             {
-                /*
-                int[] output = _interpreter.GetOutput();
-                _outputTensor = _interpreter.GetTensor(output[0]);*/
-                _outputTensor = _interpreter.Outputs[0];
+                _outputTensors = _interpreter.Outputs;
             }
 
 
@@ -182,17 +172,34 @@ namespace Emgu.TF.Lite.Models
             get { return _labels; }
         }
 
-        public float[] Recognize(String imageFile)
+        public RecognitionResult[] Recognize(String imageFile)
         {
-            NativeImageIO.ReadImageFileToTensor<float>(imageFile, _inputTensor.DataPointer, 224, 224, 128.0f, 1.0f / 128.0f);
+            //NativeImageIO.ReadImageFileToTensor<byte>(imageFile, _inputTensor.DataPointer, _inputTensor.Dims[1], _inputTensor.Dims[2], _inputTensor.QuantizationParams.ZeroPoint, _inputTensor.QuantizationParams.Scale);
+            NativeImageIO.ReadImageFileToTensor<byte>(imageFile, _inputTensor.DataPointer, _inputTensor.Dims[1], _inputTensor.Dims[2], 0.0f, 1.0f);
 
             _interpreter.Invoke();
 
-            float[] probability = _outputTensor.Data as float[];
-            return probability;
+            float[,,] outputLocations = _interpreter.Outputs[0].JaggedData as float[,,];
+            float[] classes = _interpreter.Outputs[1].Data as float[];
+            float[] scores = _interpreter.Outputs[2].Data as float[];
+            int numDetections = (int) Math.Round( (_interpreter.Outputs[3].Data as float[])[0]);
 
+            // SSD Mobilenet V1 Model assumes class 0 is background class
+            // in label file and class labels start from 1 to number_of_classes+1,
+            // while outputClasses correspond to class index from 0 to number_of_classes
+            List<RecognitionResult> results = new List<RecognitionResult>();
+            for (int i = 0; i < numDetections; i++)
+            {
+                RecognitionResult r = new RecognitionResult();
+                r.Class = (int)Math.Round(classes[i]);
+                r.Label = _labels[r.Class];
+
+            }
+
+            return results.ToArray() ;
         }
 
+        /*
         public RecognitionResult MostLikely(String imageFile)
         {
             float[] probability = Recognize(imageFile);
@@ -216,12 +223,26 @@ namespace Emgu.TF.Lite.Models
                 result.Probability = maxVal;
             }
             return result;
-        }
+        }*/
 
         public class RecognitionResult
         {
+            /// <summary>
+            /// Rectangles will be in the format of (x, y, width, height) in the original image corrdinate
+            /// </summary>
+            public float[][] Rectangles;
+            /// <summary>
+            /// The object label
+            /// </summary>
             public String Label;
-            public double Probability;
+            /// <summary>
+            /// The score of the matching
+            /// </summary>
+            public double Score;
+            /// <summary>
+            /// The class index
+            /// </summary>
+            public int Class;
         }
 
         protected override void DisposeObject()
