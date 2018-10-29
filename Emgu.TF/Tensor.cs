@@ -417,7 +417,7 @@ namespace Emgu.TF
         }
 
         /// <summary>
-        /// Get the tensor data as an array
+        /// Get the tensor data as a managed array
         /// </summary>
         public Array Data
         {

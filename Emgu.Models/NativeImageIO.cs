@@ -29,7 +29,13 @@ namespace Emgu.Models
     /// </summary>
     public class NativeImageIO
     {
-        public static void ReadImageFileToTensor<T>(String fileName, IntPtr dest, int inputHeight = -1, int inputWidth = -1, float inputMean = 0.0f, float scale = 1.0f)
+        public static void ReadImageFileToTensor<T>(
+            String fileName, 
+            IntPtr dest, 
+            int inputHeight = -1, 
+            int inputWidth = -1, 
+            float inputMean = 0.0f, 
+            float scale = 1.0f)
         {
 #if __ANDROID__
             Android.Graphics.Bitmap bmp = BitmapFactory.DecodeFile(fileName);
@@ -151,7 +157,7 @@ namespace Emgu.Models
                     new Rectangle(0, 0, bmp.Width, bmp.Height), 
                     System.Drawing.Imaging.ImageLockMode.ReadOnly,
                     System.Drawing.Imaging.PixelFormat.Format24bppRgb, bd);
-                System.Runtime.InteropServices.Marshal.Copy(bd.Scan0, byteValues, 0, byteValues.Length);
+                Marshal.Copy(bd.Scan0, byteValues, 0, byteValues.Length);
                 bmp.UnlockBits(bd);
 
                 if (typeof(T) == typeof(float))
@@ -161,15 +167,34 @@ namespace Emgu.Models
                     {
                         floatValues[i] = ((float)byteValues[i] - inputMean) * scale;
                     }
-                    System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
+                    Marshal.Copy(floatValues, 0, dest, floatValues.Length);
                 } else if (typeof(T) == typeof(byte))
                 {
-                    byte[] bValues = new byte[bmp.Width * bmp.Height * 3];
-                    for (int i = 0; i < bValues.Length; ++i)
+                    
+
+                    bool swapBR = false;
+                    if (swapBR)
                     {
-                        bValues[i] = (byte) ( ((float)bValues[i] - inputMean) * scale );
+                        int imageSize = bmp.Width * bmp.Height;
+                        byte[] bValues = new byte[imageSize * 3];
+                        for (int i = 0; i < imageSize; ++i)
+                        {
+                            bValues[i * 3] = (byte)(((float)byteValues[i * 3 + 2] - inputMean) * scale);
+                            bValues[i * 3 + 1] = (byte)(((float)byteValues[i * 3 + 1] - inputMean) * scale);
+                            bValues[i * 3 + 2] = (byte)(((float)byteValues[i * 3 + 0] - inputMean) * scale);
+                            
+                        }
+                        Marshal.Copy(bValues, 0, dest, bValues.Length);
+                    } else
+                    {
+                        if (! (inputMean == 0.0f && scale == 1.0f))
+                            for (int i = 0; i < byteValues.Length; ++i)
+                            {
+                                byteValues[i] = (byte) ( ((float)byteValues[i] - inputMean) * scale );
+                            }
+                        Marshal.Copy(byteValues, 0, dest, byteValues.Length);
                     }
-                    System.Runtime.InteropServices.Marshal.Copy(bValues, 0, dest, bValues.Length);
+
                 } else
                 {
                     throw new Exception(String.Format("Destination data type {0} is not supported.", typeof(T).ToString()));
@@ -264,13 +289,30 @@ namespace Emgu.Models
             return new float[] { left, top, right, bottom };
         }
 
+
+        /// <summary>
+        /// Image annotation
+        /// </summary>
+        public class Annotation
+        {
+            /// <summary>
+            /// The coordinates of the rectangle, the values are in the range of [0, 1], each rectangle contains 4 values, corresponding to the top left corner (x0, y0) and bottom right corner (x1, y1)
+            /// </summary>
+            public float[] Rectangle;
+
+            /// <summary>
+            /// The text to be drawn on the top left corner of the Rectangle
+            /// </summary>
+            public String Label;
+        }
+
         /// <summary>
         /// Read the file and draw rectangles on it.
         /// </summary>
         /// <param name="fileName">The name of the file.</param>
-        /// <param name="rectangles">The coordinates of the rectangles, the values are in the range of [0, 1], each rectangle contains 4 values, corresponding to the top left corner (x0, y0) and bottom right corner (x1, y1)</param>
+        /// <param name="annotations">Annotations to be add to the image. Can consist of rectangles and lables</param>
         /// <returns>The image in Jpeg stream format</returns>
-        public static byte[] DrawRectanglesToJpeg(String fileName, float[][] rectangles)
+        public static byte[] ImageFileToJpeg(String fileName, Annotation[] annotations = null)
         {
 #if __ANDROID__
             BitmapFactory.Options options = new BitmapFactory.Options();
@@ -362,16 +404,30 @@ namespace Emgu.Models
             if (Emgu.TF.Util.Platform.OperationSystem == OS.Windows)
             {
                 Bitmap img = new Bitmap(fileName);
-                using (Graphics g = Graphics.FromImage(img))
+
+                if (annotations != null)
                 {
-                    for (int i = 0; i < rectangles.Length; i++)
+                    using (Graphics g = Graphics.FromImage(img))
                     {
-                        float[] rects = ScaleLocation(rectangles[i], img.Width, img.Height);
-                        RectangleF rect = new RectangleF(rects[0], rects[1], rects[2] - rects[0], rects[3] - rects[1]);
-                        Pen redPen = new Pen(Color.Red, 3);
-                        g.DrawRectangle(redPen, Rectangle.Round(rect));
+                        for (int i = 0; i < annotations.Length; i++)
+                        {
+                            if (annotations[i].Rectangle != null)
+                            {
+                                float[] rects = ScaleLocation(annotations[i].Rectangle, img.Width, img.Height);
+                                PointF origin = new PointF(rects[0], rects[1]);
+                                RectangleF rect = new RectangleF(rects[0], rects[1], rects[2] - rects[0], rects[3] - rects[1]);
+                                Pen redPen = new Pen(Color.Red, 3);
+                                g.DrawRectangle(redPen, Rectangle.Round(rect));
+
+                                String label = annotations[i].Label;
+                                if (label != null)
+                                {
+                                    g.DrawString(label, new Font(FontFamily.GenericSansSerif, 20f), Brushes.Red, origin);
+                                }
+                            }
+                        }
+                        g.Save();
                     }
-                    g.Save();
                 }
 
                 using (MemoryStream ms = new MemoryStream())

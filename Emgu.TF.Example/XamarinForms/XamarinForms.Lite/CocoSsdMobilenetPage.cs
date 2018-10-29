@@ -90,20 +90,33 @@ namespace Emgu.TF.XamarinForms
 
         private void onDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-
             Stopwatch watch = Stopwatch.StartNew();
-            var result = _mobilenet.Recognize(_image[0]);
+            var result = _mobilenet.Recognize(_image[0], 0.5f);
             watch.Stop();
-            //String resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", result.Label, result.Probability * 100, watch.ElapsedMilliseconds);
 
-            SetImage(_image[0]);
-            //SetMessage(resStr);
+            NativeImageIO.Annotation[] annotations = new NativeImageIO.Annotation[result.Length];
+            for (int i = 0; i < result.Length; i++)
+            {
+                NativeImageIO.Annotation annotation = new NativeImageIO.Annotation();
+                annotation.Rectangle = result[i].Rectangle;
+                annotation.Label = String.Format("{0}:({1:0.00}%)", result[i].Label, result[i].Score * 100);
+                annotations[i] = annotation;
+            }
             
+            byte[] jpeg = NativeImageIO.ImageFileToJpeg(_image[0], annotations);
+            String names = String.Join(";", Array.ConvertAll(result, r => r.Label));
+            SetImage(jpeg);
+
+
+            String resStr = String.Format("Detection completed in {0} milliseconds.", watch.ElapsedMilliseconds);
+            SetMessage(resStr);
+
         }
 
         private void OnButtonClicked(Object sender, EventArgs args)
         {
             LoadImages(new string[] { "dog416.png" });
+            //LoadImages(new string[] { "grace_hopper.jpg" });
         }
 
     }

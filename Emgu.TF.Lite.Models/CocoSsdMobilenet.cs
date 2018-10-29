@@ -172,10 +172,19 @@ namespace Emgu.TF.Lite.Models
             get { return _labels; }
         }
 
-        public RecognitionResult[] Recognize(String imageFile)
+        /// <summary>
+        /// Perform Coco Ssd Mobilenet detection
+        /// </summary>
+        /// <param name="imageFile">The image file where we will ran the network through</param>
+        /// <param name="scoreThreshold">If non-positive, will return all results. If positive, we will only return results with score larger than this value</param>
+        /// <returns>The result of the detection.</returns>
+        public RecognitionResult[] Recognize(String imageFile, float scoreThreshold = 0.0f)
         {
             //NativeImageIO.ReadImageFileToTensor<byte>(imageFile, _inputTensor.DataPointer, _inputTensor.Dims[1], _inputTensor.Dims[2], _inputTensor.QuantizationParams.ZeroPoint, _inputTensor.QuantizationParams.Scale);
-            NativeImageIO.ReadImageFileToTensor<byte>(imageFile, _inputTensor.DataPointer, _inputTensor.Dims[1], _inputTensor.Dims[2], 0.0f, 1.0f);
+            int height = _inputTensor.Dims[1];
+            int width = _inputTensor.Dims[2];
+                
+            NativeImageIO.ReadImageFileToTensor<byte>(imageFile, _inputTensor.DataPointer, height, width, 0.0f, 1.0f);
 
             _interpreter.Invoke();
 
@@ -188,49 +197,38 @@ namespace Emgu.TF.Lite.Models
             // in label file and class labels start from 1 to number_of_classes+1,
             // while outputClasses correspond to class index from 0 to number_of_classes
             List<RecognitionResult> results = new List<RecognitionResult>();
+
+            int labelOffset = 1;
             for (int i = 0; i < numDetections; i++)
             {
+                if (classes[i] == 0) //background class
+                    continue;
+
+                if (scoreThreshold > 0.0f && scores[i] < scoreThreshold)
+                    continue;
+
                 RecognitionResult r = new RecognitionResult();
                 r.Class = (int)Math.Round(classes[i]);
-                r.Label = _labels[r.Class];
+                r.Label = _labels[r.Class + labelOffset];
+                r.Score = scores[i];
+                float x0 = outputLocations[0, i, 1];
+                float y0 = outputLocations[0, i, 0];
+                float x1 = outputLocations[0, i, 3];
+                float y1 = outputLocations[0, i, 2];
+                r.Rectangle = new float[] { x0, y0, x1, y1 };
 
+                results.Add(r);
             }
 
             return results.ToArray() ;
         }
-
-        /*
-        public RecognitionResult MostLikely(String imageFile)
-        {
-            float[] probability = Recognize(imageFile);
-
-            RecognitionResult result = new RecognitionResult();
-            result.Label = String.Empty;
-
-            if (probability != null)
-            {
-                float maxVal = 0;
-                int maxIdx = 0;
-                for (int i = 0; i < probability.Length; i++)
-                {
-                    if (probability[i] > maxVal)
-                    {
-                        maxVal = probability[i];
-                        maxIdx = i;
-                    }
-                }
-                result.Label = _labels[maxIdx];
-                result.Probability = maxVal;
-            }
-            return result;
-        }*/
 
         public class RecognitionResult
         {
             /// <summary>
             /// Rectangles will be in the format of (x, y, width, height) in the original image corrdinate
             /// </summary>
-            public float[][] Rectangles;
+            public float[] Rectangle;
             /// <summary>
             /// The object label
             /// </summary>
