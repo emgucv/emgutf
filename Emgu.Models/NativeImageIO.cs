@@ -51,7 +51,7 @@ namespace Emgu.Models
                 floatValues[i * 3 + 2] = ((val & 0xFF) - inputMean) * scale;
             }
 
-            System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
+            Marshal.Copy(floatValues, 0, dest, floatValues.Length);
 
 #elif __IOS__
             UIImage image = new UIImage(fileName);
@@ -237,5 +237,149 @@ namespace Emgu.Models
             throw new NotImplementedException("Not Implemented");
 #endif
         }
+
+
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+#else
+
+        private static float[] ScaleLocation(float[] location, int imageWidth, int imageHeight)
+        {
+            float left = location[0] * imageWidth;
+            float top = location[1] * imageHeight;
+            float right = location[2] * imageWidth;
+            float bottom = location[3] * imageHeight;
+            return new float[] { left, top, right, bottom };
+        }
+
+        /// <summary>
+        /// Read the file and draw rectangles on it.
+        /// </summary>
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="rectangles">The coordinates of the rectangles, the values are in the range of [0, 1], each rectangle contains 4 values, corresponding to the top left corner (x0, y0) and bottom right corner (x1, y1)</param>
+        /// <returns>The image in Jpeg stream format</returns>
+        public static byte[] DrawRectanglesToJpeg(String fileName, float[][] rectangles)
+        {
+#if __ANDROID__
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.InMutable = true;
+            Android.Graphics.Bitmap bmp = BitmapFactory.DecodeFile(fileName, options);
+
+            Android.Graphics.Paint p = new Android.Graphics.Paint();
+            p.SetStyle(Paint.Style.Stroke);
+            p.AntiAlias = true;
+            p.Color = Android.Graphics.Color.Red;
+            Canvas c = new Canvas(bmp);
+                        
+            for (int i = 0; i < rectangles.Length; i++)
+            {
+                float[] rects = ScaleLocation(rectangles[i], bmp.Width, bmp.Height);
+                Android.Graphics.Rect r = new Rect((int)rects[0], (int) rects[1], (int) rects[2], (int) rects[3]);
+                c.DrawRect(r, p);
+            }     
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bmp.Compress(Bitmap.CompressFormat.Jpeg, 90, ms);
+                return ms.ToArray();
+            }
+#elif __MACOS__
+            NSImage img = NSImage.ImageNamed(fileName);                        
+            //MultiboxGraph.DrawResults(img, detectResult, scoreThreshold);
+            //Rectangle[] locations = ScaleLocation(result.DecodedLocations, (int)img.Size.Width, (int)img.Size.Height);
+            img.LockFocus();
+
+            NSColor redColor = NSColor.Red;
+            redColor.Set();
+            var context = NSGraphicsContext.CurrentContext;
+            var cgcontext = context.CGContext;
+            cgcontext.ScaleCTM(1, -1);
+            cgcontext.TranslateCTM(0, -img.Size.Height);
+            //context.IsFlipped = !context.IsFlipped;
+            for (int i = 0; i < rectangles.Length; i++)
+            {
+                
+                    //Rectangle rect = locations[result.Indices[i]];
+                    //img.Draw()
+                    //Trace.WriteLine(String.Format("x: {0}, y: {1}, w: {2}, h: {3}", rect.X, rect.Y, rect.Width, rect.Height));
+                    CGRect cgRect = new CGRect(rectangles[i][0], rectangles[i][1], rectangles[i][2] - rectangles[i][0], rectangles[i][3] - rectangles[i][1]);
+                    //img.Draw(cgRect);
+                    //CGPath path = CGPath.FromRect(cgRect);
+                    //NSBezierPath path = NSBezierPath.FromOvalInRect(cgRect);
+                    //path.Fill();
+                    //path.Stroke();
+                    NSBezierPath.StrokeRect(cgRect);
+                    //img.Draw(cgRect, );
+
+            }
+            img.UnlockFocus();
+
+            var imageData = img.AsTiff();
+            var imageRep = NSBitmapImageRep.ImageRepsWithData(imageData)[0] as NSBitmapImageRep;
+            var jpegData = imageRep.RepresentationUsingTypeProperties(NSBitmapImageFileType.Jpeg, null);
+            byte[] jpeg = new byte[jpegData.Length];
+            System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, jpeg, 0, (int)jpegData.Length);
+            return jpeg;
+#elif __IOS__
+            UIImage uiimage = new UIImage(fileName);
+
+			//UIImage newImg = MultiboxGraph.DrawResults(uiimage, detectResult, scoreThreshold);
+            			//Rectangle[] locations = ScaleLocation(result.DecodedLocations, (int)img.Size.Width, (int)img.Size.Height);
+
+        UIGraphics.BeginImageContextWithOptions(uiimg.Size, false, 0);
+            var context = UIGraphics.GetCurrentContext();
+
+        uiimg.Draw(new CGPoint());
+            context.SetStrokeColor(UIColor.Red.CGColor);
+        context.SetLineWidth(2);
+			for (int i = 0; i < rectangles.Length; i++)
+			{
+				//if (result.Scores[i] > scoreThreshold)
+				{
+					//Rectangle rect = locations[result.Indices[i]];
+                    float[] rects = ScaleLocation(rectangles[i], img.Width, img.Height);
+					CGRect cgRect = new CGRect(rects[i][0], rects[i][1], rects[i][2] - rects[i][0], rects[i][3] - rects[i][1]);
+        context.AddRect(cgRect);
+        context.DrawPath(CGPathDrawingMode.Stroke);
+
+				}
+			}
+            UIImage imgWithRect = UIGraphics.GetImageFromCurrentImageContext();
+        UIGraphics.EndImageContext();
+            //imgWithRect;
+
+            var jpegData = imgWithRect.AsJPEG();
+			byte[] jpeg = new byte[jpegData.Length];
+			System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, jpeg, 0, (int)jpegData.Length);
+            return jpeg;
+#else
+            if (Emgu.TF.Util.Platform.OperationSystem == OS.Windows)
+            {
+                Bitmap img = new Bitmap(fileName);
+                using (Graphics g = Graphics.FromImage(img))
+                {
+                    for (int i = 0; i < rectangles.Length; i++)
+                    {
+                        float[] rects = ScaleLocation(rectangles[i], img.Width, img.Height);
+                        RectangleF rect = new RectangleF(rects[0], rects[1], rects[2] - rects[0], rects[3] - rects[1]);
+                        Pen redPen = new Pen(Color.Red, 3);
+                        g.DrawRectangle(redPen, Rectangle.Round(rect));
+                    }
+                    g.Save();
+                }
+
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    return ms.ToArray();
+                }
+            }
+            else
+            {
+                throw new Exception("DrawResultsToJpeg Not implemented for this platform");
+            }
+#endif
+
+        }
+#endif
     }
 }

@@ -81,9 +81,12 @@ namespace MultiboxPeopleDetection
             result = graph.Detect(imageTensor);
             watch.Stop();
 
-            Bitmap bmp = new Bitmap(fileName);
-            MultiboxGraph.DrawResults(bmp, result, 0.1f);
-
+            //Bitmap bmp = new Bitmap(fileName);
+            float[][] rectangles = MultiboxGraph.FilterResults(result, 0.1f);
+            byte[] jpeg = MultiboxGraph.DrawRectanglesToJpeg(fileName, rectangles);
+            //MultiboxGraph.DrawResults(bmp, result, 0.1f);
+            
+            Bitmap bmp = new Bitmap()
             if (InvokeRequired)
             {
                 this.Invoke((MethodInvoker)(() =>
