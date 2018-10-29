@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Emgu.TF.Util.TypeEnum;
+#if !__MACOS__
 using Plugin.Media;
+#endif
 using Xamarin.Forms;
 
 #if __ANDROID__

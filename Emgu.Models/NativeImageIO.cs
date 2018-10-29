@@ -310,19 +310,13 @@ namespace Emgu.Models
             //context.IsFlipped = !context.IsFlipped;
             for (int i = 0; i < rectangles.Length; i++)
             {
-                
-                    //Rectangle rect = locations[result.Indices[i]];
-                    //img.Draw()
-                    //Trace.WriteLine(String.Format("x: {0}, y: {1}, w: {2}, h: {3}", rect.X, rect.Y, rect.Width, rect.Height));
-                    CGRect cgRect = new CGRect(rectangles[i][0], rectangles[i][1], rectangles[i][2] - rectangles[i][0], rectangles[i][3] - rectangles[i][1]);
-                    //img.Draw(cgRect);
-                    //CGPath path = CGPath.FromRect(cgRect);
-                    //NSBezierPath path = NSBezierPath.FromOvalInRect(cgRect);
-                    //path.Fill();
-                    //path.Stroke();
-                    NSBezierPath.StrokeRect(cgRect);
-                    //img.Draw(cgRect, );
-
+                float[] rects = ScaleLocation(rectangles[i], (int)img.Size.Width, (int) img.Size.Height);
+                CGRect cgRect = new CGRect(
+                    rects[0], 
+                    rects[1], 
+                    rects[2] - rects[0], 
+                    rects[3] - rects[1]);
+                NSBezierPath.StrokeRect(cgRect);
             }
             img.UnlockFocus();
 

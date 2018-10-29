@@ -456,7 +456,7 @@ namespace Emgu.TF
 
             if (jagged)
             {
-                int[] dim = this.Dims;
+                int[] dim = this.Dim;
                 array = Array.CreateInstance(t, dim);
             }
             else

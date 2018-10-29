@@ -368,7 +368,7 @@ namespace Emgu.TF.Models
             if (Emgu.TF.Util.Platform.OperationSystem == OS.Windows)
             {
                 Tensor t = new Tensor(DataType.Float, new int[] { 1, (int)inputHeight, (int)inputWidth, 3 });
-                NativeImageIO.ReadImageFileToTensor(fileName, t.DataPointer, inputHeight, inputWidth, inputMean, scale);
+                NativeImageIO.ReadImageFileToTensor<float>(fileName, t.DataPointer, inputHeight, inputWidth, inputMean, scale);
                 return t;
             }
             else
