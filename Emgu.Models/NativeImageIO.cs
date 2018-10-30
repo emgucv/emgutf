@@ -371,30 +371,28 @@ namespace Emgu.Models
 #elif __IOS__
             UIImage uiimage = new UIImage(fileName);
 
-			//UIImage newImg = MultiboxGraph.DrawResults(uiimage, detectResult, scoreThreshold);
-            			//Rectangle[] locations = ScaleLocation(result.DecodedLocations, (int)img.Size.Width, (int)img.Size.Height);
-
-        UIGraphics.BeginImageContextWithOptions(uiimg.Size, false, 0);
+            UIGraphics.BeginImageContextWithOptions(uiimage.Size, false, 0);
             var context = UIGraphics.GetCurrentContext();
 
-        uiimg.Draw(new CGPoint());
+            uiimage.Draw(new CGPoint());
             context.SetStrokeColor(UIColor.Red.CGColor);
-        context.SetLineWidth(2);
-			for (int i = 0; i < rectangles.Length; i++)
-			{
-				//if (result.Scores[i] > scoreThreshold)
-				{
-					//Rectangle rect = locations[result.Indices[i]];
-                    float[] rects = ScaleLocation(rectangles[i], img.Width, img.Height);
-					CGRect cgRect = new CGRect(rects[i][0], rects[i][1], rects[i][2] - rects[i][0], rects[i][3] - rects[i][1]);
-        context.AddRect(cgRect);
-        context.DrawPath(CGPathDrawingMode.Stroke);
-
-				}
-			}
+            context.SetLineWidth(2);
+            for (int i = 0; i < annotations.Length; i++)
+            {
+                float[] rects = ScaleLocation(
+                    annotations[i].Rectangle,
+                    (int)uiimage.Size.Width,
+                    (int)uiimage.Size.Height);
+                CGRect cgRect = new CGRect(
+                                           (nfloat)rects[0],
+                                           (nfloat)rects[1],
+                                           (nfloat)(rects[2] - rects[0]),
+                                           (nfloat)(rects[3] - rects[1]));
+                context.AddRect(cgRect);
+                context.DrawPath(CGPathDrawingMode.Stroke);
+            }
             UIImage imgWithRect = UIGraphics.GetImageFromCurrentImageContext();
-        UIGraphics.EndImageContext();
-            //imgWithRect;
+            UIGraphics.EndImageContext();
 
             var jpegData = imgWithRect.AsJPEG();
 			byte[] jpeg = new byte[jpegData.Length];
@@ -443,6 +441,7 @@ namespace Emgu.Models
 #endif
 
         }
+
 #endif
     }
 }

@@ -151,7 +151,11 @@
     <Content Include="..\..\..\tensorflow\tensorflow\examples\label_image\data\grace_hopper.jpg">
       <Link>grace_hopper.jpg</Link>
     </Content>
+    <Content Include="..\..\CVInterop\dog416.png">
+      <Link>dog416.png</Link>
+    </Content>
   </ItemGroup>
+  <Import Project="..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems')" />
   <Import Project="..\XamarinForms.Lite\XamarinForms.Lite.projitems" Label="Shared" Condition="Exists('..\XamarinForms.Lite\XamarinForms.Lite.projitems')" />
   <Import Project="..\..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.Models\Emgu.Models.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
