@@ -350,9 +350,9 @@ namespace Emgu.Models
             cgcontext.ScaleCTM(1, -1);
             cgcontext.TranslateCTM(0, -img.Size.Height);
             //context.IsFlipped = !context.IsFlipped;
-            for (int i = 0; i < rectangles.Length; i++)
+            for (int i = 0; i < annotations.Length; i++)
             {
-                float[] rects = ScaleLocation(rectangles[i], (int)img.Size.Width, (int) img.Size.Height);
+                float[] rects = ScaleLocation(annotations[i].Rectangle, (int)img.Size.Width, (int) img.Size.Height);
                 CGRect cgRect = new CGRect(
                     rects[0], 
                     rects[1], 
