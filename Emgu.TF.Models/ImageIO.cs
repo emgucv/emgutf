@@ -373,6 +373,7 @@ namespace Emgu.TF.Models
             }
             else
             {
+                //Mac OS or Linux
                 using (StatusChecker checker = new StatusChecker(status))
                 {
                     var graph = new Graph();
