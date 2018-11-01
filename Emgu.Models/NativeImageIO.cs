@@ -325,9 +325,9 @@ namespace Emgu.Models
             p.Color = Android.Graphics.Color.Red;
             Canvas c = new Canvas(bmp);
                         
-            for (int i = 0; i < rectangles.Length; i++)
+            for (int i = 0; i < annotations.Length; i++)
             {
-                float[] rects = ScaleLocation(rectangles[i], bmp.Width, bmp.Height);
+                float[] rects = ScaleLocation(annotations[i].Rectangle, bmp.Width, bmp.Height);
                 Android.Graphics.Rect r = new Rect((int)rects[0], (int) rects[1], (int) rects[2], (int) rects[3]);
                 c.DrawRect(r, p);
             }     

@@ -266,14 +266,18 @@ namespace Emgu.TF.Models
         }
 
 
-        public static float[][] FilterResults(MultiboxGraph.Result[] results, float scoreThreshold)
+        public static NativeImageIO.Annotation[] FilterResults(MultiboxGraph.Result[] results, float scoreThreshold)
         {
-            List<float[]> goodResults = new List<float[]>();
+            List<NativeImageIO.Annotation> goodResults = new List<NativeImageIO.Annotation>();
             for (int i = 0; i < results.Length; i++)
             {
                 if (results[i].Scores > scoreThreshold)
                 {
-                    goodResults.Add(results[i].DecodedLocations);
+                    NativeImageIO.Annotation r = new NativeImageIO.Annotation();
+                    r.Rectangle = results[i].DecodedLocations;
+                    r.Label = String.Empty;
+                    //r.Label = String.Format("{0:0.00}%", results[i].Scores * 100);
+                    goodResults.Add(r);
                 }
             }
             return goodResults.ToArray();

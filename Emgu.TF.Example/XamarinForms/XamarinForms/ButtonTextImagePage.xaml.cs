@@ -111,6 +111,10 @@ namespace Emgu.TF.XamarinForms
                         return;
                     mats[i] = takePhotoResult.Path;
                 }
+
+                //Handle user cancel
+                if (action == null)
+                    return;
             }
             InvokeOnImagesLoaded(mats);
 #endif

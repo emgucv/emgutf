@@ -69,8 +69,9 @@ namespace Emgu.TF.XamarinForms
                     Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
                     MultiboxGraph.Result[] detectResult = _multiboxGraph.Detect(imageTensor);
                     watch.Stop();
-                    float[][] rectangles = MultiboxGraph.FilterResults(detectResult, 0.1f);
-                    byte[] jpeg = Emgu.Models.NativeImageIO.DrawRectanglesToJpeg(image[0], rectangles);
+                    Emgu.Models.NativeImageIO.Annotation[] annotations = MultiboxGraph.FilterResults(detectResult, 0.1f);
+
+                    byte[] jpeg = Emgu.Models.NativeImageIO.ImageFileToJpeg(image[0], annotations);
 
                     watch.Stop();
                     SetImage(jpeg);
