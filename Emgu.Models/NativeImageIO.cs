@@ -289,6 +289,32 @@ namespace Emgu.Models
             return new float[] { left, top, right, bottom };
         }
 
+#if __MACOS__
+
+        public static void DrawAnnotations(NSImage img, Annotation[] annotations)
+        {
+            img.LockFocus();
+
+            NSColor redColor = NSColor.Red;
+            redColor.Set();
+            var context = NSGraphicsContext.CurrentContext;
+            var cgcontext = context.CGContext;
+            cgcontext.ScaleCTM(1, -1);
+            cgcontext.TranslateCTM(0, -img.Size.Height);
+            //context.IsFlipped = !context.IsFlipped;
+            for (int i = 0; i < annotations.Length; i++)
+            {
+                float[] rects = ScaleLocation(annotations[i].Rectangle, (int)img.Size.Width, (int)img.Size.Height);
+                CGRect cgRect = new CGRect(
+                    rects[0],
+                    rects[1],
+                    rects[2] - rects[0],
+                    rects[3] - rects[1]);
+                NSBezierPath.StrokeRect(cgRect);
+            }
+            img.UnlockFocus();
+        }
+#endif
 
         /// <summary>
         /// Image annotation
@@ -338,9 +364,10 @@ namespace Emgu.Models
                 return ms.ToArray();
             }
 #elif __MACOS__
-            NSImage img = NSImage.ImageNamed(fileName);                        
-            //MultiboxGraph.DrawResults(img, detectResult, scoreThreshold);
-            //Rectangle[] locations = ScaleLocation(result.DecodedLocations, (int)img.Size.Width, (int)img.Size.Height);
+            NSImage img = NSImage.ImageNamed(fileName);
+
+            DrawAnnotations(img, annotations);
+            /*
             img.LockFocus();
 
             NSColor redColor = NSColor.Red;
@@ -361,6 +388,7 @@ namespace Emgu.Models
                 NSBezierPath.StrokeRect(cgRect);
             }
             img.UnlockFocus();
+            */
 
             var imageData = img.AsTiff();
             var imageRep = NSBitmapImageRep.ImageRepsWithData(imageData)[0] as NSBitmapImageRep;
