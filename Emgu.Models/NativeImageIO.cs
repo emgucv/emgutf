@@ -4,7 +4,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
+
 using System.Text;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -20,6 +20,8 @@ using UIKit;
 #elif __UNIFIED__
 using AppKit;
 using CoreGraphics;
+#else
+using System.Drawing;
 #endif
 
 namespace Emgu.Models
@@ -30,11 +32,11 @@ namespace Emgu.Models
     public class NativeImageIO
     {
         public static void ReadImageFileToTensor<T>(
-            String fileName, 
-            IntPtr dest, 
-            int inputHeight = -1, 
-            int inputWidth = -1, 
-            float inputMean = 0.0f, 
+            String fileName,
+            IntPtr dest,
+            int inputHeight = -1,
+            int inputWidth = -1,
+            float inputMean = 0.0f,
             float scale = 1.0f)
         {
 #if __ANDROID__
@@ -134,7 +136,8 @@ namespace Emgu.Models
                 floatValues[i * 3 + 2] = ((val & 0xFF) - inputMean) * scale;
             }
             System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
-
+#elif UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+            throw new NotImplementedException("Not implemented");
 #else
             if (Emgu.TF.Util.Platform.OperationSystem ==  OS.Windows)
             {
@@ -170,8 +173,6 @@ namespace Emgu.Models
                     Marshal.Copy(floatValues, 0, dest, floatValues.Length);
                 } else if (typeof(T) == typeof(byte))
                 {
-                    
-
                     bool swapBR = false;
                     if (swapBR)
                     {
@@ -278,6 +279,107 @@ namespace Emgu.Models
 
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+
+        public static Texture2D Resize(Texture2D source, int newWidth, int newHeight)
+        {
+            source.filterMode = FilterMode.Bilinear;
+            UnityEngine.RenderTexture rt = UnityEngine.RenderTexture.GetTemporary(newWidth, newHeight);
+            rt.filterMode = FilterMode.Bilinear;
+
+            UnityEngine.RenderTexture.active = rt;
+            Graphics.Blit(source, rt);
+            var nTex = new Texture2D(newWidth, newHeight);
+            nTex.ReadPixels(new Rect(0, 0, newWidth, newHeight), 0, 0);
+            nTex.Apply();
+            UnityEngine.RenderTexture.active = null;
+            UnityEngine.RenderTexture.ReleaseTemporary(rt);
+            return nTex;
+        }
+
+        public static void ReadTensorFromTexture2D<T>(
+            Texture2D texture, IntPtr dest, int inputHeight = -1, int inputWidth = -1,
+            float inputMean = 0.0f, float scale = 1.0f, bool flipUpsideDown = false, bool swapBR = false) where T : struct
+        {
+            Color32[] colors;
+
+            int width, height;
+            if (inputHeight > 0 || inputWidth > 0)
+            {
+                Texture2D small = Resize(texture, inputWidth, inputHeight);
+                colors = small.GetPixels32();
+                width = inputWidth;
+                height = inputHeight;
+            }
+            else
+            {
+                width = texture.width;
+                height = texture.height;
+                colors = texture.GetPixels32();
+            }
+
+            float[] floatValues = new float[colors.Length * 3];
+
+            if (flipUpsideDown)
+            {
+                //handle flip upside down
+                for (int i = 0; i < height; i++)
+                    for (int j = 0; j < width; j++)
+                    {
+                        Color32 val = colors[(height - i - 1) * width + j];
+                        int idx = i * width + j;
+                        if (swapBR)
+                        {
+                            floatValues[idx * 3 + 0] = (val.b - inputMean) * scale;
+                            floatValues[idx * 3 + 1] = (val.g - inputMean) * scale;
+                            floatValues[idx * 3 + 2] = (val.r - inputMean) * scale;
+                        }
+                        else
+                        {
+                            floatValues[idx * 3 + 0] = (val.r - inputMean) * scale;
+                            floatValues[idx * 3 + 1] = (val.g - inputMean) * scale;
+                            floatValues[idx * 3 + 2] = (val.b - inputMean) * scale;
+                        }
+                    }
+            }
+            else
+            {
+                for (int i = 0; i < colors.Length; ++i)
+                {
+                    Color32 val = colors[i];
+                    if (swapBR)
+                    {
+                        floatValues[i * 3 + 0] = (val.b - inputMean) * scale;
+                        floatValues[i * 3 + 1] = (val.g - inputMean) * scale;
+                        floatValues[i * 3 + 2] = (val.r - inputMean) * scale;
+                    }
+                    else
+                    {
+                        floatValues[i * 3 + 0] = (val.r - inputMean) * scale;
+                        floatValues[i * 3 + 1] = (val.g - inputMean) * scale;
+                        floatValues[i * 3 + 2] = (val.b - inputMean) * scale;
+                    }
+                }
+            }
+
+            if (typeof(T) == typeof(float))
+            {
+                Marshal.Copy(floatValues, 0, dest, floatValues.Length);
+            }
+            else if (typeof(T) == typeof(byte))
+            {
+                byte[] bValues = new byte[floatValues.Length];
+                for (int i = 0; i < bValues.Length; ++i)
+                {
+                    bValues[i] = (byte)floatValues[i];
+                }
+                Marshal.Copy(bValues, 0, dest, bValues.Length);
+            }
+            else
+            {
+                throw new Exception(String.Format("Destination data type {0} is not supported.", typeof(T).ToString()));
+            }
+        }
+
 #else
 
         private static float[] ScaleLocation(float[] location, int imageWidth, int imageHeight)

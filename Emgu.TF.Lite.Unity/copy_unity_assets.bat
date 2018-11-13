@@ -10,15 +10,18 @@ rm -rf Emgu.TF.Lite
 mkdir Emgu.TF.Lite
 rm -rf Emgu.Models
 mkdir Emgu.Models
+rm -rf Emgu.TF.Lite.Models
+mkdir Emgu.TF.Lite.Models
 cd ..
 cd ..
 cd ..
 cd ..
 
-cp ../tensorflow/LICENSE Assets/Emgu.TF.Lite/Assets/Documentation/tensorflow.license.txt
+cp ../tensorflow/LICENSE Assets/Emgu.TF.Lite/Documentation/tensorflow.license.txt
 
 
 cp ../Emgu.TF.Util/*.cs Assets/Emgu.TF.Lite/Assets/Scripts/Emgu.TF.Util/
 cp ../Emgu.TF.Lite/*.cs Assets/Emgu.TF.Lite/Assets/Scripts/Emgu.TF.Lite/
 cp ../Emgu.Models/*.cs Assets/Emgu.TF.Lite/Assets/Scripts/Emgu.Models/
+cp ../Emgu.TF.Lite.Models/*.cs Assets/Emgu.TF.Lite/Assets/Scripts/Emgu.TF.Lite.Models/
 

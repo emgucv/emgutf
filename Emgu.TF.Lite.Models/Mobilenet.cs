@@ -12,6 +12,10 @@ using System.IO;
 using System.ComponentModel;
 using System.Net;
 
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+using UnityEngine;
+#endif
+
 namespace Emgu.TF.Lite.Models
 {
     public class Mobilenet : Emgu.TF.Util.UnmanagedObject
@@ -138,9 +142,6 @@ namespace Emgu.TF.Lite.Models
                     throw new Exception("Model indentifier check failed");
             }
 
-            //if (_resolver == null)
-            //    _resolver = new BuildinOpResolver();
-
             if (_interpreter == null)
             {
                 _interpreter = new Interpreter(_model);
@@ -151,21 +152,17 @@ namespace Emgu.TF.Lite.Models
 
             if (_inputTensor == null)
             {
-                /*
-                int[] input = _interpreter.GetInput();
-                _inputTensor = _interpreter.GetTensor(input[0]);*/
-                _inputTensor = _interpreter.Inputs[0];
+
+                int[] input = _interpreter.InputIndices;
+                _inputTensor = _interpreter.GetTensor(input[0]);
+                
             }
 
             if (_outputTensor == null)
             {
-                /*
-                int[] output = _interpreter.GetOutput();
-                _outputTensor = _interpreter.GetTensor(output[0]);*/
-                _outputTensor = _interpreter.Outputs[0];
+                int[] output = _interpreter.OutputIndices;
+                _outputTensor = _interpreter.GetTensor(output[0]);   
             }
-
-
         }
 
         
@@ -182,44 +179,63 @@ namespace Emgu.TF.Lite.Models
             get { return _labels; }
         }
 
-        public float[] Recognize(String imageFile)
+        public RecognitionResult[] SortResults(float[] probabilities)
+        {
+            if (probabilities == null)
+                return null;
+
+            RecognitionResult[] results = new RecognitionResult[probabilities.Length];
+            for (int i = 0; i < probabilities.Length; i++)
+            {
+                results[i] = new RecognitionResult(_labels[i], probabilities[i]);
+            }
+            Array.Sort<RecognitionResult>(results, new Comparison<RecognitionResult>((a, b) => -a.Probability.CompareTo(b.Probability)));
+            return results;
+        }
+
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+        public RecognitionResult[] Recognize(Texture2D texture2D, bool flipUpsideDown=true, bool swapBR = false)
+        {
+            NativeImageIO.ReadTensorFromTexture2D<float>(
+                texture2D, 
+                _inputTensor.DataPointer, 
+                224, 224, 128.0f, 1.0f / 128.0f,
+                flipUpsideDown,
+                swapBR);
+
+            _interpreter.Invoke();
+
+            float[] probability = _outputTensor.GetData(false) as float[];
+            if (probability == null)
+                return null;
+
+            return SortResults(probability);
+
+        }
+#else
+        public RecognitionResult[] Recognize(String imageFile)
         {
             NativeImageIO.ReadImageFileToTensor<float>(imageFile, _inputTensor.DataPointer, 224, 224, 128.0f, 1.0f / 128.0f);
 
             _interpreter.Invoke();
 
             float[] probability = _outputTensor.Data as float[];
-            return probability;
+            if (probability == null)
+                return null;
+            return SortResults(probability);
 
         }
 
-        public RecognitionResult MostLikely(String imageFile)
-        {
-            float[] probability = Recognize(imageFile);
-
-            RecognitionResult result = new RecognitionResult();
-            result.Label = String.Empty;
-
-            if (probability != null)
-            {
-                float maxVal = 0;
-                int maxIdx = 0;
-                for (int i = 0; i < probability.Length; i++)
-                {
-                    if (probability[i] > maxVal)
-                    {
-                        maxVal = probability[i];
-                        maxIdx = i;
-                    }
-                }
-                result.Label = _labels[maxIdx];
-                result.Probability = maxVal;
-            }
-            return result;
-        }
+#endif
 
         public class RecognitionResult
         {
+            public RecognitionResult(String label, double probability)
+            {
+                Label = label;
+                Probability = probability;
+            }
+
             public String Label;
             public double Probability;
         }

@@ -272,7 +272,7 @@ namespace Emgu.TF.Lite
                   {
                      String unityAltFolder =
                         Path.Combine(
-                           Path.Combine(Path.Combine(Path.Combine(directory.Parent.Parent.FullName, "Assets"), "Emgu.CV"), "Plugins"),
+                           Path.Combine(Path.Combine(Path.Combine(directory.Parent.Parent.FullName, "Assets"), "Emgu.TF.Lite"), "Plugins"),
                            subfolder);
                      
 					 Debug.WriteLine("Trying unityAltFolder: " + unityAltFolder);

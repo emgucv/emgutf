@@ -63,17 +63,6 @@ namespace Emgu.TF.Lite
             return TfLiteInvoke.tfeInterpreterInvoke(_ptr);
         }
 
-        /*
-        public IntPtr GetInputTensorPtr(int index)
-        {
-            return TfLiteInvoke.tfeInterpreterInputTensor(_ptr, index);
-        }
-
-        public IntPtr GetOutputTensorPtr(int index)
-        {
-            return TfLiteInvoke.tfeInterpreterOuputTensor(_ptr, index);
-        }*/
-
         /// <summary>
         /// Get the number of tensors in the model.
         /// </summary>
@@ -110,7 +99,7 @@ namespace Emgu.TF.Lite
         {
             get
             {
-                int[] inputIdx = GetInput();
+                int[] inputIdx = InputIndices;
                 Tensor[] inputs = new Tensor[inputIdx.Length];
                 for (int i = 0; i < inputs.Length; i++)
                     inputs[i] = GetTensor(inputIdx[i]);
@@ -122,7 +111,7 @@ namespace Emgu.TF.Lite
         {
             get
             {
-                int[] outputIdx = GetOutput();
+                int[] outputIdx = OutputIndices;
                 Tensor[] inputs = new Tensor[outputIdx.Length];
                 for (int i = 0; i < inputs.Length; i++)
                     inputs[i] = GetTensor(outputIdx[i]);
@@ -134,37 +123,41 @@ namespace Emgu.TF.Lite
         /// <summary>
         /// Get the list of tensor index of the inputs tensors.
         /// </summary>
-        /// <returns>The list of tensor index of the inputs tensors.</returns>
-        private int[] GetInput()
+        public int[] InputIndices
         {
-            int size = TfLiteInvoke.tfeInterpreterGetInputSize(_ptr);
-            int[] input = new int[size];
-            GCHandle handle = GCHandle.Alloc(input, GCHandleType.Pinned);
-            TfLiteInvoke.tfeInterpreterGetInput(_ptr, handle.AddrOfPinnedObject());
-            handle.Free();
-            return input;
+            get
+            {
+                int size = TfLiteInvoke.tfeInterpreterGetInputSize(_ptr);
+                int[] input = new int[size];
+                GCHandle handle = GCHandle.Alloc(input, GCHandleType.Pinned);
+                TfLiteInvoke.tfeInterpreterGetInput(_ptr, handle.AddrOfPinnedObject());
+                handle.Free();
+                return input;
+            }
         }
 
         /// <summary>
         /// Get the list of tensor index of the outputs tensors.
         /// </summary>
-        /// <returns>The list of tensor index of the outputs tensors.</returns>
-        private int[] GetOutput()
+        public int[] OutputIndices
         {
-            int size = TfLiteInvoke.tfeInterpreterGetOutputSize(_ptr);
-            int[] output = new int[size];
-            GCHandle handle = GCHandle.Alloc(output, GCHandleType.Pinned);
-            int outputSize = TfLiteInvoke.tfeInterpreterGetOutput(_ptr, handle.AddrOfPinnedObject());
-            Debug.Assert(outputSize == size, "Output size do not match!");
-            handle.Free();
-            return output;
+            get
+            {
+                int size = TfLiteInvoke.tfeInterpreterGetOutputSize(_ptr);
+                int[] output = new int[size];
+                GCHandle handle = GCHandle.Alloc(output, GCHandleType.Pinned);
+                int outputSize = TfLiteInvoke.tfeInterpreterGetOutput(_ptr, handle.AddrOfPinnedObject());
+                Debug.Assert(outputSize == size, "Output size do not match!");
+                handle.Free();
+                return output;
+            }
         }
 
         /// <summary>
         /// Enable or disable the NN API (Android Neural Network API)
         /// </summary>
         /// <param name="enable"></param>
-        private void UseNNAPI(bool enable)
+        public void UseNNAPI(bool enable)
         {
             TfLiteInvoke.tfeInterpreterUseNNAPI(_ptr, enable);
         }
@@ -173,33 +166,10 @@ namespace Emgu.TF.Lite
         /// Set the number of threads available to the interpreter.
         /// </summary>
         /// <param name="numThreads"></param>
-        private void SetNumThreads(int numThreads)
+        public void SetNumThreads(int numThreads)
         {
             TfLiteInvoke.tfeInterpreterSetNumThreads(_ptr, numThreads);
         }
-
-        /*
-        /// <summary>
-        /// Return the name of a given input
-        /// </summary>
-        /// <param name="index">The input tensor index</param>
-        /// <returns>The name of the input tesnsor at the index</returns>
-        public String GetInputName(int index)
-        {
-            IntPtr namePtr = TfLiteInvoke.tfeInterpreterGetInputName(_ptr, index);
-            return Marshal.PtrToStringAnsi(namePtr);
-        }
-
-        /// <summary>
-        /// Return the name of a given output
-        /// </summary>
-        /// <param name="index">The output tensor index</param>
-        /// <returns>The name of the output tesnsor at the index</returns>
-        public String GetOutputName(int index)
-        {
-            IntPtr namePtr = TfLiteInvoke.tfeInterpreterGetOutputName(_ptr, index);
-            return Marshal.PtrToStringAnsi(namePtr);
-        }*/
 
         /// <summary>
         /// Release all the unmanaged memory associated with this interpreter
@@ -224,14 +194,6 @@ namespace Emgu.TF.Lite
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
         internal static extern Status tfeInterpreterInvoke(IntPtr interpreter);
-
-        /*
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
-        internal static extern IntPtr tfeInterpreterInputTensor(IntPtr interpreter, int index);
-
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
-        internal static extern IntPtr tfeInterpreterOuputTensor(IntPtr interpreter, int index);
-        */
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
         internal static extern IntPtr tfeInterpreterGetTensor(IntPtr interpreter, int index);

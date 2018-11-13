@@ -92,9 +92,9 @@ namespace Emgu.TF.XamarinForms
         {
 
             Stopwatch watch = Stopwatch.StartNew();
-            var result = _mobilenet.MostLikely(_image[0]);
+            var result = _mobilenet.Recognize(_image[0]);
             watch.Stop();
-            String resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", result.Label, result.Probability * 100, watch.ElapsedMilliseconds);
+            String resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", result[0].Label, result[0].Probability * 100, watch.ElapsedMilliseconds);
 
             SetImage(_image[0]);
             SetMessage(resStr);

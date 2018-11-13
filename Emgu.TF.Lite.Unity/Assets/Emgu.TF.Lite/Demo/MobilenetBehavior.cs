@@ -14,6 +14,7 @@ using System.Security.Cryptography.X509Certificates;
 using Emgu.TF.Lite;
 using UnityEngine.UI;
 using Emgu.Models;
+using Emgu.TF.Lite.Models;
 using System.IO;
 using System.Diagnostics;
 
@@ -31,144 +32,35 @@ public class MobilenetBehavior : MonoBehaviour
     private bool _staticViewRendered = false;
 
 
-    private FileDownloadManager _downloadManager;
-    private String[] _labels = null;
-    private FlatBufferModel _model = null;
-    private BuildinOpResolver _resolver = null;
-    private Interpreter _interpreter = null;
+    private Mobilenet _mobilenet = null;
 
     public Text DisplayText;
 
-    //private Inception _inceptionGraph = null;
-
-    public static Texture2D Resize(Texture2D source, int newWidth, int newHeight)
-    {
-        source.filterMode = FilterMode.Bilinear;
-        UnityEngine.RenderTexture rt = UnityEngine.RenderTexture.GetTemporary(newWidth, newHeight);
-        rt.filterMode = FilterMode.Bilinear;
-
-        UnityEngine.RenderTexture.active = rt;
-        Graphics.Blit(source, rt);
-        var nTex = new Texture2D(newWidth, newHeight);
-        nTex.ReadPixels(new Rect(0, 0, newWidth, newHeight), 0, 0);
-        nTex.Apply();
-        UnityEngine.RenderTexture.active = null;
-        UnityEngine.RenderTexture.ReleaseTemporary(rt);
-        return nTex;
-    }
-
-    public static Tensor ReadTensorFromTexture2D(
-        Tensor t, Texture2D texture, int inputHeight = -1, int inputWidth = -1,
-        float inputMean = 0.0f, float scale = 1.0f, bool flipUpsideDown = false)
-    {
-        Color32[] colors;
-
-        int width, height;
-        if (inputHeight > 0 || inputWidth > 0)
-        {
-            Texture2D small = Resize(texture, inputWidth, inputHeight);
-            colors = small.GetPixels32();
-            width = inputWidth;
-            height = inputHeight;
-        }
-        else
-        {
-            width = texture.width;
-            height = texture.height;
-            colors = texture.GetPixels32();
-        }
-        //t = new Tensor(DataType.Float, new int[] { 1, height, width, 3 });
-
-        float[] floatValues = new float[colors.Length*3];
-
-        if (flipUpsideDown)
-        {
-            for (int i = 0; i < height; i++)
-            for (int j = 0; j < width; j++)
-            {
-                Color32 val = colors[(height - i - 1) * width + j];
-                int idx = i * width + j;
-                floatValues[idx * 3 + 0] = (val.r - inputMean) * scale;
-                floatValues[idx * 3 + 1] = (val.g - inputMean) * scale;
-                floatValues[idx * 3 + 2] = (val.b - inputMean) * scale;
-            }
-        }
-        else
-        {
-            for (int i = 0; i < colors.Length; ++i)
-            {
-                Color32 val = colors[i];
-                floatValues[i * 3 + 0] = (val.r - inputMean) * scale;
-                floatValues[i * 3 + 1] = (val.g - inputMean) * scale;
-                floatValues[i * 3 + 2] = (val.b - inputMean) * scale;
-            }
-        }
-
-
-        System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, t.DataPointer, floatValues.Length);
-
-        return t;
-    }
-
     private void RecognizeAndUpdateText(Texture2D texture)
     {
-        int[] input = _interpreter.GetInput();
-        int[] output = _interpreter.GetOutput();
-
-        Tensor inputTensor = _interpreter.GetTensor(input[0]);
-        Tensor outputTensor = _interpreter.GetTensor(output[0]);
-
-        ReadTensorFromTexture2D(inputTensor, texture, 224, 224, 128.0f, 1.0f / 128.0f);
         Stopwatch watch = Stopwatch.StartNew();
-        _interpreter.Invoke();
+        float[] probability = _mobilenet.Recognize(texture);
+        
         watch.Stop();
-
-        float[] probability = outputTensor.GetData() as float[];
 
         String resStr = String.Empty;
         if (probability != null)
         {
-            float maxVal = 0;
-            int maxIdx = 0;
-            for (int i = 0; i < probability.Length; i++)
-            {
-                if (probability[i] > maxVal)
-                {
-                    maxVal = probability[i];
-                    maxIdx = i;
-                }
-            }
-            resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", _labels[maxIdx], maxVal * 100, watch.ElapsedMilliseconds);
+            Mobilenet.RecognitionResult[] results = _mobilenet.SortResults(probability);
+            resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", results[0].Label, results[0].Probability * 100, watch.ElapsedMilliseconds);
         }
 
-        //SetImage(_image[0]);
         _displayMessage = resStr;
-
-    }
-
-    public IEnumerator DownloadModel()
-    {
-       
-        String downloadUrl = "https://github.com/emgucv/models/raw/master/mobilenet_v1_1.0_224_float_2017_11_08/";
-        String[] fileNames = new string[] { "mobilenet_v1_1.0_224.tflite", "labels.txt" };
-
-        for (int i = 0; i < fileNames.Length; i++)
-        {
-            _downloadManager.AddFile(downloadUrl + fileNames[i]);
-        }
-
-        _downloadManager.OnDownloadProgressChanged += onDownloadProgressChanged;
-        _downloadManager.OnDownloadCompleted += onDownloadCompleted;
-        yield return _downloadManager.Download();
 
     }
 
     // Use this for initialization
     void Start()
     {
-        _downloadManager = new FileDownloadManager();
-        //bool loaded = TfInvoke.CheckLibraryLoaded();
-        //_inceptionGraph = new Inception();
+        bool loaded = Emgu.TF.Lite.TfLiteInvoke.CheckLibraryLoaded();
+
+        _mobilenet = new Emgu.TF.Lite.Models.Mobilenet();
+
         _liveCameraView = false;
         /*
         WebCamDevice[] devices = WebCamTexture.devices;
@@ -188,7 +80,7 @@ public class MobilenetBehavior : MonoBehaviour
             //data = new Color32[webcamTexture.width * webcamTexture.height];
         }*/
         DisplayText.text = "Downloading model, please wait...";
-        StartCoroutine(DownloadModel());
+        StartCoroutine(_mobilenet.Init());
     }
 
     private String _displayMessage = String.Empty;
@@ -199,42 +91,13 @@ public class MobilenetBehavior : MonoBehaviour
         _displayMessage = String.Format("{0} of {1} downloaded ({2}%)", e.BytesReceived, e.TotalBytesToReceive, e.ProgressPercentage);
     }
 
-    private void onDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-    {
-        String localFileName = _downloadManager.Files[0].LocalFile;
-        if (_labels == null)
-            _labels = File.ReadAllLines(_downloadManager.Files[1].LocalFile);
-
-        System.Diagnostics.Debug.Assert(File.Exists(localFileName), "File doesn't exist");
-        FileInfo file = new FileInfo(localFileName);
-
-        if (_model == null)
-        {
-            _model = new FlatBufferModel(localFileName);
-            if (!_model.CheckModelIdentifier())
-                throw new Exception("Model indentifier check failed");
-        }
-
-        if (_resolver == null)
-            _resolver = new BuildinOpResolver();
-
-        if (_interpreter == null)
-        {
-            _interpreter = new Interpreter(_model, _resolver);
-            Status allocateTensorStatus = _interpreter.AllocateTensors();
-            if (allocateTensorStatus == Status.Error)
-                throw new Exception("Failed to allocate tensor");
-        }
-
-    }
-
     // Update is called once per frame
     void Update()
     {
 
-        if (_interpreter == null)
+        if (!_mobilenet.Imported)
         {
-            //_displayMessage = String.Format("Downloading Inception model files, {0} % of file {1}...", _inceptionGraph.DownloadProgress*100, _inceptionGraph.DownloadFileName);
+            _displayMessage = String.Format("Downloading Inception model files, {0} % of file {1}...", _mobilenet.DownloadProgress*100, _mobilenet.DownloadFileName);
         }
         else if (_liveCameraView)
         {
@@ -292,7 +155,7 @@ public class MobilenetBehavior : MonoBehaviour
         {
             UnityEngine.Debug.Log("Reading texture for recognition");
 
-            Texture2D texture = Resources.Load<Texture2D>("space_shuttle");
+            Texture2D texture = Resources.Load<Texture2D>("grace_hopper");
             UnityEngine.Debug.Log("Starting recognition");
 
             RecognizeAndUpdateText(texture);
