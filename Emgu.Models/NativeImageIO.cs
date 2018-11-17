@@ -168,14 +168,12 @@ namespace Emgu.Models
             }
             System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
 #elif UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-            //throw new NotImplementedException("Not implemented");
             Texture2D texture = ReadTexture2DFromFile(fileName);
             ReadTensorFromTexture2D<T>(texture, dest, inputHeight, inputWidth, inputMean, scale, flipUpSideDown, false);
 #else
             if (flipUpSideDown)
                 throw new NotImplementedException("Flip Up Side Down is Not implemented");
-            if (swapBR)
-                throw new NotImplementedException("swapBR is Not implemented");
+
             if (Emgu.TF.Util.Platform.OperationSystem ==  OS.Windows)
             {
                 //Do something for Windows
@@ -202,27 +200,40 @@ namespace Emgu.Models
 
                 if (typeof(T) == typeof(float))
                 {
-                    float[] floatValues = new float[bmp.Width * bmp.Height * 3];
-                    for (int i = 0; i < byteValues.Length; ++i)
+                    int imageSize = bmp.Width * bmp.Height;
+                    float[] floatValues = new float[imageSize * 3];
+                    if (swapBR)
                     {
-                        floatValues[i] = ((float)byteValues[i] - inputMean) * scale;
+                        for (int i = 0; i < imageSize; ++i)
+                        {
+                            floatValues[i * 3] = (byte)(((float)byteValues[i * 3 + 2] - inputMean) * scale);
+                            floatValues[i * 3 + 1] = (byte)(((float)byteValues[i * 3 + 1] - inputMean) * scale);
+                            floatValues[i * 3 + 2] = (byte)(((float)byteValues[i * 3 + 0] - inputMean) * scale);
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < byteValues.Length; ++i)
+                        {
+                            floatValues[i] = ((float)byteValues[i] - inputMean) * scale;
+                        }   
                     }
                     Marshal.Copy(floatValues, 0, dest, floatValues.Length);
                 } else if (typeof(T) == typeof(byte))
                 {
-                    bool swapBR = false;
                     if (swapBR)
                     {
                         int imageSize = bmp.Width * bmp.Height;
-                        byte[] bValues = new byte[imageSize * 3];
+                        //byte[] bValues = new byte[imageSize * 3];
                         for (int i = 0; i < imageSize; ++i)
                         {
-                            bValues[i * 3] = (byte)(((float)byteValues[i * 3 + 2] - inputMean) * scale);
-                            bValues[i * 3 + 1] = (byte)(((float)byteValues[i * 3 + 1] - inputMean) * scale);
-                            bValues[i * 3 + 2] = (byte)(((float)byteValues[i * 3 + 0] - inputMean) * scale);
-                            
+                            byte c0 = (byte)(((float)byteValues[i * 3 + 2] - inputMean) * scale);
+                            byte c1 = (byte)(((float)byteValues[i * 3 + 1] - inputMean) * scale);
+                            byte c2 = (byte)(((float)byteValues[i * 3 + 0] - inputMean) * scale);
+                            byteValues[i * 3] = c0;
+                            byteValues[i * 3 + 1] = c1;
+                            byteValues[i * 3 + 2] = c2;
                         }
-                        Marshal.Copy(bValues, 0, dest, bValues.Length);
                     } else
                     {
                         if (! (inputMean == 0.0f && scale == 1.0f))
@@ -230,8 +241,9 @@ namespace Emgu.Models
                             {
                                 byteValues[i] = (byte) ( ((float)byteValues[i] - inputMean) * scale );
                             }
-                        Marshal.Copy(byteValues, 0, dest, byteValues.Length);
+                        
                     }
+                    Marshal.Copy(byteValues, 0, dest, byteValues.Length);
 
                 } else
                 {
@@ -310,7 +322,7 @@ namespace Emgu.Models
                 return raw;
             }
 #else
-            throw new NotImplementedException("Not Implemented");
+            throw new NotImplementedException("PixelToJpeg Not Implemented in this platform");
 #endif
         }
 
