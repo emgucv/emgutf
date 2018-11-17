@@ -53,9 +53,16 @@ namespace Emgu.Models
             int inputHeight = -1,
             int inputWidth = -1,
             float inputMean = 0.0f,
-            float scale = 1.0f)
+            float scale = 1.0f, 
+            bool flipUpSideDown = false,
+            bool swapBR = false)
+            where T: struct
         {
 #if __ANDROID__
+            if (flipUpSideDown)
+                throw new NotImplementedException("Flip Up Side Down is Not implemented");
+            if (swapBR)
+                throw new NotImplementedException("swapBR is Not implemented");
             Android.Graphics.Bitmap bmp = BitmapFactory.DecodeFile(fileName);
 
             if (inputHeight > 0 || inputWidth >  0)
@@ -78,6 +85,10 @@ namespace Emgu.Models
             Marshal.Copy(floatValues, 0, dest, floatValues.Length);
 
 #elif __IOS__
+            if (flipUpSideDown)
+                throw new NotImplementedException("Flip Up Side Down is Not implemented");
+            if (swapBR)
+                throw new NotImplementedException("swapBR is Not implemented");
             UIImage image = new UIImage(fileName);
 			if (inputHeight > 0 || inputWidth > 0)
 			{
@@ -114,6 +125,10 @@ namespace Emgu.Models
 			}
 			System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
 #elif __UNIFIED__
+            if (flipUpSideDown)
+                throw new NotImplementedException("Flip Up Side Down is Not implemented");
+            if (swapBR)
+                throw new NotImplementedException("swapBR is Not implemented");
             NSImage image = new NSImage(fileName);
             if (inputHeight > 0 || inputWidth > 0)
             {
@@ -153,8 +168,14 @@ namespace Emgu.Models
             }
             System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
 #elif UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-            throw new NotImplementedException("Not implemented");
+            //throw new NotImplementedException("Not implemented");
+            Texture2D texture = ReadTexture2DFromFile(fileName);
+            ReadTensorFromTexture2D<T>(texture, dest, inputHeight, inputWidth, inputMean, scale, flipUpSideDown, false);
 #else
+            if (flipUpSideDown)
+                throw new NotImplementedException("Flip Up Side Down is Not implemented");
+            if (swapBR)
+                throw new NotImplementedException("swapBR is Not implemented");
             if (Emgu.TF.Util.Platform.OperationSystem ==  OS.Windows)
             {
                 //Do something for Windows

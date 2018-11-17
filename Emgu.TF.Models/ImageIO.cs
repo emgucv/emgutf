@@ -113,10 +113,9 @@ namespace Emgu.TF.Models
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
 
-
         public static Tensor ReadTensorFromImageFile(String fileName, int inputHeight = -1, int inputWidth = -1, float inputMean = 0.0f, float scale = 1.0f, bool flipUpsideDown = false)
         {
-            Texture2D texture = ReadTexture2DFromFile(fileName);
+            Texture2D texture = NativeImageIO.ReadTexture2DFromFile(fileName);
             return ReadTensorFromTexture2D(texture, inputHeight, inputWidth, inputMean, scale, flipUpsideDown);
         }
 
