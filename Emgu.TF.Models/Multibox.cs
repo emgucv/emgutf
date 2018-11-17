@@ -359,18 +359,16 @@ namespace Emgu.TF.Models
             DrawLine(image, (int)(rect.position.x + rect.width), (int)(rect.position.y + rect.height), (int)rect.position.x, (int)(rect.position.y + rect.height), color);
         }
 
-        public static void DrawResults(Texture2D image, MultiboxGraph.Result result, float scoreThreshold)
+        public static void DrawResults(Texture2D image, MultiboxGraph.Result[] results, float scoreThreshold)
         {
-            Rect[] locations = ScaleLocation(result.DecodedLocations, image.width, image.height);
+            NativeImageIO.Annotation[] annotations = FilterResults(results, scoreThreshold);
             
             Color color = new Color(1.0f, 0, 0);//Set color to red
-            for (int i = 0; i < result.Scores.Length; i++)
+            for (int i = 0; i < annotations.Length; i++)
             {
-                if (result.Scores[i] > scoreThreshold)
+                Rect[] rects = ScaleLocation(annotations[i].Rectangle, image.width, image.height);
+                foreach (Rect r in rects)
                 {
-                    Rect r = locations[result.Indices[i]];
-                    //Texture 2D coordinates is flipped upside down, we need to do the same flipping for the Rectangle
-                    r.y = image.height - r.y - r.height;
                     DrawRect(image, r, color);
                 }
             }

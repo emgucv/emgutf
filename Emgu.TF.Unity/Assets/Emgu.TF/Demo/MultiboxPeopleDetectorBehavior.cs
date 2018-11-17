@@ -112,7 +112,7 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
                 transform.rotation = baseRotation * Quaternion.AngleAxis(webcamTexture.videoRotationAngle, Vector3.up);
 
                 Tensor imageTensor = ImageIO.ReadTensorFromTexture2D(resultTexture, 224, 224, 128.0f, 1.0f / 128.0f, true);
-                MultiboxGraph.Result results = _multiboxGraph.Detect(imageTensor);
+                MultiboxGraph.Result[] results = _multiboxGraph.Detect(imageTensor);
 
                 if (drawableTexture == null || drawableTexture.width != resultTexture.width ||
                     drawableTexture.height != resultTexture.height)
@@ -139,7 +139,7 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
             //System.IO.File.WriteAllBytes("surfers_out.jpg", raw);
 
 
-            MultiboxGraph.Result results = _multiboxGraph.Detect(imageTensor);
+            MultiboxGraph.Result[] results = _multiboxGraph.Detect(imageTensor);
 
             drawableTexture = new Texture2D(texture.width, texture.height, TextureFormat.ARGB32, false);
             drawableTexture.SetPixels(texture.GetPixels());
