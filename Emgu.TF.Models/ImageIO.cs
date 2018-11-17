@@ -112,19 +112,7 @@ namespace Emgu.TF.Models
         }
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-        public static Texture2D ReadTexture2DFromFile(String fileName)
-        {
-            Texture2D texture = null;
-            byte[] fileData;
 
-            if (File.Exists(fileName))
-            {
-                fileData = File.ReadAllBytes(fileName);
-                texture = new Texture2D(2, 2, TextureFormat.BGRA32, false);
-                texture.LoadImage(fileData); //..this will auto-resize the texture dimensions.
-            }
-            return texture;
-        }
 
         public static Tensor ReadTensorFromImageFile(String fileName, int inputHeight = -1, int inputWidth = -1, float inputMean = 0.0f, float scale = 1.0f, bool flipUpsideDown = false)
         {

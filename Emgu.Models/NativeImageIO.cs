@@ -295,6 +295,19 @@ namespace Emgu.Models
 
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+        public static Texture2D ReadTexture2DFromFile(String fileName)
+        {
+            Texture2D texture = null;
+            byte[] fileData;
+
+            if (File.Exists(fileName))
+            {
+                fileData = File.ReadAllBytes(fileName);
+                texture = new Texture2D(2, 2, TextureFormat.BGRA32, false);
+                texture.LoadImage(fileData); //..this will auto-resize the texture dimensions.
+            }
+            return texture;
+        }
 
         public static Texture2D Resize(Texture2D source, int newWidth, int newHeight)
         {
