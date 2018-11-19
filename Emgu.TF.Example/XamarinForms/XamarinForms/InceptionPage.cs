@@ -68,11 +68,11 @@ namespace Emgu.TF.XamarinForms
                     SetImage();
                     
 
-                    Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
+                    Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
                     Stopwatch watch = Stopwatch.StartNew();
                     Inception.RecognitionResult result = _inceptionGraph.MostLikely(imageTensor);
-                    
-                    SetMessage(String.Format("Object is {0} with {1}% probability. Recognized in {2} milliseconds.", result.Label, result.Probability * 100, watch.ElapsedMilliseconds));
+                    String msg = String.Format("Object is {0} with {1}% probability. Recognized in {2} milliseconds.", result.Label, result.Probability * 100, watch.ElapsedMilliseconds);
+                    SetMessage(msg);
                     
                     SetImage(image[0]);
                 }
@@ -96,7 +96,7 @@ namespace Emgu.TF.XamarinForms
             }
             else
             {
-                LoadImages(new string[] { "grace_hopper.jpg" });
+                LoadImages(new string[] { "space_shuttle.jpg" });
             }
         }
 

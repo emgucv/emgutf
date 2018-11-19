@@ -179,10 +179,10 @@ namespace Emgu.TF.Models
 
             Tensor[] finalTensor = _session.Run(new Output[] { input }, new Tensor[] { image }, outputs);
             int numDetections = (int) (finalTensor[3].Data as float[])[0];
-            float[,,] detectinBoxes = finalTensor[0].Data as float[,,];
-            float[,] detectionScores = finalTensor[1].Data as float[,];
-            float[,] detectionClasses = finalTensor[2].Data as float[,];
-            float[,,,] detectionMask = finalTensor[4].Data as float[,,,]; 
+            float[,,] detectinBoxes = finalTensor[0].JaggedData as float[,,];
+            float[,] detectionScores = finalTensor[1].JaggedData as float[,];
+            float[,] detectionClasses = finalTensor[2].JaggedData as float[,];
+            float[,,,] detectionMask = finalTensor[4].JaggedData as float[,,,]; 
             List<RecognitionResult> results = new List<RecognitionResult>();
             int numberOfClasses = detectionScores.GetLength(1);
             for (int i = 0; i < numDetections; i++)

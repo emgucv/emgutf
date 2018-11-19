@@ -287,7 +287,15 @@ namespace Emgu.TF.Models
         }
 
 
-        public static Tensor ReadTensorFromImageFile(String fileName, int inputHeight = -1, int inputWidth = -1, float inputMean = 0.0f, float scale = 1.0f, Status status = null)
+        public static Tensor ReadTensorFromImageFile<T>(
+            String fileName, 
+            int inputHeight = -1, 
+            int inputWidth = -1, 
+            float inputMean = 0.0f, 
+            float scale = 1.0f,
+            bool flipUpSideDown = false,
+            bool swapBR = false,
+            Status status = null) where T: struct
         {
 #if __ANDROID__
             Android.Graphics.Bitmap bmp = BitmapFactory.DecodeFile(fileName);
@@ -352,14 +360,38 @@ namespace Emgu.TF.Models
 			System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, t.DataPointer, floatValues.Length);
 			return t;
 #else
+
             if (Emgu.TF.Util.Platform.OperationSystem == OS.Windows)
             {
-                Tensor t = new Tensor(DataType.Float, new int[] { 1, (int)inputHeight, (int)inputWidth, 3 });
-                NativeImageIO.ReadImageFileToTensor<float>(fileName, t.DataPointer, inputHeight, inputWidth, inputMean, scale);
+                Tensor t;
+                if (typeof(T) == typeof(float))
+                    t = new Tensor(DataType.Float, new int[] { 1, (int)inputHeight, (int)inputWidth, 3 });
+                else if (typeof(T) == typeof(byte))
+                    t = new Tensor(DataType.Uint8, new int[] { 1, (int)inputHeight, (int)inputWidth, 3 });
+                else
+                {
+                    throw new Exception(String.Format("Convertion to tensor of type {0} is not implemented", typeof(T)));
+                }
+
+                NativeImageIO.ReadImageFileToTensor<T>(
+                    fileName,
+                    t.DataPointer,
+                    inputHeight,
+                    inputWidth,
+                    inputMean,
+                    scale,
+                    flipUpSideDown,
+                    swapBR
+                    );
                 return t;
             }
             else
             {
+                if (flipUpSideDown)
+                    throw new NotImplementedException("Flip Up Side Down is Not implemented");
+                if (swapBR)
+                    throw new NotImplementedException("swapBR is Not implemented");
+
                 //Mac OS or Linux
                 using (StatusChecker checker = new StatusChecker(status))
                 {
@@ -378,7 +410,7 @@ namespace Emgu.TF.Models
                     bool resizeRequired = (inputHeight > 0) && (inputWidth > 0);
                     if (resizeRequired)
                     {
-                        Tensor size = new Tensor(new int[] {inputHeight, inputWidth}); // new size;
+                        Tensor size = new Tensor(new int[] { inputHeight, inputWidth }); // new size;
                         Operation sizeOp = graph.Const(size, size.Type, opName: "size");
                         resized = graph.ResizeBilinear(dimsExpander, sizeOp); //resize image
                     }
@@ -397,8 +429,8 @@ namespace Emgu.TF.Models
 
                     Session session = new Session(graph);
                     Tensor imageTensor = Tensor.FromString(File.ReadAllBytes(fileName), status);
-                    Tensor[] imageResults = session.Run(new Output[] {input}, new Tensor[] {imageTensor},
-                        new Output[] {scaled});
+                    Tensor[] imageResults = session.Run(new Output[] { input }, new Tensor[] { imageTensor },
+                        new Output[] { scaled });
                     return imageResults[0];
 
                 }

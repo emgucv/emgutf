@@ -176,6 +176,8 @@ namespace Emgu.TF.XamarinForms
                 () =>
             {
                 this.MessageLabel.Text = message;
+                this.MessageLabel.LineBreakMode = LineBreakMode.WordWrap;
+                this.MessageLabel.WidthRequest = this.Width;
             }
             );
         }

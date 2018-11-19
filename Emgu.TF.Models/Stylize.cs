@@ -110,7 +110,7 @@ namespace Emgu.TF.Models
 
         public byte[] StylizeToJpeg(String fileName, int style)
         {
-            Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
+            Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
             
             Tensor stylizedImage = Stylize(imageTensor, 0);
 

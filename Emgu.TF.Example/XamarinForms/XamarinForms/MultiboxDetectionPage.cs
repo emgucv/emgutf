@@ -66,7 +66,8 @@ namespace Emgu.TF.XamarinForms
                     SetMessage("Please wait...");
                     SetImage();
                     Stopwatch watch = Stopwatch.StartNew();
-                    Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
+
+                    Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
                     MultiboxGraph.Result[] detectResult = _multiboxGraph.Detect(imageTensor);
                     watch.Stop();
                     Emgu.Models.NativeImageIO.Annotation[] annotations = MultiboxGraph.FilterResults(detectResult, 0.1f);

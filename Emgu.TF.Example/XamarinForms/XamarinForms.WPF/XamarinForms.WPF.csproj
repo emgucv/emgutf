@@ -132,8 +132,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\tensorflow\tensorflow\examples\label_image\data\grace_hopper.jpg">
-      <Link>grace_hopper.jpg</Link>
+    <Content Include="..\..\InceptionObjectRecognition\space_shuttle.jpg">
+      <Link>space_shuttle.jpg</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
