@@ -171,9 +171,7 @@ namespace Emgu.Models
             Texture2D texture = ReadTexture2DFromFile(fileName);
             ReadTensorFromTexture2D<T>(texture, dest, inputHeight, inputWidth, inputMean, scale, flipUpSideDown, false);
 #else
-            if (flipUpSideDown)
-                throw new NotImplementedException("Flip Up Side Down is Not implemented");
-
+            
             if (Emgu.TF.Util.Platform.OperationSystem ==  OS.Windows)
             {
                 //Do something for Windows
@@ -188,6 +186,11 @@ namespace Emgu.Models
                     //bmp.Save("tmp.png");
                 }
 
+                if (flipUpSideDown)
+                {
+                    bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
+                }
+                
                 byte[] byteValues = new byte[bmp.Width * bmp.Height * 3];
                 System.Drawing.Imaging.BitmapData bd = new System.Drawing.Imaging.BitmapData();
 
@@ -250,8 +253,11 @@ namespace Emgu.Models
                     throw new Exception(String.Format("Destination data type {0} is not supported.", typeof(T).ToString()));
                 }
             }
-            else
+            else //Unix
             {
+                if (flipUpSideDown)
+                    throw new NotImplementedException("Flip Up Side Down is Not implemented");
+
                 throw new Exception("Not implemented");
             }
 #endif
