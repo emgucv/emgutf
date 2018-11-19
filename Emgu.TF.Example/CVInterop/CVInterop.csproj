@@ -37,11 +37,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Emgu.CV.UI, Version=3.4.1.2976, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\nugetpackages\EMGU.CV.3.4.1.2976\lib\net35\Emgu.CV.UI.dll</HintPath>
+    <Reference Include="Emgu.CV.UI, Version=3.4.3.3016, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <HintPath>..\..\nugetpackages\EMGU.CV.3.4.3.3016\lib\net35\Emgu.CV.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Emgu.CV.World, Version=3.4.1.2976, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\nugetpackages\EMGU.CV.3.4.1.2976\lib\net35\Emgu.CV.World.dll</HintPath>
+    <Reference Include="Emgu.CV.World, Version=3.4.3.3016, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <HintPath>..\..\nugetpackages\EMGU.CV.3.4.3.3016\lib\net35\Emgu.CV.World.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -88,12 +88,12 @@
   <Import Project="..\..\Emgu.TF.Util\Emgu.TF.Util.projitems" Label="Shared" />
   <Import Project="..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\..\nugetpackages\EMGU.CV.3.4.1.2976\build\EMGU.CV.targets" Condition="Exists('..\..\nugetpackages\EMGU.CV.3.4.1.2976\build\EMGU.CV.targets')" />
+  <Import Project="..\..\nugetpackages\EMGU.CV.3.4.3.3016\build\EMGU.CV.targets" Condition="Exists('..\..\nugetpackages\EMGU.CV.3.4.3.3016\build\EMGU.CV.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\nugetpackages\EMGU.CV.3.4.1.2976\build\EMGU.CV.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\nugetpackages\EMGU.CV.3.4.1.2976\build\EMGU.CV.targets'))" />
+    <Error Condition="!Exists('..\..\nugetpackages\EMGU.CV.3.4.3.3016\build\EMGU.CV.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\nugetpackages\EMGU.CV.3.4.3.3016\build\EMGU.CV.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
