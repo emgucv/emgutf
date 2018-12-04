@@ -11,7 +11,7 @@ IF "%1%"=="64" SET OS_MODE= Win64
 IF "%1%"=="ARM" SET OS_MODE= ARM
 
 IF NOT "%2%"=="clean" GOTO END_OF_CLEAN
-rm -rf %USERPROFILE%\_bazel_*
+rm -rf %USERPROFILE%\_bazel_%USERNAME%
 :END_OF_CLEAN
 
 SET PROGRAMFILES_DIR_X86=%programfiles(x86)%
