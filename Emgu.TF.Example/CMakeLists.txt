@@ -331,7 +331,7 @@ IF(NOT (NETFX_CORE OR ANDROID OR (APPLE AND (NOT IOS))))
     -r:"${LIBRARY_OUTPUT_PATH}/Emgu.TF.World.dll" )
 ENDIF()
 
-add_subdirectory(MultiboxPeopleDetection)
+#add_subdirectory(MultiboxPeopleDetection)
 add_subdirectory(InceptionObjectRecognition)
 add_subdirectory(CVInterop)
 

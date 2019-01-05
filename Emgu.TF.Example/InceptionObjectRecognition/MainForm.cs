@@ -82,10 +82,7 @@ namespace InceptionObjectRecognition
         {
             if (InvokeRequired)
             {
-                this.Invoke((MethodInvoker)(() =>
-                {
-                    openFileButton.Enabled = true;                    
-                }));
+                this.Invoke((MethodInvoker) EnableUI);
             }
             else
             {
@@ -98,7 +95,7 @@ namespace InceptionObjectRecognition
 
         public void Recognize(String fileName)
         {            
-            Tensor imageTensor = ImageIO.ReadTensorFromImageFile(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
+            Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
 
             float[] probability;
             if (_coldSession)
