@@ -100,10 +100,11 @@ call %DEVENV% %BUILD_TYPE% emgutf.sln %BUILD_PROJECT%
 IF "%3%"=="htmldoc" ^
 call %DEVENV% %BUILD_TYPE% emgutf.sln /project Emgu.TF.Lite.Document.Html 
 
-REM IF "%5%"=="nuget" ^
-REM call %DEVENV% %BUILD_TYPE% emgutf.sln /project Emgu.TF.Models.nuget 
-REM IF "%5%"=="nuget" ^
-REM call %DEVENV% %BUILD_TYPE% emgutf.sln /project Emgu.TF.Protobuf.nuget 
+IF "%5%"=="nuget" ^
+call %DEVENV% %BUILD_TYPE% emgutf.sln /project Emgu.TF.Lite.nuget 
+IF "%5%"=="nuget" ^
+call %DEVENV% %BUILD_TYPE% emgutf.sln /project Emgu.TF.Lite.Models.nuget 
+
 
 :END_OF_SCRIPT
 popd
