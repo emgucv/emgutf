@@ -39,14 +39,13 @@ public class MobilenetBehavior : MonoBehaviour
     private void RecognizeAndUpdateText(Texture2D texture)
     {
         Stopwatch watch = Stopwatch.StartNew();
-        float[] probability = _mobilenet.Recognize(texture);
+        Mobilenet.RecognitionResult[] results = _mobilenet.Recognize(texture);
         
         watch.Stop();
 
         String resStr = String.Empty;
-        if (probability != null)
+        if (results != null)
         {
-            Mobilenet.RecognitionResult[] results = _mobilenet.SortResults(probability);
             resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", results[0].Label, results[0].Probability * 100, watch.ElapsedMilliseconds);
         }
 
