@@ -93,10 +93,13 @@ GOTO END_OF_MSVC_DEPENDENCY
 
 :VS2015_DEPEDENCY
 copy /Y "%BAZEL_VC%\redist\x64\Microsoft.VC140.CRT\*" lib\x64\
+rm lib\x64\vccorlib140.dll
 GOTO END_OF_MSVC_DEPENDENCY
 
 :VS2017_DEPEDENCY
-copy /Y "%BAZEL_VC%\Redist\MSVC\14.15.26706\x64\Microsoft.VC141.CRT\*140.dll" lib\x64\
+REM copy /Y "%BAZEL_VC%\Redist\MSVC\14.15.26706\x64\Microsoft.VC141.CRT\*140.dll" lib\x64\
+copy /Y "%BAZEL_VC%\Redist\MSVC\14.16.27012\x64\Microsoft.VC141.CRT\*140.dll" lib\x64\
+rm lib\x64\vccorlib140.dll
 
 :END_OF_MSVC_DEPENDENCY
 
