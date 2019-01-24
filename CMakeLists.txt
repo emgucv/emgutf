@@ -482,11 +482,13 @@ IF(HAVE_WINDESKTOP_LITE)
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.World.dll\" target=\"lib\\net35\" />
 	<file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.World.XML\" target=\"lib\\net35\" />")
 	SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
-	<file src=\"Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_NUGET_ID}.targets\" />")
+	<file src=\"Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_NUGET_ID}.targets\" />
+	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
 	
 	SET(EMGUTF_LITE_MODEL_NUGET_FILE_LIST "${EMGUTF_LITE_MODEL_NUGET_FILE_LIST} 
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.dll\" target=\"lib\\net35\" />
-	<file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.XML\" target=\"lib\\net35\" />")
+	<file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.XML\" target=\"lib\\net35\" />
+	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
 ENDIF()
 
 
