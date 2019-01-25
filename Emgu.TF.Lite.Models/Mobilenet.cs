@@ -18,6 +18,9 @@ using UnityEngine;
 
 namespace Emgu.TF.Lite.Models
 {
+    /// <summary>
+    /// The mobile net model for object class labeling 
+    /// </summary>
     public class Mobilenet : Emgu.TF.Util.UnmanagedObject
     {
         private FileDownloadManager _downloadManager;
@@ -30,6 +33,9 @@ namespace Emgu.TF.Lite.Models
         private Tensor _outputTensor;
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+        /// <summary>
+        /// Get the download progress
+        /// </summary>
         public double DownloadProgress
         {
             get
@@ -42,6 +48,9 @@ namespace Emgu.TF.Lite.Models
             }
         }
 
+        /// <summary>
+        /// Get the name of the file that is currently being downloaded.
+        /// </summary>
         public String DownloadFileName
         {
             get
@@ -55,6 +64,9 @@ namespace Emgu.TF.Lite.Models
         }
 #endif
 
+        /// <summary>
+        /// Create a Mobilenet for object labeling.
+        /// </summary>
         public Mobilenet()
         {
             _downloadManager = new FileDownloadManager();
@@ -80,10 +92,21 @@ namespace Emgu.TF.Lite.Models
                 OnDownloadProgressChanged(sender, e);
         }
 
+        /// <summary>
+        /// Callback when the download progress has been changed.
+        /// </summary>
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
+
+        /// <summary>
+        /// Callback when the download is completed.
+        /// </summary>
         public event System.ComponentModel.AsyncCompletedEventHandler OnDownloadCompleted;
 
-
+        /// <summary>
+        /// Initialize the graph by downloading the model from the internet
+        /// </summary>
+        /// <param name="modelFiles">The model file names as an array. First one is the ".tflite" file and the second one should be the label names.</param>
+        /// <param name="downloadUrl">The url where the files can be downloaded from.</param>
         public
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             IEnumerator
@@ -106,6 +129,9 @@ namespace Emgu.TF.Lite.Models
 #endif
         }
 
+        /// <summary>
+        /// Return true if the graph has been imported
+        /// </summary>
         public bool Imported
         {
             get
@@ -165,7 +191,9 @@ namespace Emgu.TF.Lite.Models
             }
         }
 
-        
+        /// <summary>
+        /// Get the interpreter for this graph
+        /// </summary>
         public Interpreter Interpreter
         {
             get
@@ -174,11 +202,19 @@ namespace Emgu.TF.Lite.Models
             }
         }
 
+        /// <summary>
+        /// Get the labels
+        /// </summary>
         public String[] Labels
         {
             get { return _labels; }
         }
 
+        /// <summary>
+        /// Sort the result from the most likely to the less likely
+        /// </summary>
+        /// <param name="probabilities">The probability for the classes, this should be the values of the output tensor</param>
+        /// <returns>The recognition result, sorted by likelihood.</returns>
         public RecognitionResult[] SortResults(float[] probabilities)
         {
             if (probabilities == null)
@@ -213,6 +249,11 @@ namespace Emgu.TF.Lite.Models
 
         }
 #else
+        /// <summary>
+        /// Load the file, ran it through the mobile net graph and return the recognition results
+        /// </summary>
+        /// <param name="imageFile">The image to be loaded</param>
+        /// <returns>The recognition result sorted by probability</returns>
         public RecognitionResult[] Recognize(String imageFile)
         {
             NativeImageIO.ReadImageFileToTensor<float>(imageFile, _inputTensor.DataPointer, 224, 224, 128.0f, 1.0f / 128.0f);
@@ -227,19 +268,35 @@ namespace Emgu.TF.Lite.Models
         }
 
 #endif
-
+        /// <summary>
+        /// The result of the class labeling
+        /// </summary>
         public class RecognitionResult
         {
+            /// <summary>
+            /// Create a recognition result by providing the label and the probability
+            /// </summary>
+            /// <param name="label">The label</param>
+            /// <param name="probability">The probability</param>
             public RecognitionResult(String label, double probability)
             {
                 Label = label;
                 Probability = probability;
             }
 
+            /// <summary>
+            /// The label
+            /// </summary>
             public String Label;
+            /// <summary>
+            /// The probability
+            /// </summary>
             public double Probability;
         }
 
+        /// <summary>
+        /// Release all the unmanaged memory associated with this graph
+        /// </summary>
         protected override void DisposeObject()
         {
             

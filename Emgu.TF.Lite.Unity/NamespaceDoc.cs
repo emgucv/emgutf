@@ -45,3 +45,17 @@ namespace Emgu.TF.Util
 namespace Emgu.TF.Util.TypeEnum
 {
 }
+
+/// <summary>
+/// Utilities for downloading model files.
+/// </summary>
+namespace Emgu.Models
+{
+}
+
+/// <summary>
+/// Emgu TF Lite models
+/// </summary>
+namespace Emgu.TF.Lite.Models
+{
+}
