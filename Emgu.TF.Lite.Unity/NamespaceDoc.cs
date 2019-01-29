@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2018 by EMGU Corporation. All rights reserved.       
+//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
 using System;
@@ -15,7 +15,13 @@ using Emgu.TF.Util;
 /// </summary>
 namespace Emgu
 {
+}
 
+/// <summary>
+/// Utilities for downloading model files.
+/// </summary>
+namespace Emgu.Models
+{
 }
 
 /// <summary>
@@ -26,9 +32,16 @@ namespace Emgu.TF
 }
 
 /// <summary>
-/// Wrapper of Tensorflow Lite functions.
+/// Wrapper of Tensorflow-Lite functions.
 /// </summary>
 namespace Emgu.TF.Lite
+{
+}
+
+/// <summary>
+/// Emgu TF Lite models
+/// </summary>
+namespace Emgu.TF.Lite.Models
 {
 }
 
@@ -46,16 +59,6 @@ namespace Emgu.TF.Util.TypeEnum
 {
 }
 
-/// <summary>
-/// Utilities for downloading model files.
-/// </summary>
-namespace Emgu.Models
-{
-}
 
-/// <summary>
-/// Emgu TF Lite models
-/// </summary>
-namespace Emgu.TF.Lite.Models
-{
-}
+
+
