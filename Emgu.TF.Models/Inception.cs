@@ -14,6 +14,9 @@ using System.Net;
 
 namespace Emgu.TF.Models
 {
+    /// <summary>
+    /// Inception image classification 
+    /// </summary>
     public class Inception : Emgu.TF.Util.UnmanagedObject
     {
         private FileDownloadManager _downloadManager;
@@ -51,6 +54,11 @@ namespace Emgu.TF.Models
         }
 #endif
 
+        /// <summary>
+        /// Create a new inception object 
+        /// </summary>
+        /// <param name="status">The status object that can be used to keep track of error or exceptions</param>
+        /// <param name="sessionOptions">The options for running the tensorflow session.</param>
         public Inception(Status status = null, SessionOptions sessionOptions = null)
         {
             _status = status;
@@ -76,10 +84,23 @@ namespace Emgu.TF.Models
                 OnDownloadProgressChanged(sender, e);
         }
 
+        /// <summary>
+        /// Callback when graph download progress is changed.
+        /// </summary>
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
+
+        /// <summary>
+        /// Callback when graph download progress is completed.
+        /// </summary>
         public event System.ComponentModel.AsyncCompletedEventHandler OnDownloadCompleted;
 
-
+        /// <summary>
+        /// Initiate the graph by checking if the graph file exit on disk, if not download the graph from internet.
+        /// </summary>
+        /// <param name="modelFiles">An array where the first file is the tensorflow graph and the second file are the object class labels. </param>
+        /// <param name="downloadUrl">The url where the file can be downloaded</param>
+        /// <param name="inputName">The input operation name. Default to "input" if not specified.</param>
+        /// <param name="outputName">The output operation name. Default to "output" if not specified.</param>
         public
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             IEnumerator
@@ -104,6 +125,9 @@ namespace Emgu.TF.Models
 #endif
         }
 
+        /// <summary>
+        /// Return true if the graph has been imported.
+        /// </summary>
         public bool Imported
         {
             get
@@ -140,6 +164,9 @@ namespace Emgu.TF.Models
             _labels = File.ReadAllLines(_downloadManager.Files[1].LocalFile);
         }
 
+        /// <summary>
+        /// Get the graph from this inception model
+        /// </summary>
         public Graph Graph
         {
             get
@@ -148,19 +175,40 @@ namespace Emgu.TF.Models
             }
         }
 
+        /// <summary>
+        /// Get the labels of the object classes
+        /// </summary>
         public String[] Labels
         {
             get { return _labels; }
         }
 
+        /// <summary>
+        /// Pass the image tensor to the graph and return the probability that the object in image belongs to each of the object class.
+        /// </summary>
+        /// <param name="image">The image to be classified</param>
+        /// <returns>The probability that the object belong to each of the object class</returns>
         public float[] Recognize(Tensor image)
         {
-            Tensor[] finalTensor = _session.Run(new Output[] { _graph[_inputName] }, new Tensor[] { image },
-                new Output[] { _graph[_outputName] });
+            Operation input = _graph[_inputName];
+            if (input == null)
+                throw new Exception(String.Format("Could not find input operation '{0}' in the graph", _inputName));
+
+            Operation output = _graph[_outputName];
+            if (output == null)
+                throw new Exception(String.Format("Could not find output operation '{0}' in the graph", _outputName));
+
+            Tensor[] finalTensor = _session.Run(new Output[] { input }, new Tensor[] { image },
+                new Output[] { output });
             float[] probability = finalTensor[0].GetData(false) as float[];
             return probability;
         }
 
+        /// <summary>
+        /// Perform object classification and get the most likely object class.
+        /// </summary>
+        /// <param name="image">The image to be recognized.</param>
+        /// <returns>The most likely object class</returns>
         public RecognitionResult MostLikely(Tensor image)
         {
             float[] probability = Recognize(image);
@@ -192,6 +240,9 @@ namespace Emgu.TF.Models
             public double Probability;
         }
 
+        /// <summary>
+        /// Release the memory associated with this inception graph
+        /// </summary>
         protected override void DisposeObject()
         {
             if (_graph != null)
