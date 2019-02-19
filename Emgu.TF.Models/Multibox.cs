@@ -29,9 +29,6 @@ using CoreGraphics;
 #endif
 #endif
 
-/// <summary>
-/// Utilities for downloading tensorflow models
-/// </summary>
 namespace Emgu.TF.Models
 {
     /// <summary>

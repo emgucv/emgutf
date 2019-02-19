@@ -35,8 +35,12 @@ namespace InceptionObjectRecognition
             //Use the following code for the full inception model
             inceptionGraph.Init();
 
-            //Uncomment the following code to use a retrained model to recognize followers, downloaded from the internet
-            //inceptionGraph.Init(new string[] {"optimized_graph.pb", "output_labels.txt"}, "https://github.com/emgucv/models/raw/master/inception_flower_retrain/", "Mul", "final_result");
+            //Uncomment the following code to use a retrained model to recognize followers, downloaded from the Internet
+            //inceptionGraph.Init(
+            //    new string[] {"optimized_graph.pb", "output_labels.txt"}, 
+            //    "https://github.com/emgucv/models/raw/master/inception_flower_retrain/", 
+            //    "Placeholder", 
+            //    "final_result");
         }
 
         public void OnDownloadProgressChangedEventHandler(object sender, System.Net.DownloadProgressChangedEventArgs e)
@@ -97,38 +101,28 @@ namespace InceptionObjectRecognition
         {            
             Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
 
-            float[] probability;
+            Inception.RecognitionResult result;
             if (_coldSession)
             {
                 //First run of the recognition graph, here we will compile the graph and initialize the session
                 //This is expected to take much longer time than consecutive runs.
-                probability = inceptionGraph.Recognize(imageTensor);
+                result = inceptionGraph.MostLikely(imageTensor);
                 _coldSession = false;
             }
 
-
             //Here we are trying to time the execution of the graph after it is loaded
-            //If we are not interest in the performance, we can skip the 3 lines that follows
+            //If we are not interest in the performance, we can skip the following 3 lines
             Stopwatch sw = Stopwatch.StartNew();
-            probability = inceptionGraph.Recognize(imageTensor);
+            result = inceptionGraph.MostLikely(imageTensor); 
             sw.Stop();
 
             String resStr = String.Empty;
-            if (probability != null)
-            {
-                String[] labels = inceptionGraph.Labels;
-                float maxVal = 0;
-                int maxIdx = 0;
-                for (int i = 0; i < probability.Length; i++)
-                {
-                    if (probability[i] > maxVal)
-                    {
-                        maxVal = probability[i];
-                        maxIdx = i;
-                    }
-                }
-                resStr = String.Format("Object is {0} with {1}% probability. Recognition done in {2} in {3} milliseconds.", labels[maxIdx], maxVal * 100, TfInvoke.IsGoogleCudaEnabled ? "GPU" : "CPU", sw.ElapsedMilliseconds);
-            }
+            if (result != null)
+                resStr = String.Format(
+                    "Object is {0} with {1}% probability. Recognition done in {2} in {3} milliseconds.", 
+                    result.Label, 
+                    result.Probability * 100, 
+                    TfInvoke.IsGoogleCudaEnabled ? "GPU" : "CPU", sw.ElapsedMilliseconds);
 
             if (InvokeRequired)
             {
