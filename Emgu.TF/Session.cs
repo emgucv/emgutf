@@ -15,6 +15,7 @@ namespace Emgu.TF
     /// </summary>
     public class Session : UnmanagedObject
     {
+        private Graph _graph;
 
         /// <summary>
         /// Return a new execution session with the associated graph.
@@ -27,6 +28,8 @@ namespace Emgu.TF
         /// <param name="status">The status</param>
         public Session(Graph graph, SessionOptions sessionOptions = null, Status status = null)
         {
+            _graph = graph;
+
             using (StatusChecker checker = new StatusChecker(status))
                 _ptr = TfInvoke.tfeNewSession(graph, sessionOptions, checker.Status);
         }
@@ -52,6 +55,8 @@ namespace Emgu.TF
                 using (StatusChecker checker = new StatusChecker(null))
                     TfInvoke.tfeDeleteSession(ref _ptr, checker.Status);
             }
+
+            _graph = null;
         }
 
         /// <summary>
@@ -76,7 +81,6 @@ namespace Emgu.TF
         /// <returns>On success, the tensors corresponding to outputs[0,noutputs-1] are placed in the returned Tensors.</returns>
         public Tensor[] Run(Output[] inputs, Tensor[] inputValues, Output[] outputs, Operation[] targetOperations = null, Buffer runOptions = null, Buffer runMetadata = null, Status status = null)
         {
-
             IntPtr[] inputOps = Array.ConvertAll(inputs, i => i.Operation.Ptr);
             int[] inputIdx = Array.ConvertAll(inputs, i => i.Index);
             IntPtr[] inputTensors = Array.ConvertAll(inputValues, i => i.Ptr);
