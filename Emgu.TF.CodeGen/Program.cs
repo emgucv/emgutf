@@ -23,9 +23,11 @@ namespace Emgu.TF.CodeGen
             using (MemoryStream ms = bf.GetMemoryStream())
             {
                 var opList = Tensorflow.OpList.Parser.ParseFrom(ms);
-
+                List<OpDef> opDefList = new List<OpDef>(opList.Op);
+                opDefList.Sort((def1, def2) => def1.Name.CompareTo(def2.Name) );
                 List<String> codeGenResults = new List<string>();
-                foreach (var op in opList.Op)
+                
+                foreach (var op in opDefList)
                 {
                     codeGenResults.Add(CodeGen(op));
                 }
@@ -94,6 +96,7 @@ namespace Emgu.TF
             }
             return null;
         }
+
         private static bool IsTypeKnown(String typeName)
         {
             if (_typeMap.ContainsKey(typeName))
@@ -111,39 +114,42 @@ namespace Emgu.TF
             return description.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;").Replace("\n", " ");
         }
 
-        private static String _sixSpaces = "      ";
-        private static String _nineSpaces = "         ";
+        private static String _twoTabs = "        ";
+        private static String _threeTabs = "            ";
+        private static String _fourTabs = "                ";
 
         private static String CodeGen(OpDef op)
         {
 
-            String defaultStr = String.Format("{1}// Skipped function {0}", op.Name, _sixSpaces);
+            String defaultStr = String.Format("{1}// Skipped function {0}", op.Name, _twoTabs);
             if (op.Name.StartsWith("_"))
                 return defaultStr;
 
             //if (op.name.Equals("PaddingFIFOQueueV2"))
             {
                 StringBuilder document = new StringBuilder(
-                    String.Format("{0}{2}///<summary>{0}{2}///{1}{0}{2}///</summary>{0}",
+                    String.Format("{0}{2}/// <summary>{0}{2}/// {1}{0}{2}/// </summary>{0}",
                     Environment.NewLine,
-                    CleanUpDescription(op.Summary),
-                    _sixSpaces));
+                    String.IsNullOrEmpty(CleanUpDescription(op.Summary))
+                        ? op.Name
+                        : CleanUpDescription(op.Summary),
+                    _twoTabs));
                 var outputs = op.OutputArg;
 
                 String[] returnDescs = new string[outputs.Count];
                 for (int i = 0; i < outputs.Count; i++)
                 {
-                    returnDescs[i] = String.Format("{4}///{3} {0}(type: {1}){2}",
+                    returnDescs[i] = String.Format("{4}/// {3} {0}(type: {1}){2}",
                         outputs[i].Name,
                         outputs[i].Type,
                         String.IsNullOrEmpty(CleanUpDescription(outputs[i].Description))
                             ? "."
                             : ": " + CleanUpDescription(outputs[i].Description),
                         outputs.Count > 0 ? String.Format("[{0}]", i) : String.Empty,
-                        _sixSpaces);
+                        _twoTabs);
                 }
                 String returnDoc = String.Join(Environment.NewLine, returnDescs);
-                returnDoc = String.Format("{2}///<return>{0}{1}{0}{2}///</return>{0}", Environment.NewLine, returnDoc, _sixSpaces);
+                returnDoc = String.Format("{2}/// <return>{0}{1}{0}{2}/// </return>{0}", Environment.NewLine, returnDoc, _twoTabs);
                 if (outputs.Count == 0)
                     returnDoc = String.Empty;
 
@@ -156,7 +162,7 @@ namespace Emgu.TF
                 foreach (var input in inputs)
                 {
                     string inputDescription = CleanUpDescription(input.Description);
-                    document.AppendFormat("{4}///<param name=\"{0}\">Input to the operation{3} {1}</param>{2}", FixParamName(input.Name), inputDescription, Environment.NewLine, String.IsNullOrEmpty(inputDescription) ? "." : ":", _sixSpaces);
+                    document.AppendFormat("{4}/// <param name=\"{0}\">Input to the operation{3} {1}</param>{2}", FixParamName(input.Name), inputDescription, Environment.NewLine, String.IsNullOrEmpty(inputDescription) ? "." : ":", _twoTabs);
                     inputsStrList.Add(String.Format(" {0} {1} ", "Output", FixParamName(input.Name)));
                 }
 
@@ -200,23 +206,35 @@ namespace Emgu.TF
                 }
                 foreach (var required in requiredAttr)
                 {
-                    document.AppendFormat("{3}///<param name=\"{0}\">{1}</param>{2}", FixParamName(required.Name), CleanUpDescription(required.Description), Environment.NewLine, _sixSpaces);
+                    document.AppendFormat(
+                        "{3}/// <param name=\"{0}\">{1}</param>{2}", 
+                        FixParamName(required.Name), 
+                        String.IsNullOrEmpty(CleanUpDescription(required.Description)) ?
+                        required.Name.Replace("_", " ") : CleanUpDescription(required.Description), 
+                        Environment.NewLine, 
+                        _twoTabs);
                 }
                 foreach (var optional in optionalAttr)
                 {
-                    document.AppendFormat("{3}///<param name=\"{0}\">{1}</param>{2}", FixParamName(optional.Name), CleanUpDescription(optional.Description), Environment.NewLine, _sixSpaces);
+                    document.AppendFormat(
+                        "{3}/// <param name=\"{0}\">{1}</param>{2}", 
+                        FixParamName(optional.Name), 
+                        String.IsNullOrEmpty(CleanUpDescription(optional.Description)) ?
+                        optional.Name.Replace("_", " ") : CleanUpDescription(optional.Description), 
+                        Environment.NewLine, 
+                        _twoTabs);
                 }
 
-                document.AppendFormat("{0}///<param name=\"opName\">The name of the operation</param>{1}", _sixSpaces,
+                document.AppendFormat("{0}/// <param name=\"opName\">The name of the operation</param>{1}", _twoTabs,
                     Environment.NewLine);
                 document.Append(returnDoc);
 
                 if (unknownAttr.Count > 0)
                 {
-                    document.AppendFormat("{2}//The following attributes are not known: {1}{0}",
+                    document.AppendFormat("{2}// The following attributes are not known: {1}{0}",
                         Environment.NewLine,
                         String.Join("; ", unknownAttr.ConvertAll(a => String.Format("{0}: {1}", a.Name, a.Type))),
-                        _sixSpaces);
+                        _twoTabs);
                 }
 
                 String requiredStr = String.Join(",", requiredAttr.ConvertAll<String>(
@@ -269,27 +287,43 @@ namespace Emgu.TF
                 if (!String.IsNullOrEmpty(inputsStr)) paramList.Add(inputsStr);
                 if (!String.IsNullOrEmpty(requiredStr)) paramList.Add(requiredStr);
                 if (!String.IsNullOrEmpty(optionalStr)) paramList.Add(optionalStr);
-                paramList.Add(String.Format(" String opName= \"{0}\"", op.Name));
-                String paramStr = String.Join(",", paramList);
+                paramList.Add(String.Format(" String opName = \"{0}\"", op.Name));
+                String paramStr = String.Join(",", paramList).Replace(" ,", ",");
 
                 StringBuilder body = new StringBuilder(String.Format(
                     "{2}OperationDescription desc = NewOperation(\"{0}\", opName);{1}",
                     op.Name,
                     Environment.NewLine,
-                    _nineSpaces));
+                    _threeTabs));
                 List<String> addInputStringList = new List<string>();
                 foreach (var i in inputs)
                 {
-                    addInputStringList.Add(String.Format("{1}desc.AddInput({0});", FixParamName(i.Name), _nineSpaces));
+                    addInputStringList.Add(String.Format("{1}desc.AddInput({0});", FixParamName(i.Name), _threeTabs));
                 }
-                body.Append(String.Join(Environment.NewLine, addInputStringList));
-                body.Append(Environment.NewLine);
-                body.Append(String.Join(Environment.NewLine, requiredAttr.ConvertAll(RequiredAttrToString)));
-                body.Append(Environment.NewLine);
-                body.Append(String.Join(Environment.NewLine, optionalAttr.ConvertAll(OptionalAttrToString)));
-                body.Append(Environment.NewLine);
-                body.Append(String.Format("{0}return desc.FinishOperation();", _nineSpaces));
-                String code = String.Format("{5}public {0} {1} ( {2} ) {3}{5}{{{3}{4}{3}{5}}} ", returnStr, op.Name, paramStr, Environment.NewLine, body.ToString(), _sixSpaces);
+
+                String addInputStr = String.Join(Environment.NewLine, addInputStringList);
+                if (!String.IsNullOrEmpty(addInputStr))
+                {
+                    body.Append(addInputStr);
+                    body.Append(Environment.NewLine);
+                }
+
+                String requiredAttStr = String.Join(Environment.NewLine, requiredAttr.ConvertAll(RequiredAttrToString));
+                if (!String.IsNullOrEmpty(requiredAttStr.Trim()))
+                {
+                    body.Append(requiredAttStr);
+                    body.Append(Environment.NewLine);
+                }
+
+                String optionalAttStr = String.Join(Environment.NewLine, optionalAttr.ConvertAll(OptionalAttrToString));
+                if (!String.IsNullOrEmpty(optionalAttStr.Trim()))
+                {
+                    body.Append(optionalAttStr);
+                    body.Append(Environment.NewLine);
+                }
+                
+                body.Append(String.Format("{0}return desc.FinishOperation();", _threeTabs));
+                String code = String.Format("{5}public {0} {1}({2}) {3}{5}{{{3}{4}{3}{5}}} ", returnStr, op.Name, paramStr.Trim(), Environment.NewLine, body.ToString(), _twoTabs);
                 return String.Format("{0}{1}", document, code);
             }
 
@@ -324,14 +358,14 @@ namespace Emgu.TF
                     "{2}if ({0} != null) desc.{1}(\"{0}\", {0});",
                     a.Name,
                     funcName,
-                    _nineSpaces);
+                    _threeTabs);
             }
             if (_typeIsStruct[a.Type])
             {
                 if (a.Type.Equals("int"))
-                    return String.Format("{3}if ({0} != {1}) desc.{2}(\"{0}\", {0});", a.Name, a.DefaultValue.I, funcName, _nineSpaces);
+                    return String.Format("{3}if ({0} != {1}){4}{5}desc.{2}(\"{0}\", {0});", a.Name, a.DefaultValue.I, funcName, _threeTabs, Environment.NewLine, _fourTabs);
                 else if (a.Type.Equals("bool"))
-                    return String.Format("{3}if ({0} != {1}) desc.{2}(\"{0}\", {0});", a.Name, a.DefaultValue.B ? "true" : "false", funcName, _nineSpaces);
+                    return String.Format("{3}if ({0} != {1}){4}{5}desc.{2}(\"{0}\", {0});", a.Name, a.DefaultValue.B ? "true" : "false", funcName, _threeTabs, Environment.NewLine, _fourTabs);
                 else if (a.Type.Equals("float"))
                 {
                     String valueString = a.DefaultValue.F.ToString();
@@ -343,25 +377,33 @@ namespace Emgu.TF
                         valueString = valueString + "f";
 
                     return String.Format(
-                        "{3}if ({0} != {1}) desc.{2}(\"{0}\", {0});", a.Name, valueString,
+                        "{3}if ({0} != {1}){4}{5}desc.{2}(\"{0}\", {0});", 
+                        a.Name, 
+                        valueString,
                         funcName,
-                        _nineSpaces);
+                        _threeTabs, 
+                        Environment.NewLine,
+                        _fourTabs);
                 }
                 else
                     return String.Format(
-                        "{2}if ({0}.HasValue) desc.{1}(\"{0}\", {0}.Value);",
+                        "{2}if ({0}.HasValue){3}{4}desc.{1}(\"{0}\", {0}.Value);",
                         a.Name,
                         funcName,
-                        _nineSpaces);
+                        _threeTabs, 
+                        Environment.NewLine,
+                        _fourTabs);
 
             }
             else
             {
-                return String.Format("{3}if ({0}{1}) desc.{2}(\"{0}\", {0});",
+                return String.Format("{3}if ({0}{1}){4}{5} desc.{2}(\"{0}\", {0});",
                     a.Name,
                     " != null",
                     funcName,
-                    _nineSpaces);
+                    _threeTabs, 
+                    Environment.NewLine,
+                    _fourTabs);
             }
         }
 
@@ -379,7 +421,7 @@ namespace Emgu.TF
             return String.Format("{2}desc.{1}(\"{0}\", {0});",
                 a.Name,
                 funcName,
-                _nineSpaces);
+                _threeTabs);
         }
 
     }

@@ -99,10 +99,10 @@ namespace InceptionObjectRecognition
 
         public void Recognize(String fileName)
         {
-            Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
+            //Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
 
             //Uncomment the following code to use a retrained model to recognize followers, downloaded from the Internet
-            //Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>(fileName, 299, 299, 0.0f, 1.0f / 255.0f);
+            Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>(fileName, 299, 299, 0.0f, 1.0f / 255.0f);
 
             Inception.RecognitionResult result;
             if (_coldSession)
