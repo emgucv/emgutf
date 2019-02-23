@@ -167,6 +167,18 @@ namespace Emgu.TF
             }
         }
 
+        public Buffer GetOpDef(
+            String opName,
+            Status status = null)
+        {
+            using (StatusChecker checker = new StatusChecker(status))
+            {
+                Buffer buffer = new Buffer();
+                TfInvoke.tfeGraphGetOpDef(_ptr, opName, buffer, checker.Status);
+                return buffer;
+            }
+        }
+
         /// <summary>
         /// Returns the number of TF_Functions registered in the graph
         /// </summary>
@@ -239,6 +251,14 @@ namespace Emgu.TF
 
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         internal static extern void tfeGraphGetTensorShape(IntPtr graph, IntPtr outputOperation, int idx, IntPtr dims, int numDims, IntPtr status);
+
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        internal static extern void tfeGraphGetOpDef(
+            IntPtr graph,
+            [MarshalAs(StringMarshalType)]
+            String opName, 
+            IntPtr outputOpDef, 
+            IntPtr status);
 
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         internal static extern IntPtr tfeGraphVersions(IntPtr graph, IntPtr status);

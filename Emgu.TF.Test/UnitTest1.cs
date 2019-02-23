@@ -52,12 +52,43 @@ namespace Emgu.TF.Test
                     HashSet<string> couldBeOutputs = new HashSet<string>();
                     foreach (Operation op in inceptionGraph.Graph)
                     {
+                        
                         String name = op.Name;
                         opNames.Add(name);
 
                         if (op.NumInputs == 0 && op.OpType.Equals("Placeholder"))
+                        {
                             couldBeInputs.Add(op.Name);
-                        
+                            AttrMetadata dtypeMeta = op.GetAttrMetadata("dtype");
+                            AttrMetadata shapeMeta = op.GetAttrMetadata("shape");
+                            DataType type = op.GetAttrType("dtype");
+                            Int64[] shape = op.GetAttrShape("shape");
+                            Buffer valueBuffer = op.GetAttrValueProto("shape");
+                            Buffer shapeBuffer = op.GetAttrTensorShapeProto("shape");
+                            Tensorflow.TensorShapeProto shapeProto =
+                                Tensorflow.TensorShapeProto.Parser.ParseFrom(shapeBuffer.Data);
+                        }
+
+                        if (op.OpType.Equals("Const"))
+                        {
+                            AttrMetadata dtypeMeta = op.GetAttrMetadata("dtype");
+                            AttrMetadata valueMeta = op.GetAttrMetadata("value");
+                            using (Tensor valueTensor = op.GetAttrTensor("value"))
+                            {
+                                var dim = valueTensor.Dim;
+                            }
+                        }
+
+                        if (op.OpType.Equals("Conv2D"))
+                        {
+                            AttrMetadata stridesMeta = op.GetAttrMetadata("strides");
+                            AttrMetadata paddingMeta = op.GetAttrMetadata("padding");
+                            AttrMetadata boolMeta = op.GetAttrMetadata("use_cudnn_on_gpu");
+                            Int64[] strides = op.GetAttrIntList("strides");
+                            bool useCudnn = op.GetAttrBool("use_cudnn_on_gpu");
+                            String padding = op.GetAttrString("padding");
+                        }
+
                         foreach (Output output in op.Outputs)
                         {
                             int[] shape = inceptionGraph.Graph.GetTensorShape(output);
@@ -66,7 +97,11 @@ namespace Emgu.TF.Test
                                 couldBeOutputs.Add(name);
                             }
                         }
+
+                        Buffer buffer = inceptionGraph.Graph.GetOpDef(op.OpType);
+                        Tensorflow.OpDef opDef = Tensorflow.OpDef.Parser.ParseFrom(buffer.Data);
                     }
+
                     using (Buffer versionDef = inceptionGraph.Graph.Versions())
                     {
                         int l = versionDef.Length;
