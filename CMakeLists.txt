@@ -604,26 +604,29 @@ IF(HAVE_WINDESKTOP_X64)
 			<dependency id=\"EMGU.TF.CUFFT\" version=\"[${EMGU_TF_CUFFT_VERSION}]\" />
 		</dependencies>")
 		SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
-		<file src=\"..\\..\\lib\\x64\\*.dll\" exclude=\"..\\..\\lib\\x64\\cudnn*.dll;..\\..\\lib\\x64\\cufft*.dll\" target=\"build\\x64\" />")
+	<file src=\"..\\..\\lib\\x64\\*.dll\" exclude=\"..\\..\\lib\\x64\\cudnn*.dll;..\\..\\lib\\x64\\cufft*.dll\" target=\"build\\x64\" />")
 	ELSE()
 		SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
-		<file src=\"..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />")
+	<file src=\"..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />")
 	ENDIF()
 	SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
-		<file src=\"Emgu.TF.targets\" target=\"build\\${EMGUTF_NUGET_ID}.targets\" />")
+	<file src=\"Emgu.TF.targets\" target=\"build\\${EMGUTF_NUGET_ID}.targets\" />")
 	
 	SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
     <file src=\"..\\..\\lib\\Emgu.TF.World.dll\" target=\"lib\\net35\" />
-	<file src=\"..\\..\\lib\\Emgu.TF.World.XML\" target=\"lib\\net35\" />")
+	<file src=\"..\\..\\lib\\Emgu.TF.World.XML\" target=\"lib\\net35\" />
+	<file src=\"..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
 ENDIF()
 
 SET(EMGUTF_MODEL_NUGET_FILE_LIST "
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.dll\" target=\"lib\\net46\" />
-	<file src=\"..\\..\\..\\lib\\Emgu.TF.Models.XML\" target=\"lib\\net46\" />")
+	<file src=\"..\\..\\..\\lib\\Emgu.TF.Models.XML\" target=\"lib\\net46\" />
+	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
 
 SET(EMGUTF_PROTOBUF_NUGET_FILE_LIST "
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.Netstandard.dll\" target=\"lib\\netstandard1.0\" />
-	<file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.Netstandard.XML\" target=\"lib\\netstandard1.0\" />")
+	<file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.Netstandard.XML\" target=\"lib\\netstandard1.0\" />
+	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
 #MESSAGE(STATUS "+++++++++++++++++++++++++++++++++++++++++")
 SET(EMGUTF_PROTOBUF_PROJECT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf/Emgu.TF.Protobuf.Netstandard/Emgu.TF.Protobuf.Netstandard.csproj")
 file(STRINGS "${EMGUTF_PROTOBUF_PROJECT_FILE}" EMGUTF_PROTOBUF_PROJECT_PARTS REGEX "Google.Protobuf" )
