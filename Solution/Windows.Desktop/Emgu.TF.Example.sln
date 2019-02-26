@@ -17,8 +17,6 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "XamarinForms", "..\..\Emgu.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinForms.WPF", "..\..\Emgu.TF.Example\XamarinForms\XamarinForms.WPF\XamarinForms.WPF.csproj", "{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InceptionObjectRecognition", "..\..\Emgu.TF.Example\InceptionObjectRecognition\InceptionObjectRecognition.csproj", "{DAE2EF5C-AD22-473C-BC7B-75C3CE3D8EAE}"
-EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{0a7a7b86-35e5-4887-b337-96c2f1b1fcf8}*SharedItemsImports = 4
@@ -35,10 +33,6 @@ Global
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{8edce0c8-ba71-4396-9428-35d05877258c}*SharedItemsImports = 13
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{98561642-5ec3-4244-baf9-6876d9ba5527}*SharedItemsImports = 13
 		..\..\Emgu.TF\Emgu.TF.projitems*{d47d776e-9970-4552-bc8a-24cadcbea009}*SharedItemsImports = 13
-		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{dae2ef5c-ad22-473c-bc7b-75c3ce3d8eae}*SharedItemsImports = 4
-		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{dae2ef5c-ad22-473c-bc7b-75c3ce3d8eae}*SharedItemsImports = 4
-		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{dae2ef5c-ad22-473c-bc7b-75c3ce3d8eae}*SharedItemsImports = 4
-		..\..\Emgu.TF\Emgu.TF.projitems*{dae2ef5c-ad22-473c-bc7b-75c3ce3d8eae}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,18 +67,6 @@ Global
 		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Release|iPhone.Build.0 = Release|Any CPU
 		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{DAE2EF5C-AD22-473C-BC7B-75C3CE3D8EAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DAE2EF5C-AD22-473C-BC7B-75C3CE3D8EAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DAE2EF5C-AD22-473C-BC7B-75C3CE3D8EAE}.Debug|iPhone.ActiveCfg = Debug|iPhone
-		{DAE2EF5C-AD22-473C-BC7B-75C3CE3D8EAE}.Debug|iPhone.Build.0 = Debug|iPhone
-		{DAE2EF5C-AD22-473C-BC7B-75C3CE3D8EAE}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
-		{DAE2EF5C-AD22-473C-BC7B-75C3CE3D8EAE}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
-		{DAE2EF5C-AD22-473C-BC7B-75C3CE3D8EAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DAE2EF5C-AD22-473C-BC7B-75C3CE3D8EAE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DAE2EF5C-AD22-473C-BC7B-75C3CE3D8EAE}.Release|iPhone.ActiveCfg = Release|iPhone
-		{DAE2EF5C-AD22-473C-BC7B-75C3CE3D8EAE}.Release|iPhone.Build.0 = Release|iPhone
-		{DAE2EF5C-AD22-473C-BC7B-75C3CE3D8EAE}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
-		{DAE2EF5C-AD22-473C-BC7B-75C3CE3D8EAE}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
