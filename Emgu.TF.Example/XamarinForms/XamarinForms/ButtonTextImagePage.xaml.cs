@@ -4,12 +4,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Emgu.TF.Util.TypeEnum;
 #if !__MACOS__
 using Plugin.Media;
 #endif
 using Xamarin.Forms;
-
 #if __ANDROID__
 using Plugin.CurrentActivity;
 #endif
@@ -52,7 +52,7 @@ namespace Emgu.TF.XamarinForms
                 {
                     //CrossMedia is not implemented on Windows.
                     haveCameraOption = false;
-                    havePickImgOption = false;
+                    havePickImgOption = true; //We will provide our implementation of pick image option
                 }
                 else
                 {
@@ -94,10 +94,34 @@ namespace Emgu.TF.XamarinForms
                 }
                 else if (action.Equals("Photo Library"))
                 {
-                    var photoResult = await CrossMedia.Current.PickPhotoAsync();
-                    if (photoResult == null) //cancelled
-                        return;
-                    mats[i] = photoResult.Path;
+                    if (Emgu.TF.Util.Platform.OperationSystem == OS.Windows)
+                    {
+                        // our implementation of pick image
+#if !(__ANDROID__ || __IOS__ || __MACOS__)
+                        using (System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog())
+                        {
+                            dialog.Multiselect = false;
+                            dialog.Title = "Select an Image File";
+                            dialog.Filter = "Image | *.jpg;*.jpeg;*.png;*.bmp;*.gif | All Files | *";
+                            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                            {
+                                mats[i] = dialog.FileName;
+                            }
+                            else
+                            {
+                                return; 
+                            }
+                        }
+#endif
+
+                    }
+                    else
+                    {
+                        var photoResult = await CrossMedia.Current.PickPhotoAsync();
+                        if (photoResult == null) //cancelled
+                            return;
+                        mats[i] = photoResult.Path;
+                    }
                 }
                 else if (action.Equals("Camera"))
                 {
@@ -164,7 +188,7 @@ namespace Emgu.TF.XamarinForms
                });
         }
 
-        public Label GetLabel()
+        public Xamarin.Forms.Label GetLabel()
         {
             //return null;
             return this.MessageLabel;
@@ -182,7 +206,7 @@ namespace Emgu.TF.XamarinForms
             );
         }
 
-        public Button GetButton()
+        public Xamarin.Forms.Button GetButton()
         {
             //return null;
             return this.TopButton;

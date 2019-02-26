@@ -36,6 +36,8 @@ namespace Emgu.TF.XamarinForms
     {
         private Inception _inceptionGraph;
 
+        private bool _coldSession = true;
+
         public override String GetButtonName(ButtonMode mode)
         {
             switch (mode)
@@ -66,12 +68,28 @@ namespace Emgu.TF.XamarinForms
                 {
                     SetMessage("Please wait...");
                     SetImage();
-                    
 
-                    Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
-                    Stopwatch watch = Stopwatch.StartNew();
-                    Inception.RecognitionResult result = _inceptionGraph.MostLikely(imageTensor);
-                    String msg = String.Format("Object is {0} with {1}% probability. Recognized in {2} milliseconds.", result.Label, result.Probability * 100, watch.ElapsedMilliseconds);
+                    Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
+
+                    //Uncomment the following code to use a retrained model to recognize followers, downloaded from the Internet
+                    //Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>(image[0], 299, 299, 0.0f, 1.0f / 255.0f);
+
+                    Inception.RecognitionResult result;
+                    if (_coldSession)
+                    {
+                        //First run of the recognition graph, here we will compile the graph and initialize the session
+                        //This is expected to take much longer time than consecutive runs.
+                        result = _inceptionGraph.MostLikely(imageTensor);
+                        _coldSession = false;
+                    }
+
+                    //Here we are trying to time the execution of the graph after it is loaded
+                    //If we are not interest in the performance, we can skip the following 3 lines
+                    Stopwatch sw = Stopwatch.StartNew();
+                    result = _inceptionGraph.MostLikely(imageTensor);
+                    sw.Stop();
+
+                    String msg = String.Format("Object is {0} with {1}% probability. Recognized in {2} milliseconds.", result.Label, result.Probability * 100, sw.ElapsedMilliseconds);
                     SetMessage(msg);
                     
                     SetImage(image[0]);
@@ -92,7 +110,15 @@ namespace Emgu.TF.XamarinForms
 
             if (_buttonMode == ButtonMode.WaitingModelDownload)
             {
+                //Use the following code for the full inception model
                 _inceptionGraph.Init();
+
+                //Uncomment the following code to use a retrained model to recognize followers, downloaded from the Internet
+                //_inceptionGraph.Init(
+                //    new string[] {"optimized_graph.pb", "output_labels.txt"}, 
+                //    "https://github.com/emgucv/models/raw/master/inception_flower_retrain/", 
+                //    "Placeholder", 
+                //    "final_result");
             }
             else
             {
