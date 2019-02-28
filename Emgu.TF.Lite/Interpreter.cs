@@ -16,11 +16,6 @@ namespace Emgu.TF.Lite
     /// </summary>
     public class Interpreter : Emgu.TF.Util.UnmanagedObject
     {
-        /*
-        private Interpreter()
-        {
-            _ptr = TfLiteInvoke.tfeInterpreterCreate();
-        }*/
 
         /// <summary>
         /// Create an interpreter from a flatbuffer model
@@ -95,6 +90,9 @@ namespace Emgu.TF.Lite
             return new Tensor(TfLiteInvoke.tfeInterpreterGetTensor(_ptr, index), false);
         }
 
+        /// <summary>
+        /// Get an array of all the input tensors
+        /// </summary>
         public Tensor[] Inputs
         {
             get
@@ -107,6 +105,9 @@ namespace Emgu.TF.Lite
             }
         }
 
+        /// <summary>
+        /// Get an array of all the output tensors
+        /// </summary>
         public Tensor[] Outputs
         {
             get
@@ -156,7 +157,7 @@ namespace Emgu.TF.Lite
         /// <summary>
         /// Enable or disable the NN API (Android Neural Network API)
         /// </summary>
-        /// <param name="enable"></param>
+        /// <param name="enable">If true, enable the NN API (Android Neural Network API). If false, disable it.</param>
         public void UseNNAPI(bool enable)
         {
             TfLiteInvoke.tfeInterpreterUseNNAPI(_ptr, enable);
@@ -165,7 +166,7 @@ namespace Emgu.TF.Lite
         /// <summary>
         /// Set the number of threads available to the interpreter.
         /// </summary>
-        /// <param name="numThreads"></param>
+        /// <param name="numThreads">The number of threads</param>
         public void SetNumThreads(int numThreads)
         {
             TfLiteInvoke.tfeInterpreterSetNumThreads(_ptr, numThreads);

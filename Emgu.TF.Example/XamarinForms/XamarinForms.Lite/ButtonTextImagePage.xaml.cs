@@ -1,64 +1,58 @@
-﻿//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
-//----------------------------------------------------------------------------
-
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using Xamarin.Forms;
 
-#if __ANDROID__ || __IOS__
+using Emgu.TF.Util.TypeEnum;
+#if !__MACOS__
 using Plugin.Media;
+#endif
+using Xamarin.Forms;
 #if __ANDROID__
 using Plugin.CurrentActivity;
 #endif
-#elif __MACOS__
+
+#if __MACOS__
 using AppKit;
 using CoreGraphics;
-#else
-using Plugin.Media;
 #endif
 
 namespace Emgu.TF.XamarinForms
 {
     public partial class ButtonTextImagePage : ContentPage
     {
+
         public ButtonTextImagePage()
         {
             InitializeComponent();
         }
 
-
         public virtual async void LoadImages(String[] imageNames, String[] labels = null)
         {
-#if __ANDROID__ || __IOS__			
-			await CrossMedia.Current.Initialize();
-#endif			
+#if __ANDROID__ || __IOS__
+            await CrossMedia.Current.Initialize();
+#endif
 
 #if (__MACOS__) //Xamarin Mac
             //use default images
             InvokeOnImagesLoaded(imageNames);
 #else
-            
+
             String[] mats = new String[imageNames.Length];
             for (int i = 0; i < mats.Length; i++)
             {
                 String pickImgString = "Use Image from";
                 if (labels != null && labels.Length > i)
                     pickImgString = labels[i];
-
                 bool haveCameraOption;
                 bool havePickImgOption;
-                if (Emgu.TF.Util.Platform.OperationSystem == Emgu.TF.Util.TypeEnum.OS.Windows)
+                if (Emgu.TF.Util.Platform.OperationSystem == OS.Windows)
                 {
                     //CrossMedia is not implemented on Windows.
                     haveCameraOption = false;
-                    havePickImgOption = false;
+                    havePickImgOption = true; //We will provide our implementation of pick image option
                 }
                 else
                 {
@@ -73,7 +67,8 @@ namespace Emgu.TF.XamarinForms
                 {
                     action = await DisplayActionSheet(pickImgString, "Cancel", null, "Default", "Photo Library",
                         "Camera");
-                } else if (havePickImgOption)
+                }
+                else if (havePickImgOption)
                 {
                     action = await DisplayActionSheet(pickImgString, "Cancel", null, "Default", "Photo Library");
                 }
@@ -81,7 +76,7 @@ namespace Emgu.TF.XamarinForms
                 {
                     action = "Default";
                 }
-                
+
 
                 if (action.Equals("Default"))
                 {
@@ -99,10 +94,34 @@ namespace Emgu.TF.XamarinForms
                 }
                 else if (action.Equals("Photo Library"))
                 {
-                    var photoResult = await CrossMedia.Current.PickPhotoAsync();
-                    if (photoResult == null) //cancelled
-                        return;
-                    mats[i] = photoResult.Path;
+                    if (Emgu.TF.Util.Platform.OperationSystem == OS.Windows)
+                    {
+                        // our implementation of pick image
+#if !(__ANDROID__ || __IOS__ || __MACOS__)
+                        using (System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog())
+                        {
+                            dialog.Multiselect = false;
+                            dialog.Title = "Select an Image File";
+                            dialog.Filter = "Image | *.jpg;*.jpeg;*.png;*.bmp;*.gif | All Files | *";
+                            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                            {
+                                mats[i] = dialog.FileName;
+                            }
+                            else
+                            {
+                                return; 
+                            }
+                        }
+#endif
+
+                    }
+                    else
+                    {
+                        var photoResult = await CrossMedia.Current.PickPhotoAsync();
+                        if (photoResult == null) //cancelled
+                            return;
+                        mats[i] = photoResult.Path;
+                    }
                 }
                 else if (action.Equals("Camera"))
                 {
@@ -116,6 +135,10 @@ namespace Emgu.TF.XamarinForms
                         return;
                     mats[i] = takePhotoResult.Path;
                 }
+
+                //Handle user cancel
+                if (action == null)
+                    return;
             }
             InvokeOnImagesLoaded(mats);
 #endif
@@ -137,46 +160,45 @@ namespace Emgu.TF.XamarinForms
             }
 
             Xamarin.Forms.Device.BeginInvokeOnMainThread(
-                () =>
-                {
-                    var imageSource = new FileImageSource();
-                    imageSource.File = fileName;
-                    this.DisplayImage.Source = imageSource;
+               () =>
+               {
+                   var imageSource = new FileImageSource();
+                   imageSource.File = fileName;
+                   this.DisplayImage.Source = imageSource;
 #if __MACOS__
-                    NSImage image = new NSImage(fileName);
-                    this.DisplayImage.WidthRequest = image.Size.Width;
-                    this.DisplayImage.HeightRequest = image.Size.Height;
+                   NSImage image = new NSImage(fileName);
+                   this.DisplayImage.WidthRequest = image.Size.Width;
+                   this.DisplayImage.HeightRequest = image.Size.Height;
 #endif
-                });
+               });
         }
 
-        public void SetImage(byte[] image = null, int widthRequest = -1, int heightRequest=-1)
+        public void SetImage(byte[] image = null, int widthRequest = -1, int heightRequest = -1)
         {
             Xamarin.Forms.Device.BeginInvokeOnMainThread(
-                () =>
-                {
-                    if (image == null)
-                    {
-                        this.DisplayImage.Source = null;
-                        return;
-                    }
+               () =>
+               {
+                   if (image == null)
+                   {
+                       this.DisplayImage.Source = null;
+                       return;
+                   }
 
-                    this.DisplayImage.Source = ImageSource.FromStream(() => new MemoryStream(image));
+                   this.DisplayImage.Source = ImageSource.FromStream(() => new MemoryStream(image));
 
-                    if (widthRequest > 0)
-                        this.DisplayImage.WidthRequest = widthRequest;
-                    if (heightRequest > 0)
-                        this.DisplayImage.HeightRequest = heightRequest;
-
+                   if (widthRequest > 0)
+                       this.DisplayImage.WidthRequest = widthRequest;
+                   if (heightRequest > 0)
+                       this.DisplayImage.HeightRequest = heightRequest;
+               });
 #if __IOS__
                     //Xamarin Form's Image class do not seems to re-render after Soure is change
                     //forcing focus seems to force a re-rendering
                     this.DisplayImage.Focus();
 #endif
-                });
         }
 
-        public Label GetLabel()
+        public Xamarin.Forms.Label GetLabel()
         {
             //return null;
             return this.MessageLabel;
@@ -188,14 +210,22 @@ namespace Emgu.TF.XamarinForms
                 () =>
             {
                 this.MessageLabel.Text = message;
+                this.MessageLabel.LineBreakMode = LineBreakMode.WordWrap;
+                this.MessageLabel.WidthRequest = this.Width;
             }
             );
         }
 
-        public Button GetButton()
+        public Xamarin.Forms.Button GetButton()
         {
             //return null;
             return this.TopButton;
+        }
+
+        public Image GetImage()
+        {
+            //return null;
+            return this.DisplayImage;
         }
     }
 }
