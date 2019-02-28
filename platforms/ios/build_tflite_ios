@@ -3,10 +3,10 @@ cd ../..
 
 cd tensorflow/
 
-cd tensorflow/contrib/lite/tools/make
+cd tensorflow/lite/tools/make
 ./download_dependencies.sh
 cd ../../../../..
-tensorflow/contrib/lite/tools/make/build_ios_universal_lib.sh 
+tensorflow/lite/tools/make/build_ios_universal_lib.sh 
 cd ..
 
 mkdir -p lib/ios
@@ -15,4 +15,4 @@ mkdir -p lib/ios
 #tensorflow/contrib/makefile/gen/lib/libtensorflow-core.a \
 #tensorflow/contrib/makefile/gen/protobuf_ios/lib/libprotobuf.a
 
-cp tensorflow/tensorflow/contrib/lite/tools/make/gen/lib/libtensorflow-lite.a lib/ios/libtfliteextern.a
+cp tensorflow/tensorflow/lite/tools/make/gen/lib/libtensorflow-lite.a lib/ios/libtfliteextern.a
