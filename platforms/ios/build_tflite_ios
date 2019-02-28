@@ -5,7 +5,7 @@ cd tensorflow/
 
 cd tensorflow/lite/tools/make
 ./download_dependencies.sh
-cd ../../../../..
+cd ../../../..
 tensorflow/lite/tools/make/build_ios_universal_lib.sh 
 cd ..
 
