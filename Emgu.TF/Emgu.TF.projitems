@@ -121,10 +121,12 @@
       <PropertyGroup>
         <EmguTFLinkTarget Condition="('$(AndroidApplication)'=='True' OR '$(AndroidApplication)'=='true')">Xamarin Android App</EmguTFLinkTarget>
         <EmguTFLinkTarget Condition="!('$(AndroidApplication)'=='True' OR '$(AndroidApplication)'=='true')">Xamarin Android Library</EmguTFLinkTarget>
+		<!-- 
         <EmguTFNativeArmeabi>$(TFBinaryDir)\android\armeabi\libtfextern.so</EmguTFNativeArmeabi>
-        <EmguTFBuildAndroidArmeabi Condition="$(AndroidSupportedAbis.Contains('armeabi%3')) OR $(AndroidSupportedAbis.Contains('armeabi,')) OR $(AndroidSupportedAbis.Contains('armeabi;')) OR $(AndroidSupportedAbis.EndsWith('armeabi')) OR ('$(AndroidSupportedAbis)'=='' AND '$(Platform)'=='AnyCPU') OR ('$(Platform)'=='armeabi')">True</EmguTFBuildAndroidArmeabi>
+		<EmguTFBuildAndroidArmeabi Condition="$(AndroidSupportedAbis.Contains('armeabi%3')) OR $(AndroidSupportedAbis.Contains('armeabi,')) OR $(AndroidSupportedAbis.Contains('armeabi;')) OR $(AndroidSupportedAbis.EndsWith('armeabi')) OR ('$(AndroidSupportedAbis)'=='' AND '$(Platform)'=='AnyCPU') OR ('$(Platform)'=='armeabi')">True</EmguTFBuildAndroidArmeabi>
         <EmguTFErrorMessage Condition="'$(EmguTFBuildAndroidArmeabi)'=='True' AND !Exists('$(EmguTFNativeArmeabi)')">This package do not contain necessary binary for $(EmguTFLinkTarget). Emgu TF for Android Commercial License is required. Armeabi is targeted, but file $(EmguTFNativeArmeabi) is missing.</EmguTFErrorMessage>
-        <EmguTFDeployMessage Condition="'$(EmguTFBuildAndroidArmeabi)'=='True' AND Exists('$(EmguTFNativeArmeabi)')">$(EmguTFDeployMessage)armeabi </EmguTFDeployMessage>
+        <EmguTFDeployMessage Condition="'$(EmguTFBuildAndroidArmeabi)'=='True' AND Exists('$(EmguTFNativeArmeabi)')">$(EmguTFDeployMessage)armeabi </EmguTFDeployMessage> 
+		-->
         <EmguTFNativeArmeabiv7a>$(TFBinaryDir)\android\armeabi-v7a\libtfextern.so</EmguTFNativeArmeabiv7a>
         <EmguTFBuildAndroidArmeabiv7a Condition="$(AndroidSupportedAbis.Contains('armeabi-v7a%3')) OR $(AndroidSupportedAbis.Contains('armeabi-v7a,')) OR $(AndroidSupportedAbis.Contains('armeabi-v7a;')) OR $(AndroidSupportedAbis.EndsWith('armeabi-v7a')) OR ('$(AndroidSupportedAbis)'=='' AND '$(Platform)'=='AnyCPU') OR ('$(Platform)'=='armeabi-v7a')">True</EmguTFBuildAndroidArmeabiv7a>
         <EmguTFErrorMessage Condition="'$(EmguTFBuildAndroidArmeabiv7a)'=='True' AND !Exists('$(EmguTFNativeArmeabiv7a)')">This package do not contain necessary binary for $(EmguTFLinkTarget). Emgu TF for Android Commercial License is required. Armeabi-v7a is targeted, but file $(EmguTFNativeArmeabiv7a) is missing.</EmguTFErrorMessage>
@@ -143,6 +145,7 @@
         <EmguTFDeployMessage Condition="'$(EmguTFBuildAndroidx8664)'=='True' AND Exists('$(EmguTFNativex8664)')">$(EmguTFDeployMessage)x86_64 </EmguTFDeployMessage>
       </PropertyGroup>
       <!-- armeabi -->
+	  <!--
       <ItemGroup Condition="'$(EmguTFBuildAndroidArmeabi)'=='True' AND Exists('$(EmguTFNativeArmeabi)')">
         <EmbeddedNativeLibrary Condition="'$(EmguTFLinkTarget)'=='Xamarin Android Library'" Include="$(EmguTFNativeArmeabi)">
           <Link>lib\armeabi\libtfextern.so</Link>
@@ -151,6 +154,7 @@
           <Link>lib\armeabi\libtfextern.so</Link>
         </AndroidNativeLibrary>
       </ItemGroup>
+	  -->
       <!-- armeabi-v7a -->
       <ItemGroup Condition="'$(EmguTFBuildAndroidArmeabiv7a)'=='True' AND Exists('$(EmguTFNativeArmeabiv7a)')">
         <EmbeddedNativeLibrary Condition="'$(EmguTFLinkTarget)'=='Xamarin Android Library'" Include="$(EmguTFNativeArmeabiv7a)">

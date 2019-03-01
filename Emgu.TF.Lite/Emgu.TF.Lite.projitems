@@ -116,10 +116,12 @@
       <PropertyGroup>
         <EmguTFLiteLinkTarget Condition="('$(AndroidApplication)'=='True' OR '$(AndroidApplication)'=='true')">Xamarin Android App</EmguTFLiteLinkTarget>
         <EmguTFLiteLinkTarget Condition="!('$(AndroidApplication)'=='True' OR '$(AndroidApplication)'=='true')">Xamarin Android Library</EmguTFLiteLinkTarget>
-        <EmguTFLiteNativeArmeabi>$(TFLiteBinaryDir)\android\armeabi\libtfliteextern.so</EmguTFLiteNativeArmeabi>
+        <!--
+		<EmguTFLiteNativeArmeabi>$(TFLiteBinaryDir)\android\armeabi\libtfliteextern.so</EmguTFLiteNativeArmeabi>
         <EmguTFLiteBuildAndroidArmeabi Condition="$(AndroidSupportedAbis.Contains('armeabi%3')) OR $(AndroidSupportedAbis.Contains('armeabi,')) OR $(AndroidSupportedAbis.Contains('armeabi;')) OR $(AndroidSupportedAbis.EndsWith('armeabi')) OR ('$(AndroidSupportedAbis)'=='' AND '$(Platform)'=='AnyCPU') OR ('$(Platform)'=='armeabi')">True</EmguTFLiteBuildAndroidArmeabi>
         <EmguTFLiteErrorMessage Condition="'$(EmguTFLiteBuildAndroidArmeabi)'=='True' AND !Exists('$(EmguTFLiteNativeArmeabi)')">This package do not contain necessary binary for $(EmguTFLiteLinkTarget). Emgu TF Lite for Android Commercial License is required. Armeabi is targeted, but file $(EmguTFLiteNativeArmeabi) is missing.</EmguTFLiteErrorMessage>
         <EmguTFLiteDeployMessage Condition="'$(EmguTFLiteBuildAndroidArmeabi)'=='True' AND Exists('$(EmguTFLiteNativeArmeabi)')">$(EmguTFLiteDeployMessage)armeabi </EmguTFLiteDeployMessage>
+		-->
         <EmguTFLiteNativeArmeabiv7a>$(TFLiteBinaryDir)\android\armeabi-v7a\libtfliteextern.so</EmguTFLiteNativeArmeabiv7a>
         <EmguTFLiteBuildAndroidArmeabiv7a Condition="$(AndroidSupportedAbis.Contains('armeabi-v7a%3')) OR $(AndroidSupportedAbis.Contains('armeabi-v7a,')) OR $(AndroidSupportedAbis.Contains('armeabi-v7a;')) OR $(AndroidSupportedAbis.EndsWith('armeabi-v7a')) OR ('$(AndroidSupportedAbis)'=='' AND '$(Platform)'=='AnyCPU') OR ('$(Platform)'=='armeabi-v7a')">True</EmguTFLiteBuildAndroidArmeabiv7a>
         <EmguTFLiteErrorMessage Condition="'$(EmguTFLiteBuildAndroidArmeabiv7a)'=='True' AND !Exists('$(EmguTFLiteNativeArmeabiv7a)')">This package do not contain necessary binary for $(EmguTFLiteLinkTarget). Emgu TF Lite for Android Commercial License is required. Armeabi-v7a is targeted, but file $(EmguTFLiteNativeArmeabiv7a) is missing.</EmguTFLiteErrorMessage>
@@ -138,6 +140,7 @@
         <EmguTFLiteDeployMessage Condition="'$(EmguTFLiteBuildAndroidx8664)'=='True' AND Exists('$(EmguTFLiteNativex8664)')">$(EmguTFLiteDeployMessage)x86_64 </EmguTFLiteDeployMessage>
       </PropertyGroup>
       <!-- armeabi -->
+	  <!--
       <ItemGroup Condition="'$(EmguTFLiteBuildAndroidArmeabi)'=='True' AND Exists('$(EmguTFLiteNativeArmeabi)')">
         <EmbeddedNativeLibrary Condition="'$(EmguTFLiteLinkTarget)'=='Xamarin Android Library'" Include="$(EmguTFLiteNativeArmeabi)">
           <Link>lib\armeabi\libtfliteextern.so</Link>
@@ -146,6 +149,7 @@
           <Link>lib\armeabi\libtfliteextern.so</Link>
         </AndroidNativeLibrary>
       </ItemGroup>
+	  -->
       <!-- armeabi-v7a -->
       <ItemGroup Condition="'$(EmguTFLiteBuildAndroidArmeabiv7a)'=='True' AND Exists('$(EmguTFLiteNativeArmeabiv7a)')">
         <EmbeddedNativeLibrary Condition="'$(EmguTFLiteLinkTarget)'=='Xamarin Android Library'" Include="$(EmguTFLiteNativeArmeabiv7a)">
