@@ -67,10 +67,14 @@ namespace Emgu.TF.XamarinForms
                 {
                     action = await DisplayActionSheet(pickImgString, "Cancel", null, "Default", "Photo Library",
                         "Camera");
+					if (action == null) //user clicked outside of action sheet
+                        return;
                 }
                 else if (havePickImgOption)
                 {
                     action = await DisplayActionSheet(pickImgString, "Cancel", null, "Default", "Photo Library");
+					if (action == null) //user clicked outside of action sheet
+                        return;
                 }
                 else
                 {
@@ -87,6 +91,8 @@ namespace Emgu.TF.XamarinForms
                     mats[i] = fi.FullName;
 
 #else
+	                if (!File.Exists(imageNames[i]))
+                        throw new FileNotFoundException(String.Format("File {0} do not exist.", imageNames[i]));
                     mats[i] = imageNames[i];
             
 #endif
