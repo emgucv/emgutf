@@ -31,15 +31,15 @@ namespace Emgu.TF.XamarinForms
 
         public virtual async void LoadImages(String[] imageNames, String[] labels = null)
         {
-#if __ANDROID__ || __IOS__
-            await CrossMedia.Current.Initialize();
-#endif
 
 #if (__MACOS__) //Xamarin Mac
             //use default images
             InvokeOnImagesLoaded(imageNames);
 #else
-
+	
+#if __ANDROID__ || __IOS__
+            await CrossMedia.Current.Initialize();
+#endif
             String[] mats = new String[imageNames.Length];
             for (int i = 0; i < mats.Length; i++)
             {
@@ -119,12 +119,11 @@ namespace Emgu.TF.XamarinForms
                             }
                         }
 #endif
-
                     }
                     else
                     {
                         var photoResult = await CrossMedia.Current.PickPhotoAsync();
-                        if (photoResult == null) //cancelled
+                        if (photoResult == null) //canceled
                             return;
                         mats[i] = photoResult.Path;
                     }
