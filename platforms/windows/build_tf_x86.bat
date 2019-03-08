@@ -122,6 +122,8 @@ IF %DEVENV%==%VS2013% SET CMAKE_CONF="Visual Studio 12%OS_MODE%"
 IF %DEVENV%==%VS2015% SET CMAKE_CONF="Visual Studio 14%OS_MODE%"
 IF %DEVENV%==%VS2017% SET CMAKE_CONF="Visual Studio 15%OS_MODE%"
 
+call tensorflow\tensorflow\contrib\cmake\make.bat
+
 cd tensorflow\tensorflow\contrib\cmake
 
 mkdir build
