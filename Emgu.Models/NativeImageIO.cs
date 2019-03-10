@@ -190,63 +190,80 @@ namespace Emgu.Models
                 {
                     bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
                 }
-                
-                byte[] byteValues = new byte[bmp.Width * bmp.Height * 3];
-                System.Drawing.Imaging.BitmapData bd = new System.Drawing.Imaging.BitmapData();
 
+                int bmpWidth = bmp.Width;
+                int bmpHeight = bmp.Height;
+                System.Drawing.Imaging.BitmapData bd = new System.Drawing.Imaging.BitmapData();
                 bmp.LockBits(
-                    new Rectangle(0, 0, bmp.Width, bmp.Height), 
+                    new Rectangle(0, 0, bmpWidth, bmpHeight),
                     System.Drawing.Imaging.ImageLockMode.ReadOnly,
                     System.Drawing.Imaging.PixelFormat.Format24bppRgb, bd);
+                int stride = bd.Stride;
+
+                byte[] byteValues = new byte[bmpHeight * stride];
                 Marshal.Copy(bd.Scan0, byteValues, 0, byteValues.Length);
                 bmp.UnlockBits(bd);
 
                 if (typeof(T) == typeof(float))
                 {
-                    int imageSize = bmp.Width * bmp.Height;
+                    int imageSize = bmpWidth * bmpHeight;
                     float[] floatValues = new float[imageSize * 3];
                     if (swapBR)
                     {
-                        for (int i = 0; i < imageSize; ++i)
+                        int idx = 0;
+                        for (int i = 0; i < bmpHeight; ++i)
                         {
-                            floatValues[i * 3] = (byte)(((float)byteValues[i * 3 + 2] - inputMean) * scale);
-                            floatValues[i * 3 + 1] = (byte)(((float)byteValues[i * 3 + 1] - inputMean) * scale);
-                            floatValues[i * 3 + 2] = (byte)(((float)byteValues[i * 3 + 0] - inputMean) * scale);
+                            int rowOffset = i * stride;
+                            for (int j = 0; j < bmpWidth; ++j)
+                            {
+                                floatValues[idx++] = ((float) byteValues[rowOffset + j * 3 + 2] - inputMean) * scale;
+                                floatValues[idx++] = ((float) byteValues[rowOffset + j * 3 + 1] - inputMean) * scale;
+                                floatValues[idx++] = ((float) byteValues[rowOffset + j * 3] - inputMean) * scale;
+                            }
                         }
                     }
                     else
                     {
-                        for (int i = 0; i < byteValues.Length; ++i)
+                        int idx = 0;
+                        for (int i = 0; i < bmpHeight; ++i)
                         {
-                            floatValues[i] = ((float)byteValues[i] - inputMean) * scale;
-                        }   
+                            int rowOffset = i * stride;
+                            for (int j = 0; j < bmpWidth; ++j)
+                            {
+                                floatValues[idx++] = ((float) byteValues[rowOffset + j * 3] - inputMean) * scale;
+                                floatValues[idx++] = ((float) byteValues[rowOffset + j * 3 + 1] - inputMean) * scale;
+                                floatValues[idx++] = ((float) byteValues[rowOffset + j * 3 + 2] - inputMean) * scale;
+                            }
+                        }
                     }
                     Marshal.Copy(floatValues, 0, dest, floatValues.Length);
                 } else if (typeof(T) == typeof(byte))
                 {
+                    int imageSize = bmp.Width * bmp.Height;
                     if (swapBR)
                     {
-                        int imageSize = bmp.Width * bmp.Height;
-                        //byte[] bValues = new byte[imageSize * 3];
-                        for (int i = 0; i < imageSize; ++i)
-                        {
-                            byte c0 = (byte)(((float)byteValues[i * 3 + 2] - inputMean) * scale);
-                            byte c1 = (byte)(((float)byteValues[i * 3 + 1] - inputMean) * scale);
-                            byte c2 = (byte)(((float)byteValues[i * 3 + 0] - inputMean) * scale);
-                            byteValues[i * 3] = c0;
-                            byteValues[i * 3 + 1] = c1;
-                            byteValues[i * 3 + 2] = c2;
-                        }
+
+                        int idx = 0;
+                        for (int i = 0; i < bmpHeight; ++i)
+                            for(int j = 0; j < bmpWidth; ++j)
+                            {
+                                byte c0 = (byte)(((float)byteValues[i * stride + j*3 + 2] - inputMean) * scale);
+                                byte c1 = (byte)(((float)byteValues[i * stride + j*3 + 1] - inputMean) * scale);
+                                byte c2 = (byte)(((float)byteValues[i * stride + j*3] - inputMean) * scale);
+                                byteValues[idx++] = c0;
+                                byteValues[idx++] = c1;
+                                byteValues[idx++] = c2;
+                            }
                     } else
                     {
-                        if (! (inputMean == 0.0f && scale == 1.0f))
-                            for (int i = 0; i < byteValues.Length; ++i)
+                        int idx = 0;
+                        for (int i = 0; i < bmpHeight; ++i)
+                            for (int j = 0; j < bmpWidth*3; ++j)
                             {
-                                byteValues[i] = (byte) ( ((float)byteValues[i] - inputMean) * scale );
+                                byteValues[idx++] = (byte) ( ((float)byteValues[i*stride + j] - inputMean) * scale );
                             }
-                        
                     }
-                    Marshal.Copy(byteValues, 0, dest, byteValues.Length);
+                    Marshal.Copy(byteValues, 0, dest, imageSize*3);
 
                 } else
                 {

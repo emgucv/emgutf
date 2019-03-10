@@ -45,7 +45,7 @@ namespace Emgu.TF.Models
             Tensor mean = new Tensor(inputMean);
             Operation meanOp = graph.Const(mean, mean.Type, opName: "mean");
             Operation added = graph.Add(scaled, meanOp);
-            Operation uintCaster = graph.Cast(added, DstT: DataType.Uint8); //cast to float
+            Operation uintCaster = graph.Cast(added, DstT: DataType.Uint8); //cast to uint
             Operation squeezed = graph.Squeeze(uintCaster, new long[] { 0 });
             Operation jpegRaw = graph.EncodeJpeg(squeezed);
             Session session = new Session(graph);
@@ -360,7 +360,7 @@ namespace Emgu.TF.Models
 			System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, t.DataPointer, floatValues.Length);
 			return t;
 #else
-
+            /*
             if (Emgu.TF.Util.Platform.OperationSystem == OS.Windows)
             {
                 Tensor t;
@@ -370,7 +370,7 @@ namespace Emgu.TF.Models
                     t = new Tensor(DataType.Uint8, new int[] { 1, (int)inputHeight, (int)inputWidth, 3 });
                 else
                 {
-                    throw new Exception(String.Format("Convertion to tensor of type {0} is not implemented", typeof(T)));
+                    throw new Exception(String.Format("Conversion to tensor of type {0} is not implemented", typeof(T)));
                 }
 
                 NativeImageIO.ReadImageFileToTensor<T>(
@@ -381,30 +381,25 @@ namespace Emgu.TF.Models
                     inputMean,
                     scale,
                     flipUpSideDown,
-                    swapBR
+                    !swapBR //No swapping BR in tensorflow is swapping BR in Bitmap
                     );
                 return t;
             }
-            else
+            else*/
             {
-                if (flipUpSideDown)
-                    throw new NotImplementedException("Flip Up Side Down is Not implemented");
-                if (swapBR)
-                    throw new NotImplementedException("swapBR is Not implemented");
-
                 //Mac OS or Linux
                 using (StatusChecker checker = new StatusChecker(status))
+                using(Graph graph = new Graph())
                 {
-                    var graph = new Graph();
                     Operation input = graph.Placeholder(DataType.String);
 
-                    Operation jpegDecoder = graph.DecodeJpeg(input, 3); //dimension 3
+                    Operation jpegDecoder = graph.DecodeJpeg(input, 3); //output dimension [height, width, 3] where 3 is the number of channels
 
                     Operation floatCaster = graph.Cast(jpegDecoder, DstT: DataType.Float); //cast to float
 
-                    Tensor axis = new Tensor(0);
-                    Operation axisOp = graph.Const(axis, axis.Type, opName: "axis");
-                    Operation dimsExpander = graph.ExpandDims(floatCaster, axisOp); //turn it to dimension [1,3]
+                    Tensor zeroConst = new Tensor(0);
+                    Operation zeroConstOp = graph.Const(zeroConst, zeroConst.Type, opName: "zeroConstOp");
+                    Operation dimsExpander = graph.ExpandDims(floatCaster, zeroConstOp); //turn it to dimension [1, height, width, 3]
 
                     Operation resized;
                     bool resizeRequired = (inputHeight > 0) && (inputWidth > 0);
@@ -427,11 +422,37 @@ namespace Emgu.TF.Models
                     Operation scaleOp = graph.Const(scaleTensor, scaleTensor.Type, opName: "scale");
                     Operation scaled = graph.Mul(substracted, scaleOp);
 
-                    Session session = new Session(graph);
-                    Tensor imageTensor = Tensor.FromString(File.ReadAllBytes(fileName), status);
-                    Tensor[] imageResults = session.Run(new Output[] { input }, new Tensor[] { imageTensor },
-                        new Output[] { scaled });
-                    return imageResults[0];
+                    Operation swapedBR;
+                    if (swapBR)
+                    {
+                        Tensor threeConst = new Tensor(new int[]{3});
+                        Operation threeConstOp = graph.Const(threeConst, threeConst.Type, "threeConstOp");
+                        swapedBR = graph.ReverseV2(scaled, threeConstOp, "swapBR");
+                    }
+                    else
+                    {
+                        swapedBR = scaled;
+                    }
+
+                    Operation flipped;
+                    if (flipUpSideDown)
+                    {
+                        Tensor oneConst = new Tensor(new int[]{1});
+                        Operation oneConstOp = graph.Const(oneConst, oneConst.Type, "oneConstOp");
+                        flipped = graph.ReverseV2(swapedBR, oneConstOp, "flipUpSideDownOp");
+                    }
+                    else
+                    {
+                        flipped = swapedBR;
+                    }
+
+                    using (Session session = new Session(graph))
+                    {
+                        Tensor imageTensor = Tensor.FromString(File.ReadAllBytes(fileName), status);
+                        Tensor[] imageResults = session.Run(new Output[] { input }, new Tensor[] { imageTensor },
+                            new Output[] { flipped });
+                        return imageResults[0];
+                    }
 
                 }
             }

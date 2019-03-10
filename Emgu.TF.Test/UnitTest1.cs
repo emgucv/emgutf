@@ -15,6 +15,7 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using Emgu.Models;
 using Emgu.TF.Models;
 using Tensorflow;
 using Google.Protobuf;
@@ -41,7 +42,7 @@ namespace Emgu.TF.Test
         [TestMethod]
         public void TestInception()
         {
-            using (Tensor imageTensor = ImageIO.ReadTensorFromImageFile("grace_hopper.jpg", 224, 224, 128.0f, 1.0f))
+            using (Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>("grace_hopper.jpg", 224, 224, 128.0f, 1.0f))
             using (Inception inceptionGraph = new Inception())
             {
                 bool processCompleted = false;
@@ -138,17 +139,18 @@ namespace Emgu.TF.Test
         public void TestMultiboxPeopleDetect()
         {
 
-            Tensor imageResults = ImageIO.ReadTensorFromImageFile("surfers.jpg", 224, 224, 128.0f, 1.0f / 128.0f);
+            Tensor imageResults = ImageIO.ReadTensorFromImageFile<float>("surfers.jpg", 224, 224, 128.0f, 1.0f / 128.0f);
 
             MultiboxGraph multiboxGraph = new MultiboxGraph();
             bool processCompleted = false;
 
             multiboxGraph.OnDownloadCompleted += (sender, e) =>
             {
-                MultiboxGraph.Result result = multiboxGraph.Detect(imageResults);
+                MultiboxGraph.Result[] result = multiboxGraph.Detect(imageResults);
 
                 Bitmap bmp = new Bitmap("surfers.jpg");
-                MultiboxGraph.DrawResults(bmp, result, 0.1f);
+                //MultiboxGraph.DrawResults(bmp, result, 0.1f);
+                //MultiboxGraph.
                 bmp.Save("surfers_result.jpg");
                 processCompleted = true;
             };
@@ -167,7 +169,7 @@ namespace Emgu.TF.Test
         public void TestStylize()
         {
             StylizeGraph stylizeGraph = new StylizeGraph();
-            Tensor image = ImageIO.ReadTensorFromImageFile("surfers.jpg");
+            Tensor image = ImageIO.ReadTensorFromImageFile<float>("surfers.jpg");
             Tensor stylizedImage = stylizeGraph.Stylize(image, 0);
         }
 
@@ -180,8 +182,8 @@ namespace Emgu.TF.Test
         [TestMethod]
         public void TestEncodeJpeg()
         {
-            Tensor image = ImageIO.ReadTensorFromImageFile("surfers.jpg");
-            byte[] jpegRaw = ImageIO.EncodeJpeg(image);
+            Tensor image = ImageIO.ReadTensorFromImageFile<float>("surfers.jpg", 299, 299, 0, 1.0f/255.0f, true, false);
+            byte[] jpegRaw = ImageIO.EncodeJpeg(image, 255.0f, 0.0f);
             File.WriteAllBytes("surefers_out.jpg", jpegRaw);
         }
 
@@ -299,6 +301,28 @@ namespace Emgu.TF.Test
             byte[] data = results[0].DecodeString();
             String output = System.Text.Encoding.Default.GetString(data);
             Assert.IsTrue(output.Equals(h));
+        }
+
+        [TestMethod]
+        public void TestNativeImageIO()
+        {
+            int inputHeight = 299;
+            int inputWidth = 299;
+            String file = "surfers.jpg";
+            Tensor t0 = new Tensor(DataType.Uint8, new int[] { 1, (int)inputHeight, (int)inputWidth, 3 });
+            NativeImageIO.ReadImageFileToTensor<float>(file, t0.DataPointer, inputHeight, inputWidth, 0.0f,
+                1.0f / 255.0f);
+            Tensor t1 = ImageIO.ReadTensorFromImageFile<float>(file);
+            float maxDiff = 0.0f;
+            var ta0 = t0.GetData(false) as float[];
+            var ta1 = t1.GetData(false) as float[];
+            for (int i = 0; i < ta0.Length; i++)
+            {
+                float diff = Math.Abs(ta0[i] - ta1[i]);
+                if (diff < maxDiff)
+                    maxDiff = diff;
+            }
+
         }
     }
 }

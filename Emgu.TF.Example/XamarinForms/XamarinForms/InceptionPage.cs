@@ -69,10 +69,10 @@ namespace Emgu.TF.XamarinForms
                     SetMessage("Please wait...");
                     SetImage();
 
-                    Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
+                    //Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
 
                     //Uncomment the following code to use a retrained model to recognize followers, downloaded from the Internet
-                    //Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>(image[0], 299, 299, 0.0f, 1.0f / 255.0f);
+                    Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>(image[0], 299, 299, 0.0f, 1.0f/255.0f, false, false);
 
                     Inception.RecognitionResult result;
                     if (_coldSession)
@@ -114,11 +114,11 @@ namespace Emgu.TF.XamarinForms
                 _inceptionGraph.Init();
 
                 //Uncomment the following code to use a retrained model to recognize followers, downloaded from the Internet
-                //_inceptionGraph.Init(
-                //    new string[] {"optimized_graph.pb", "output_labels.txt"}, 
-                //    "https://github.com/emgucv/models/raw/master/inception_flower_retrain/", 
-                //    "Placeholder", 
-                //    "final_result");
+                _inceptionGraph.Init(
+                    new string[] {"optimized_graph.pb", "output_labels.txt"}, 
+                    "https://github.com/emgucv/models/raw/master/inception_flower_retrain/", 
+                    "Placeholder", 
+                    "final_result");
             }
             else
             {
