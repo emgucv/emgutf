@@ -76,7 +76,7 @@ namespace Emgu.TF.XamarinForms
                 _inceptionGraph = new Inception();
                 _inceptionGraph.OnDownloadProgressChanged += onDownloadProgressChanged;
                 _inceptionGraph.OnDownloadCompleted += onDownloadCompleted;
-                _inceptionGraph.OnDownloadCompleted += (sender, e) => 
+                _inceptionGraph.OnDownloadCompleted += (sender, e) =>
                 {
                     OnButtonClicked(sender, e);
                 };
@@ -91,14 +91,14 @@ namespace Emgu.TF.XamarinForms
                     Tensor imageTensor;
                     if (_model == Model.Flower)
                     {
-                        imageTensor = ImageIO.ReadTensorFromImageFile<float>(image[0], 299, 299, 0.0f, 1.0f / 255.0f, false, false);    
+                        imageTensor = ImageIO.ReadTensorFromImageFile<float>(image[0], 299, 299, 0.0f, 1.0f / 255.0f, false, false);
                     }
                     else
                     {
                         imageTensor =
                             ImageIO.ReadTensorFromImageFile<float>(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
                     }
-                    
+
                     Inception.RecognitionResult result;
                     if (_coldSession)
                     {
@@ -116,7 +116,7 @@ namespace Emgu.TF.XamarinForms
 
                     String msg = String.Format("Object is {0} with {1}% probability. Recognized in {2} milliseconds.", result.Label, result.Probability * 100, sw.ElapsedMilliseconds);
                     SetMessage(msg);
-                    
+
                     SetImage(image[0]);
                 }
                 catch (Exception excpt)
@@ -125,7 +125,7 @@ namespace Emgu.TF.XamarinForms
                     SetMessage(msg);
                 }
             };
-            
+
         }
 
         public override void OnButtonClicked(Object sender, EventArgs args)
@@ -148,14 +148,22 @@ namespace Emgu.TF.XamarinForms
                     //The inception model
                     _inceptionGraph.Init();
                 }
-                
+
             }
             else
             {
-                LoadImages(new string[] { "space_shuttle.jpg" });
+                if (_model == Model.Flower)
+                {
+                    LoadImages(new string[] { "tulips.jpg" });
+                }
+                else
+                {
+                    LoadImages(new string[] { "space_shuttle.jpg" });
+                }
+
             }
         }
 
-   
+
     }
 }

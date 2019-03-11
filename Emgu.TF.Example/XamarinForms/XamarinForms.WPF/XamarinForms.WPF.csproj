@@ -123,6 +123,10 @@
       <Link>space_shuttle.jpg</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\XamarinForms\tulips.jpg">
+      <Link>tulips.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\..\tensorflow\tensorflow\examples\multibox_detector\data\surfers.jpg">
