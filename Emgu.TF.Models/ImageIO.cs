@@ -33,7 +33,7 @@ namespace Emgu.TF.Models
         /// <param name="image">The image tensor. Should be a single channel or 3 channel 4-D tensor</param>
         /// <param name="scale">The tensor value will be scaled with this values first</param>
         /// <param name="inputMean">The mean value will be added back to the image after scaling is done</param>
-        /// <returns></returns>
+        /// <returns>The jpeg data</returns>
         private static byte[] EncodeJpeg(Tensor image, float scale = 1.0f, float inputMean = 0.0f)
         {
             var graph = new Graph();
@@ -56,7 +56,7 @@ namespace Emgu.TF.Models
             return raw[0].DecodeString();
         }
 
-        public static byte[] TensorToPixel(Tensor imageTensorF, float scale = 1.0f, int dstChannels = 3, Status status = null)
+        public static byte[] TensorToPixel(Tensor imageTensorF, float scale = 1.0f, float mean = 0.0f, int dstChannels = 3, Status status = null)
         {
             int[] dim = imageTensorF.Dim;
             if (dim[3] != 3)
@@ -79,38 +79,45 @@ namespace Emgu.TF.Models
                 Operation scaleOp = graph.Const(scaleTensor, scaleTensor.Type, opName: "scale");
                 Operation scaled = graph.Mul(input, scaleOp);
 
+                //Add mean value
+                Tensor meanTensor = new Tensor(mean);
+                Operation meanOp = graph.Const(meanTensor, meanTensor.Type, opName: "mean");
+                Operation added = graph.Add(scaled, meanOp);
+
                 //cast to byte
-                Operation byteCaster = graph.Cast(scaled, DstT: DataType.Uint8);
+                Operation byteCaster = graph.Cast(added, DstT: DataType.Uint8);
 
                 //run the graph
-                Session session = new Session(graph);
-                Tensor[] imageResults = session.Run(new Output[] { input }, new Tensor[] { imageTensorF },
-                    new Output[] { byteCaster });
-
-                //get the raw data
-                byte[] raw = imageResults[0].Flat<byte>();
-
-                if (dstChannels == 3)
+                using (Session session = new Session(graph))
                 {
-                    return raw;
-                }
-                else if (dstChannels == 4)
-                {
-                    int pixelCount = raw.Length / 3;
-                    byte[] colors = new byte[pixelCount * 4];
-                    for (int i = 0; i < pixelCount; i++)
+                    Tensor[] imageResults = session.Run(new Output[] {input}, new Tensor[] {imageTensorF},
+                        new Output[] {byteCaster});
+
+                    //get the raw data
+                    byte[] raw = imageResults[0].Flat<byte>();
+
+                    if (dstChannels == 3)
                     {
-                        colors[i * 4] = raw[i * 3];
-                        colors[i * 4 + 1] = raw[i * 3 + 1];
-                        colors[i * 4 + 2] = raw[i * 3 + 2];
-                        colors[i * 4 + 3] = (byte)255;
+                        return raw;
                     }
-                    return colors;
-
-                }
-                else
-                {
-                    throw new Exception(String.Format("Output channel count of {0} is not supported", dstChannels));
+                    else if (dstChannels == 4)
+                    {
+                        int pixelCount = raw.Length / 3;
+                        byte[] colors = new byte[pixelCount * 4];
+                        for (int i = 0; i < pixelCount; i++)
+                        {
+                            colors[i * 4] = raw[i * 3];
+                            colors[i * 4 + 1] = raw[i * 3 + 1];
+                            colors[i * 4 + 2] = raw[i * 3 + 2];
+                            colors[i * 4 + 3] = (byte) 255;
+                        }
+                        return colors;
+                    }
+                    else
+                    {
+                        throw new NotImplementedException(String.Format("Output channel count of {0} is not supported",
+                            dstChannels));
+                    }
                 }
 
             }
@@ -274,22 +281,18 @@ namespace Emgu.TF.Models
 
         public static byte[] TensorToJpeg(Tensor image, float scale = 1.0f, float mean = 0.0f, Status status = null)
         {
-#if __ANDROID__
-            if (mean != 0.0)
-                throw new NotImplemenetedException("Not able to accept mean values on this platform");
-            byte[] rawPixel = TensorToPixel(image, scale, 4);
+#if __ANDROID__         
+            byte[] rawPixel = TensorToPixel(image, scale, mean, 4);
             int[] dim = image.Dim;
             return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 4);
 #elif __IOS__
             if (mean != 0.0)
                 throw new NotImplemenetedException("Not able to accept mean values on this platform");
-            byte[] rawPixel = TensorToPixel(image, scale, 3);
+            byte[] rawPixel = TensorToPixel(image, scale, mean, 3);
             int[] dim = image.Dim;
             return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 3);
 #elif __UNIFIED__ //Mac OSX
-            if (mean != 0.0)
-                throw new NotImplemenetedException("Not able to accept mean values on this platform");
-            byte[] rawPixel = TensorToPixel(image, scale, 4);
+            byte[] rawPixel = TensorToPixel(image, scale, mean, 4);
             int[] dim = image.Dim;
             return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 4);
 #else
@@ -309,28 +312,8 @@ namespace Emgu.TF.Models
             Status status = null) where T: struct
         {
 #if __ANDROID__
-            Android.Graphics.Bitmap bmp = BitmapFactory.DecodeFile(fileName);
-
-            if (inputHeight > 0 || inputWidth >  0)
-            {
-                Bitmap resized = Bitmap.CreateScaledBitmap(bmp, inputWidth, inputHeight, false);
-                bmp.Dispose();
-                bmp = resized;
-            }
-            int[] intValues = new int[bmp.Width * bmp.Height];
-            float[] floatValues = new float[bmp.Width * bmp.Height * 3];
-            bmp.GetPixels(intValues, 0, bmp.Width, 0, 0, bmp.Width, bmp.Height);
-            for (int i = 0; i < intValues.Length; ++i)
-            {
-                int val = intValues[i];
-                floatValues[i * 3 + 0] = (((val >> 16) & 0xFF) - inputMean) * scale;
-                floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - inputMean) * scale;
-                floatValues[i * 3 + 2] = ((val & 0xFF) - inputMean) * scale;
-            }
-
-            Tensor t =  new Tensor(DataType.Float, new int[] {1, bmp.Height, bmp.Width, 3});
-            System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, t.DataPointer, floatValues.Length);
-            return t;
+            return NativeReadTensorFromImageFile<T>(fileName, inputHeight, inputWidth, inputMean, scale,
+                flipUpSideDown, swapBR);
 #elif __IOS__
             UIImage image = new UIImage(fileName);
 			if (inputHeight > 0 || inputWidth > 0)
@@ -454,30 +437,45 @@ namespace Emgu.TF.Models
             }
             else
             {
-                //Use native Image handler to import the file
-                Tensor t;
-                if (typeof(T) == typeof(float))
-                    t = new Tensor(DataType.Float, new int[] { 1, (int)inputHeight, (int)inputWidth, 3 });
-                else if (typeof(T) == typeof(byte))
-                    t = new Tensor(DataType.Uint8, new int[] { 1, (int)inputHeight, (int)inputWidth, 3 });
-                else
-                {
-                    throw new Exception(String.Format("Conversion to tensor of type {0} is not implemented", typeof(T)));
-                }
-
-                NativeImageIO.ReadImageFileToTensor<T>(
-                    fileName,
-                    t.DataPointer,
-                    inputHeight,
-                    inputWidth,
-                    inputMean,
-                    scale,
-                    flipUpSideDown,
-                    !swapBR //No swapping BR in tensorflow is swapping BR in Bitmap
-                );
-                return t;
+                return NativeReadTensorFromImageFile<T>(fileName, inputHeight, inputWidth, inputMean, scale,
+                    flipUpSideDown, swapBR);
             }
 #endif
+        }
+
+        private static Tensor NativeReadTensorFromImageFile<T>(
+            String fileName,
+
+            int inputHeight = -1,
+            int inputWidth = -1,
+            float inputMean = 0.0f,
+            float scale = 1.0f,
+            bool flipUpSideDown = false,
+            bool swapBR = false,
+            Status status = null) where T : struct
+        {
+            //Use native Image handler to import the file
+            Tensor t;
+            if (typeof(T) == typeof(float))
+                t = new Tensor(DataType.Float, new int[] { 1, (int)inputHeight, (int)inputWidth, 3 });
+            else if (typeof(T) == typeof(byte))
+                t = new Tensor(DataType.Uint8, new int[] { 1, (int)inputHeight, (int)inputWidth, 3 });
+            else
+            {
+                throw new Exception(String.Format("Conversion to tensor of type {0} is not implemented", typeof(T)));
+            }
+
+            NativeImageIO.ReadImageFileToTensor<T>(
+                fileName,
+                t.DataPointer,
+                inputHeight,
+                inputWidth,
+                inputMean,
+                scale,
+                flipUpSideDown,
+                !swapBR //No swapping BR in tensorflow is swapping BR in Bitmap
+            );
+            return t;
         }
 #endif
     }
