@@ -34,7 +34,7 @@ namespace Emgu.TF.Models
         /// <param name="scale">The tensor value will be scaled with this values first</param>
         /// <param name="inputMean">The mean value will be added back to the image after scaling is done</param>
         /// <returns></returns>
-        public static byte[] EncodeJpeg(Tensor image, float scale = 1.0f, float inputMean = 0.0f)
+        private static byte[] EncodeJpeg(Tensor image, float scale = 1.0f, float inputMean = 0.0f)
         {
             var graph = new Graph();
             Operation input = graph.Placeholder(DataType.Float);
@@ -267,22 +267,28 @@ namespace Emgu.TF.Models
         }*/
 #else
 
-        public static byte[] TensorToJpeg(Tensor stylizedImage, float scale = 1.0f, Status status = null)
+        public static byte[] TensorToJpeg(Tensor image, float scale = 1.0f, float mean = 0.0f, Status status = null)
         {
 #if __ANDROID__
-            byte[] rawPixel = TensorToPixel(stylizedImage, scale, 4);
-            int[] dim = stylizedImage.Dim;
+            if (mean != 0.0)
+                throw new NotImplemenetedException("Not able to accept mean values on this platform");
+            byte[] rawPixel = TensorToPixel(image, scale, 4);
+            int[] dim = image.Dim;
             return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 4);
 #elif __IOS__
-            byte[] rawPixel = TensorToPixel(stylizedImage, scale, 3);
-            int[] dim = stylizedImage.Dim;
+            if (mean != 0.0)
+                throw new NotImplemenetedException("Not able to accept mean values on this platform");
+            byte[] rawPixel = TensorToPixel(image, scale, 3);
+            int[] dim = image.Dim;
             return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 3);
 #elif __UNIFIED__ //Mac OSX
-            byte[] rawPixel = TensorToPixel(stylizedImage, scale, 4);
-            int[] dim = stylizedImage.Dim;
+            if (mean != 0.0)
+                throw new NotImplemenetedException("Not able to accept mean values on this platform");
+            byte[] rawPixel = TensorToPixel(image, scale, 4);
+            int[] dim = image.Dim;
             return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 4);
 #else
-            return null;
+            return EncodeJpeg(image, 1.0f, 0.0f);
 #endif
         }
 
@@ -360,40 +366,25 @@ namespace Emgu.TF.Models
 			System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, t.DataPointer, floatValues.Length);
 			return t;
 #else
-            /*
-            if (Emgu.TF.Util.Platform.OperationSystem == OS.Windows)
-            {
-                Tensor t;
-                if (typeof(T) == typeof(float))
-                    t = new Tensor(DataType.Float, new int[] { 1, (int)inputHeight, (int)inputWidth, 3 });
-                else if (typeof(T) == typeof(byte))
-                    t = new Tensor(DataType.Uint8, new int[] { 1, (int)inputHeight, (int)inputWidth, 3 });
-                else
-                {
-                    throw new Exception(String.Format("Conversion to tensor of type {0} is not implemented", typeof(T)));
-                }
+            FileInfo fi = new FileInfo(fileName);
+            String extension = fi.Extension.ToLower();
 
-                NativeImageIO.ReadImageFileToTensor<T>(
-                    fileName,
-                    t.DataPointer,
-                    inputHeight,
-                    inputWidth,
-                    inputMean,
-                    scale,
-                    flipUpSideDown,
-                    !swapBR //No swapping BR in tensorflow is swapping BR in Bitmap
-                    );
-                return t;
-            }
-            else*/
+            //Use tensorflow to decode the following image formats
+            if ((typeof(T) == typeof(float)) 
+                &&
+                (extension.Equals(".jpeg") 
+                || extension.Equals(".jpg") 
+                || extension.Equals(".png")
+                || extension.Equals(".gif")))
             {
-                //Mac OS or Linux
-                using (StatusChecker checker = new StatusChecker(status))
+                //using (StatusChecker checker = new StatusChecker(status))
                 using(Graph graph = new Graph())
                 {
                     Operation input = graph.Placeholder(DataType.String);
 
-                    Operation jpegDecoder = graph.DecodeJpeg(input, 3); //output dimension [height, width, 3] where 3 is the number of channels
+                    //output dimension [height, width, 3] where 3 is the number of channels
+                    //DecodeJpeg can decode JPEG, PNG and GIF
+                    Operation jpegDecoder = graph.DecodeJpeg(input, 3); 
 
                     Operation floatCaster = graph.Cast(jpegDecoder, DstT: DataType.Float); //cast to float
 
@@ -455,6 +446,31 @@ namespace Emgu.TF.Models
                     }
 
                 }
+            }
+            else
+            {
+                //Use native Image handler to import the file
+                Tensor t;
+                if (typeof(T) == typeof(float))
+                    t = new Tensor(DataType.Float, new int[] { 1, (int)inputHeight, (int)inputWidth, 3 });
+                else if (typeof(T) == typeof(byte))
+                    t = new Tensor(DataType.Uint8, new int[] { 1, (int)inputHeight, (int)inputWidth, 3 });
+                else
+                {
+                    throw new Exception(String.Format("Conversion to tensor of type {0} is not implemented", typeof(T)));
+                }
+
+                NativeImageIO.ReadImageFileToTensor<T>(
+                    fileName,
+                    t.DataPointer,
+                    inputHeight,
+                    inputWidth,
+                    inputMean,
+                    scale,
+                    flipUpSideDown,
+                    !swapBR //No swapping BR in tensorflow is swapping BR in Bitmap
+                );
+                return t;
             }
 #endif
         }

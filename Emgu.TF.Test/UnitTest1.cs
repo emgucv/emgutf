@@ -183,7 +183,7 @@ namespace Emgu.TF.Test
         public void TestEncodeJpeg()
         {
             Tensor image = ImageIO.ReadTensorFromImageFile<float>("surfers.jpg", 299, 299, 0, 1.0f/255.0f, true, false);
-            byte[] jpegRaw = ImageIO.EncodeJpeg(image, 255.0f, 0.0f);
+            byte[] jpegRaw = ImageIO.TensorToJpeg(image, 255.0f, 0.0f);
             File.WriteAllBytes("surefers_out.jpg", jpegRaw);
         }
 

@@ -28,12 +28,20 @@ namespace Emgu.TF.XamarinForms
             buttons.Add(multiboxDetectionButton);
 
             Button inceptionButton = new Button();
-            inceptionButton.Text = "Object recognition";
+            inceptionButton.Text = "Object recognition (Inception)";
             inceptionButton.Clicked += (sender, args) =>
             {
-                MainPage.Navigation.PushAsync(new InceptionPage());
+                MainPage.Navigation.PushAsync(new InceptionPage(InceptionPage.Model.Default));
             };
             buttons.Add(inceptionButton);
+
+            Button flowerButton = new Button();
+            flowerButton.Text = "Flower Recognition";
+            flowerButton.Clicked += (sender, args) =>
+            {
+                MainPage.Navigation.PushAsync(new InceptionPage(InceptionPage.Model.Flower));
+            };
+            buttons.Add(flowerButton);
 
 #if __ANDROID__ || __UNIFIED__
             //Only add stylize for Android, iOS and Mac.

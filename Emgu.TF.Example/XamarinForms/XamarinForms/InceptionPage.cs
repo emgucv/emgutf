@@ -34,6 +34,23 @@ namespace Emgu.TF.XamarinForms
 {
     public class InceptionPage : ModelButtonTextImagePage
     {
+        /// <summary>
+        /// The inception model to use.
+        /// </summary>
+        public enum Model
+        {
+            /// <summary>
+            /// The default inception model
+            /// </summary>
+            Default,
+            /// <summary>
+            /// The flower re-train model
+            /// </summary>
+            Flower
+        }
+
+        private Model _model;
+
         private Inception _inceptionGraph;
 
         private bool _coldSession = true;
@@ -49,9 +66,11 @@ namespace Emgu.TF.XamarinForms
             }
         }
 
-        public InceptionPage()
+        public InceptionPage(Model model)
             : base()
         {
+            _model = model;
+
             if (_inceptionGraph == null)
             {
                 _inceptionGraph = new Inception();
@@ -69,11 +88,17 @@ namespace Emgu.TF.XamarinForms
                     SetMessage("Please wait...");
                     SetImage();
 
-                    //Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
-
-                    //Uncomment the following code to use a retrained model to recognize followers, downloaded from the Internet
-                    Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>(image[0], 299, 299, 0.0f, 1.0f/255.0f, false, false);
-
+                    Tensor imageTensor;
+                    if (_model == Model.Flower)
+                    {
+                        imageTensor = ImageIO.ReadTensorFromImageFile<float>(image[0], 299, 299, 0.0f, 1.0f / 255.0f, false, false);    
+                    }
+                    else
+                    {
+                        imageTensor =
+                            ImageIO.ReadTensorFromImageFile<float>(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
+                    }
+                    
                     Inception.RecognitionResult result;
                     if (_coldSession)
                     {
@@ -100,8 +125,7 @@ namespace Emgu.TF.XamarinForms
                     SetMessage(msg);
                 }
             };
-
-           
+            
         }
 
         public override void OnButtonClicked(Object sender, EventArgs args)
@@ -110,15 +134,21 @@ namespace Emgu.TF.XamarinForms
 
             if (_buttonMode == ButtonMode.WaitingModelDownload)
             {
-                //Use the following code for the full inception model
-                _inceptionGraph.Init();
-
-                //Uncomment the following code to use a retrained model to recognize followers, downloaded from the Internet
-                _inceptionGraph.Init(
-                    new string[] {"optimized_graph.pb", "output_labels.txt"}, 
-                    "https://github.com/emgucv/models/raw/master/inception_flower_retrain/", 
-                    "Placeholder", 
-                    "final_result");
+                if (_model == Model.Flower)
+                {
+                    //use a retrained model to recognize followers
+                    _inceptionGraph.Init(
+                        new string[] { "optimized_graph.pb", "output_labels.txt" },
+                        "https://github.com/emgucv/models/raw/master/inception_flower_retrain/",
+                        "Placeholder",
+                        "final_result");
+                }
+                else
+                {
+                    //The inception model
+                    _inceptionGraph.Init();
+                }
+                
             }
             else
             {
