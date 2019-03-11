@@ -119,7 +119,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\InceptionObjectRecognition\space_shuttle.jpg">
+    <Content Include="..\XamarinForms\space_shuttle.jpg">
       <Link>space_shuttle.jpg</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

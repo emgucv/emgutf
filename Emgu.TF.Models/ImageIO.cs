@@ -64,6 +64,11 @@ namespace Emgu.TF.Models
                 throw new NotImplementedException("Only 3 channel tensor input is supported.");
             }
 
+            if (imageTensorF.Type != DataType.Float)
+            {
+                throw new NotImplementedException("Only floating point tensor input is supported.");
+            }
+
             using (StatusChecker checker = new StatusChecker(status))
             {
                 var graph = new Graph();

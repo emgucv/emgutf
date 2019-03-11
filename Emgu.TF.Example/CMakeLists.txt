@@ -24,6 +24,7 @@ IF (HAVE_ANDROID OR HAVE_IOS OR HAVE_OSX OR HAVE_WINDESKTOP_X64)
     PATTERN "*.xml"
     PATTERN "*.txt"
     PATTERN "*.png"
+	PATTERN "*.jpg"
     PATTERN "*.dll"
     PATTERN "*.json"
     PATTERN ".git" EXCLUDE
