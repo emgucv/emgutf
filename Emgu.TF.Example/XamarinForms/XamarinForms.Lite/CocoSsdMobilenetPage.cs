@@ -102,7 +102,8 @@ namespace Emgu.TF.XamarinForms
                 annotation.Label = String.Format("{0}:({1:0.00}%)", result[i].Label, result[i].Score * 100);
                 annotations[i] = annotation;
             }
-            
+
+
             byte[] jpeg = NativeImageIO.ImageFileToJpeg(_image[0], annotations);
             String names = String.Join(";", Array.ConvertAll(result, r => r.Label));
             SetImage(jpeg);

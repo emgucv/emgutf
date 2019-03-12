@@ -106,7 +106,7 @@ namespace Emgu.Models
             {
                 Marshal.Copy(floatValues, 0, dest, floatValues.Length);
             }
-            else if (typeof(T) == typeof(float))
+            else if (typeof(T) == typeof(byte))
             {
                 //copy float to bytes
                 byte[] byteValues = new byte[floatValues.Length];
@@ -122,8 +122,7 @@ namespace Emgu.Models
 #elif __IOS__
             if (flipUpSideDown)
                 throw new NotImplementedException("Flip Up Side Down is Not implemented");
-            if (swapBR)
-                throw new NotImplementedException("swapBR is Not implemented");
+
             UIImage image = new UIImage(fileName);
 			if (inputHeight > 0 || inputWidth > 0)
 			{
@@ -151,19 +150,31 @@ namespace Emgu.Models
             }
             handle.Free();
 
-			for (int i = 0; i < intValues.Length; ++i)
-			{
-				int val = intValues[i];
-				floatValues[i * 3 + 0] = (((val >> 16) & 0xFF) - inputMean) * scale;
-				floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - inputMean) * scale;
-				floatValues[i * 3 + 2] = ((val & 0xFF) - inputMean) * scale;
-			}
+            if (swapBR)
+            {
+                for (int i = 0; i < intValues.Length; ++i)
+                {
+                    int val = intValues[i];
+                    floatValues[i * 3 + 0] = ((val & 0xFF) - inputMean) * scale;
+                    floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - inputMean) * scale;
+                    floatValues[i * 3 + 2] = (((val >> 16) & 0xFF) - inputMean) * scale;
+                }
+            } else
+            {
+    			for (int i = 0; i < intValues.Length; ++i)
+    			{
+    				int val = intValues[i];
+    				floatValues[i * 3 + 0] = (((val >> 16) & 0xFF) - inputMean) * scale;
+    				floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - inputMean) * scale;
+    				floatValues[i * 3 + 2] = ((val & 0xFF) - inputMean) * scale;
+    			}
+            }
 			System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
 #elif __UNIFIED__
             if (flipUpSideDown)
                 throw new NotImplementedException("Flip Up Side Down is Not implemented");
-            if (swapBR)
-                throw new NotImplementedException("swapBR is Not implemented");
+            //if (swapBR)
+            //    throw new NotImplementedException("swapBR is Not implemented");
             NSImage image = new NSImage(fileName);
             if (inputHeight > 0 || inputWidth > 0)
             {
@@ -193,20 +204,49 @@ namespace Emgu.Models
 
             }
             handle.Free();
-
-            for (int i = 0; i < intValues.Length; ++i)
+            if (swapBR)
             {
-                int val = intValues[i];
-                floatValues[i * 3 + 0] = (((val >> 16) & 0xFF) - inputMean) * scale;
-                floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - inputMean) * scale;
-                floatValues[i * 3 + 2] = ((val & 0xFF) - inputMean) * scale;
+                for (int i = 0; i < intValues.Length; ++i)
+                {
+                    int val = intValues[i];
+                    floatValues[i * 3 + 0] = ((val & 0xFF) - inputMean) * scale;
+                    floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - inputMean) * scale;
+                    floatValues[i * 3 + 2] = (((val >> 16) & 0xFF) - inputMean) * scale;
+                }
+            } else
+            {
+                for (int i = 0; i < intValues.Length; ++i)
+                {
+                    int val = intValues[i];
+                    floatValues[i * 3 + 0] = (((val >> 16) & 0xFF) - inputMean) * scale;
+                    floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - inputMean) * scale;
+                    floatValues[i * 3 + 2] = ((val & 0xFF) - inputMean) * scale;
+                }
             }
-            System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
+
+            if (typeof(T) == typeof(float))
+            {
+                Marshal.Copy(floatValues, 0, dest, floatValues.Length);
+            }
+            else if (typeof(T) == typeof(byte))
+            {
+                //copy float to bytes
+                byte[] byteValues = new byte[floatValues.Length];
+                for (int i = 0; i < floatValues.Length; i++)
+                    byteValues[i] = (byte) floatValues[i];
+                Marshal.Copy(byteValues, 0, dest, byteValues.Length);
+            }
+            else
+            {
+                throw new NotImplementedException(String.Format("Destination data type {0} is not supported.", typeof(T).ToString()));
+            }
+
+            //System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
 #elif UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             Texture2D texture = ReadTexture2DFromFile(fileName);
             ReadTensorFromTexture2D<T>(texture, dest, inputHeight, inputWidth, inputMean, scale, flipUpSideDown, false);
 #else
-            
+
             if (Emgu.TF.Util.Platform.OperationSystem ==  OS.Windows)
             {
                 //Do something for Windows
