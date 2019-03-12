@@ -16,6 +16,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)CocoSsdMobilenetPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)InceptionPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MobilenetPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SmartReply.cs" />
   </ItemGroup>

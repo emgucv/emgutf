@@ -17,7 +17,6 @@ namespace Emgu.TF.XamarinForms
         {
             Emgu.TF.Lite.TfLiteInvoke.CheckLibraryLoaded();
 
-            
             Button multiboxDetectionButton = new Button();
             multiboxDetectionButton.Text = "Coco SSD Mobilenet";
             
@@ -27,6 +26,10 @@ namespace Emgu.TF.XamarinForms
             Button smartReplyButton = new Button();
             smartReplyButton.Text = "Smart Reply";
             */
+
+            Button inceptionButton = new Button();
+            inceptionButton.Text = "Flower recognition";
+
             // The root page of your application
             ContentPage page =
                new ContentPage
@@ -38,13 +41,14 @@ namespace Emgu.TF.XamarinForms
                      {
                            multiboxDetectionButton,
                            //smartReplyButton,
-                           mobilenetButton
+                           mobilenetButton,
+                           inceptionButton
                      }
                    }
                };
 
 #if NETFX_CORE
-		   String aboutIcon = "questionmark.png";
+		    String aboutIcon = "questionmark.png";
 #else
             String aboutIcon = null;
 #endif
@@ -58,7 +62,6 @@ namespace Emgu.TF.XamarinForms
                () =>
                {
                    MainPage.Navigation.PushAsync(new AboutPage());
-                   //page.DisplayAlert("Emgu TF Examples", "App version: ...", "Ok");
                }
             );
             page.ToolbarItems.Add(aboutItem);
@@ -79,6 +82,10 @@ namespace Emgu.TF.XamarinForms
             {
                 MainPage.Navigation.PushAsync(new SmartReplyPage());
             };*/
+            inceptionButton.Clicked += (sender, args) =>
+            {
+                MainPage.Navigation.PushAsync(new InceptionPage());
+            };
         }
 
         public Page CurrentPage

@@ -19,12 +19,12 @@ using UnityEngine;
 namespace Emgu.TF.Lite.Models
 {
     /// <summary>
-    /// The mobile net model for object class labeling 
+    /// The inception model for object class labeling 
     /// </summary>
-    public class Mobilenet : Emgu.TF.Util.UnmanagedObject
+    public class Inception : Emgu.TF.Util.UnmanagedObject
     {
         private FileDownloadManager _downloadManager;
-
+        
         private Interpreter _interpreter = null;
         private String[] _labels = null;
         private FlatBufferModel _model = null;
@@ -64,9 +64,9 @@ namespace Emgu.TF.Lite.Models
 #endif
 
         /// <summary>
-        /// Create a Mobilenet for object labeling.
+        /// Create a Inception model for object labeling.
         /// </summary>
-        public Mobilenet()
+        public Inception()
         {
             _downloadManager = new FileDownloadManager();
 
@@ -116,8 +116,8 @@ namespace Emgu.TF.Lite.Models
         {
 
             _downloadManager.Clear();
-            String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/mobilenet_v1_1.0_224_float_2017_11_08/" : downloadUrl;
-            String[] fileNames = modelFiles == null ? new string[] { "mobilenet_v1_1.0_224.tflite", "labels.txt" } : modelFiles;
+            String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/inception_flower_retrain/" : downloadUrl;
+            String[] fileNames = modelFiles == null ? new string[] { "optimized_graph.lite", "output_labels.txt" } : modelFiles;
             for (int i = 0; i < fileNames.Length; i++)
                 _downloadManager.AddFile(url + fileNames[i]);
 
@@ -253,9 +253,9 @@ namespace Emgu.TF.Lite.Models
         /// </summary>
         /// <param name="imageFile">The image to be loaded</param>
         /// <returns>The recognition result sorted by probability</returns>
-        public RecognitionResult[] Recognize(String imageFile)
+        public RecognitionResult[] Recognize(String imageFile, int width = 299, int height = 299, float mean = 0.0f, float scale = 1.0f/255.0f, bool flipUpsideDown = false, bool swapBR = true)
         {
-            NativeImageIO.ReadImageFileToTensor<float>(imageFile, _inputTensor.DataPointer, 224, 224, 128.0f, 1.0f / 128.0f);
+            NativeImageIO.ReadImageFileToTensor<float>(imageFile, _inputTensor.DataPointer, height, width, mean, scale, flipUpsideDown, swapBR);
 
             _interpreter.Invoke();
 

@@ -32,13 +32,13 @@ using CoreGraphics;
 
 namespace Emgu.TF.XamarinForms
 {
-    public class MobilenetPage : ButtonTextImagePage
+    public class InceptionPage : ButtonTextImagePage
     {
 
-        private Mobilenet _mobilenet;
+        private Inception _inception;
         private string[] _image = null;
 
-        public MobilenetPage()
+        public InceptionPage()
            : base()
         {
 
@@ -46,7 +46,7 @@ namespace Emgu.TF.XamarinForms
             button.Text = "Perform Image Classification";
             button.Clicked += OnButtonClicked;
 
-            _mobilenet = new Mobilenet();
+            _inception = new Inception();
 
             OnImagesLoaded += (sender, image) =>
             {
@@ -58,16 +58,16 @@ namespace Emgu.TF.XamarinForms
                 try
 #endif
                 {
-                    if (_mobilenet.Imported)
+                    if (_inception.Imported)
                     {
                         onDownloadCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(null, false, null));
                     }
                     else
                     {
-                        SetMessage("Please wait while the Mobilenet Model is being downloaded...");
-                        _mobilenet.OnDownloadProgressChanged += onDownloadProgressChanged;
-                        _mobilenet.OnDownloadCompleted += onDownloadCompleted;
-                        _mobilenet.Init();
+                        SetMessage("Please wait while the Inception Model is being downloaded...");
+                        _inception.OnDownloadProgressChanged += onDownloadProgressChanged;
+                        _inception.OnDownloadCompleted += onDownloadCompleted;
+                        _inception.Init();
                     }
                 }
 #if !DEBUG
@@ -92,7 +92,7 @@ namespace Emgu.TF.XamarinForms
         {
 
             Stopwatch watch = Stopwatch.StartNew();
-            var result = _mobilenet.Recognize(_image[0]);
+            var result = _inception.Recognize(_image[0]);
             watch.Stop();
             String resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", result[0].Label, result[0].Probability * 100, watch.ElapsedMilliseconds);
 
@@ -103,7 +103,7 @@ namespace Emgu.TF.XamarinForms
 
         private void OnButtonClicked(Object sender, EventArgs args)
         {
-            LoadImages(new string[] { "space_shuttle.jpg" });
+            LoadImages(new string[] { "tulips.jpg" });
         }
 
     }
