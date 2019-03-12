@@ -117,7 +117,7 @@
     <Content Include="..\..\tensorflow\tensorflow\examples\multibox_detector\data\surfers.jpg">
       <Link>surfers.jpg</Link>
     </Content>
-    <Content Include="..\InceptionObjectRecognition\space_shuttle.jpg">
+    <Content Include="..\XamarinForms\XamarinForms\space_shuttle.jpg">
       <Link>space_shuttle.jpg</Link>
     </Content>
   </ItemGroup>

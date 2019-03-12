@@ -149,6 +149,10 @@ namespace Emgu.TF.Models
 
         public Result[] Detect(Tensor imageResults)
         {
+            if (_graph == null)
+            {
+                throw new NullReferenceException("The multibox graph has not been initialized. Please call the Init function first.");
+            }
             Tensor[] finalTensor = _session.Run(new Output[] { _graph["ResizeBilinear"] }, new Tensor[] { imageResults },
                 new Output[] { _graph["output_scores/Reshape"], _graph["output_locations/Reshape"] });
 

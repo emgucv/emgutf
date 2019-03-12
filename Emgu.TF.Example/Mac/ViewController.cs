@@ -16,7 +16,7 @@ namespace Example.OSX
 		{
 			String fileName = "space_shuttle.jpg";
 
-            Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
+            Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
             //MultiboxGraph.Result detectResult = graph.Detect(imageTensor);
             float[] probability = _inceptionGraph.Recognize(imageTensor);
             String resStr = String.Empty;
@@ -39,11 +39,11 @@ namespace Example.OSX
             SetImage(new NSImage(fileName));
 		}
 
-		void multiboxGraph_OnDownloadProgressChanged(object sender, System.Net.DownloadProgressChangedEventArgs e)
+		void multiboxGraph_OnDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
 		{
 			String fileName = "surfers.jpg";
             
-            Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
+            Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
 			MultiboxGraph.Result[] detectResult = _multiboxGraph.Detect(imageTensor);
             Emgu.Models.NativeImageIO.Annotation[] annotations = MultiboxGraph.FilterResults(detectResult, 0.1f);
 
@@ -55,31 +55,12 @@ namespace Example.OSX
 
 		void stylizeGraph_OnDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
 		{
-			Tensor image = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile("surfers.jpg");
-            Tensor stylizedImage = _stylizeGraph.Stylize(image, 0);
-            var dim = stylizedImage.Dim;
-            System.Drawing.Size sz = new System.Drawing.Size(dim[2], dim[1]);
-
-            byte[] rawPixels = Emgu.TF.Models.ImageIO.TensorToPixel(stylizedImage, 255, 4);
-
-            CGColorSpace cspace = CGColorSpace.CreateDeviceRGB();
-            CGBitmapContext context = new CGBitmapContext(
-                rawPixels,
-                sz.Width, sz.Height,
-                8,
-                sz.Width * 4,
-                cspace,
-                CGBitmapFlags.PremultipliedLast | CGBitmapFlags.ByteOrder32Big);
-            CGImage cgImage = context.ToImage();
-
-            NSImage newImg = new NSImage(cgImage, new CGSize(cgImage.Width, cgImage.Height));
-			SetImage( newImg );
-
-            NSData dta = newImg.AsTiff();
-            NSBitmapImageRep imgRep = new NSBitmapImageRep(dta);
-            //var datra = imgRep.RepresentationUsingTypeProperties(NSBitmapImageFileType.NSBitmapImageFileType.Jpeg);
-
-
+            byte[] jpeg = _stylizeGraph.StylizeToJpeg("surfers.jpg", 0);
+            using (System.IO.Stream s = new System.IO.MemoryStream(jpeg))
+            {
+                NSImage newImg = NSImage.FromStream(s);
+                SetImage(newImg);
+            }
 		}
 
 
@@ -112,11 +93,33 @@ namespace Example.OSX
 		private MultiboxGraph _multiboxGraph = null;
 		private StylizeGraph _stylizeGraph = null;
 
-		void OnDownloadProgressChanged(object sender, System.Net.DownloadProgressChangedEventArgs e)
+        private static String ByteToSizeStr(long byteCount)
+        {
+            if (byteCount < 1024)
+            {
+                return String.Format("{0} B", byteCount);
+            }
+            else if (byteCount < 1024 * 1024)
+            {
+                return String.Format("{0} KB", byteCount / 1024);
+            }
+            else
+            {
+                return String.Format("{0} MB", byteCount / (1024 * 1024));
+            }
+        }
+
+
+
+        void OnDownloadProgressChanged(object sender, System.Net.DownloadProgressChangedEventArgs e)
 		{
-			String message = String.Format("Downloading {0} of {1} ({2}%)", e.BytesReceived, e.TotalBytesToReceive, e.ProgressPercentage);
-			SetMessage(message);
-		}
+            String msg;
+            if (e.TotalBytesToReceive > 0)
+                msg = String.Format("{0} of {1} downloaded ({2}%)", ByteToSizeStr(e.BytesReceived), ByteToSizeStr(e.TotalBytesToReceive), e.ProgressPercentage);
+            else
+                msg = String.Format("{0} downloaded", ByteToSizeStr(e.BytesReceived));
+            SetMessage(msg);
+        }
 
 
         public void SetMessage(String message)
@@ -162,7 +165,7 @@ namespace Example.OSX
 			{
 				_multiboxGraph = new MultiboxGraph();
 				_multiboxGraph.OnDownloadProgressChanged += OnDownloadProgressChanged;
-				_multiboxGraph.OnDownloadProgressChanged += multiboxGraph_OnDownloadProgressChanged;
+				_multiboxGraph.OnDownloadCompleted += multiboxGraph_OnDownloadCompleted;
 			}
 			_multiboxGraph.Init();
 

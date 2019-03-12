@@ -68,9 +68,28 @@ namespace Emgu.TF.XamarinForms
 
         }
 
+        private static String ByteToSizeStr(long byteCount)
+        {
+            if (byteCount < 1024)
+            {
+                return String.Format("{0} B", byteCount);
+            } else if (byteCount < 1024 * 1024)
+            {
+                return String.Format("{0} KB", byteCount / 1024);
+            } else
+            {
+                return String.Format("{0} MB", byteCount / (1024 * 1024));
+            }
+        }
+
         protected void onDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            SetMessage(String.Format("{0} of {1} downloaded ({2}%)", e.BytesReceived, e.TotalBytesToReceive, e.ProgressPercentage));
+            String msg;
+            if (e.TotalBytesToReceive > 0)
+                msg = String.Format("{0} of {1} downloaded ({2}%)", ByteToSizeStr(e.BytesReceived), ByteToSizeStr(e.TotalBytesToReceive), e.ProgressPercentage);
+            else
+                msg = String.Format("{0} downloaded", ByteToSizeStr(e.BytesReceived));
+            SetMessage(msg);
         }
     }
 }
