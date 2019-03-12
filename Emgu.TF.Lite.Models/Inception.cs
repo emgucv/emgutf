@@ -117,7 +117,7 @@ namespace Emgu.TF.Lite.Models
 
             _downloadManager.Clear();
             String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/inception_flower_retrain/" : downloadUrl;
-            String[] fileNames = modelFiles == null ? new string[] { "optimized_graph.lite", "output_labels.txt" } : modelFiles;
+            String[] fileNames = modelFiles == null ? new string[] { "optimized_graph.tflite", "output_labels.txt" } : modelFiles;
             for (int i = 0; i < fileNames.Length; i++)
                 _downloadManager.AddFile(url + fileNames[i]);
 
