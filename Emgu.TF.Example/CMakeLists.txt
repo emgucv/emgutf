@@ -5,7 +5,6 @@
 
 #XamarinForms
 
-
 IF (HAVE_ANDROID OR HAVE_IOS OR HAVE_OSX OR HAVE_WINDESKTOP_X64) 
   INSTALL(
     DIRECTORY
@@ -23,8 +22,6 @@ IF (HAVE_ANDROID OR HAVE_IOS OR HAVE_OSX OR HAVE_WINDESKTOP_X64)
     PATTERN "*.xaml"
     PATTERN "*.xml"
     PATTERN "*.txt"
-    PATTERN "*.png"
-	PATTERN "*.jpg"
     PATTERN "*.dll"
     PATTERN "*.json"
     PATTERN ".git" EXCLUDE
@@ -33,16 +30,33 @@ IF (HAVE_ANDROID OR HAVE_IOS OR HAVE_OSX OR HAVE_WINDESKTOP_X64)
     )
 ENDIF()
 
-IF (HAVE_ANDROID OR HAVE_IOS OR HAVE_OSX OR HAVE_ANDROID_LITE OR HAVE_IOS_LITE OR HAVE_OSX_LITE OR HAVE_WINDESKTOP_LITE OR HAVE_WINDESKTOP_X64) 	
+IF (HAVE_ANDROID OR HAVE_IOS OR HAVE_OSX OR HAVE_WINDESKTOP_X64 OR HAVE_ANDROID_LITE OR HAVE_IOS_LITE OR HAVE_OSX_LITE OR HAVE_WINDESKTOP_LITE) 	
+  INSTALL(
+    DIRECTORY
+    "${CMAKE_CURRENT_SOURCE_DIR}/XamarinForms/XamarinForms/"
+    DESTINATION Emgu.TF.Example/XamarinForms/XamarinForms/
+    COMPONENT emgutf_example_source
+    FILES_MATCHING 
+    PATTERN "*.png"
+	PATTERN "*.jpg"
+    PATTERN ".git" EXCLUDE
+    PATTERN "Debug" EXCLUDE
+    PATTERN "Release" EXCLUDE  
+    )
   INSTALL(FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/examples/multibox_detector/data/surfers.jpg"
     DESTINATION tensorflow/tensorflow/examples/multibox_detector/data 
 	COMPONENT emgutf_example_source)
 	
-  INSTALL(FILES
-    "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/examples/label_image/data/grace_hopper.jpg"
-    DESTINATION tensorflow/tensorflow/examples/label_image/data 
-	COMPONENT emgutf_example_source)
+  #INSTALL(FILES
+  #  "${CMAKE_CURRENT_SOURCE_DIR}/InceptionObjectRecognition/space_shuttle.jpg"
+  #  DESTINATION Emgu.TF.Example/InceptionObjectRecognition
+  #  COMPONENT emgutf_example_source)
+	
+  #INSTALL(FILES
+  #  "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/examples/label_image/data/grace_hopper.jpg"
+  #  DESTINATION tensorflow/tensorflow/examples/label_image/data 
+  #	COMPONENT emgutf_example_source)
 ENDIF()
 
 IF (HAVE_ANDROID_LITE OR HAVE_IOS_LITE OR HAVE_OSX_LITE OR HAVE_WINDESKTOP_LITE OR HAVE_WINDESKTOP_X64) 
@@ -232,12 +246,6 @@ IF(HAVE_OSX)
     PATTERN "Debug" EXCLUDE
     PATTERN "Release" EXCLUDE
     )
-
-  INSTALL(FILES
-    "${CMAKE_CURRENT_SOURCE_DIR}/InceptionObjectRecognition/space_shuttle.jpg"
-    DESTINATION Emgu.TF.Example/InceptionObjectRecognition
-    COMPONENT emgutf_example_source)
-
 ENDIF()
 
 IF(HAVE_OSX_LITE)
