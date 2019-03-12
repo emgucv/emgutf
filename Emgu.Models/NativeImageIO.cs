@@ -59,30 +59,65 @@ namespace Emgu.Models
             where T: struct
         {
 #if __ANDROID__
-            if (flipUpSideDown)
-                throw new NotImplementedException("Flip Up Side Down is Not implemented");
-            if (swapBR)
-                throw new NotImplementedException("swapBR is Not implemented");
+            
             Android.Graphics.Bitmap bmp = BitmapFactory.DecodeFile(fileName);
-
             if (inputHeight > 0 || inputWidth >  0)
             {
                 Bitmap resized = Bitmap.CreateScaledBitmap(bmp, inputWidth, inputHeight, false);
                 bmp.Dispose();
-                bmp = resized;
+                bmp = resized;                
             }
+
+            if (flipUpSideDown)
+            {
+                Matrix matrix = new Matrix();
+                matrix.PostScale(1, -1, bmp.Width / 2, bmp.Height / 2);
+                Bitmap flipped = Bitmap.CreateBitmap(bmp, 0, 0, bmp.Width, bmp.Height, matrix, true);
+                bmp.Dispose();
+                bmp = flipped;
+            }
+            
             int[] intValues = new int[bmp.Width * bmp.Height];
             float[] floatValues = new float[bmp.Width * bmp.Height * 3];
             bmp.GetPixels(intValues, 0, bmp.Width, 0, 0, bmp.Width, bmp.Height);
-            for (int i = 0; i < intValues.Length; ++i)
+
+            if (swapBR)
             {
-                int val = intValues[i];
-                floatValues[i * 3 + 0] = (((val >> 16) & 0xFF) - inputMean) * scale;
-                floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - inputMean) * scale;
-                floatValues[i * 3 + 2] = ((val & 0xFF) - inputMean) * scale;
+                for (int i = 0; i < intValues.Length; ++i)
+                {
+                    int val = intValues[i];
+                    floatValues[i * 3 + 0] = ((val & 0xFF) - inputMean) * scale; 
+                    floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - inputMean) * scale;
+                    floatValues[i * 3 + 2] = (((val >> 16) & 0xFF) - inputMean) * scale;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < intValues.Length; ++i)
+                {
+                    int val = intValues[i];
+                    floatValues[i * 3 + 0] = (((val >> 16) & 0xFF) - inputMean) * scale;
+                    floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - inputMean) * scale;
+                    floatValues[i * 3 + 2] = ((val & 0xFF) - inputMean) * scale;
+                }
             }
 
-            Marshal.Copy(floatValues, 0, dest, floatValues.Length);
+            if (typeof(T) == typeof(float))
+            {
+                Marshal.Copy(floatValues, 0, dest, floatValues.Length);
+            }
+            else if (typeof(T) == typeof(float))
+            {
+                //copy float to bytes
+                byte[] byteValues = new byte[floatValues.Length];
+                for (int i = 0; i < floatValues.Length; i++)
+                    byteValues[i] = (byte) floatValues[i];
+                Marshal.Copy(byteValues, 0, dest, byteValues.Length);
+            }
+            else
+            {
+                throw new NotImplementedException(String.Format("Destination data type {0} is not supported.", typeof(T).ToString()));
+            }
 
 #elif __IOS__
             if (flipUpSideDown)
@@ -267,7 +302,7 @@ namespace Emgu.Models
 
                 } else
                 {
-                    throw new Exception(String.Format("Destination data type {0} is not supported.", typeof(T).ToString()));
+                    throw new NotImplementedException(String.Format("Destination data type {0} is not supported.", typeof(T).ToString()));
                 }
             }
             else //Unix
@@ -275,7 +310,7 @@ namespace Emgu.Models
                 if (flipUpSideDown)
                     throw new NotImplementedException("Flip Up Side Down is Not implemented");
 
-                throw new Exception("Not implemented");
+                throw new NotImplementedException("Not implemented");
             }
 #endif
         }
