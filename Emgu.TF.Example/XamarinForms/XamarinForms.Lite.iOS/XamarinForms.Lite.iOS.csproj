@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\..\nugetpackages\Xamarin.Forms.3.2.0.839982\build\netstandard2.0\Xamarin.Forms.props" Condition="Exists('..\..\..\nugetpackages\Xamarin.Forms.3.2.0.839982\build\netstandard2.0\Xamarin.Forms.props')" />
+  <Import Project="..\..\..\nugetpackages\Xamarin.Forms.3.6.0.220655\build\Xamarin.Forms.props" Condition="Exists('..\..\..\nugetpackages\Xamarin.Forms.3.6.0.220655\build\Xamarin.Forms.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
@@ -101,16 +101,16 @@
       <HintPath>..\..\..\nugetpackages\Xam.Plugin.Media.4.0.1.5\lib\xamarinios10\Plugin.Media.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Core">
-      <HintPath>..\..\..\nugetpackages\Xamarin.Forms.3.2.0.839982\lib\Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
+      <HintPath>..\..\..\nugetpackages\Xamarin.Forms.3.6.0.220655\lib\Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Platform">
-      <HintPath>..\..\..\nugetpackages\Xamarin.Forms.3.2.0.839982\lib\Xamarin.iOS10\Xamarin.Forms.Platform.dll</HintPath>
+      <HintPath>..\..\..\nugetpackages\Xamarin.Forms.3.6.0.220655\lib\Xamarin.iOS10\Xamarin.Forms.Platform.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Platform.iOS">
-      <HintPath>..\..\..\nugetpackages\Xamarin.Forms.3.2.0.839982\lib\Xamarin.iOS10\Xamarin.Forms.Platform.iOS.dll</HintPath>
+      <HintPath>..\..\..\nugetpackages\Xamarin.Forms.3.6.0.220655\lib\Xamarin.iOS10\Xamarin.Forms.Platform.iOS.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Xaml">
-      <HintPath>..\..\..\nugetpackages\Xamarin.Forms.3.2.0.839982\lib\Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
+      <HintPath>..\..\..\nugetpackages\Xamarin.Forms.3.6.0.220655\lib\Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -159,5 +159,5 @@
   <Import Project="..\XamarinForms.Lite\XamarinForms.Lite.projitems" Label="Shared" Condition="Exists('..\XamarinForms.Lite\XamarinForms.Lite.projitems')" />
   <Import Project="..\..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.Models\Emgu.Models.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
-  <Import Project="..\..\..\nugetpackages\Xamarin.Forms.3.2.0.839982\build\netstandard2.0\Xamarin.Forms.targets" Condition="Exists('..\..\..\nugetpackages\Xamarin.Forms.3.2.0.839982\build\netstandard2.0\Xamarin.Forms.targets')" />
+  <Import Project="..\..\..\nugetpackages\Xamarin.Forms.3.6.0.220655\build\Xamarin.Forms.targets" Condition="Exists('..\..\..\nugetpackages\Xamarin.Forms.3.6.0.220655\build\Xamarin.Forms.targets')" />
 </Project>
