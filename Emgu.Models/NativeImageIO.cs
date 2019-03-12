@@ -169,7 +169,25 @@ namespace Emgu.Models
     				floatValues[i * 3 + 2] = ((val & 0xFF) - inputMean) * scale;
     			}
             }
-			System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
+
+            if (typeof(T) == typeof(float))
+            {
+                Marshal.Copy(floatValues, 0, dest, floatValues.Length);
+            }
+            else if (typeof(T) == typeof(byte))
+            {
+                //copy float to bytes
+                byte[] byteValues = new byte[floatValues.Length];
+                for (int i = 0; i < floatValues.Length; i++)
+                    byteValues[i] = (byte)floatValues[i];
+                Marshal.Copy(byteValues, 0, dest, byteValues.Length);
+            }
+            else
+            {
+                throw new NotImplementedException(String.Format("Destination data type {0} is not supported.", typeof(T).ToString()));
+            }
+
+            //System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
 #elif __UNIFIED__
             if (flipUpSideDown)
                 throw new NotImplementedException("Flip Up Side Down is Not implemented");
@@ -666,6 +684,11 @@ namespace Emgu.Models
                                            (nfloat)(rects[3] - rects[1]));
                 context.AddRect(cgRect);
                 context.DrawPath(CGPathDrawingMode.Stroke);
+
+                context.SelectFont("Helvetica", 12, CGTextEncoding.MacRoman);
+                context.SetFillColor((nfloat)1.0, (nfloat)0.0, (nfloat)0.0, (nfloat)1.0);
+                context.SetTextDrawingMode(CGTextDrawingMode.Fill);
+                context.ShowTextAtPoint(rects[0], rects[1], annotations[i].Label);
             }
             UIImage imgWithRect = UIGraphics.GetImageFromCurrentImageContext();
             UIGraphics.EndImageContext();
