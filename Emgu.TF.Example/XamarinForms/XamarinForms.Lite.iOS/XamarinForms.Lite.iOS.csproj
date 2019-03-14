@@ -148,11 +148,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\tensorflow\tensorflow\examples\label_image\data\grace_hopper.jpg">
-      <Link>grace_hopper.jpg</Link>
-    </Content>
     <Content Include="..\..\CVInterop\dog416.png">
       <Link>dog416.png</Link>
+    </Content>
+    <Content Include="..\XamarinForms\space_shuttle.jpg">
+      <Link>space_shuttle.jpg</Link>
+    </Content>
+    <Content Include="..\XamarinForms\tulips.jpg">
+      <Link>tulips.jpg</Link>
     </Content>
   </ItemGroup>
   <Import Project="..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems')" />
