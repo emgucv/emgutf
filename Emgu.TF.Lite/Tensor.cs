@@ -272,6 +272,9 @@ namespace Emgu.TF.Lite
             return array;
         }
 
+        /// <summary>
+        /// Get the size of the dimensions of the tensor
+        /// </summary>
         public int[] Dims
         {
             get

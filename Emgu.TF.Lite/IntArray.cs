@@ -10,10 +10,17 @@ using Emgu.TF.Util;
 
 namespace Emgu.TF.Lite
 {
+    /// <summary>
+    /// A tensorflow integer array
+    /// </summary>
     public class IntArray : Emgu.TF.Util.UnmanagedObject
     {
         private bool _needDispose;
 
+        /// <summary>
+        /// Create an int array of the given size
+        /// </summary>
+        /// <param name="size">The size of the IntArray</param>
         public IntArray(int size)
         {
             _needDispose = true;
@@ -26,7 +33,9 @@ namespace Emgu.TF.Lite
             _needDispose = needDispose;
         }
 
-
+        /// <summary>
+        /// Get a copy of the data in this integer array
+        /// </summary>
         public int[] Data
         {
             get

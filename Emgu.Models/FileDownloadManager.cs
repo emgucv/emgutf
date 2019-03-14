@@ -14,23 +14,42 @@ using UnityEngine;
 
 namespace Emgu.Models
 {
+    /// <summary>
+    /// Use to download files (e.g. models) from the internet
+    /// </summary>
     public class FileDownloadManager
     {
+        /// <summary>
+        /// Create a file download manager
+        /// </summary>
         public FileDownloadManager()
         {
         }
 
+        /// <summary>
+        /// This event will be fired when the download progress is changed
+        /// </summary>
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
-        public event System.ComponentModel.AsyncCompletedEventHandler OnDownloadCompleted;
 
+        /// <summary>
+        /// This event will be fired when the download is completed
+        /// </summary>
+        public event System.ComponentModel.AsyncCompletedEventHandler OnDownloadCompleted;
 
         private List<DownloadableFile> _files = new List<DownloadableFile>();
         
+        /// <summary>
+        /// Clear the list of files
+        /// </summary>
         public void Clear()
         {
             _files.Clear();
         }
 
+        /// <summary>
+        /// Add a file to download
+        /// </summary>
+        /// <param name="url">The url of the file to be downloaded</param>
         public void AddFile(String url)
         {
             _files.Add(new DownloadableFile(url));

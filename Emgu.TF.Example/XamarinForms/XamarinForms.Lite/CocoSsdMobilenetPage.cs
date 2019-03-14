@@ -105,7 +105,7 @@ namespace Emgu.TF.XamarinForms
 
 
             byte[] jpeg = NativeImageIO.ImageFileToJpeg(_imageFiles[0], annotations);
-            String names = String.Join(";", Array.ConvertAll(result, r => r.Label));
+            //String names = String.Join(";", Array.ConvertAll(result, r => r.Label));
             SetImage(jpeg);
 
 

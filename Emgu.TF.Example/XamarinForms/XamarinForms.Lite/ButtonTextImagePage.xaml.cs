@@ -207,7 +207,6 @@ namespace Emgu.TF.XamarinForms
 
         public Xamarin.Forms.Label GetLabel()
         {
-            //return null;
             return this.MessageLabel;
         }
 
@@ -225,13 +224,11 @@ namespace Emgu.TF.XamarinForms
 
         public Xamarin.Forms.Button GetButton()
         {
-            //return null;
             return this.TopButton;
         }
 
         public Image GetImage()
         {
-            //return null;
             return this.DisplayImage;
         }
     }
