@@ -154,8 +154,6 @@ namespace Emgu.TF.Lite.Models
             {
                 _outputTensors = _interpreter.Outputs;
             }
-
-
         }
 
         
@@ -180,10 +178,9 @@ namespace Emgu.TF.Lite.Models
         /// <returns>The result of the detection.</returns>
         public RecognitionResult[] Recognize(String imageFile, float scoreThreshold = 0.0f)
         {
-            //NativeImageIO.ReadImageFileToTensor<byte>(imageFile, _inputTensor.DataPointer, _inputTensor.Dims[1], _inputTensor.Dims[2], _inputTensor.QuantizationParams.ZeroPoint, _inputTensor.QuantizationParams.Scale);
             int height = _inputTensor.Dims[1];
             int width = _inputTensor.Dims[2];
-                
+
             NativeImageIO.ReadImageFileToTensor<byte>(imageFile, _inputTensor.DataPointer, height, width, 0.0f, 1.0f);
 
             _interpreter.Invoke();

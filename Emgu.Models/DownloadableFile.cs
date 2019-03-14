@@ -13,16 +13,35 @@ using UnityEngine;
 
 namespace Emgu.Models
 {
+    /// <summary>
+    /// This represent a file that can be downloaded from the internet
+    /// </summary>
     public class DownloadableFile
     {
+        private String _url;
+
+        /// <summary>
+        /// Create a downloadable file from the url
+        /// </summary>
+        /// <param name="url">The url where the file can be downloaded from</param>
         public DownloadableFile(String url)
         {
-            Url = url;
+            _url = url;
         }
 
         private String _localFile = null;
-        public String Url;
 
+        /// <summary>
+        /// The url where this file can be downloaded from
+        /// </summary>
+        public String Url
+        {
+            get { return _url; }
+        }
+
+        /// <summary>
+        /// The local file name
+        /// </summary>
         public String LocalFile
         {
             get
@@ -52,6 +71,11 @@ namespace Emgu.Models
         public static String PersistentDataPath = Application.persistentDataPath;
 #endif
 
+        /// <summary>
+        /// The local path to the local file given the file name
+        /// </summary>
+        /// <param name="fileName">The name of the file</param>
+        /// <returns>The local path of the file</returns>
         public static String GetLocalFileName(String fileName)
         {
 #if __ANDROID__ || UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE

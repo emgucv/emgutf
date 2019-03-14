@@ -47,6 +47,18 @@ namespace Emgu.Models
             public String Label;
         }
 
+        /// <summary>
+        /// Read an image file, covert the data and save it to the native pointer
+        /// </summary>
+        /// <typeparam name="T">The type of the data to covert the image pixel values to. e.g. "float" or "byte"</typeparam>
+        /// <param name="fileName">The name of the image file</param>
+        /// <param name="dest">The native pointer where the image pixels values will be saved to.</param>
+        /// <param name="inputHeight">The height of the image, must match the height requirement for the tensor</param>
+        /// <param name="inputWidth">The width of the image, must match the width requirement for the tensor</param>
+        /// <param name="inputMean">The mean value, it will be substracted from the input image pixel values</param>
+        /// <param name="scale">The scale, after mean is substracted, the scale will be used to multiply the pixel values</param>
+        /// <param name="flipUpSideDown">If true, the image needs to be flipped up side down</param>
+        /// <param name="swapBR">If true, will flip the Blue channel with the Red. e.g. If false, the tensor's color channel order will be RGB. If true, the tensor's color channle order will be BGR </param>
         public static void ReadImageFileToTensor<T>(
             String fileName,
             IntPtr dest,
@@ -58,6 +70,9 @@ namespace Emgu.Models
             bool swapBR = false)
             where T: struct
         {
+            if (!File.Exists(fileName))
+                throw new FileNotFoundException(String.Format("File {0} do not exist.", fileName));
+
 #if __ANDROID__
             
             Android.Graphics.Bitmap bmp = BitmapFactory.DecodeFile(fileName);
@@ -265,9 +280,9 @@ namespace Emgu.Models
             ReadTensorFromTexture2D<T>(texture, dest, inputHeight, inputWidth, inputMean, scale, flipUpSideDown, false);
 #else
 
-            if (Emgu.TF.Util.Platform.OperationSystem ==  OS.Windows)
+            if (Emgu.TF.Util.Platform.OperationSystem == OS.Windows)
             {
-                //Do something for Windows
+                //Read the file using Bitmap class
                 System.Drawing.Bitmap bmp = new Bitmap(fileName);
 
                 if (inputHeight > 0 || inputWidth > 0)
@@ -304,29 +319,36 @@ namespace Emgu.Models
                     if (swapBR)
                     {
                         int idx = 0;
+                        int rowOffset = 0;
                         for (int i = 0; i < bmpHeight; ++i)
                         {
-                            int rowOffset = i * stride;
+                            int rowPtr = rowOffset;
                             for (int j = 0; j < bmpWidth; ++j)
                             {
-                                floatValues[idx++] = ((float) byteValues[rowOffset + j * 3 + 2] - inputMean) * scale;
-                                floatValues[idx++] = ((float) byteValues[rowOffset + j * 3 + 1] - inputMean) * scale;
-                                floatValues[idx++] = ((float) byteValues[rowOffset + j * 3] - inputMean) * scale;
+                                float b = ((float)byteValues[rowPtr++] - inputMean) * scale;
+                                float g = ((float)byteValues[rowPtr++] - inputMean) * scale;
+                                float r = ((float)byteValues[rowPtr++] - inputMean) * scale;
+                                floatValues[idx++] = r;
+                                floatValues[idx++] = g;
+                                floatValues[idx++] = b;
                             }
+                            rowOffset += stride;
                         }
                     }
                     else
                     {
                         int idx = 0;
+                        int rowOffset = 0;
                         for (int i = 0; i < bmpHeight; ++i)
                         {
-                            int rowOffset = i * stride;
+                            int rowPtr = rowOffset;
                             for (int j = 0; j < bmpWidth; ++j)
                             {
-                                floatValues[idx++] = ((float) byteValues[rowOffset + j * 3] - inputMean) * scale;
-                                floatValues[idx++] = ((float) byteValues[rowOffset + j * 3 + 1] - inputMean) * scale;
-                                floatValues[idx++] = ((float) byteValues[rowOffset + j * 3 + 2] - inputMean) * scale;
+                                floatValues[idx++] = ((float) byteValues[rowPtr++] - inputMean) * scale;
+                                floatValues[idx++] = ((float) byteValues[rowPtr++] - inputMean) * scale;
+                                floatValues[idx++] = ((float) byteValues[rowPtr++] - inputMean) * scale;
                             }
+                            rowOffset += stride;
                         }
                     }
                     Marshal.Copy(floatValues, 0, dest, floatValues.Length);
@@ -335,26 +357,31 @@ namespace Emgu.Models
                     int imageSize = bmp.Width * bmp.Height;
                     if (swapBR)
                     {
-
                         int idx = 0;
                         for (int i = 0; i < bmpHeight; ++i)
-                            for(int j = 0; j < bmpWidth; ++j)
+                        {
+                            int offset = i * stride;
+                            for (int j = 0; j < bmpWidth; ++j)
                             {
-                                byte c0 = (byte)(((float)byteValues[i * stride + j*3 + 2] - inputMean) * scale);
-                                byte c1 = (byte)(((float)byteValues[i * stride + j*3 + 1] - inputMean) * scale);
-                                byte c2 = (byte)(((float)byteValues[i * stride + j*3] - inputMean) * scale);
-                                byteValues[idx++] = c0;
-                                byteValues[idx++] = c1;
-                                byteValues[idx++] = c2;
+                                byte b = (byte)(((float)byteValues[offset++] - inputMean) * scale);
+                                byte g = (byte)(((float)byteValues[offset++] - inputMean) * scale);
+                                byte r = (byte)(((float)byteValues[offset++] - inputMean) * scale);
+                                byteValues[idx++] = r;
+                                byteValues[idx++] = g;
+                                byteValues[idx++] = b;
                             }
+                        }
                     } else
                     {
                         int idx = 0;
                         for (int i = 0; i < bmpHeight; ++i)
-                            for (int j = 0; j < bmpWidth*3; ++j)
+                        {
+                            int offset = i * stride;
+                            for (int j = 0; j < bmpWidth * 3; ++j)
                             {
-                                byteValues[idx++] = (byte) ( ((float)byteValues[i*stride + j] - inputMean) * scale );
+                                byteValues[idx++] = (byte)(((float)byteValues[offset++] - inputMean) * scale);
                             }
+                        }
                     }
                     Marshal.Copy(byteValues, 0, dest, imageSize*3);
 
@@ -365,8 +392,8 @@ namespace Emgu.Models
             }
             else //Unix
             {
-                if (flipUpSideDown)
-                    throw new NotImplementedException("Flip Up Side Down is Not implemented");
+                //if (flipUpSideDown)
+                //    throw new NotImplementedException("Flip Up Side Down is Not implemented");
 
                 throw new NotImplementedException("Not implemented");
             }
@@ -712,7 +739,7 @@ namespace Emgu.Models
                             {
                                 float[] rects = ScaleLocation(annotations[i].Rectangle, img.Width, img.Height);
                                 PointF origin = new PointF(rects[0], rects[1]);
-                                RectangleF rect = new RectangleF(rects[0], rects[1], rects[2] - rects[0], rects[3] - rects[1]);
+                                RectangleF rect = new RectangleF(origin, new SizeF(rects[2] - rects[0], rects[3] - rects[1]));
                                 Pen redPen = new Pen(Color.Red, 3);
                                 g.DrawRectangle(redPen, Rectangle.Round(rect));
 

@@ -50,6 +50,9 @@ namespace Emgu.TF.XamarinForms
 
             OnImagesLoaded += (sender, image) =>
             {
+                if (image == null) //cancelled
+                    return;
+
                 SetMessage("Please wait...");
                 SetImage();
                 _image = image;
@@ -117,7 +120,6 @@ namespace Emgu.TF.XamarinForms
         private void OnButtonClicked(Object sender, EventArgs args)
         {
             LoadImages(new string[] { "dog416.png" });
-            //LoadImages(new string[] { "grace_hopper.jpg" });
         }
 
     }

@@ -59,20 +59,29 @@ namespace Emgu.TF.Models
         public static byte[] TensorToPixel(Tensor imageTensorF, float scale = 1.0f, float mean = 0.0f, int dstChannels = 3, Status status = null)
         {
             int[] dim = imageTensorF.Dim;
-            if (dim[3] != 3)
+            if (dim[0] != 1 || dim[3] != 3)
             {
-                throw new NotImplementedException("Only 3 channel tensor input is supported.");
+                throw new NotImplementedException("Only [1, height, width, 3] tensor input type is supported.");
             }
 
-            if (imageTensorF.Type != DataType.Float)
-            {
-                throw new NotImplementedException("Only floating point tensor input is supported.");
-            }
+            //if (imageTensorF.Type != DataType.Float)
+            //{
+            //    throw new NotImplementedException("Only floating point tensor input is supported.");
+            //}
 
             using (StatusChecker checker = new StatusChecker(status))
             {
                 var graph = new Graph();
                 Operation input = graph.Placeholder(imageTensorF.Type);
+
+                Operation floatCaster;
+                if (imageTensorF.Type != DataType.Float)
+                {
+                    floatCaster = graph.Cast(input, DstT: DataType.Float);
+                } else
+                {
+                    floatCaster = input;
+                }
 
                 //multiply with scale
                 Tensor scaleTensor = new Tensor(scale);
@@ -104,12 +113,14 @@ namespace Emgu.TF.Models
                     {
                         int pixelCount = raw.Length / 3;
                         byte[] colors = new byte[pixelCount * 4];
+                        int idxColor = 0;
+                        int idxRaw = 0;
                         for (int i = 0; i < pixelCount; i++)
                         {
-                            colors[i * 4] = raw[i * 3];
-                            colors[i * 4 + 1] = raw[i * 3 + 1];
-                            colors[i * 4 + 2] = raw[i * 3 + 2];
-                            colors[i * 4 + 3] = (byte) 255;
+                            colors[idxColor++] = raw[idxRaw++];
+                            colors[idxColor++] = raw[idxRaw++];
+                            colors[idxColor++] = raw[idxRaw++];
+                            colors[idxColor++] = (byte) 255;
                         }
                         return colors;
                     }
@@ -296,6 +307,11 @@ namespace Emgu.TF.Models
             int[] dim = image.Dim;
             return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 4);
 #else
+            //if (mean != 0.0)
+            //    throw new NotImplemenetedException("Not able to accept mean values on this platform");
+            //byte[] rawPixel = TensorToPixel(image, scale, mean, 3);
+            //int[] dim = image.Dim;
+            //return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 3);
             return EncodeJpeg(image, 1.0f, 0.0f);
 #endif
         }
