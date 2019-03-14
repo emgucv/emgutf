@@ -36,7 +36,7 @@ namespace Emgu.TF.XamarinForms
     {
 
         private CocoSsdMobilenet _mobilenet;
-        private string[] _image = null;
+        private string[] _imageFiles = null;
 
         public CocoSsdMobilenetPage()
            : base()
@@ -48,14 +48,11 @@ namespace Emgu.TF.XamarinForms
 
             _mobilenet = new CocoSsdMobilenet();
 
-            OnImagesLoaded += (sender, image) =>
+            OnImagesLoaded += (sender, imageFiles) =>
             {
-                if (image == null) //cancelled
-                    return;
-
                 SetMessage("Please wait...");
                 SetImage();
-                _image = image;
+                _imageFiles = imageFiles;
 
 #if !DEBUG
                 try
@@ -94,7 +91,7 @@ namespace Emgu.TF.XamarinForms
         private void onDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             Stopwatch watch = Stopwatch.StartNew();
-            var result = _mobilenet.Recognize(_image[0], 0.5f);
+            var result = _mobilenet.Recognize(_imageFiles[0], 0.5f);
             watch.Stop();
 
             NativeImageIO.Annotation[] annotations = new NativeImageIO.Annotation[result.Length];
@@ -107,7 +104,7 @@ namespace Emgu.TF.XamarinForms
             }
 
 
-            byte[] jpeg = NativeImageIO.ImageFileToJpeg(_image[0], annotations);
+            byte[] jpeg = NativeImageIO.ImageFileToJpeg(_imageFiles[0], annotations);
             String names = String.Join(";", Array.ConvertAll(result, r => r.Label));
             SetImage(jpeg);
 

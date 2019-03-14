@@ -36,7 +36,7 @@ namespace Emgu.TF.XamarinForms
     {
 
         private Inception _inception;
-        private string[] _image = null;
+        private string[] _imageFiles = null;
 
         public InceptionPage()
            : base()
@@ -48,11 +48,11 @@ namespace Emgu.TF.XamarinForms
 
             _inception = new Inception();
 
-            OnImagesLoaded += (sender, image) =>
+            OnImagesLoaded += (sender, imageFiles) =>
             {
                 SetMessage("Please wait...");
                 SetImage();
-                _image = image;
+                _imageFiles = imageFiles;
 
 #if !DEBUG
                 try
@@ -92,11 +92,11 @@ namespace Emgu.TF.XamarinForms
         {
 
             Stopwatch watch = Stopwatch.StartNew();
-            var result = _inception.Recognize(_image[0]);
+            var result = _inception.Recognize(_imageFiles[0]);
             watch.Stop();
             String resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", result[0].Label, result[0].Probability * 100, watch.ElapsedMilliseconds);
 
-            SetImage(_image[0]);
+            SetImage(_imageFiles[0]);
             SetMessage(resStr);
             
         }

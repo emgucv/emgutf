@@ -144,10 +144,17 @@ namespace Emgu.TF.XamarinForms
 #endif
         }
 
-        public void InvokeOnImagesLoaded(string[] images)
+        public void InvokeOnImagesLoaded(string[] imageFiles)
         {
+            if (imageFiles == null) //cancelled
+                return;
+
+            for (int i = 0; i < imageFiles.Length; i++)
+                if (imageFiles[i] == null)
+                    return; //cancelled
+
             if (OnImagesLoaded != null)
-                OnImagesLoaded(this, images);
+                OnImagesLoaded(this, imageFiles);
         }
 
         public event EventHandler<string[]> OnImagesLoaded;
