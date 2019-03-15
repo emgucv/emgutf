@@ -52,7 +52,7 @@ namespace Emgu.TF.Test
                     HashSet<string> couldBeOutputs = new HashSet<string>();
                     foreach (Operation op in inceptionGraph.Graph)
                     {
-                        
+
                         String name = op.Name;
                         opNames.Add(name);
 
@@ -299,6 +299,15 @@ namespace Emgu.TF.Test
             byte[] data = results[0].DecodeString();
             String output = System.Text.Encoding.Default.GetString(data);
             Assert.IsTrue(output.Equals(h));
+        }
+
+        [TestMethod]
+        public void TestIsOperationSupported()
+        {
+            bool castSupported = TfInvoke.IsOperationSupported("Cast");
+            Assert.IsTrue(castSupported);
+            bool notSuppoted = TfInvoke.IsOperationSupported("NotASupportedOperation");
+            Assert.IsTrue(!notSuppoted);
         }
     }
 }
