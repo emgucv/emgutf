@@ -328,10 +328,13 @@ namespace Emgu.TF.Test
         [TestMethod]
         public void TestIsOperationSupported()
         {
-            bool castSupported = TfInvoke.IsOperationSupported("Cast");
+            bool castSupported = TfInvoke.OpHasKernel("Cast");
             Assert.IsTrue(castSupported);
-            bool notSuppoted = TfInvoke.IsOperationSupported("NotASupportedOperation");
+            bool notSuppoted = TfInvoke.OpHasKernel("NotASupportedOperation");
             Assert.IsTrue(!notSuppoted);
+            bool quantizeV2HasKernel = TfInvoke.OpHasKernel("QuantizeV2");
+            bool quantizeV2IsRegistered = TfInvoke.OpIsRegistered("QuantizeV2");
+
         }
     }
 }

@@ -483,16 +483,31 @@ namespace Emgu.TF
         private static extern bool tfeIsGoogleCudaEnabled();
 
         /// <summary>
-        /// Returns true if the operation is defined.
+        /// Returns true if the operation is registered.
         /// </summary>
-        public static bool IsOperationSupported(String operationName)
+        public static bool OpIsRegistered(String operationName)
         {
-            return tfeIsOperationSupported(operationName);
+            return tfeOpIsRegistered(operationName);
         }
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         [return: MarshalAs(TfInvoke.BoolMarshalType)]
-        private static extern bool tfeIsOperationSupported(
+        private static extern bool tfeOpIsRegistered(
             [MarshalAs(TfInvoke.StringMarshalType)]
             String operationName);
+
+        /// <summary>
+        /// Returns true if the operation has a kernel
+        /// </summary>
+        public static bool OpHasKernel(String operationName)
+        {
+            return tfeOpHasKernel(operationName);
+        }
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [return: MarshalAs(TfInvoke.BoolMarshalType)]
+        private static extern bool tfeOpHasKernel(
+            [MarshalAs(TfInvoke.StringMarshalType)]
+            String operationName);
+
+
     }
 }
