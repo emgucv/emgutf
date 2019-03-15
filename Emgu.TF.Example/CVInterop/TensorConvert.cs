@@ -12,7 +12,7 @@ namespace Emgu.TF
     public static class TensorConvert
     {
         /// <summary>
-        /// Conver a 3 channel BGR Mat to a Tensor
+        /// Convert a 3 channel BGR Mat to a Tensor
         /// </summary>
         /// <param name="image">The input Emgu CV Mat</param>
         /// <param name="inputHeight">The height of the image in the output tensor, if it is -1, the height will not be changed.</param>
