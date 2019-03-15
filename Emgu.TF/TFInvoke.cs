@@ -481,5 +481,18 @@ namespace Emgu.TF
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         [return:MarshalAs(TfInvoke.BoolMarshalType)]
         private static extern bool tfeIsGoogleCudaEnabled();
+
+        /// <summary>
+        /// Returns true if the operation is defined.
+        /// </summary>
+        public static bool IsOperationSupported(String operationName)
+        {
+            return tfeIsOperationSupported(operationName);
+        }
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [return: MarshalAs(TfInvoke.BoolMarshalType)]
+        private static extern bool tfeIsOperationSupported(
+            [MarshalAs(TfInvoke.StringMarshalType)]
+            String operationName);
     }
 }
