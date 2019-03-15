@@ -43,17 +43,15 @@ namespace Emgu.TF.XamarinForms
             };
             buttons.Add(flowerButton);
 
-#if __ANDROID__ || __UNIFIED__
-            //Only add stylize for Android, iOS and Mac.
-            //Quantization is not available on Windows
-            Button stylizeButton = new Button();
-            stylizeButton.Text = "Stylize";
-            stylizeButton.Clicked += (sender, args) =>
+            //Only include stylize demo if QuantizeV2 is available.
+            if (TfInvoke.OpHasKernel("QuantizeV2"))
             {
-                MainPage.Navigation.PushAsync(new StylizePage());
-            };
-            buttons.Add(stylizeButton);
-#endif
+                Button stylizeButton = new Button();
+                stylizeButton.Text = "Stylize";
+                stylizeButton.Clicked += (sender, args) => { MainPage.Navigation.PushAsync(new StylizePage()); };
+                buttons.Add(stylizeButton);
+            }
+
             StackLayout layout = new StackLayout
             {
                 VerticalOptions = LayoutOptions.Start,
