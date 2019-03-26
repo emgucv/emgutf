@@ -512,8 +512,8 @@ IF(HAVE_WINDESKTOP_X64)
 		SET(EMGUTF_PROTOBUF_NUGET_TITLE "${EMGUTF_PROTOBUF_NUGET_TITLE} Commercial Release")
 	ENDIF()
 	
-	SET(BAZEL_GENERATED_CUFFT_VERSION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/bazel-genfiles/external/local_config_cuda/cuda/cuda/include/nppversion.h")
-	SET(BAZEL_GENERATED_DNN_VERSION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/bazel-genfiles/external/local_config_cuda/cuda/cuda/include/cudnn.h")
+	SET(BAZEL_CUDA_TOOLKIT_PATH_FILE "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/tensorflow/tools/CUDA_TOOLKIT_PATH.txt")
+	
 	SET(TFEXTERN_DEPENDENCY_DLLS)
 	
 	IF(EXISTS ${BAZEL_GENERATED_CUFFT_VERSION_FILE})
@@ -525,12 +525,18 @@ IF(HAVE_WINDESKTOP_X64)
 		SET(CMAKE_GENERATED_CUFFT_VERSION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/tensorflow/contrib/cmake/emgu.tf.cufft.version.txt")	
 		IF(EXISTS ${CMAKE_GENERATED_CUFFT_VERSION_FILE})
 			#The native binary is built with CMAKE
-			MESSAGE("-- Native tensorflow is build with cuda and cmake")
-			FILE(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/tensorflow/contrib/cmake/emgu.tf.cufft.version.txt" EMGU_TF_CUFFT_VERSION)
+			MESSAGE(STATUS "Native tensorflow is build with cuda and cmake")
+			FILE(STRINGS "${CMAKE_GENERATED_CUFFT_VERSION_FILE}" EMGU_TF_CUFFT_VERSION)
 			STRING(REPLACE "." "" EMGU_TF_CUFFT_FILE_VERSION "${EMGU_TF_CUFFT_VERSION}")
-		ELSEIF(EXISTS ${BAZEL_GENERATED_CUFFT_VERSION_FILE})	
+		ELSEIF(EXISTS ${BAZEL_CUDA_TOOLKIT_PATH_FILE})	
 			#The native binary is built with bazel
-			MESSAGE("-- Native tensorflow is build with cuda and bazel")
+			MESSAGE(STATUS "Native tensorflow is build with cuda and bazel")
+			FILE(STRINGS "${BAZEL_CUDA_TOOLKIT_PATH_FILE}" BAZEL_CUDA_TOOLKIT_PATH_RAW)
+			#STRING(REGEX REPLACE "\n" "" BAZEL_CUDA_TOOLKIT_PATH "${BAZEL_CUDA_TOOLKIT_PATH}")
+			STRING(STRIP "${BAZEL_CUDA_TOOLKIT_PATH_RAW}" BAZEL_CUDA_TOOLKIT_PATH)
+			#MESSAGE(STATUS "The Cuda path is: '${BAZEL_CUDA_TOOLKIT_PATH}'")
+			SET(BAZEL_GENERATED_CUFFT_VERSION_FILE "${BAZEL_CUDA_TOOLKIT_PATH}/include/nppversion.h")
+			SET(BAZEL_GENERATED_DNN_VERSION_FILE "${BAZEL_CUDA_TOOLKIT_PATH}/include/cudnn.h")
 			file( STRINGS "${BAZEL_GENERATED_CUFFT_VERSION_FILE}" npp_major REGEX "#define NPP_VERSION_MAJOR.*")
 			file( STRINGS "${BAZEL_GENERATED_CUFFT_VERSION_FILE}" npp_minor REGEX "#define NPP_VERSION_MINOR.*")
 			file( STRINGS "${BAZEL_GENERATED_CUFFT_VERSION_FILE}" npp_build REGEX "#define NPP_VERSION_BUILD.*")
@@ -543,7 +549,9 @@ IF(HAVE_WINDESKTOP_X64)
 			string( REGEX MATCH "[0-9]+" npp_minor ${npp_minor} ) 
 			string( REGEX MATCH "[0-9]+" npp_build ${npp_build} )
 			SET(EMGU_TF_CUFFT_VERSION "${npp_major}.${npp_minor}.${npp_build}") 
-			SET(CUDA_TOOLKIT_ROOT_DIR "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v${npp_major}.${npp_minor}")
+			#SET(CUDA_TOOLKIT_ROOT_DIR "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v${npp_major}.${npp_minor}")
+			SET(CUDA_TOOLKIT_ROOT_DIR "${BAZEL_CUDA_TOOLKIT_PATH}")
+			
 			LIST(APPEND TFEXTERN_DEPENDENCY_DLLS 
 				"${CUDA_TOOLKIT_ROOT_DIR}/bin/cudart${CUDA_POSTFIX}_${npp_major}${npp_minor}.dll"
 				"${CUDA_TOOLKIT_ROOT_DIR}/bin/cufft${CUDA_POSTFIX}_${npp_major}${npp_minor}.dll"
@@ -551,7 +559,9 @@ IF(HAVE_WINDESKTOP_X64)
 				"${CUDA_TOOLKIT_ROOT_DIR}/bin/curand${CUDA_POSTFIX}_${npp_major}${npp_minor}.dll"
 				"${CUDA_TOOLKIT_ROOT_DIR}/bin/cusolver${CUDA_POSTFIX}_${npp_major}${npp_minor}.dll"
 				)
-			SET(EMGU_TF_CUFFT_FILE_VERSION "${npp_major}${npp_minor}") 
+			SET(EMGU_TF_CUFFT_FILE_VERSION "${npp_major}${npp_minor}")
+        ELSE()
+			MESSAGE(FATAL_ERROR "-- Unable to find CUFFT version")
 		ENDIF()
 		
 		MESSAGE(STATUS "CUDA release using CUFFT: ${EMGU_TF_CUFFT_VERSION}; File Version: ${EMGU_TF_CUFFT_FILE_VERSION}")	
