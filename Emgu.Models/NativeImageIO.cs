@@ -623,7 +623,12 @@ namespace Emgu.Models
         }
 #endif
 
-
+        public class JpegData
+        {
+            public int Width { get; set; }
+            public int Height { get; set; }
+            public byte[] Raw { get; set; }
+        }
 
         /// <summary>
         /// Read the file and draw rectangles on it.
@@ -631,7 +636,7 @@ namespace Emgu.Models
         /// <param name="fileName">The name of the file.</param>
         /// <param name="annotations">Annotations to be add to the image. Can consist of rectangles and lables</param>
         /// <returns>The image in Jpeg stream format</returns>
-        public static byte[] ImageFileToJpeg(String fileName, Annotation[] annotations = null)
+        public static JpegData ImageFileToJpeg(String fileName, Annotation[] annotations = null)
         {
 #if __ANDROID__
             BitmapFactory.Options options = new BitmapFactory.Options();
@@ -654,41 +659,30 @@ namespace Emgu.Models
             using (MemoryStream ms = new MemoryStream())
             {
                 bmp.Compress(Bitmap.CompressFormat.Jpeg, 90, ms);
-                return ms.ToArray();
+                JpegData result = new JpegData();
+                result.Raw = ms.ToArray();
+                result.Width = bmp.Size.Width;
+                result.Height = bmp.Size.Height;
+                return result;
             }
 #elif __MACOS__
             NSImage img = NSImage.ImageNamed(fileName);
 
-            DrawAnnotations(img, annotations);
-            /*
-            img.LockFocus();
-
-            NSColor redColor = NSColor.Red;
-            redColor.Set();
-            var context = NSGraphicsContext.CurrentContext;
-            var cgcontext = context.CGContext;
-            cgcontext.ScaleCTM(1, -1);
-            cgcontext.TranslateCTM(0, -img.Size.Height);
-            //context.IsFlipped = !context.IsFlipped;
-            for (int i = 0; i < annotations.Length; i++)
-            {
-                float[] rects = ScaleLocation(annotations[i].Rectangle, (int)img.Size.Width, (int) img.Size.Height);
-                CGRect cgRect = new CGRect(
-                    rects[0], 
-                    rects[1], 
-                    rects[2] - rects[0], 
-                    rects[3] - rects[1]);
-                NSBezierPath.StrokeRect(cgRect);
-            }
-            img.UnlockFocus();
-            */
+            if (annotations != null && annotations.Length > 0)
+                DrawAnnotations(img, annotations);
 
             var imageData = img.AsTiff();
             var imageRep = NSBitmapImageRep.ImageRepsWithData(imageData)[0] as NSBitmapImageRep;
             var jpegData = imageRep.RepresentationUsingTypeProperties(NSBitmapImageFileType.Jpeg, null);
             byte[] jpeg = new byte[jpegData.Length];
             System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, jpeg, 0, (int)jpegData.Length);
-            return jpeg;
+
+            JpegData result = new JpegData();
+            result.Raw = jpeg;
+            result.Width = (int)img.Size.Width;
+            result.Height = (int)img.Size.Height;
+
+            return result;
 #elif __IOS__
             UIImage uiimage = new UIImage(fileName);
 
@@ -757,7 +751,11 @@ namespace Emgu.Models
                 using (MemoryStream ms = new MemoryStream())
                 {
                     img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                    return ms.ToArray();
+                    JpegData result = new JpegData();
+                    result.Raw = ms.ToArray();
+                    result.Width = img.Size.Width;
+                    result.Height = img.Size.Height;
+                    return result;
                 }
             }
             else

@@ -104,9 +104,10 @@ namespace Emgu.TF.XamarinForms
             }
 
 
-            byte[] jpeg = NativeImageIO.ImageFileToJpeg(_imageFiles[0], annotations);
+            NativeImageIO.JpegData jpeg = NativeImageIO.ImageFileToJpeg(_imageFiles[0], annotations);
+            //NativeImageIO.JpegData jpeg = NativeImageIO.ImageFileToJpeg(_imageFiles[0]);
             //String names = String.Join(";", Array.ConvertAll(result, r => r.Label));
-            SetImage(jpeg);
+            SetImage(jpeg.Raw, jpeg.Width, jpeg.Height);
 
 
             String resStr = String.Format("Detected {1} objects in {0} milliseconds.", watch.ElapsedMilliseconds, result.Length);

@@ -198,7 +198,7 @@ namespace Emgu.TF.XamarinForms
                    if (heightRequest > 0)
                        this.DisplayImage.HeightRequest = heightRequest;
                });
-#if __IOS__ || __MACOS__
+#if __IOS__
                     //Xamarin Form's Image class do not seems to re-render after Soure is change
                     //forcing focus seems to force a re-rendering
                     this.DisplayImage.Focus();
