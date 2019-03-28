@@ -692,6 +692,7 @@ namespace Emgu.Models
             uiimage.Draw(new CGPoint());
             context.SetStrokeColor(UIColor.Red.CGColor);
             context.SetLineWidth(2);
+
             for (int i = 0; i < annotations.Length; i++)
             {
                 float[] rects = ScaleLocation(
@@ -705,11 +706,19 @@ namespace Emgu.Models
                                            (nfloat)(rects[3] - rects[1]));
                 context.AddRect(cgRect);
                 context.DrawPath(CGPathDrawingMode.Stroke);
-
-                context.SelectFont("Helvetica", 12, CGTextEncoding.MacRoman);
+            }
+            context.ScaleCTM(1, -1);
+            context.TranslateCTM(0, -uiimage.Size.Height);
+            for (int i = 0; i < annotations.Length; i++)
+            {
+                float[] rects = ScaleLocation(
+                    annotations[i].Rectangle,
+                    (int)uiimage.Size.Width,
+                    (int)uiimage.Size.Height);
+                context.SelectFont("Helvetica", 18, CGTextEncoding.MacRoman);
                 context.SetFillColor((nfloat)1.0, (nfloat)0.0, (nfloat)0.0, (nfloat)1.0);
                 context.SetTextDrawingMode(CGTextDrawingMode.Fill);
-                context.ShowTextAtPoint(rects[0], rects[1], annotations[i].Label);
+                context.ShowTextAtPoint(rects[0], uiimage.Size.Height - rects[1], annotations[i].Label);
             }
             UIImage imgWithRect = UIGraphics.GetImageFromCurrentImageContext();
             UIGraphics.EndImageContext();
@@ -717,7 +726,11 @@ namespace Emgu.Models
             var jpegData = imgWithRect.AsJPEG();
 			byte[] jpeg = new byte[jpegData.Length];
 			System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, jpeg, 0, (int)jpegData.Length);
-            return jpeg;
+            JpegData result = new JpegData();
+            result.Raw = jpeg;
+            result.Width = (int)uiimage.Size.Width;
+            result.Height = (int)uiimage.Size.Height;
+            return result;
 #else
             if (Emgu.TF.Util.Platform.OperationSystem == OS.Windows)
             {
