@@ -35,7 +35,7 @@ ELSE()
     INSTALL(
       FILES
       "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Documentation.chm"
-      DESTINATION ./
+      DESTINATION .
       COMPONENT emgutf_document
       )
   ENDIF()
@@ -60,7 +60,7 @@ ELSE()
     INSTALL(
       FILES
       "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.Documentation.chm"
-      DESTINATION ./
+      DESTINATION .
       COMPONENT emgutf_document
       )
   ENDIF()

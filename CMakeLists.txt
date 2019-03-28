@@ -913,20 +913,25 @@ IF (WIN32)
   # ----------------------------------------------------------------------------
   #  Add menu link for documentations
   # ----------------------------------------------------------------------------
-  SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "${CPACK_NSIS_EXTRA_INSTALL_COMMANDS}\nCreateDirectory \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\" ")
   
-  #SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "${CPACK_NSIS_EXTRA_INSTALL_COMMANDS}\nCreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\Open CV Documentation.lnk\\\"  \\\"$INSTDIR\\\\doc\\\\opencv2refman.pdf\\\" ")	
-  #SET(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "${CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS}\n Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\\Open CV Documentation.lnk\\\" ")
   
-  #IF(EMGU_TF_DOCUMENTATION_BUILD)
-  #  LIST(APPEND CPACK_COMPONENTS_ALL emgutf_document)
-  #  set(CPACK_COMPONENT_EMGUTF_DOCUMENT_DISPLAY_NAME "Emgu TF Documentation")
-  #  set(CPACK_COMPONENT_EMGUTF_DOCUMENT_DEPENDS emgutf_binary)
-  #  SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "${CPACK_NSIS_EXTRA_INSTALL_COMMANDS}\nCreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\Emgu TF Documentation.lnk\\\"  \\\"$INSTDIR\\\\Emgu.TF.Documentation.chm\\\" ")	
-  #  SET(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "${CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS}\n Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\\Emgu TF Documentation.lnk\\\" ")
-  #ENDIF()
-  
-  SET(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "${CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS}\nRMDir  \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\" ")
+  IF(EMGU_TF_DOCUMENTATION_BUILD)
+    SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "${CPACK_NSIS_EXTRA_INSTALL_COMMANDS}\nCreateDirectory \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\" ")
+	
+    LIST(APPEND CPACK_COMPONENTS_ALL emgutf_document)
+    set(CPACK_COMPONENT_EMGUTF_DOCUMENT_DISPLAY_NAME "Emgu TF Documentation")
+    set(CPACK_COMPONENT_EMGUTF_DOCUMENT_DEPENDS emgutf_binary)
+	IF (HAVE_WINDESKTOP)
+      SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "${CPACK_NSIS_EXTRA_INSTALL_COMMANDS}\nCreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\Emgu TF Documentation.lnk\\\"  \\\"$INSTDIR\\\\Emgu.TF.Documentation.chm\\\" ")	
+      SET(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "${CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS}\n Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\\Emgu TF Documentation.lnk\\\" ")
+	ENDIF()
+	IF (HAVE_WINDESKTOP_LITE)
+      SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "${CPACK_NSIS_EXTRA_INSTALL_COMMANDS}\nCreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\Emgu TF Lite Documentation.lnk\\\"  \\\"$INSTDIR\\\\Emgu.TF.Lite.Documentation.chm\\\" ")	
+      SET(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "${CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS}\n Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\\Emgu TF Lite Documentation.lnk\\\" ")
+	ENDIF()
+	
+	SET(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "${CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS}\nRMDir  \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\" ")
+  ENDIF()
   
   # ----------------------------------------------------------------------------
   #  Add menu link for web sites
