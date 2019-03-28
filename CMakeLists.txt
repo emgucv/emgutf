@@ -230,6 +230,10 @@ ELSEIF(HAVE_WINDESKTOP_X64)
 ELSE() 
   SET(WINDESKTOP_LABEL "")
 ENDIF()
+SET(HAVE_WINDESKTOP OFF)
+IF(HAVE_WINDESKTOP_X86 OR HAVE_WINDESKTOP_X64)
+  SET(HAVE_WINDESKTOP ON) 
+ENDIF()
 
 
 IF(HAVE_WINDESKTOP_X86_LITE AND HAVE_WINDESKTOP_X64_LITE)
@@ -703,6 +707,12 @@ IF (HAS_FULL_BUILD OR HAS_LITE_BUILD)
   ADD_SUBDIRECTORY(platforms)
 ENDIF()
 
+INSTALL(
+  FILES
+  "tensorflow/LICENSE"
+  DESTINATION "tensorflow"
+  COMPONENT emgutf_source
+  ) 
 
 IF(HAVE_ANDROID)
   INSTALL(
@@ -929,10 +939,14 @@ IF (WIN32)
   #  Add menu link for Visual Studio solutions 
   # ----------------------------------------------------------------------------
   SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "${CPACK_NSIS_EXTRA_INSTALL_COMMANDS}\nCreateDirectory \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Visual Studio Solution\\\" ")
-  
-  SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "${CPACK_NSIS_EXTRA_INSTALL_COMMANDS}\nCreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Visual Studio Solution\\\\Visual Studio Examples.lnk\\\"  \\\"$INSTDIR\\\\Solution\\\\Windows.Desktop\\\\Emgu.TF.Example.sln\\\" ")	
-  
-  SET(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "${CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS}\n Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Visual Studio Solution\\\\Visual Studio Examples.lnk\\\" ")
+  IF (HAVE_WINDESKTOP)
+    SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "${CPACK_NSIS_EXTRA_INSTALL_COMMANDS}\nCreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Visual Studio Solution\\\\Emgu TF Visual Studio Examples.lnk\\\"  \\\"$INSTDIR\\\\Solution\\\\Windows.Desktop\\\\Emgu.TF.Example.sln\\\" ")	
+    SET(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "${CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS}\n Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Visual Studio Solution\\\\Emgu TF Visual Studio Examples.lnk\\\" ")
+  ENDIF()
+  IF (HAVE_WINDESKTOP_LITE)
+    SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "${CPACK_NSIS_EXTRA_INSTALL_COMMANDS}\nCreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Visual Studio Solution\\\\Emgu TF Lite Visual Studio Examples.lnk\\\"  \\\"$INSTDIR\\\\Solution\\\\Windows.Desktop\\\\Emgu.TF.Lite.Example.sln\\\" ")	
+    SET(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "${CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS}\n Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Visual Studio Solution\\\\Emgu TF Lite Visual Studio Examples.lnk\\\" ")
+  ENDIF()
   
   SET(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "${CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS}\nRMDir  \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Visual Studio Solution\\\" ")
   
@@ -942,11 +956,11 @@ IF (WIN32)
   SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "${CPACK_NSIS_EXTRA_INSTALL_COMMANDS}\nCreateDirectory \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\License\\\" ")
   
   SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "${CPACK_NSIS_EXTRA_INSTALL_COMMANDS}\nCreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\License\\\\Emgu TF License.lnk\\\"  \\\"$INSTDIR\\\\${LICENSE_FILE_NAME}\\\" ")	
-  SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "${CPACK_NSIS_EXTRA_INSTALL_COMMANDS}\nCreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\License\\\\Tensorflow License.lnk\\\"  \\\"$INSTDIR\\\\lib\\\\tensorflow.license.txt\\\" ")
-  
+  SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "${CPACK_NSIS_EXTRA_INSTALL_COMMANDS}\nCreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\License\\\\Tensorflow License.lnk\\\"  \\\"$INSTDIR\\\\tensorflow\\\\LICENSE\\\" ")
   
   SET(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "${CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS}\n Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\License\\\\Emgu TF License.lnk\\\" ")
   SET(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "${CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS}\n Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\License\\\\Tensorflow License.lnk\\\" ")
+  
   SET(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "${CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS}\nRMDir  \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\License\\\" ")
   
   #IF(EMGU_TF_EXAMPLE_BUILD AND NOT NETFX_CORE)
