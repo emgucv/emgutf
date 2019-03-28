@@ -243,10 +243,10 @@ namespace Emgu.TF.Lite
         /// <summary>
         /// Get a copy of the tensor data as a managed array
         /// </summary>
+        /// <param name="jagged">If true, return the data as a jagged array. Otherwise, return a single dimension array.</param>
         /// <returns>A copy of the tensor data as a managed array</returns>
         public Array GetData(bool jagged = true)
         {
-
             DataType type = this.Type;
             Type t = TfLiteInvoke.GetNativeType(type);
             if (t == null)

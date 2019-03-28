@@ -307,7 +307,7 @@ namespace Emgu.TF.Lite
                   else       
 #endif
                         {
-                            Debug.WriteLine("No suitable directory found to load unmanaged modules");
+                            System.Diagnostics.Debug.WriteLine("No suitable directory found to load unmanaged modules");
                             return false;
                         }
                     }
@@ -444,7 +444,7 @@ namespace Emgu.TF.Lite
         /// </summary>
         static TfLiteInvoke()
         {
-            //Debug.WriteLine(String.Format("Emgu TF Running in {0} bit mode.", IntPtr.Size));
+            System.Diagnostics.Debug.WriteLine(String.Format("Emgu TF Running in {0} bit mode.", IntPtr.Size));
             List<String> modules = TfLiteInvoke.TensorflowModuleList;
             modules.RemoveAll(String.IsNullOrEmpty);
 
@@ -464,6 +464,9 @@ namespace Emgu.TF.Lite
         [DllImport(ExternLibrary, CallingConvention = TFCallingConvention)]
         internal static extern void tfeMemcpy(IntPtr dst, IntPtr src, int length);
 
+        /// <summary>
+        /// Get the tensorflow lite version.
+        /// </summary>
         public static String Version
         {
             get

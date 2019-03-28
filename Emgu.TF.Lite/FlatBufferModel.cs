@@ -61,9 +61,12 @@ namespace Emgu.TF.Lite
         }
 
         /// <summary>
-        ///Returns true if the model identifier is correct (otherwise false and
+        /// Check if the model identifier is correct.
+        /// </summary>
+        /// <returns>
+        /// True if the model identifier is correct (otherwise false and
         /// reports an error).
-        /// </summary> 
+        /// </returns>
         public bool CheckModelIdentifier()
         {
             return TfLiteInvoke.tfeFlatBufferModelCheckModelIdentifier(_ptr);
