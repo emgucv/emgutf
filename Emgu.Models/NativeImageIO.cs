@@ -661,8 +661,8 @@ namespace Emgu.Models
                 bmp.Compress(Bitmap.CompressFormat.Jpeg, 90, ms);
                 JpegData result = new JpegData();
                 result.Raw = ms.ToArray();
-                result.Width = bmp.Size.Width;
-                result.Height = bmp.Size.Height;
+                result.Width = bmp.Width;
+                result.Height = bmp.Height;
                 return result;
             }
 #elif __MACOS__
