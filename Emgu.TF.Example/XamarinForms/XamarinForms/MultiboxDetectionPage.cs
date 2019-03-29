@@ -72,15 +72,14 @@ namespace Emgu.TF.XamarinForms
                     watch.Stop();
                     Emgu.Models.NativeImageIO.Annotation[] annotations = MultiboxGraph.FilterResults(detectResult, 0.1f);
 
-                    byte[] jpeg = Emgu.Models.NativeImageIO.ImageFileToJpeg(image[0], annotations);
+                    var jpeg = Emgu.Models.NativeImageIO.ImageFileToJpeg(image[0], annotations);
 
                     watch.Stop();
-                    SetImage(jpeg);
+                    SetImage(jpeg.Raw);
 #if __MACOS__
-                    NSImage img = new NSImage(image[0]);
                     var displayImage = this.GetImage();
-                    displayImage.WidthRequest = img.Size.Width;
-                    displayImage.HeightRequest = img.Size.Height;
+                    displayImage.WidthRequest = jpeg.Width;
+                    displayImage.HeightRequest = jpeg.Height;
 #endif
 
                     SetMessage(String.Format("Detected in {0} milliseconds.", watch.ElapsedMilliseconds));
