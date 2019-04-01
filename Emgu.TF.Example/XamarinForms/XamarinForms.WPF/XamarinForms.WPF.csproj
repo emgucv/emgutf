@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\..\nugetpackages\Xamarin.Forms.3.6.0.220655\build\Xamarin.Forms.props" Condition="Exists('..\..\..\nugetpackages\Xamarin.Forms.3.6.0.220655\build\Xamarin.Forms.props')" />
+  <Import Project="..\..\..\nugetpackages\Xamarin.Forms.3.6.0.264807\build\Xamarin.Forms.props" Condition="Exists('..\..\..\nugetpackages\Xamarin.Forms.3.6.0.264807\build\Xamarin.Forms.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Google.Protobuf, Version=3.7.0.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\..\..\nugetpackages\Google.Protobuf.3.7.0\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK, Version=3.0.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>..\..\..\nugetpackages\OpenTK.3.0.1\lib\net20\OpenTK.dll</HintPath>
     </Reference>
@@ -71,20 +74,16 @@
       <HintPath>..\..\..\nugetpackages\WpfLightToolkit.1.0.3\lib\net45\WpfLightToolkit.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\nugetpackages\Xamarin.Forms.3.6.0.220655\lib\netstandard1.0\Xamarin.Forms.Core.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\nugetpackages\Xamarin.Forms.3.6.0.264807\lib\netstandard2.0\Xamarin.Forms.Core.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\nugetpackages\Xamarin.Forms.3.6.0.220655\lib\netstandard1.0\Xamarin.Forms.Platform.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\nugetpackages\Xamarin.Forms.3.6.0.264807\lib\netstandard2.0\Xamarin.Forms.Platform.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Forms.Platform.WPF">
-      <HintPath>..\..\..\nugetpackages\Xamarin.Forms.Platform.WPF.3.6.0.220655\lib\net45\Xamarin.Forms.Platform.WPF.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Xamarin.Forms.Platform.WPF, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\nugetpackages\Xamarin.Forms.Platform.WPF.3.6.0.264807\lib\net45\Xamarin.Forms.Platform.WPF.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Xaml, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\nugetpackages\Xamarin.Forms.3.6.0.220655\lib\netstandard1.0\Xamarin.Forms.Xaml.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\nugetpackages\Xamarin.Forms.3.6.0.264807\lib\netstandard2.0\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -139,13 +138,14 @@
   <Import Project="..\..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems" Label="Shared" />
   <Import Project="..\..\..\Emgu.TF.Util\Emgu.TF.Util.projitems" Label="Shared" />
   <Import Project="..\XamarinForms\XamarinForms.projitems" Label="Shared" />
+  <Import Project="..\..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\..\nugetpackages\Xamarin.Forms.3.6.0.220655\build\Xamarin.Forms.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\nugetpackages\Xamarin.Forms.3.6.0.220655\build\Xamarin.Forms.props'))" />
-    <Error Condition="!Exists('..\..\..\nugetpackages\Xamarin.Forms.3.6.0.220655\build\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\nugetpackages\Xamarin.Forms.3.6.0.220655\build\Xamarin.Forms.targets'))" />
+    <Error Condition="!Exists('..\..\..\nugetpackages\Xamarin.Forms.3.6.0.264807\build\Xamarin.Forms.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\nugetpackages\Xamarin.Forms.3.6.0.264807\build\Xamarin.Forms.props'))" />
+    <Error Condition="!Exists('..\..\..\nugetpackages\Xamarin.Forms.3.6.0.264807\build\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\nugetpackages\Xamarin.Forms.3.6.0.264807\build\Xamarin.Forms.targets'))" />
   </Target>
-  <Import Project="..\..\..\nugetpackages\Xamarin.Forms.3.6.0.220655\build\Xamarin.Forms.targets" Condition="Exists('..\..\..\nugetpackages\Xamarin.Forms.3.6.0.220655\build\Xamarin.Forms.targets')" />
+  <Import Project="..\..\..\nugetpackages\Xamarin.Forms.3.6.0.264807\build\Xamarin.Forms.targets" Condition="Exists('..\..\..\nugetpackages\Xamarin.Forms.3.6.0.264807\build\Xamarin.Forms.targets')" />
 </Project>

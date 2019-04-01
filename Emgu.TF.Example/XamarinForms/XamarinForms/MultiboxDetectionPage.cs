@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using Emgu.TF;
 using Emgu.TF.Models;
+using Tensorflow;
+
 #if __ANDROID__
 using Android.App;
 using Android.Content;
@@ -50,7 +52,15 @@ namespace Emgu.TF.XamarinForms
         {
             if (_multiboxGraph == null)
             {
-                _multiboxGraph = new MultiboxGraph();
+                SessionOptions so = new SessionOptions();
+                if (TfInvoke.IsGoogleCudaEnabled)
+                {
+                    Tensorflow.ConfigProto config = new Tensorflow.ConfigProto();
+                    config.GpuOptions = new Tensorflow.GPUOptions();
+                    config.GpuOptions.AllowGrowth = true;
+                    so.SetConfig(config.ToProtobuf());
+                }
+                _multiboxGraph = new MultiboxGraph(null, so);
                 _multiboxGraph.OnDownloadProgressChanged += onDownloadProgressChanged;
                 _multiboxGraph.OnDownloadCompleted += onDownloadCompleted;
                 _multiboxGraph.OnDownloadCompleted += (sender, e) =>
