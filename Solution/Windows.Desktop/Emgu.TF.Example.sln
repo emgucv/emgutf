@@ -29,6 +29,7 @@ Global
 		..\..\Emgu.TF\Emgu.TF.projitems*{0a7a7b86-35e5-4887-b337-96c2f1b1fcf8}*SharedItemsImports = 4
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
 		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
+		..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
 		..\..\Emgu.TF\Emgu.TF.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms\XamarinForms.projitems*{26bdb58d-52d9-4ad1-9205-be5792781a98}*SharedItemsImports = 13
