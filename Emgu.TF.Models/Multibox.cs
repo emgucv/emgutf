@@ -360,7 +360,7 @@ namespace Emgu.TF.Models
             DrawLine(image, (int)(rect.position.x + rect.width), (int)(rect.position.y + rect.height), (int)rect.position.x, (int)(rect.position.y + rect.height), color);
         }
 
-        public static void DrawResults(Texture2D image, MultiboxGraph.Result[] results, float scoreThreshold)
+        public static void DrawResults(Texture2D image, MultiboxGraph.Result[] results, float scoreThreshold, bool flipUpSideDown = false)
         {
             NativeImageIO.Annotation[] annotations = FilterResults(results, scoreThreshold);
             
@@ -368,9 +368,18 @@ namespace Emgu.TF.Models
             for (int i = 0; i < annotations.Length; i++)
             {
                 Rect[] rects = ScaleLocation(annotations[i].Rectangle, image.width, image.height);
+                
                 foreach (Rect r in rects)
                 {
-                    DrawRect(image, r, color);
+                    if (flipUpSideDown)
+                    {
+                        Rect rFlipped = r;
+                        rFlipped.y = image.height - r.y;
+                        rFlipped.height = -r.height;
+                        DrawRect(image, rFlipped, color);
+                    }
+                    else 
+                        DrawRect(image, r, color);
                 }
             }
             image.Apply();
