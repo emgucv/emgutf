@@ -24,6 +24,7 @@ using Emgu.TF.Models;
 using System.Net;
 using System.ComponentModel;
 using System.Diagnostics;
+using Tensorflow;
 
 namespace Emgu.TF.XamarinForms
 {
@@ -47,7 +48,15 @@ namespace Emgu.TF.XamarinForms
         {
             if (_stylizeGraph == null)
             {
-                _stylizeGraph = new StylizeGraph();
+                SessionOptions so = new SessionOptions();
+                if (TfInvoke.IsGoogleCudaEnabled)
+                {
+                    Tensorflow.ConfigProto config = new Tensorflow.ConfigProto();
+                    config.GpuOptions = new Tensorflow.GPUOptions();
+                    config.GpuOptions.AllowGrowth = true;
+                    so.SetConfig(config.ToProtobuf());
+                }
+                _stylizeGraph = new StylizeGraph(null, so);
                 _stylizeGraph.OnDownloadProgressChanged += onDownloadProgressChanged;
                 _stylizeGraph.OnDownloadCompleted += onDownloadCompleted;
                 _stylizeGraph.OnDownloadCompleted += (sender, e) =>

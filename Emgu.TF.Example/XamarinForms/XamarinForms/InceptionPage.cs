@@ -12,6 +12,7 @@ using System.Diagnostics;
 using Emgu.TF;
 using Emgu.Models;
 using Emgu.TF.Models;
+using Tensorflow;
 
 #if __ANDROID__
 using Android.App;
@@ -73,7 +74,15 @@ namespace Emgu.TF.XamarinForms
 
             if (_inceptionGraph == null)
             {
-                _inceptionGraph = new Inception();
+                SessionOptions so = new SessionOptions();
+                if (TfInvoke.IsGoogleCudaEnabled)
+                {
+                    Tensorflow.ConfigProto config = new Tensorflow.ConfigProto();
+                    config.GpuOptions = new Tensorflow.GPUOptions();
+                    config.GpuOptions.AllowGrowth = true;
+                    so.SetConfig(config.ToProtobuf());
+                }
+                _inceptionGraph = new Inception(null, so);
                 _inceptionGraph.OnDownloadProgressChanged += onDownloadProgressChanged;
                 _inceptionGraph.OnDownloadCompleted += onDownloadCompleted;
                 _inceptionGraph.OnDownloadCompleted += (sender, e) =>
