@@ -17,7 +17,7 @@ cd ..
 cd ..
 cd ..
 
-cp ../tensorflow/LICENSE Assets/Emgu.TF/Assets/Documentation/tensorflow.license.txt
+cp ../tensorflow/LICENSE Assets/Emgu.TF/Documentation/tensorflow.license.txt
 
 cp ../Emgu.TF.Util/*.cs Assets/Emgu.TF/Assets/Scripts/Emgu.TF.Util/
 cp ../Emgu.TF/*.cs Assets/Emgu.TF/Assets/Scripts/Emgu.TF/
