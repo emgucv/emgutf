@@ -102,7 +102,7 @@ namespace Emgu.TF.Lite.Models
         public event System.ComponentModel.AsyncCompletedEventHandler OnDownloadCompleted;
 
         /// <summary>
-        /// Initialize the graph by downloading the model from the internet
+        /// Initialize the graph by downloading the model from the Internet
         /// </summary>
         /// <param name="modelFiles">The model file names as an array. First one is the ".tflite" file and the second one should be the label names.</param>
         /// <param name="downloadUrl">The url where the files can be downloaded from.</param>
@@ -170,6 +170,13 @@ namespace Emgu.TF.Lite.Models
             if (_interpreter == null)
             {
                 _interpreter = new Interpreter(_model);
+                using (NNAPIDelegate d = new NNAPIDelegate())
+                {
+                    if (d.IsSupported)
+                    {
+                        _interpreter.UseNNAPI(true);
+                    }
+                }
                 Status allocateTensorStatus = _interpreter.AllocateTensors();
                 if (allocateTensorStatus == Status.Error)
                     throw new Exception("Failed to allocate tensor");

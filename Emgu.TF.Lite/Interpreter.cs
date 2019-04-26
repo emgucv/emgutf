@@ -180,6 +180,11 @@ namespace Emgu.TF.Lite
             if (IntPtr.Zero != _ptr)
                 TfLiteInvoke.tfeInterpreterRelease(ref _ptr);
         }
+
+        public Status ModifyGraphWithDelegate(IDelegate tfDelegate)
+        {
+            return TfLiteInvoke.tfeInterpreterModifyGraphWithDelegate(_ptr, tfDelegate.DelegatePtr);
+        }
     }
 
     public static partial class TfLiteInvoke
@@ -232,5 +237,8 @@ namespace Emgu.TF.Lite
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
         internal static extern void tfeInterpreterSetNumThreads(IntPtr interpreter, int numThreads);
+
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        internal static extern Status tfeInterpreterModifyGraphWithDelegate(IntPtr interpreter, IntPtr delegatePtr);
     }
 }
