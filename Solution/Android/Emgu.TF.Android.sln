@@ -17,10 +17,13 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Models.Shared", "..
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.Models.Shared", "..\..\Emgu.Models\Emgu.Models.Shared.shproj", "{8EDCE0C8-BA71-4396-9428-35D05877258C}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Protobuf.Shared", "..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.shproj", "{88FED2CB-EE86-4B5E-85A0-9F5FDF42111F}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms\XamarinForms.projitems*{26bdb58d-52d9-4ad1-9205-be5792781a98}*SharedItemsImports = 13
 		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{752279f0-17ef-4ec8-857c-8f5f897af0e8}*SharedItemsImports = 13
+		..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems*{88fed2cb-ee86-4b5e-85a0-9f5fdf42111f}*SharedItemsImports = 13
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{8edce0c8-ba71-4396-9428-35d05877258c}*SharedItemsImports = 13
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{98561642-5ec3-4244-baf9-6876d9ba5527}*SharedItemsImports = 13
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{b2f6d900-aa34-49d2-98ee-3c9f8dd896f2}*SharedItemsImports = 4
@@ -29,6 +32,7 @@ Global
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{ed27ffdc-d1da-4602-9f0e-af775fcec5e8}*SharedItemsImports = 4
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms\XamarinForms.projitems*{ed27ffdc-d1da-4602-9f0e-af775fcec5e8}*SharedItemsImports = 4
 		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{ed27ffdc-d1da-4602-9f0e-af775fcec5e8}*SharedItemsImports = 4
+		..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems*{ed27ffdc-d1da-4602-9f0e-af775fcec5e8}*SharedItemsImports = 4
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{ed27ffdc-d1da-4602-9f0e-af775fcec5e8}*SharedItemsImports = 4
 		..\..\Emgu.TF\Emgu.TF.projitems*{ed27ffdc-d1da-4602-9f0e-af775fcec5e8}*SharedItemsImports = 4
 	EndGlobalSection

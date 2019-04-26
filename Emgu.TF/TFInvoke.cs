@@ -383,8 +383,7 @@ namespace Emgu.TF
             //Debug.WriteLine(string.Format(handle == IntPtr.Zero ? "Failed to load {0}." : "Loaded {0}.", module));
             try
             {
-
-               Console.WriteLine(string.Format("Trying to load {0}.", module));
+               Console.WriteLine(string.Format("Trying to load {0} ({1} bit).", module, Marshal.SizeOf<IntPtr>() * 8));
 #if __ANDROID__
                Java.Lang.JavaSystem.LoadLibrary(module);
 #else //(UNITY_ANDROID && !UNITY_EDITOR)

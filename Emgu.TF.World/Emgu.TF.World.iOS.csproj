@@ -14,22 +14,22 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\lib\</OutputPath>
+    <OutputPath>..\lib\iOS_build\</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>..\lib\Emgu.TF.World.iOS.xml</DocumentationFile>
+    <DocumentationFile>..\lib\iOS_build\Emgu.TF.World.iOS.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
-    <OutputPath>..\lib\</OutputPath>
+    <OutputPath>..\lib\iOS_build\</OutputPath>
     <DefineConstants>
     </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>..\lib\Emgu.TF.World.iOS.xml</DocumentationFile>
+    <DocumentationFile>..\lib\iOS_build\Emgu.TF.World.iOS.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK-1.0" />
@@ -46,4 +46,9 @@
   <Import Project="..\Emgu.TF.Util\Emgu.TF.Util.projitems" Label="Shared" Condition="Exists('..\Emgu.TF.Util\Emgu.TF.Util.projitems')" />
   <Import Project="..\Emgu.TF\Emgu.TF.projitems" Label="Shared" Condition="Exists('..\Emgu.TF\Emgu.TF.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.ObjCBinding.CSharp.targets" />
+  <Target Name="AfterBuild">
+    <Message Text="Copying $(OutputPath)$(AssemblyName).dll and $(OutputPath)$(AssemblyName).xml to ..\lib" Importance="high" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="..\lib" ContinueOnError="true" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).xml" DestinationFolder="..\lib" ContinueOnError="true" />
+  </Target>
 </Project>

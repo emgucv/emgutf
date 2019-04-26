@@ -146,13 +146,13 @@ namespace Emgu.TF.Models
             Texture2D texture, int inputHeight = -1, int inputWidth = -1,
             float inputMean = 0.0f, float scale = 1.0f, bool flipUpsideDown = false)
         {
-        #region Get the RGBA raw data as imgOrig
+#region Get the RGBA raw data as imgOrig
             Tensor imgOrig = new Tensor(DataType.Uint8, new int[] { 1, texture.height, texture.width, 4 });
             Color32[] colors = texture.GetPixels32(); //32bit RGBA
             GCHandle colorsHandle = GCHandle.Alloc(colors, GCHandleType.Pinned);
             Emgu.TF.TfInvoke.tfeMemcpy(imgOrig.DataPointer, colorsHandle.AddrOfPinnedObject(), colors.Length * Marshal.SizeOf(typeof(Color32)));
             colorsHandle.Free();
-        #endregion
+#endregion
 
             var graph = new Graph();
             Operation input = graph.Placeholder(DataType.Uint8);

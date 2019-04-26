@@ -111,14 +111,14 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
 
                 transform.rotation = baseRotation * Quaternion.AngleAxis(webcamTexture.videoRotationAngle, Vector3.up);
 
-                Tensor imageTensor = ImageIO.ReadTensorFromTexture2D(resultTexture, 224, 224, 128.0f, 1.0f / 128.0f, true);
+                Tensor imageTensor = ImageIO.ReadTensorFromTexture2D(resultTexture, 224, 224, 128.0f, 1.0f/128.0f, true);
                 MultiboxGraph.Result[] results = _multiboxGraph.Detect(imageTensor);
 
                 if (drawableTexture == null || drawableTexture.width != resultTexture.width ||
                     drawableTexture.height != resultTexture.height)
                     drawableTexture = new Texture2D(resultTexture.width, resultTexture.height, TextureFormat.ARGB32, false);
                 drawableTexture.SetPixels(resultTexture.GetPixels());
-                MultiboxGraph.DrawResults(drawableTexture, results, 0.2f);
+                MultiboxGraph.DrawResults(drawableTexture, results, 0.2f, true);
 
                 if (!_textureResized)
                 {
@@ -133,7 +133,7 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
         else if (!_staticViewRendered)
         {
             Texture2D texture = Resources.Load<Texture2D>("surfers");
-            Tensor imageTensor = ImageIO.ReadTensorFromTexture2D(texture, 224, 224, 128.0f, 1.0f / 128.0f, true);
+            Tensor imageTensor = ImageIO.ReadTensorFromTexture2D(texture, 224, 224, 128.0f, 1.0f/128.0f, true);
 
             //byte[] raw = ImageIO.EncodeJpeg(imageTensor, 128.0f, 128.0f);
             //System.IO.File.WriteAllBytes("surfers_out.jpg", raw);
@@ -143,7 +143,7 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
 
             drawableTexture = new Texture2D(texture.width, texture.height, TextureFormat.ARGB32, false);
             drawableTexture.SetPixels(texture.GetPixels());
-            MultiboxGraph.DrawResults(drawableTexture, results, 0.1f);
+            MultiboxGraph.DrawResults(drawableTexture, results, 0.1f, true);
 
             RenderTexture(drawableTexture);
             ResizeTexture(drawableTexture);

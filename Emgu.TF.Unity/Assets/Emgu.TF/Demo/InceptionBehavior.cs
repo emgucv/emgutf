@@ -38,7 +38,7 @@ public class InceptionBehavior : MonoBehaviour
             return;
         Tensor imageTensor = ImageIO.ReadTensorFromTexture2D(texture, 224, 224, 128.0f, 1.0f, true);
         Inception.RecognitionResult result = _inceptionGraph.MostLikely(imageTensor);
-        _displayMessage = String.Format("Object is {0} with {1}% probability.", result.Label, result.Probability);
+        _displayMessage = String.Format("Object is {0} with {1}% probability.", result.Label, result.Probability*100);
     }
 
 

@@ -19,10 +19,13 @@ namespace Emgu.TF.Models
         private FileDownloadManager _downloadManager;
         private Graph _graph = null;
         private Status _status = null;
+        private SessionOptions _sessionOptions = null;
+        private Session _session = null;
 
-        public StylizeGraph(Status status = null)
+        public StylizeGraph(Status status = null, SessionOptions sessionOptions = null)
         {
             _status = status;
+            _sessionOptions = sessionOptions;
             _downloadManager = new FileDownloadManager();
             
             _downloadManager.OnDownloadProgressChanged += onDownloadProgressChanged;
@@ -76,6 +79,11 @@ namespace Emgu.TF.Models
             if (_graph != null)
                 _graph.Dispose();
             _graph = new Graph();
+
+            if (_session != null)
+                _session.Dispose();
+            _session = new Session(_graph, _sessionOptions);
+
             String localFileName = _downloadManager.Files[0].LocalFile;
             byte[] model = File.ReadAllBytes(localFileName);
             if (model.Length == 0)
@@ -98,10 +106,9 @@ namespace Emgu.TF.Models
                 throw new Exception(String.Format("Style must be a number between 0 and {0}", NumStyles - 1));
             }
 
-            Session stylizeSession = new Session(_graph);
             Tensor styleTensor = GetStyleTensor(style, NumStyles);
             
-            Tensor[] finalTensor = stylizeSession.Run(
+            Tensor[] finalTensor = _session.Run(
                 new Output[] { _graph["input"], _graph["style_num"] }, new Tensor[] { imageValue, styleTensor },
                 new Output[] { _graph[@"transformer/expand/conv3/conv/Sigmoid"] });
 

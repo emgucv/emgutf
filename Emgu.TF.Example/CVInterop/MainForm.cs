@@ -13,6 +13,7 @@ using Emgu.TF.Models;
 using Emgu.CV;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using Tensorflow;
 
 namespace CVInterop
 {
@@ -30,8 +31,16 @@ namespace CVInterop
 
             DisableUI();
 
-            //Use the following code for the full inception model
-            _inceptionGraph = new MaskRcnnInceptionV2Coco();
+            SessionOptions so = new SessionOptions();
+            if (TfInvoke.IsGoogleCudaEnabled)
+            {
+                Tensorflow.ConfigProto config = new Tensorflow.ConfigProto();
+                config.GpuOptions = new Tensorflow.GPUOptions();
+                config.GpuOptions.AllowGrowth = true;
+                so.SetConfig(config.ToProtobuf());
+            }
+            _inceptionGraph = new MaskRcnnInceptionV2Coco(null, so );
+
             _inceptionGraph.OnDownloadProgressChanged += OnDownloadProgressChangedEventHandler;
             _inceptionGraph.OnDownloadCompleted += onDownloadCompleted;
 
@@ -107,7 +116,7 @@ namespace CVInterop
 
         public void Recognize(Mat m)
         {
-            Tensor imageTensor = Emgu.TF.TensorConvert.ReadTensorFromMatBgr(m, DataType.Uint8);
+            Tensor imageTensor = Emgu.TF.TensorConvert.ReadTensorFromMatBgr(m, Emgu.TF.DataType.Uint8);
 
             MaskRcnnInceptionV2Coco.RecognitionResult[] results;
             if (_coldSession)
