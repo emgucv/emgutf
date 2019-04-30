@@ -9,7 +9,6 @@ using System.IO;
 using System.Runtime.InteropServices;
 using Emgu.Models;
 using Emgu.TF;
-using Emgu.TF.Util.TypeEnum;
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
 using UnityEngine;

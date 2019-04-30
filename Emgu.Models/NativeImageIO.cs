@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Runtime.InteropServices;
-using Emgu.TF.Util.TypeEnum;
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
 using UnityEngine;
@@ -280,7 +279,7 @@ namespace Emgu.Models
             ReadTensorFromTexture2D<T>(texture, dest, inputHeight, inputWidth, inputMean, scale, flipUpSideDown, false);
 #else
 
-            if (Emgu.TF.Util.Platform.OperationSystem == OS.Windows)
+            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
             {
                 //Read the file using Bitmap class
                 System.Drawing.Bitmap bmp = new Bitmap(fileName);
@@ -732,7 +731,7 @@ namespace Emgu.Models
             result.Height = (int)uiimage.Size.Height;
             return result;
 #else
-            if (Emgu.TF.Util.Platform.OperationSystem == OS.Windows)
+            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
             {
                 Bitmap img = new Bitmap(fileName);
 

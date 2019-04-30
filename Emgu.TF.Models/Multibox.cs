@@ -12,7 +12,7 @@ using System.Text;
 using Emgu.Models;
 using System.Net;
 using System.ComponentModel;
-using Emgu.TF.Util.TypeEnum;
+
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
 using UnityEngine;
 #else

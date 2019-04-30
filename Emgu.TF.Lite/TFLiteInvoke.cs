@@ -12,25 +12,10 @@ using Emgu.TF.Util;
 
 namespace Emgu.TF.Lite
 {
-    /// <summary>
-    /// Tensorflow lite status
-    /// </summary>
-    public enum Status
-    {
-        /// <summary>
-        /// Ok
-        /// </summary>
-        Ok = 0,
-        /// <summary>
-        /// Error
-        /// </summary>
-        Error = 1
-    }
-
     public static partial class TfLiteInvoke
     {
 #if __IOS__
-      [ObjCRuntime.MonoPInvokeCallback(typeof(TfliteErrorCallback))]
+        [ObjCRuntime.MonoPInvokeCallback(typeof(TfliteErrorCallback))]
 #endif
         private static int TfliteErrorHandler(
            int status,
@@ -157,10 +142,10 @@ namespace Emgu.TF.Lite
             {
                 String subfolder = String.Empty;
 #if UNITY_EDITOR_WIN
-            subfolder = IntPtr.Size == 8 ? "x86_64" : "x86";
+                subfolder = IntPtr.Size == 8 ? "x86_64" : "x86";
 #elif UNITY_STANDALONE_WIN
 #else
-                if (Emgu.TF.Util.Platform.OperationSystem == Emgu.TF.Util.TypeEnum.OS.Windows)
+                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
                 {
                     subfolder = IntPtr.Size == 8 ? "x64" : "x86";
 
@@ -375,12 +360,11 @@ namespace Emgu.TF.Lite
          return "lib{0}.dylib";
 #else
             String formatString = "{0}";
-            if (Emgu.TF.Util.Platform.OperationSystem == Emgu.TF.Util.TypeEnum.OS.Windows
-                || Emgu.TF.Util.Platform.OperationSystem == Emgu.TF.Util.TypeEnum.OS.WindowsPhone)
+            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
                 formatString = "{0}.dll";
-            else if (Emgu.TF.Util.Platform.OperationSystem == Emgu.TF.Util.TypeEnum.OS.Linux)
+            else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
                 formatString = "lib{0}.so";
-            else if (Emgu.TF.Util.Platform.OperationSystem == Emgu.TF.Util.TypeEnum.OS.MacOSX)
+            else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
                 formatString = "lib{0}.dylib";
             return formatString;
 #endif
@@ -427,7 +411,7 @@ namespace Emgu.TF.Lite
             }
 #elif __IOS__ || UNITY_IOS || NETFX_CORE
 #else
-            if (Emgu.TF.Util.Platform.OperationSystem != Emgu.TF.Util.TypeEnum.OS.MacOSX)
+            if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
             {
                 String formatString = GetModuleFormatString();
                 for (int i = 0; i < modules.Length; ++i)

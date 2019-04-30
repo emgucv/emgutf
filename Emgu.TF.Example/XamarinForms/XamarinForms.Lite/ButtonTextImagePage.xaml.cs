@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Emgu.TF.Util.TypeEnum;
 #if !__MACOS__
 using Plugin.Media;
 #endif
@@ -48,7 +47,7 @@ namespace Emgu.TF.XamarinForms
                     pickImgString = labels[i];
                 bool haveCameraOption;
                 bool havePickImgOption;
-                if (Emgu.TF.Util.Platform.OperationSystem == OS.Windows)
+                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
                 {
                     //CrossMedia is not implemented on Windows.
                     haveCameraOption = false;
@@ -94,7 +93,7 @@ namespace Emgu.TF.XamarinForms
                 }
                 else if (action.Equals("Photo Library"))
                 {
-                    if (Emgu.TF.Util.Platform.OperationSystem == OS.Windows)
+                    if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
                     {
                         // our implementation of pick image
 #if !(__ANDROID__ || __IOS__ || __MACOS__)

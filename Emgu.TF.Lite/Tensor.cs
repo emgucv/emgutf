@@ -12,49 +12,6 @@ using Emgu.TF.Util;
 namespace Emgu.TF.Lite
 {
     /// <summary>
-    /// Types supported by tensor
-    /// </summary>
-    public enum DataType
-    {
-        /// <summary>
-        /// No type
-        /// </summary>
-        NoType = 0,
-        /// <summary>
-        /// single precision float
-        /// </summary>
-        Float32 = 1,
-        /// <summary>
-        /// Int32
-        /// </summary>
-        Int32 = 2,
-        /// <summary>
-        /// UInt8
-        /// </summary>
-        UInt8 = 3,
-        /// <summary>
-        /// Int64
-        /// </summary>
-        Int64 = 4,
-        /// <summary>
-        /// String
-        /// </summary>
-        String = 5,
-        /// <summary>
-        /// Bool
-        /// </summary>
-        Bool = 6,
-        /// <summary>
-        /// Bool
-        /// </summary>
-        Int16 = 7,
-        /// <summary>
-        /// Complex64
-        /// </summary>
-        Complex64
-    }
-
-    /// <summary>
     /// Complex number
     /// </summary>
     public struct Complex64
@@ -89,33 +46,6 @@ namespace Emgu.TF.Lite
     }
 
     /// <summary>
-    /// Memory allocation strategies.
-    /// </summary>
-    public enum AllocationType
-    {
-        /// <summary>
-        /// None
-        /// </summary>
-        MemNone = 0,
-        /// <summary>
-        ///  Read-only memory-mapped data (or data externally allocated).
-        /// </summary>
-        MmapRo,
-        /// <summary>
-        /// Arena allocated data
-        /// </summary>
-        ArenaRw,
-        /// <summary>
-        /// Arena allocated persistent data
-        /// </summary>
-        ArenaRwPersistent,
-        /// <summary>
-        /// Tensors that are allocated during evaluation
-        /// </summary>
-        Dynamic,
-    }
-
-    /// <summary>
     /// A tensorflow lite tensor
     /// </summary>
     public class Tensor : Emgu.TF.Util.UnmanagedObject
@@ -137,7 +67,7 @@ namespace Emgu.TF.Lite
         /// The data type specification for data stored in `data`. This affects
         /// what member of `data` union should be used.
         /// </summary>
-        public DataType Type
+        public Emgu.TF.Lite.DataType Type
         {
             get
             {

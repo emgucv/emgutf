@@ -181,7 +181,7 @@ namespace Emgu.TF.Lite
                 TfLiteInvoke.tfeInterpreterRelease(ref _ptr);
         }
 
-        public Status ModifyGraphWithDelegate(IDelegate tfDelegate)
+        public Status ModifyGraphWithDelegate(Emgu.TF.Lite.IDelegate tfDelegate)
         {
             return TfLiteInvoke.tfeInterpreterModifyGraphWithDelegate(_ptr, tfDelegate.DelegatePtr);
         }
