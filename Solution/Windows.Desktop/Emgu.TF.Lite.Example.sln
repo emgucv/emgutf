@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinForms.Lite.WPF", "..
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Models.Shared", "..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.shproj", "{E956DD26-1294-4731-8A90-C4CBA9F291B6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Lite.NetStandard", "..\..\Emgu.TF.Lite.NetStandard\Emgu.TF.Lite.NetStandard.csproj", "{A7B53A24-DCC7-4AC1-BA7C-11098F938E12}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{2475c64a-227a-442f-a1c8-8d488ce2fd08}*SharedItemsImports = 4
@@ -43,6 +45,14 @@ Global
 		{2475C64A-227A-442F-A1C8-8D488CE2FD08}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2475C64A-227A-442F-A1C8-8D488CE2FD08}.Release|x64.ActiveCfg = Release|Any CPU
 		{2475C64A-227A-442F-A1C8-8D488CE2FD08}.Release|x64.Build.0 = Release|Any CPU
+		{A7B53A24-DCC7-4AC1-BA7C-11098F938E12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7B53A24-DCC7-4AC1-BA7C-11098F938E12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7B53A24-DCC7-4AC1-BA7C-11098F938E12}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A7B53A24-DCC7-4AC1-BA7C-11098F938E12}.Debug|x64.Build.0 = Debug|Any CPU
+		{A7B53A24-DCC7-4AC1-BA7C-11098F938E12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7B53A24-DCC7-4AC1-BA7C-11098F938E12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7B53A24-DCC7-4AC1-BA7C-11098F938E12}.Release|x64.ActiveCfg = Release|Any CPU
+		{A7B53A24-DCC7-4AC1-BA7C-11098F938E12}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

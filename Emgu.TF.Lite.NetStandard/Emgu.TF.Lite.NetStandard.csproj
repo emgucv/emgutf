@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <Import Project="..\Emgu.TF.Lite\Emgu.TF.Lite.projitems" Label="Shared" />
+
+</Project>
