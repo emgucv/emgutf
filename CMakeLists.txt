@@ -39,14 +39,17 @@ ENDIF()
 SET(TENSORFLOW_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow")
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
 
-SET(CSC_PREFERRED_VERSION "4.0")
-IF((NOT NETFX_CORE) AND MSVC) 
-  #SET CSC 3.5 as the prefered compiler for EMGU TF
-  SET(CSC_TARGET_FRAMEWORK "3.5" CACHE STRING "C#  target framework")
-ELSE()
-  #SET CSC 4.5 (in the .Net framework 4.0 folder) as the prefered compiler for EMGU TF
-  SET(CSC_TARGET_FRAMEWORK "" CACHE STRING "C# target framework")
-ENDIF()
+SET(CSC_PREFERRED_VERSION "16.0")
+SET(CSC_TARGET_FRAMEWORK "" CACHE STRING "C# target framework")
+
+#SET(CSC_PREFERRED_VERSION "4.0")
+#IF((NOT NETFX_CORE) AND MSVC) 
+#  #SET CSC 3.5 as the prefered compiler for EMGU TF
+#  SET(CSC_TARGET_FRAMEWORK "3.5" CACHE STRING "C#  target framework")
+#ELSE()
+#  #SET CSC 4.5 (in the .Net framework 4.0 folder) as the prefered compiler for EMGU TF
+#  SET(CSC_TARGET_FRAMEWORK "" CACHE STRING "C# target framework")
+#ENDIF()
 
 FIND_PACKAGE(CSharp REQUIRED)
 INCLUDE (CSharpMacros)

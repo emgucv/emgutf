@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Util", "..\..\Emgu.TF.Util\Emgu.TF.Util.shproj", "{98561642-5EC3-4244-BAF9-6876D9BA5527}"
 EndProject
@@ -39,8 +39,8 @@ Global
 		{2475C64A-227A-442F-A1C8-8D488CE2FD08}.Debug|x64.Build.0 = Debug|Any CPU
 		{2475C64A-227A-442F-A1C8-8D488CE2FD08}.Release|x64.ActiveCfg = Release|Any CPU
 		{2475C64A-227A-442F-A1C8-8D488CE2FD08}.Release|x64.Build.0 = Release|Any CPU
-		{A7B53A24-DCC7-4AC1-BA7C-11098F938E12}.Debug|x64.ActiveCfg = Debug|x64
-		{A7B53A24-DCC7-4AC1-BA7C-11098F938E12}.Debug|x64.Build.0 = Debug|x64
+		{A7B53A24-DCC7-4AC1-BA7C-11098F938E12}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A7B53A24-DCC7-4AC1-BA7C-11098F938E12}.Debug|x64.Build.0 = Debug|Any CPU
 		{A7B53A24-DCC7-4AC1-BA7C-11098F938E12}.Release|x64.ActiveCfg = Release|Any CPU
 		{A7B53A24-DCC7-4AC1-BA7C-11098F938E12}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection

@@ -25,13 +25,12 @@ INSTALL(
 )
 
 IF(WIN32 OR APPLE)
+  BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.Netstandard.csproj" "" ALL)
+
   ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
 	PRE_BUILD
-	COMMAND dotnet nuget restore "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf.Netstandard/Emgu.TF.Protobuf.Netstandard.csproj"
+	COMMAND dotnet restore Emgu.TF.Lite.Netstandard.csproj
 	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
-
-  #MESSAGE("Adding protobuf project")
-  BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.Netstandard/Emgu.TF.Lite.Netstandard.csproj" "" ALL)
 
   INSTALL(
   FILES 

@@ -26,12 +26,11 @@ SET VS2012=%VS110COMNTOOLS%..\IDE\devenv.com
 SET VS2013=%VS120COMNTOOLS%..\IDE\devenv.com
 SET VS2015=%VS140COMNTOOLS%..\IDE\devenv.com
 
-SET VS2017_DIR=%PROGRAMFILES_DIR_X86%\Microsoft Visual Studio\2017\Community
-IF EXIST "%PROGRAMFILES_DIR_X86%\Microsoft Visual Studio\2017\Professional\Common7\IDE\devenv.com" SET VS2017_DIR=%PROGRAMFILES_DIR_X86%\Microsoft Visual Studio\2017\Professional
-IF EXIST "%PROGRAMFILES_DIR_X86%\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\devenv.com" SET VS2017_DIR=%PROGRAMFILES_DIR_X86%\Microsoft Visual Studio\2017\Enterprise
-IF EXIST "%VS2017INSTALLDIR%\Common7\IDE\devenv.com" SET VS2017_DIR=%VS2017INSTALLDIR%
-IF EXIST "%VS150COMNTOOLS%..\IDE\devenv.com" SET VS2017_DIR =%VS150COMNTOOLS%..\..
+FOR /F "tokens=* USEBACKQ" %%F IN (`miscellaneous\vswhere.exe -version [15.0^,16.0^) -property installationPath`) DO SET VS2017_DIR=%%F
 SET VS2017=%VS2017_DIR%\Common7\IDE\devenv.com
+
+FOR /F "tokens=* USEBACKQ" %%F IN (`miscellaneous\vswhere.exe -version [16.0^,17.0^) -property installationPath`) DO SET VS2019_DIR=%%F
+SET VS2019=%VS2019_DIR%\Common7\IDE\devenv.com
 
 IF EXIST "%windir%\Microsoft.NET\Framework\v3.5\MSBuild.exe" SET MSBUILD35=%windir%\Microsoft.NET\Framework\v3.5\MSBuild.exe
 IF EXIST "%windir%\Microsoft.NET\Framework64\v3.5\MSBuild.exe" SET MSBUILD35=%windir%\Microsoft.NET\Framework64\v3.5\MSBuild.exe
@@ -45,12 +44,14 @@ IF EXIST "%VS2010%" SET DEVENV=%VS2010%
 IF EXIST "%VS2012%" SET DEVENV=%VS2012%
 IF EXIST "%VS2013%" SET DEVENV=%VS2013%
 IF EXIST "%VS2015%" SET DEVENV=%VS2015%
-REM IF EXIST "%VS2017%" SET DEVENV=%VS2017%
+IF EXIST "%VS2017%" SET DEVENV=%VS2017%
+REM IF EXIST "%VS2019%" SET DEVENV=%VS2019%
 
 
 :SET_BAZEL_VS_VC
 IF "%DEVENV%"=="%VS2015%" SET BAZEL_VS=%VS2015:\Common7\Tools\..\IDE\devenv.com=%
 IF "%DEVENV%"=="%VS2017%" SET BAZEL_VS=%VS2017:\Common7\IDE\devenv.com=%
+IF "%DEVENV%"=="%VS2019%" SET BAZEL_VS=%VS2019:\Common7\IDE\devenv.com=%
 IF NOT "%BAZEL_VS%"=="" SET BAZEL_VC=%BAZEL_VS%\VC
 REM SET BAZEL_VS="%BAZEL_VS%"
 
@@ -71,6 +72,7 @@ cp -f tensorflow/bazel-bin/tensorflow/tfliteextern/libtfliteextern.so lib/x64/tf
 IF "%BAZEL_VC%"=="" GOTO END_OF_MSVC_DEPENDENCY
 IF "%DEVENV%"=="%VS2015%" GOTO VS2015_DEPEDENCY
 IF "%DEVENV%"=="%VS2017%" GOTO VS2017_DEPEDENCY
+IF "%DEVENV%"=="%VS2019%" GOTO VS2019_DEPEDENCY
 GOTO END_OF_MSVC_DEPENDENCY
 
 :VS2015_DEPEDENCY
@@ -80,6 +82,11 @@ GOTO END_OF_MSVC_DEPENDENCY
 
 :VS2017_DEPEDENCY
 copy /Y "%BAZEL_VC%\Redist\MSVC\14.16.27012\x64\Microsoft.VC141.CRT\*140.dll" lib\x64\
+rm lib\x64\vccorlib140.dll
+GOTO END_OF_MSVC_DEPENDENCY
+
+:VS2019_DEPEDENCY
+copy /Y "%BAZEL_VC%\Redist\MSVC\14.20.27508\x64\Microsoft.VC141.CRT\*140.dll" lib\x64\
 rm lib\x64\vccorlib140.dll
 
 :END_OF_MSVC_DEPENDENCY

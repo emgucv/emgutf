@@ -385,7 +385,7 @@ namespace Emgu.TF.Lite
             DirectoryInfo directory = file.Directory;
 
 #if (UNITY_ANDROID && !UNITY_EDITOR)
-         UnityEngine.AndroidJavaObject jo = new UnityEngine.AndroidJavaObject("java.lang.System");
+            UnityEngine.AndroidJavaObject jo = new UnityEngine.AndroidJavaObject("java.lang.System");
 #endif
             foreach (String module in modules)
             {
@@ -411,7 +411,9 @@ namespace Emgu.TF.Lite
             }
 #elif __IOS__ || UNITY_IOS || NETFX_CORE
 #else
+#if !(UNITY_EDITOR || UNITY_STANDALONE || UNITY_ANDROID)
             if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
+#endif
             {
                 String formatString = GetModuleFormatString();
                 for (int i = 0; i < modules.Length; ++i)
