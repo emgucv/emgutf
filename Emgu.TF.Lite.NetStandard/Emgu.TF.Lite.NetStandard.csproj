@@ -11,6 +11,8 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DefineConstants>TRACE;__NETSTANDARD_2_0__</DefineConstants>
+    <OutputPath>..\lib\</OutputPath>
+    <DocumentationFile>..\lib\Emgu.TF.Lite.NetStandard.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -19,6 +21,8 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <DefineConstants>TRACE;__NETSTANDARD_2_0__</DefineConstants>
+    <OutputPath>..\lib\</OutputPath>
+    <DocumentationFile>..\lib\Emgu.TF.Lite.NetStandard.xml</DocumentationFile>
   </PropertyGroup>
 
   <Import Project="..\Emgu.TF.Lite\Emgu.TF.Lite.projitems" Label="Shared" />

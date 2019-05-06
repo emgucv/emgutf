@@ -20,7 +20,7 @@ INSTALL(
 	PATTERN "obj" EXCLUDE
 	PATTERN "CMakeFiles" EXCLUDE
 	PATTERN "x64" EXCLUDE #exclude build artifacts from Visual Studio build process
-	PATTERN "x64" EXCLUDE #exclude build artifacts from Visual Studio build process
+	PATTERN "x86" EXCLUDE #exclude build artifacts from Visual Studio build process
 	PATTERN "${PROJECT_NAME}.dir" EXCLUDE
 )
 
