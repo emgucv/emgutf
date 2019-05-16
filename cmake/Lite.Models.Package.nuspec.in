@@ -15,7 +15,12 @@
     <releaseNotes>This is the Emgu.TF.Lite.Models component for the ${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX} release of Emgu TF Lite. For online documentation please visit
 http://www.emgu.com/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}/document/</releaseNotes>
     <dependencies>
-		<dependency id="${EMGUTF_LITE_NUGET_ID}" version="[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]" />
+		<group>
+			<dependency id="${EMGUTF_LITE_NUGET_ID}" version="[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]" />
+		</group>
+		<group targetFramework="netstandard2.0">
+			<dependency id="System.Drawing.Common" version="[4.5.1]" />
+        </group>
     </dependencies>
     <copyright>${CURRENT_YEAR} ${CPACK_PACKAGE_VENDOR}, all rights reserved</copyright>
     <tags>tensorflow emgu emgutf ai </tags>
