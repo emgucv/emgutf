@@ -490,8 +490,8 @@ IF(HAVE_WINDESKTOP_LITE)
 	SET(EMGUTF_LITE_NUGET_FILE_LIST "
 	<file src=\"..\\..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />")
 	SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.World.dll\" target=\"lib\\net45\" />
-	<file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.World.xml\" target=\"lib\\net45\" />")
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Net45.dll\" target=\"lib\\net45\" />
+	<file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Net45.xml\" target=\"lib\\net45\" />")
 	SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Netstandard.dll\" target=\"lib\\netstandard2.0\" />
 	<file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Netstandard.xml\" target=\"lib\\netstandard2.0\" />")
@@ -695,7 +695,7 @@ IF(HAS_FULL_BUILD)
 ENDIF()
 IF(HAS_LITE_BUILD)
   ADD_SUBDIRECTORY(Emgu.TF.Lite)
-  ADD_SUBDIRECTORY(Emgu.TF.Lite.Netstandard)
+  #ADD_SUBDIRECTORY(Emgu.TF.Lite.Netstandard)
 ENDIF()
 ADD_SUBDIRECTORY(Emgu.TF.Example)
 #ADD_SUBDIRECTORY(Emgu.TF.Test.Core)

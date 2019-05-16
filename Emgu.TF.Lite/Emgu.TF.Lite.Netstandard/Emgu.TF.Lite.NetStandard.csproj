@@ -6,19 +6,19 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\lib\</OutputPath>
-    <DocumentationFile>..\lib\Emgu.TF.Lite.Netstandard.xml</DocumentationFile>
+    <OutputPath>..\..\lib\</OutputPath>
+    <DocumentationFile>..\..\lib\Emgu.TF.Lite.Netstandard.xml</DocumentationFile>
     <DefineConstants>TRACE;__NETSTANDARD_2_0__</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\lib\</OutputPath>
-    <DocumentationFile>..\lib\Emgu.TF.Lite.Netstandard.xml</DocumentationFile>
+    <OutputPath>..\..\lib\</OutputPath>
+    <DocumentationFile>..\..\lib\Emgu.TF.Lite.Netstandard.xml</DocumentationFile>
     <DefineConstants>TRACE;__NETSTANDARD_2_0__</DefineConstants>
   </PropertyGroup>
 
-  <Import Project="..\Emgu.TF.Lite\Emgu.TF.Lite.projitems" Label="Shared" />
+  <Import Project="..\..\Emgu.TF.Lite\Emgu.TF.Lite.projitems" Label="Shared" />
 
-  <Import Project="..\Emgu.TF.Util\Emgu.TF.Util.projitems" Label="Shared" />
+  <Import Project="..\..\Emgu.TF.Util\Emgu.TF.Util.projitems" Label="Shared" />
 
 </Project>

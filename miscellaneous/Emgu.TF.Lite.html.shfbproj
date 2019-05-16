@@ -40,14 +40,15 @@
     <FooterText>For questions and discussions please visit https://github.com/emgucv/emgutf/issues</FooterText>
     <PresentationStyle>VS2013</PresentationStyle>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\Emgu.TF.World\Emgu.TF.Lite.World.csproj" />
+      <DocumentationSource sourceFile="..\Emgu.TF.Lite\Emgu.TF.Lite.Net45\Emgu.TF.Lite.Net45.csproj" />
     </DocumentationSources>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="(global)" isDocumented="True">Emgu TF Lite is a cross platform .Net wrapper for the Google Tensorflow Lite library. Allows Tensorflow Lite functions to be called from .NET compatible languages such as C#, VB, VC++, IronPython.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Emgu" isDocumented="True">Root namespace for class and functions implemented by Emgu Corporation</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Emgu.TF.Lite" isDocumented="True">Wrapper of Tensorflow Lite functions.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Emgu.TF.Util" isDocumented="True">Emgu TF Utilities.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Emgu.TF.Util.TypeEnum" isDocumented="True">Enumeration container for the Utility namespace</NamespaceSummaryItem></NamespaceSummaries>
+      <NamespaceSummaryItem name="Emgu" isDocumented="True">Root namespace for class and functions implemented by Emgu Corporation</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Emgu.TF.Lite" isDocumented="True">Wrapper of Tensorflow Lite functions.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Emgu.TF.Util" isDocumented="True">Emgu TF Utilities.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Emgu.TF.Util.TypeEnum" isDocumented="True">Enumeration container for the Utility namespace</NamespaceSummaryItem>
+    </NamespaceSummaries>
     <PlugInConfigurations>
     </PlugInConfigurations>
     <MaximumGroupParts>2</MaximumGroupParts>

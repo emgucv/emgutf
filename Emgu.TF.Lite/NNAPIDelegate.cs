@@ -36,6 +36,10 @@ namespace Emgu.TF.Lite
                 TfLiteInvoke.tfeNNAPIDelegateRelease(ref _ptr);
         }
 
+
+        /// <summary>
+        /// Return true if NNAPI is supported in the current platform
+        /// </summary>
         public bool IsSupported
         {
             get

@@ -430,7 +430,7 @@ namespace Emgu.TF.Lite
         /// </summary>
         static TfLiteInvoke()
         {
-            System.Diagnostics.Debug.WriteLine(String.Format("Emgu TF Running in {0} bit mode.", IntPtr.Size));
+            System.Diagnostics.Debug.WriteLine(String.Format("Emgu TF Running in {0} bit mode.", IntPtr.Size * 8));
             List<String> modules = TfLiteInvoke.TensorflowModuleList;
             modules.RemoveAll(String.IsNullOrEmpty);
 

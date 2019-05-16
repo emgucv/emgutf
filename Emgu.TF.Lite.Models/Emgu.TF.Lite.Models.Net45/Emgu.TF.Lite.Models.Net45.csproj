@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Emgu.TF.Lite.Models</RootNamespace>
-    <AssemblyName>Emgu.TF.Lite.Models</AssemblyName>
+    <AssemblyName>Emgu.TF.Lite.Models.Net45</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -22,7 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\lib\Emgu.TF.Lite.Models.xml</DocumentationFile>
+    <DocumentationFile>..\..\lib\Emgu.TF.Lite.Models.Net45.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,7 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\lib\Emgu.TF.Lite.Models.xml</DocumentationFile>
+    <DocumentationFile>..\..\lib\Emgu.TF.Lite.Models.Net45.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -51,13 +51,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Emgu.TF.World\Emgu.TF.Lite.World.csproj">
-      <Project>{72c5fe43-d0c0-45c6-b5a6-c4fc21263924}</Project>
-      <Name>Emgu.TF.Lite.World</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\..\Emgu.TF.Lite\Emgu.TF.Lite.Net45\Emgu.TF.Lite.Net45.csproj">
+      <Project>{72c5fe43-d0c0-45c6-b5a6-c4fc21263924}</Project>
+      <Name>Emgu.TF.Lite.Net45</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="..\Emgu.TF.Lite.Models.Shared.projitems" Label="Shared" />
   <Import Project="..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" />

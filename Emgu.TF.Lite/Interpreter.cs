@@ -181,6 +181,14 @@ namespace Emgu.TF.Lite
                 TfLiteInvoke.tfeInterpreterRelease(ref _ptr);
         }
 
+        /// <summary>
+        /// Allow a delegate to look at the graph and modify the graph to handle
+        /// parts of the graph themselves. After this is called, the graph may
+        /// contain new nodes that replace 1 more nodes.
+        /// WARNING: This is an experimental API and subject to change.
+        /// </summary>
+        /// <param name="tfDelegate">The delegate</param>
+        /// <returns>The status</returns>
         public Status ModifyGraphWithDelegate(Emgu.TF.Lite.IDelegate tfDelegate)
         {
             return TfLiteInvoke.tfeInterpreterModifyGraphWithDelegate(_ptr, tfDelegate.DelegatePtr);

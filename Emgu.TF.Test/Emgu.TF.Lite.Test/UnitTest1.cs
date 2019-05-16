@@ -23,7 +23,7 @@ namespace Emgu.TF.Lite.Test
                 bool processCompleted = false;
                 mobilenet.OnDownloadCompleted += (sender, e) =>
                 {
-                    var result = mobilenet.MostLikely("grace_hopper.jpg");
+                    var result = mobilenet.Recognize("grace_hopper.jpg")[0];
                     
                     processCompleted = true;
                 };
