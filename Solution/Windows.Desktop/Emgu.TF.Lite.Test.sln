@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.452
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Util", "..\..\Emgu.TF.Util\Emgu.TF.Util.shproj", "{98561642-5EC3-4244-BAF9-6876D9BA5527}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Lite.Models", "..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.csproj", "{FA244E26-8E10-4F87-8B60-6C4C0B0CB1F7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Lite.World", "..\..\Emgu.TF.World\Emgu.TF.Lite.World.csproj", "{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.NetStandard", "..\..\Emgu.TF.Lite.NetStandard\Emgu.TF.Lite.NetStandard.csproj", "{3068CFFD-FE89-489D-AC98-F10789E6C921}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -117,6 +119,22 @@ Global
 		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Release|x64.ActiveCfg = Release|Any CPU
 		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Release|x64.Build.0 = Release|Any CPU
+		{3068CFFD-FE89-489D-AC98-F10789E6C921}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3068CFFD-FE89-489D-AC98-F10789E6C921}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3068CFFD-FE89-489D-AC98-F10789E6C921}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{3068CFFD-FE89-489D-AC98-F10789E6C921}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{3068CFFD-FE89-489D-AC98-F10789E6C921}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{3068CFFD-FE89-489D-AC98-F10789E6C921}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{3068CFFD-FE89-489D-AC98-F10789E6C921}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3068CFFD-FE89-489D-AC98-F10789E6C921}.Debug|x64.Build.0 = Debug|Any CPU
+		{3068CFFD-FE89-489D-AC98-F10789E6C921}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3068CFFD-FE89-489D-AC98-F10789E6C921}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3068CFFD-FE89-489D-AC98-F10789E6C921}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{3068CFFD-FE89-489D-AC98-F10789E6C921}.Release|iPhone.Build.0 = Release|Any CPU
+		{3068CFFD-FE89-489D-AC98-F10789E6C921}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{3068CFFD-FE89-489D-AC98-F10789E6C921}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{3068CFFD-FE89-489D-AC98-F10789E6C921}.Release|x64.ActiveCfg = Release|Any CPU
+		{3068CFFD-FE89-489D-AC98-F10789E6C921}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
