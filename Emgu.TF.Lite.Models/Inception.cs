@@ -259,6 +259,12 @@ namespace Emgu.TF.Lite.Models
         /// Load the file, ran it through the mobile net graph and return the recognition results
         /// </summary>
         /// <param name="imageFile">The image to be loaded</param>
+        /// <param name="width">The width of the input tensor</param>
+        /// <param name="height">The height of the input tensor</param>
+        /// <param name="mean">The mean to be subtracted when converting the image to input tensor</param>
+        /// <param name="scale">The scale to be multiplied when converting the image to input tensor</param>
+        /// <param name="flipUpsideDown">If true, the image will be flipped upside down when it is coverted to input tensor</param>
+        /// <param name="swapBR">If true, the blue and red channel will be swapped when converting the image to input tensor </param>
         /// <returns>The recognition result sorted by probability</returns>
         public RecognitionResult[] Recognize(String imageFile, int width = 299, int height = 299, float mean = 0.0f, float scale = 1.0f/255.0f, bool flipUpsideDown = false, bool swapBR = true)
         {

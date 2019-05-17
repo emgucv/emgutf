@@ -399,6 +399,14 @@ namespace Emgu.Models
 #endif
         }
 
+        /// <summary>
+        /// Converting raw pixel data to jpeg stream
+        /// </summary>
+        /// <param name="rawPixel">The raw pixel data</param>
+        /// <param name="width">The width of the image</param>
+        /// <param name="height">The height of the image</param>
+        /// <param name="channels">The number of channels</param>
+        /// <returns>The jpeg stream</returns>
         public static byte[] PixelToJpeg(byte[] rawPixel, int width, int height, int channels)
         {
 #if __ANDROID__
