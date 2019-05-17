@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.NetStandard", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Models.Netstandard", "..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Netstandard\Emgu.TF.Lite.Models.Netstandard.csproj", "{8D1CDAF7-E886-4A3C-B9D9-39BFE193E07C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inception.Console.Netstandard", "..\..\Emgu.TF.Example\Inception.Console.Netstandard\Inception.Console.Netstandard.csproj", "{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{2475c64a-227a-442f-a1c8-8d488ce2fd08}*SharedItemsImports = 4
@@ -63,6 +65,14 @@ Global
 		{8D1CDAF7-E886-4A3C-B9D9-39BFE193E07C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8D1CDAF7-E886-4A3C-B9D9-39BFE193E07C}.Release|x64.ActiveCfg = Release|Any CPU
 		{8D1CDAF7-E886-4A3C-B9D9-39BFE193E07C}.Release|x64.Build.0 = Release|Any CPU
+		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Debug|x64.Build.0 = Debug|Any CPU
+		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Release|x64.ActiveCfg = Release|Any CPU
+		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
