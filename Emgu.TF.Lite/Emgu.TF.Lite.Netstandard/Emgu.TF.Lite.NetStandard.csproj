@@ -17,8 +17,13 @@
     <DefineConstants>TRACE;__NETSTANDARD_2_0__</DefineConstants>
   </PropertyGroup>
 
-  <Import Project="..\..\Emgu.TF.Lite\Emgu.TF.Lite.projitems" Label="Shared" />
-
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' " />
+  <Import Project="..\Emgu.TF.Lite.projitems" Label="Shared" Condition="Exists('..\Emgu.TF.Lite.projitems')" />
   <Import Project="..\..\Emgu.TF.Util\Emgu.TF.Util.projitems" Label="Shared" />
 
 </Project>
