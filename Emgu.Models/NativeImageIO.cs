@@ -603,6 +603,7 @@ namespace Emgu.Models
             return new float[] { left, top, right, bottom };
         }
 
+
 #if __MACOS__
 
         public static void DrawAnnotations(NSImage img, Annotation[] annotations)
@@ -613,6 +614,24 @@ namespace Emgu.Models
             redColor.Set();
             var context = NSGraphicsContext.CurrentContext;
             var cgcontext = context.CGContext;
+
+            for (int i = 0; i < annotations.Length; i++)
+            {
+                float[] rects = ScaleLocation(annotations[i].Rectangle, (int)img.Size.Width, (int)img.Size.Height);
+                CGRect cgRect = new CGRect(
+                    rects[0],
+                    rects[1],
+                    rects[2] - rects[0],
+                    rects[3] - rects[1]);
+                NSFont font = NSFont.FromFontName("Arial", 20);
+                var fontDictionary = Foundation.NSDictionary.FromObjectsAndKeys(
+                    new Foundation.NSObject[] { font, NSColor.Red },
+                    new Foundation.NSObject[] { NSStringAttributeKey.Font, NSStringAttributeKey.ForegroundColor });
+                //CGSize size = text.StringSize(fontDictionary);
+                CGPoint p = new CGPoint(cgRect.Location.X, img.Size.Height - cgRect.Location.Y);
+                annotations[i].Label.DrawAtPoint(p, fontDictionary);
+            }
+
             cgcontext.ScaleCTM(1, -1);
             cgcontext.TranslateCTM(0, -img.Size.Height);
             //context.IsFlipped = !context.IsFlipped;
@@ -625,7 +644,9 @@ namespace Emgu.Models
                     rects[2] - rects[0],
                     rects[3] - rects[1]);
                 NSBezierPath.StrokeRect(cgRect);
+
             }
+
             img.UnlockFocus();
         }
 #endif
