@@ -329,6 +329,29 @@ IF(HAVE_WINDESKTOP_X64)
     )
 ENDIF()
 
+  INSTALL(
+    DIRECTORY
+    "${CMAKE_CURRENT_SOURCE_DIR}/Inception.Console.Lite.Netstandard/"
+    DESTINATION Emgu.TF.Example/Inception.Console.Lite.Netstandard/
+    COMPONENT emgutf_example_source
+    FILES_MATCHING 
+    PATTERN "*.cs"
+    PATTERN "*.csproj"
+    PATTERN "*.config"
+    PATTERN "*.shproj"
+    PATTERN "*.Xamarin"
+    PATTERN "*.projitems"
+    PATTERN "*.axml"
+    PATTERN "*.xaml"
+    PATTERN "*.xml"
+    PATTERN "*.txt"
+    PATTERN "*.png"
+    PATTERN "*.dll"
+    PATTERN "*.json"
+    PATTERN ".git" EXCLUDE
+    PATTERN "Debug" EXCLUDE
+    PATTERN "Release" EXCLUDE  
+    )
 
 IF(NOT (NETFX_CORE OR ANDROID OR (APPLE AND (NOT IOS))))
   SET(EMGU_TF_REFERENCE 
