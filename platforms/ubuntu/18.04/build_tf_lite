@@ -1,0 +1,8 @@
+#!/bin/sh
+cd ../../..
+cd tensorflow
+
+bazel build //tensorflow/tfliteextern:libtfliteextern.so 
+cd ..
+mkdir -p lib
+cp tensorflow/bazel-bin/tensorflow/tfliteextern/*.so lib/

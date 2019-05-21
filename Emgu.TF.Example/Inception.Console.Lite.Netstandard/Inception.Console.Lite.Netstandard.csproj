@@ -27,12 +27,6 @@
   </Choose>
 	
   <ItemGroup>
-    <Content Include="$(TensorflowLiteOSXNativeFile)" Link="libtfliteextern.dylib">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-	
-  <ItemGroup>
     <Content Include="..\XamarinForms\XamarinForms\tulips.jpg" Link="tulips.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
