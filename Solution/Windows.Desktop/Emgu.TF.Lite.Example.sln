@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.NetStandard", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Models.Netstandard", "..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Netstandard\Emgu.TF.Lite.Models.Netstandard.csproj", "{8D1CDAF7-E886-4A3C-B9D9-39BFE193E07C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inception.Console.Netstandard", "..\..\Emgu.TF.Example\Inception.Console.Netstandard\Inception.Console.Netstandard.csproj", "{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inception.Console.Lite.Netstandard", "..\..\Emgu.TF.Example\Inception.Console.Lite.Netstandard\Inception.Console.Lite.Netstandard.csproj", "{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
