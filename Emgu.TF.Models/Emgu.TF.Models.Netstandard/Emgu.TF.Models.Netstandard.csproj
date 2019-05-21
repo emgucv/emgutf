@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\..\lib</OutputPath>
+    <DocumentationFile>..\..\lib\Emgu.TF.Models.Netstandard.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\lib</OutputPath>
+    <DocumentationFile>..\..\lib\Emgu.TF.Models.Netstandard.xml</DocumentationFile>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
+  </ItemGroup>
+
+  <Import Project="..\Emgu.TF.Models.Shared.projitems" Label="Shared" />
+
+  <Import Project="..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj" />
+  </ItemGroup>
+
+</Project>

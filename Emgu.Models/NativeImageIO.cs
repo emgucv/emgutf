@@ -773,8 +773,7 @@ namespace Emgu.Models
             result.Height = (int)uiimage.Size.Height;
             return result;
 #else
-            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
-            {
+
                 Bitmap img = new Bitmap(fileName);
 
                 if (annotations != null)
@@ -811,11 +810,7 @@ namespace Emgu.Models
                     result.Height = img.Size.Height;
                     return result;
                 }
-            }
-            else
-            {
-                throw new Exception("DrawResultsToJpeg Not implemented for this platform");
-            }
+
 #endif
 
         }

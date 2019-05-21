@@ -24,6 +24,9 @@ using CoreGraphics;
 
 namespace Emgu.TF.Models
 {
+    /// <summary>
+    /// Provide image IO functions
+    /// </summary>
     public class ImageIO
     {
         /// <summary>
