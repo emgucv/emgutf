@@ -279,7 +279,7 @@ namespace Emgu.Models
             ReadTensorFromTexture2D<T>(texture, dest, inputHeight, inputWidth, inputMean, scale, flipUpSideDown, false);
 #else
 
-            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+            //if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
             {
                 //Read the file using Bitmap class
                 System.Drawing.Bitmap bmp = new Bitmap(fileName);
@@ -389,13 +389,14 @@ namespace Emgu.Models
                     throw new NotImplementedException(String.Format("Destination data type {0} is not supported.", typeof(T).ToString()));
                 }
             }
+            /*
             else //Unix
             {
                 //if (flipUpSideDown)
                 //    throw new NotImplementedException("Flip Up Side Down is Not implemented");
 
                 throw new NotImplementedException("Not implemented");
-            }
+            }*/
 #endif
         }
 
