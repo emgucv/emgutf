@@ -113,14 +113,14 @@ namespace Emgu.TF.XamarinForms
                     {
                         //First run of the recognition graph, here we will compile the graph and initialize the session
                         //This is expected to take much longer time than consecutive runs.
-                        result = _inceptionGraph.MostLikely(imageTensor);
+                        result = _inceptionGraph.Recognize(imageTensor)[0];
                         _coldSession = false;
                     }
 
                     //Here we are trying to time the execution of the graph after it is loaded
                     //If we are not interest in the performance, we can skip the following 3 lines
                     Stopwatch sw = Stopwatch.StartNew();
-                    result = _inceptionGraph.MostLikely(imageTensor);
+                    result = _inceptionGraph.Recognize(imageTensor)[0];
                     sw.Stop();
 
                     String msg = String.Format("Object is {0} with {1}% probability. Recognized in {2} milliseconds.", result.Label, result.Probability * 100, sw.ElapsedMilliseconds);

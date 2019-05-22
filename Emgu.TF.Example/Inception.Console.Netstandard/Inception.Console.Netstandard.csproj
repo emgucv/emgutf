@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\lib\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TensorflowBinaryDir>$(MSBuildThisFileDirectory)..\..\lib</TensorflowBinaryDir>
+    <TensorflowOSXNativeFile>$(TensorflowBinaryDir)\osx\libtfextern.dylib</TensorflowOSXNativeFile>
+  </PropertyGroup>
+  
+  <Choose>
+    <!-- Copy macOS native binary -->
+    <When Condition="Exists('$(TensorflowOSXNativeFile)')">
+      <ItemGroup>
+        <Content Include="$(TensorflowOSXNativeFile)" Link="libtfextern.dylib">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+      </ItemGroup>
+    </When>
+  </Choose>
+	
+  <ItemGroup>
+    <Content Include="..\XamarinForms\XamarinForms\tulips.jpg" Link="tulips.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Emgu.TF.Models\Emgu.TF.Models.Netstandard\Emgu.TF.Models.Netstandard.csproj" />
+    <ProjectReference Include="..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Netstandard\Emgu.TF.Protobuf.Netstandard.csproj" />
+    <ProjectReference Include="..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj" />
+  </ItemGroup>
+
+</Project>

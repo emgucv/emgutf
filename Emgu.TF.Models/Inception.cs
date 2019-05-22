@@ -187,8 +187,8 @@ namespace Emgu.TF.Models
         /// Pass the image tensor to the graph and return the probability that the object in image belongs to each of the object class.
         /// </summary>
         /// <param name="image">The image to be classified</param>
-        /// <returns>The probability that the object belong to each of the object class</returns>
-        public float[] Recognize(Tensor image)
+        /// <returns>The object classes, sorted by probability from high to low</returns>
+        public RecognitionResult[] Recognize(Tensor image)
         {
             Operation input = _graph[_inputName];
             if (input == null)
@@ -201,20 +201,23 @@ namespace Emgu.TF.Models
             Tensor[] finalTensor = _session.Run(new Output[] { input }, new Tensor[] { image },
                 new Output[] { output });
             float[] probability = finalTensor[0].GetData(false) as float[];
-            return probability;
+            //return probability;
+            return SortResults(probability);
         }
 
+        /*
         /// <summary>
         /// Perform object classification and get the most likely object class.
         /// </summary>
         /// <param name="image">The image to be recognized.</param>
-        /// <returns>The most likely object class</returns>
-        public RecognitionResult MostLikely(Tensor image)
+        /// <returns>The object classes, sorted by probability from high to low</returns>
+        public RecognitionResult[] MostLikely(Tensor image)
         {
             float[] probability = Recognize(image);
 
+            
             RecognitionResult result = new RecognitionResult();
-            result.Label = String.Empty;
+            //result.Label = String.Empty;
 
             if (probability != null)
             {
@@ -231,12 +234,51 @@ namespace Emgu.TF.Models
                 result.Label = _labels[maxIdx];
                 result.Probability = maxVal;
             }
-            return result;
+            return SortResults(probability);
+        }*/
+
+        /// <summary>
+        /// Sort the result from the most likely to the less likely
+        /// </summary>
+        /// <param name="probabilities">The probability for the classes, this should be the values of the output tensor</param>
+        /// <returns>The recognition result, sorted by likelihood.</returns>
+        public RecognitionResult[] SortResults(float[] probabilities)
+        {
+            if (probabilities == null)
+                return null;
+
+            RecognitionResult[] results = new RecognitionResult[probabilities.Length];
+            for (int i = 0; i < probabilities.Length; i++)
+            {
+                results[i] = new RecognitionResult(_labels[i], probabilities[i]);
+            }
+            Array.Sort<RecognitionResult>(results, new Comparison<RecognitionResult>((a, b) => -a.Probability.CompareTo(b.Probability)));
+            return results;
         }
 
+        /// <summary>
+        /// The result of the class labeling
+        /// </summary>
         public class RecognitionResult
         {
+            /// <summary>
+            /// Create a recognition result by providing the label and the probability
+            /// </summary>
+            /// <param name="label">The label</param>
+            /// <param name="probability">The probability</param>
+            public RecognitionResult(String label, double probability)
+            {
+                Label = label;
+                Probability = probability;
+            }
+
+            /// <summary>
+            /// The label
+            /// </summary>
             public String Label;
+            /// <summary>
+            /// The probability
+            /// </summary>
             public double Probability;
         }
 

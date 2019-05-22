@@ -1,9 +1,14 @@
-﻿using System;
+﻿//----------------------------------------------------------------------------
+//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
+//----------------------------------------------------------------------------
+
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Emgu.TF.Lite.Models;
 using System.Threading;
-namespace ConsoleAppNetCore
+
+namespace Inception.Console.Lite.Netstandard
 {
     class Program
     {
