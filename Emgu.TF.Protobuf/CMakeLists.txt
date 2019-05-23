@@ -30,10 +30,15 @@ ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME}
 	PRE_BUILD
 	COMMAND ${DOTNET_EXECUTABLE} restore ${PROJECT_NAME}.csproj
 	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}")
-  ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
+#ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
+#	PRE_BUILD
+#	COMMAND ${DOTNET_EXECUTABLE} restore Emgu.TF.CodeGen.NetCore.csproj
+#	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../Emgu.TF.CodeGen.NetCore")
+ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
 	PRE_BUILD
-	COMMAND ${DOTNET_EXECUTABLE} restore Emgu.TF.CodeGen.NetCore.csproj
-	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../Emgu.TF.CodeGen.NetCore")
+	COMMAND wget https://www.nuget.org/api/v2/package/Google.Protobuf.Tools/3.7.0 -O protobuf.tools.zip
+	COMMAND unzip -u protobuf.tools.zip -d protobuf.tools
+	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 
 SET(PROTO_SOURCE)
 FILE(GLOB PROTO_SOURCE_FILES_FRAME_WORK RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/framework/" "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/framework/*.proto")
@@ -88,13 +93,16 @@ MESSAGE(STATUS "PROTO_SOURCE: ${PROTO_SOURCE}")
 #  "tensorflow\\core\\protobuf\\debug.proto" 
 #  "tensorflow\\core\\protobuf\\rewriter_config.proto" )
 
+  
 
-SET(PROTOBUF_TOOLS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../nugetpackages/Google.Protobuf.Tools.3.6.1/)
+SET(PROTOBUF_TOOLS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/protobuf.tools)
 
 IF(WIN32)
   SET(PROTOC_EXE "${PROTOBUF_TOOLS_PATH}/tools/windows_x86/protoc.exe")
 ELSEIF(APPLE)
   SET(PROTOC_EXE "${PROTOBUF_TOOLS_PATH}/tools/macosx_x64/protoc")
+ELSE()
+  SET(PROTOC_EXE "${PROTOBUF_TOOLS_PATH}/tools/linux_x86/protoc")
 ENDIF()
 
 SET(PROTO_GEN_COMMAND ${PROTOC_EXE} "--proto_path=." "--csharp_out=\"${CMAKE_CURRENT_SOURCE_DIR}\"" "--csharp_opt=file_extension=.g.cs" ${PROTO_SOURCE})
