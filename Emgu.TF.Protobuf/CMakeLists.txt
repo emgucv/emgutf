@@ -30,15 +30,14 @@ ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME}
 	PRE_BUILD
 	COMMAND ${DOTNET_EXECUTABLE} restore ${PROJECT_NAME}.csproj
 	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}")
-#ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
-#	PRE_BUILD
-#	COMMAND ${DOTNET_EXECUTABLE} restore Emgu.TF.CodeGen.NetCore.csproj
-#	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../Emgu.TF.CodeGen.NetCore")
-ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
+
+IF(WIN32 OR APPLE)
+  ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
 	PRE_BUILD
 	COMMAND wget https://www.nuget.org/api/v2/package/Google.Protobuf.Tools/3.7.0 -O protobuf.tools.zip
 	COMMAND unzip -u protobuf.tools.zip -d protobuf.tools
 	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
+ENDIF()
 
 SET(PROTO_SOURCE)
 FILE(GLOB PROTO_SOURCE_FILES_FRAME_WORK RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/framework/" "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/framework/*.proto")
@@ -73,36 +72,14 @@ ENDIF()
 ENDFOREACH()
 
 MESSAGE(STATUS "PROTO_SOURCE: ${PROTO_SOURCE}")
-#SET(PROTO_SOURCE 
-#  "tensorflow\\core\\framework\\op_def.proto" 
-#  "tensorflow\\core\\framework\\tensor.proto" 
-#  "tensorflow\\core\\framework\\types.proto" 
-#  "tensorflow\\core\\framework\\attr_value.proto" 
-#  "tensorflow\\core\\framework\\tensor_shape.proto" 
-#  "tensorflow\\core\\framework\\resource_handle.proto" 
-#  "tensorflow\\core\\framework\\graph.proto" 
-#  "tensorflow\\core\\framework\\step_stats.proto" 
-#  "tensorflow\\core\\framework\\versions.proto" 
-#  "tensorflow\\core\\framework\\node_def.proto" 
-#  "tensorflow\\core\\framework\\tensor_description.proto" 
-#  "tensorflow\\core\\framework\\allocation_description.proto" 
-#  "tensorflow\\core\\framework\\cost_graph.proto" 
-#  "tensorflow\\core\\framework\\function.proto" 
-#  "tensorflow\\core\\protobuf\\config.proto" 
-#  "tensorflow\\core\\protobuf\\cluster.proto" 
-#  "tensorflow\\core\\protobuf\\debug.proto" 
-#  "tensorflow\\core\\protobuf\\rewriter_config.proto" )
-
-  
 
 SET(PROTOBUF_TOOLS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/protobuf.tools)
-
 IF(WIN32)
   SET(PROTOC_EXE "${PROTOBUF_TOOLS_PATH}/tools/windows_x86/protoc.exe")
 ELSEIF(APPLE)
   SET(PROTOC_EXE "${PROTOBUF_TOOLS_PATH}/tools/macosx_x64/protoc")
 ELSE()
-  SET(PROTOC_EXE "${PROTOBUF_TOOLS_PATH}/tools/linux_x86/protoc")
+  SET(PROTOC_EXE "protoc")
 ENDIF()
 
 SET(PROTO_GEN_COMMAND ${PROTOC_EXE} "--proto_path=." "--csharp_out=\"${CMAKE_CURRENT_SOURCE_DIR}\"" "--csharp_opt=file_extension=.g.cs" ${PROTO_SOURCE})
@@ -133,7 +110,7 @@ DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
 COMPONENT emgutf_binary)
 
 IF(HAVE_WINDESKTOP)
-  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.World)
+  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Netstandard)
 ENDIF()
 
 IF(HAVE_OSX)
