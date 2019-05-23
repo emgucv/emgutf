@@ -167,6 +167,12 @@ namespace Emgu.TF
             }
         }
 
+        /// <summary>
+        /// Get the operation definition in protobuf format
+        /// </summary>
+        /// <param name="opName">The name of the operation</param>
+        /// <param name="status">The status</param>
+        /// <returns>The operation definition in protobuf format</returns>
         public Buffer GetOpDef(
             String opName,
             Status status = null)

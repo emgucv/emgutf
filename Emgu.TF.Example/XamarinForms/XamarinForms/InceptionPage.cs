@@ -172,7 +172,5 @@ namespace Emgu.TF.XamarinForms
 
             }
         }
-
-
     }
 }

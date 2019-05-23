@@ -108,22 +108,10 @@ namespace Emgu.TF.Test
                         int l = versionDef.Length;
                     }
 
-                    float[] probability = inceptionGraph.Recognize(imageTensor);
-                    if (probability != null)
-                    {
-                        String[] labels = inceptionGraph.Labels;
-                        float maxVal = 0;
-                        int maxIdx = 0;
-                        for (int i = 0; i < probability.Length; i++)
-                        {
-                            if (probability[i] > maxVal)
-                            {
-                                maxVal = probability[i];
-                                maxIdx = i;
-                            }
-                        }
-                        Trace.WriteLine(String.Format("Object is {0} with {1}% probability", labels[maxIdx], maxVal * 100));
-                    }
+                    Inception.RecognitionResult[] results = inceptionGraph.Recognize(imageTensor);
+                    
+                    Trace.WriteLine(String.Format("Object is {0} with {1}% probability", results[0].Label, results[0].Probability * 100));
+                    
                     processCompleted = true;
                 };
 

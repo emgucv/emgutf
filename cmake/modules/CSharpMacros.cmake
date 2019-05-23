@@ -140,7 +140,12 @@ ENDMACRO(SET_CS_TARGET_FRAMEWORK)
 
 MACRO(BUILD_CSPROJ target csproj_file extra_flags)
   ADD_CUSTOM_TARGET (${target} ${ARGV3})
-  IF (WIN32 AND MSVC AND NOT ("${CMAKE_VS_DEVENV_COMMAND}" STREQUAL ""))
+  IF (DOTNET_EXECUTABLE)
+    ADD_CUSTOM_COMMAND (
+      TARGET ${target}
+      COMMAND ${DOTNET_EXECUTABLE} build ${csproj_file}
+      COMMENT "Building ${target}")
+  ELSEIF (WIN32 AND MSVC AND NOT ("${CMAKE_VS_DEVENV_COMMAND}" STREQUAL ""))
     ADD_CUSTOM_COMMAND (
       TARGET ${target}
       COMMAND ${CMAKE_VS_DEVENV_COMMAND} /Build Release ${extra_flags} ${csproj_file}

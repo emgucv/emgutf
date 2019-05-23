@@ -3,9 +3,6 @@
 # --------------------------------------------------------
 
 
-
-
-
 IF(HAVE_WINDESKTOP_X86_LITE OR HAVE_WINDESKTOP_X64_LITE)
 PROJECT(Emgu.TF.Lite.Models.Net45)
 

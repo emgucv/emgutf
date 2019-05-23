@@ -24,45 +24,35 @@ INSTALL(
 	PATTERN "${PROJECT_NAME}.dir" EXCLUDE
 )
 
-IF(WIN32 OR APPLE)
-
 #MESSAGE("Adding protobuf project")
-BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf.Netstandard/Emgu.TF.Protobuf.Netstandard.csproj" "" ALL)
-
-IF(WIN32)
+BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj" "" ALL)
+ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
+	PRE_BUILD
+	COMMAND ${DOTNET_EXECUTABLE} restore ${PROJECT_NAME}.csproj
+	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}")
   ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
 	PRE_BUILD
-	COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../miscellaneous/nuget.exe" restore "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf.Netstandard/Emgu.TF.Protobuf.Netstandard.csproj"
-	#Restore Google.Protobuf.Tools so we can generated protobuf code
-	COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../miscellaneous/nuget.exe" restore "${CMAKE_CURRENT_SOURCE_DIR}/../Emgu.TF.CodeGen/Emgu.TF.CodeGen.csproj" 
-	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
-ELSE()
-  ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
-	PRE_BUILD
-	COMMAND mono "${CMAKE_CURRENT_SOURCE_DIR}/../miscellaneous/nuget.exe" restore "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf.Netstandard/Emgu.TF.Protobuf.Netstandard.csproj"
-	#Restore Google.Protobuf.Tools so we can generated protobuf code
-	COMMAND mono "${CMAKE_CURRENT_SOURCE_DIR}/../miscellaneous/nuget.exe" restore "${CMAKE_CURRENT_SOURCE_DIR}/../Emgu.TF.CodeGen/Emgu.TF.CodeGen.csproj" 
-	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
-ENDIF()
+	COMMAND ${DOTNET_EXECUTABLE} restore Emgu.TF.CodeGen.csproj
+	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../Emgu.TF.CodeGen")
 
 SET(PROTO_SOURCE)
 FILE(GLOB PROTO_SOURCE_FILES_FRAME_WORK RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/framework/" "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/framework/*.proto")
 FOREACH(PROTO_SOURCE_FILE ${PROTO_SOURCE_FILES_FRAME_WORK} )
 	#MESSAGE(STATUS "File: ${PROTO_SOURCE_FILE}")
-IF(WIN32)
+  IF(WIN32)
 	LIST(APPEND PROTO_SOURCE "tensorflow\\core\\framework\\${PROTO_SOURCE_FILE}" )
-ELSE()
-        LIST(APPEND PROTO_SOURCE "tensorflow/core/framework/${PROTO_SOURCE_FILE}" )
-ENDIF()
+  ELSE()
+    LIST(APPEND PROTO_SOURCE "tensorflow/core/framework/${PROTO_SOURCE_FILE}" )
+  ENDIF()
 ENDFOREACH()
 
 FILE(GLOB PROTO_SOURCE_FILES_PROTOBUF RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/protobuf/" "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/protobuf/*.proto")
 LIST(REMOVE_ITEM PROTO_SOURCE_FILES_PROTOBUF "meta_graph.proto" "saved_model.proto" "worker.proto" "worker_service.proto")
 FOREACH(PROTO_SOURCE_FILE ${PROTO_SOURCE_FILES_PROTOBUF} )
 	#MESSAGE(STATUS "Protobuf File: ${PROTO_SOURCE_FILE}")
-IF(WIN32)
+  IF(WIN32)
 	LIST(APPEND PROTO_SOURCE "tensorflow\\core\\protobuf\\${PROTO_SOURCE_FILE}" )
-ELSE()
+  ELSE()
 	LIST(APPEND PROTO_SOURCE "tensorflow/core/protobuf/${PROTO_SOURCE_FILE}" )
 ENDIF()
 ENDFOREACH()
@@ -70,9 +60,9 @@ ENDFOREACH()
 FILE(GLOB PROTO_SOURCE_FILES_LIB_CORE RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/lib/core" "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/lib/core/*.proto")
 FOREACH(PROTO_SOURCE_FILE ${PROTO_SOURCE_FILES_LIB_CORE} )
 #MESSAGE(STATUS "File: ${PROTO_SOURCE_FILE}")
-IF(WIN32)
+  IF(WIN32)
 	LIST(APPEND PROTO_SOURCE "tensorflow\\core\\lib\\core\\${PROTO_SOURCE_FILE}" )
-ELSE()
+  ELSE()
 	LIST(APPEND PROTO_SOURCE "tensorflow/core/lib/core/${PROTO_SOURCE_FILE}" )
 ENDIF()
 ENDFOREACH()
@@ -142,5 +132,5 @@ IF(HAVE_OSX)
   ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.World.Mac)
 ENDIF()
 
-ENDIF()
+
 
