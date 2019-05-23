@@ -3,18 +3,18 @@
 # --------------------------------------------------------
 
 IF(WIN32 AND HAVE_WINDESKTOP_X64)
-  PROJECT(Emgu.TF.CodeGen)
+  PROJECT(Emgu.TF.CodeGen.NetCore)
 
-  BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.CodeGen.csproj"  "" ALL)
+  BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}.csproj"  "" ALL)
 
   ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
 	PRE_BUILD
-	COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../miscellaneous/nuget.exe" restore "${CMAKE_CURRENT_SOURCE_DIR}/packages.config") 
+	COMMAND "${DOTNET_EXECUTABLE}" restore "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}.csproj") 
   
   ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
 	POST_BUILD
 	COMMAND "${PROJECT_NAME}.exe"
 	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../Emgu.TF/") 
 
-  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.World Emgu.TF.Protobuf.Netstandard)
+  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Netstandard Emgu.TF.Protobuf.Netstandard)
 ENDIF()

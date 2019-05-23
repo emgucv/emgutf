@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Tensorflow;
-using Emgu.TF;
+
 
 namespace Emgu.TF.CodeGen
 {
