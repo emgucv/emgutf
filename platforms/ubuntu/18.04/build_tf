@@ -7,3 +7,4 @@ cd ..
 
 mkdir -p lib
 cp tensorflow/bazel-bin/tensorflow/tfextern/*.so lib/
+cp tensorflow/bazel-bin/tensorflow/*.so lib/
