@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Netstandard", "..\.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Models.Netstandard", "..\..\Emgu.TF.Models\Emgu.TF.Models.Netstandard\Emgu.TF.Models.Netstandard.csproj", "{1E761DE9-F20C-4133-9C52-F790EEBCE34A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inception.Console.Netstandard", "..\..\Emgu.TF.Example\Inception.Console.Netstandard\Inception.Console.Netstandard.csproj", "{56D9DEE1-6E33-4DC5-BAC4-DC164B35C129}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inception.Console.NetCore", "..\..\Emgu.TF.Example\Inception.Console.NetCore\Inception.Console.NetCore.csproj", "{56D9DEE1-6E33-4DC5-BAC4-DC164B35C129}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Protobuf.Netstandard", "..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Netstandard\Emgu.TF.Protobuf.Netstandard.csproj", "{DB17DF2E-D7A4-4CD4-B4D9-FC3447E5AFD8}"
 EndProject

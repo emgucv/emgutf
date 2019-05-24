@@ -329,10 +329,11 @@ IF(HAVE_WINDESKTOP_X64)
     )
 ENDIF()
 
+IF(HAS_LITE_BUILD)
   INSTALL(
     DIRECTORY
-    "${CMAKE_CURRENT_SOURCE_DIR}/Inception.Console.Lite.Netstandard/"
-    DESTINATION Emgu.TF.Example/Inception.Console.Lite.Netstandard/
+    "${CMAKE_CURRENT_SOURCE_DIR}/Inception.Console.Lite.NetCore/"
+    DESTINATION Emgu.TF.Example/Inception.Console.Lite.NetCore/
     COMPONENT emgutf_example_source
     FILES_MATCHING 
     PATTERN "*.cs"
@@ -352,6 +353,35 @@ ENDIF()
     PATTERN "Debug" EXCLUDE
     PATTERN "Release" EXCLUDE  
     )
+  add_subdirectory(Inception.Console.Lite.NetCore)
+ENDIF()
+
+IF(HAS_FULL_BUILD)
+  INSTALL(
+    DIRECTORY
+    "${CMAKE_CURRENT_SOURCE_DIR}/Inception.Console.NetCore/"
+    DESTINATION Emgu.TF.Example/Inception.Console.NetCore/
+    COMPONENT emgutf_example_source
+    FILES_MATCHING 
+    PATTERN "*.cs"
+    PATTERN "*.csproj"
+    PATTERN "*.config"
+    PATTERN "*.shproj"
+    PATTERN "*.Xamarin"
+    PATTERN "*.projitems"
+    PATTERN "*.axml"
+    PATTERN "*.xaml"
+    PATTERN "*.xml"
+    PATTERN "*.txt"
+    PATTERN "*.png"
+    PATTERN "*.dll"
+    PATTERN "*.json"
+    PATTERN ".git" EXCLUDE
+    PATTERN "Debug" EXCLUDE
+    PATTERN "Release" EXCLUDE  
+    )
+  add_subdirectory(Inception.Console.NetCore)
+ENDIF()
 
 IF(NOT (NETFX_CORE OR ANDROID OR (APPLE AND (NOT IOS))))
   SET(EMGU_TF_REFERENCE 
