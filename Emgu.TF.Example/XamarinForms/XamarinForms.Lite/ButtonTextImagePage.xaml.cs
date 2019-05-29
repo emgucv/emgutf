@@ -25,6 +25,7 @@ namespace Emgu.TF.XamarinForms
 
         public ButtonTextImagePage()
         {
+            
             InitializeComponent();
         }
 
