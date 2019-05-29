@@ -353,7 +353,11 @@ IF(HAS_LITE_BUILD)
     PATTERN "Debug" EXCLUDE
     PATTERN "Release" EXCLUDE  
     )
-  add_subdirectory(Inception.Console.Lite.NetCore)
+	
+  PROJECT(Inception.Console.Lite.NetCore)
+  BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj" "" ALL)
+  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Netstandard Emgu.TF.Lite.Models.Netstandard)
+  
 ENDIF()
 
 IF(HAS_FULL_BUILD)
@@ -380,7 +384,11 @@ IF(HAS_FULL_BUILD)
     PATTERN "Debug" EXCLUDE
     PATTERN "Release" EXCLUDE  
     )
-  add_subdirectory(Inception.Console.NetCore)
+	
+  PROJECT(Inception.Console.NetCore)
+  BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj"  "" ALL)
+  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Netstandard Emgu.TF.Protobuf.Netstandard Emgu.TF.Models.Netstandard)
+  
 ENDIF()
 
 IF(NOT (NETFX_CORE OR ANDROID OR (APPLE AND (NOT IOS))))

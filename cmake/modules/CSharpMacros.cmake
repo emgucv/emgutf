@@ -157,8 +157,25 @@ MACRO(BUILD_CSPROJ target csproj_file extra_flags)
       TARGET ${target}
       COMMAND ${DOTNET_EXECUTABLE} build ${csproj_file}
       COMMENT "Building ${target}")
+  ELSE()
+    MESSAGE(FATAL_ERROR "Neither Visual Studio, msbuild nor dotnot is found!")
   ENDIF()
 ENDMACRO()
+
+MACRO(BUILD_DOTNET_PROJ target csproj_file extra_flags)
+  ADD_CUSTOM_TARGET (${target} ${ARGV3})
+  
+  IF (DOTNET_EXECUTABLE)
+    ADD_CUSTOM_COMMAND (
+      TARGET ${target}
+      COMMAND "${DOTNET_EXECUTABLE}" build "${csproj_file}"
+      COMMENT "Building ${target}")
+	MESSAGE(STATUS " ==> ${target} Build command: ${DOTNET_EXECUTABLE} build ${csproj_file}" )
+  ELSE()
+	MESSAGE(FATAL_ERROR "DOTNET_EXECUTABLE not found!")
+  ENDIF()
+ENDMACRO()
+
 
 MACRO(COMPILE_CS target target_type source)
 IF(${target_type} STREQUAL "library")
