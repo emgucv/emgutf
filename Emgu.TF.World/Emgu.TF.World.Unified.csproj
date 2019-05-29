@@ -114,7 +114,6 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="..\Emgu.TF.Util\Emgu.TF.Util.projitems" Label="Shared" Condition="Exists('..\Emgu.TF.Util\Emgu.TF.Util.projitems')" />
   <Import Project="..\Emgu.TF\Emgu.TF.projitems" Label="Shared" Condition="Exists('..\Emgu.TF\Emgu.TF.projitems')" />
