@@ -32,7 +32,7 @@
     </BuildLogFile>
     <HelpFileFormat>Website</HelpFileFormat>
     <CppCommentsFixup>False</CppCommentsFixup>
-    <FrameworkVersion>.NET Framework 3.5</FrameworkVersion>
+    <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
     <HelpTitle>Emgu TF Lite Library Documentation</HelpTitle>
     <CopyrightText>2018 Emgu Corporation, All Rights Reserved,</CopyrightText>
     <FeedbackEMailAddress>support%40emgu.com</FeedbackEMailAddress>
@@ -65,6 +65,7 @@
     <IndentHtml>False</IndentHtml>
     <DisableCodeBlockComponent>False</DisableCodeBlockComponent>
     <CleanIntermediates>True</CleanIntermediates>
+    <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
   </PropertyGroup>
   <!-- There are no properties for these two groups but they need to appear in
        order for Visual Studio to perform the build. -->
