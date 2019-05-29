@@ -367,28 +367,30 @@ namespace Emgu.TF
         public static bool DefaultLoadUnmanagedModules(String[] modules)
         {
             bool libraryLoaded = true;
-#if __ANDROID__ || (UNITY_ANDROID && !UNITY_EDITOR)
-
-         System.Reflection.Assembly asm = System.Reflection.Assembly.GetExecutingAssembly();
-         FileInfo file = new FileInfo(asm.Location);
-         DirectoryInfo directory = file.Directory;
-
-#if (UNITY_ANDROID && !UNITY_EDITOR)
-         UnityEngine.AndroidJavaObject jo = new UnityEngine.AndroidJavaObject("java.lang.System");
-#endif
+#if __ANDROID__
          foreach (String module in modules)
          {
-            //IntPtr handle = Emgu.TF.Util.Toolbox.LoadLibrary(module);
-            //Debug.WriteLine(string.Format(handle == IntPtr.Zero ? "Failed to load {0}." : "Loaded {0}.", module));
             try
             {
                Console.WriteLine(string.Format("Trying to load {0} ({1} bit).", module, Marshal.SizeOf<IntPtr>() * 8));
-#if __ANDROID__
                Java.Lang.JavaSystem.LoadLibrary(module);
-#else //(UNITY_ANDROID && !UNITY_EDITOR)
+               Console.WriteLine(string.Format("Loaded {0}.", module));
+            }
+            catch (Exception e)
+            {
+               libraryLoaded = false;
+               Console.WriteLine(String.Format("Failed to load {0}: {1}", module, e.Message));
+            }
+         }
+#elif (UNITY_ANDROID && !UNITY_EDITOR)
+         UnityEngine.AndroidJavaObject jo = new UnityEngine.AndroidJavaObject("java.lang.System");
 
+         foreach (String module in modules)
+         {
+            try
+            {
+               Console.WriteLine(string.Format("Trying to load {0} ({1} bit).", module, Marshal.SizeOf<IntPtr>() * 8));
                jo.CallStatic("loadLibrary", module); 
-#endif
                Console.WriteLine(string.Format("Loaded {0}.", module));
             }
             catch (Exception e)
@@ -399,7 +401,9 @@ namespace Emgu.TF
          }
 #elif __IOS__ || UNITY_IOS || NETFX_CORE
 #else
+#if !(UNITY_EDITOR || UNITY_STANDALONE || UNITY_ANDROID)
             if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
+#endif
             {
                 String formatString = GetModuleFormatString();
                 for (int i = 0; i < modules.Length; ++i)

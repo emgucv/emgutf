@@ -16,6 +16,8 @@ namespace Emgu.TF.Lite
     {
 #if __IOS__
         [ObjCRuntime.MonoPInvokeCallback(typeof(TfliteErrorCallback))]
+#elif UNITY_ANDROID || UNITY_IOS || UNITY_EDITOR || UNITY_STANDALONE
+        [AOT.MonoPInvokeCallback(typeof(TfliteErrorCallback))]
 #endif
         private static int TfliteErrorHandler(
            int status,
@@ -26,7 +28,7 @@ namespace Emgu.TF.Lite
         }
 
         /// <summary>
-        /// Define the funtional interface for the error callback
+        /// Define the functional interface for the error callback
         /// </summary>
         /// <param name="status">The status code</param>
         /// <param name="errMsg">The pointer to the error message</param>
@@ -163,48 +165,55 @@ namespace Emgu.TF.Lite
                 }*/
 
                 System.Reflection.Assembly asm = typeof(TfLiteInvoke).Assembly; //System.Reflection.Assembly.GetExecutingAssembly();
-                if ((String.IsNullOrEmpty(asm.Location) || !System.IO.File.Exists(asm.Location)) && AppDomain.CurrentDomain.BaseDirectory != null)
+                if ((String.IsNullOrEmpty(asm.Location) || !System.IO.File.Exists(asm.Location)))
                 {
-                    //if may be running in a debugger visualizer under a unit test in this case
-                    String visualStudioDir = AppDomain.CurrentDomain.BaseDirectory;
-                    DirectoryInfo visualStudioDirInfo = new DirectoryInfo(visualStudioDir);
-                    String debuggerVisualzerPath =
-                        Path.Combine(Path.Combine(Path.Combine(
-                            visualStudioDirInfo.Parent.FullName, "Packages"), "Debugger"), "Visualizers");
-
-                    if (Directory.Exists(debuggerVisualzerPath))
-                        loadDirectory = debuggerVisualzerPath;
-                    else
+                    if (String.IsNullOrEmpty(AppDomain.CurrentDomain.BaseDirectory))
+                    {
                         loadDirectory = String.Empty;
-                    /*
-                                   loadDirectory = Path.GetDirectoryName(new UriBuilder(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).Path);
+                    }
+                    else
+                    {
+                        //if may be running in a debugger visualizer under a unit test in this case
+                        String visualStudioDir = AppDomain.CurrentDomain.BaseDirectory;
+                        DirectoryInfo visualStudioDirInfo = new DirectoryInfo(visualStudioDir);
+                        String debuggerVisualzerPath =
+                            Path.Combine(Path.Combine(Path.Combine(
+                                visualStudioDirInfo.Parent.FullName, "Packages"), "Debugger"), "Visualizers");
 
-                                   DirectoryInfo dir = new DirectoryInfo(loadDirectory);
-                                   string subdir = String.Join(";", Array.ConvertAll(dir.GetDirectories(), d => d.ToString()));
-
-                                   throw new Exception(String.Format(
-                                      "The Emgu.CV.dll assembly path (typeof (CvInvoke).Assembly.Location) '{0}' is invalid." +
-                                      Environment.NewLine
-                                      + " Other possible path (System.Reflection.Assembly.GetExecutingAssembly().Location): '{1}';" +
-                                      Environment.NewLine
-                                      + " Other possible path (Path.GetDirectoryName(new UriBuilder(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).Path): '{2}';" +
-                                      Environment.NewLine
-                                      + " Other possible path (System.Reflection.Assembly.GetExecutingAssembly().CodeBase): '{3};'" +
-                                      Environment.NewLine
-                                      + " Other possible path (typeof(CvInvoke).Assembly.CodeBase): '{4}'" +
-                                      Environment.NewLine
-                                      + " Other possible path (AppDomain.CurrentDomain.BaseDirectory): '{5}'" +
-                                      Environment.NewLine
-                                      + " subfolder name: '{6}'",
-                                      asm.Location,
-                                      Path.GetDirectoryName(new UriBuilder(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).Path),
-                                      loadDirectory + ": subdir '" + subdir +"'",
-                                      System.Reflection.Assembly.GetExecutingAssembly().CodeBase,
-                                      typeof(CvInvoke).Assembly.Location,
-                                      AppDomain.CurrentDomain.BaseDirectory,
-                                      subfolder
-                                      ));
-                     */
+                        if (Directory.Exists(debuggerVisualzerPath))
+                            loadDirectory = debuggerVisualzerPath;
+                        else
+                            loadDirectory = String.Empty;
+                        /*
+                                       loadDirectory = Path.GetDirectoryName(new UriBuilder(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).Path);
+    
+                                       DirectoryInfo dir = new DirectoryInfo(loadDirectory);
+                                       string subdir = String.Join(";", Array.ConvertAll(dir.GetDirectories(), d => d.ToString()));
+    
+                                       throw new Exception(String.Format(
+                                          "The Emgu.CV.dll assembly path (typeof (CvInvoke).Assembly.Location) '{0}' is invalid." +
+                                          Environment.NewLine
+                                          + " Other possible path (System.Reflection.Assembly.GetExecutingAssembly().Location): '{1}';" +
+                                          Environment.NewLine
+                                          + " Other possible path (Path.GetDirectoryName(new UriBuilder(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).Path): '{2}';" +
+                                          Environment.NewLine
+                                          + " Other possible path (System.Reflection.Assembly.GetExecutingAssembly().CodeBase): '{3};'" +
+                                          Environment.NewLine
+                                          + " Other possible path (typeof(CvInvoke).Assembly.CodeBase): '{4}'" +
+                                          Environment.NewLine
+                                          + " Other possible path (AppDomain.CurrentDomain.BaseDirectory): '{5}'" +
+                                          Environment.NewLine
+                                          + " subfolder name: '{6}'",
+                                          asm.Location,
+                                          Path.GetDirectoryName(new UriBuilder(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).Path),
+                                          loadDirectory + ": subdir '" + subdir +"'",
+                                          System.Reflection.Assembly.GetExecutingAssembly().CodeBase,
+                                          typeof(CvInvoke).Assembly.Location,
+                                          AppDomain.CurrentDomain.BaseDirectory,
+                                          subfolder
+                                          ));
+                         */
+                    }
                 }
                 else
                 {
@@ -378,29 +387,31 @@ namespace Emgu.TF.Lite
         public static bool DefaultLoadUnmanagedModules(String[] modules)
         {
             bool libraryLoaded = true;
-#if __ANDROID__ || (UNITY_ANDROID && !UNITY_EDITOR)
+#if __ANDROID__ 
 
-            System.Reflection.Assembly asm = System.Reflection.Assembly.GetExecutingAssembly();
-            FileInfo file = new FileInfo(asm.Location);
-            DirectoryInfo directory = file.Directory;
-
-#if (UNITY_ANDROID && !UNITY_EDITOR)
-            UnityEngine.AndroidJavaObject jo = new UnityEngine.AndroidJavaObject("java.lang.System");
-#endif
             foreach (String module in modules)
             {
-                //IntPtr handle = Emgu.TF.Util.Toolbox.LoadLibrary(module);
-                //Debug.WriteLine(string.Format(handle == IntPtr.Zero ? "Failed to load {0}." : "Loaded {0}.", module));
                 try
                 {
-
                     Console.WriteLine(string.Format("Trying to load {0}.", module));
-#if __ANDROID__
                     Java.Lang.JavaSystem.LoadLibrary(module);
-#else //(UNITY_ANDROID && !UNITY_EDITOR)
+                    Console.WriteLine(string.Format("Loaded {0}.", module));
+                }
+                catch (Exception e)
+                {
+                    libraryLoaded = false;
+                    Console.WriteLine(String.Format("Failed to load {0}: {1}", module, e.Message));
+                }
+            }
+#elif UNITY_ANDROID && !UNITY_EDITOR
 
-               jo.CallStatic("loadLibrary", module); 
-#endif
+            UnityEngine.AndroidJavaObject jo = new UnityEngine.AndroidJavaObject("java.lang.System");
+            foreach (String module in modules)
+            {
+                try
+                {
+                    Console.WriteLine(string.Format("Trying to load {0}.", module));
+                    jo.CallStatic("loadLibrary", module); 
                     Console.WriteLine(string.Format("Loaded {0}.", module));
                 }
                 catch (Exception e)

@@ -38,6 +38,12 @@ public class MobilenetBehavior : MonoBehaviour
 
     private void RecognizeAndUpdateText(Texture2D texture)
     {
+        if (_mobilenet == null)
+        {
+            _displayMessage = "Waiting for mobile net model to be loaded...";
+            return;
+        }
+
         Stopwatch watch = Stopwatch.StartNew();
         Mobilenet.RecognitionResult[] results = _mobilenet.Recognize(texture);
         
@@ -93,8 +99,11 @@ public class MobilenetBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (!_mobilenet.Imported)
+        if (_mobilenet == null)
+        {
+            _displayMessage = String.Format("Pending mobile net initialization");
+        }
+        else if (!_mobilenet.Imported)
         {
             _displayMessage = String.Format("Downloading Inception model files, {0} % of file {1}...", _mobilenet.DownloadProgress*100, _mobilenet.DownloadFileName);
         }
