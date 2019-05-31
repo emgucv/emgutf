@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Netstandard", "..\.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Models.Netstandard", "..\..\Emgu.TF.Models\Emgu.TF.Models.Netstandard\Emgu.TF.Models.Netstandard.csproj", "{88534285-26F1-4421-B595-6C28C1C6DD78}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.CodeGen.NetCore", "..\..\Emgu.TF.CodeGen.NetCore\Emgu.TF.CodeGen.NetCore.csproj", "{EFEA6188-E2ED-4B03-AB0B-6A9A14722485}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.CodeGen.NetCore", "..\..\Emgu.TF.CodeGen\Emgu.TF.CodeGen.NetCore\Emgu.TF.CodeGen.NetCore.csproj", "{EFEA6188-E2ED-4B03-AB0B-6A9A14722485}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
