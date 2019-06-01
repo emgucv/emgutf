@@ -13,37 +13,16 @@ INSTALL(FILES
 IF(HAVE_WINDESKTOP)
   PROJECT(Example.CVInterop)
   
-  FILE(GLOB_RECURSE SRC_Example_CVInterop RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.cs")
-  
-  SET(SRC_Example_CVInterop_ALL)
-  LIST(APPEND SRC_Example_CVInterop_ALL ${SRC_Example_CVInterop})
-  LIST(APPEND SRC_Example_MultiboxPeopleDetection_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.Models/FileDownloadManager.cs)
-  LIST(APPEND SRC_Example_MultiboxPeopleDetection_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.Models/DownloadableFile.cs)
-  LIST(APPEND SRC_Example_MultiboxPeopleDetection_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.Models/NativeImageIO.cs)
-  LIST(APPEND SRC_Example_CVInterop_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.TF.Models/ImageIO.cs)
-  LIST(APPEND SRC_Example_CVInterop_ALL ${CMAKE_CURRENT_SOURCE_DIR}/../../Emgu.TF.Models/Inception.cs)
-  
-  #IF(TARGET_ARCH_64)
-  #  LIST(APPEND CS_FLAGS -platform:x64)
-  #ELSE()
-  #  LIST(APPEND CS_FLAGS -platform:x86)
-  #ENDIF()
-  
-  LIST(APPEND CS_FLAGS ${EMGU_TF_REFERENCE})
-   
-  FOREACH(EXAMPLE_INCEPTION_DATA_FILE ${EXAMPLE_INCEPTION_DATA_FILES})
-    ADD_CS_FILE_TO_DEPLOY(${EXAMPLE_INCEPTION_DATA_FILE})
-  ENDFOREACH()
-  
-  #COMPILE_CS(${PROJECT_NAME} "winexe" "${SRC_Example_CVInterop_ALL}" ALL)
-  #set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "Emgu.TF.Examples")
-  #ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.World)
+  BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/CvInterop.csproj" "" ALL)
+  ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
+	PRE_BUILD
+	COMMAND ${MSBUILD_EXECUTABLE} /t:restore CvInterop.csproj
+	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
   
   INSTALL(FILES
     ${SRC_Example_CVInterop}
     ${CMAKE_CURRENT_SOURCE_DIR}/CVInterop.csproj
     ${CMAKE_CURRENT_SOURCE_DIR}/App.config
-    ${CMAKE_CURRENT_SOURCE_DIR}/packages.config
     DESTINATION Emgu.TF.Example/CVInterop COMPONENT emgutf_example_source)
   INSTALL(FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/Properties/AssemblyInfo.cs

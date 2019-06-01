@@ -2,8 +2,6 @@
 #  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-
-
 INSTALL(
   DIRECTORY
   ${CMAKE_CURRENT_SOURCE_DIR}

@@ -12,7 +12,7 @@ IF (WIN32 AND (HAVE_WINDESKTOP_X86 OR HAVE_WINDESKTOP_X64) )
 	   COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../../miscellaneous/nuget.exe" pack Package.nuspec -OutputDirectory "${CMAKE_CURRENT_SOURCE_DIR}/"
 	)
 
-	ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.World)
+	ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Net45 Emgu.TF.Netstandard)
 
 	if(ENABLE_SOLUTION_FOLDERS)
 	  set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "NUGET")

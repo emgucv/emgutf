@@ -22,7 +22,7 @@ ELSE()
        COMMAND ${MSBUILD_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.html.shfbproj
        SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.html.shfbproj
     )
-    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.World)
+    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Net45)
     
     PROJECT(Emgu.TF.Documentation.chm)
     ADD_CUSTOM_TARGET(
@@ -30,7 +30,7 @@ ELSE()
        COMMAND ${MSBUILD_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.html.shfbproj /property:OutputPath=. /property:HelpFileFormat=HtmlHelp1
        SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.html.shfbproj
     )
-    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.World)
+    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Net45)
   
     INSTALL(
       FILES
