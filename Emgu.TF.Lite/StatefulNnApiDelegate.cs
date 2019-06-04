@@ -2,6 +2,7 @@
 //  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
+/*
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -9,11 +10,11 @@ using System.Runtime.InteropServices;
 
 namespace Emgu.TF.Lite
 {
-    public class NNAPIDelegate : Emgu.TF.Util.UnmanagedObject, IDelegate
+    public class StatefulNnApiDelegate : Emgu.TF.Util.UnmanagedObject, IDelegate
     {
-        public NNAPIDelegate()
+        public StatefulNnApiDelegate()
         {
-            _ptr = TfLiteInvoke.tfeNNAPIDelegateCreate();
+            _ptr = TfLiteInvoke.tfeStatefulNnApiDelegateCreate();
         }
 
         /// <summary>
@@ -23,7 +24,7 @@ namespace Emgu.TF.Lite
         {
             get
             {
-                return TfLiteInvoke.tfeNNAPIDelegateGetDelegate();
+                return TfLiteInvoke.tfeStatefulNnApiDelegateGetDelegate();
             }
         }
 
@@ -33,36 +34,25 @@ namespace Emgu.TF.Lite
         protected override void DisposeObject()
         {
             if (IntPtr.Zero != _ptr)
-                TfLiteInvoke.tfeNNAPIDelegateRelease(ref _ptr);
-        }
-
-
-        /// <summary>
-        /// Return true if NNAPI is supported in the current platform
-        /// </summary>
-        public bool IsSupported
-        {
-            get
-            {
-                return TfLiteInvoke.tfeNNAPIDelegateIsSupported(_ptr);
-            }
+                TfLiteInvoke.tfeStatefulNnApiDelegateRelease(ref _ptr);
         }
     }
 
     public static partial class TfLiteInvoke
     {
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
-        internal static extern IntPtr tfeNNAPIDelegateCreate();
+        internal static extern IntPtr tfeStatefulNnApiDelegateCreate();
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
-        internal static extern void tfeNNAPIDelegateRelease(ref IntPtr delegatePtr);
+        internal static extern void tfeStatefulNnApiDelegateRelease(ref IntPtr delegatePtr);
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
-        internal static extern IntPtr tfeNNAPIDelegateGetDelegate();
+        internal static extern IntPtr tfeStatefulNnApiDelegateGetDelegate();
 
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
-        [return: MarshalAs(TfLiteInvoke.BoolMarshalType)]
-        internal static extern bool tfeNNAPIDelegateIsSupported(IntPtr delegatePtr);
+        //[DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        //[return: MarshalAs(TfLiteInvoke.BoolMarshalType)]
+        //internal static extern bool tfeStatefulNnApiDelegateIsSupported(IntPtr delegatePtr);
         
     }
 }
+*/

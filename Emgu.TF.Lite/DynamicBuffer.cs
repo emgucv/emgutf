@@ -39,9 +39,9 @@ namespace Emgu.TF.Lite
         /// Fill content into a string tensor.
         /// </summary>
         /// <param name="tensor">The string tensor</param>
-        public void WriteToTensor(Tensor tensor)
+        public void WriteToTensor(Tensor tensor, IntArray newShape = null)
         {
-            TfLiteInvoke.tfeDynamicBufferWriteToTensor(_ptr, tensor);
+            TfLiteInvoke.tfeDynamicBufferWriteToTensor(_ptr, tensor, newShape == null ? IntPtr.Zero : newShape);
         }
         
         /// <summary>
@@ -69,7 +69,7 @@ namespace Emgu.TF.Lite
         internal static extern void tfeDynamicBufferAddString(IntPtr buffer, IntPtr str, int len);
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
-        internal static extern void tfeDynamicBufferWriteToTensor(IntPtr buffer, IntPtr tensor);
+        internal static extern void tfeDynamicBufferWriteToTensor(IntPtr buffer, IntPtr tensor, IntPtr newShape);
 
 
     }
