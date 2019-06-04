@@ -564,16 +564,26 @@ IF(HAVE_WINDESKTOP_X64)
 			string( REGEX MATCH "[0-9]+" npp_major ${npp_major} ) 
 			string( REGEX MATCH "[0-9]+" npp_minor ${npp_minor} ) 
 			string( REGEX MATCH "[0-9]+" npp_build ${npp_build} )
+			
+			
 			SET(EMGU_TF_CUFFT_VERSION "${npp_major}.${npp_minor}.${npp_build}") 
 			#SET(CUDA_TOOLKIT_ROOT_DIR "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v${npp_major}.${npp_minor}")
 			SET(CUDA_TOOLKIT_ROOT_DIR "${BAZEL_CUDA_TOOLKIT_PATH}")
 			
+		    IF((${npp_major} GREATER 10) OR (("${npp_major}" STREQUAL "10") AND (${npp_minor} GREATER 0)))
+				SET(NPP_POSTFIX "${npp_major}")
+				LIST(APPEND TFEXTERN_DEPENDENCY_DLLS 
+					"${CUDA_TOOLKIT_ROOT_DIR}/bin/cublasLt${CUDA_POSTFIX}_${NPP_POSTFIX}.dll")
+			ELSE()
+				SET(NPP_POSTFIX "${npp_major}${npp_minor}")
+			ENDIF()
+			
 			LIST(APPEND TFEXTERN_DEPENDENCY_DLLS 
 				"${CUDA_TOOLKIT_ROOT_DIR}/bin/cudart${CUDA_POSTFIX}_${npp_major}${npp_minor}.dll"
-				"${CUDA_TOOLKIT_ROOT_DIR}/bin/cufft${CUDA_POSTFIX}_${npp_major}${npp_minor}.dll"
-				"${CUDA_TOOLKIT_ROOT_DIR}/bin/cublas${CUDA_POSTFIX}_${npp_major}${npp_minor}.dll"
-				"${CUDA_TOOLKIT_ROOT_DIR}/bin/curand${CUDA_POSTFIX}_${npp_major}${npp_minor}.dll"
-				"${CUDA_TOOLKIT_ROOT_DIR}/bin/cusolver${CUDA_POSTFIX}_${npp_major}${npp_minor}.dll"
+				"${CUDA_TOOLKIT_ROOT_DIR}/bin/cufft${CUDA_POSTFIX}_${NPP_POSTFIX}.dll"
+				"${CUDA_TOOLKIT_ROOT_DIR}/bin/cublas${CUDA_POSTFIX}_${NPP_POSTFIX}.dll"
+				"${CUDA_TOOLKIT_ROOT_DIR}/bin/curand${CUDA_POSTFIX}_${NPP_POSTFIX}.dll"
+				"${CUDA_TOOLKIT_ROOT_DIR}/bin/cusolver${CUDA_POSTFIX}_${NPP_POSTFIX}.dll"
 				)
 			SET(EMGU_TF_CUFFT_FILE_VERSION "${npp_major}${npp_minor}")
         ELSE()
