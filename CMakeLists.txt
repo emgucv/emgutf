@@ -653,14 +653,14 @@ IF(HAVE_WINDESKTOP_X64)
 	<file src=\"Emgu.TF.targets\" target=\"build\\${EMGUTF_NUGET_ID}.targets\" />")
 	
 	SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\lib\\Emgu.TF.World.dll\" target=\"lib\\net35\" />
-	<file src=\"..\\..\\lib\\Emgu.TF.World.XML\" target=\"lib\\net35\" />
+    <file src=\"..\\..\\lib\\Emgu.TF.Net45.dll\" target=\"lib\\net45\" />
+	<file src=\"..\\..\\lib\\Emgu.TF.Net45.xml\" target=\"lib\\net45\" />
 	<file src=\"..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
 ENDIF()
 
 SET(EMGUTF_MODEL_NUGET_FILE_LIST "
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.dll\" target=\"lib\\net46\" />
-	<file src=\"..\\..\\..\\lib\\Emgu.TF.Models.XML\" target=\"lib\\net46\" />
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.Net45.dll\" target=\"lib\\net45\" />
+	<file src=\"..\\..\\..\\lib\\Emgu.TF.Models.Net45.xml\" target=\"lib\\net45\" />
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
 
 SET(EMGUTF_PROTOBUF_NUGET_FILE_LIST "
