@@ -73,6 +73,13 @@ FOREACH(PROTO_SOURCE_FILE ${PROTO_SOURCE_FILES_LIB_CORE} )
 ENDIF()
 ENDFOREACH()
 
+IF(WIN32)
+  LIST(APPEND PROTO_SOURCE "tensorflow\\stream_executor\\dnn.proto" )
+ELSE()
+  LIST(APPEND PROTO_SOURCE "tensorflow/stream_executor/dnn.proto" )
+ENDIF()
+
+
 MESSAGE(STATUS "PROTO_SOURCE: ${PROTO_SOURCE}")
 
 SET(PROTOBUF_TOOLS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/protobuf.tools)
@@ -93,7 +100,7 @@ ELSE()
   SET(PROTOC_EXE "protoc")
 ENDIF()
 
-SET(PROTO_GEN_COMMAND ${PROTOC_EXE} "--proto_path=." "--csharp_out=\"${CMAKE_CURRENT_SOURCE_DIR}\"" "--csharp_opt=file_extension=.g.cs" ${PROTO_SOURCE})
+SET(PROTO_GEN_COMMAND ${PROTOC_EXE} "--proto_path=." "--proto_path=\"${PROTOBUF_TOOLS_PATH}/tools\""  "--csharp_out=\"${CMAKE_CURRENT_SOURCE_DIR}\"" "--csharp_opt=file_extension=.g.cs" ${PROTO_SOURCE})
 
 #IF(NOT WIN32)
 #  SET(PROTO_GEN_COMMAND mono ${PROTO_GEN_COMMAND})
