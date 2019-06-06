@@ -117,8 +117,8 @@ rm lib\x64\vccorlib140.dll
 GOTO END_OF_MSVC_DEPENDENCY
 
 :VS2019_DEPEDENCY
-IF EXIST "%BAZEL_VC%\Redist\MSVC\14.20.27508\x64\Microsoft.VC141.CRT" SET VS2019_REDIST=%BAZEL_VC%\Redist\MSVC\14.20.27508\x64\Microsoft.VC142.CRT
-IF EXIST "%BAZEL_VC%\Redist\MSVC\14.21.27702\x64\Microsoft.VC141.CRT" SET VS2019_REDIST=%BAZEL_VC%\Redist\MSVC\14.21.27702\x64\Microsoft.VC142.CRT
+IF EXIST "%BAZEL_VC%\Redist\MSVC\14.20.27508\x64\Microsoft.VC142.CRT" SET VS2019_REDIST=%BAZEL_VC%\Redist\MSVC\14.20.27508\x64\Microsoft.VC142.CRT
+IF EXIST "%BAZEL_VC%\Redist\MSVC\14.21.27702\x64\Microsoft.VC142.CRT" SET VS2019_REDIST=%BAZEL_VC%\Redist\MSVC\14.21.27702\x64\Microsoft.VC142.CRT
 copy /Y "%VS2019_REDIST%\*140.dll" lib\x64\
 rm lib\x64\vccorlib140.dll
 
@@ -135,6 +135,9 @@ copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cufft64_*.dll" lib\x64\
 copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\curand64_*.dll" lib\x64\
 copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cudart64_*.dll" lib\x64\
 :END_OF_DEPLOY_DEPENDENCY_GPU
+
+cp -rf tensorflow\bazel-bin\external\protobuf_archive .
+cp -rf tensorflow\bazel-tensorflow\external\protobuf_archive .
 
 IF "%3%"=="dev" GOTO END_OF_CLEAN
 
