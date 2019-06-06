@@ -28,7 +28,5 @@ IF(HAVE_WINDESKTOP)
     ${CMAKE_CURRENT_SOURCE_DIR}/Properties/AssemblyInfo.cs
     DESTINATION Emgu.TF.Example/CVInterop/Properties COMPONENT emgutf_example_source)
   
-  #INSTALL(FILES 
-  #${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.${CS_EXECUTABLE_EXTENSION} 
-  #DESTINATION bin COMPONENT emgutf_example_binary)
+  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Protobuf.Netstandard)
 ENDIF()
