@@ -36,7 +36,7 @@ BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/$
 IF(WIN32 OR APPLE)
   ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
 	PRE_BUILD
-	COMMAND wget https://www.nuget.org/api/v2/package/Google.Protobuf.Tools/3.7.0 -O protobuf.tools.zip
+	COMMAND wget https://www.nuget.org/api/v2/package/Google.Protobuf.Tools/3.8.0 -O protobuf.tools.zip
 	COMMAND unzip -u protobuf.tools.zip -d protobuf.tools
 	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 ENDIF()
