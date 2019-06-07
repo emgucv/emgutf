@@ -170,13 +170,14 @@ namespace Emgu.TF.Lite.Models
             if (_interpreter == null)
             {
                 _interpreter = new Interpreter(_model);
+                /*
                 using (NNAPIDelegate d = new NNAPIDelegate())
                 {
                     if (d.IsSupported)
                     {
                         _interpreter.UseNNAPI(true);
                     }
-                }
+                }*/
                 Status allocateTensorStatus = _interpreter.AllocateTensors();
                 if (allocateTensorStatus == Status.Error)
                     throw new Exception("Failed to allocate tensor");
