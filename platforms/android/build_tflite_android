@@ -1,4 +1,12 @@
 #!/bin/sh
+
+if [ -n "$1" ]; then
+    echo "Building for android $1 architecture"
+else
+    echo "Please specify the android architecture to build. e.g. $0 x86"
+    exit 1
+fi
+
 cd ../..
 cd tensorflow
 
