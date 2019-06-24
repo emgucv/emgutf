@@ -160,24 +160,30 @@ FILE(MAKE_DIRECTORY ${UNMANAGED_LIBRARY_OUTPUT_PATH})
 
 SET(UNMANAGED_DLL_EXTRA)
 
-MACRO(CHECK_BINARY_EXIST folder pattern property_name second_check)
-  FILE(GLOB DLL_LIST "${CMAKE_CURRENT_SOURCE_DIR}/${folder}/${pattern}")
-  LIST(LENGTH DLL_LIST DLL_LIST_LENGTH)
-  IF(DLL_LIST_LENGTH GREATER 0)
-    LIST(APPEND UNMANAGED_DLL_EXTRA ${DLL_LIST})
-    MESSAGE(STATUS "Including the following files in package: ${DLL_LIST}")
-    INSTALL(
-      FILES
-      ${DLL_LIST}
-      DESTINATION ${folder}
-      COMPONENT emgutf_binary
-      )  
-    SET(${property_name} ON)
-  ELSE()
-    SET(${property_name} ${second_check})
-  ENDIF()
-  #ENDIF()
-  #MESSAGE(STATUS "Property - ${property_name}: ${${property_name}}")
+MACRO(CHECK_BINARY_EXIST folder patterns property_name second_check)
+  SET(${property_name} ON)
+  #MESSAGE(STATUS "PATTERNS: ${patterns}")
+  #separate_arguments(patterns)
+  foreach(pattern ${patterns})
+    #MESSAGE(STATUS "PATTERN: ${pattern}")
+    FILE(GLOB DLL_LIST "${CMAKE_CURRENT_SOURCE_DIR}/${folder}/${pattern}")
+    LIST(LENGTH DLL_LIST DLL_LIST_LENGTH)
+    IF(DLL_LIST_LENGTH GREATER 0)
+      LIST(APPEND UNMANAGED_DLL_EXTRA ${DLL_LIST})
+      MESSAGE(STATUS "Including the following files in package: ${DLL_LIST}")
+      INSTALL(
+        FILES
+        ${DLL_LIST}
+        DESTINATION ${folder}
+        COMPONENT emgutf_binary
+        )  
+      #SET(${property_name} ON)
+    ELSE()
+      SET(${property_name} ${second_check})
+    ENDIF()
+    #ENDIF()
+    #MESSAGE(STATUS "Property - ${property_name}: ${${property_name}}")
+  endforeach()
   IF(${${property_name}})
     MESSAGE(STATUS "${property_name}: ${${property_name}}")
   ENDIF()
@@ -186,7 +192,10 @@ ENDMACRO()
 
 #CHECK_BINARY_EXIST("lib/ios" "libtfextern.a" HAVE_IOS OFF)
 CHECK_BINARY_EXIST("lib/ios" "libtfliteextern.a" HAVE_IOS_LITE OFF)
-CHECK_BINARY_EXIST("lib/osx" "libtfextern.dylib" HAVE_OSX OFF)
+#CHECK_BINARY_EXIST("lib/osx" "{libtfextern|libtensorflow_framework}.dylib" HAVE_OSX OFF)
+CHECK_BINARY_EXIST("lib/osx" "libtensorflow_framework.dylib;libtfextern.dylib" HAVE_OSX OFF)
+#CHECK_BINARY_EXIST("lib/osx" "*.dylib" HAVE_OSX OFF)
+#CHECK_BINARY_EXIST("lib/osx" "libtfextern.dylib" HAVE_OSX OFF)
 CHECK_BINARY_EXIST("lib/osx" "libtfliteextern.dylib" HAVE_OSX_LITE OFF)
 CHECK_BINARY_EXIST("lib" "libtfextern.so" HAVE_LINUX OFF)
 CHECK_BINARY_EXIST("lib" "libtfliteextern.so" HAVE_LINUX_LITE OFF)
