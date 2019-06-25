@@ -93,7 +93,9 @@ namespace Emgu.TF.XamarinForms
             }
             OnImagesLoaded += (sender, image) =>
             {
+#if !DEBUG
                 try
+#endif
                 {
                     SetMessage("Please wait...");
                     SetImage();
@@ -129,11 +131,13 @@ namespace Emgu.TF.XamarinForms
 
                     SetImage(image[0]);
                 }
+#if  !DEBUG
                 catch (Exception excpt)
                 {
                     String msg = excpt.Message.Replace(System.Environment.NewLine, " ");
                     SetMessage(msg);
                 }
+#endif
             };
 
         }

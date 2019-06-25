@@ -10,6 +10,7 @@ using Emgu.TF;
 using Emgu.Models;
 using System.IO;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Net;
 
 namespace Emgu.TF.Models
@@ -107,7 +108,10 @@ namespace Emgu.TF.Models
 #else
             void
 #endif
-            Init(String[] modelFiles = null, String downloadUrl = null, String inputName = null, String outputName = null)
+            Init(String[] modelFiles = null, 
+                String downloadUrl = null, 
+                String inputName = null, 
+                String outputName = null)
         {
             _inputName = inputName == null ? "input" : inputName;
             _outputName = outputName == null ? "output" : outputName;
@@ -205,38 +209,6 @@ namespace Emgu.TF.Models
             return SortResults(probability);
         }
 
-        /*
-        /// <summary>
-        /// Perform object classification and get the most likely object class.
-        /// </summary>
-        /// <param name="image">The image to be recognized.</param>
-        /// <returns>The object classes, sorted by probability from high to low</returns>
-        public RecognitionResult[] MostLikely(Tensor image)
-        {
-            float[] probability = Recognize(image);
-
-            
-            RecognitionResult result = new RecognitionResult();
-            //result.Label = String.Empty;
-
-            if (probability != null)
-            {
-                float maxVal = 0;
-                int maxIdx = 0;
-                for (int i = 0; i < probability.Length; i++)
-                {
-                    if (probability[i] > maxVal)
-                    {
-                        maxVal = probability[i];
-                        maxIdx = i;
-                    }
-                }
-                result.Label = _labels[maxIdx];
-                result.Probability = maxVal;
-            }
-            return SortResults(probability);
-        }*/
-
         /// <summary>
         /// Sort the result from the most likely to the less likely
         /// </summary>
@@ -247,8 +219,11 @@ namespace Emgu.TF.Models
             if (probabilities == null)
                 return null;
 
-            RecognitionResult[] results = new RecognitionResult[probabilities.Length];
-            for (int i = 0; i < probabilities.Length; i++)
+            if (_labels.Length != probabilities.Length)
+                Trace.TraceWarning("Length of labels does not equals to the length of probabilities");
+
+            RecognitionResult[] results = new RecognitionResult[Math.Min(_labels.Length, probabilities.Length)];
+            for (int i = 0; i < results.Length; i++)
             {
                 results[i] = new RecognitionResult(_labels[i], probabilities[i]);
             }
