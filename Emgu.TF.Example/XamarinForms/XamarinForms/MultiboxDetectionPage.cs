@@ -50,6 +50,8 @@ namespace Emgu.TF.XamarinForms
         public MultiboxDetectionPage()
            : base()
         {
+            Title = "Multibox People Detection";
+
             if (_multiboxGraph == null)
             {
                 SessionOptions so = new SessionOptions();

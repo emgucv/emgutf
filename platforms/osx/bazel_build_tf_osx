@@ -23,7 +23,7 @@ then
   install_name_tool -id @rpath/libtensorflow_framework.dylib lib/osx/libtensorflow_framework.dylib
   chmod u-w lib/osx/libtensorflow_framework.dylib
   chmod u+w lib/osx/libtfextern.dylib
-  install_name_tool -change @rpath/libtensorflow_framework.1.so @rpath/libtensorflow_framework.dylib lib/osx/libtfextern.dylib
+  install_name_tool -change @rpath/libtensorflow_framework.1.dylib @rpath/libtensorflow_framework.dylib lib/osx/libtfextern.dylib
   chmod u-w lib/osx/libtfextern.dylib
 fi
 cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64"

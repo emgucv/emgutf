@@ -46,6 +46,8 @@ namespace Emgu.TF.XamarinForms
         public StylizePage()
             : base()
         {
+            Title = "Stylize";
+
             if (_stylizeGraph == null)
             {
                 SessionOptions so = new SessionOptions();

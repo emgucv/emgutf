@@ -70,6 +70,7 @@ namespace Emgu.TF.XamarinForms
         public InceptionPage(Model model)
             : base()
         {
+            Title = model == Model.Flower ? "Flower Recognition" : "Object recognition (Inception)";
             _model = model;
 
             if (_inceptionGraph == null)
