@@ -1,4 +1,6 @@
 #!/bin/sh
+
+cd "$(dirname "$0")"
 cd ../../..
 cd tensorflow
 
@@ -8,3 +10,4 @@ cd ..
 mkdir -p lib
 cp tensorflow/bazel-bin/tensorflow/tfextern/*.so lib/
 cp tensorflow/bazel-bin/tensorflow/*.so lib/
+ln -s lib/libtensorflow_framework.so lib/libtensorflow_framework.so.1
