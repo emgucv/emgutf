@@ -30,4 +30,4 @@ fi
 cd ..
 
 mkdir -p lib/android/$1
-cp tensorflow/bazel-bin/tensorflow/tfextern/*.so lib/android/$1
+cp -rf tensorflow/bazel-bin/tensorflow/tfextern/*.so lib/android/$1
