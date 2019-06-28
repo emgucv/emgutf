@@ -27,4 +27,4 @@ bazel build -c opt \
 cd ..
 
 mkdir -p lib/android/$1
-cp tensorflow/bazel-bin/tensorflow/tfliteextern/*.so lib/android/$1
+cp -rf tensorflow/bazel-bin/tensorflow/tfliteextern/*.so lib/android/$1
