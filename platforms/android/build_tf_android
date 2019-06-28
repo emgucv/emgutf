@@ -1,14 +1,33 @@
 #!/bin/sh
+
+if [ -n "$1" ]; then
+    echo "Building for android $1 architecture"
+else
+    echo "Please specify the android architecture to build. e.g. $0 x86"
+    exit 1
+fi
+
+cd "$(dirname "$0")"
 cd ../..
 cd tensorflow
 
-bazel build -c opt //tensorflow/tfextern:libtfextern.so \
---crosstool_top=external:android/crosstool \
---cxxopt='--std=c++11' \
---config monolithic \
---host_crosstool_top=@bazel_tools//tools/cpp:toolchain \
---cpu=$1 
+if [ "$1" = "x86" ]; then
+    bazel build -c opt //tensorflow/tfextern:libtfextern.so \
+	  --crosstool_top=external:android/crosstool \
+	  --cxxopt='--std=c++11' \
+	  --config monolithic \
+	  --host_crosstool_top=@bazel_tools//tools/cpp:toolchain \
+	  --cpu=x86 \
+	  --copt=-march=i686
+else
+    bazel build -c opt //tensorflow/tfextern:libtfextern.so \
+	  --crosstool_top=external:android/crosstool \
+	  --cxxopt='--std=c++11' \
+	  --config monolithic \
+	  --host_crosstool_top=@bazel_tools//tools/cpp:toolchain \
+	  --cpu=$1
+fi    
 cd ..
 
 mkdir -p lib/android/$1
-cp tensorflow/bazel-bin/tensorflow/tfextern/*.so lib/android/$1
+cp -rf tensorflow/bazel-bin/tensorflow/tfextern/*.so lib/android/$1

@@ -1,4 +1,13 @@
 #!/bin/sh
+
+if [ -n "$1" ]; then
+    echo "Building for android $1 architecture"
+else
+    echo "Please specify the android architecture to build. e.g. $0 x86"
+    exit 1
+fi
+
+cd "$(dirname "$0")"
 cd ../..
 cd tensorflow
 
@@ -18,4 +27,4 @@ bazel build -c opt \
 cd ..
 
 mkdir -p lib/android/$1
-cp tensorflow/bazel-bin/tensorflow/tfliteextern/*.so lib/android/$1
+cp -rf tensorflow/bazel-bin/tensorflow/tfliteextern/*.so lib/android/$1

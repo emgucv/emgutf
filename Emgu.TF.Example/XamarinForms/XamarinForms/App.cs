@@ -17,6 +17,19 @@ namespace Emgu.TF.XamarinForms
         {
             Emgu.TF.TfInvoke.CheckLibraryLoaded();
 
+            TabbedPage tabbedPage = new TabbedPage();
+            tabbedPage.Title = "Emgu TF Demos";
+            tabbedPage.Children.Add(new AboutPage());
+
+            tabbedPage.Children.Add(new MultiboxDetectionPage());
+            tabbedPage.Children.Add(new InceptionPage(InceptionPage.Model.Default));
+            tabbedPage.Children.Add(new InceptionPage(InceptionPage.Model.Flower));
+            if (TfInvoke.OpHasKernel("QuantizeV2"))
+            {
+                tabbedPage.Children.Add(new StylizePage());
+            }
+            MainPage = tabbedPage;
+            /*
             List<View> buttons = new List<View>();
 
             Button multiboxDetectionButton = new Button();
@@ -87,7 +100,7 @@ namespace Emgu.TF.XamarinForms
                }
             );
             page.ToolbarItems.Add(aboutItem);
-
+            */
         }
 
         public Page CurrentPage
