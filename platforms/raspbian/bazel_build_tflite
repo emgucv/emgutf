@@ -1,0 +1,10 @@
+#!/bin/sh
+
+cd "$(dirname "$0")"
+cd ../..
+cd tensorflow
+
+bazel build --jobs=2 //tensorflow/tfliteextern:libtfliteextern.so  
+cd ..
+mkdir -p lib
+cp tensorflow/bazel-bin/tensorflow/tfliteextern/*.so lib/
