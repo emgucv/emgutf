@@ -287,7 +287,7 @@ namespace Emgu.TF.Models
 
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-        public static Rect[] ScaleLocation(float[] location, int imageWidth, int imageHeight)
+        public static Rect[] ScaleLocation(float[] location, int imageWidth, int imageHeight, bool flipUpSideDown = false)
         {
             Rect[] scaledLocation = new Rect[location.Length / 4];
             for (int i = 0; i < scaledLocation.Length; i++)
@@ -298,66 +298,15 @@ namespace Emgu.TF.Models
                 float bottom = location[i * 4 + 3] * imageHeight;
 
                 scaledLocation[i] = new Rect(left, top, right - left, bottom - top);
+				if (flipUpSideDown)
+				{
+					Rect rFlipped = scaledLocation[i];
+					rFlipped.y = image.height - scaledLocation[i].y;
+					rFlipped.height = -scaledLocation[i].height;
+					scaledLocation[i] = rFlipped;
+				}
             }
             return scaledLocation;
-        }
-
-        #region TextureDrawLine function from http://wiki.unity3d.com/index.php?title=TextureDrawLine
-        private static void DrawLine(Texture2D tex, int x0, int y0, int x1, int y1, Color col)
-        {
-            int dy = (int)(y1 - y0);
-            int dx = (int)(x1 - x0);
-            int stepx, stepy;
-
-            if (dy < 0) { dy = -dy; stepy = -1; }
-            else { stepy = 1; }
-            if (dx < 0) { dx = -dx; stepx = -1; }
-            else { stepx = 1; }
-            dy <<= 1;
-            dx <<= 1;
-
-            float fraction = 0;
-
-            tex.SetPixel(x0, y0, col);
-            if (dx > dy)
-            {
-                fraction = dy - (dx >> 1);
-                while (Mathf.Abs(x0 - x1) > 1)
-                {
-                    if (fraction >= 0)
-                    {
-                        y0 += stepy;
-                        fraction -= dx;
-                    }
-                    x0 += stepx;
-                    fraction += dy;
-                    tex.SetPixel(x0, y0, col);
-                }
-            }
-            else
-            {
-                fraction = dx - (dy >> 1);
-                while (Mathf.Abs(y0 - y1) > 1)
-                {
-                    if (fraction >= 0)
-                    {
-                        x0 += stepx;
-                        fraction -= dy;
-                    }
-                    y0 += stepy;
-                    fraction += dx;
-                    tex.SetPixel(x0, y0, col);
-                }
-            }
-        }
-        #endregion
-
-        private static void DrawRect(Texture2D image, Rect rect, Color color)
-        {
-            DrawLine(image, (int)rect.position.x, (int)rect.position.y, (int)(rect.position.x + rect.width), (int)rect.position.y, color);
-            DrawLine(image, (int)rect.position.x, (int)rect.position.y, (int)rect.position.x, (int)(rect.position.y + rect.height), color);
-            DrawLine(image, (int)(rect.position.x + rect.width), (int)(rect.position.y + rect.height), (int)(rect.position.x + rect.width), (int)rect.position.y, color);
-            DrawLine(image, (int)(rect.position.x + rect.width), (int)(rect.position.y + rect.height), (int)rect.position.x, (int)(rect.position.y + rect.height), color);
         }
 
         public static void DrawResults(Texture2D image, MultiboxGraph.Result[] results, float scoreThreshold, bool flipUpSideDown = false)
@@ -367,19 +316,11 @@ namespace Emgu.TF.Models
             Color color = new Color(1.0f, 0, 0);//Set color to red
             for (int i = 0; i < annotations.Length; i++)
             {
-                Rect[] rects = ScaleLocation(annotations[i].Rectangle, image.width, image.height);
+                Rect[] rects = ScaleLocation(annotations[i].Rectangle, image.width, image.height, flipUpSideDown);
                 
                 foreach (Rect r in rects)
                 {
-                    if (flipUpSideDown)
-                    {
-                        Rect rFlipped = r;
-                        rFlipped.y = image.height - r.y;
-                        rFlipped.height = -r.height;
-                        DrawRect(image, rFlipped, color);
-                    }
-                    else 
-                        DrawRect(image, r, color);
+                    NativeImageIO.DrawRect(image, r, color);
                 }
             }
             image.Apply();

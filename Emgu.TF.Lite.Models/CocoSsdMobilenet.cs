@@ -12,6 +12,10 @@ using System.IO;
 using System.ComponentModel;
 using System.Net;
 
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+using UnityEngine;
+#endif
+
 namespace Emgu.TF.Lite.Models
 {
     public class CocoSsdMobilenet : Emgu.TF.Util.UnmanagedObject
@@ -170,6 +174,24 @@ namespace Emgu.TF.Lite.Models
             get { return _labels; }
         }
 
+
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+        public RecognitionResult[] Recognize(Texture2D texture2D, bool flipUpsideDown = true, bool swapBR = false, float scoreThreshold = 0.0f)
+        {
+            int height = _inputTensor.Dims[1];
+            int width = _inputTensor.Dims[2];
+            NativeImageIO.ReadTensorFromTexture2D<byte>(
+                texture2D,
+                _inputTensor.DataPointer,
+                height, width, 0.0f, 1.0f,
+                flipUpsideDown,
+                swapBR);
+
+            _interpreter.Invoke();
+
+            return ConvertResults(scoreThreshold);
+        }
+#else
         /// <summary>
         /// Perform Coco Ssd Mobilenet detection
         /// </summary>
@@ -185,10 +207,16 @@ namespace Emgu.TF.Lite.Models
 
             _interpreter.Invoke();
 
+            return ConvertResults(scoreThreshold);
+        }
+#endif
+
+        private RecognitionResult[] ConvertResults(float scoreThreshold)
+        {
             float[,,] outputLocations = _interpreter.Outputs[0].JaggedData as float[,,];
             float[] classes = _interpreter.Outputs[1].Data as float[];
             float[] scores = _interpreter.Outputs[2].Data as float[];
-            int numDetections = (int) Math.Round( (_interpreter.Outputs[3].Data as float[])[0]);
+            int numDetections = (int)Math.Round((_interpreter.Outputs[3].Data as float[])[0]);
 
             // SSD Mobilenet V1 Model assumes class 0 is background class
             // in label file and class labels start from 1 to number_of_classes+1,
@@ -217,13 +245,13 @@ namespace Emgu.TF.Lite.Models
                 results.Add(r);
             }
 
-            return results.ToArray() ;
+            return results.ToArray();
         }
 
         public class RecognitionResult
         {
             /// <summary>
-            /// Rectangles will be in the format of (x, y, width, height) in the original image corrdinate
+            /// Rectangles will be in the format of (x, y, width, height) in the original image coordinate
             /// </summary>
             public float[] Rectangle;
             /// <summary>
