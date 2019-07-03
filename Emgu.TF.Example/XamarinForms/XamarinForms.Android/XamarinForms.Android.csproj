@@ -385,7 +385,7 @@
       <Version>0.4.11</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms">
-      <Version>4.0.0.540366</Version>
+      <Version>4.1.0.555618</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="..\XamarinForms\XamarinForms.projitems" Label="Shared" Condition="Exists('..\XamarinForms\XamarinForms.projitems')" />
