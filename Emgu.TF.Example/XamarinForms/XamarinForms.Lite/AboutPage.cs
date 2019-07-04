@@ -32,9 +32,7 @@ namespace Emgu.TF.XamarinForms
                     </body>
                     </html>", tensorflowVer);
 
-            Content = new StackLayout
-            {
-                Children = {
+            Content = 
                     new WebView()
                     {
                         WidthRequest =  1000,
@@ -43,9 +41,7 @@ namespace Emgu.TF.XamarinForms
                         {
                             Html = htmlSource
                         }
-                    }
-                }
-            };
+                    };
         }
     }
 }
