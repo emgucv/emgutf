@@ -38,6 +38,9 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' ">
     <OutputPath>..\lib</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <OutputPath>.</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK-1.0" />
     <Reference Include="System" />

@@ -67,6 +67,8 @@ namespace Emgu.Models
 
 #if __ANDROID__
         public static String PersistentDataPath = System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, Android.OS.Environment.DirectoryDownloads);
+#elif __IOS__
+        public static String PersistentDataPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
 #elif UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
         public static String PersistentDataPath = Application.persistentDataPath;
 #endif
@@ -78,7 +80,7 @@ namespace Emgu.Models
         /// <returns>The local path of the file</returns>
         public static String GetLocalFileName(String fileName)
         {
-#if __ANDROID__ || UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+#if __ANDROID__ || __IOS__ || UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             return System.IO.Path.Combine(PersistentDataPath, fileName);
 #else
             return fileName;

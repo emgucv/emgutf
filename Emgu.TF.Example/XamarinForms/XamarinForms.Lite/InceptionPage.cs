@@ -90,6 +90,11 @@ namespace Emgu.TF.XamarinForms
 
         private void onDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
+            if (e.Error != null)
+            {
+                SetMessage(e.Error.Message);
+                return;
+            }
 
             Stopwatch watch = Stopwatch.StartNew();
             var result = _inception.Recognize(_imageFiles[0]);
