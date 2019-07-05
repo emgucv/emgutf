@@ -30,14 +30,16 @@ namespace Emgu.TF.XamarinForms
 {
     public class CameraViewPage : Xamarin.Forms.ContentPage
     {
+        private CocoSsdMobilenet _mobilenet;
+
         public UIImageView ImageView;
         private Label _label;
         AVCaptureSession session;
         OutputRecorder outputRecorder;
         DispatchQueue queue;
 
-        private CocoSsdMobilenet _mobilenet;
-        private string[] _imageFiles = null;
+        //private CocoSsdMobilenet _mobilenet;
+        //private string[] _imageFiles = null;
 
         public CameraViewPage()
            : base()
@@ -56,9 +58,81 @@ namespace Emgu.TF.XamarinForms
 
             Content = stackLayout;
 
-            CheckVideoPermissionAndStart();
+            _mobilenet = new CocoSsdMobilenet();
+
+
+            SetMessage("Please wait...");
+
+            InitModel();
+
+
+            //CheckVideoPermissionAndStart();
         }
 
+        public void SetMessage(String message)
+        {
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(
+                () =>
+                {
+                    _label.Text = message;
+                    _label.LineBreakMode = LineBreakMode.WordWrap;
+                    _label.WidthRequest = this.Width;
+                }
+            );
+        }
+
+        private void InitModel()
+        {
+#if !DEBUG
+            try
+#endif
+            {
+                if (_mobilenet.Imported)
+                {
+                    onDownloadCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(null, false, null));
+                }
+                else
+                {
+                    SetMessage("Please wait while the Coco SSD Mobilenet Model is being downloaded...");
+                    _mobilenet.OnDownloadProgressChanged += onDownloadProgressChanged;
+                    _mobilenet.OnDownloadCompleted += onDownloadCompleted;
+                    _mobilenet.Init();
+                }
+            }
+#if !DEBUG
+            catch (Exception e)
+            {
+                String msg = e.Message.Replace(System.Environment.NewLine, " ");
+                SetMessage(msg);     
+            }
+#endif
+        }
+
+        private void onDownloadProgressChanged(object sender, System.Net.DownloadProgressChangedEventArgs e)
+        {
+            if (e.TotalBytesToReceive <= 0)
+                SetMessage(String.Format("{0} bytes downloaded.", e.BytesReceived, e.ProgressPercentage));
+            else
+                SetMessage(String.Format("{0} of {1} bytes downloaded ({2}%)", e.BytesReceived, e.TotalBytesToReceive, e.ProgressPercentage));
+        }
+
+        private void onDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            if (e != null && e.Error != null)
+            {
+                SetMessage(e.Error.Message);
+                return;
+            }
+
+            //Stopwatch watch = Stopwatch.StartNew();
+            //var result = _mobilenet.Recognize(_imageFiles[0]);
+            //watch.Stop();
+            //String resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", result[0].Label, result[0].Probability * 100, watch.ElapsedMilliseconds);
+
+            //SetImage(_imageFiles[0]);
+            //SetMessage(resStr);
+            CheckVideoPermissionAndStart();
+        }
 
         private void CheckVideoPermissionAndStart()
         {
@@ -134,7 +208,7 @@ namespace Emgu.TF.XamarinForms
 
             // configure the output
             queue = new DispatchQueue("myQueue");
-            outputRecorder = new OutputRecorder(ImageView, _label);
+            outputRecorder = new OutputRecorder(ImageView, _label, _mobilenet);
             output.SetSampleBufferDelegateQueue(outputRecorder, queue);
             session.AddOutput(output);
 
@@ -147,11 +221,13 @@ namespace Emgu.TF.XamarinForms
     {
         private UIImageView _imageView;
         private Label _label;
+        private CocoSsdMobilenet _mobilenet;
 
-        public OutputRecorder(UIImageView imageView, Label label)
+        public OutputRecorder(UIImageView imageView, Label label, CocoSsdMobilenet mobilenet)
         {
             _imageView = imageView;
             _label = label;
+            _mobilenet = mobilenet;
         }
 
         private int _counter = 0;
@@ -161,14 +237,14 @@ namespace Emgu.TF.XamarinForms
             {
                 _counter++;
                 UIImage image = ImageFromSampleBuffer(sampleBuffer);
-
+                CocoSsdMobilenet.RecognitionResult[] results = _mobilenet.Recognize(image, 0.5f);
                 
                 // Do something with the image, we just stuff it in our main view.
                 BeginInvokeOnMainThread(delegate
                 {
                     if (_imageView.Frame.Size != image.Size)
                         _imageView.Frame = new CGRect(CGPoint.Empty, image.Size);
-
+                    
                     UIImage oldImage = _imageView.Image;
 
                     _imageView.Image = image;
@@ -192,6 +268,11 @@ namespace Emgu.TF.XamarinForms
             catch (Exception e)
             {
                 Console.WriteLine(e);
+
+                BeginInvokeOnMainThread(delegate
+                {
+                    _label.Text = String.Format("{0} image", e.Message);
+                });
             }
         }
 

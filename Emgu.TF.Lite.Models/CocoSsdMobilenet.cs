@@ -16,6 +16,11 @@ using System.Net;
 using UnityEngine;
 #endif
 
+#if __IOS__
+using UIKit;
+using CoreGraphics;
+#endif
+
 namespace Emgu.TF.Lite.Models
 {
     public class CocoSsdMobilenet : Emgu.TF.Util.UnmanagedObject
@@ -192,6 +197,27 @@ namespace Emgu.TF.Lite.Models
             return ConvertResults(scoreThreshold);
         }
 #else
+
+#if __IOS__
+        /// <summary>
+        /// Perform Coco Ssd Mobilenet detection
+        /// </summary>
+        /// <param name="image">The image where we will ran the network through</param>
+        /// <param name="scoreThreshold">If non-positive, will return all results. If positive, we will only return results with score larger than this value</param>
+        /// <returns>The result of the detection.</returns>
+        public RecognitionResult[] Recognize(UIImage image, float scoreThreshold = 0.0f)
+        {
+            int height = _inputTensor.Dims[1];
+            int width = _inputTensor.Dims[2];
+
+            NativeImageIO.ReadImageToTensor<byte>(image, _inputTensor.DataPointer, height, width, 0.0f, 1.0f);
+
+            _interpreter.Invoke();
+
+            return ConvertResults(scoreThreshold);
+        }
+#endif
+
         /// <summary>
         /// Perform Coco Ssd Mobilenet detection
         /// </summary>
