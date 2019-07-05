@@ -134,7 +134,7 @@ namespace Emgu.TF.XamarinForms
 
             // configure the output
             queue = new DispatchQueue("myQueue");
-            outputRecorder = new OutputRecorder(ImageView);
+            outputRecorder = new OutputRecorder(ImageView, _label);
             output.SetSampleBufferDelegateQueue(outputRecorder, queue);
             session.AddOutput(output);
 
@@ -146,24 +146,38 @@ namespace Emgu.TF.XamarinForms
     public class OutputRecorder : AVCaptureVideoDataOutputSampleBufferDelegate
     {
         private UIImageView _imageView;
-        public OutputRecorder(UIImageView imageView)
+        private Label _label;
+
+        public OutputRecorder(UIImageView imageView, Label label)
         {
             _imageView = imageView;
+            _label = label;
         }
+
+        private int _counter = 0;
         public override void DidOutputSampleBuffer(AVCaptureOutput captureOutput, CMSampleBuffer sampleBuffer, AVCaptureConnection connection)
         {
             try
             {
+                _counter++;
                 UIImage image = ImageFromSampleBuffer(sampleBuffer);
 
+                
                 // Do something with the image, we just stuff it in our main view.
                 BeginInvokeOnMainThread(delegate
                 {
                     if (_imageView.Frame.Size != image.Size)
                         _imageView.Frame = new CGRect(CGPoint.Empty, image.Size);
-                    _imageView.Image = image;
-                });
 
+                    UIImage oldImage = _imageView.Image;
+
+                    _imageView.Image = image;
+                    _label.Text = String.Format("{0} image", _counter);
+
+                    if (oldImage != null)
+                        oldImage.Dispose();
+                });
+                
                 //
                 // Although this looks innocent "Oh, he is just optimizing this case away"
                 // this is incredibly important to call on this callback, because the AVFoundation
@@ -171,6 +185,9 @@ namespace Emgu.TF.XamarinForms
                 // delivering frames. 
                 // 
                 sampleBuffer.Dispose();
+                //Console.WriteLine(String.Format("Frame at: {0}", DateTime.Now));
+
+                
             }
             catch (Exception e)
             {
@@ -182,15 +199,21 @@ namespace Emgu.TF.XamarinForms
 
         UIImage ImageFromSampleBuffer(CMSampleBuffer sampleBuffer)
         {
+            UIImage image; 
             // Get the CoreVideo image
             using (CVPixelBuffer pixelBuffer = sampleBuffer.GetImageBuffer() as CVPixelBuffer)
             {
                 // Lock the base address
                 pixelBuffer.Lock(CVPixelBufferLock.ReadOnly);
-                CIImage cIImage = new CIImage(pixelBuffer);
+                using (CIImage cIImage = new CIImage(pixelBuffer))
+                {
+                    
+                    image = new UIImage(cIImage);
+                    //return UIImage.FromImage(cIImage);
+                }
                 pixelBuffer.Unlock(CVPixelBufferLock.ReadOnly);
-                return new UIImage(cIImage);
             }
+            return image;
         }
     }
 }

@@ -90,7 +90,7 @@ namespace Emgu.TF.XamarinForms
 
         private void onDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-            if (e.Error != null)
+            if (e != null && e.Error != null)
             {
                 SetMessage(e.Error.Message);
                 return;
