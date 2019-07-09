@@ -50,6 +50,7 @@ namespace Emgu.TF.XamarinForms
             _label.Text = "Label";
 
             ImageView = new UIImageView();
+            ImageView.ContentMode = UIViewContentMode.ScaleAspectFit;
 
             Xamarin.Forms.StackLayout stackLayout = new StackLayout();
             stackLayout.Children.Add(button);
@@ -237,8 +238,19 @@ namespace Emgu.TF.XamarinForms
             {
                 _counter++;
                 UIImage image = ImageFromSampleBuffer(sampleBuffer);
-                CocoSsdMobilenet.RecognitionResult[] results = _mobilenet.Recognize(image, 0.5f);
-                
+                CocoSsdMobilenet.RecognitionResult[] result = _mobilenet.Recognize(image, 0.5f);
+                NativeImageIO.Annotation[] annotations = new NativeImageIO.Annotation[result.Length];
+                for (int i = 0; i < result.Length; i++)
+                {
+                    NativeImageIO.Annotation annotation = new NativeImageIO.Annotation();
+                    annotation.Rectangle = result[i].Rectangle;
+                    annotation.Label = String.Format("{0}:({1:0.00}%)", result[i].Label, result[i].Score * 100);
+                    annotations[i] = annotation;
+                }
+
+                UIImage annotatedImage = NativeImageIO.DrawAnnotations(image, annotations);
+                image.Dispose();
+
                 // Do something with the image, we just stuff it in our main view.
                 BeginInvokeOnMainThread(delegate
                 {
@@ -247,7 +259,8 @@ namespace Emgu.TF.XamarinForms
                     
                     UIImage oldImage = _imageView.Image;
 
-                    _imageView.Image = image;
+                    _imageView.Image = annotatedImage;
+                    
                     _label.Text = String.Format("{0} image", _counter);
 
                     if (oldImage != null)

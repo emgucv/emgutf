@@ -773,13 +773,57 @@ namespace Emgu.Models
             public byte[] Raw { get; set; }
         }
 
-        /// <summary>
-        /// Read the file and draw rectangles on it.
-        /// </summary>
-        /// <param name="fileName">The name of the file.</param>
-        /// <param name="annotations">Annotations to be add to the image. Can consist of rectangles and lables</param>
-        /// <returns>The image in Jpeg stream format</returns>
-        public static JpegData ImageFileToJpeg(String fileName, Annotation[] annotations = null)
+#if __IOS__
+        public static UIImage DrawAnnotations(UIImage uiimage, Annotation[] annotations)
+        {
+            UIGraphics.BeginImageContextWithOptions(uiimage.Size, false, 0);
+            var context = UIGraphics.GetCurrentContext();
+
+            uiimage.Draw(new CGPoint());
+            context.SetStrokeColor(UIColor.Red.CGColor);
+            context.SetLineWidth(2);
+
+            for (int i = 0; i < annotations.Length; i++)
+            {
+                float[] rects = ScaleLocation(
+                    annotations[i].Rectangle,
+                    (int)uiimage.Size.Width,
+                    (int)uiimage.Size.Height);
+                CGRect cgRect = new CGRect(
+                                           (nfloat)rects[0],
+                                           (nfloat)rects[1],
+                                           (nfloat)(rects[2] - rects[0]),
+                                           (nfloat)(rects[3] - rects[1]));
+                context.AddRect(cgRect);
+                context.DrawPath(CGPathDrawingMode.Stroke);
+            }
+            context.ScaleCTM(1, -1);
+            context.TranslateCTM(0, -uiimage.Size.Height);
+            for (int i = 0; i < annotations.Length; i++)
+            {
+                float[] rects = ScaleLocation(
+                    annotations[i].Rectangle,
+                    (int)uiimage.Size.Width,
+                    (int)uiimage.Size.Height);
+                context.SelectFont("Helvetica", 18, CGTextEncoding.MacRoman);
+                context.SetFillColor((nfloat)1.0, (nfloat)0.0, (nfloat)0.0, (nfloat)1.0);
+                context.SetTextDrawingMode(CGTextDrawingMode.Fill);
+                context.ShowTextAtPoint(rects[0], uiimage.Size.Height - rects[1], annotations[i].Label);
+            }
+            UIImage imgWithRect = UIGraphics.GetImageFromCurrentImageContext();
+            UIGraphics.EndImageContext();
+            return imgWithRect;
+        }
+
+#endif
+
+		/// <summary>
+		/// Read the file and draw rectangles on it.
+		/// </summary>
+		/// <param name="fileName">The name of the file.</param>
+		/// <param name="annotations">Annotations to be add to the image. Can consist of rectangles and lables</param>
+		/// <returns>The image in Jpeg stream format</returns>
+		public static JpegData ImageFileToJpeg(String fileName, Annotation[] annotations = null)
         {
 #if __ANDROID__
             BitmapFactory.Options options = new BitmapFactory.Options();
@@ -829,43 +873,7 @@ namespace Emgu.Models
 #elif __IOS__
             UIImage uiimage = new UIImage(fileName);
 
-            UIGraphics.BeginImageContextWithOptions(uiimage.Size, false, 0);
-            var context = UIGraphics.GetCurrentContext();
-
-            uiimage.Draw(new CGPoint());
-            context.SetStrokeColor(UIColor.Red.CGColor);
-            context.SetLineWidth(2);
-
-            for (int i = 0; i < annotations.Length; i++)
-            {
-                float[] rects = ScaleLocation(
-                    annotations[i].Rectangle,
-                    (int)uiimage.Size.Width,
-                    (int)uiimage.Size.Height);
-                CGRect cgRect = new CGRect(
-                                           (nfloat)rects[0],
-                                           (nfloat)rects[1],
-                                           (nfloat)(rects[2] - rects[0]),
-                                           (nfloat)(rects[3] - rects[1]));
-                context.AddRect(cgRect);
-                context.DrawPath(CGPathDrawingMode.Stroke);
-            }
-            context.ScaleCTM(1, -1);
-            context.TranslateCTM(0, -uiimage.Size.Height);
-            for (int i = 0; i < annotations.Length; i++)
-            {
-                float[] rects = ScaleLocation(
-                    annotations[i].Rectangle,
-                    (int)uiimage.Size.Width,
-                    (int)uiimage.Size.Height);
-                context.SelectFont("Helvetica", 18, CGTextEncoding.MacRoman);
-                context.SetFillColor((nfloat)1.0, (nfloat)0.0, (nfloat)0.0, (nfloat)1.0);
-                context.SetTextDrawingMode(CGTextDrawingMode.Fill);
-                context.ShowTextAtPoint(rects[0], uiimage.Size.Height - rects[1], annotations[i].Label);
-            }
-            UIImage imgWithRect = UIGraphics.GetImageFromCurrentImageContext();
-            UIGraphics.EndImageContext();
-
+            UIImage imgWithRect = DrawAnnotations(uiimage, annotations);
             var jpegData = imgWithRect.AsJPEG();
 			byte[] jpeg = new byte[jpegData.Length];
 			System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, jpeg, 0, (int)jpegData.Length);
@@ -918,5 +926,5 @@ namespace Emgu.Models
         }
 
 #endif
-    }
+	}
 }
