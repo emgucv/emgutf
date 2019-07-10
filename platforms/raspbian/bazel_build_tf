@@ -4,10 +4,10 @@ cd "$(dirname "$0")"
 cd ../..
 cd tensorflow
 
-bazel build --jobs=2 //tensorflow/tfextern:libtfextern.so 
+bazel build --jobs=2 --config=monolithic --host_linkopt=-latomic //tensorflow/tfextern:libtfextern.so 
 cd ..
 
 mkdir -p lib
 cp tensorflow/bazel-bin/tensorflow/tfextern/*.so lib/
-cp tensorflow/bazel-bin/tensorflow/*.so lib/
-ln -s lib/libtensorflow_framework.so lib/libtensorflow_framework.so.1
+#cp tensorflow/bazel-bin/tensorflow/*.so lib/
+#ln -s lib/libtensorflow_framework.so lib/libtensorflow_framework.so.1
