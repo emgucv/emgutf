@@ -295,8 +295,8 @@ IF(HAVE_WINDESKTOP_LITE)
     PATTERN "*.png"
     PATTERN "*.dll"
     PATTERN "*.json"
-	PATTERN "*.resx"
-	PATTERN "*.settings"
+    PATTERN "*.resx"
+    PATTERN "*.settings"
     PATTERN ".git" EXCLUDE
     PATTERN "Debug" EXCLUDE
     PATTERN "Release" EXCLUDE  
@@ -353,11 +353,12 @@ IF(HAS_LITE_BUILD)
     PATTERN "Debug" EXCLUDE
     PATTERN "Release" EXCLUDE  
     )
-	
-  PROJECT(Inception.Console.Lite.NetCore)
-  BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj" "" ALL)
-  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Netstandard Emgu.TF.Lite.Models.Netstandard)
-  
+
+  IF (NOT "${DOTNET_EXECUTABLE}" STREQUAL "DOTNET_EXECUTABLE-NOTFOUND")
+    PROJECT(Inception.Console.Lite.NetCore)
+    BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj" "" ALL)
+    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Netstandard Emgu.TF.Lite.Models.Netstandard)
+  ENDIF()
 ENDIF()
 
 IF(HAS_FULL_BUILD)
@@ -384,11 +385,11 @@ IF(HAS_FULL_BUILD)
     PATTERN "Debug" EXCLUDE
     PATTERN "Release" EXCLUDE  
     )
-	
-  PROJECT(Inception.Console.NetCore)
-  BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj"  "" ALL)
-  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Netstandard Emgu.TF.Protobuf.Netstandard Emgu.TF.Models.Netstandard)
-  
+  IF (NOT "${DOTNET_EXECUTABLE}" STREQUAL "DOTNET_EXECUTABLE-NOTFOUND")
+    PROJECT(Inception.Console.NetCore)
+    BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj"  "" ALL)
+    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Netstandard Emgu.TF.Protobuf.Netstandard Emgu.TF.Models.Netstandard)
+  ENDIF() 
 ENDIF()
 
 IF(NOT (NETFX_CORE OR ANDROID OR (APPLE AND (NOT IOS))))
