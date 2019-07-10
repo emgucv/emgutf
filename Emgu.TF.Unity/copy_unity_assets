@@ -1,8 +1,8 @@
 cd Assets
 cd Emgu.TF
-mkdir Assets
+mkdir -p Assets
 cd Assets
-mkdir Scripts
+mkdir -p Scripts
 cd Scripts
 rm -rf Emgu.TF.Util
 mkdir Emgu.TF.Util
