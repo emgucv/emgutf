@@ -821,7 +821,7 @@ namespace Emgu.Models
 		/// Read the file and draw rectangles on it.
 		/// </summary>
 		/// <param name="fileName">The name of the file.</param>
-		/// <param name="annotations">Annotations to be add to the image. Can consist of rectangles and lables</param>
+		/// <param name="annotations">Annotations to be add to the image. Can consist of rectangles and labels</param>
 		/// <returns>The image in Jpeg stream format</returns>
 		public static JpegData ImageFileToJpeg(String fileName, Annotation[] annotations = null)
         {
@@ -831,17 +831,22 @@ namespace Emgu.Models
             Android.Graphics.Bitmap bmp = BitmapFactory.DecodeFile(fileName, options);
 
             Android.Graphics.Paint p = new Android.Graphics.Paint();
-            p.SetStyle(Paint.Style.Stroke);
+            
             p.AntiAlias = true;
             p.Color = Android.Graphics.Color.Red;
             Canvas c = new Canvas(bmp);
-                        
+
+            p.TextSize = 20;
             for (int i = 0; i < annotations.Length; i++)
             {
+                p.SetStyle(Paint.Style.Stroke);
                 float[] rects = ScaleLocation(annotations[i].Rectangle, bmp.Width, bmp.Height);
                 Android.Graphics.Rect r = new Rect((int)rects[0], (int) rects[1], (int) rects[2], (int) rects[3]);
                 c.DrawRect(r, p);
-            }     
+
+                p.SetStyle(Paint.Style.Fill);
+                c.DrawText(annotations[i].Label, (int)rects[0], (int)rects[1], p);
+            }
 
             using (MemoryStream ms = new MemoryStream())
             {
