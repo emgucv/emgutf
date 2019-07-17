@@ -50,12 +50,29 @@ namespace Emgu.TF.XamarinForms
 
             MessageLabel.Text = "";
             MessageLabel.HorizontalOptions = LayoutOptions.Center;
+            MessageLabel.VerticalOptions = LayoutOptions.Center;
+            MessageLabel.VerticalTextAlignment = TextAlignment.Center;
+            MessageLabel.HorizontalTextAlignment = TextAlignment.Center;
 
             StackLayout mainLayout = new StackLayout();
+            mainLayout.VerticalOptions = LayoutOptions.FillAndExpand;
+            mainLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
+            mainLayout.Orientation = StackOrientation.Vertical;
+            mainLayout.Spacing = 15;
+            mainLayout.Padding = new Thickness(10, 10, 10, 10);
+
+            DisplayImage.HorizontalOptions = LayoutOptions.Center;
+            
+            /*
+            DisplayImage.BackgroundColor = new Color(1, 0, 0);
+            MessageLabel.BackgroundColor = new Color(0, 0, 1);
+            mainLayout.BackgroundColor = new Color(0, 1, 0);
+            */
+
             mainLayout.Children.Add(TopButton);
             mainLayout.Children.Add(MessageLabel);
             mainLayout.Children.Add(DisplayImage);
-            mainLayout.Padding = new Thickness( 10, 10, 10, 10);
+            
             Content = mainLayout;
         }
 
@@ -207,6 +224,7 @@ namespace Emgu.TF.XamarinForms
                    this.DisplayImage.WidthRequest = image.Size.Width;
                    this.DisplayImage.HeightRequest = image.Size.Height;
 #endif
+                   this.DisplayImage.Focus();
                });
         }
 
@@ -227,12 +245,14 @@ namespace Emgu.TF.XamarinForms
                        this.DisplayImage.WidthRequest = widthRequest;
                    if (heightRequest > 0)
                        this.DisplayImage.HeightRequest = heightRequest;
-               });
+
 #if __IOS__
                     //Xamarin Form's Image class do not seems to re-render after Source is change
                     //forcing focus seems to force a re-rendering
                     this.DisplayImage.Focus();
 #endif
+               });
+
         }
 
         /*
@@ -245,11 +265,14 @@ namespace Emgu.TF.XamarinForms
         {
             Xamarin.Forms.Device.BeginInvokeOnMainThread(
                 () =>
-            {
-                this.MessageLabel.Text = message;
-                this.MessageLabel.LineBreakMode = LineBreakMode.WordWrap;
-                this.MessageLabel.WidthRequest = this.Width;
-            }
+                {
+                    this.MessageLabel.Text = message;
+                    this.MessageLabel.WidthRequest = this.Width;
+                    this.MessageLabel.HeightRequest = 60;
+
+                    this.MessageLabel.LineBreakMode = LineBreakMode.WordWrap;
+                    this.MessageLabel.Focus();
+                }
             );
         }
 

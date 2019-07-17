@@ -16,6 +16,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)InceptionPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MobilenetPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SmartReply.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CameraViewPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)iOS\CameraViewPage.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)iOS\" />
   </ItemGroup>
 </Project>
