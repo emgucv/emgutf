@@ -42,7 +42,7 @@ namespace Emgu.TF.XamarinForms
            : base()
         {
 
-            var button = this.GetButton();
+            var button = this.TopButton;
             button.Text = "Perform Image Classification";
             button.Clicked += OnButtonClicked;
 

@@ -22,11 +22,41 @@ namespace Emgu.TF.XamarinForms
 {
     public partial class ButtonTextImagePage : ContentPage
     {
+        private Button _topButton = new Button();
+        public Button TopButton
+        {
+            get { return _topButton; }
+        }
+
+        private Label _messageLabel = new Label();
+        public Label MessageLabel
+        {
+            get { return _messageLabel; }
+        }
+
+        private Image _displayImage = new Image();
+
+        public Image DisplayImage
+        {
+            get { return _displayImage; }
+        }
 
         public ButtonTextImagePage()
         {
             
-            InitializeComponent();
+            TopButton.Text = "Click me";
+            TopButton.IsEnabled = true;
+            TopButton.HorizontalOptions = LayoutOptions.Center;
+
+            MessageLabel.Text = "";
+            MessageLabel.HorizontalOptions = LayoutOptions.Center;
+
+            StackLayout mainLayout = new StackLayout();
+            mainLayout.Children.Add(TopButton);
+            mainLayout.Children.Add(MessageLabel);
+            mainLayout.Children.Add(DisplayImage);
+            mainLayout.Padding = new Thickness( 10, 10, 10, 10);
+            Content = mainLayout;
         }
 
         public virtual async void LoadImages(String[] imageNames, String[] labels = null)
@@ -199,16 +229,17 @@ namespace Emgu.TF.XamarinForms
                        this.DisplayImage.HeightRequest = heightRequest;
                });
 #if __IOS__
-                    //Xamarin Form's Image class do not seems to re-render after Soure is change
+                    //Xamarin Form's Image class do not seems to re-render after Source is change
                     //forcing focus seems to force a re-rendering
                     this.DisplayImage.Focus();
 #endif
         }
 
+        /*
         public Xamarin.Forms.Label GetLabel()
         {
             return this.MessageLabel;
-        }
+        }*/
 
         public void SetMessage(String message)
         {
@@ -222,6 +253,7 @@ namespace Emgu.TF.XamarinForms
             );
         }
 
+        /*
         public Xamarin.Forms.Button GetButton()
         {
             return this.TopButton;
@@ -230,6 +262,6 @@ namespace Emgu.TF.XamarinForms
         public Image GetImage()
         {
             return this.DisplayImage;
-        }
+        }*/
     }
 }

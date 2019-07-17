@@ -11,19 +11,10 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)AboutPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ButtonTextImagePage.xaml.cs">
-      <DependentUpon>ButtonTextImagePage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ButtonTextImagePage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CocoSsdMobilenetPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)InceptionPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MobilenetPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SmartReply.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)ButtonTextImagePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
   </ItemGroup>
 </Project>
