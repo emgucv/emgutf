@@ -170,7 +170,18 @@ namespace Emgu.Models
                     if (onDownloadProgressChanged != null)
                         downloadClient.DownloadProgressChanged += onDownloadProgressChanged;
                     if (onDownloadFileCompleted != null)
-                        downloadClient.DownloadFileCompleted += onDownloadFileCompleted;
+                        downloadClient.DownloadFileCompleted +=
+                            (sender, e) =>
+                            {
+                                bool fileExist = File.Exists(downloadableFile.LocalFile);
+                                if (fileExist)
+                                    fileExist = new FileInfo(downloadableFile.LocalFile).Length > 0;
+
+                                if (!fileExist)
+                                    e = new System.ComponentModel.AsyncCompletedEventArgs(new FileNotFoundException("Failed to download file"), e.Cancelled, e.UserState);
+
+                                onDownloadFileCompleted(sender, e);                                
+                            };
 
                     downloadClient.DownloadFileAsync(new Uri(downloadableFile.Url), downloadableFile.LocalFile);
                     

@@ -301,7 +301,7 @@ namespace Emgu.TF.Models
 				if (flipUpSideDown)
 				{
 					Rect rFlipped = scaledLocation[i];
-					rFlipped.y = image.height - scaledLocation[i].y;
+					rFlipped.y = imageHeight - scaledLocation[i].y;
 					rFlipped.height = -scaledLocation[i].height;
 					scaledLocation[i] = rFlipped;
 				}

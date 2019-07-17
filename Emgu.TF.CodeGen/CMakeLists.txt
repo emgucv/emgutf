@@ -2,7 +2,7 @@
 #  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-IF(HAVE_WINDESKTOP_X64 OR HAVE_LINUX)
+IF((HAVE_WINDESKTOP_X64 OR HAVE_LINUX) AND (NOT "${DOTNET_EXECUTABLE}" STREQUAL "DOTNET_EXECUTABLE-NOTFOUND"))
   PROJECT(Emgu.TF.CodeGen.NetCore)
 
   BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj"  "" ALL)
