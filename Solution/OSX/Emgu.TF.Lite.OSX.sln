@@ -16,9 +16,9 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Models.Shared"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inception.Console.Lite.NetCore", "..\..\Emgu.TF.Example\Inception.Console.Lite.NetCore\Inception.Console.Lite.NetCore.csproj", "{7F80AE6A-BD36-45BA-A152-5D366BCF8570}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.NetStandard", "..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.NetStandard.csproj", "{C07F7FE3-3835-460D-B6C2-166250C03AC0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Lite.Netstandard", "..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.NetStandard.csproj", "{C07F7FE3-3835-460D-B6C2-166250C03AC0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Models.Netstandard", "..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Netstandard\Emgu.TF.Lite.Models.Netstandard.csproj", "{971A6E6A-E7D4-4FF6-931E-8A25D572161C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Lite.Models.Netstandard", "..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Netstandard\Emgu.TF.Lite.Models.Netstandard.csproj", "{971A6E6A-E7D4-4FF6-931E-8A25D572161C}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
