@@ -1,18 +1,18 @@
 cd Assets
 cd Emgu.TF.Lite
-mkdir Assets
+mkdir -p Assets
 cd Assets
-mkdir Scripts
+mkdir -p Scripts
 cd Scripts
 
 rm -rf Emgu.TF.Util
-mkdir Emgu.TF.Util
+mkdir -p Emgu.TF.Util
 rm -rf Emgu.TF.Lite
-mkdir Emgu.TF.Lite
+mkdir -p Emgu.TF.Lite
 rm -rf Emgu.Models
-mkdir Emgu.Models
+mkdir -p Emgu.Models
 rm -rf Emgu.TF.Lite.Models
-mkdir Emgu.TF.Lite.Models
+mkdir -p Emgu.TF.Lite.Models
 
 cd ..
 cd ..
