@@ -12,10 +12,7 @@ rm -rf Emgu.TF.Models
 mkdir Emgu.TF.Models
 rm -rf Emgu.Models
 mkdir Emgu.Models
-cd ..
-cd ..
-cd ..
-cd ..
+cd ../../../..
 
 cp ../tensorflow/LICENSE Assets/Emgu.TF/Documentation/tensorflow.license.txt
 
