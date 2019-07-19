@@ -23,7 +23,7 @@ namespace XamarinForms.Lite.OSX
                 var rect = new CoreGraphics.CGRect(200, 1000, 1024, 768);
                 //var rect = NSWindow.FrameRectFor(NSScreen.MainScreen.Frame, style);
                 _window = new NSWindow(rect, style, NSBackingStore.Buffered, false);
-                _window.Title = "Emgu TF Xamarin Forms for Mac";
+                _window.Title = "Emgu TF Lite Xamarin Forms Demo for Mac";
                 //_window.TitleVisibility = NSWindowTitleVisibility.Hidden;
         }
 
