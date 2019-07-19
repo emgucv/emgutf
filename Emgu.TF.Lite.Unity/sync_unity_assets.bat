@@ -1,4 +1,4 @@
-cp Assets/Emgu.TF.Lite/Assets/Scripts/Emgu.TF.Util/*.cs ../Emgu.TF.Util/
-cp Assets/Emgu.TF.Lite/Assets/Scripts/Emgu.TF.Lite/*.cs ../Emgu.TF.Lite/
-cp Assets/Emgu.TF.Lite/Assets/Scripts/Emgu.Models/*.cs ../Emgu.Models/
-cp Assets/Emgu.TF.Lite/Assets/Scripts/Emgu.TF.Lite.Models/*.cs ../Emgu.TF.Lite.Models/
+pushd %~p0
+call wsl dos2unix sync_unity_assets
+call wsl ./sync_unity_assets
+popd
