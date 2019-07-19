@@ -45,7 +45,7 @@ namespace Emgu.TF.XamarinForms
                {
                    Content = new StackLayout
                    {
-                       VerticalOptions = LayoutOptions.Start,
+                       VerticalOptions = LayoutOptions.Center,
                        Children =
                      {
                            multiboxDetectionButton,
