@@ -2,7 +2,7 @@
 //  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
-#if __IOS__
+#if __IOS__ || __MACOS__
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,7 +13,7 @@ using System.Diagnostics;
 using Emgu.TF.Lite;
 using Emgu.Models;
 using Emgu.TF.Lite.Models;
-using UIKit;
+
 using CoreGraphics;
 using Xamarin.Forms;
 
@@ -24,7 +24,14 @@ using CoreVideo;
 using CoreMedia;
 using CoreImage;
 using CoreFoundation;
+
+#if __IOS__
+using UIKit;
 using Xamarin.Forms.Platform.iOS;
+#else
+using AppKit;
+using Xamarin.Forms.Platform.MacOS;
+#endif
 
 namespace Emgu.TF.XamarinForms
 {
@@ -32,7 +39,11 @@ namespace Emgu.TF.XamarinForms
     {
         private CocoSsdMobilenet _mobilenet;
 
+#if __IOS__
         public UIImageView ImageView;
+#else
+        public NSImageView ImageView;
+#endif
         private Label _label;
         AVCaptureSession session;
         OutputRecorder outputRecorder;
@@ -49,9 +60,13 @@ namespace Emgu.TF.XamarinForms
             _label = new Label();
             _label.Text = "Label";
 
+#if __IOS__
             ImageView = new UIImageView();
             ImageView.ContentMode = UIViewContentMode.ScaleAspectFit;
-
+#else
+            ImageView = new NSImageView();
+            ImageView.ImageScaling = NSImageScale.None;
+#endif
             Xamarin.Forms.StackLayout stackLayout = new StackLayout();
             stackLayout.Children.Add(button);
             stackLayout.Children.Add(_label);
@@ -220,11 +235,19 @@ namespace Emgu.TF.XamarinForms
 
     public class OutputRecorder : AVCaptureVideoDataOutputSampleBufferDelegate
     {
+#if __IOS__
         private UIImageView _imageView;
+#else
+        private NSImageView _imageView;
+#endif
         private Label _label;
         private CocoSsdMobilenet _mobilenet;
 
+#if __IOS__
         public OutputRecorder(UIImageView imageView, Label label, CocoSsdMobilenet mobilenet)
+#else
+        public OutputRecorder(NSImageView imageView, Label label, CocoSsdMobilenet mobilenet)
+#endif
         {
             _imageView = imageView;
             _label = label;
@@ -232,36 +255,59 @@ namespace Emgu.TF.XamarinForms
         }
 
         private int _counter = 0;
+
+        private static NativeImageIO.Annotation[] GetAnnotations(CocoSsdMobilenet.RecognitionResult[] result)
+        {
+            NativeImageIO.Annotation[] annotations = new NativeImageIO.Annotation[result.Length];
+            for (int i = 0; i < result.Length; i++)
+            {
+                NativeImageIO.Annotation annotation = new NativeImageIO.Annotation();
+                annotation.Rectangle = result[i].Rectangle;
+                annotation.Label = String.Format("{0}:({1:0.00}%)", result[i].Label, result[i].Score * 100);
+                annotations[i] = annotation;
+            }
+            return annotations;
+        }
         public override void DidOutputSampleBuffer(AVCaptureOutput captureOutput, CMSampleBuffer sampleBuffer, AVCaptureConnection connection)
         {
             try
             {
                 _counter++;
+#if __IOS__
                 UIImage image = ImageFromSampleBuffer(sampleBuffer);
+#else
+                NSImage image = ImageFromSampleBuffer(sampleBuffer);
+#endif
                 CocoSsdMobilenet.RecognitionResult[] result = _mobilenet.Recognize(image, 0.5f);
-                NativeImageIO.Annotation[] annotations = new NativeImageIO.Annotation[result.Length];
-                for (int i = 0; i < result.Length; i++)
-                {
-                    NativeImageIO.Annotation annotation = new NativeImageIO.Annotation();
-                    annotation.Rectangle = result[i].Rectangle;
-                    annotation.Label = String.Format("{0}:({1:0.00}%)", result[i].Label, result[i].Score * 100);
-                    annotations[i] = annotation;
-                }
+                NativeImageIO.Annotation[] annotations = GetAnnotations(result);
 
+#if __IOS__
                 UIImage annotatedImage = NativeImageIO.DrawAnnotations(image, annotations);
                 image.Dispose();
 
+#endif
+                //Debug.WriteLine(image == null ? "null image" : String.Format(">image {0} x {1}", image.Size.Width, image.Size.Height));
                 // Do something with the image, we just stuff it in our main view.
                 BeginInvokeOnMainThread(delegate
                 {
+                    //Debug.WriteLine(image == null ? "null image" : String.Format(">>image {0} x {1}", image.Size.Width, image.Size.Height));
+#if __MACOS__
+                    NativeImageIO.DrawAnnotations(image, annotations);
+#endif
                     if (_imageView.Frame.Size != image.Size)
                         _imageView.Frame = new CGRect(CGPoint.Empty, image.Size);
-                    
-                    UIImage oldImage = _imageView.Image;
-
-                    _imageView.Image = annotatedImage;
-                    
                     _label.Text = String.Format("{0} image", _counter);
+
+#if __IOS__
+                    UIImage oldImage = _imageView.Image;
+                    _imageView.Image = annotatedImage;
+#else
+                    NSImage oldImage = _imageView.Image;
+
+                    //Debug.WriteLine(image == null ? "null image" : String.Format(">>>image {0} x {1}", image.Size.Width, image.Size.Height));
+                    _imageView.Image = image;
+                    
+#endif
 
                     if (oldImage != null)
                         oldImage.Dispose();
@@ -290,10 +336,20 @@ namespace Emgu.TF.XamarinForms
         }
 
         //private static MCvFont font = new MCvFont(Emgu.CV.CvEnum.FONT.CV_FONT_HERSHEY_PLAIN, 1.0, 1.0);
-
+#if __IOS__
         UIImage ImageFromSampleBuffer(CMSampleBuffer sampleBuffer)
+#else
+        NSImage ImageFromSampleBuffer(CMSampleBuffer sampleBuffer)
+#endif
         {
-            UIImage image; 
+#if __IOS__
+            UIImage image;
+#else
+            NSImage image;
+#endif
+
+            Random r = new Random();
+            int flag = r.Next();
             // Get the CoreVideo image
             using (CVPixelBuffer pixelBuffer = sampleBuffer.GetImageBuffer() as CVPixelBuffer)
             {
@@ -301,12 +357,38 @@ namespace Emgu.TF.XamarinForms
                 pixelBuffer.Lock(CVPixelBufferLock.ReadOnly);
                 using (CIImage cIImage = new CIImage(pixelBuffer))
                 {
-                    
+#if __IOS__
                     image = new UIImage(cIImage);
-                    //return UIImage.FromImage(cIImage);
+#else
+                    image = null;
+
+                    AutoResetEvent e = new AutoResetEvent(false);
+                    //e.WaitOne();
+
+                    //Semaphore s = new Semaphore(1, 1);
+                    //s.WaitOne();
+                    BeginInvokeOnMainThread(delegate
+                    {
+                        NSCIImageRep rep = new NSCIImageRep(cIImage);
+                        Debug.WriteLine(String.Format("({2}) NSCIImageRep: {0}x{1}", rep.Size.Width, rep.Size.Height, flag));
+                        image = new NSImage(rep.Size);
+                        image.AddRepresentation(rep);
+                        //s.Release();
+                        //Monitor.Exit(this);
+                        Debug.WriteLine(String.Format("({2}) NSImage: {0}x{1}", image.Size.Width, image.Size.Height, flag));
+                        e.Set();
+                    });
+                    e.WaitOne();
+                    //Monitor.Enter(this);
+                    //Monitor.Exit(this);
+                    //s.WaitOne();
+                    //s.Release();
+                    
+#endif
                 }
                 pixelBuffer.Unlock(CVPixelBufferLock.ReadOnly);
             }
+            Debug.WriteLine(String.Format("({2}) Recevied NSImage: {0}x{1}", image.Size.Width, image.Size.Height, flag));
             return image;
         }
     }

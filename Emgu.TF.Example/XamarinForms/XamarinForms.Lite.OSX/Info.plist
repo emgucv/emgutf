@@ -26,5 +26,7 @@
 	<string>NSApplication</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This App Requires Camera Access to run the demos</string>
 </dict>
 </plist>

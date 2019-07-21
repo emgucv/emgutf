@@ -48,7 +48,7 @@ namespace Emgu.Models
 
 #if __IOS__
         /// <summary>
-        /// Read an image file, covert the data and save it to the native pointer
+        /// Read an UIImage, covert the data and save it to the native pointer
         /// </summary>
         /// <typeparam name="T">The type of the data to covert the image pixel values to. e.g. "float" or "byte"</typeparam>
         /// <param name="image">The uiimage</param>
@@ -153,19 +153,116 @@ namespace Emgu.Models
         }
 #endif
 
-            /// <summary>
-            /// Read an image file, covert the data and save it to the native pointer
-            /// </summary>
-            /// <typeparam name="T">The type of the data to covert the image pixel values to. e.g. "float" or "byte"</typeparam>
-            /// <param name="fileName">The name of the image file</param>
-            /// <param name="dest">The native pointer where the image pixels values will be saved to.</param>
-            /// <param name="inputHeight">The height of the image, must match the height requirement for the tensor</param>
-            /// <param name="inputWidth">The width of the image, must match the width requirement for the tensor</param>
-            /// <param name="inputMean">The mean value, it will be substracted from the input image pixel values</param>
-            /// <param name="scale">The scale, after mean is substracted, the scale will be used to multiply the pixel values</param>
-            /// <param name="flipUpSideDown">If true, the image needs to be flipped up side down</param>
-            /// <param name="swapBR">If true, will flip the Blue channel with the Red. e.g. If false, the tensor's color channel order will be RGB. If true, the tensor's color channle order will be BGR </param>
-            public static void ReadImageFileToTensor<T>(
+#if __MACOS__
+        /// <summary>
+        /// Read a NSImage, covert the data and save it to the native pointer
+        /// </summary>
+        /// <typeparam name="T">The type of the data to covert the image pixel values to. e.g. "float" or "byte"</typeparam>
+        /// <param name="image">The nsimage</param>
+        /// <param name="dest">The native pointer where the image pixels values will be saved to.</param>
+        /// <param name="inputHeight">The height of the image, must match the height requirement for the tensor</param>
+        /// <param name="inputWidth">The width of the image, must match the width requirement for the tensor</param>
+        /// <param name="inputMean">The mean value, it will be substracted from the input image pixel values</param>
+        /// <param name="scale">The scale, after mean is substracted, the scale will be used to multiply the pixel values</param>
+        /// <param name="flipUpSideDown">If true, the image needs to be flipped up side down</param>
+        /// <param name="swapBR">If true, will flip the Blue channel with the Red. e.g. If false, the tensor's color channel order will be RGB. If true, the tensor's color channle order will be BGR </param>
+        public static void ReadImageToTensor<T>(
+            NSImage image,
+            IntPtr dest,
+            int inputHeight = -1,
+            int inputWidth = -1,
+            float inputMean = 0.0f,
+            float scale = 1.0f,
+            bool flipUpSideDown = false,
+            bool swapBR = false)
+            where T : struct
+        {
+            if (flipUpSideDown)
+                throw new NotImplementedException("Flip Up Side Down is Not implemented");
+            NSImage resized;
+            if (inputHeight > 0 || inputWidth > 0)
+            {
+                resized = new NSImage(new CGSize(inputWidth, inputHeight));
+                resized.LockFocus();
+                image.DrawInRect(new CGRect(0, 0, inputWidth, inputHeight), CGRect.Empty, NSCompositingOperation.SourceOver, 1.0f);
+                resized.UnlockFocus();
+            } else
+                resized = image;
+
+            int[] intValues = new int[(int)(resized.Size.Width * resized.Size.Height)];
+            float[] floatValues = new float[(int)(resized.Size.Width * resized.Size.Height * 3)];
+            System.Runtime.InteropServices.GCHandle handle = System.Runtime.InteropServices.GCHandle.Alloc(intValues, System.Runtime.InteropServices.GCHandleType.Pinned);
+            using (CGImage cgimage = resized.CGImage)
+            using (CGColorSpace cspace = CGColorSpace.CreateDeviceRGB())
+            using (CGBitmapContext context = new CGBitmapContext(
+                handle.AddrOfPinnedObject(),
+                (nint)resized.Size.Width,
+                (nint)resized.Size.Height,
+                8,
+                (nint)resized.Size.Width * 4,
+                cspace,
+                CGImageAlphaInfo.PremultipliedLast
+                ))
+            {
+                context.DrawImage(new CGRect(new CGPoint(), resized.Size), cgimage);
+            }
+            handle.Free();
+            if (swapBR)
+            {
+                for (int i = 0; i < intValues.Length; ++i)
+                {
+                    int val = intValues[i];
+                    floatValues[i * 3 + 0] = ((val & 0xFF) - inputMean) * scale;
+                    floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - inputMean) * scale;
+                    floatValues[i * 3 + 2] = (((val >> 16) & 0xFF) - inputMean) * scale;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < intValues.Length; ++i)
+                {
+                    int val = intValues[i];
+                    floatValues[i * 3 + 0] = (((val >> 16) & 0xFF) - inputMean) * scale;
+                    floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - inputMean) * scale;
+                    floatValues[i * 3 + 2] = ((val & 0xFF) - inputMean) * scale;
+                }
+            }
+
+            if (typeof(T) == typeof(float))
+            {
+                Marshal.Copy(floatValues, 0, dest, floatValues.Length);
+            }
+            else if (typeof(T) == typeof(byte))
+            {
+                //copy float to bytes
+                byte[] byteValues = new byte[floatValues.Length];
+                for (int i = 0; i < floatValues.Length; i++)
+                    byteValues[i] = (byte)floatValues[i];
+                Marshal.Copy(byteValues, 0, dest, byteValues.Length);
+            }
+            else
+            {
+                throw new NotImplementedException(String.Format("Destination data type {0} is not supported.", typeof(T).ToString()));
+            }
+            if (resized != image)
+                resized.Dispose();
+        }
+
+#endif
+
+        /// <summary>
+        /// Read an image file, covert the data and save it to the native pointer
+        /// </summary>
+        /// <typeparam name="T">The type of the data to covert the image pixel values to. e.g. "float" or "byte"</typeparam>
+        /// <param name="fileName">The name of the image file</param>
+        /// <param name="dest">The native pointer where the image pixels values will be saved to.</param>
+        /// <param name="inputHeight">The height of the image, must match the height requirement for the tensor</param>
+        /// <param name="inputWidth">The width of the image, must match the width requirement for the tensor</param>
+        /// <param name="inputMean">The mean value, it will be substracted from the input image pixel values</param>
+        /// <param name="scale">The scale, after mean is substracted, the scale will be used to multiply the pixel values</param>
+        /// <param name="flipUpSideDown">If true, the image needs to be flipped up side down</param>
+        /// <param name="swapBR">If true, will flip the Blue channel with the Red. e.g. If false, the tensor's color channel order will be RGB. If true, the tensor's color channle order will be BGR </param>
+        public static void ReadImageFileToTensor<T>(
             String fileName,
             IntPtr dest,
             int inputHeight = -1,
@@ -242,82 +339,16 @@ namespace Emgu.Models
 
 #elif __IOS__
 
-
             UIImage image = new UIImage(fileName);
 
             ReadImageToTensor<T>(image, dest, inputHeight, inputWidth, inputMean, scale, flipUpSideDown, swapBR);
 
             //System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
-#elif __UNIFIED__
-            if (flipUpSideDown)
-                throw new NotImplementedException("Flip Up Side Down is Not implemented");
-            //if (swapBR)
-            //    throw new NotImplementedException("swapBR is Not implemented");
+#elif __MACOS__
+
             NSImage image = new NSImage(fileName);
-            if (inputHeight > 0 || inputWidth > 0)
-            {
-                NSImage resized = new NSImage(new CGSize(inputWidth, inputHeight));
-                resized.LockFocus();
-                image.DrawInRect(new CGRect(0, 0, inputWidth, inputHeight), CGRect.Empty, NSCompositingOperation.SourceOver, 1.0f);
-                resized.UnlockFocus();       
-                image.Dispose();
-                image = resized;
-            }
-            int[] intValues = new int[(int) (image.Size.Width * image.Size.Height)];
-            float[] floatValues = new float[(int) (image.Size.Width * image.Size.Height * 3)];
-            System.Runtime.InteropServices.GCHandle handle = System.Runtime.InteropServices.GCHandle.Alloc(intValues, System.Runtime.InteropServices.GCHandleType.Pinned);
-            using (CGImage cgimage = image.CGImage)
-            using (CGColorSpace cspace = CGColorSpace.CreateDeviceRGB())
-            using (CGBitmapContext context = new CGBitmapContext(
-                handle.AddrOfPinnedObject(),
-                (nint)image.Size.Width,
-                (nint)image.Size.Height,
-                8,
-                (nint)image.Size.Width * 4,
-                cspace,
-                CGImageAlphaInfo.PremultipliedLast
-                ))
-            {
-                context.DrawImage(new CGRect(new CGPoint(), image.Size), cgimage);
 
-            }
-            handle.Free();
-            if (swapBR)
-            {
-                for (int i = 0; i < intValues.Length; ++i)
-                {
-                    int val = intValues[i];
-                    floatValues[i * 3 + 0] = ((val & 0xFF) - inputMean) * scale;
-                    floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - inputMean) * scale;
-                    floatValues[i * 3 + 2] = (((val >> 16) & 0xFF) - inputMean) * scale;
-                }
-            } else
-            {
-                for (int i = 0; i < intValues.Length; ++i)
-                {
-                    int val = intValues[i];
-                    floatValues[i * 3 + 0] = (((val >> 16) & 0xFF) - inputMean) * scale;
-                    floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - inputMean) * scale;
-                    floatValues[i * 3 + 2] = ((val & 0xFF) - inputMean) * scale;
-                }
-            }
-
-            if (typeof(T) == typeof(float))
-            {
-                Marshal.Copy(floatValues, 0, dest, floatValues.Length);
-            }
-            else if (typeof(T) == typeof(byte))
-            {
-                //copy float to bytes
-                byte[] byteValues = new byte[floatValues.Length];
-                for (int i = 0; i < floatValues.Length; i++)
-                    byteValues[i] = (byte) floatValues[i];
-                Marshal.Copy(byteValues, 0, dest, byteValues.Length);
-            }
-            else
-            {
-                throw new NotImplementedException(String.Format("Destination data type {0} is not supported.", typeof(T).ToString()));
-            }
+            ReadImageToTensor<T>(image, dest, inputHeight, inputWidth, inputMean, scale, flipUpSideDown, swapBR);
 
             //System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
 #elif UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
@@ -715,7 +746,10 @@ namespace Emgu.Models
 
             NSColor redColor = NSColor.Red;
             redColor.Set();
+
             var context = NSGraphicsContext.CurrentContext;
+            if (context == null)
+                return;
             var cgcontext = context.CGContext;
 
             for (int i = 0; i < annotations.Length; i++)
