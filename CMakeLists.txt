@@ -594,7 +594,7 @@ IF(HAVE_WINDESKTOP_X64)
 				"${CUDA_TOOLKIT_ROOT_DIR}/bin/curand${CUDA_POSTFIX}_${NPP_POSTFIX}.dll"
 				"${CUDA_TOOLKIT_ROOT_DIR}/bin/cusolver${CUDA_POSTFIX}_${NPP_POSTFIX}.dll"
 				)
-			SET(EMGU_TF_CUFFT_FILE_VERSION "${npp_major}${npp_minor}")
+			SET(EMGU_TF_CUFFT_FILE_VERSION "${NPP_POSTFIX}")
         ELSE()
 			MESSAGE(FATAL_ERROR "-- Unable to find CUFFT version")
 		ENDIF()
