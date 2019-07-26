@@ -134,6 +134,7 @@ copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cudnn64_*.dll" lib\x64\
 copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cufft64_*.dll" lib\x64\
 copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\curand64_*.dll" lib\x64\
 copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cudart64_*.dll" lib\x64\
+copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cusparse64_*.dll" lib\x64\
 :END_OF_DEPLOY_DEPENDENCY_GPU
 
 cp -rf tensorflow\bazel-bin\external\protobuf_archive .
