@@ -170,7 +170,7 @@ MACRO(BUILD_DOTNET_PROJ target csproj_file extra_flags)
       TARGET ${target}
       COMMAND "${DOTNET_EXECUTABLE}" build "${csproj_file}"
       COMMENT "Building ${target}")
-	MESSAGE(STATUS " ==> ${target} Build command: ${DOTNET_EXECUTABLE} build ${csproj_file}" )
+	#MESSAGE(STATUS " ==> ${target} Build command: ${DOTNET_EXECUTABLE} build ${csproj_file}" )
   ELSE()
 	MESSAGE(FATAL_ERROR "DOTNET_EXECUTABLE not found!")
   ENDIF()
