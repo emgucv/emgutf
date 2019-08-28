@@ -89,7 +89,7 @@ namespace Emgu.TF.XamarinForms
                     watch.Stop();
                     SetImage(jpeg.Raw);
 #if __MACOS__
-                    var displayImage = this.GetImage();
+                    var displayImage = this.DisplayImage;
                     displayImage.WidthRequest = jpeg.Width;
                     displayImage.HeightRequest = jpeg.Height;
 #endif
