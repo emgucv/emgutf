@@ -40,7 +40,7 @@ namespace Emgu.TF.XamarinForms
         public ModelButtonTextImagePage():
             base()
         {
-            var button = this.GetButton();
+            var button = this.TopButton;
             button.Text = GetButtonName(_buttonMode);
 
             button.Clicked += OnButtonClicked;
@@ -52,7 +52,7 @@ namespace Emgu.TF.XamarinForms
         {
             if (_buttonMode == ButtonMode.WaitingModelDownload)
             {
-                var button = this.GetButton();
+                var button = this.TopButton;
                 button.IsEnabled = false;
                 SetMessage("Please wait while we download the model from internet.");
             }
@@ -61,7 +61,7 @@ namespace Emgu.TF.XamarinForms
         protected void onDownloadCompleted(object sender, AsyncCompletedEventArgs e)
         {
             SetMessage("Models downloaded.");
-            var button = this.GetButton();
+            var button = this.TopButton;
             _buttonMode = ButtonMode.Ready;
             button.Text = GetButtonName(_buttonMode);
             button.IsEnabled = true;

@@ -22,23 +22,71 @@ namespace Emgu.TF.XamarinForms
 {
     public partial class ButtonTextImagePage : ContentPage
     {
+        private Button _topButton = new Button();
+        public Button TopButton
+        {
+            get { return _topButton; }
+        }
+
+        private Label _messageLabel = new Label();
+        public Label MessageLabel
+        {
+            get { return _messageLabel; }
+        }
+
+        private Image _displayImage = new Image();
+
+        public Image DisplayImage
+        {
+            get { return _displayImage; }
+        }
 
         public ButtonTextImagePage()
         {
-            InitializeComponent();
+            
+            TopButton.Text = "Click me";
+            TopButton.IsEnabled = true;
+            TopButton.HorizontalOptions = LayoutOptions.Center;
+
+            MessageLabel.Text = "";
+            MessageLabel.HorizontalOptions = LayoutOptions.Center;
+            MessageLabel.VerticalOptions = LayoutOptions.Center;
+            MessageLabel.VerticalTextAlignment = TextAlignment.Center;
+            MessageLabel.HorizontalTextAlignment = TextAlignment.Center;
+
+            StackLayout mainLayout = new StackLayout();
+            mainLayout.VerticalOptions = LayoutOptions.FillAndExpand;
+            mainLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
+            mainLayout.Orientation = StackOrientation.Vertical;
+            mainLayout.Spacing = 15;
+            mainLayout.Padding = new Thickness(10, 10, 10, 10);
+
+            DisplayImage.HorizontalOptions = LayoutOptions.Center;
+            
+            /*
+            DisplayImage.BackgroundColor = new Color(1, 0, 0);
+            MessageLabel.BackgroundColor = new Color(0, 0, 1);
+            mainLayout.BackgroundColor = new Color(0, 1, 0);
+            */
+
+            mainLayout.Children.Add(TopButton);
+            mainLayout.Children.Add(MessageLabel);
+            mainLayout.Children.Add(DisplayImage);
+            
+            Content = mainLayout;
         }
 
         public virtual async void LoadImages(String[] imageNames, String[] labels = null)
         {
+#if __ANDROID__ || __IOS__
+            await CrossMedia.Current.Initialize();
+#endif
 
 #if (__MACOS__) //Xamarin Mac
             //use default images
             InvokeOnImagesLoaded(imageNames);
 #else
-	
-#if __ANDROID__ || __IOS__
-            await CrossMedia.Current.Initialize();
-#endif
+
             String[] mats = new String[imageNames.Length];
             for (int i = 0; i < mats.Length; i++)
             {
@@ -66,14 +114,10 @@ namespace Emgu.TF.XamarinForms
                 {
                     action = await DisplayActionSheet(pickImgString, "Cancel", null, "Default", "Photo Library",
                         "Camera");
-					if (action == null) //user clicked outside of action sheet
-                        return;
                 }
                 else if (havePickImgOption)
                 {
                     action = await DisplayActionSheet(pickImgString, "Cancel", null, "Default", "Photo Library");
-					if (action == null) //user clicked outside of action sheet
-                        return;
                 }
                 else
                 {
@@ -90,8 +134,6 @@ namespace Emgu.TF.XamarinForms
                     mats[i] = fi.FullName;
 
 #else
-	                if (!File.Exists(imageNames[i]))
-                        throw new FileNotFoundException(String.Format("File {0} do not exist.", imageNames[i]));
                     mats[i] = imageNames[i];
             
 #endif
@@ -118,11 +160,12 @@ namespace Emgu.TF.XamarinForms
                             }
                         }
 #endif
+
                     }
                     else
                     {
                         var photoResult = await CrossMedia.Current.PickPhotoAsync();
-                        if (photoResult == null) //canceled
+                        if (photoResult == null) //cancelled
                             return;
                         mats[i] = photoResult.Path;
                     }
@@ -148,10 +191,17 @@ namespace Emgu.TF.XamarinForms
 #endif
         }
 
-        public void InvokeOnImagesLoaded(string[] images)
+        public void InvokeOnImagesLoaded(string[] imageFiles)
         {
+            if (imageFiles == null) //cancelled
+                return;
+
+            for (int i = 0; i < imageFiles.Length; i++)
+                if (imageFiles[i] == null)
+                    return; //cancelled
+
             if (OnImagesLoaded != null)
-                OnImagesLoaded(this, images);
+                OnImagesLoaded(this, imageFiles);
         }
 
         public event EventHandler<string[]> OnImagesLoaded;
@@ -174,6 +224,7 @@ namespace Emgu.TF.XamarinForms
                    this.DisplayImage.WidthRequest = image.Size.Width;
                    this.DisplayImage.HeightRequest = image.Size.Height;
 #endif
+                   this.DisplayImage.Focus();
                });
         }
 
@@ -194,42 +245,46 @@ namespace Emgu.TF.XamarinForms
                        this.DisplayImage.WidthRequest = widthRequest;
                    if (heightRequest > 0)
                        this.DisplayImage.HeightRequest = heightRequest;
-               });
+
 #if __IOS__
-                    //Xamarin Form's Image class do not seems to re-render after Soure is change
+                    //Xamarin Form's Image class do not seems to re-render after Source is change
                     //forcing focus seems to force a re-rendering
                     this.DisplayImage.Focus();
 #endif
+               });
+
         }
 
+        /*
         public Xamarin.Forms.Label GetLabel()
         {
-            //return null;
             return this.MessageLabel;
-        }
+        }*/
 
         public void SetMessage(String message)
         {
             Xamarin.Forms.Device.BeginInvokeOnMainThread(
                 () =>
-            {
-                this.MessageLabel.Text = message;
-                this.MessageLabel.LineBreakMode = LineBreakMode.WordWrap;
-                this.MessageLabel.WidthRequest = this.Width;
-            }
+                {
+                    this.MessageLabel.Text = message;
+                    this.MessageLabel.WidthRequest = this.Width;
+                    this.MessageLabel.HeightRequest = 60;
+
+                    this.MessageLabel.LineBreakMode = LineBreakMode.WordWrap;
+                    this.MessageLabel.Focus();
+                }
             );
         }
 
+        /*
         public Xamarin.Forms.Button GetButton()
         {
-            //return null;
             return this.TopButton;
         }
 
         public Image GetImage()
         {
-            //return null;
             return this.DisplayImage;
-        }
+        }*/
     }
 }
