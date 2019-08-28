@@ -149,9 +149,9 @@ namespace Emgu.TF
                         _twoTabs);
                 }
                 String returnDoc = String.Join(Environment.NewLine, returnDescs);
-                returnDoc = String.Format("{2}/// <return>{0}{1}{0}{2}/// </return>{0}", Environment.NewLine, returnDoc, _twoTabs);
+                returnDoc = String.Format("{2}/// <return>{0}{2}/// The operation, where:{0}{1}{0}{2}/// </return>{0}", Environment.NewLine, returnDoc, _twoTabs);
                 if (outputs.Count == 0)
-                    returnDoc = String.Empty;
+                    returnDoc = String.Format("{0}/// <return>The operation.</return>{1}", _twoTabs, Environment.NewLine);
 
 
                 String returnStr = "Operation";
