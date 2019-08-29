@@ -17,23 +17,12 @@ namespace Example.OSX
 			String fileName = "space_shuttle.jpg";
 
             Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
-            //MultiboxGraph.Result detectResult = graph.Detect(imageTensor);
-            float[] probability = _inceptionGraph.Recognize(imageTensor);
+            
+            var recognitionResults = _inceptionGraph.Recognize(imageTensor);
             String resStr = String.Empty;
-            if (probability != null)
+            if (recognitionResults != null && recognitionResults.Length > 0)
             {
-                String[] labels = _inceptionGraph.Labels;
-                float maxVal = 0;
-                int maxIdx = 0;
-                for (int i = 0; i < probability.Length; i++)
-                {
-                    if (probability[i] > maxVal)
-                    {
-                        maxVal = probability[i];
-                        maxIdx = i;
-                    }
-                }
-                resStr = String.Format("Object is {0} with {1}% probability.", labels[maxIdx], maxVal * 100);
+                resStr = String.Format("Object is {0} with {1}% probability.", recognitionResults[0].Label, recognitionResults[0].Probability * 100);
             }
             SetMessage(resStr);
             SetImage(new NSImage(fileName));
