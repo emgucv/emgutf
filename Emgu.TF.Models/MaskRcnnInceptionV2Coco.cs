@@ -150,30 +150,8 @@ namespace Emgu.TF.Models
             get { return _labels; }
         }
 
-        
         public RecognitionResult[] Recognize(Tensor image)
         {
-            HashSet<string> opNames = new HashSet<string>();
-            HashSet<string> couldBeInputs = new HashSet<string>();
-            HashSet<string> couldBeOutputs = new HashSet<string>();
-            foreach (Operation op in _graph)
-            {
-                String name = op.Name;
-                opNames.Add(name);
-
-                if (op.NumInputs == 0 && op.OpType.Equals("Placeholder"))
-                    couldBeInputs.Add(op.Name);
-
-                foreach (Output output in op.Outputs)
-                {
-                    int[] shape = _graph.GetTensorShape(output);
-                    if (output.NumConsumers == 0)
-                    {
-                        couldBeOutputs.Add(name);
-                    }
-                }
-            }
-
             Output input = _graph["image_tensor"];
             Output[] outputs = new Output[] { _graph["detection_boxes"], _graph["detection_scores"], _graph["detection_classes"], _graph["num_detections"], _graph["detection_masks"] };
 

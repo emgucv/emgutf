@@ -115,6 +115,7 @@
             this.Controls.Add(this.pictureBox);
             this.Name = "MainForm";
             this.Text = "Emgu CV Interop";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

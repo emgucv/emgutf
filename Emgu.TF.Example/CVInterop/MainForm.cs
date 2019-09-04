@@ -12,6 +12,7 @@ using Emgu.TF;
 using Emgu.TF.Models;
 using Emgu.CV;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 using Tensorflow;
 
@@ -20,14 +21,15 @@ namespace CVInterop
     public partial class MainForm : Form
     {
         private MaskRcnnInceptionV2Coco _inceptionGraph;
-
+        private String _startCameraText = "Start Camera";
+        private String _stopCameraText = "Stop Camera";
         public MainForm()
         {
             InitializeComponent();
 
             TfInvoke.CheckLibraryLoaded();
             messageLabel.Text = String.Empty;
-            cameraButton.Text = "Start Camera";
+            cameraButton.Text = _startCameraText;
 
             DisableUI();
 
@@ -114,24 +116,42 @@ namespace CVInterop
 
         private Mat _renderMat;
 
+        private Tensor _imageTensor;
+
         public void Recognize(Mat m)
         {
-            Tensor imageTensor = Emgu.TF.TensorConvert.ReadTensorFromMatBgr(m, Emgu.TF.DataType.Uint8);
+
+
+            int[] dim = new int[] {1, m.Height, m.Width, 3};
+            if (_imageTensor == null)
+            {
+                _imageTensor = new Tensor(Emgu.TF.DataType.Uint8, dim);
+            }
+            else
+            {
+                if (!(_imageTensor.Type == Emgu.TF.DataType.Uint8 && Enumerable.SequenceEqual(dim, _imageTensor.Dim)))
+                {
+                    _imageTensor.Dispose();
+                    _imageTensor = new Tensor(Emgu.TF.DataType.Uint8, dim);
+                }
+            }
+
+            Emgu.TF.TensorConvert.ReadTensorFromMatBgr(m, _imageTensor);
 
             MaskRcnnInceptionV2Coco.RecognitionResult[] results;
             if (_coldSession)
             {
                 //First run of the recognition graph, here we will compile the graph and initialize the session
                 //This is expected to take much longer time than consecutive runs.
-                results = _inceptionGraph.Recognize(imageTensor);
+                results = _inceptionGraph.Recognize(_imageTensor);
                 _coldSession = false;
             }
 
             //Here we are trying to time the execution of the graph after it is loaded
             Stopwatch sw = Stopwatch.StartNew();
-            results = _inceptionGraph.Recognize(imageTensor);
+            results = _inceptionGraph.Recognize(_imageTensor);
             sw.Stop();
-
+            int goodResultCount = 0;
             foreach (var r in results)
             {
                 if (r.Probability > 0.5)
@@ -142,12 +162,15 @@ namespace CVInterop
                     float y2 = r.Region[3] * m.Width;
                     RectangleF rectf = new RectangleF(y1, x1, y2 - y1, x2 - x1);
                     Rectangle rect = Rectangle.Round(rectf);
-                    rect.Intersect(new Rectangle(Point.Empty, m.Size));
 
+                    rect.Intersect(new Rectangle(Point.Empty, m.Size)); //only keep the region that is inside the image
                     if (rect.IsEmpty)
                         continue;
+
+                    //draw the rectangle around the region
                     CvInvoke.Rectangle(m, rect, new Emgu.CV.Structure.MCvScalar(0, 0, 255), 2);
 
+                    #region draw the mask
                     float[,] mask = r.Mask;
                     GCHandle handle = GCHandle.Alloc(mask, GCHandleType.Pinned);
                     using (Mat mk = new Mat(new Size(mask.GetLength(1), mask.GetLength(0)), Emgu.CV.CvEnum.DepthType.Cv32F, 1, handle.AddrOfPinnedObject(), mask.GetLength(1) * sizeof(float)))
@@ -173,17 +196,20 @@ namespace CVInterop
                         
                     }
                     handle.Free();
+                    #endregion
 
+                    //draw the label
                     CvInvoke.PutText(m, r.Label, Point.Round(rect.Location), Emgu.CV.CvEnum.FontFace.HersheyComplex, 1.0, new Emgu.CV.Structure.MCvScalar(0, 255, 0), 1);
+
+                    goodResultCount++;
                 }
             }
             
-            String resStr = String.Format("{0} objects detected in {1} milliseconds.", results.Length, sw.ElapsedMilliseconds);
+            String resStr = String.Format("{0} objects detected in {1} milliseconds.", goodResultCount, sw.ElapsedMilliseconds);
 
             if (_renderMat == null)
                 _renderMat = new Mat();
             m.CopyTo(_renderMat);
-            
             Bitmap bmp = _renderMat.Bitmap;
 
             if (InvokeRequired)
@@ -229,7 +255,7 @@ namespace CVInterop
 
         private void cameraButton_Click(object sender, EventArgs e)
         {
-            if (cameraButton.Text.Equals("Start Camera"))
+            if (cameraButton.Text.Equals(_startCameraText))
             {
                 if (_capture == null)
                 {
@@ -243,13 +269,13 @@ namespace CVInterop
                     _capture.ImageGrabbed += _capture_ImageGrabbed;
                     _capture.Start();
                 }
-                cameraButton.Text = "Stop Camera";   
+                cameraButton.Text = _stopCameraText;   
             } else
             {
                 _capture.Stop();
                 _capture.Dispose();
                 _capture = null;
-                cameraButton.Text = "Start Camera";
+                cameraButton.Text = _startCameraText;
             }
         }
 
@@ -259,6 +285,15 @@ namespace CVInterop
         {
             _capture.Retrieve(_captureFrame);
             Recognize(_captureFrame);
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (cameraButton.Text.Equals(_stopCameraText))
+            {
+                //stop the camera if we are in a recording session.
+                cameraButton_Click(this, null);
+            }
         }
     }
 }

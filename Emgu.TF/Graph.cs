@@ -197,6 +197,43 @@ namespace Emgu.TF
         }
 
         /// <summary>
+        /// Get the names of the operations
+        /// </summary>
+        /// <param name="opNames">If provided, this HashSet will be filled with names of operations</param>
+        /// <param name="potentialInputs">If provided, this HashSet will be filled with names of operations that may be a input operation.</param>
+        /// <param name="potentialOutputs">If provided, this HashSet will be filled with names of operations that may be an output operation.</param>
+        public void GetOpNames(
+            HashSet<string> opNames = null,
+            HashSet<string> potentialInputs = null,
+            HashSet<string> potentialOutputs = null)
+        {
+            foreach (Operation op in this)
+            {
+                String name = op.Name;
+
+                if (potentialInputs != null)
+                {
+                    if (op.NumInputs == 0 && op.OpType.Equals("Placeholder"))
+                    {
+                        potentialInputs.Add(name);
+                    }
+                }
+
+                if (potentialOutputs != null)
+                    foreach (Output output in op.Outputs)
+                    {
+                        int[] shape = GetTensorShape(output);
+                        if (output.NumConsumers == 0)
+                        {
+                            potentialOutputs.Add(name);
+                        }
+                    }
+
+                opNames?.Add(name);
+            }
+        }
+
+        /// <summary>
         /// Get an enumerator of the Operations in this Graph
         /// </summary>
         /// <returns>An enumerator of the Operations in this Graph</returns>
