@@ -11,21 +11,17 @@ cd "$(dirname "$0")"
 cd ../..
 cd tensorflow
 
+buildscript="bazel build -c opt //tensorflow/tfextern:libtfextern.so \
+	  --crosstool_top=external:android/crosstool \
+	  --cxxopt='--std=c++11' \
+	  --config monolithic \
+	  --host_crosstool_top=@bazel_tools//tools/cpp:toolchain \
+	  --cpu=$1"
+
 if [ "$1" = "x86" ]; then
-    bazel build -c opt //tensorflow/tfextern:libtfextern.so \
-	  --crosstool_top=external:android/crosstool \
-	  --cxxopt='--std=c++11' \
-	  --config monolithic \
-	  --host_crosstool_top=@bazel_tools//tools/cpp:toolchain \
-	  --cpu=x86 \
-	  --copt=-march=i686
+    $buildscript --copt=-march=i686
 else
-    bazel build -c opt //tensorflow/tfextern:libtfextern.so \
-	  --crosstool_top=external:android/crosstool \
-	  --cxxopt='--std=c++11' \
-	  --config monolithic \
-	  --host_crosstool_top=@bazel_tools//tools/cpp:toolchain \
-	  --cpu=$1
+    $buildscrtipt
 fi    
 cd ..
 
