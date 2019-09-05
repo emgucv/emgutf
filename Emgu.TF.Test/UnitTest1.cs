@@ -193,6 +193,31 @@ namespace Emgu.TF.Test
         }
 
         [TestMethod]
+        public void TestServer()
+        {
+            Tensorflow.ServerDef def = new ServerDef();
+            ClusterDef clusterDef = new ClusterDef();
+            JobDef jd = new JobDef();
+            clusterDef.Job.Add(jd);
+            
+            def.Cluster = clusterDef;
+            byte[] pbuff;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                def.WriteTo(ms);
+                pbuff = ms.ToArray();
+            }
+
+            /*
+            using (Emgu.TF.Server s = new Emgu.TF.Server(pbuff))
+            {
+                String target = s.Target;
+            }*/
+
+        }
+
+
+        [TestMethod]
         public void TestChooseDevice()
         {
             SessionOptions so = new SessionOptions();

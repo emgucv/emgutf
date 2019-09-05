@@ -45,6 +45,16 @@ namespace Emgu.TF
         }
 
         /// <summary>
+        /// Set the execution device for nodes in GraphDef.
+        /// Only applies to nodes where a device was not already explicitly specified.
+        /// </summary>
+        /// <param name="device">The device name</param>
+        public void SetDefaultDevice(String device)
+        {
+            TfInvoke.tfeImportGraphDefOptionsSetDefaultDevice(_ptr, device);
+        }
+
+        /// <summary>
         /// Set any imported nodes with input <paramref name="srcName"/>:<paramref name="srcIndex"/> to have that input
         /// replaced with <paramref name="dst"/>.
         /// </summary>
@@ -116,6 +126,12 @@ namespace Emgu.TF
             IntPtr opts,
             [MarshalAs(StringMarshalType)]
             String prefix);
+
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        internal static extern void tfeImportGraphDefOptionsSetDefaultDevice(
+            IntPtr opts,
+            [MarshalAs(StringMarshalType)]
+            String device);
 
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         internal static extern void tfeImportGraphDefOptionsAddInputMapping(
