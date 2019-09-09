@@ -808,11 +808,11 @@ ENDIF()
 IF(HAVE_OSX)
   INSTALL(
     DIRECTORY
-    ${CMAKE_CURRENT_SOURCE_DIR}/Solution/OSX
+    ${CMAKE_CURRENT_SOURCE_DIR}/Solution/macos
     DESTINATION Solution
     COMPONENT emgutf_source
     FILES_MATCHING 
-    PATTERN "Emgu.TF.OSX.sln"
+    PATTERN "Emgu.TF.Mac.sln"
     PATTERN ".git" EXCLUDE
     PATTERN "bin" EXCLUDE
     )
@@ -821,11 +821,11 @@ ENDIF()
 IF(HAVE_OSX_LITE)
   INSTALL(
     DIRECTORY
-    ${CMAKE_CURRENT_SOURCE_DIR}/Solution/OSX
+    ${CMAKE_CURRENT_SOURCE_DIR}/Solution/macos
     DESTINATION Solution
     COMPONENT emgutf_source
     FILES_MATCHING 
-    PATTERN "Emgu.TF.Lite.OSX.sln"
+    PATTERN "Emgu.TF.Lite.Mac.sln"
     PATTERN ".git" EXCLUDE
     PATTERN "bin" EXCLUDE
     )
