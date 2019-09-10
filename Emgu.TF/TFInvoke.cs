@@ -232,6 +232,18 @@ namespace Emgu.TF
 #endif
         }
 
+        private static System.Reflection.Assembly FindAssembly(String assembleName)
+        {
+            System.Reflection.Assembly[] asms = AppDomain.CurrentDomain.GetAssemblies();
+            foreach (System.Reflection.Assembly asm in asms)
+            {
+                if (asm.ManifestModule.Name.Equals(assembleName))
+                    return asm;
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Attempts to load tensorflow modules from the specific location
         /// </summary>
@@ -240,22 +252,39 @@ namespace Emgu.TF
         public static bool DefaultLoadUnmanagedModules(String[] modules)
         {
             bool libraryLoaded = true;
-#if __ANDROID__
-         foreach (String module in modules)
-         {
-            try
+
+            System.Reflection.Assembly monoAndroidAssembly = FindAssembly("Mono.Android.dll");
+            if (monoAndroidAssembly != null)
             {
-               Console.WriteLine(string.Format("Trying to load {0} ({1} bit).", module, Marshal.SizeOf<IntPtr>() * 8));
-               Java.Lang.JavaSystem.LoadLibrary(module);
-               Console.WriteLine(string.Format("Loaded {0}.", module));
+                //Running on Android
+                Type javaSystemType = monoAndroidAssembly.GetType("Java.Lang.JavaSystem");
+                if (javaSystemType != null)
+                {
+                    System.Reflection.MethodInfo loadLibraryMethodInfo = javaSystemType.GetMethod("LoadLibrary");
+                    if (loadLibraryMethodInfo != null)
+                    {
+                        foreach (String module in modules)
+                        {
+                            try
+                            {
+                                Console.WriteLine(string.Format("Trying to load {0} ({1} bit).", module,
+                                    Marshal.SizeOf<IntPtr>() * 8));
+                                loadLibraryMethodInfo.Invoke(null, new object[] {module});
+                                //Java.Lang.JavaSystem.LoadLibrary(module);
+                                Console.WriteLine(string.Format("Loaded {0}.", module));
+                            }
+                            catch (Exception e)
+                            {
+                                libraryLoaded = false;
+                                Console.WriteLine(String.Format("Failed to load {0}: {1}", module, e.Message));
+                            }
+                        }
+                        return libraryLoaded;
+                    }
+                }
             }
-            catch (Exception e)
-            {
-               libraryLoaded = false;
-               Console.WriteLine(String.Format("Failed to load {0}: {1}", module, e.Message));
-            }
-         }
-#elif (UNITY_ANDROID && !UNITY_EDITOR)
+
+#if (UNITY_ANDROID && !UNITY_EDITOR)
          UnityEngine.AndroidJavaObject jo = new UnityEngine.AndroidJavaObject("java.lang.System");
 
          foreach (String module in modules)
@@ -275,16 +304,18 @@ namespace Emgu.TF
 #elif __IOS__ || UNITY_IOS || NETFX_CORE
 #else
 #if !(UNITY_EDITOR || UNITY_STANDALONE || UNITY_ANDROID)
-            if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
+                if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices
+                    .OSPlatform.OSX))
 #endif
-            {
-                String formatString = GetModuleFormatString();
-                for (int i = 0; i < modules.Length; ++i)
-                    modules[i] = String.Format(formatString, modules[i]);
+                {
+                    String formatString = GetModuleFormatString();
+                    for (int i = 0; i < modules.Length; ++i)
+                        modules[i] = String.Format(formatString, modules[i]);
 
-                libraryLoaded &= LoadUnmanagedModules(null, modules);
-            }
+                    libraryLoaded &= LoadUnmanagedModules(null, modules);
+                }
 #endif
+            
             return libraryLoaded;
         }
 
