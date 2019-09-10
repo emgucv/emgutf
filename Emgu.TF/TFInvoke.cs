@@ -268,7 +268,7 @@ namespace Emgu.TF
                             try
                             {
                                 Console.WriteLine(string.Format("Trying to load {0} ({1} bit).", module,
-                                    Marshal.SizeOf<IntPtr>() * 8));
+                                    IntPtr.Size * 8));
                                 loadLibraryMethodInfo.Invoke(null, new object[] {module});
                                 //Java.Lang.JavaSystem.LoadLibrary(module);
                                 Console.WriteLine(string.Format("Loaded {0}.", module));
