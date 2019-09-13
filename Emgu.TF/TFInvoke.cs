@@ -402,6 +402,5 @@ namespace Emgu.TF
             [MarshalAs(TfInvoke.StringMarshalType)]
             String operationName);
 
-
     }
 }
