@@ -16,7 +16,6 @@ namespace Emgu.TF.Util
     /// </summary>
     public static class Toolbox
     {
-
         /// <summary>
         /// Maps the specified executable module into the address space of the calling process.
         /// </summary>
@@ -25,9 +24,9 @@ namespace Emgu.TF.Util
         public static IntPtr LoadLibrary(String dllname)
         {
 #if UNITY_EDITOR_WIN
-          const int loadLibrarySearchDllLoadDir = 0x00000100;
-          const int loadLibrarySearchDefaultDirs = 0x00001000;
-          return LoadLibraryEx(dllname, IntPtr.Zero, loadLibrarySearchDllLoadDir | loadLibrarySearchDefaultDirs);
+            const int loadLibrarySearchDllLoadDir = 0x00000100;
+            const int loadLibrarySearchDefaultDirs = 0x00001000;
+            return LoadLibraryEx(dllname, IntPtr.Zero, loadLibrarySearchDllLoadDir | loadLibrarySearchDefaultDirs);
 #else
             if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
             {
@@ -69,9 +68,10 @@ namespace Emgu.TF.Util
 
         [DllImport("dl", EntryPoint = "dlopen")]
         private static extern IntPtr Dlopen(
-           [MarshalAs(UnmanagedType.LPStr)]
-         String dllname, int mode);
+            [MarshalAs(UnmanagedType.LPStr)]
+            String dllname, int mode);
 
+        /*
         /// <summary>
         /// Decrements the reference count of the loaded dynamic-link library (DLL). When the reference count reaches zero, the module is unmapped from the address space of the calling process and the handle is no longer valid
         /// </summary>
@@ -89,6 +89,18 @@ namespace Emgu.TF.Util
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool SetDllDirectory(String path);
+        */
 
+        public static System.Reflection.Assembly FindAssembly(String assembleName)
+        {
+            System.Reflection.Assembly[] asms = AppDomain.CurrentDomain.GetAssemblies();
+            foreach (System.Reflection.Assembly asm in asms)
+            {
+                if (asm.ManifestModule.Name.Equals(assembleName))
+                    return asm;
+            }
+
+            return null;
+        }
     }
 }

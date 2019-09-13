@@ -309,11 +309,6 @@ namespace Emgu.TF.Models
             int[] dim = image.Dim;
             return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 4);
 #else
-            //if (mean != 0.0)
-            //    throw new NotImplemenetedException("Not able to accept mean values on this platform");
-            //byte[] rawPixel = TensorToPixel(image, scale, mean, 3);
-            //int[] dim = image.Dim;
-            //return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 3);
             return EncodeJpeg(image, 1.0f, 0.0f);
 #endif
         }

@@ -14,23 +14,6 @@ using Emgu.Models;
 using Emgu.TF.Models;
 using Tensorflow;
 
-#if __ANDROID__
-using Android.App;
-using Android.Content;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Android.OS;
-using Android.Graphics;
-using Android.Preferences;
-#elif __UNIFIED__ && !__IOS__
-using AppKit;
-using CoreGraphics;
-#elif __IOS__
-using UIKit;
-using CoreGraphics;
-#endif
-
 namespace Emgu.TF.XamarinForms
 {
     public class InceptionPage : ModelButtonTextImagePage
@@ -129,7 +112,8 @@ namespace Emgu.TF.XamarinForms
                     String msg = String.Format("Object is {0} with {1}% probability. Recognized in {2} milliseconds.", result.Label, result.Probability * 100, sw.ElapsedMilliseconds);
                     SetMessage(msg);
 
-                    SetImage(image[0]);
+                    var jpeg = Emgu.Models.NativeImageIO.ImageFileToJpeg(image[0]);
+                    SetImage(jpeg.Raw, jpeg.Width, jpeg.Height);
                 }
 #if  !DEBUG
                 catch (Exception excpt)

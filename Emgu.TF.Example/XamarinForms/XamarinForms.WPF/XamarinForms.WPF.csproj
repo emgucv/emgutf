@@ -111,10 +111,10 @@
       <Version>4.0.1.5</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms">
-      <Version>4.2.0.709249</Version>
+      <Version>4.2.0.778463</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms.Platform.WPF">
-      <Version>4.2.0.709249</Version>
+      <Version>4.2.0.778463</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="..\..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" />

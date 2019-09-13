@@ -232,18 +232,6 @@ namespace Emgu.TF
 #endif
         }
 
-        private static System.Reflection.Assembly FindAssembly(String assembleName)
-        {
-            System.Reflection.Assembly[] asms = AppDomain.CurrentDomain.GetAssemblies();
-            foreach (System.Reflection.Assembly asm in asms)
-            {
-                if (asm.ManifestModule.Name.Equals(assembleName))
-                    return asm;
-            }
-
-            return null;
-        }
-
         /// <summary>
         /// Attempts to load tensorflow modules from the specific location
         /// </summary>
@@ -253,7 +241,7 @@ namespace Emgu.TF
         {
             bool libraryLoaded = true;
 
-            System.Reflection.Assembly monoAndroidAssembly = FindAssembly("Mono.Android.dll");
+            System.Reflection.Assembly monoAndroidAssembly = Emgu.TF.Util.Toolbox.FindAssembly("Mono.Android.dll");
             if (monoAndroidAssembly != null)
             {
                 //Running on Android

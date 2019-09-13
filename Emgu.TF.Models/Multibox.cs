@@ -17,16 +17,6 @@ using System.ComponentModel;
 using UnityEngine;
 #else
 using System.Drawing;
-#if __ANDROID__
-using Android.Graphics;
-using Color = System.Drawing.Color;
-#elif __UNIFIED__ && !__IOS__
-using AppKit;
-using CoreGraphics;
-#elif __IOS__
-using UIKit;
-using CoreGraphics;
-#endif
 #endif
 
 namespace Emgu.TF.Models
@@ -283,8 +273,6 @@ namespace Emgu.TF.Models
             }
             return goodResults.ToArray();
         }
-
-
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
         public static Rect[] ScaleLocation(float[] location, int imageWidth, int imageHeight, bool flipUpSideDown = false)

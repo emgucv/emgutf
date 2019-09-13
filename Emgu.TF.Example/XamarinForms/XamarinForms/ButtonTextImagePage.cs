@@ -2,21 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-#if !__MACOS__
-using Plugin.Media;
-#endif
 using Xamarin.Forms;
-#if __ANDROID__
-using Plugin.CurrentActivity;
-#endif
 
-#if __MACOS__
-using AppKit;
-using CoreGraphics;
-#endif
 
 namespace Emgu.TF.XamarinForms
 {
@@ -78,14 +69,16 @@ namespace Emgu.TF.XamarinForms
 
         public virtual async void LoadImages(String[] imageNames, String[] labels = null)
         {
-#if __ANDROID__ || __IOS__
-            await CrossMedia.Current.Initialize();
-#endif
+            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
+            {
+                //use default images
+                InvokeOnImagesLoaded(imageNames);
+                return;
+            }
 
-#if (__MACOS__) //Xamarin Mac
-            //use default images
-            InvokeOnImagesLoaded(imageNames);
-#else
+            if (!(System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX)
+            || System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows)))
+                await Plugin.Media.CrossMedia.Current.Initialize(); //Implementation only available for iOS, Android
 
             String[] mats = new String[imageNames.Length];
             for (int i = 0; i < mats.Length; i++)
@@ -104,9 +97,9 @@ namespace Emgu.TF.XamarinForms
                 else
                 {
                     haveCameraOption =
-                        (CrossMedia.Current.IsCameraAvailable && CrossMedia.Current.IsTakePhotoSupported);
+                        (Plugin.Media.CrossMedia.Current.IsCameraAvailable && Plugin.Media.CrossMedia.Current.IsTakePhotoSupported);
                     havePickImgOption =
-                        CrossMedia.Current.IsPickVideoSupported;
+                        Plugin.Media.CrossMedia.Current.IsPickVideoSupported;
                 }
 
                 String action;
@@ -128,11 +121,10 @@ namespace Emgu.TF.XamarinForms
                 if (action.Equals("Default"))
                 {
 #if __ANDROID__
-                    FileInfo fi = Emgu.TF.Util.AndroidFileAsset.WritePermanantFileAsset(CrossCurrentActivity.Current.Activity, imageNames[i], "tmp",
+                    FileInfo fi = Emgu.TF.Util.AndroidFileAsset.WritePermanantFileAsset(Plugin.CurrentActivity.CrossCurrentActivity.Current.Activity, imageNames[i], "tmp",
                         Emgu.TF.Util.AndroidFileAsset.OverwriteMethod.AlwaysOverwrite);
 
                     mats[i] = fi.FullName;
-
 #else
                     mats[i] = imageNames[i];
             
@@ -143,8 +135,8 @@ namespace Emgu.TF.XamarinForms
                 {
                     if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
                     {
-                        // our implementation of pick image
-#if !(__ANDROID__ || __IOS__ || __MACOS__)
+                        // our implementation of pick image for Windows
+                        /*
                         using (System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog())
                         {
                             dialog.Multiselect = false;
@@ -158,14 +150,64 @@ namespace Emgu.TF.XamarinForms
                             {
                                 return; 
                             }
+                        }*/
+                        System.Reflection.Assembly windowsFormsAssembly = Emgu.TF.Util.Toolbox.FindAssembly("System.Windows.Forms.dll");
+                        if (windowsFormsAssembly != null)
+                        {
+                            //Running on Windows
+                            Type openFileDialogType = windowsFormsAssembly.GetType("System.Windows.Forms.OpenFileDialog");
+                            Type dialogResultType = windowsFormsAssembly.GetType("System.Windows.Forms.DialogResult");
+                            if (openFileDialogType != null && dialogResultType != null)
+                            {
+                                object dialog = Activator.CreateInstance(openFileDialogType);
+                                openFileDialogType.InvokeMember(
+                                    "Multiselect",
+                                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.SetProperty,
+                                    Type.DefaultBinder,
+                                    dialog,
+                                    new object[] { (object) false });
+                                openFileDialogType.InvokeMember(
+                                    "Title", 
+                                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.SetProperty,
+                                    Type.DefaultBinder, 
+                                    dialog, 
+                                    new object[] { (object) "Select an Image File"});
+                                openFileDialogType.InvokeMember(
+                                    "Filter",
+                                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.SetProperty,
+                                    Type.DefaultBinder,
+                                    dialog,
+                                    new object[] { (object)"Image | *.jpg;*.jpeg;*.png;*.bmp;*.gif | All Files | *" });
+                                object dialogResult = openFileDialogType.InvokeMember(
+                                    "ShowDialog",
+                                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.InvokeMethod,
+                                    Type.DefaultBinder,
+                                    dialog,
+                                    null);
+                                String dialogResultStr = Enum.GetName(dialogResultType, dialogResult);
+                                if (dialogResultStr.Equals("OK"))
+                                {
+                                    //mats[i] = dialog.FileName;
+                                    String fileName = openFileDialogType.InvokeMember(
+                                        "FileName",
+                                        BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetProperty,
+                                        Type.DefaultBinder,
+                                        dialog,
+                                        null) as String;
+                                    mats[i] = fileName;
+                                }
+                                else
+                                {
+                                    return;
+                                }
+                            }
                         }
-#endif
 
                     }
                     else
                     {
-                        var photoResult = await CrossMedia.Current.PickPhotoAsync();
-                        if (photoResult == null) //cancelled
+                        var photoResult = await Plugin.Media.CrossMedia.Current.PickPhotoAsync();
+                        if (photoResult == null) //canceled
                             return;
                         mats[i] = photoResult.Path;
                     }
@@ -177,8 +219,8 @@ namespace Emgu.TF.XamarinForms
                         Directory = "Emgu",
                         Name = $"{DateTime.UtcNow}.jpg"
                     };
-                    var takePhotoResult = await CrossMedia.Current.TakePhotoAsync(mediaOptions);
-                    if (takePhotoResult == null) //cancelled
+                    var takePhotoResult = await Plugin.Media.CrossMedia.Current.TakePhotoAsync(mediaOptions);
+                    if (takePhotoResult == null) //canceled
                         return;
                     mats[i] = takePhotoResult.Path;
                 }
@@ -188,7 +230,6 @@ namespace Emgu.TF.XamarinForms
                     return;
             }
             InvokeOnImagesLoaded(mats);
-#endif
         }
 
         public void InvokeOnImagesLoaded(string[] imageFiles)
@@ -205,28 +246,6 @@ namespace Emgu.TF.XamarinForms
         }
 
         public event EventHandler<string[]> OnImagesLoaded;
-
-        public void SetImage(String fileName)
-        {
-            if (!File.Exists(fileName))
-            {
-                throw new Exception(String.Format("File '{0}' do not exist.", fileName));
-            }
-
-            Xamarin.Forms.Device.BeginInvokeOnMainThread(
-               () =>
-               {
-                   var imageSource = new FileImageSource();
-                   imageSource.File = fileName;
-                   this.DisplayImage.Source = imageSource;
-#if __MACOS__
-                   NSImage image = new NSImage(fileName);
-                   this.DisplayImage.WidthRequest = image.Size.Width;
-                   this.DisplayImage.HeightRequest = image.Size.Height;
-#endif
-                   this.DisplayImage.Focus();
-               });
-        }
 
         public void SetImage(byte[] image = null, int widthRequest = -1, int heightRequest = -1)
         {
@@ -246,20 +265,13 @@ namespace Emgu.TF.XamarinForms
                    if (heightRequest > 0)
                        this.DisplayImage.HeightRequest = heightRequest;
 
-#if __IOS__
-                    //Xamarin Form's Image class do not seems to re-render after Source is change
-                    //forcing focus seems to force a re-rendering
-                    this.DisplayImage.Focus();
-#endif
+                   //For iOS
+                   //Xamarin Form's Image class do not seems to re-render after Source is change
+                   //forcing focus seems to force a re-rendering
+                   this.DisplayImage.Focus();
                });
 
         }
-
-        /*
-        public Xamarin.Forms.Label GetLabel()
-        {
-            return this.MessageLabel;
-        }*/
 
         public void SetMessage(String message)
         {
@@ -275,16 +287,5 @@ namespace Emgu.TF.XamarinForms
                 }
             );
         }
-
-        /*
-        public Xamarin.Forms.Button GetButton()
-        {
-            return this.TopButton;
-        }
-
-        public Image GetImage()
-        {
-            return this.DisplayImage;
-        }*/
     }
 }

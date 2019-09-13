@@ -87,7 +87,7 @@ namespace Emgu.TF.XamarinForms
                     var jpeg = Emgu.Models.NativeImageIO.ImageFileToJpeg(image[0], annotations);
 
                     watch.Stop();
-                    SetImage(jpeg.Raw);
+                    SetImage(jpeg.Raw, jpeg.Width, jpeg.Height);
 #if __MACOS__
                     var displayImage = this.DisplayImage;
                     displayImage.WidthRequest = jpeg.Width;

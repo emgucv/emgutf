@@ -343,14 +343,12 @@ namespace Emgu.Models
 
             ReadImageToTensor<T>(image, dest, inputHeight, inputWidth, inputMean, scale, flipUpSideDown, swapBR);
 
-            //System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
 #elif __MACOS__
 
             NSImage image = new NSImage(fileName);
 
             ReadImageToTensor<T>(image, dest, inputHeight, inputWidth, inputMean, scale, flipUpSideDown, swapBR);
 
-            //System.Runtime.InteropServices.Marshal.Copy(floatValues, 0, dest, floatValues.Length);
 #elif UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             Texture2D texture = ReadTexture2DFromFile(fileName);
             ReadTensorFromTexture2D<T>(texture, dest, inputHeight, inputWidth, inputMean, scale, flipUpSideDown, false);
