@@ -858,36 +858,42 @@ namespace Emgu.Models
 		public static JpegData ImageFileToJpeg(String fileName, Annotation[] annotations = null)
         {
 #if __ANDROID__
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.InMutable = true;
-            Android.Graphics.Bitmap bmp = BitmapFactory.DecodeFile(fileName, options);
-
-            Android.Graphics.Paint p = new Android.Graphics.Paint();
-            
-            p.AntiAlias = true;
-            p.Color = Android.Graphics.Color.Red;
-            Canvas c = new Canvas(bmp);
-
-            p.TextSize = 20;
-            for (int i = 0; i < annotations.Length; i++)
+            using (BitmapFactory.Options options = new BitmapFactory.Options())
+            using (Android.Graphics.Bitmap bmp = BitmapFactory.DecodeFile(fileName, options))
             {
-                p.SetStyle(Paint.Style.Stroke);
-                float[] rects = ScaleLocation(annotations[i].Rectangle, bmp.Width, bmp.Height);
-                Android.Graphics.Rect r = new Rect((int)rects[0], (int) rects[1], (int) rects[2], (int) rects[3]);
-                c.DrawRect(r, p);
+                options.InMutable = true;
+                if (annotations != null)
+                {
+                    using (Android.Graphics.Paint p = new Android.Graphics.Paint())
+                    using (Canvas c = new Canvas(bmp))
+                    {
+                        p.AntiAlias = true;
+                        p.Color = Android.Graphics.Color.Red;
 
-                p.SetStyle(Paint.Style.Fill);
-                c.DrawText(annotations[i].Label, (int)rects[0], (int)rects[1], p);
-            }
+                        p.TextSize = 20;
+                        for (int i = 0; i < annotations.Length; i++)
+                        {
+                            p.SetStyle(Paint.Style.Stroke);
+                            float[] rects = ScaleLocation(annotations[i].Rectangle, bmp.Width, bmp.Height);
+                            Android.Graphics.Rect r = new Rect((int)rects[0], (int)rects[1], (int)rects[2],
+                                (int)rects[3]);
+                            c.DrawRect(r, p);
 
-            using (MemoryStream ms = new MemoryStream())
-            {
-                bmp.Compress(Bitmap.CompressFormat.Jpeg, 90, ms);
-                JpegData result = new JpegData();
-                result.Raw = ms.ToArray();
-                result.Width = bmp.Width;
-                result.Height = bmp.Height;
-                return result;
+                            p.SetStyle(Paint.Style.Fill);
+                            c.DrawText(annotations[i].Label, (int)rects[0], (int)rects[1], p);
+                        }
+                    }
+                }
+
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    bmp.Compress(Bitmap.CompressFormat.Jpeg, 90, ms);
+                    JpegData result = new JpegData();
+                    result.Raw = ms.ToArray();
+                    result.Width = bmp.Width;
+                    result.Height = bmp.Height;
+                    return result;
+                }
             }
 #elif __MACOS__
             NSImage img = NSImage.ImageNamed(fileName);
