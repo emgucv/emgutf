@@ -218,9 +218,7 @@ namespace Emgu.TF.Lite.Models
 
             return ConvertResults(scoreThreshold);
         }
-#endif
-
-#if __MACOS__
+#elif __MACOS__
         /// <summary>
         /// Perform Coco Ssd Mobilenet detection
         /// </summary>

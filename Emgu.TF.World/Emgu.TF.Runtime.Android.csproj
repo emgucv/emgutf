@@ -136,7 +136,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Android\*.cs" />
+    
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj">

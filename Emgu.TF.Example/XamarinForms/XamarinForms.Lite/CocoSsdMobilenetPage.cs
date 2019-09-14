@@ -100,17 +100,17 @@ namespace Emgu.TF.XamarinForms
             var result = _mobilenet.Recognize(_imageFiles[0], 0.5f);
             watch.Stop();
 
-            NativeImageIO.Annotation[] annotations = new NativeImageIO.Annotation[result.Length];
+            Annotation[] annotations = new Annotation[result.Length];
             for (int i = 0; i < result.Length; i++)
             {
-                NativeImageIO.Annotation annotation = new NativeImageIO.Annotation();
+                Annotation annotation = new Annotation();
                 annotation.Rectangle = result[i].Rectangle;
                 annotation.Label = String.Format("{0}:({1:0.00}%)", result[i].Label, result[i].Score * 100);
                 annotations[i] = annotation;
             }
 
 
-            NativeImageIO.JpegData jpeg = NativeImageIO.ImageFileToJpeg(_imageFiles[0], annotations);
+            JpegData jpeg = NativeImageIO.ImageFileToJpeg(_imageFiles[0], annotations);
             //NativeImageIO.JpegData jpeg = NativeImageIO.ImageFileToJpeg(_imageFiles[0]);
             //String names = String.Join(";", Array.ConvertAll(result, r => r.Label));
             SetImage(jpeg.Raw, jpeg.Width, jpeg.Height);
