@@ -4,27 +4,28 @@
 
 using System;
 using System.Collections.Generic;
-
 using System.Text;
 using System.IO;
-
+using System.Runtime.InteropServices;
 
 namespace Emgu.Models
 {
     /// <summary>
-    /// Image annotation
+    /// The Jpeg Data
     /// </summary>
-    public class Annotation
+    public class JpegData
     {
         /// <summary>
-        /// The coordinates of the rectangle, the values are in the range of [0, 1], each rectangle contains 4 values, corresponding to the top left corner (x0, y0) and bottom right corner (x1, y1)
+        /// The width of the image
         /// </summary>
-        public float[] Rectangle;
-
+        public int Width { get; set; }
         /// <summary>
-        /// The text to be drawn on the top left corner of the Rectangle
+        /// The height of the image
         /// </summary>
-        public String Label;
+        public int Height { get; set; }
+        /// <summary>
+        /// The raw jpeg data
+        /// </summary>
+        public byte[] Raw { get; set; }
     }
-
 }

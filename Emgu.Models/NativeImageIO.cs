@@ -767,27 +767,6 @@ namespace Emgu.Models
             return new float[] { left, top, right, bottom };
         }
 
-
-
-        /// <summary>
-        /// The Jpeg Data
-        /// </summary>
-        public class JpegData
-        {
-            /// <summary>
-            /// The width of the image
-            /// </summary>
-            public int Width { get; set; }
-            /// <summary>
-            /// The height of the image
-            /// </summary>
-            public int Height { get; set; }
-            /// <summary>
-            /// The raw jpeg data
-            /// </summary>
-            public byte[] Raw { get; set; }
-        }
-
 #if __IOS__
         public static UIImage DrawAnnotations(UIImage uiimage, Annotation[] annotations)
         {
