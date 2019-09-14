@@ -51,12 +51,12 @@ namespace Emgu.Models
         /// Read an UIImage, covert the data and save it to the native pointer
         /// </summary>
         /// <typeparam name="T">The type of the data to covert the image pixel values to. e.g. "float" or "byte"</typeparam>
-        /// <param name="image">The uiimage</param>
+        /// <param name="image">The input image</param>
         /// <param name="dest">The native pointer where the image pixels values will be saved to.</param>
         /// <param name="inputHeight">The height of the image, must match the height requirement for the tensor</param>
         /// <param name="inputWidth">The width of the image, must match the width requirement for the tensor</param>
-        /// <param name="inputMean">The mean value, it will be substracted from the input image pixel values</param>
-        /// <param name="scale">The scale, after mean is substracted, the scale will be used to multiply the pixel values</param>
+        /// <param name="inputMean">The mean value, it will be subtracted from the input image pixel values</param>
+        /// <param name="scale">The scale, after mean is subtracted, the scale will be used to multiply the pixel values</param>
         /// <param name="flipUpSideDown">If true, the image needs to be flipped up side down</param>
         /// <param name="swapBR">If true, will flip the Blue channel with the Red. e.g. If false, the tensor's color channel order will be RGB. If true, the tensor's color channle order will be BGR </param>
         public static void ReadImageToTensor<T>(
@@ -158,12 +158,12 @@ namespace Emgu.Models
         /// Read a NSImage, covert the data and save it to the native pointer
         /// </summary>
         /// <typeparam name="T">The type of the data to covert the image pixel values to. e.g. "float" or "byte"</typeparam>
-        /// <param name="image">The nsimage</param>
+        /// <param name="image">The input image</param>
         /// <param name="dest">The native pointer where the image pixels values will be saved to.</param>
         /// <param name="inputHeight">The height of the image, must match the height requirement for the tensor</param>
         /// <param name="inputWidth">The width of the image, must match the width requirement for the tensor</param>
-        /// <param name="inputMean">The mean value, it will be substracted from the input image pixel values</param>
-        /// <param name="scale">The scale, after mean is substracted, the scale will be used to multiply the pixel values</param>
+        /// <param name="inputMean">The mean value, it will be subtracted from the input image pixel values</param>
+        /// <param name="scale">The scale, after mean is subtracted, the scale will be used to multiply the pixel values</param>
         /// <param name="flipUpSideDown">If true, the image needs to be flipped up side down</param>
         /// <param name="swapBR">If true, will flip the Blue channel with the Red. e.g. If false, the tensor's color channel order will be RGB. If true, the tensor's color channle order will be BGR </param>
         public static void ReadImageToTensor<T>(
@@ -248,6 +248,52 @@ namespace Emgu.Models
                 resized.Dispose();
         }
 
+        public static void DrawAnnotations(NSImage img, Annotation[] annotations)
+        {
+            img.LockFocus();
+
+            NSColor redColor = NSColor.Red;
+            redColor.Set();
+
+            var context = NSGraphicsContext.CurrentContext;
+            if (context == null)
+                return;
+            var cgcontext = context.CGContext;
+
+            for (int i = 0; i < annotations.Length; i++)
+            {
+                float[] rects = ScaleLocation(annotations[i].Rectangle, (int)img.Size.Width, (int)img.Size.Height);
+                CGRect cgRect = new CGRect(
+                    rects[0],
+                    rects[1],
+                    rects[2] - rects[0],
+                    rects[3] - rects[1]);
+                NSFont font = NSFont.FromFontName("Arial", 20);
+                var fontDictionary = Foundation.NSDictionary.FromObjectsAndKeys(
+                    new Foundation.NSObject[] { font, NSColor.Red },
+                    new Foundation.NSObject[] { NSStringAttributeKey.Font, NSStringAttributeKey.ForegroundColor });
+                //CGSize size = text.StringSize(fontDictionary);
+                CGPoint p = new CGPoint(cgRect.Location.X, img.Size.Height - cgRect.Location.Y);
+                annotations[i].Label.DrawAtPoint(p, fontDictionary);
+            }
+
+            cgcontext.ScaleCTM(1, -1);
+            cgcontext.TranslateCTM(0, -img.Size.Height);
+            //context.IsFlipped = !context.IsFlipped;
+            for (int i = 0; i < annotations.Length; i++)
+            {
+                float[] rects = ScaleLocation(annotations[i].Rectangle, (int)img.Size.Width, (int)img.Size.Height);
+                CGRect cgRect = new CGRect(
+                    rects[0],
+                    rects[1],
+                    rects[2] - rects[0],
+                    rects[3] - rects[1]);
+                NSBezierPath.StrokeRect(cgRect);
+
+            }
+
+            img.UnlockFocus();
+        }
 #endif
 
         /// <summary>
@@ -258,8 +304,8 @@ namespace Emgu.Models
         /// <param name="dest">The native pointer where the image pixels values will be saved to.</param>
         /// <param name="inputHeight">The height of the image, must match the height requirement for the tensor</param>
         /// <param name="inputWidth">The width of the image, must match the width requirement for the tensor</param>
-        /// <param name="inputMean">The mean value, it will be substracted from the input image pixel values</param>
-        /// <param name="scale">The scale, after mean is substracted, the scale will be used to multiply the pixel values</param>
+        /// <param name="inputMean">The mean value, it will be subtracted from the input image pixel values</param>
+        /// <param name="scale">The scale, after mean is subtracted, the scale will be used to multiply the pixel values</param>
         /// <param name="flipUpSideDown">If true, the image needs to be flipped up side down</param>
         /// <param name="swapBR">If true, will flip the Blue channel with the Red. e.g. If false, the tensor's color channel order will be RGB. If true, the tensor's color channle order will be BGR </param>
         public static void ReadImageFileToTensor<T>(
@@ -736,55 +782,7 @@ namespace Emgu.Models
             return new float[] { left, top, right, bottom };
         }
 
-#if __MACOS__
 
-        public static void DrawAnnotations(NSImage img, Annotation[] annotations)
-        {
-            img.LockFocus();
-
-            NSColor redColor = NSColor.Red;
-            redColor.Set();
-
-            var context = NSGraphicsContext.CurrentContext;
-            if (context == null)
-                return;
-            var cgcontext = context.CGContext;
-
-            for (int i = 0; i < annotations.Length; i++)
-            {
-                float[] rects = ScaleLocation(annotations[i].Rectangle, (int)img.Size.Width, (int)img.Size.Height);
-                CGRect cgRect = new CGRect(
-                    rects[0],
-                    rects[1],
-                    rects[2] - rects[0],
-                    rects[3] - rects[1]);
-                NSFont font = NSFont.FromFontName("Arial", 20);
-                var fontDictionary = Foundation.NSDictionary.FromObjectsAndKeys(
-                    new Foundation.NSObject[] { font, NSColor.Red },
-                    new Foundation.NSObject[] { NSStringAttributeKey.Font, NSStringAttributeKey.ForegroundColor });
-                //CGSize size = text.StringSize(fontDictionary);
-                CGPoint p = new CGPoint(cgRect.Location.X, img.Size.Height - cgRect.Location.Y);
-                annotations[i].Label.DrawAtPoint(p, fontDictionary);
-            }
-
-            cgcontext.ScaleCTM(1, -1);
-            cgcontext.TranslateCTM(0, -img.Size.Height);
-            //context.IsFlipped = !context.IsFlipped;
-            for (int i = 0; i < annotations.Length; i++)
-            {
-                float[] rects = ScaleLocation(annotations[i].Rectangle, (int)img.Size.Width, (int)img.Size.Height);
-                CGRect cgRect = new CGRect(
-                    rects[0],
-                    rects[1],
-                    rects[2] - rects[0],
-                    rects[3] - rects[1]);
-                NSBezierPath.StrokeRect(cgRect);
-
-            }
-
-            img.UnlockFocus();
-        }
-#endif
 
         /// <summary>
         /// The Jpeg Data
@@ -859,40 +857,42 @@ namespace Emgu.Models
         {
 #if __ANDROID__
             using (BitmapFactory.Options options = new BitmapFactory.Options())
-            using (Android.Graphics.Bitmap bmp = BitmapFactory.DecodeFile(fileName, options))
             {
                 options.InMutable = true;
-                if (annotations != null)
+                using (Android.Graphics.Bitmap bmp = BitmapFactory.DecodeFile(fileName, options))
                 {
-                    using (Android.Graphics.Paint p = new Android.Graphics.Paint())
-                    using (Canvas c = new Canvas(bmp))
+                    if (annotations != null)
                     {
-                        p.AntiAlias = true;
-                        p.Color = Android.Graphics.Color.Red;
-
-                        p.TextSize = 20;
-                        for (int i = 0; i < annotations.Length; i++)
+                        using (Android.Graphics.Paint p = new Android.Graphics.Paint())
+                        using (Canvas c = new Canvas(bmp))
                         {
-                            p.SetStyle(Paint.Style.Stroke);
-                            float[] rects = ScaleLocation(annotations[i].Rectangle, bmp.Width, bmp.Height);
-                            Android.Graphics.Rect r = new Rect((int)rects[0], (int)rects[1], (int)rects[2],
-                                (int)rects[3]);
-                            c.DrawRect(r, p);
+                            p.AntiAlias = true;
+                            p.Color = Android.Graphics.Color.Red;
 
-                            p.SetStyle(Paint.Style.Fill);
-                            c.DrawText(annotations[i].Label, (int)rects[0], (int)rects[1], p);
+                            p.TextSize = 20;
+                            for (int i = 0; i < annotations.Length; i++)
+                            {
+                                p.SetStyle(Paint.Style.Stroke);
+                                float[] rects = ScaleLocation(annotations[i].Rectangle, bmp.Width, bmp.Height);
+                                Android.Graphics.Rect r = new Rect((int) rects[0], (int) rects[1], (int) rects[2],
+                                    (int) rects[3]);
+                                c.DrawRect(r, p);
+
+                                p.SetStyle(Paint.Style.Fill);
+                                c.DrawText(annotations[i].Label, (int) rects[0], (int) rects[1], p);
+                            }
                         }
                     }
-                }
 
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    bmp.Compress(Bitmap.CompressFormat.Jpeg, 90, ms);
-                    JpegData result = new JpegData();
-                    result.Raw = ms.ToArray();
-                    result.Width = bmp.Width;
-                    result.Height = bmp.Height;
-                    return result;
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        bmp.Compress(Bitmap.CompressFormat.Jpeg, 90, ms);
+                        JpegData result = new JpegData();
+                        result.Raw = ms.ToArray();
+                        result.Width = bmp.Width;
+                        result.Height = bmp.Height;
+                        return result;
+                    }
                 }
             }
 #elif __MACOS__
@@ -927,42 +927,42 @@ namespace Emgu.Models
             return result;
 #else
 
-                Bitmap img = new Bitmap(fileName);
+            Bitmap img = new Bitmap(fileName);
 
-                if (annotations != null)
+            if (annotations != null)
+            {
+                using (Graphics g = Graphics.FromImage(img))
                 {
-                    using (Graphics g = Graphics.FromImage(img))
+                    for (int i = 0; i < annotations.Length; i++)
                     {
-                        for (int i = 0; i < annotations.Length; i++)
+                        if (annotations[i].Rectangle != null)
                         {
-                            if (annotations[i].Rectangle != null)
-                            {
-                                float[] rects = ScaleLocation(annotations[i].Rectangle, img.Width, img.Height);
-                                PointF origin = new PointF(rects[0], rects[1]);
-                                RectangleF rect = new RectangleF(origin, new SizeF(rects[2] - rects[0], rects[3] - rects[1]));
-                                Pen redPen = new Pen(Color.Red, 3);
-                                g.DrawRectangle(redPen, Rectangle.Round(rect));
+                            float[] rects = ScaleLocation(annotations[i].Rectangle, img.Width, img.Height);
+                            PointF origin = new PointF(rects[0], rects[1]);
+                            RectangleF rect = new RectangleF(origin, new SizeF(rects[2] - rects[0], rects[3] - rects[1]));
+                            Pen redPen = new Pen(Color.Red, 3);
+                            g.DrawRectangle(redPen, Rectangle.Round(rect));
 
-                                String label = annotations[i].Label;
-                                if (label != null)
-                                {
-                                    g.DrawString(label, new Font(FontFamily.GenericSansSerif, 20f), Brushes.Red, origin);
-                                }
+                            String label = annotations[i].Label;
+                            if (label != null)
+                            {
+                                g.DrawString(label, new Font(FontFamily.GenericSansSerif, 20f), Brushes.Red, origin);
                             }
                         }
-                        g.Save();
                     }
+                    g.Save();
                 }
+            }
 
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                    JpegData result = new JpegData();
-                    result.Raw = ms.ToArray();
-                    result.Width = img.Size.Width;
-                    result.Height = img.Size.Height;
-                    return result;
-                }
+            using (MemoryStream ms = new MemoryStream())
+            {
+                img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                JpegData result = new JpegData();
+                result.Raw = ms.ToArray();
+                result.Width = img.Size.Width;
+                result.Height = img.Size.Height;
+                return result;
+            }
 
 #endif
 

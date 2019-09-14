@@ -66,11 +66,6 @@ namespace Emgu.TF.Models
                 throw new NotImplementedException("Only [1, height, width, 3] tensor input type is supported.");
             }
 
-            //if (imageTensorF.Type != DataType.Float)
-            //{
-            //    throw new NotImplementedException("Only floating point tensor input is supported.");
-            //}
-
             using (StatusChecker checker = new StatusChecker(status))
             {
                 var graph = new Graph();
@@ -88,7 +83,7 @@ namespace Emgu.TF.Models
                 //multiply with scale
                 Tensor scaleTensor = new Tensor(scale);
                 Operation scaleOp = graph.Const(scaleTensor, scaleTensor.Type, opName: "scale");
-                Operation scaled = graph.Mul(input, scaleOp);
+                Operation scaled = graph.Mul(floatCaster, scaleOp);
 
                 //Add mean value
                 Tensor meanTensor = new Tensor(mean);
@@ -312,7 +307,6 @@ namespace Emgu.TF.Models
             return EncodeJpeg(image, 1.0f, 0.0f);
 #endif
         }
-
 
         public static Tensor ReadTensorFromImageFile<T>(
             String fileName, 
