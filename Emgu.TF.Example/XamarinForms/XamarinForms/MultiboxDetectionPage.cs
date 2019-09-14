@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using Emgu.TF;
 using Emgu.TF.Models;
+using Emgu.Models;
 using Tensorflow;
 
 #if __ANDROID__
@@ -82,7 +83,7 @@ namespace Emgu.TF.XamarinForms
                     Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
                     MultiboxGraph.Result[] detectResult = _multiboxGraph.Detect(imageTensor);
                     watch.Stop();
-                    Emgu.Models.NativeImageIO.Annotation[] annotations = MultiboxGraph.FilterResults(detectResult, 0.1f);
+                    Emgu.Models.Annotation[] annotations = MultiboxGraph.FilterResults(detectResult, 0.1f);
 
                     var jpeg = Emgu.Models.NativeImageIO.ImageFileToJpeg(image[0], annotations);
 
