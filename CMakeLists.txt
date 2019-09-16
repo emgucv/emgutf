@@ -329,7 +329,7 @@ IF(HAVE_ANDROID_X86_64_LITE)
 ENDIF()
 
 
-CHECK_BINARY_EXIST("bin" "Emgu.TF.World*" HAVE_PREBUILD_EMGU_TF_WORLD OFF)
+CHECK_BINARY_EXIST("bin" "Emgu.TF.Runtime.*" HAVE_PREBUILD_EMGU_TF_WORLD OFF)
 
 #IF("${ANDROID_LABEL}" STREQUAL "-arm64-v8a-armeabi-armeabi-v7a-x86-x86_64")
 IF("${ANDROID_LABEL}" STREQUAL "-arm64-v8a-armeabi-v7a-x86-x86_64")
@@ -483,11 +483,11 @@ IF(HAVE_WINDESKTOP_X64_CUDA)
 ENDIF()
 
 IF(HAVE_ANDROID)
-	SET(EMGUTF_ANDROID_NUGET_ID "${EMGUTF_NUGET_ID}-ANDROID")
-	SET(EMGUTF_ANDROID_NUGET_TITLE "${EMGUTF_NUGET_TITLE} for Android")	
+	SET(EMGUTF_ANDROID_NUGET_ID "runtime.android.${EMGUTF_NUGET_ID}")
+	SET(EMGUTF_ANDROID_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Android")	
 	SET(EMGUTF_ANDROID_NUGET_FILE_LIST " 
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.World.Android.dll\" target=\"lib\\MonoAndroid50\" />
-	<file src=\"..\\..\\..\\lib\\Emgu.TF.World.Android.XML\" target=\"lib\\MonoAndroid50\" />")
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Runtime.Android.dll\" target=\"lib\\MonoAndroid50\" />
+	<file src=\"..\\..\\..\\lib\\Emgu.TF.Runtime.Android.XML\" target=\"lib\\MonoAndroid50\" />")
 ENDIF()
 
 IF(HAVE_WINDESKTOP_LITE)

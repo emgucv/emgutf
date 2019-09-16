@@ -54,16 +54,16 @@ IF(HAVE_OSX)
     DESTINATION .
     COMPONENT emgutf_source
     FILES_MATCHING 
-    PATTERN "Emgu.TF.World.Unified.csproj"
+    PATTERN "Emgu.TF.Runtime.Unified.csproj"
     PATTERN ".svn" EXCLUDE
     PATTERN "obj" EXCLUDE
     PATTERN "CMakeFiles" EXCLUDE
     PATTERN "${PROJECT_NAME}.dir" EXCLUDE
     )
   IF(APPLE)
-    PROJECT(Emgu.TF.World.Mac)
+    PROJECT(Emgu.TF.Runtime.Unified)
     #MESSAGE(STATUS "BUILD EMGU.TF.World.Mac project")
-    BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.World.Unified.csproj" "" ALL)
+    BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}.csproj" "" ALL)
     INSTALL(
       FILES 
       ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.xml
@@ -74,14 +74,14 @@ IF(HAVE_OSX)
 ENDIF()
 
 IF(HAVE_ANDROID)
-  PROJECT(Emgu.TF.World.Android)
+  PROJECT(Emgu.TF.Runtime.Android)
   INSTALL(
     DIRECTORY
     ${CMAKE_CURRENT_SOURCE_DIR}
     DESTINATION .
     COMPONENT emgutf_source
     FILES_MATCHING 
-    PATTERN "Emgu.TF.World.Android.csproj"
+    PATTERN "${PROJECT_NAME}.csproj"
     PATTERN ".svn" EXCLUDE
     PATTERN "obj" EXCLUDE
     PATTERN "CMakeFiles" EXCLUDE
