@@ -22,41 +22,43 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\lib\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
+	<OutputPath>..\lib\Runtime.Android.$(PlatformTarget)\</OutputPath>
+    <DocumentationFile>..\lib\Runtime.Android.$(PlatformTarget)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\lib\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\lib\Emgu.TF.Runtime.Android.xml</DocumentationFile>
     <PlatformTarget>AnyCPU</PlatformTarget>
+	<OutputPath>..\lib\Runtime.Android.$(PlatformTarget)\</OutputPath>
+	<DocumentationFile>..\lib\Runtime.Android\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\lib\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
+	<OutputPath>..\lib\Runtime.Android.$(PlatformTarget)\</OutputPath>
+	<DocumentationFile>..\lib\Runtime.Android.x86\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\lib\android\x86\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\lib\android\x86\Emgu.TF.Runtime.Android.xml</DocumentationFile>
     <PlatformTarget>x86</PlatformTarget>
+	<OutputPath>..\lib\Runtime.Android.$(PlatformTarget)\</OutputPath>
+	<DocumentationFile>..\lib\Runtime.Android.x86\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -136,7 +138,6 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj">
@@ -161,5 +162,10 @@
     <Error Text="'$(EmguTFErrorMessage)'" Condition="'$(EmguTFErrorMessage)'!=''" />
     <Message Text="Emgu TF Compiling with $(EmguTFDeployMessage)binary" Condition="'$(EmguTFDeployMessage)'!=''" Importance="High" />
     <Message Text="No native binary is deployed by the Emgu.TF shared project." Condition="'$(EmguTFDeployMessage)'==''" Importance="High" />
+  </Target>
+  <Target Name="AfterBuild">
+    <Message Text="Copying $(OutputPath)$(AssemblyName).dll, $(OutputPath)$(AssemblyName).xml to ..\libs" Importance="high" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="..\libs" ContinueOnError="true" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).xml" DestinationFolder="..\libs" ContinueOnError="true" />
   </Target>
 </Project>

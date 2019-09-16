@@ -39,6 +39,7 @@
     <EnableLLVM>false</EnableLLVM>
     <BundleAssemblies>false</BundleAssemblies>
     <AndroidTlsProvider>btls</AndroidTlsProvider>
+    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -389,6 +390,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Emgu.TF.Models\Emgu.TF.Models.Android\Emgu.TF.Models.Android.csproj">
+      <Project>{65e850a1-d9b6-4999-9bb6-bbf586ce2b0b}</Project>
+      <Name>Emgu.TF.Models.Android</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Netstandard\Emgu.TF.Protobuf.Netstandard.csproj">
       <Project>{f6f7c7bc-1ea0-4623-966c-bcd3fc7b8d88}</Project>
       <Name>Emgu.TF.Protobuf.Netstandard</Name>
@@ -403,8 +408,6 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\XamarinForms\XamarinForms.projitems" Label="Shared" Condition="Exists('..\XamarinForms\XamarinForms.projitems')" />
-  <Import Project="..\..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems" Label="Shared" />
-  <Import Project="..\..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
      Other similar extension points exist, see Microsoft.Common.targets.

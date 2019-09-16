@@ -487,7 +487,8 @@ IF(HAVE_ANDROID)
 	SET(EMGUTF_ANDROID_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Android")	
 	SET(EMGUTF_ANDROID_NUGET_FILE_LIST " 
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Runtime.Android.dll\" target=\"lib\\MonoAndroid50\" />
-	<file src=\"..\\..\\..\\lib\\Emgu.TF.Runtime.Android.XML\" target=\"lib\\MonoAndroid50\" />")
+	<file src=\"..\\..\\..\\lib\\Emgu.TF.Runtime.Android.XML\" target=\"lib\\MonoAndroid50\" />
+	<file src=\"..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
 ENDIF()
 
 IF(HAVE_WINDESKTOP_LITE)
