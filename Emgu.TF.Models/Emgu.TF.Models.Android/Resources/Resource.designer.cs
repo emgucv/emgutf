@@ -9,9 +9,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: global::Android.Runtime.ResourceDesignerAttribute("Emgu.TF.Models.Android.Resource", IsApplication=false)]
+[assembly: global::Android.Runtime.ResourceDesignerAttribute("Emgu.TF.Models.Resource", IsApplication=false)]
 
-namespace Emgu.TF.Models.Android
+namespace Emgu.TF.Models
 {
 	
 	

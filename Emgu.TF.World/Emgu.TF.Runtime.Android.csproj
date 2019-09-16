@@ -26,8 +26,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-	<OutputPath>..\lib\Runtime.Android.$(PlatformTarget)\</OutputPath>
-    <DocumentationFile>..\lib\Runtime.Android.$(PlatformTarget)\$(AssemblyName).xml</DocumentationFile>
+	<OutputPath>..\lib\Build\Runtime.Android.$(PlatformTarget)\</OutputPath>
+    <DocumentationFile>..\lib\Build\Runtime.Android.$(PlatformTarget)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,8 +36,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-	<OutputPath>..\lib\Runtime.Android.$(PlatformTarget)\</OutputPath>
-	<DocumentationFile>..\lib\Runtime.Android\$(AssemblyName).xml</DocumentationFile>
+	<OutputPath>..\lib\Build\Runtime.Android.$(PlatformTarget)\</OutputPath>
+	<DocumentationFile>..\lib\Build\Runtime.Android\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,8 +47,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
-	<OutputPath>..\lib\Runtime.Android.$(PlatformTarget)\</OutputPath>
-	<DocumentationFile>..\lib\Runtime.Android.x86\$(AssemblyName).xml</DocumentationFile>
+	<OutputPath>..\lib\Build\Runtime.Android.$(PlatformTarget)\</OutputPath>
+	<DocumentationFile>..\lib\Build\Runtime.Android.x86\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
@@ -57,8 +57,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
-	<OutputPath>..\lib\Runtime.Android.$(PlatformTarget)\</OutputPath>
-	<DocumentationFile>..\lib\Runtime.Android.x86\$(AssemblyName).xml</DocumentationFile>
+	<OutputPath>..\lib\Build\Runtime.Android.$(PlatformTarget)\</OutputPath>
+	<DocumentationFile>..\lib\Build\Runtime.Android.x86\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -164,8 +164,8 @@
     <Message Text="No native binary is deployed by the Emgu.TF shared project." Condition="'$(EmguTFDeployMessage)'==''" Importance="High" />
   </Target>
   <Target Name="AfterBuild">
-    <Message Text="Copying $(OutputPath)$(AssemblyName).dll, $(OutputPath)$(AssemblyName).xml to ..\libs" Importance="high" />
-    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="..\libs" ContinueOnError="true" />
-    <Copy SourceFiles="$(OutputPath)$(AssemblyName).xml" DestinationFolder="..\libs" ContinueOnError="true" />
+    <Message Text="Copying $(OutputPath)$(AssemblyName).dll, $(OutputPath)$(AssemblyName).xml to ..\lib" Importance="high" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="..\lib" ContinueOnError="true" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).xml" DestinationFolder="..\lib" ContinueOnError="true" />
   </Target>
 </Project>

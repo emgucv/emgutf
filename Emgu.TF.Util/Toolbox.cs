@@ -91,6 +91,11 @@ namespace Emgu.TF.Util
         public static extern bool SetDllDirectory(String path);
         */
 
+        /// <summary>
+        /// Find the loaded assembly with the specific assembly name
+        /// </summary>
+        /// <param name="assembleName"></param>
+        /// <returns></returns>
         public static System.Reflection.Assembly FindAssembly(String assembleName)
         {
             System.Reflection.Assembly[] asms = AppDomain.CurrentDomain.GetAssemblies();
