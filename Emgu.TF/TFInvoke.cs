@@ -86,7 +86,6 @@ namespace Emgu.TF
                         loadDirectory = debuggerVisualzerPath;
                     else
                         loadDirectory = String.Empty;
-
                 }
                 else
                 {
@@ -96,6 +95,10 @@ namespace Emgu.TF
                 if (!String.IsNullOrEmpty(subfolder))
                     loadDirectory = Path.Combine(loadDirectory, subfolder);
 
+                System.Reflection.Assembly monoAndroidAssembly = Emgu.TF.Util.Toolbox.FindAssembly("Mono.Android.dll");
+                if (monoAndroidAssembly == null)
+                {
+                    //Not running on Android
 #if (UNITY_STANDALONE_WIN && !UNITY_EDITOR_WIN)
 				FileInfo file = new FileInfo(asm.Location);
 				DirectoryInfo directory = file.Directory;
@@ -111,23 +114,23 @@ namespace Emgu.TF
                       return false;
                    }
                 }
-#elif __ANDROID__ || UNITY_ANDROID
+#elif UNITY_ANDROID
 #else
-                if (!Directory.Exists(loadDirectory))
-                {
-                    //try to find an alternative loadDirectory path
-                    //The following code should handle finding the asp.NET BIN folder 
-                    String altLoadDirectory = Path.GetDirectoryName(asm.CodeBase);
-                    if (!String.IsNullOrEmpty(altLoadDirectory) && altLoadDirectory.StartsWith(@"file:\"))
-                        altLoadDirectory = altLoadDirectory.Substring(6);
-
-                    if (!String.IsNullOrEmpty(subfolder))
-                        altLoadDirectory = Path.Combine(altLoadDirectory, subfolder);
-
-                    if (!Directory.Exists(altLoadDirectory))
+                    if (!Directory.Exists(loadDirectory))
                     {
-                        FileInfo file = new FileInfo(asm.Location);
-                        DirectoryInfo directory = file.Directory;
+                        //try to find an alternative loadDirectory path
+                        //The following code should handle finding the asp.NET BIN folder 
+                        String altLoadDirectory = Path.GetDirectoryName(asm.CodeBase);
+                        if (!String.IsNullOrEmpty(altLoadDirectory) && altLoadDirectory.StartsWith(@"file:\"))
+                            altLoadDirectory = altLoadDirectory.Substring(6);
+
+                        if (!String.IsNullOrEmpty(subfolder))
+                            altLoadDirectory = Path.Combine(altLoadDirectory, subfolder);
+
+                        if (!Directory.Exists(altLoadDirectory))
+                        {
+                            FileInfo file = new FileInfo(asm.Location);
+                            DirectoryInfo directory = file.Directory;
 #if UNITY_EDITOR_WIN
                     if (directory.Parent != null && directory.Parent.Parent != null)
                       {
@@ -148,32 +151,33 @@ namespace Emgu.TF
                       }
                       else
 #elif (UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX)
-                     if (directory.Parent != null && directory.Parent.Parent != null)
-                      {
-                         String unityAltFolder =
-                            Path.Combine(Path.Combine(Path.Combine(
-                               Path.Combine(Path.Combine(directory.Parent.Parent.FullName, "Assets"), "Plugins"),
-                               "emgucv.bundle"), "Contents"), "MacOS");
+                         if (directory.Parent != null && directory.Parent.Parent != null)
+                          {
+                             String unityAltFolder =
+                                Path.Combine(Path.Combine(Path.Combine(
+                                   Path.Combine(Path.Combine(directory.Parent.Parent.FullName, "Assets"), "Plugins"),
+                                   "emgucv.bundle"), "Contents"), "MacOS");
                          
-                         if (Directory.Exists(unityAltFolder))
-                         {
-                            loadDirectory = unityAltFolder;
-                         }
-                         else
-                         {
-                            return false;
-                         }
+                             if (Directory.Exists(unityAltFolder))
+                             {
+                                loadDirectory = unityAltFolder;
+                             }
+                             else
+                             {
+                                return false;
+                             }
                          
-                      }
-                      else       
+                          }
+                          else       
 #endif
-                        {
-                            Debug.WriteLine("No suitable directory found to load unmanaged modules");
-                            return false;
+                            {
+                                Debug.WriteLine("No suitable directory found to load unmanaged modules");
+                                return false;
+                            }
                         }
+                        else
+                            loadDirectory = altLoadDirectory;
                     }
-                    else
-                        loadDirectory = altLoadDirectory;
                 }
 #endif
             }
@@ -182,12 +186,10 @@ namespace Emgu.TF
             if (!String.IsNullOrEmpty(loadDirectory) && Directory.Exists(loadDirectory))
                 Environment.CurrentDirectory = loadDirectory;
 
-
             System.Diagnostics.Debug.WriteLine(String.Format("Loading tensorflow binary from {0}", loadDirectory));
+
             bool success = true;
-
             string prefix = string.Empty;
-
             foreach (String module in unmanagedModules)
             {
                 string mName = module;
@@ -257,7 +259,7 @@ namespace Emgu.TF
                             {
                                 Console.WriteLine(string.Format("Trying to load {0} ({1} bit).", module,
                                     IntPtr.Size * 8));
-                                loadLibraryMethodInfo.Invoke(null, new object[] {module});
+                                loadLibraryMethodInfo.Invoke(null, new object[] { module });
                                 //Java.Lang.JavaSystem.LoadLibrary(module);
                                 Console.WriteLine(string.Format("Loaded {0}.", module));
                             }
@@ -292,18 +294,17 @@ namespace Emgu.TF
 #elif __IOS__ || UNITY_IOS || NETFX_CORE
 #else
 #if !(UNITY_EDITOR || UNITY_STANDALONE || UNITY_ANDROID)
-                if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices
-                    .OSPlatform.OSX))
+            if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices
+                .OSPlatform.OSX))
 #endif
-                {
-                    String formatString = GetModuleFormatString();
-                    for (int i = 0; i < modules.Length; ++i)
-                        modules[i] = String.Format(formatString, modules[i]);
+            {
+                String formatString = GetModuleFormatString();
+                for (int i = 0; i < modules.Length; ++i)
+                    modules[i] = String.Format(formatString, modules[i]);
 
-                    libraryLoaded &= LoadUnmanagedModules(null, modules);
-                }
+                libraryLoaded &= LoadUnmanagedModules(null, modules);
+            }
 #endif
-            
             return libraryLoaded;
         }
 
@@ -331,7 +332,7 @@ namespace Emgu.TF
             }
         }
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention )]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         private static extern IntPtr tfeGetVersion();
 
         /// <summary>
@@ -373,7 +374,7 @@ namespace Emgu.TF
             get { return tfeIsGoogleCudaEnabled(); }
         }
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
-        [return:MarshalAs(TfInvoke.BoolMarshalType)]
+        [return: MarshalAs(TfInvoke.BoolMarshalType)]
         private static extern bool tfeIsGoogleCudaEnabled();
 
         /// <summary>

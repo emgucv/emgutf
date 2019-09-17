@@ -71,6 +71,5 @@ namespace Emgu.TF.Lite
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
         internal static extern void tfeDynamicBufferWriteToTensor(IntPtr buffer, IntPtr tensor, IntPtr newShape);
 
-
     }
 }

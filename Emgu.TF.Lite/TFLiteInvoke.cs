@@ -83,63 +83,7 @@ namespace Emgu.TF.Lite
         /// <remarks>If <paramref name="loadDirectory"/> is null, the default location on windows is the dll's path appended by either "x64" or "x86", depends on the applications current mode.</remarks>
         public static bool LoadUnmanagedModules(String loadDirectory, params String[] unmanagedModules)
         {
-#if NETFX_CORE
-         if (loadDirectory != null)
-         {
-            throw new NotImplementedException("Loading modules from a specific directory is not implemented in Windows Store App");
-         }
 
-         String subfolder = String.Empty;
-         if (Emgu.TF.Util.Platform.OperationSystem == Emgu.TF.Util.TypeEnum.OS.Windows) //|| Platform.OperationSystem == Emgu.Util.TypeEnum.OS.WindowsPhone)
-         {
-            if (IntPtr.Size == 8)
-            {  //64bit process
-#if UNITY_METRO
-               subfolder = "x86_64";
-#else
-               subfolder = String.Empty;
-#endif
-            }
-            else
-            {
-               subfolder = String.Empty;
-            }
-         }
-
-         Windows.Storage.StorageFolder installFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
-         
-#if UNITY_METRO
-         loadDirectory = Path.Combine(
-            Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName( installFolder.Path))))
-            , "Plugins", "Metro", subfolder);
-#else
-         loadDirectory = Path.Combine(installFolder.Path, subfolder);
-#endif
-
-         var t = System.Threading.Tasks.Task.Run(async () =>
-         {
-            List<string> files = new List<string>();
-            Windows.Storage.StorageFolder loadFolder = installFolder;
-            try
-            {
-               
-               if (!String.IsNullOrEmpty(subfolder))
-                  loadFolder = await installFolder.GetFolderAsync(subfolder);
-
-               foreach (var file in await loadFolder.GetFilesAsync())
-                  files.Add(file.Name);
-            }
-            catch (Exception e)
-            {
-               System.Diagnostics.Debug.WriteLine(String.Format("Unable to retrieve files in folder '{0}':{1}", loadFolder.Path, e.StackTrace));
-            }
-
-            return files;
-         });
-         t.Wait();
-
-         List<String> loadableFiles = t.Result;
-#else
             if (loadDirectory == null)
             {
                 String subfolder = String.Empty;
@@ -157,12 +101,6 @@ namespace Emgu.TF.Lite
                     }
                 }
 #endif
-
-                /*
-                else if (Platform.OperationSystem == Emgu.TF.Util.TypeEnum.OS.MacOSX)
-                {
-                   subfolder = "..";
-                }*/
 
                 System.Reflection.Assembly asm = typeof(TfLiteInvoke).Assembly; //System.Reflection.Assembly.GetExecutingAssembly();
                 if ((String.IsNullOrEmpty(asm.Location) || !System.IO.File.Exists(asm.Location)))
@@ -184,139 +122,110 @@ namespace Emgu.TF.Lite
                             loadDirectory = debuggerVisualzerPath;
                         else
                             loadDirectory = String.Empty;
-                        /*
-                                       loadDirectory = Path.GetDirectoryName(new UriBuilder(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).Path);
-    
-                                       DirectoryInfo dir = new DirectoryInfo(loadDirectory);
-                                       string subdir = String.Join(";", Array.ConvertAll(dir.GetDirectories(), d => d.ToString()));
-    
-                                       throw new Exception(String.Format(
-                                          "The Emgu.CV.dll assembly path (typeof (CvInvoke).Assembly.Location) '{0}' is invalid." +
-                                          Environment.NewLine
-                                          + " Other possible path (System.Reflection.Assembly.GetExecutingAssembly().Location): '{1}';" +
-                                          Environment.NewLine
-                                          + " Other possible path (Path.GetDirectoryName(new UriBuilder(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).Path): '{2}';" +
-                                          Environment.NewLine
-                                          + " Other possible path (System.Reflection.Assembly.GetExecutingAssembly().CodeBase): '{3};'" +
-                                          Environment.NewLine
-                                          + " Other possible path (typeof(CvInvoke).Assembly.CodeBase): '{4}'" +
-                                          Environment.NewLine
-                                          + " Other possible path (AppDomain.CurrentDomain.BaseDirectory): '{5}'" +
-                                          Environment.NewLine
-                                          + " subfolder name: '{6}'",
-                                          asm.Location,
-                                          Path.GetDirectoryName(new UriBuilder(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).Path),
-                                          loadDirectory + ": subdir '" + subdir +"'",
-                                          System.Reflection.Assembly.GetExecutingAssembly().CodeBase,
-                                          typeof(CvInvoke).Assembly.Location,
-                                          AppDomain.CurrentDomain.BaseDirectory,
-                                          subfolder
-                                          ));
-                         */
+                        
                     }
                 }
                 else
                 {
                     loadDirectory = Path.GetDirectoryName(asm.Location);
                 }
-                /*
-                FileInfo file = new FileInfo(asm.Location);
-                //FileInfo file = new FileInfo(asm.CodeBase);
-                DirectoryInfo directory = file.Directory;
-                loadDirectory = directory.FullName;
-                */
 
                 if (!String.IsNullOrEmpty(subfolder))
                     loadDirectory = Path.Combine(loadDirectory, subfolder);
 
-#if (UNITY_STANDALONE_WIN && !UNITY_EDITOR_WIN)
-				FileInfo file = new FileInfo(asm.Location);
-				DirectoryInfo directory = file.Directory;
-            if (directory.Parent != null)
-            {
-               String unityAltFolder = Path.Combine(directory.Parent.FullName, "Plugins");
-              
-               if (Directory.Exists(unityAltFolder))
-                  loadDirectory = unityAltFolder;
-               else
-               {
-                  Debug.WriteLine("No suitable directory found to load unmanaged modules");
-                  return false;
-               }
-            }
-#elif __ANDROID__ || UNITY_ANDROID
-#else
-                if (!Directory.Exists(loadDirectory))
+
+                System.Reflection.Assembly monoAndroidAssembly = Emgu.TF.Util.Toolbox.FindAssembly("Mono.Android.dll");
+                if (monoAndroidAssembly == null)
                 {
-                    //try to find an alternative loadDirectory path
-                    //The following code should handle finding the asp.NET BIN folder 
-                    String altLoadDirectory = Path.GetDirectoryName(asm.CodeBase);
-                    if (!String.IsNullOrEmpty(altLoadDirectory) && altLoadDirectory.StartsWith(@"file:\"))
-                        altLoadDirectory = altLoadDirectory.Substring(6);
-
-                    if (!String.IsNullOrEmpty(subfolder))
-                        altLoadDirectory = Path.Combine(altLoadDirectory, subfolder);
-
-                    if (!Directory.Exists(altLoadDirectory))
+                    //Not running on Android
+#if (UNITY_STANDALONE_WIN && !UNITY_EDITOR_WIN)
+				    FileInfo file = new FileInfo(asm.Location);
+				    DirectoryInfo directory = file.Directory;
+                    if (directory.Parent != null)
                     {
-                        FileInfo file = new FileInfo(asm.Location);
-                        DirectoryInfo directory = file.Directory;
-#if UNITY_EDITOR_WIN
-              if (directory.Parent != null && directory.Parent.Parent != null)
-                  {
-                     String unityAltFolder =
-                        Path.Combine(
-                           Path.Combine(Path.Combine(Path.Combine(directory.Parent.Parent.FullName, "Assets"), "Emgu.TF.Lite"), "Plugins"),
-                           subfolder);
-                     
-					 Debug.WriteLine("Trying unityAltFolder: " + unityAltFolder);
-                     if (Directory.Exists(unityAltFolder))
-                        loadDirectory = unityAltFolder;
-                     else
-                     {
-                        Debug.WriteLine("No suitable directory found to load unmanaged modules");
-                        return false;
-                     }
-                    
-                  }
-                  else
-#elif (UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX)
-                     if (directory.Parent != null && directory.Parent.Parent != null)
-                  {
-                     String unityAltFolder =
-                        Path.Combine(Path.Combine(Path.Combine(
-                           Path.Combine(Path.Combine(directory.Parent.Parent.FullName, "Assets"), "Plugins"),
-                           "emgutflite.bundle"), "Contents"), "MacOS");
-                     
-                     if (Directory.Exists(unityAltFolder))
-                     {
-                        loadDirectory = unityAltFolder;
-                     }
-                     else
-                     {
-                        return false;
-                     }
-                     
-                  }
-                  else       
-#endif
-                        {
-                            System.Diagnostics.Debug.WriteLine("No suitable directory found to load unmanaged modules");
-                            return false;
-                        }
+                       String unityAltFolder = Path.Combine(directory.Parent.FullName, "Plugins");
+              
+                       if (Directory.Exists(unityAltFolder))
+                          loadDirectory = unityAltFolder;
+                       else
+                       {
+                          Debug.WriteLine("No suitable directory found to load unmanaged modules");
+                          return false;
+                       }
                     }
-                    else
-                        loadDirectory = altLoadDirectory;
-                }
+#elif UNITY_ANDROID
+#else
+                    if (!Directory.Exists(loadDirectory))
+                    {
+                        //try to find an alternative loadDirectory path
+                        //The following code should handle finding the asp.NET BIN folder 
+                        String altLoadDirectory = Path.GetDirectoryName(asm.CodeBase);
+                        if (!String.IsNullOrEmpty(altLoadDirectory) && altLoadDirectory.StartsWith(@"file:\"))
+                            altLoadDirectory = altLoadDirectory.Substring(6);
+
+                        if (!String.IsNullOrEmpty(subfolder))
+                            altLoadDirectory = Path.Combine(altLoadDirectory, subfolder);
+
+                        if (!Directory.Exists(altLoadDirectory))
+                        {
+                            FileInfo file = new FileInfo(asm.Location);
+                            DirectoryInfo directory = file.Directory;
+#if UNITY_EDITOR_WIN
+                        if (directory.Parent != null && directory.Parent.Parent != null)
+                            {
+                                String unityAltFolder =
+                                Path.Combine(
+                                    Path.Combine(Path.Combine(Path.Combine(directory.Parent.Parent.FullName, "Assets"), "Emgu.TF.Lite"), "Plugins"),
+                                    subfolder);
+                     
+			                    Debug.WriteLine("Trying unityAltFolder: " + unityAltFolder);
+                                if (Directory.Exists(unityAltFolder))
+                                loadDirectory = unityAltFolder;
+                                else
+                                {
+                                Debug.WriteLine("No suitable directory found to load unmanaged modules");
+                                return false;
+                                }
+                    
+                            }
+                            else
+#elif (UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX)
+                            if (directory.Parent != null && directory.Parent.Parent != null)
+                            {
+                                String unityAltFolder =
+                                Path.Combine(Path.Combine(Path.Combine(
+                                    Path.Combine(Path.Combine(directory.Parent.Parent.FullName, "Assets"), "Plugins"),
+                                    "emgutflite.bundle"), "Contents"), "MacOS");
+                     
+                                if (Directory.Exists(unityAltFolder))
+                                {
+                                    loadDirectory = unityAltFolder;
+                                }
+                                else
+                                {
+                                    return false;
+                                }                     
+                            }
+                            else       
 #endif
+                            {
+                                System.Diagnostics.Debug.WriteLine("No suitable directory found to load unmanaged modules");
+                                return false;
+                            }
+                        }
+                        else
+                            loadDirectory = altLoadDirectory;
+                    }
+#endif
+                }
             }
 
             String oldDir = Environment.CurrentDirectory;
             if (!String.IsNullOrEmpty(loadDirectory) && Directory.Exists(loadDirectory))
                 Environment.CurrentDirectory = loadDirectory;
-#endif
 
-            System.Diagnostics.Debug.WriteLine(String.Format("Loading tensorflow binary from {0}", loadDirectory));
+
+            System.Diagnostics.Debug.WriteLine(String.Format("Loading tensorflow lite binary from {0}", loadDirectory));
             bool success = true;
 
             string prefix = string.Empty;
@@ -327,17 +236,6 @@ namespace Emgu.TF.Lite
 
                 String fullPath = Path.Combine(prefix, mName);
 
-#if NETFX_CORE
-            if (loadableFiles.Exists(sf => sf.Equals(fullPath)))
-            {
-               IntPtr handle = Toolbox.LoadLibrary(fullPath);
-               success &= (!IntPtr.Zero.Equals(handle));
-            }
-            else
-            {
-               success = false;
-            }
-#else
                 //Use absolute path for Windows Desktop
                 fullPath = Path.Combine(loadDirectory, fullPath);
 
@@ -348,12 +246,9 @@ namespace Emgu.TF.Lite
                 if (fileExist && (!fileExistAndLoaded))
                     System.Diagnostics.Debug.WriteLine(String.Format("File {0} cannot be loaded.", fullPath));
                 success &= fileExistAndLoaded;
-#endif
             }
 
-#if !NETFX_CORE
             Environment.CurrentDirectory = oldDir;
-#endif
             return success;
         }
 
@@ -364,9 +259,9 @@ namespace Emgu.TF.Lite
         public static String GetModuleFormatString()
         {
 #if UNITY_EDITOR_WIN
-         return "{0}.dll";
+            return "{0}.dll";
 #elif UNITY_EDITOR_OSX
-         return "lib{0}.dylib";
+            return "lib{0}.dylib";
 #else
             String formatString = "{0}";
             if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
@@ -387,23 +282,39 @@ namespace Emgu.TF.Lite
         public static bool DefaultLoadUnmanagedModules(String[] modules)
         {
             bool libraryLoaded = true;
-#if __ANDROID__ 
-
-            foreach (String module in modules)
+            
+            System.Reflection.Assembly monoAndroidAssembly = Emgu.TF.Util.Toolbox.FindAssembly("Mono.Android.dll");
+            if (monoAndroidAssembly != null)
             {
-                try
+                //Running on Xamarin Android
+                Type javaSystemType = monoAndroidAssembly.GetType("Java.Lang.JavaSystem");
+                if (javaSystemType != null)
                 {
-                    Console.WriteLine(string.Format("Trying to load {0}.", module));
-                    Java.Lang.JavaSystem.LoadLibrary(module);
-                    Console.WriteLine(string.Format("Loaded {0}.", module));
-                }
-                catch (Exception e)
-                {
-                    libraryLoaded = false;
-                    Console.WriteLine(String.Format("Failed to load {0}: {1}", module, e.Message));
+                    System.Reflection.MethodInfo loadLibraryMethodInfo = javaSystemType.GetMethod("LoadLibrary");
+                    if (loadLibraryMethodInfo != null)
+                    {
+                        foreach (String module in modules)
+                        {
+                            try
+                            {
+                                Console.WriteLine(string.Format("Trying to load {0} ({1} bit).", module,
+                                    IntPtr.Size * 8));
+                                loadLibraryMethodInfo.Invoke(null, new object[] { module });
+                                //Java.Lang.JavaSystem.LoadLibrary(module);
+                                Console.WriteLine(string.Format("Loaded {0}.", module));
+                            }
+                            catch (Exception e)
+                            {
+                                libraryLoaded = false;
+                                Console.WriteLine(String.Format("Failed to load {0}: {1}", module, e.Message));
+                            }
+                        }
+                        return libraryLoaded;
+                    }
                 }
             }
-#elif UNITY_ANDROID && !UNITY_EDITOR
+
+#if UNITY_ANDROID && !UNITY_EDITOR
 
             UnityEngine.AndroidJavaObject jo = new UnityEngine.AndroidJavaObject("java.lang.System");
             foreach (String module in modules)
