@@ -4,7 +4,7 @@
 
 IF ( HAVE_ANDROID )
 
-PROJECT(Emgu.TF.Android.nuget)
+PROJECT(Emgu.TF.Runtime.Android.nuget)
 ADD_CUSTOM_TARGET(
    ${PROJECT_NAME}
    COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../../../miscellaneous/nuget.exe" pack Package.nuspec -OutputDirectory "${CMAKE_CURRENT_SOURCE_DIR}/../"
