@@ -121,7 +121,7 @@
       <Version>3.8.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.Platforms">
-      <Version>2.2.1</Version>
+      <Version>2.2.3</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Win32.Primitives">
       <Version>4.3.0</Version>
@@ -256,13 +256,27 @@
       <Version>4.3.0</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms">
-      <Version>4.2.0.709249</Version>
+      <Version>4.2.0.778463</Version>
+    </PackageReference>
+    <PackageReference Include="Xam.Plugin.Media">
+      <Version>4.0.1.5</Version>
     </PackageReference>
   </ItemGroup>
-  <Import Project="..\..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems')" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj">
+      <Project>{F644AA6A-5E39-4DAE-9BAD-6DDBE3335A74}</Project>
+      <Name>Emgu.TF.Netstandard</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Emgu.TF.World\Emgu.TF.Runtime.Unified.csproj">
+      <Project>{64306FF5-1E98-4D18-9CA7-666CD2D0F642}</Project>
+      <Name>Emgu.TF.Runtime.Unified</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Netstandard\Emgu.TF.Protobuf.Netstandard.csproj">
+      <Project>{0A11AE64-3B7B-4C02-8004-D2FAD72673CE}</Project>
+      <Name>Emgu.TF.Protobuf.Netstandard</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="..\..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.Models\Emgu.Models.Shared.projitems')" />
-  <Import Project="..\..\..\Emgu.TF\Emgu.TF.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.TF\Emgu.TF.projitems')" />
-  <Import Project="..\..\..\Emgu.TF.Util\Emgu.TF.Util.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.TF.Util\Emgu.TF.Util.projitems')" />
   <Import Project="..\XamarinForms\XamarinForms.projitems" Label="Shared" Condition="Exists('..\XamarinForms\XamarinForms.projitems')" />
   <Import Project="..\..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
