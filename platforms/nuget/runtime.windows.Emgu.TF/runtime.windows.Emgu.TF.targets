@@ -19,6 +19,6 @@
     <Message Condition="'$(EmguTFLinkTarget)'!=''" Text="Emgu TF nuget package compiling against $(EmguTFLinkTarget)" Importance="High" />
     <Error Text="'$(EmguTFErrorMessage)'" Condition="'$(EmguTFErrorMessage)'!=''" />
     <Message Text="Emgu TF Compiling with $(EmguTFDeployMessage)binary" Condition="'$(EmguTFDeployMessage)'!=''" Importance="High" />
-    <Message Text="No native binary is deployed by the Emgu.TF shared project." Condition="'$(EmguTFDeployMessage)'==''" Importance="High" />
+    <Message Text="No native binary is deployed by the Emgu.TF nuget package." Condition="'$(EmguTFDeployMessage)'==''" Importance="High" />
   </Target>
 </Project>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>EMGU.TF.DNN</id>
+    <id>${EMGU_TF_DNN_ID}</id>
 	<title>Native x64 DNN binary for Emgu.TF</title>
     <version>${EMGU_TF_DNN_VERSION}</version>
     <authors>${CPACK_PACKAGE_VENDOR}</authors>

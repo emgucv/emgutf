@@ -448,10 +448,8 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CommonAssemblyInfo.cs.in ${CMAK
 #CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/component.yaml.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/xamarin/emgutf_v1/component/component.yaml)
 
 SET(EMGUTF_NUGET_FILE_LIST "")
-#IF(HAVE_WINDESKTOP_X64)
-#	SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
-#	<file src=\"..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />")
-#ENDIF()
+
+
 
 
 SET(EMGUTF_NUGET_ID "EMGU.TF")
@@ -474,6 +472,8 @@ STRING(STRIP "${EMGUTF_NUGET_TITLE}" EMGUTF_NUGET_TITLE)
 SET(EMGUTF_MODEL_NUGET_TITLE "EMGU TF MODELS")
 SET(EMGUTF_PROTOBUF_NUGET_TITLE "EMGU TF PROTOBUF")
 
+SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "")
+
 IF(HAVE_WINDESKTOP_X64_CUDA)
 	SET(EMGUTF_NUGET_ID "${EMGUTF_NUGET_ID}-CUDA")
 	SET(EMGUTF_MODEL_NUGET_ID "${EMGUTF_MODEL_NUGET_ID}-CUDA")
@@ -484,6 +484,22 @@ IF(HAVE_WINDESKTOP_X64_CUDA)
 	SET(EMGUTF_PROTOBUF_NUGET_TITLE "${EMGUTF_MODEL_NUGET_TITLE} with CUDA support")
 ENDIF()
 
+IF(HAVE_WINDESKTOP_X64 OR HAVE_WINDESKTOP_X64_CUDA)
+  SET(EMGUTF_WINDOWS_NUGET_ID "runtime.windows.${EMGUTF_NUGET_ID}")
+  SET(EMGUTF_WINDOWS_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Windows")	
+  SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "${EMGUTF_WINDOWS_NUGET_FILE_LIST}  
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Runtime.Net.dll\" target=\"lib\\net470\" />
+	<file src=\"..\\..\\..\\lib\\Emgu.TF.Runtime.Net.xml\" target=\"lib\\net470\" />
+	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+  SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "${EMGUTF_WINDOWS_NUGET_FILE_LIST} 
+	<file src=\"runtime.windows.Emgu.TF.targets\" target=\"build\\${EMGUTF_WINDOWS_NUGET_ID}.targets\" />")
+  SET(EMGUTF_WINDOWS_NUGET_DEPENDENCY "${EMGUTF_ANDROID_NUGET_DEPENDENCY}
+    <dependencies>
+		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
+    </dependencies>") 
+ENDIF()
+
+
 IF(HAVE_ANDROID)
 	SET(EMGUTF_ANDROID_NUGET_ID "runtime.android.${EMGUTF_NUGET_ID}")
 	SET(EMGUTF_ANDROID_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Android")	
@@ -491,6 +507,10 @@ IF(HAVE_ANDROID)
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Runtime.Android.dll\" target=\"lib\\MonoAndroid50\" />
 	<file src=\"..\\..\\..\\lib\\Emgu.TF.Runtime.Android.XML\" target=\"lib\\MonoAndroid50\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+	SET(EMGUTF_ANDROID_NUGET_DEPENDENCY "${EMGUTF_ANDROID_NUGET_DEPENDENCY}
+    <dependencies>
+		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
+    </dependencies>") 
 ENDIF()
 
 IF(HAVE_WINDESKTOP_LITE)
@@ -652,28 +672,30 @@ IF(HAVE_WINDESKTOP_X64)
 		  ENDFOREACH()
 		ENDIF()
 		
-		CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Dnn.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Dnn/Package.nuspec)
-		CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Dnn.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Dnn/Emgu.TF.Dnn.targets)
-		CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Cufft.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Cufft/Package.nuspec)
-		CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Cufft.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Cufft/Emgu.TF.Cufft.targets)
+		SET(EMGU_TF_DNN_ID "runtime.windows.cuda.dnn.Emgu.TF")
+		SET(EMGU_TF_CUFFT_ID "runtime.windows.cuda.cufft.Emgu.TF")
+		
+		CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_DNN_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_DNN_ID}/Package.nuspec)
+		CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_DNN_ID}.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_DNN_ID}/${EMGU_TF_DNN_ID}.targets)
+		CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_CUFFT_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_CUFFT_ID}/Package.nuspec)
+		CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_CUFFT_ID}.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_CUFFT_ID}/${EMGU_TF_CUFFT_ID}.targets)
 		SET(EMGUTF_NUGET_DEPENDENCY "${EMGUTF_NUGET_DEPENDENCY}
 		<dependencies>
-			<dependency id=\"EMGU.TF.DNN\" version=\"[${EMGU_TF_DNN_VERSION}]\" />
+			<dependency id=\"${EMGU_TF_DNN_ID}\" version=\"[${EMGU_TF_DNN_VERSION}]\" />
 			<dependency id=\"EMGU.TF.CUFFT\" version=\"[${EMGU_TF_CUFFT_VERSION}]\" />
 		</dependencies>")
-		SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
-	<file src=\"..\\..\\lib\\x64\\*.dll\" exclude=\"..\\..\\lib\\x64\\cudnn*.dll;..\\..\\lib\\x64\\cufft*.dll\" target=\"build\\x64\" />")
+		SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "${EMGUTF_WINDOWS_NUGET_FILE_LIST} 
+	<file src=\"..\\..\\..\\lib\\x64\\*.dll\" exclude=\"..\\..\\..\\lib\\x64\\cudnn*.dll;..\\..\\..\\lib\\x64\\cufft*.dll\" target=\"build\\x64\" />")
 	ELSE()
-		SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
-	<file src=\"..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />")
+		SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "${EMGUTF_WINDOWS_NUGET_FILE_LIST} 
+	<file src=\"..\\..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />")
 	ENDIF()
-	SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
-	<file src=\"Emgu.TF.targets\" target=\"build\\${EMGUTF_NUGET_ID}.targets\" />")
+
 	
 	SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\lib\\Emgu.TF.Net45.dll\" target=\"lib\\net45\" />
-	<file src=\"..\\..\\lib\\Emgu.TF.Net45.xml\" target=\"lib\\net45\" />
-	<file src=\"..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Netstandard.dll\" target=\"lib\\netstandard2.0\" />
+	<file src=\"..\\..\\..\\lib\\Emgu.TF.Netstandard.xml\" target=\"lib\\netstandard2.0\" />
+	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
 ENDIF()
 
 SET(EMGUTF_MODEL_NUGET_FILE_LIST "
@@ -700,10 +722,11 @@ SET(EMGUTF_PROTOBUF_NUGET_DEPENDENCY "${EMGUTF_PROTOBUF_NUGET_DEPENDENCY}
 	
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Models.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Models/Package.nuspec)
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Protobuf.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Protobuf/Package.nuspec)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Protobuf.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Protobuf/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/XamarinForms.Android.AndroidManifest.xml.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Example/XamarinForms/XamarinForms.Android/Properties/AndroidManifest.xml @ONLY)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/XamarinForms.Lite.Android.AndroidManifest.xml.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Example/XamarinForms/XamarinForms.Lite.Android/Properties/AndroidManifest.xml @ONLY)
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Android.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Android/Package.nuspec)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/runtime.android.Emgu.TF.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/runtime.android.Emgu.TF/Package.nuspec)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/runtime.windows.Emgu.TF.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/runtime.windows.Emgu.TF/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Lite.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Lite/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Lite.Models.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Lite.Models/Package.nuspec)
 

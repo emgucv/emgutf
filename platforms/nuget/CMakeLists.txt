@@ -5,14 +5,15 @@
 add_subdirectory(Emgu.TF)
 
 IF (WIN32 AND (HAVE_WINDESKTOP_X86 OR HAVE_WINDESKTOP_X64) )
-	add_subdirectory(Dnn)
-	add_subdirectory(Cufft)
+	add_subdirectory(runtime.windows.cuda.dnn.Emgu.TF)
+	add_subdirectory(runtime.windows.cuda.cufft.Emgu.TF)
 	add_subdirectory(Models)
-	add_subdirectory(Protobuf)
+	add_subdirectory(Emgu.TF.Protobuf)
+	add_subdirectory(runtime.windows.Emgu.TF)
 ENDIF()
 
 IF ( HAVE_ANDROID )
-	add_subdirectory(Android)
+	add_subdirectory(runtime.android.Emgu.TF)
 ENDIF()
 
 IF (HAVE_WINDESKTOP_X64_LITE)

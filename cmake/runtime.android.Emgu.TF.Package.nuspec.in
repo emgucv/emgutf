@@ -10,8 +10,8 @@
     <projectUrl>http://www.emgu.com/wiki/index.php/Emgu_TF</projectUrl>
 	<iconUrl>http://www.emgu.com/wiki/files/EmguTFLogo.png</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-	<summary>Runtime package for Emgu TF Android</summary>
-    <description>Emgu TF Android is a .Net wrapper for the Google Tensorflow library for Xamarin Android</description>
+	<summary>Runtime package of Emgu TF for Android</summary>
+    <description>This package contains the native runtime of Emgu TF for Windows</description>
     <releaseNotes>This is the ${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX} release of Emgu TF for Android. For online documentation please visit
 http://www.emgu.com/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}/document/</releaseNotes>
 	${EMGUTF_ANDROID_NUGET_DEPENDENCY}

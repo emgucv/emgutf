@@ -2,16 +2,15 @@
 #  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-IF (WIN32 AND (HAVE_WINDESKTOP_X64_CUDA) )
+IF(HAVE_WINDESKTOP_X64 OR HAVE_WINDESKTOP_X64_CUDA)
 
-PROJECT(Emgu.TF.Dnn.nuget)
+PROJECT(runtime.windows.Emgu.TF.nuget)
 ADD_CUSTOM_TARGET(
    ${PROJECT_NAME}
-   #COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../../../tensorflow/tensorflow/contrib/cmake/nuget/Dnn/Package.nuspec ${CMAKE_CURRENT_SOURCE_DIR}
    COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../../../miscellaneous/nuget.exe" pack Package.nuspec -OutputDirectory "${CMAKE_CURRENT_SOURCE_DIR}/../"
-   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
-ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Net45 Emgu.TF.Netstandard)
+
+ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.nuget)
 
 if(ENABLE_SOLUTION_FOLDERS)
   set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "NUGET")
