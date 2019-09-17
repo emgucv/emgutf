@@ -2,7 +2,9 @@
 #  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-add_subdirectory(Emgu.TF)
+IF (HAVE_WINDESKTOP_X86 OR HAVE_WINDESKTOP_X64 OR HAVE_ANDROID OR HAVE_OSX)
+	add_subdirectory(Emgu.TF)
+ENDIF()
 
 IF (WIN32 AND (HAVE_WINDESKTOP_X86 OR HAVE_WINDESKTOP_X64) )
 	add_subdirectory(runtime.windows.cuda.dnn.Emgu.TF)
