@@ -50,10 +50,6 @@
       <Project>{01147797-9f30-4ab3-a86c-1c4509c88edb}</Project>
       <Name>Emgu.TF.Protobuf.Netstandard</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Emgu.TF\Emgu.TF.Net45\Emgu.TF.Net45.csproj">
-      <Project>{cf1433de-b607-479e-862d-8f4cb6783261}</Project>
-      <Name>Emgu.TF.World</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Google.Protobuf">

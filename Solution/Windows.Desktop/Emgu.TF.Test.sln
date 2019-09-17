@@ -7,8 +7,6 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF", "..\..\Emgu.TF\Em
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Test", "..\..\Emgu.TF.Test\Emgu.TF.Test.csproj", "{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Net45", "..\..\Emgu.TF\Emgu.TF.Net45\Emgu.TF.Net45.csproj", "{CF1433DE-B607-479E-862D-8F4CB6783261}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Util", "..\..\Emgu.TF.Util\Emgu.TF.Util.shproj", "{98561642-5EC3-4244-BAF9-6876D9BA5527}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Test.Core", "..\..\Emgu.TF.Test.Core\Emgu.TF.Test.Core.csproj", "{67A1A571-95E4-43A0-A67F-C6F210A71AAE}"
@@ -39,8 +37,6 @@ Global
 		..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems*{88fed2cb-ee86-4b5e-85a0-9f5fdf42111f}*SharedItemsImports = 13
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{8edce0c8-ba71-4396-9428-35d05877258c}*SharedItemsImports = 13
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{98561642-5ec3-4244-baf9-6876d9ba5527}*SharedItemsImports = 13
-		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{cf1433de-b607-479e-862d-8f4cb6783261}*SharedItemsImports = 4
-		..\..\Emgu.TF\Emgu.TF.projitems*{cf1433de-b607-479e-862d-8f4cb6783261}*SharedItemsImports = 4
 		..\..\Emgu.TF\Emgu.TF.projitems*{d47d776e-9970-4552-bc8a-24cadcbea009}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,22 +66,6 @@ Global
 		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Release|x64.Build.0 = Release|Any CPU
 		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Release|x86.ActiveCfg = Release|Any CPU
 		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Release|x86.Build.0 = Release|Any CPU
-		{CF1433DE-B607-479E-862D-8F4CB6783261}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CF1433DE-B607-479E-862D-8F4CB6783261}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CF1433DE-B607-479E-862D-8F4CB6783261}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{CF1433DE-B607-479E-862D-8F4CB6783261}.Debug|ARM.Build.0 = Debug|Any CPU
-		{CF1433DE-B607-479E-862D-8F4CB6783261}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{CF1433DE-B607-479E-862D-8F4CB6783261}.Debug|x64.Build.0 = Debug|Any CPU
-		{CF1433DE-B607-479E-862D-8F4CB6783261}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{CF1433DE-B607-479E-862D-8F4CB6783261}.Debug|x86.Build.0 = Debug|Any CPU
-		{CF1433DE-B607-479E-862D-8F4CB6783261}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CF1433DE-B607-479E-862D-8F4CB6783261}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CF1433DE-B607-479E-862D-8F4CB6783261}.Release|ARM.ActiveCfg = Release|Any CPU
-		{CF1433DE-B607-479E-862D-8F4CB6783261}.Release|ARM.Build.0 = Release|Any CPU
-		{CF1433DE-B607-479E-862D-8F4CB6783261}.Release|x64.ActiveCfg = Release|Any CPU
-		{CF1433DE-B607-479E-862D-8F4CB6783261}.Release|x64.Build.0 = Release|Any CPU
-		{CF1433DE-B607-479E-862D-8F4CB6783261}.Release|x86.ActiveCfg = Release|Any CPU
-		{CF1433DE-B607-479E-862D-8F4CB6783261}.Release|x86.Build.0 = Release|Any CPU
 		{67A1A571-95E4-43A0-A67F-C6F210A71AAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{67A1A571-95E4-43A0-A67F-C6F210A71AAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67A1A571-95E4-43A0-A67F-C6F210A71AAE}.Debug|ARM.ActiveCfg = Debug|Any CPU

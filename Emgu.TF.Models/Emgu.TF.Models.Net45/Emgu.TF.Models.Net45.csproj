@@ -51,9 +51,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Emgu.TF\Emgu.TF.Net45\Emgu.TF.Net45.csproj">
-      <Project>{cf1433de-b607-479e-862d-8f4cb6783261}</Project>
-      <Name>Emgu.TF.World</Name>
+    <ProjectReference Include="..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj">
+      <Project>{1c543cbf-f574-421d-bc17-effbb306694c}</Project>
+      <Name>Emgu.TF.Netstandard</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\Emgu.TF.Models.Shared.projitems" Label="Shared" />
