@@ -19,6 +19,6 @@ IF ( HAVE_ANDROID )
 ENDIF()
 
 IF (HAVE_WINDESKTOP_X64_LITE)
-	add_subdirectory(Lite)
-	add_subdirectory(Lite.Models)
+	add_subdirectory(Emgu.TF.Lite)
+	add_subdirectory(Emgu.TF.Lite.Models)
 ENDIF()

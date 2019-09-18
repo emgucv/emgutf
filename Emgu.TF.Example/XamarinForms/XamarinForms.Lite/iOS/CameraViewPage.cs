@@ -388,7 +388,7 @@ namespace Emgu.TF.XamarinForms
                 }
                 pixelBuffer.Unlock(CVPixelBufferLock.ReadOnly);
             }
-            Debug.WriteLine(String.Format("({2}) Recevied NSImage: {0}x{1}", image.Size.Width, image.Size.Height, flag));
+            Debug.WriteLine(String.Format("({2}) Received NSImage: {0}x{1}", image.Size.Width, image.Size.Height, flag));
             return image;
         }
     }
