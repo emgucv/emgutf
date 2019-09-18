@@ -121,7 +121,9 @@ namespace Emgu.TF.Models
                 _graph.Dispose();
             _graph = new Graph();
             String localFileName = _downloadManager.Files[0].LocalFile;
+
             byte[] model = File.ReadAllBytes(localFileName);
+
             if (model.Length == 0)
                 throw new FileNotFoundException(String.Format("Unable to load file {0}", localFileName));
             Buffer modelBuffer = Buffer.FromString(model);

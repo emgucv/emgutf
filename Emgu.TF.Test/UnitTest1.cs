@@ -126,7 +126,6 @@ namespace Emgu.TF.Test
         [TestMethod]
         public void TestMultiboxPeopleDetect()
         {
-
             Tensor imageResults = ImageIO.ReadTensorFromImageFile<float>("surfers.jpg", 224, 224, 128.0f, 1.0f / 128.0f);
 
             MultiboxGraph multiboxGraph = new MultiboxGraph();
@@ -136,10 +135,10 @@ namespace Emgu.TF.Test
             {
                 MultiboxGraph.Result[] result = multiboxGraph.Detect(imageResults);
 
-                Bitmap bmp = new Bitmap("surfers.jpg");
+                //Bitmap bmp = new Bitmap("surfers.jpg");
                 //MultiboxGraph.DrawResults(bmp, result, 0.1f);
                 //MultiboxGraph.
-                bmp.Save("surfers_result.jpg");
+                //bmp.Save("surfers_result.jpg");
                 processCompleted = true;
             };
 
@@ -348,6 +347,37 @@ namespace Emgu.TF.Test
             bool quantizeV2HasKernel = TfInvoke.OpHasKernel("QuantizeV2");
             bool quantizeV2IsRegistered = TfInvoke.OpIsRegistered("QuantizeV2");
 
+        }
+
+        [TestMethod]
+        public void TestMultiSession()
+        {
+            Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>("grace_hopper.jpg", 224, 224, 128.0f, 1.0f);
+            int sessionCount = 10;
+
+            Inception[] graphs = new Inception[sessionCount];
+            bool[] processCompleted = new bool[sessionCount];
+            for (int i = 0; i < sessionCount; i++)
+            {
+                graphs[i] = new Inception();
+                processCompleted[i] = false;
+
+                graphs[i].OnDownloadCompleted += (sender, e) =>
+                {
+                    Inception.RecognitionResult[] results = graphs[i].Recognize(imageTensor);
+
+                    processCompleted[i] = true;
+                };
+
+                graphs[i].Init();
+                Trace.WriteLine(System.String.Format("Reading graph {0}", i));
+                Thread.Sleep(1000);
+            }
+
+            while (!processCompleted.All((v) => v))
+            {
+                Thread.Sleep(1000);
+            }
         }
     }
 }
