@@ -62,13 +62,17 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Emgu.TF.Models\Emgu.TF.Models.Netstandard\Emgu.TF.Models.Netstandard.csproj">
+      <Project>{88534285-26f1-4421-b595-6c28c1c6dd78}</Project>
+      <Name>Emgu.TF.Models.Netstandard</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Netstandard\Emgu.TF.Protobuf.Netstandard.csproj">
       <Project>{01147797-9f30-4ab3-a86c-1c4509c88edb}</Project>
       <Name>Emgu.TF.Protobuf.Netstandard</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Emgu.TF.Test.Core\Emgu.TF.Test.Core.csproj">
-      <Project>{67a1a571-95e4-43a0-a67f-c6f210a71aae}</Project>
-      <Name>Emgu.TF.Test.Core</Name>
+    <ProjectReference Include="..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj">
+      <Project>{1c543cbf-f574-421d-bc17-effbb306694c}</Project>
+      <Name>Emgu.TF.Netstandard</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
