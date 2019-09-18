@@ -474,19 +474,25 @@ SET(EMGUTF_PROTOBUF_NUGET_TITLE "EMGU TF PROTOBUF")
 
 SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "")
 
-IF(HAVE_WINDESKTOP_X64_CUDA)
-	SET(EMGUTF_NUGET_ID "${EMGUTF_NUGET_ID}-CUDA")
-	SET(EMGUTF_MODEL_NUGET_ID "${EMGUTF_MODEL_NUGET_ID}-CUDA")
-	SET(EMGUTF_PROTOBUF_NUGET_ID "${EMGUTF_PROTOBUF_NUGET_ID}-CUDA")
+#IF(HAVE_WINDESKTOP_X64_CUDA)
+	#SET(EMGUTF_NUGET_ID "${EMGUTF_NUGET_ID}-CUDA")
+	#SET(EMGUTF_MODEL_NUGET_ID "${EMGUTF_MODEL_NUGET_ID}-CUDA")
+	#SET(EMGUTF_PROTOBUF_NUGET_ID "${EMGUTF_PROTOBUF_NUGET_ID}-CUDA")
 	
-	SET(EMGUTF_NUGET_TITLE "${EMGUTF_NUGET_TITLE} with CUDA support")	
-	SET(EMGUTF_MODEL_NUGET_TITLE "${EMGUTF_MODEL_NUGET_TITLE} with CUDA support")
-	SET(EMGUTF_PROTOBUF_NUGET_TITLE "${EMGUTF_MODEL_NUGET_TITLE} with CUDA support")
-ENDIF()
+	#SET(EMGUTF_NUGET_TITLE "${EMGUTF_NUGET_TITLE} with CUDA support")	
+	#SET(EMGUTF_MODEL_NUGET_TITLE "${EMGUTF_MODEL_NUGET_TITLE} with CUDA support")
+	#SET(EMGUTF_PROTOBUF_NUGET_TITLE "${EMGUTF_MODEL_NUGET_TITLE} with CUDA support")
+#ENDIF()
 
 IF(HAVE_WINDESKTOP_X64 OR HAVE_WINDESKTOP_X64_CUDA)
-  SET(EMGUTF_WINDOWS_NUGET_ID "runtime.windows.${EMGUTF_NUGET_ID}")
-  SET(EMGUTF_WINDOWS_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Windows")	
+  IF(HAVE_WINDESKTOP_X64_CUDA)
+	SET(EMGUTF_WINDOWS_NUGET_ID "runtime.windows.cuda.${EMGUTF_NUGET_ID}")  
+    SET(EMGUTF_WINDOWS_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Windows with CUDA support")	
+  ELSE()
+    SET(EMGUTF_WINDOWS_NUGET_ID "runtime.windows.${EMGUTF_NUGET_ID}")  
+    SET(EMGUTF_WINDOWS_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Windows")	
+  ENDIF()
+  
   SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "${EMGUTF_WINDOWS_NUGET_FILE_LIST}  
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Runtime.Net.dll\" target=\"lib\\net470\" />
 	<file src=\"..\\..\\..\\lib\\Emgu.TF.Runtime.Net.xml\" target=\"lib\\net470\" />
@@ -699,8 +705,8 @@ IF(HAVE_WINDESKTOP_X64)
 ENDIF()
 
 SET(EMGUTF_MODEL_NUGET_FILE_LIST "
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.Net45.dll\" target=\"lib\\net45\" />
-	<file src=\"..\\..\\..\\lib\\Emgu.TF.Models.Net45.xml\" target=\"lib\\net45\" />
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.Netstandard.dll\" target=\"lib\\netstandard2.0\" />
+	<file src=\"..\\..\\..\\lib\\Emgu.TF.Models.Netstandard.xml\" target=\"lib\\netstandard2.0\" />
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
 
 SET(EMGUTF_PROTOBUF_NUGET_FILE_LIST "
@@ -721,7 +727,7 @@ SET(EMGUTF_PROTOBUF_NUGET_DEPENDENCY "${EMGUTF_PROTOBUF_NUGET_DEPENDENCY}
     </dependencies>") 
 	
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF/Package.nuspec)
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Models.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Models/Package.nuspec)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Models.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Models/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Protobuf.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Protobuf/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/XamarinForms.Android.AndroidManifest.xml.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Example/XamarinForms/XamarinForms.Android/Properties/AndroidManifest.xml @ONLY)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/XamarinForms.Lite.Android.AndroidManifest.xml.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Example/XamarinForms/XamarinForms.Lite.Android/Properties/AndroidManifest.xml @ONLY)
