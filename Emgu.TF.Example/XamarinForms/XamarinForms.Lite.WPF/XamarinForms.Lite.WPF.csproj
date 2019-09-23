@@ -265,6 +265,10 @@
       <Project>{ec62d093-7446-4af0-a3c8-61d497cf3d7e}</Project>
       <Name>Emgu.TF.Lite.NetStandard</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Emgu.TF.World\Emgu.TF.Lite.Runtime.Windows.csproj">
+      <Project>{6b3d7196-ad70-4a1f-8b3e-97c3707e5574}</Project>
+      <Name>Emgu.TF.Lite.Runtime.Windows</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="..\XamarinForms.Lite\XamarinForms.Lite.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
