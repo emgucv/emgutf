@@ -7551,6 +7551,9 @@ namespace XamarinForms.Droid
 			// aapt resource value: 0x7f0b0032
 			public const int abc_toolbar_collapse_description = 2131427378;
 			
+			// aapt resource value: 0x7f0b004f
+			public const int app_name = 2131427407;
+			
 			// aapt resource value: 0x7f0b0040
 			public const int appbar_scrolling_view_behavior = 2131427392;
 			
@@ -7568,6 +7571,9 @@ namespace XamarinForms.Droid
 			
 			// aapt resource value: 0x7f0b0045
 			public const int fab_transformation_sheet_behavior = 2131427397;
+			
+			// aapt resource value: 0x7f0b004e
+			public const int hello = 2131427406;
 			
 			// aapt resource value: 0x7f0b0046
 			public const int hide_bottom_view_on_scroll_behavior = 2131427398;

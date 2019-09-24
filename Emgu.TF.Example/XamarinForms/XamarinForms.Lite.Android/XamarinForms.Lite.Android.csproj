@@ -389,11 +389,17 @@
       <Version>4.2.0.778463</Version>
     </PackageReference>
   </ItemGroup>
-  <Import Project="..\..\..\Emgu.TF.Util\Emgu.TF.Util.projitems" Label="Shared" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Android\Emgu.TF.Lite.Models.Android.csproj">
+      <Project>{b8c8535c-d4b3-49e3-82e7-8c16f607d624}</Project>
+      <Name>Emgu.TF.Lite.Models.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.Netstandard.csproj">
+      <Project>{fdab1bd5-2bc7-4839-83a6-3dcd6e8c4b5a}</Project>
+      <Name>Emgu.TF.Lite.Netstandard</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="..\XamarinForms.Lite\XamarinForms.Lite.projitems" Label="Shared" />
-  <Import Project="..\..\..\Emgu.TF.Lite\Emgu.TF.Lite.projitems" Label="Shared" />
-  <Import Project="..\..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" />
-  <Import Project="..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
      Other similar extension points exist, see Microsoft.Common.targets.
