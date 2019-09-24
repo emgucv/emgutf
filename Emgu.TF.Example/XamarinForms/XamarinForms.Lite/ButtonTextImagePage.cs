@@ -72,8 +72,11 @@ namespace Emgu.TF.XamarinForms
             mainLayout.Children.Add(TopButton);
             mainLayout.Children.Add(MessageLabel);
             mainLayout.Children.Add(DisplayImage);
-            
-            Content = mainLayout;
+
+            Content = new ScrollView()
+            {
+                Content = mainLayout
+            };
         }
 
         public virtual async void LoadImages(String[] imageNames, String[] labels = null)

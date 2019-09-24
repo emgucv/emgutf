@@ -124,12 +124,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Emgu.TF.World\Emgu.TF.Lite.World.iOS.csproj">
-      <Project>{A14504ED-D613-43D1-AD3D-AE3F411C51CE}</Project>
-      <Name>Emgu.TF.Lite.World.iOS</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="..\..\CVInterop\dog416.png">
       <Link>dog416.png</Link>
     </Content>
@@ -147,6 +141,16 @@
     <PackageReference Include="Xamarin.Forms">
       <Version>4.1.0.555618</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.Netstandard.csproj">
+      <Project>{7d6e901b-ef2c-48a2-b1be-09ca9bf1f189}</Project>
+      <Name>Emgu.TF.Lite.Netstandard</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Emgu.TF.World\Emgu.TF.Lite.Runtime.iOS.csproj">
+      <Project>{a14504ed-d613-43d1-ad3d-ae3f411c51ce}</Project>
+      <Name>Emgu.TF.Lite.Runtime.iOS</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems')" />
   <Import Project="..\XamarinForms.Lite\XamarinForms.Lite.projitems" Label="Shared" Condition="Exists('..\XamarinForms.Lite\XamarinForms.Lite.projitems')" />

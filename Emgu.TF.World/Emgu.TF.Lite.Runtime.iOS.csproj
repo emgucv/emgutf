@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A14504ED-D613-43D1-AD3D-AE3F411C51CE}</ProjectGuid>
+    <ProjectTypeGuids>{8FFB629D-F513-41CE-95D2-7ECE97B6EEEC};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Emgu.TF.Lite</RootNamespace>
+    <AssemblyName>Emgu.TF.Lite.Runtime.iOS</AssemblyName>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\lib\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\lib\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>..\lib\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\lib\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <OutputPath>..\lib\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' ">
+    <OutputPath>..\lib\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' ">
+    <OutputPath>..\lib\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <OutputPath>..\lib\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <OutputPath>..\lib\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+      <PropertyGroup>
+    <TFLiteBinaryDir>$(MSBuildThisFileDirectory)..\lib</TFLiteBinaryDir>
+    <EmguTFLiteDir>$(MSBuildThisFileDirectory)</EmguTFLiteDir>
+  </PropertyGroup>
+        <PropertyGroup>
+        <EmguTFLiteLinkTarget>Xamarin iOS Native Binding Library</EmguTFLiteLinkTarget>
+        <EmguTFLiteNativeFile>$(MSBuildThisFileDirectory)..\lib\ios\libtfliteextern.a</EmguTFLiteNativeFile>
+        <EmguTFLiteErrorMessage Condition="!Exists('$(EmguTFLiteNativeFile)')"> This package do not contain necessary binary for $(EmguTFLiteLinkTarget). Emgu TF Lite for iOS Commercial License is required. Missing $(EmguTFLiteNativeFile) </EmguTFLiteErrorMessage>
+        <EmguTFLiteDeployMessage Condition="Exists('$(EmguTFLiteNativeFile)')">$(EmguTFLiteDeployMessage)ios </EmguTFLiteDeployMessage>
+        <EmguTFLiteLinkWithFile>$(MSBuildThisFileDirectory)ios\libtfliteextern.linkwith.cs</EmguTFLiteLinkWithFile>
+        <EmguTFLiteErrorMessage Condition="!Exists('$(EmguTFLiteLinkWithFile)')"> This package do not contain necessary file for $(EmguTFLiteLinkTarget). Emgu TF Lite for iOS Commercial License is required. Missing $(EmguTFLiteLinkWithFile) </EmguTFLiteErrorMessage>
+      </PropertyGroup>
+      <ItemGroup>
+        <ObjcBindingNativeLibrary Include="$(EmguTFLiteNativeFile)" Condition="Exists('$(EmguTFLiteNativeFile)')" />
+      </ItemGroup>
+      <ItemGroup>
+        <Compile Include="$(EmguTFLiteLinkWithFile)" Condition="Exists('$(EmguTFLiteLinkWithFile)')">
+          <DependentUpon>libtfliteextern.a</DependentUpon>
+        </Compile>
+      </ItemGroup>
+  <ItemGroup>
+    <Reference Include="OpenTK-1.0" />
+    <Reference Include="System" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="Xamarin.iOS" />
+  </ItemGroup>
+  <ItemGroup>
+    <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.ObjCBinding.CSharp.targets" />
+    <Target Name="EmguTFLitePackageBuildImports" BeforeTargets="PrepareForBuild">
+    <!-- <Error Condition="'$(EmguTFLiteLinkTarget)'==''" Text="Emgu TF Lite is not able to detect the project type, please use the pre-compiled Emgu.TF.Lite.World dll or send a bug report to support@emgu.com" /> -->
+    <Message Condition="'$(EmguTFLiteLinkTarget)'!=''" Text="Emgu TF Lite shared project compiling against $(EmguTFLiteLinkTarget)" Importance="High" />
+    <Error Text="'$(EmguTFLiteErrorMessage)'" Condition="'$(EmguTFLiteErrorMessage)'!=''" />
+    <Message Text="Emgu TF Lite Compiling with $(EmguTFLiteDeployMessage)binary" Condition="'$(EmguTFLiteDeployMessage)'!=''" Importance="High" />
+    <Message Text="No native binary is deployed by the Emgu.TF shared project." Condition="'$(EmguTFLiteDeployMessage)'==''" Importance="High" />
+  </Target>
+</Project>
