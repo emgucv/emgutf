@@ -256,12 +256,12 @@ namespace Emgu.TF.XamarinForms
 
         private int _counter = 0;
 
-        private static NativeImageIO.Annotation[] GetAnnotations(CocoSsdMobilenet.RecognitionResult[] result)
+        private static Annotation[] GetAnnotations(CocoSsdMobilenet.RecognitionResult[] result)
         {
-            NativeImageIO.Annotation[] annotations = new NativeImageIO.Annotation[result.Length];
+            Annotation[] annotations = new Annotation[result.Length];
             for (int i = 0; i < result.Length; i++)
             {
-                NativeImageIO.Annotation annotation = new NativeImageIO.Annotation();
+                Annotation annotation = new Annotation();
                 annotation.Rectangle = result[i].Rectangle;
                 annotation.Label = String.Format("{0}:({1:0.00}%)", result[i].Label, result[i].Score * 100);
                 annotations[i] = annotation;
@@ -279,7 +279,7 @@ namespace Emgu.TF.XamarinForms
                 NSImage image = ImageFromSampleBuffer(sampleBuffer);
 #endif
                 CocoSsdMobilenet.RecognitionResult[] result = _mobilenet.Recognize(image, 0.5f);
-                NativeImageIO.Annotation[] annotations = GetAnnotations(result);
+                Annotation[] annotations = GetAnnotations(result);
 
 #if __IOS__
                 UIImage annotatedImage = NativeImageIO.DrawAnnotations(image, annotations);
