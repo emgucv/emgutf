@@ -21,11 +21,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Models.Netstan
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inception.Console.Lite.NetCore", "..\..\Emgu.TF.Example\Inception.Console.Lite.NetCore\Inception.Console.Lite.NetCore.csproj", "{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Lite.Runtime.Windows", "..\..\Emgu.TF.World\Emgu.TF.Lite.Runtime.Windows.csproj", "{6B3D7196-AD70-4A1F-8B3E-97C3707E5574}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Runtime.Windows", "..\..\Emgu.TF.World\Emgu.TF.Lite.Runtime.Windows.shproj", "{0D7C99EA-3AAE-4F45-9BA7-3B4AF8313753}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\Emgu.TF.World\Emgu.TF.Lite.Runtime.Windows.projitems*{0d7c99ea-3aae-4f45-9ba7-3b4af8313753}*SharedItemsImports = 13
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite\XamarinForms.Lite.projitems*{2475c64a-227a-442f-a1c8-8d488ce2fd08}*SharedItemsImports = 4
+		..\..\Emgu.TF.World\Emgu.TF.Lite.Runtime.Windows.projitems*{2475c64a-227a-442f-a1c8-8d488ce2fd08}*SharedItemsImports = 4
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite\XamarinForms.Lite.projitems*{26f4d7af-57b6-4d2d-9a1c-aafa757ddc4a}*SharedItemsImports = 13
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{8edce0c8-ba71-4396-9428-35d05877258c}*SharedItemsImports = 13
 		..\..\Emgu.TF.Lite\Emgu.TF.Lite.projitems*{8f587fb9-bba6-4c30-9329-8cbac7020fe0}*SharedItemsImports = 13
@@ -71,14 +73,6 @@ Global
 		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Release|x64.ActiveCfg = Release|Any CPU
 		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Release|x64.Build.0 = Release|Any CPU
-		{6B3D7196-AD70-4A1F-8B3E-97C3707E5574}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6B3D7196-AD70-4A1F-8B3E-97C3707E5574}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6B3D7196-AD70-4A1F-8B3E-97C3707E5574}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{6B3D7196-AD70-4A1F-8B3E-97C3707E5574}.Debug|x64.Build.0 = Debug|Any CPU
-		{6B3D7196-AD70-4A1F-8B3E-97C3707E5574}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6B3D7196-AD70-4A1F-8B3E-97C3707E5574}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6B3D7196-AD70-4A1F-8B3E-97C3707E5574}.Release|x64.ActiveCfg = Release|Any CPU
-		{6B3D7196-AD70-4A1F-8B3E-97C3707E5574}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
