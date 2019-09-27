@@ -139,21 +139,15 @@
       <Version>4.0.1.5</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms">
-      <Version>4.1.0.555618</Version>
+      <Version>4.2.0.815419</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.Netstandard.csproj">
-      <Project>{7d6e901b-ef2c-48a2-b1be-09ca9bf1f189}</Project>
-      <Name>Emgu.TF.Lite.Netstandard</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Emgu.TF.World\Emgu.TF.Lite.Runtime.iOS.csproj">
       <Project>{a14504ed-d613-43d1-ad3d-ae3f411c51ce}</Project>
       <Name>Emgu.TF.Lite.Runtime.iOS</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems')" />
   <Import Project="..\XamarinForms.Lite\XamarinForms.Lite.projitems" Label="Shared" Condition="Exists('..\XamarinForms.Lite\XamarinForms.Lite.projitems')" />
-  <Import Project="..\..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.Models\Emgu.Models.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

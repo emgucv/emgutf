@@ -73,9 +73,12 @@
   <ItemGroup>
     <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
   </ItemGroup>
+  <Import Project="..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems" Label="Shared" Condition="Exists('..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems')" />
+  <Import Project="..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" Condition="Exists('..\Emgu.Models\Emgu.Models.Shared.projitems')" />
+  <Import Project="..\Emgu.TF.Lite\Emgu.TF.Lite.projitems" Label="Shared" Condition="Exists('..\Emgu.TF.Lite\Emgu.TF.Lite.projitems')" />
+  <Import Project="..\Emgu.TF.Util\Emgu.TF.Util.projitems" Label="Shared" Condition="Exists('..\Emgu.TF.Util\Emgu.TF.Util.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.ObjCBinding.CSharp.targets" />
-    <Target Name="EmguTFLitePackageBuildImports" BeforeTargets="PrepareForBuild">
-    <!-- <Error Condition="'$(EmguTFLiteLinkTarget)'==''" Text="Emgu TF Lite is not able to detect the project type, please use the pre-compiled Emgu.TF.Lite.World dll or send a bug report to support@emgu.com" /> -->
+  <Target Name="EmguTFLitePackageBuildImports" BeforeTargets="PrepareForBuild">
     <Message Condition="'$(EmguTFLiteLinkTarget)'!=''" Text="Emgu TF Lite shared project compiling against $(EmguTFLiteLinkTarget)" Importance="High" />
     <Error Text="'$(EmguTFLiteErrorMessage)'" Condition="'$(EmguTFLiteErrorMessage)'!=''" />
     <Message Text="Emgu TF Lite Compiling with $(EmguTFLiteDeployMessage)binary" Condition="'$(EmguTFLiteDeployMessage)'!=''" Importance="High" />

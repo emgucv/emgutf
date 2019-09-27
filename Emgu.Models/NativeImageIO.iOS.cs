@@ -22,7 +22,7 @@ namespace Emgu.Models
         /// Read an UIImage, covert the data and save it to the native pointer
         /// </summary>
         /// <typeparam name="T">The type of the data to covert the image pixel values to. e.g. "float" or "byte"</typeparam>
-        /// <param name="image">The input image</param>
+        /// <param name="imageOriginal">The input image</param>
         /// <param name="dest">The native pointer where the image pixels values will be saved to.</param>
         /// <param name="inputHeight">The height of the image, must match the height requirement for the tensor</param>
         /// <param name="inputWidth">The width of the image, must match the width requirement for the tensor</param>
@@ -197,14 +197,14 @@ namespace Emgu.Models
         {
             if (channels != 3)
                 throw new NotImplementedException("Only 3 channel pixel input is supported.");
-            System.Drawing.Size sz = new System.Drawing.Size(width, height);
+            //System.Drawing.Size sz = new System.Drawing.Size(width, height);
             GCHandle handle = GCHandle.Alloc(rawPixel, GCHandleType.Pinned);
             using (CGColorSpace cspace = CGColorSpace.CreateDeviceRGB())
             using (CGBitmapContext context = new CGBitmapContext(
                 handle.AddrOfPinnedObject(),
-                sz.Width, sz.Height,
+                width, height,
                 8,
-                sz.Width * 3,
+                width * 3,
                 cspace,
                 CGImageAlphaInfo.PremultipliedLast))
             using (CGImage cgImage = context.ToImage())
