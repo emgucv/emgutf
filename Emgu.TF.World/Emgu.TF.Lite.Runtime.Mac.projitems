@@ -17,8 +17,12 @@
     <EmguTFLiteErrorMessage Condition="!Exists('$(EmguTFLiteNativeFile)')"> This package do not contain necessary binary for $(EmguTFLiteLinkTarget). Emgu TF Lite for Mac Commercial License is required. Missing $(EmguTFLiteNativeFile) </EmguTFLiteErrorMessage>
     <EmguTFLiteDeployMessage Condition="Exists('$(EmguTFLiteNativeFile)')">$(EmguTFLiteDeployMessage)mac </EmguTFLiteDeployMessage>
   </PropertyGroup>
-  <ItemGroup>
-  </ItemGroup>
+      <ItemGroup Condition="Exists('$(EmguTFLiteNativeFile)')">
+        <Content Include="$(MSBuildThisFileDirectory)..\lib\osx\libtfliteextern.dylib">
+          <Link>libtfliteextern.dylib</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+      </ItemGroup>
     <Target Name="EmguTFLitePackageBuildImports" BeforeTargets="PrepareForBuild">
     <Message Condition="'$(EmguTFLiteLinkTarget)'!=''" Text="Emgu TF Lite shared project compiling against $(EmguTFLiteLinkTarget)" Importance="High" />
     <Error Text="'$(EmguTFLiteErrorMessage)'" Condition="'$(EmguTFLiteErrorMessage)'!=''" />
