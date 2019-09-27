@@ -142,12 +142,14 @@ MACRO(BUILD_CSPROJ target csproj_file extra_flags)
   ADD_CUSTOM_TARGET (${target} ${ARGV3})
   
   IF (WIN32 AND MSVC AND NOT ("${CMAKE_VS_DEVENV_COMMAND}" STREQUAL ""))
+    MESSAGE(STATUS "Adding custom command: ${CMAKE_VS_DEVENV_COMMAND} /Build Release ${extra_flags} ${csproj_file}")
     ADD_CUSTOM_COMMAND (
       TARGET ${target}
       COMMAND ${CMAKE_VS_DEVENV_COMMAND} /Build Release ${extra_flags} ${csproj_file}
       COMMENT "Building ${target}")
   ELSEIF(MSBUILD_EXECUTABLE)
-    #MESSAGE(STATUS "Adding custom command: ${MSBUILD_EXECUTABLE} /t:Build /p:Configuration=Release ${extra_flags} ${csproj_file}")
+  #IF(MSBUILD_EXECUTABLE)
+    MESSAGE(STATUS "Adding custom command: ${MSBUILD_EXECUTABLE} /t:Build /p:Configuration=Release ${extra_flags} ${csproj_file}")
     ADD_CUSTOM_COMMAND (
       TARGET ${target}
       COMMAND ${MSBUILD_EXECUTABLE} /t:Build /p:Configuration=Release ${extra_flags} ${csproj_file}
@@ -170,7 +172,6 @@ MACRO(BUILD_DOTNET_PROJ target csproj_file extra_flags)
       TARGET ${target}
       COMMAND "${DOTNET_EXECUTABLE}" build "${csproj_file}"
       COMMENT "Building ${target}")
-	#MESSAGE(STATUS " ==> ${target} Build command: ${DOTNET_EXECUTABLE} build ${csproj_file}" )
   ELSE()
 	MESSAGE(FATAL_ERROR "DOTNET_EXECUTABLE not found!")
   ENDIF()

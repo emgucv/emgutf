@@ -449,9 +449,6 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CommonAssemblyInfo.cs.in ${CMAK
 
 SET(EMGUTF_NUGET_FILE_LIST "")
 
-
-
-
 SET(EMGUTF_NUGET_ID "EMGU.TF")
 SET(EMGUTF_MODEL_NUGET_ID "EMGU.TF.MODELS")
 SET(EMGUTF_PROTOBUF_NUGET_ID "EMGU.TF.PROTOBUF")
@@ -536,14 +533,15 @@ IF(HAVE_WINDESKTOP_LITE)
 	
 	SET(EMGUTF_LITE_NUGET_FILE_LIST "
 	<file src=\"..\\..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />")
-	SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Net45.dll\" target=\"lib\\net45\" />
-	<file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Net45.xml\" target=\"lib\\net45\" />")
+#	SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
+#    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Net45.dll\" target=\"lib\\net45\" />
+#	<file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Net45.xml\" target=\"lib\\net45\" />")
 	SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Netstandard.dll\" target=\"lib\\netstandard2.0\" />
 	<file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Netstandard.xml\" target=\"lib\\netstandard2.0\" />")
-	SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
-	<file src=\"Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_NUGET_ID}.targets\" />
+#	SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST}
+#	<file src=\"Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_NUGET_ID}.targets\" />")
+	SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST}
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
 	
 	SET(EMGUTF_LITE_MODEL_NUGET_FILE_LIST "${EMGUTF_LITE_MODEL_NUGET_FILE_LIST} 
@@ -764,7 +762,7 @@ ENDIF()
 ADD_SUBDIRECTORY(Emgu.TF.Example)
 #ADD_SUBDIRECTORY(Emgu.TF.Test.Core)
 #ADD_SUBDIRECTORY(Emgu.TF.Test)
-ADD_SUBDIRECTORY(Emgu.TF.World)
+ADD_SUBDIRECTORY(Emgu.TF.Runtime)
 ADD_SUBDIRECTORY(Emgu.Models)
 IF(HAS_FULL_BUILD)
   ADD_SUBDIRECTORY(Emgu.TF.Models)

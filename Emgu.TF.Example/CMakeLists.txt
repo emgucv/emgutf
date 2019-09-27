@@ -199,8 +199,8 @@ ENDIF()
 IF(HAVE_OSX)
   INSTALL(
     DIRECTORY
-    "${CMAKE_CURRENT_SOURCE_DIR}/XamarinForms/XamarinForms.OSX/"
-    DESTINATION Emgu.TF.Example/XamarinForms/XamarinForms.OSX/
+    "${CMAKE_CURRENT_SOURCE_DIR}/XamarinForms/XamarinForms.Mac/"
+    DESTINATION Emgu.TF.Example/XamarinForms/XamarinForms.Mac/
     COMPONENT emgutf_example_source
     FILES_MATCHING
     PATTERN "*.cs"
@@ -251,8 +251,8 @@ ENDIF()
 IF(HAVE_OSX_LITE)
   INSTALL(
     DIRECTORY
-    "${CMAKE_CURRENT_SOURCE_DIR}/XamarinForms/XamarinForms.Lite.OSX/"
-    DESTINATION Emgu.TF.Example/XamarinForms/XamarinForms.Lite.OSX/
+    "${CMAKE_CURRENT_SOURCE_DIR}/XamarinForms/XamarinForms.Lite.Mac/"
+    DESTINATION Emgu.TF.Example/XamarinForms/XamarinForms.Lite.Mac/
     COMPONENT emgutf_example_source
     FILES_MATCHING
     PATTERN "*.cs"
@@ -390,16 +390,6 @@ IF(HAS_FULL_BUILD)
     BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj"  "" ALL)
     ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Netstandard Emgu.TF.Protobuf.Netstandard Emgu.TF.Models.Netstandard)
   ENDIF() 
-ENDIF()
-
-IF(NOT (NETFX_CORE OR ANDROID OR (APPLE AND (NOT IOS))))
-  SET(EMGU_TF_REFERENCE 
-    -r:System.Xml.dll 
-    -r:System.Drawing.dll 
-    -r:System.Data.dll 
-    -r:System.Windows.Forms.dll
-    -r:System.ServiceModel.dll
-    -r:"${LIBRARY_OUTPUT_PATH}/Emgu.TF.World.dll" )
 ENDIF()
 
 #add_subdirectory(MultiboxPeopleDetection)

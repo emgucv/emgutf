@@ -4,7 +4,7 @@ VisualStudioVersion = 16.0.28803.452
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Util", "..\..\Emgu.TF.Util\Emgu.TF.Util.shproj", "{98561642-5EC3-4244-BAF9-6876D9BA5527}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinForms.Lite.OSX", "..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite.OSX\XamarinForms.Lite.OSX.csproj", "{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinForms.Lite.Mac", "..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite.Mac\XamarinForms.Lite.Mac.csproj", "{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.Models.Shared", "..\..\Emgu.Models\Emgu.Models.Shared.shproj", "{8EDCE0C8-BA71-4396-9428-35D05877258C}"
 EndProject
