@@ -154,13 +154,9 @@
       <Project>{C07F7FE3-3835-460D-B6C2-166250C03AC0}</Project>
       <Name>Emgu.TF.Lite.NetStandard</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Emgu.TF.World\Emgu.TF.Lite.Runtime.Mac.csproj">
-      <Project>{880C9A75-4817-41D0-A826-351B5D049C4D}</Project>
-      <Name>Emgu.TF.Lite.Runtime.Mac</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems')" />
   <Import Project="..\XamarinForms.Lite\XamarinForms.Lite.projitems" Label="Shared" Condition="Exists('..\XamarinForms.Lite\XamarinForms.Lite.projitems')" />
   <Import Project="..\..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.Models\Emgu.Models.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
-  </Project>
+</Project>
