@@ -17,8 +17,8 @@
     <DefineConstants>TRACE;__NETSTANDARD_2_0__</DefineConstants>
   </PropertyGroup>
   
-  <Import Project="..\..\Emgu.TF.Util\Emgu.TF.Util.projitems" Label="Shared" />
+  <Import Project="..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems" Label="Shared" />
 
-  <Import Project="..\Emgu.TF.projitems" Label="Shared" />
+  <Import Project="..\Emgu.TF.Shared.projitems" Label="Shared" />
 
 </Project>

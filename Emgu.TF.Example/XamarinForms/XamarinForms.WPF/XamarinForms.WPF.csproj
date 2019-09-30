@@ -126,7 +126,7 @@
       <Project>{db17df2e-d7a4-4cd4-b4d9-fc3447e5afd8}</Project>
       <Name>Emgu.TF.Protobuf.Netstandard</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Emgu.TF.World\Emgu.TF.Runtime.Net.csproj">
+    <ProjectReference Include="..\..\..\Emgu.TF.Runtime\Emgu.TF.Runtime.Net.csproj">
       <Project>{cf1433de-b607-479e-862d-8f4cb6783261}</Project>
       <Name>Emgu.TF.Runtime.Net</Name>
     </ProjectReference>

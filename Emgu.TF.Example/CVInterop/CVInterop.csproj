@@ -86,9 +86,9 @@
       <Version>4.3.0</Version>
     </PackageReference>
   </ItemGroup>
-  <Import Project="..\..\Emgu.TF\Emgu.TF.projitems" Label="Shared" />
+  <Import Project="..\..\Emgu.TF\Emgu.TF.Shared.projitems" Label="Shared" />
   <Import Project="..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems" Label="Shared" />
-  <Import Project="..\..\Emgu.TF.Util\Emgu.TF.Util.projitems" Label="Shared" />
+  <Import Project="..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems" Label="Shared" />
   <Import Project="..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" />
   <Import Project="..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

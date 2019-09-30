@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.852
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29318.209
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF", "..\..\Emgu.TF\Emgu.TF.shproj", "{D47D776E-9970-4552-BC8A-24CADCBEA009}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Shared", "..\..\Emgu.TF\Emgu.TF.Shared.shproj", "{D47D776E-9970-4552-BC8A-24CADCBEA009}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Util", "..\..\Emgu.TF.Util\Emgu.TF.Util.shproj", "{98561642-5EC3-4244-BAF9-6876D9BA5527}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Util.Shared", "..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.shproj", "{98561642-5EC3-4244-BAF9-6876D9BA5527}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Models.Shared", "..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.shproj", "{752279F0-17EF-4EC8-857C-8F5F897AF0E8}"
 EndProject
@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inception.Console.NetCore",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Protobuf.Netstandard", "..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Netstandard\Emgu.TF.Protobuf.Netstandard.csproj", "{DB17DF2E-D7A4-4CD4-B4D9-FC3447E5AFD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Runtime.Net", "..\..\Emgu.TF.World\Emgu.TF.Runtime.Net.csproj", "{CF1433DE-B607-479E-862D-8F4CB6783261}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Runtime.Windows", "..\..\Emgu.TF.Runtime\Emgu.TF.Runtime.Windows.csproj", "{CF1433DE-B607-479E-862D-8F4CB6783261}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -35,14 +35,14 @@ Global
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
 		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
 		..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
-		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
-		..\..\Emgu.TF\Emgu.TF.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
+		..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
+		..\..\Emgu.TF\Emgu.TF.Shared.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms\XamarinForms.projitems*{26bdb58d-52d9-4ad1-9205-be5792781a98}*SharedItemsImports = 13
 		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{752279f0-17ef-4ec8-857c-8f5f897af0e8}*SharedItemsImports = 13
 		..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems*{88fed2cb-ee86-4b5e-85a0-9f5fdf42111f}*SharedItemsImports = 13
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{8edce0c8-ba71-4396-9428-35d05877258c}*SharedItemsImports = 13
-		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{98561642-5ec3-4244-baf9-6876d9ba5527}*SharedItemsImports = 13
-		..\..\Emgu.TF\Emgu.TF.projitems*{d47d776e-9970-4552-bc8a-24cadcbea009}*SharedItemsImports = 13
+		..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems*{98561642-5ec3-4244-baf9-6876d9ba5527}*SharedItemsImports = 13
+		..\..\Emgu.TF\Emgu.TF.Shared.projitems*{d47d776e-9970-4552-bc8a-24cadcbea009}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

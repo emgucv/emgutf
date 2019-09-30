@@ -209,7 +209,7 @@ namespace Emgu.TF.Lite
                             else       
 #endif
                             {
-                                System.Diagnostics.Debug.WriteLine("No suitable directory found to load unmanaged modules");
+                                System.Diagnostics.Debug.WriteLine("No suitable directory found to load unmanaged modules, please make sure a Emgu.TF.Lite.Runtime project / nuget package is referenced.");
                                 return false;
                             }
                         }

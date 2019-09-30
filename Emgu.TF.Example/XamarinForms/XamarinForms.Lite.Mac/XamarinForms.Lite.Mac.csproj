@@ -155,7 +155,7 @@
       <Name>Emgu.TF.Lite.NetStandard</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="..\..\..\Emgu.TF.World\Emgu.TF.Lite.Runtime.Mac.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.TF.World\Emgu.TF.Lite.Runtime.Mac.projitems')" />
+  <Import Project="..\..\..\Emgu.TF.Runtime\Emgu.TF.Lite.Runtime.Mac.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.TF.Runtime\Emgu.TF.Lite.Runtime.Mac.projitems')" />
   <Import Project="..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems')" />
   <Import Project="..\XamarinForms.Lite\XamarinForms.Lite.projitems" Label="Shared" Condition="Exists('..\XamarinForms.Lite\XamarinForms.Lite.projitems')" />
   <Import Project="..\..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\..\Emgu.Models\Emgu.Models.Shared.projitems')" />

@@ -267,6 +267,6 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\XamarinForms.Lite\XamarinForms.Lite.projitems" Label="Shared" />
-  <Import Project="..\..\..\Emgu.TF.World\Emgu.TF.Lite.Runtime.Windows.projitems" Label="Shared" />
+  <Import Project="..\..\..\Emgu.TF.Runtime\Emgu.TF.Lite.Runtime.Windows.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

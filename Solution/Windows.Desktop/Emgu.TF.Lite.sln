@@ -1,18 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2026
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29318.209
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Util", "..\..\Emgu.TF.Util\Emgu.TF.Util.shproj", "{98561642-5EC3-4244-BAF9-6876D9BA5527}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Util.Shared", "..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.shproj", "{98561642-5EC3-4244-BAF9-6876D9BA5527}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Lite.World", "..\..\Emgu.TF.World\Emgu.TF.Lite.World.csproj", "{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Shared", "..\..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.shproj", "{8F587FB9-BBA6-4C30-9329-8CBAC7020FE0}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite", "..\..\Emgu.TF.Lite\Emgu.TF.Lite.shproj", "{8F587FB9-BBA6-4C30-9329-8CBAC7020FE0}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Runtime.Windows", "..\..\Emgu.TF.Runtime\Emgu.TF.Lite.Runtime.Windows.shproj", "{0D7C99EA-3AAE-4F45-9BA7-3B4AF8313753}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Netstandard", "..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj", "{9EE02B11-58A6-412A-8222-3E70ECB29C0C}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\Emgu.TF.Lite\Emgu.TF.Lite.projitems*{72c5fe43-d0c0-45c6-b5a6-c4fc21263924}*SharedItemsImports = 4
-		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{72c5fe43-d0c0-45c6-b5a6-c4fc21263924}*SharedItemsImports = 4
+		..\..\Emgu.TF.Runtime\Emgu.TF.Lite.Runtime.Windows.projitems*{0d7c99ea-3aae-4f45-9ba7-3b4af8313753}*SharedItemsImports = 13
 		..\..\Emgu.TF.Lite\Emgu.TF.Lite.projitems*{8f587fb9-bba6-4c30-9329-8cbac7020fe0}*SharedItemsImports = 13
 		..\..\Emgu.TF.Util\Emgu.TF.Util.projitems*{98561642-5ec3-4244-baf9-6876d9ba5527}*SharedItemsImports = 13
 	EndGlobalSection
@@ -31,30 +32,30 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Debug|ARM.Build.0 = Debug|Any CPU
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Debug|iPhone.ActiveCfg = Debug|iPhone
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Debug|iPhone.Build.0 = Debug|iPhone
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Debug|x64.Build.0 = Debug|Any CPU
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Debug|x86.Build.0 = Debug|Any CPU
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Release|Any CPU.Build.0 = Release|Any CPU
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Release|ARM.ActiveCfg = Release|Any CPU
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Release|ARM.Build.0 = Release|Any CPU
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Release|iPhone.ActiveCfg = Release|iPhone
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Release|iPhone.Build.0 = Release|iPhone
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Release|x64.ActiveCfg = Release|Any CPU
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Release|x64.Build.0 = Release|Any CPU
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Release|x86.ActiveCfg = Release|Any CPU
-		{72C5FE43-D0C0-45C6-B5A6-C4FC21263924}.Release|x86.Build.0 = Release|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Debug|ARM.Build.0 = Debug|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Debug|x64.Build.0 = Debug|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Debug|x86.Build.0 = Debug|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Release|ARM.ActiveCfg = Release|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Release|ARM.Build.0 = Release|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Release|iPhone.Build.0 = Release|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Release|x64.ActiveCfg = Release|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Release|x64.Build.0 = Release|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Release|x86.ActiveCfg = Release|Any CPU
+		{9EE02B11-58A6-412A-8222-3E70ECB29C0C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

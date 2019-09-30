@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.852
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Util", "..\..\Emgu.TF.Util\Emgu.TF.Util.shproj", "{98561642-5EC3-4244-BAF9-6876D9BA5527}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Util.Shared", "..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.shproj", "{98561642-5EC3-4244-BAF9-6876D9BA5527}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinForms.Lite.iOS", "..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite.iOS\XamarinForms.Lite.iOS.csproj", "{FB5CF614-195E-4D5A-ABDB-1B831A5F8F79}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite", "..\..\Emgu.TF.Lite\Emgu.TF.Lite.shproj", "{8F587FB9-BBA6-4C30-9329-8CBAC7020FE0}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Shared", "..\..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.shproj", "{8F587FB9-BBA6-4C30-9329-8CBAC7020FE0}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.Models.Shared", "..\..\Emgu.Models\Emgu.Models.Shared.shproj", "{8EDCE0C8-BA71-4396-9428-35D05877258C}"
 EndProject
@@ -17,7 +17,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Models.Shared"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Netstandard", "..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.Netstandard.csproj", "{7D6E901B-EF2C-48A2-B1BE-09CA9BF1F189}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Lite.Runtime.iOS", "..\..\Emgu.TF.World\Emgu.TF.Lite.Runtime.iOS.csproj", "{A14504ED-D613-43D1-AD3D-AE3F411C51CE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Lite.Runtime.iOS", "..\..\Emgu.TF.Runtime\Emgu.TF.Lite.Runtime.iOS.csproj", "{A14504ED-D613-43D1-AD3D-AE3F411C51CE}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
