@@ -129,6 +129,22 @@ IF(HAVE_WINDESKTOP_X64 OR HAVE_WINDESKTOP_X64_CUDA)
 #    COMPONENT emgutf_binary)
 ENDIF()
 
+IF(HAVE_OSX_LITE)
+  INSTALL(
+    DIRECTORY
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    DESTINATION .
+    COMPONENT emgutf_source
+    FILES_MATCHING 
+	PATTERN "Emgu.TF.Lite.Runtime.Mac.shproj"
+	PATTERN "Emgu.TF.Lite.Runtime.Mac.projitems"
+    PATTERN ".svn" EXCLUDE
+    PATTERN "obj" EXCLUDE
+    PATTERN "CMakeFiles" EXCLUDE
+    PATTERN "${PROJECT_NAME}.dir" EXCLUDE
+    )
+ENDIF()
+
 
 IF(HAVE_ANDROID_LITE)
   PROJECT(Emgu.TF.Lite.Runtime.Android)
