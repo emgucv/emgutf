@@ -44,7 +44,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <OutputPath>..\lib\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
   </PropertyGroup>
-      <PropertyGroup>
+  <PropertyGroup>
     <TFLiteBinaryDir>$(MSBuildThisFileDirectory)..\lib</TFLiteBinaryDir>
     <EmguTFLiteDir>$(MSBuildThisFileDirectory)</EmguTFLiteDir>
   </PropertyGroup>
@@ -83,5 +83,10 @@
     <Error Text="'$(EmguTFLiteErrorMessage)'" Condition="'$(EmguTFLiteErrorMessage)'!=''" />
     <Message Text="Emgu TF Lite Compiling with $(EmguTFLiteDeployMessage)binary" Condition="'$(EmguTFLiteDeployMessage)'!=''" Importance="High" />
     <Message Text="No native binary is deployed by the Emgu.TF shared project." Condition="'$(EmguTFLiteDeployMessage)'==''" Importance="High" />
+  </Target>
+  <Target Name="AfterBuild">
+    <Message Text="Copying $(OutputPath)$(AssemblyName).dll, $(OutputPath)$(AssemblyName).xml to $(TFLiteBinaryDir)" Importance="high" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="$(TFLiteBinaryDir)" ContinueOnError="true" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).xml" DestinationFolder="$(TFLiteBinaryDir)" ContinueOnError="true" />
   </Target>
 </Project>
