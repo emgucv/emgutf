@@ -39,8 +39,7 @@
 	<DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <TFLiteBinaryDir>$(MSBuildThisFileDirectory)..\lib</TFLiteBinaryDir>
-    <EmguTFLiteDir>$(MSBuildThisFileDirectory)</EmguTFLiteDir>
+    <TFLiteBinaryDir>$(MSBuildThisFileDirectory)..\..\lib</TFLiteBinaryDir>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
