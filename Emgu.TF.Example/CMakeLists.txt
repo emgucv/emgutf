@@ -57,6 +57,11 @@ IF (HAVE_ANDROID OR HAVE_IOS OR HAVE_OSX OR HAVE_WINDESKTOP_X64 OR HAVE_ANDROID_
   #  "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/examples/label_image/data/grace_hopper.jpg"
   #  DESTINATION tensorflow/tensorflow/examples/label_image/data 
   #	COMPONENT emgutf_example_source)
+  
+  INSTALL(FILES
+    "${CMAKE_CURRENT_SOURCE_DIR}/CVInterop/dog416.png"
+    DESTINATION Emgu.TF.Example/CVInterop
+	COMPONENT emgutf_example_source)
 ENDIF()
 
 IF (HAS_LITE_BUILD) 
