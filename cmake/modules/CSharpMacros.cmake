@@ -142,14 +142,14 @@ MACRO(BUILD_CSPROJ target csproj_file extra_flags)
   ADD_CUSTOM_TARGET (${target} ${ARGV3})
   
   IF (WIN32 AND MSVC AND NOT ("${CMAKE_VS_DEVENV_COMMAND}" STREQUAL ""))
-    MESSAGE(STATUS "Adding custom command: ${CMAKE_VS_DEVENV_COMMAND} /Build Release ${extra_flags} ${csproj_file}")
+    #MESSAGE(STATUS "Adding custom command: ${CMAKE_VS_DEVENV_COMMAND} /Build Release ${extra_flags} ${csproj_file}")
     ADD_CUSTOM_COMMAND (
       TARGET ${target}
       COMMAND ${CMAKE_VS_DEVENV_COMMAND} /Build Release ${extra_flags} ${csproj_file}
       COMMENT "Building ${target}")
   ELSEIF(MSBUILD_EXECUTABLE)
   #IF(MSBUILD_EXECUTABLE)
-    MESSAGE(STATUS "Adding custom command: ${MSBUILD_EXECUTABLE} /t:Build /p:Configuration=Release ${extra_flags} ${csproj_file}")
+    #MESSAGE(STATUS "Adding custom command: ${MSBUILD_EXECUTABLE} /t:Build /p:Configuration=Release ${extra_flags} ${csproj_file}")
     ADD_CUSTOM_COMMAND (
       TARGET ${target}
       COMMAND ${MSBUILD_EXECUTABLE} /t:Build /p:Configuration=Release ${extra_flags} ${csproj_file}
