@@ -64,10 +64,6 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Emgu.TF.Runtime\Emgu.TF.Runtime.Android.csproj">
-      <Project>{b2f6d900-aa34-49d2-98ee-3c9f8dd896f2}</Project>
-      <Name>Emgu.TF.Runtime.Android</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj">
       <Project>{c096e7e5-ab7f-4255-b4fc-d6fbe96cbfdf}</Project>
       <Name>Emgu.TF.Netstandard</Name>
