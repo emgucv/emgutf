@@ -714,6 +714,12 @@ SET(EMGUTF_MODEL_NUGET_FILE_LIST "
 	<file src=\"..\\..\\..\\lib\\Emgu.TF.Models.Netstandard.xml\" target=\"lib\\netstandard2.0\" />
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
 
+IF(HAVE_ANDROID)
+  SET(EMGUTF_MODEL_NUGET_FILE_LIST "${EMGUTF_MODEL_NUGET_FILE_LIST}
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.Android.dll\" target=\"lib\\MonoAndroid90\" />
+	<file src=\"..\\..\\..\\lib\\Emgu.TF.Models.Android.xml\" target=\"lib\\MonoAndroid90\" />")
+ENDIF()
+
 SET(EMGUTF_PROTOBUF_NUGET_FILE_LIST "
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.Netstandard.dll\" target=\"lib\\netstandard1.0\" />
 	<file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.Netstandard.XML\" target=\"lib\\netstandard1.0\" />

@@ -2,7 +2,7 @@
 #  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-IF (WIN32 AND (HAVE_WINDESKTOP_X86 OR HAVE_WINDESKTOP_X64) )
+IF (WIN32 AND (HAVE_WINDESKTOP OR HAVE_ANDROID OR HAVE_OSX) )
 
 PROJECT(Emgu.TF.Protobuf.nuget)
 ADD_CUSTOM_TARGET(
