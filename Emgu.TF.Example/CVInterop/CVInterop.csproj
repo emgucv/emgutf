@@ -86,11 +86,21 @@
       <Version>4.3.0</Version>
     </PackageReference>
   </ItemGroup>
-  <Import Project="..\..\Emgu.TF\Emgu.TF.Shared.projitems" Label="Shared" />
-  <Import Project="..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems" Label="Shared" />
-  <Import Project="..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems" Label="Shared" />
-  <Import Project="..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" />
-  <Import Project="..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems" Label="Shared" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Emgu.TF.Models\Emgu.TF.Models.Netstandard\Emgu.TF.Models.Netstandard.csproj">
+      <Project>{1e761de9-f20c-4133-9c52-f790eebce34a}</Project>
+      <Name>Emgu.TF.Models.Netstandard</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Netstandard\Emgu.TF.Protobuf.Netstandard.csproj">
+      <Project>{db17df2e-d7a4-4cd4-b4d9-fc3447e5afd8}</Project>
+      <Name>Emgu.TF.Protobuf.Netstandard</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj">
+      <Project>{aae51eb4-f01c-4e68-b275-adc86d1019ca}</Project>
+      <Name>Emgu.TF.Netstandard</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="..\..\Emgu.TF.Runtime\Emgu.TF.Runtime.Windows.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

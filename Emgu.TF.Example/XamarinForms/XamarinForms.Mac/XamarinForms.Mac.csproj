@@ -65,9 +65,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="netstandard.dll">
       <!-- HintPath for macOS -->
-      <HintPath Condition="Exists('/Library/Frameworks/Xamarin.Mac.framework/Versions/Current/lib/mono/Xamarin.Mac/Facades/netstandard.dll')">/Library/Frameworks/Xamarin.Mac.framework/Versions/Current/lib/mono/Xamarin.Mac/Facades/netstandard.dll</HintPath> 
+      <HintPath Condition="Exists('/Library/Frameworks/Xamarin.Mac.framework/Versions/Current/lib/mono/Xamarin.Mac/Facades/netstandard.dll')">/Library/Frameworks/Xamarin.Mac.framework/Versions/Current/lib/mono/Xamarin.Mac/Facades/netstandard.dll</HintPath>
       <!-- HintPath for Windows -->
-      <HintPath Condition="Exists('$(TargetFrameworkRootPath)\Xamarin.Mac\Facades\netstandard.dll')">$(TargetFrameworkRootPath)\Xamarin.Mac\Facades\netstandard.dll</HintPath> 
+      <HintPath Condition="Exists('$(TargetFrameworkRootPath)\Xamarin.Mac\Facades\netstandard.dll')">$(TargetFrameworkRootPath)\Xamarin.Mac\Facades\netstandard.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -266,10 +266,6 @@
     <ProjectReference Include="..\..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj">
       <Project>{F644AA6A-5E39-4DAE-9BAD-6DDBE3335A74}</Project>
       <Name>Emgu.TF.Netstandard</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Emgu.TF.World\Emgu.TF.Runtime.Unified.csproj">
-      <Project>{64306FF5-1E98-4D18-9CA7-666CD2D0F642}</Project>
-      <Name>Emgu.TF.Runtime.Unified</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Netstandard\Emgu.TF.Protobuf.Netstandard.csproj">
       <Project>{0A11AE64-3B7B-4C02-8004-D2FAD72673CE}</Project>
