@@ -275,7 +275,8 @@ FIND_PROGRAM (RESGEN_EXECUTABLE resgen
 /Library/Frameworks/Mono.framework/Commands/
 )
 
-FIND_PROGRAM(DOTNET_EXECUTABLE dotnet)
+FIND_PROGRAM(DOTNET_EXECUTABLE dotnet
+/usr/local/share/dotnet)
   
 SET (CSharp_FOUND FALSE)
 IF (DOTNET_EXECUTABLE)
