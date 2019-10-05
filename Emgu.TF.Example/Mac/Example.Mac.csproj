@@ -140,6 +140,7 @@
       <Name>Emgu.TF.Netstandard</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="..\..\Emgu.TF.Runtime\Emgu.TF.Runtime.Mac.projitems" Label="Shared" Condition="Exists('..\..\Emgu.TF.Runtime\Emgu.TF.Runtime.Mac.projitems')" />
   <Import Project="..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\Emgu.Models\Emgu.Models.Shared.projitems')" />
   <Import Project="..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />

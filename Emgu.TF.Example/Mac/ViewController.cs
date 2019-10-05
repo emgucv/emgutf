@@ -34,7 +34,7 @@ namespace Example.OSX
             
             Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
 			MultiboxGraph.Result[] detectResult = _multiboxGraph.Detect(imageTensor);
-            Emgu.Models.NativeImageIO.Annotation[] annotations = MultiboxGraph.FilterResults(detectResult, 0.1f);
+            Emgu.Models.Annotation[] annotations = MultiboxGraph.FilterResults(detectResult, 0.1f);
 
             NSImage img = new NSImage(fileName);
             Emgu.Models.NativeImageIO.DrawAnnotations(img, annotations);

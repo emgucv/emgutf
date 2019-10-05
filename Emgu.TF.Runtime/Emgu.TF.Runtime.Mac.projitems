@@ -22,11 +22,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="$(EmguTFNativeFile)">
-      <Link>%(Filename)%(Extension)</Link>
+      <Link>libtfextern.dylib</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
 	<Content Include="$(EmguTFNativeFile2)">
-      <Link>%(Filename)%(Extension)</Link>
+      <Link>libtensorflow_framework.dylib</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
