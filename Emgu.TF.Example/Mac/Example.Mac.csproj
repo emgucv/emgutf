@@ -60,27 +60,11 @@
     <UseSGen>false</UseSGen>
     <AOTMode>None</AOTMode>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
-    <UseSGen>false</UseSGen>
-    <AOTMode>None</AOTMode>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
-    <UseSGen>false</UseSGen>
-    <AOTMode>None</AOTMode>
-  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <UseSGen>false</UseSGen>
     <AOTMode>None</AOTMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' ">
-    <UseSGen>false</UseSGen>
-    <AOTMode>None</AOTMode>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
-    <UseSGen>false</UseSGen>
-    <AOTMode>None</AOTMode>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <UseSGen>false</UseSGen>
     <AOTMode>None</AOTMode>
   </PropertyGroup>
