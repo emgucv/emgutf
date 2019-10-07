@@ -6,22 +6,12 @@
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\..\lib\</OutputPath>
-  </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutputPath>..\..\lib\</OutputPath>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\..\lib\</OutputPath>
-  </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutputPath>..\..\lib\</OutputPath>
-  </PropertyGroup>
-	
   <ItemGroup>
     <Content Include="..\XamarinForms\XamarinForms\tulips.jpg" Link="tulips.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -34,8 +24,9 @@
     <ProjectReference Include="..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj" />
   </ItemGroup>
 
-  <Import Project="..\..\Emgu.TF.Runtime\Emgu.TF.Runtime.Windows.projitems" Label="Shared" />
+  <Import Project="..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Runtime.Windows.projitems" Label="Shared" /> 
 
-  <Import Project="..\..\Emgu.TF.Runtime\Emgu.TF.Runtime.Mac.projitems" Label="Shared" />
+  <Import Project="..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Runtime.Mac.projitems" Label="Shared" />
+
 
 </Project>

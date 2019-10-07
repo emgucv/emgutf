@@ -26,7 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-	<OutputPath>..\lib\Build\Runtime.Android.$(Platform)\$(Configuration)\</OutputPath>
+	<OutputPath>..\..\lib\Build\Runtime.Android.$(Platform)\$(Configuration)\</OutputPath>
     <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -36,7 +36,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-	<OutputPath>..\lib\Build\Runtime.Android.$(Platform)\$(Configuration)\</OutputPath>
+	<OutputPath>..\..\lib\Build\Runtime.Android.$(Platform)\$(Configuration)\</OutputPath>
 	<DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -47,7 +47,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
-	<OutputPath>..\lib\Build\Runtime.Android.$(Platform)\$(Configuration)\</OutputPath>
+	<OutputPath>..\..\lib\Build\Runtime.Android.$(Platform)\$(Configuration)\</OutputPath>
 	<DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
@@ -57,7 +57,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
-	<OutputPath>..\lib\Build\Runtime.Android.$(Platform)\$(Configuration)\</OutputPath>
+	<OutputPath>..\..\lib\Build\Runtime.Android.$(Platform)\$(Configuration)\</OutputPath>
 	<DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
@@ -70,7 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <PropertyGroup>
-    <TFBinaryDir>$(MSBuildThisFileDirectory)..\lib</TFBinaryDir>
+    <TFBinaryDir>$(MSBuildThisFileDirectory)..\..\lib</TFBinaryDir>
     <EmguTFDir>$(MSBuildThisFileDirectory)</EmguTFDir>
   </PropertyGroup>
   <PropertyGroup>
@@ -135,12 +135,12 @@
     </AndroidNativeLibrary>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\CommonAssemblyInfo.cs">
+    <Compile Include="..\..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj">
+    <ProjectReference Include="..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj">
       <Project>{c096e7e5-ab7f-4255-b4fc-d6fbe96cbfdf}</Project>
       <Name>Emgu.TF.Netstandard</Name>
     </ProjectReference>
@@ -164,8 +164,8 @@
     <Message Text="No native binary is deployed by the Emgu.TF shared project." Condition="'$(EmguTFDeployMessage)'==''" Importance="High" />
   </Target>
   <Target Name="AfterBuild">
-    <Message Text="Copying $(OutputPath)$(AssemblyName).dll, $(OutputPath)$(AssemblyName).xml to ..\lib" Importance="high" />
-    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="..\lib" ContinueOnError="true" />
-    <Copy SourceFiles="$(OutputPath)$(AssemblyName).xml" DestinationFolder="..\lib" ContinueOnError="true" />
+    <Message Text="Copying $(OutputPath)$(AssemblyName).dll, $(OutputPath)$(AssemblyName).xml to ..\..\lib" Importance="high" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="..\..\lib" ContinueOnError="true" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).xml" DestinationFolder="..\..\lib" ContinueOnError="true" />
   </Target>
 </Project>

@@ -9,7 +9,7 @@
     <Import_RootNamespace>Emgu.TF</Import_RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
-    <EmguTFWindowsBinaryDir>$(MSBuildThisFileDirectory)..\lib</EmguTFWindowsBinaryDir>
+    <EmguTFWindowsBinaryDir>$(MSBuildThisFileDirectory)..\..\lib</EmguTFWindowsBinaryDir>
     <EmguTFWindowsDir>$(MSBuildThisFileDirectory)</EmguTFWindowsDir>
   </PropertyGroup>
   <PropertyGroup>

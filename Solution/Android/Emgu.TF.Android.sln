@@ -19,7 +19,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Protobuf.Shared", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Netstandard", "..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj", "{C096E7E5-AB7F-4255-B4FC-D6FBE96CBFDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Runtime.Android", "..\..\Emgu.TF.Runtime\Emgu.TF.Runtime.Android.csproj", "{B2F6D900-AA34-49D2-98EE-3C9F8DD896F2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Runtime.Android", "..\..\Emgu.TF.Runtime\Android\Emgu.TF.Runtime.Android.csproj", "{B2F6D900-AA34-49D2-98EE-3C9F8DD896F2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Protobuf.Netstandard", "..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Netstandard\Emgu.TF.Protobuf.Netstandard.csproj", "{F6F7C7BC-1EA0-4623-966C-BCD3FC7B8D88}"
 EndProject
