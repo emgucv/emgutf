@@ -15,7 +15,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "XamarinForms.Lite", "..\..\
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Models.Shared", "..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.shproj", "{E956DD26-1294-4731-8A90-C4CBA9F291B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Lite.Runtime.iOS", "..\..\Emgu.TF.Runtime\Emgu.TF.Lite.Runtime.iOS.csproj", "{A14504ED-D613-43D1-AD3D-AE3F411C51CE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Lite.Runtime.iOS", "..\..\Emgu.TF.Runtime\ios\Emgu.TF.Lite.Runtime.iOS.csproj", "{A14504ED-D613-43D1-AD3D-AE3F411C51CE}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

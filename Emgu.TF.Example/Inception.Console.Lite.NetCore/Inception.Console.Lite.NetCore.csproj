@@ -37,4 +37,6 @@
     <ProjectReference Include="..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.Netstandard.csproj" />
   </ItemGroup>
 
+  <Import Project="..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems" Label="Shared" />
+
 </Project>

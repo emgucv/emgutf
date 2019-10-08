@@ -398,7 +398,7 @@
       <Project>{fdab1bd5-2bc7-4839-83a6-3dcd6e8c4b5a}</Project>
       <Name>Emgu.TF.Lite.Netstandard</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Emgu.TF.Runtime\Emgu.TF.Lite.Runtime.Android.csproj">
+    <ProjectReference Include="..\..\..\Emgu.TF.Runtime\Android\Emgu.TF.Lite.Runtime.Android.csproj">
       <Project>{d11aa8f3-def2-4f40-a4e5-fb8a8938ddb7}</Project>
       <Name>Emgu.TF.Lite.Runtime.Android</Name>
     </ProjectReference>

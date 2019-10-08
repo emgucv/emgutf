@@ -10,50 +10,51 @@
     <AssemblyName>Emgu.TF.Lite.Runtime.iOS</AssemblyName>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
   </PropertyGroup>
+  <PropertyGroup>
+    <TFLiteBinaryDir>$(MSBuildThisFileDirectory)..\..\lib</TFLiteBinaryDir>
+    <EmguTFLiteDir>$(MSBuildThisFileDirectory)</EmguTFLiteDir>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\lib\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>$(TFLiteBinaryDir)\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\lib\$(AssemblyName).xml</DocumentationFile>
+    <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
-    <OutputPath>..\lib\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>$(TFLiteBinaryDir)\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>
     </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\lib\$(AssemblyName).xml</DocumentationFile>
+    <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
-    <OutputPath>..\lib\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>$(TFLiteBinaryDir)\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' ">
-    <OutputPath>..\lib\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>$(TFLiteBinaryDir)\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' ">
-    <OutputPath>..\lib\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>$(TFLiteBinaryDir)\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
-    <OutputPath>..\lib\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>$(TFLiteBinaryDir)\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
-    <OutputPath>..\lib\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>$(TFLiteBinaryDir)\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
   </PropertyGroup>
-  <PropertyGroup>
-    <TFLiteBinaryDir>$(MSBuildThisFileDirectory)..\lib</TFLiteBinaryDir>
-    <EmguTFLiteDir>$(MSBuildThisFileDirectory)</EmguTFLiteDir>
-  </PropertyGroup>
+
         <PropertyGroup>
         <EmguTFLiteLinkTarget>Xamarin iOS Native Binding Library</EmguTFLiteLinkTarget>
-        <EmguTFLiteNativeFile>$(MSBuildThisFileDirectory)..\lib\ios\libtfliteextern.a</EmguTFLiteNativeFile>
+        <EmguTFLiteNativeFile>$(TFLiteBinaryDir)\ios\libtfliteextern.a</EmguTFLiteNativeFile>
         <EmguTFLiteErrorMessage Condition="!Exists('$(EmguTFLiteNativeFile)')"> This package do not contain necessary binary for $(EmguTFLiteLinkTarget). Emgu TF Lite for iOS Commercial License is required. Missing $(EmguTFLiteNativeFile) </EmguTFLiteErrorMessage>
         <EmguTFLiteDeployMessage Condition="Exists('$(EmguTFLiteNativeFile)')">$(EmguTFLiteDeployMessage)ios </EmguTFLiteDeployMessage>
-        <EmguTFLiteLinkWithFile>$(MSBuildThisFileDirectory)ios\libtfliteextern.linkwith.cs</EmguTFLiteLinkWithFile>
+        <EmguTFLiteLinkWithFile>$(MSBuildThisFileDirectory)libtfliteextern.linkwith.cs</EmguTFLiteLinkWithFile>
         <EmguTFLiteErrorMessage Condition="!Exists('$(EmguTFLiteLinkWithFile)')"> This package do not contain necessary file for $(EmguTFLiteLinkTarget). Emgu TF Lite for iOS Commercial License is required. Missing $(EmguTFLiteLinkWithFile) </EmguTFLiteErrorMessage>
       </PropertyGroup>
       <ItemGroup>
@@ -73,10 +74,10 @@
   <ItemGroup>
     <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
   </ItemGroup>
-  <Import Project="..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems" Label="Shared" Condition="Exists('..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems')" />
-  <Import Project="..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.projitems" Label="Shared" Condition="Exists('..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.projitems')" />
-  <Import Project="..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems" Label="Shared" Condition="Exists('..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems')" />
-  <Import Project="..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" Condition="Exists('..\Emgu.Models\Emgu.Models.Shared.projitems')" />
+  <Import Project="..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems" Label="Shared" Condition="Exists('..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems')" />
+  <Import Project="..\..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.projitems" Label="Shared" Condition="Exists('..\..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.projitems')" />
+  <Import Project="..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems')" />
+  <Import Project="..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\Emgu.Models\Emgu.Models.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.ObjCBinding.CSharp.targets" />
   <Target Name="EmguTFLitePackageBuildImports" BeforeTargets="PrepareForBuild">
     <Message Condition="'$(EmguTFLiteLinkTarget)'!=''" Text="Emgu TF Lite shared project compiling against $(EmguTFLiteLinkTarget)" Importance="High" />

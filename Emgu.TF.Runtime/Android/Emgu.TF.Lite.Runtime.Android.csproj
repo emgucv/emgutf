@@ -23,7 +23,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>portable</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\lib\Build\Runtime.Android.$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>..\..\lib\Build\Runtime.Android.$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -32,14 +32,14 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>portable</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\lib\Build\Runtime.Android.$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>..\..\lib\Build\Runtime.Android.$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <TFLiteBinaryDir>$(MSBuildThisFileDirectory)..\lib</TFLiteBinaryDir>
+    <TFLiteBinaryDir>$(MSBuildThisFileDirectory)..\..\lib</TFLiteBinaryDir>
     <EmguTFLiteDir>$(MSBuildThisFileDirectory)</EmguTFLiteDir>
   </PropertyGroup>
   <PropertyGroup>
@@ -133,7 +133,7 @@
     <Folder Include="Resources\values\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\CommonAssemblyInfo.cs">
+    <Compile Include="..\..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
   </ItemGroup>
