@@ -7,12 +7,12 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>..\..\lib</OutputPath>
-    <DocumentationFile>..\..\lib\Emgu.TF.Lite.Models.Netstandard.xml</DocumentationFile>
+    <DocumentationFile>$(OutputPath)\Emgu.TF.Lite.Models.Netstandard.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\..\lib</OutputPath>
-    <DocumentationFile>..\..\lib\Emgu.TF.Lite.Models.Netstandard.xml</DocumentationFile>
+    <DocumentationFile>$(OutputPath)\Emgu.TF.Lite.Models.Netstandard.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
