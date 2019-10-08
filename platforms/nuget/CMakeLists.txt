@@ -18,8 +18,14 @@ IF ( HAVE_ANDROID )
 	add_subdirectory(runtime.android.Emgu.TF)
 ENDIF()
 
-IF (HAVE_WINDESKTOP_X64_LITE)
-	add_subdirectory(runtime.windows.Emgu.TF.Lite)
+#MESSAGE(STATUS "-------HAVE_OSX_LITE: ${HAVE_OSX_LITE}")
+#MESSAGE(STATUS "-------HAVE_LITE_BUILD: ${HAVE_LITE_BUILD}")
+
+IF (HAVE_LITE_BUILD)
 	add_subdirectory(Emgu.TF.Lite)
 	add_subdirectory(Emgu.TF.Lite.Models)
+ENDIF()
+
+IF (HAVE_WINDESKTOP_X64_LITE)
+	add_subdirectory(runtime.windows.Emgu.TF.Lite)
 ENDIF()
