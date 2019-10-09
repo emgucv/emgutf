@@ -28,6 +28,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inception.Console.NetCore",
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Windows", "..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Runtime.Windows.shproj", "{3088794D-7022-4049-98BC-41E2949E48B4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Models.Mac", "..\..\Emgu.TF.Models\Emgu.TF.Models.Mac\Emgu.TF.Models.Mac.csproj", "{1D693B5F-E979-4102-A2AE-D67F150174FA}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms\XamarinForms.projitems*{26bdb58d-52d9-4ad1-9205-be5792781a98}*SharedItemsImports = 13
@@ -69,6 +71,10 @@ Global
 		{476CD8E3-3C26-4D27-AC6E-85298F4D3F62}.Debug|x64.Build.0 = Debug|Any CPU
 		{476CD8E3-3C26-4D27-AC6E-85298F4D3F62}.Release|x64.ActiveCfg = Release|Any CPU
 		{476CD8E3-3C26-4D27-AC6E-85298F4D3F62}.Release|x64.Build.0 = Release|Any CPU
+		{1D693B5F-E979-4102-A2AE-D67F150174FA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1D693B5F-E979-4102-A2AE-D67F150174FA}.Debug|x64.Build.0 = Debug|Any CPU
+		{1D693B5F-E979-4102-A2AE-D67F150174FA}.Release|x64.ActiveCfg = Release|Any CPU
+		{1D693B5F-E979-4102-A2AE-D67F150174FA}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

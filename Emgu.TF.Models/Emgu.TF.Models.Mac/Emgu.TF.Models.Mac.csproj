@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FF3D6E2C-3E0B-411C-A802-F61EE8A4829F}</ProjectGuid>
+    <ProjectGuid>{1D693B5F-E979-4102-A2AE-D67F150174FA}</ProjectGuid>
     <ProjectTypeGuids>{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>Emgu.TF.Lite.Models</RootNamespace>
-    <AssemblyName>Emgu.TF.Lite.Models.Mac</AssemblyName>
+    <RootNamespace>Emgu.TF.Models</RootNamespace>
+    <AssemblyName>Emgu.TF.Models.Mac</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
@@ -58,13 +58,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.NetStandard.csproj">
-      <Project>{C07F7FE3-3835-460D-B6C2-166250C03AC0}</Project>
-      <Name>Emgu.TF.Lite.NetStandard</Name>
+    <ProjectReference Include="..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj">
+      <Project>{F644AA6A-5E39-4DAE-9BAD-6DDBE3335A74}</Project>
+      <Name>Emgu.TF.Netstandard</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="..\Emgu.TF.Models.Shared.projitems" Label="Shared" Condition="Exists('..\Emgu.TF.Models.Shared.projitems')" />
   <Import Project="..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\Emgu.Models\Emgu.Models.Shared.projitems')" />
-  <Import Project="..\Emgu.TF.Lite.Models.Shared.projitems" Label="Shared" Condition="Exists('..\Emgu.TF.Lite.Models.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
   <Target Name="AfterBuild">
     <Message Text="Copying $(OutputPath)$(AssemblyName).dll, $(OutputPath)$(AssemblyName).xml to ..\..\lib" Importance="high" />
