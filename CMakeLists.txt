@@ -447,9 +447,9 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CommonAssemblyInfo.cs.in ${CMAK
 
 SET(EMGUTF_NUGET_FILE_LIST "")
 
-SET(EMGUTF_NUGET_ID "EMGU.TF")
-SET(EMGUTF_MODEL_NUGET_ID "EMGU.TF.MODELS")
-SET(EMGUTF_PROTOBUF_NUGET_ID "EMGU.TF.PROTOBUF")
+SET(EMGUTF_NUGET_ID "Emgu.TF")
+SET(EMGUTF_MODEL_NUGET_ID "Emgu.TF.Models")
+SET(EMGUTF_PROTOBUF_NUGET_ID "Emgu.TF.Protobuf")
 
 SET(EMGUTF_NUGET_TITLE_ARCH "")
 IF(HAVE_WINDESKTOP_X86)
@@ -461,11 +461,11 @@ ENDIF()
 STRING(STRIP "${EMGUTF_NUGET_TITLE_ARCH}" EMGUTF_NUGET_TITLE_ARCH)
 STRING(REPLACE "x86 x64" "" EMGUTF_NUGET_TITLE_ARCH "${EMGUTF_NUGET_TITLE_ARCH}")
  
-SET(EMGUTF_NUGET_TITLE "EMGU TF ${EMGUTF_NUGET_TITLE_ARCH}")
+SET(EMGUTF_NUGET_TITLE "Emgu TF ${EMGUTF_NUGET_TITLE_ARCH}")
 STRING(STRIP "${EMGUTF_NUGET_TITLE}" EMGUTF_NUGET_TITLE)
 
-SET(EMGUTF_MODEL_NUGET_TITLE "EMGU TF MODELS")
-SET(EMGUTF_PROTOBUF_NUGET_TITLE "EMGU TF PROTOBUF")
+SET(EMGUTF_MODEL_NUGET_TITLE "Emgu TF Models")
+SET(EMGUTF_PROTOBUF_NUGET_TITLE "Emgu TF Protobuf")
 
 SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "")
 
@@ -515,8 +515,8 @@ IF(HAVE_ANDROID)
 ENDIF()
 
 IF(HAVE_LITE_BUILD)
-  SET(EMGUTF_LITE_NUGET_ID "${EMGUTF_NUGET_ID}.LITE")
-  SET(EMGUTF_LITE_MODEL_NUGET_ID "${EMGUTF_NUGET_ID}.LITE.MODELS")
+  SET(EMGUTF_LITE_NUGET_ID "${EMGUTF_NUGET_ID}.Lite")
+  SET(EMGUTF_LITE_MODEL_NUGET_ID "${EMGUTF_NUGET_ID}.Lite.Models")
   SET(EMGUTF_LITE_NUGET_TITLE "${EMGUTF_NUGET_ID} Lite")
   
   SET(EMGUTF_LITE_WINDOWS_NUGET_ID "runtime.windows.${EMGUTF_LITE_NUGET_ID}")  
@@ -528,6 +528,9 @@ IF(HAVE_LITE_BUILD)
   SET(EMGUTF_LITE_ANDROID_NUGET_ID "runtime.android.${EMGUTF_LITE_NUGET_ID}")  
   SET(EMGUTF_LITE_ANDROID_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Android")	
   
+  SET(EMGUTF_LITE_IOS_NUGET_ID "runtime.ios.${EMGUTF_LITE_NUGET_ID}")  
+  SET(EMGUTF_LITE_IOS_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for iOS")	
+
   SET(EMGUTF_LITE_MODEL_NUGET_TITLE "EMGU TF LITE MODELS")
   #MESSAGE(STATUS ">>> HAVE_WINDESKTOP_LITE: ${HAVE_WINDESKTOP_LITE}")
   IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
@@ -538,29 +541,10 @@ IF(HAVE_LITE_BUILD)
     SET(EMGUTF_LITE_NUGET_TITLE "${EMGUTF_LITE_NUGET_TITLE} Commercial Release")
     SET(EMGUTF_LITE_MODEL_NUGET_TITLE "${EMGUTF_LITE_MODEL_NUGET_TITLE} Commercial Release")
   ENDIF()
-  
-  #SET(EMGUTF_LITE_NUGET_FILE_LIST "
-  #<file src=\"..\\..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />")
-  SET(EMGUTF_LITE_WINDOWS_NUGET_FILE_LIST "${EMGUTF_LITE_WINDOWS_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />
-	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
-	<file src=\"runtime.windows.Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_WINDOWS_NUGET_ID}.targets\" />")
-	
-  SET(EMGUTF_LITE_MACOS_NUGET_FILE_LIST "${EMGUTF_LITE_MACOS_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\..\\lib\\osx\\*.dylib\" target=\"build\" />
-	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
-	<file src=\"runtime.macos.Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_MACOS_NUGET_ID}.targets\" />")
-	
-  SET(EMGUTF_LITE_ANDROID_NUGET_FILE_LIST "${EMGUTF_LITE_ANDROID_NUGET_FILE_LIST}
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Runtime.Android.dll\" target=\"lib\\MonoAndroid90\" />
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Runtime.Android.xml\" target=\"lib\\MonoAndroid90\" />
-	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
-	
+  	
   SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Netstandard.dll\" target=\"lib\\netstandard2.0\" />
 	<file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Netstandard.xml\" target=\"lib\\netstandard2.0\" />")
-  #	SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST}
-  #	<file src=\"Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_NUGET_ID}.targets\" />")
   SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST}
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
   
@@ -569,15 +553,37 @@ IF(HAVE_LITE_BUILD)
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.Netstandard.xml\" target=\"lib\\netstandard2.0\" />
     <file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
 ENDIF()
+
+IF( HAVE_WINDESKTOP_LITE )
+  SET(EMGUTF_LITE_WINDOWS_NUGET_FILE_LIST "${EMGUTF_LITE_WINDOWS_NUGET_FILE_LIST} 
+    <file src=\"..\\..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />
+	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
+	<file src=\"runtime.windows.Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_WINDOWS_NUGET_ID}.targets\" />")
+ENDIF()
+
 IF( HAVE_OSX_LITE ) 
   SET(EMGUTF_LITE_MODEL_NUGET_FILE_LIST "${EMGUTF_LITE_MODEL_NUGET_FILE_LIST}
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.Mac.dll\" target=\"lib\\xamarinmac20\" />
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.Mac.xml\" target=\"lib\\xamarinmac20\" />")
+  SET(EMGUTF_LITE_MACOS_NUGET_FILE_LIST "${EMGUTF_LITE_MACOS_NUGET_FILE_LIST} 
+    <file src=\"..\\..\\..\\lib\\osx\\*.dylib\" target=\"build\" />
+	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
+	<file src=\"runtime.macos.Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_MACOS_NUGET_ID}.targets\" />")
+ENDIF()
+IF (HAVE_IOS_LITE)
+  SET(EMGUTF_LITE_IOS_NUGET_FILE_LIST "${EMGUTF_LITE_IOS_NUGET_FILE_LIST}
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Runtime.iOS.dll\" target=\"lib\\Xamarin.iOS10\" />
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Runtime.iOS.xml\" target=\"lib\\Xamarin.iOS10\" />
+	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
 ENDIF()
 IF(HAVE_ANDROID_LITE)
   SET(EMGUTF_LITE_MODEL_NUGET_FILE_LIST "${EMGUTF_LITE_MODEL_NUGET_FILE_LIST}
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.Android.dll\" target=\"lib\\MonoAndroid90\" />
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.Android.xml\" target=\"lib\\MonoAndroid90\" />")
+  SET(EMGUTF_LITE_ANDROID_NUGET_FILE_LIST "${EMGUTF_LITE_ANDROID_NUGET_FILE_LIST}
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Runtime.Android.dll\" target=\"lib\\MonoAndroid90\" />
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Runtime.Android.xml\" target=\"lib\\MonoAndroid90\" />
+	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
 ENDIF()
 
 SET(EMGUTF_NUGET_DEPENDENCY "")

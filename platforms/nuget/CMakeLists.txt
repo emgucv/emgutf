@@ -37,3 +37,7 @@ ENDIF()
 IF ( HAVE_ANDROID_LITE )
   add_subdirectory(runtime.android.Emgu.TF.Lite)
 ENDIF()
+
+IF ( HAVE_IOS_LITE )
+  add_subdirectory(runtime.ios.Emgu.TF.Lite)
+ENDIF()
