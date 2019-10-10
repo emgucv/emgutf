@@ -522,6 +522,10 @@ IF(HAVE_LITE_BUILD)
   SET(EMGUTF_LITE_WINDOWS_NUGET_ID "runtime.windows.${EMGUTF_LITE_NUGET_ID}")  
   SET(EMGUTF_LITE_WINDOWS_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Windows")	
   
+  SET(EMGUTF_LITE_MACOS_NUGET_ID "runtime.macos.${EMGUTF_LITE_NUGET_ID}")  
+  SET(EMGUTF_LITE_MACOS_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for MacOS")	
+
+  
   SET(EMGUTF_LITE_MODEL_NUGET_TITLE "EMGU TF LITE MODELS")
   #MESSAGE(STATUS ">>> HAVE_WINDESKTOP_LITE: ${HAVE_WINDESKTOP_LITE}")
   IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
@@ -539,6 +543,12 @@ IF(HAVE_LITE_BUILD)
     <file src=\"..\\..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
 	<file src=\"runtime.windows.Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_WINDOWS_NUGET_ID}.targets\" />")
+	
+  SET(EMGUTF_LITE_MACOS_NUGET_FILE_LIST "${EMGUTF_LITE_MACOS_NUGET_FILE_LIST} 
+    <file src=\"..\\..\\..\\lib\\osx\\*.dylib\" target=\"build\" />
+	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
+	<file src=\"runtime.macos.Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_MACOS_NUGET_ID}.targets\" />")
+	
   SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Netstandard.dll\" target=\"lib\\netstandard2.0\" />
 	<file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Netstandard.xml\" target=\"lib\\netstandard2.0\" />")
@@ -757,6 +767,7 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/runtime.windows.Emgu.TF.Package
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.Models.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.Models/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/runtime.windows.Emgu.TF.Lite.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/runtime.windows.Emgu.TF.Lite/Package.nuspec)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/runtime.macos.Emgu.TF.Lite.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/runtime.macos.Emgu.TF.Lite/Package.nuspec)
 
 # ----------------------------------------------------------------------------
 #  Generate readme file for Emgu TF project

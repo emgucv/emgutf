@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+      <PropertyGroup>
+        <EmguTFLiteMacLinkTarget>MacOS_x64</EmguTFLiteMacLinkTarget>
+        <EmguTFLiteMacBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguTFLiteMacBuildX64>
+        <EmguTFLiteMacNativeFileX64>$(MSBuildThisFileDirectory)libtfliteextern.dylib</EmguTFLiteMacNativeFileX64>
+        <EmguTFLiteMacErrorMessage Condition="'$(EmguTFLiteMacBuildX64)'=='True' AND !Exists('$(EmguTFLiteMacNativeFileX64)')">This package do not contain necessary binary for $(EmguTFLiteMacLinkTarget). File $(EmguTFLiteMacNativeFileX64) is missing.</EmguTFLiteMacErrorMessage>
+        <EmguTFLiteMacDeployMessage Condition="'$(EmguTFLiteMacBuildX64)'=='True' AND Exists('$(EmguTFLiteMacNativeFileX64)')">$(EmguTFLiteMacDeployMessage)x64 </EmguTFLiteMacDeployMessage >
+      </PropertyGroup>
+      <ItemGroup Condition="'$(EmguTFLiteMacBuildX64)'=='True' AND Exists('$(EmguTFLiteMacNativeFileX64)')">
+        <None Include="$(MSBuildThisFileDirectory)\*.dylib">
+          <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+      </ItemGroup>
+  <Target Name="EmguTFLiteMacPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <!-- <Message Condition="'$(EmguTFLiteMacLinkTarget)'!=''" Text="Emgu TF nuget package compiling against $(EmguTFLiteMacLinkTarget)" Importance="High" /> -->
+    <Warning Text="'$(EmguTFLiteMacErrorMessage)'" Condition="'$(EmguTFLiteMacErrorMessage)'!=''" />
+    <Message Text="Emgu TF Lite Compiling with $(EmguTFLiteMacDeployMessage)binary" Condition="'$(EmguTFLiteMacDeployMessage)'!=''" Importance="High" />
+    <Message Text="No native binary is deployed by the runtime.macos.Emgu.TF.Lite nuget package." Condition="'$(EmguTFLiteMacDeployMessage)'==''" Importance="High" />
+  </Target>
+</Project>
