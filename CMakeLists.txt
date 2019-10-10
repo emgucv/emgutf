@@ -469,16 +469,6 @@ SET(EMGUTF_PROTOBUF_NUGET_TITLE "Emgu TF Protobuf")
 
 SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "")
 
-#IF(HAVE_WINDESKTOP_X64_CUDA)
-	#SET(EMGUTF_NUGET_ID "${EMGUTF_NUGET_ID}-CUDA")
-	#SET(EMGUTF_MODEL_NUGET_ID "${EMGUTF_MODEL_NUGET_ID}-CUDA")
-	#SET(EMGUTF_PROTOBUF_NUGET_ID "${EMGUTF_PROTOBUF_NUGET_ID}-CUDA")
-	
-	#SET(EMGUTF_NUGET_TITLE "${EMGUTF_NUGET_TITLE} with CUDA support")	
-	#SET(EMGUTF_MODEL_NUGET_TITLE "${EMGUTF_MODEL_NUGET_TITLE} with CUDA support")
-	#SET(EMGUTF_PROTOBUF_NUGET_TITLE "${EMGUTF_MODEL_NUGET_TITLE} with CUDA support")
-#ENDIF()
-
 IF(HAVE_WINDESKTOP_X64 OR HAVE_WINDESKTOP_X64_CUDA)
   IF(HAVE_WINDESKTOP_X64_CUDA)
     SET(EMGUTF_WINDOWS_NUGET_ID "runtime.windows.cuda.${EMGUTF_NUGET_ID}")  
@@ -514,10 +504,33 @@ IF(HAVE_ANDROID)
     </dependencies>") 
 ENDIF()
 
+IF(HAVE_OSX)
+  SET(EMGUTF_MACOS_NUGET_ID "runtime.mac.${EMGUTF_NUGET_ID}")
+  SET(EMGUTF_MACOS_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for MacOS")	
+  SET(EMGUTF_MACOS_NUGET_FILE_LIST " 
+    <file src=\"..\\..\\..\\lib\\osx\\*.dylib\" target=\"build\" />
+	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
+	<file src=\"runtime.macos.Emgu.TF.targets\" target=\"build\\${EMGUTF_LITE_MACOS_NUGET_ID}.targets\" />")
+  SET(EMGUTF_MACOS_NUGET_DEPENDENCY "${EMGUTF_MACOS_NUGET_DEPENDENCY}
+    <dependencies>
+		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
+    </dependencies>") 
+ENDIF()
+
 IF(HAVE_LITE_BUILD)
+
   SET(EMGUTF_LITE_NUGET_ID "${EMGUTF_NUGET_ID}.Lite")
   SET(EMGUTF_LITE_MODEL_NUGET_ID "${EMGUTF_NUGET_ID}.Lite.Models")
   SET(EMGUTF_LITE_NUGET_TITLE "${EMGUTF_NUGET_ID} Lite")
+  
+  IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
+    #MESSAGE(STATUS ">>> TF Lite Commercial license")
+    SET(EMGUTF_LITE_NUGET_ID "${EMGUTF_LITE_NUGET_ID}-CR")
+    SET(EMGUTF_LITE_MODEL_NUGET_ID "${EMGUTF_LITE_MODEL_NUGET_ID}-CR")
+    
+    SET(EMGUTF_LITE_NUGET_TITLE "${EMGUTF_LITE_NUGET_TITLE} Commercial Release")
+    SET(EMGUTF_LITE_MODEL_NUGET_TITLE "${EMGUTF_LITE_MODEL_NUGET_TITLE} Commercial Release")
+  ENDIF()
   
   SET(EMGUTF_LITE_WINDOWS_NUGET_ID "runtime.windows.${EMGUTF_LITE_NUGET_ID}")  
   SET(EMGUTF_LITE_WINDOWS_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Windows")	
@@ -533,14 +546,7 @@ IF(HAVE_LITE_BUILD)
 
   SET(EMGUTF_LITE_MODEL_NUGET_TITLE "EMGU TF LITE MODELS")
   #MESSAGE(STATUS ">>> HAVE_WINDESKTOP_LITE: ${HAVE_WINDESKTOP_LITE}")
-  IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
-    #MESSAGE(STATUS ">>> TF Lite Commercial license")
-    SET(EMGUTF_LITE_NUGET_ID "${EMGUTF_LITE_NUGET_ID}-CR")
-    SET(EMGUTF_LITE_MODEL_NUGET_ID "${EMGUTF_LITE_MODEL_NUGET_ID}-CR")
-    
-    SET(EMGUTF_LITE_NUGET_TITLE "${EMGUTF_LITE_NUGET_TITLE} Commercial Release")
-    SET(EMGUTF_LITE_MODEL_NUGET_TITLE "${EMGUTF_LITE_MODEL_NUGET_TITLE} Commercial Release")
-  ENDIF()
+
   	
   SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Netstandard.dll\" target=\"lib\\netstandard2.0\" />
@@ -552,6 +558,10 @@ IF(HAVE_LITE_BUILD)
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.Netstandard.dll\" target=\"lib\\netstandard2.0\" />
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.Netstandard.xml\" target=\"lib\\netstandard2.0\" />
     <file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
+  SET(EMGUTF_LITE_MODEL_NUGET_DEPENDENCY "${EMGUTF_LITE_MODEL_NUGET_DEPENDENCY}
+    <dependencies>
+		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
+    </dependencies>")
 ENDIF()
 
 IF( HAVE_WINDESKTOP_LITE )
@@ -559,6 +569,10 @@ IF( HAVE_WINDESKTOP_LITE )
     <file src=\"..\\..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
 	<file src=\"runtime.windows.Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_WINDOWS_NUGET_ID}.targets\" />")
+  SET(EMGUTF_LITE_WINDOWS_NUGET_DEPENDENCY "${EMGUTF_LITE_WINDOWS_NUGET_DEPENDENCY}
+    <dependencies>
+		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
+    </dependencies>")
 ENDIF()
 
 IF( HAVE_OSX_LITE ) 
@@ -569,6 +583,10 @@ IF( HAVE_OSX_LITE )
     <file src=\"..\\..\\..\\lib\\osx\\*.dylib\" target=\"build\" />
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
 	<file src=\"runtime.macos.Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_MACOS_NUGET_ID}.targets\" />")
+  SET(EMGUTF_LITE_MACOS_NUGET_DEPENDENCY "${EMGUTF_LITE_MACOS_NUGET_DEPENDENCY}
+    <dependencies>
+		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
+    </dependencies>")	
 ENDIF()
 IF (HAVE_IOS_LITE)
   SET(EMGUTF_LITE_IOS_NUGET_FILE_LIST "${EMGUTF_LITE_IOS_NUGET_FILE_LIST}
@@ -584,12 +602,16 @@ IF(HAVE_ANDROID_LITE)
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Runtime.Android.dll\" target=\"lib\\MonoAndroid90\" />
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Runtime.Android.xml\" target=\"lib\\MonoAndroid90\" />
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
+  SET(EMGUTF_LITE_ANDROID_NUGET_DEPENDENCY "${EMGUTF_LITE_ANDROID_NUGET_DEPENDENCY}
+    <dependencies>
+		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
+    </dependencies>")
 ENDIF()
 
 SET(EMGUTF_NUGET_DEPENDENCY "")
 SET(EMGUTF_PROTOBUF_NUGET_DEPENDENCY "")
 
-IF(HAVE_WINDESKTOP_X64 OR HAVE_WINDESKTOP_X64_CUDA OR HAVE_ANDROID OR HAVE_OSX)
+IF(HAVE_FULL_BUILD)
   IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
     SET(EMGUTF_NUGET_ID "${EMGUTF_NUGET_ID}-CR")
     SET(EMGUTF_MODEL_NUGET_ID "${EMGUTF_MODEL_NUGET_ID}-CR")
@@ -607,7 +629,6 @@ ENDIF()
 
 IF(HAVE_WINDESKTOP_X64)
   MESSAGE(STATUS "-- HAVE_WINDESKTOP_X64: ${HAVE_WINDESKTOP_X64}")
-    
   SET(BAZEL_CUDA_TOOLKIT_PATH_FILE "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/tensorflow/tools/CUDA_TOOLKIT_PATH.txt")
   
   SET(TFEXTERN_DEPENDENCY_DLLS)
@@ -757,7 +778,6 @@ SET(EMGUTF_PROTOBUF_NUGET_FILE_LIST "
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.Netstandard.XML\" target=\"lib\\netstandard1.0\" />
     <file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
 
-#MESSAGE(STATUS "+++++++++++++++++++++++++++++++++++++++++")
 SET(EMGUTF_PROTOBUF_PROJECT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf/Emgu.TF.Protobuf.Netstandard/Emgu.TF.Protobuf.Netstandard.csproj")
 file(STRINGS "${EMGUTF_PROTOBUF_PROJECT_FILE}" EMGUTF_PROTOBUF_PROJECT_PARTS REGEX "Google.Protobuf" )
 string(REGEX REPLACE ".+Version=\"([0-9]+.[0-9]+.[0-9]+)\".*" "\\1" PROTOBUF_VERSION "${EMGUTF_PROTOBUF_PROJECT_PARTS}")

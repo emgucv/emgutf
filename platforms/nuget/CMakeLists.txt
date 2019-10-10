@@ -18,6 +18,10 @@ IF ( HAVE_ANDROID )
   add_subdirectory(runtime.android.Emgu.TF)
 ENDIF()
 
+IF(HAVE_OSX)
+  add_subdirectory(runtime.macos.Emgu.TF)
+ENDIF()
+
 #MESSAGE(STATUS "-------HAVE_OSX_LITE: ${HAVE_OSX_LITE}")
 #MESSAGE(STATUS "-------HAVE_LITE_BUILD: ${HAVE_LITE_BUILD}")
 
