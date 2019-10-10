@@ -87,10 +87,11 @@ SET CMAKE_CONF_FLAGS=%CMAKE_CONF_FLAGS% -DEMGU_TF_DOCUMENTATION_BUILD:BOOL=TRUE
 -G %CMAKE_CONF% ^
 %CMAKE_CONF_FLAGS% 
 
+call %DEVENV% %BUILD_TYPE% emgutf.sln %BUILD_PROJECT% 
+
 IF "%TF_TYPE%"=="LITE" goto BUILD_TF_LITE
 
 :BUILD_TF_FULL
-call %DEVENV% %BUILD_TYPE% emgutf.sln %BUILD_PROJECT% 
 IF "%3%"=="htmldoc" ^
 call %DEVENV% %BUILD_TYPE% emgutf.sln /project Emgu.TF.Document.Html 
 
@@ -101,7 +102,6 @@ call %DEVENV% %BUILD_TYPE% emgutf.sln /project Emgu.TF.Protobuf.nuget
 goto END_OF_SCRIPT
 
 :BUILD_TF_LITE
-call %DEVENV% %BUILD_TYPE% emgutf.sln %BUILD_PROJECT% 
 IF "%3%"=="htmldoc" ^
 call %DEVENV% %BUILD_TYPE% emgutf.sln /project Emgu.TF.Lite.Document.Html 
 
