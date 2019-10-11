@@ -467,6 +467,16 @@ STRING(STRIP "${EMGUTF_NUGET_TITLE}" EMGUTF_NUGET_TITLE)
 SET(EMGUTF_MODEL_NUGET_TITLE "Emgu TF Models")
 SET(EMGUTF_PROTOBUF_NUGET_TITLE "Emgu TF Protobuf")
 
+IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
+  SET(EMGUTF_NUGET_ID "${EMGUTF_NUGET_ID}-CR")
+  SET(EMGUTF_MODEL_NUGET_ID "${EMGUTF_MODEL_NUGET_ID}-CR")
+  SET(EMGUTF_PROTOBUF_NUGET_ID "${EMGUTF_PROTOBUF_NUGET_ID}-CR")
+    
+  SET(EMGUTF_NUGET_TITLE "${EMGUTF_NUGET_TITLE} Commercial Release")
+  SET(EMGUTF_MODEL_NUGET_TITLE "${EMGUTF_MODEL_NUGET_TITLE} Commercial Release")
+  SET(EMGUTF_PROTOBUF_NUGET_TITLE "${EMGUTF_PROTOBUF_NUGET_TITLE} Commercial Release")
+ENDIF()
+
 SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "")
 
 IF(HAVE_WINDESKTOP_X64 OR HAVE_WINDESKTOP_X64_CUDA)
@@ -477,10 +487,8 @@ IF(HAVE_WINDESKTOP_X64 OR HAVE_WINDESKTOP_X64_CUDA)
     SET(EMGUTF_WINDOWS_NUGET_ID "runtime.windows.${EMGUTF_NUGET_ID}")  
     SET(EMGUTF_WINDOWS_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Windows")	
   ENDIF()
-  
+
   SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "${EMGUTF_WINDOWS_NUGET_FILE_LIST}  
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Runtime.Net.dll\" target=\"lib\\net470\" />
-	<file src=\"..\\..\\..\\lib\\Emgu.TF.Runtime.Net.xml\" target=\"lib\\net470\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
   SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "${EMGUTF_WINDOWS_NUGET_FILE_LIST} 
 	<file src=\"runtime.windows.Emgu.TF.targets\" target=\"build\\${EMGUTF_WINDOWS_NUGET_ID}.targets\" />")
@@ -519,9 +527,9 @@ ENDIF()
 
 IF(HAVE_LITE_BUILD)
 
-  SET(EMGUTF_LITE_NUGET_ID "${EMGUTF_NUGET_ID}.Lite")
-  SET(EMGUTF_LITE_MODEL_NUGET_ID "${EMGUTF_NUGET_ID}.Lite.Models")
-  SET(EMGUTF_LITE_NUGET_TITLE "${EMGUTF_NUGET_ID} Lite")
+  SET(EMGUTF_LITE_NUGET_ID "Emgu.TF.Lite")
+  SET(EMGUTF_LITE_MODEL_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.Models")
+  SET(EMGUTF_LITE_NUGET_TITLE "Emgu TF Lite")
   
   IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
     #MESSAGE(STATUS ">>> TF Lite Commercial license")
@@ -546,7 +554,6 @@ IF(HAVE_LITE_BUILD)
 
   SET(EMGUTF_LITE_MODEL_NUGET_TITLE "EMGU TF LITE MODELS")
   #MESSAGE(STATUS ">>> HAVE_WINDESKTOP_LITE: ${HAVE_WINDESKTOP_LITE}")
-
   	
   SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Netstandard.dll\" target=\"lib\\netstandard2.0\" />
@@ -612,15 +619,6 @@ SET(EMGUTF_NUGET_DEPENDENCY "")
 SET(EMGUTF_PROTOBUF_NUGET_DEPENDENCY "")
 
 IF(HAVE_FULL_BUILD)
-  IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
-    SET(EMGUTF_NUGET_ID "${EMGUTF_NUGET_ID}-CR")
-    SET(EMGUTF_MODEL_NUGET_ID "${EMGUTF_MODEL_NUGET_ID}-CR")
-    SET(EMGUTF_PROTOBUF_NUGET_ID "${EMGUTF_PROTOBUF_NUGET_ID}-CR")
-    
-    SET(EMGUTF_NUGET_TITLE "${EMGUTF_NUGET_TITLE} Commercial Release")
-    SET(EMGUTF_MODEL_NUGET_TITLE "${EMGUTF_MODEL_NUGET_TITLE} Commercial Release")
-    SET(EMGUTF_PROTOBUF_NUGET_TITLE "${EMGUTF_PROTOBUF_NUGET_TITLE} Commercial Release")
-  ENDIF()
   SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Netstandard.dll\" target=\"lib\\netstandard2.0\" />
 	<file src=\"..\\..\\..\\lib\\Emgu.TF.Netstandard.xml\" target=\"lib\\netstandard2.0\" />
@@ -797,6 +795,7 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/XamarinForms.Android.AndroidMan
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/XamarinForms.Lite.Android.AndroidManifest.xml.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Example/XamarinForms/XamarinForms.Lite.Android/Properties/AndroidManifest.xml @ONLY)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/runtime.android.Emgu.TF.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/runtime.android.Emgu.TF/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/runtime.windows.Emgu.TF.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/runtime.windows.Emgu.TF/Package.nuspec)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/runtime.macos.Emgu.TF.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/runtime.macos.Emgu.TF/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.Models.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.Models/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/runtime.windows.Emgu.TF.Lite.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/runtime.windows.Emgu.TF.Lite/Package.nuspec)
