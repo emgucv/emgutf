@@ -18,7 +18,7 @@ cd tensorflow
 #bazel clean
 
 bazel build -c opt \
-      --cpu=$1\
+      --fat_apk_cpu=$1\
       --cxxopt='--std=c++11' \
       --crosstool_top=external:android/crosstool \
       --host_crosstool_top=@bazel_tools//tools/cpp:toolchain \
