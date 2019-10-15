@@ -1,16 +1,16 @@
 #!/bin/sh
 
-if [ -n "$1" ]; then
-    echo "Building for android $1 architecture"
+if [ \( -n "$1" \) -o \( -n "$2" \) ]; then
+    echo "Building with config android_$1 for $2 architecture"
 else
-    echo "Please specify the android architecture to build. e.g. $0 x86"
+    echo "Please specify the android config and architecture to build. e.g. $0 x86 x86; $0 x86_64 x86_64; $0 arm armeabi-v7a; $0 arm64 arm64-v8a;"
     exit 1
 fi
 
 cd "$(dirname "$0")"
 cd ../..
 cd tensorflow
-
+set -x
 bazel build -c opt \
       --config=android_$1\
       --cxxopt='--std=c++11' \
@@ -21,30 +21,9 @@ bazel build -c opt \
       --action_env ANDROID_SDK_HOME=/usr/lib/android-sdk \
       --verbose_failures \
       //tensorflow/tfliteextern:libtfliteextern.so
-
-#bazel build -c opt \
-#      --config=android_$1\
-#      --cxxopt='--std=c++11' \
-#      --host_crosstool_top=@bazel_tools//tools/cpp:toolchain \
-#      --action_env ANDROID_NDK_HOME=/usr/lib/android-ndk \
-#      --action_env ANDROID_NDK_API_LEVEL=18 \
-#      --action_env ANDROID_BUILD_TOOLS_VERSION=debian \
-#      --action_env ANDROID_SDK_API_LEVEL=23 \
-#      --action_env ANDROID_SDK_HOME=/usr/lib/android-sdk \
-#      //tensorflow/tfliteextern:libtfliteextern.so
-
+set +x
 #bazel clean
-
-#bazel build -c opt \
-#      --fat_apk_cpu=$1\
-#      --cpu=$1\
-#      --cxxopt='--std=c++11' \
-#      --crosstool_top=external:android/crosstool \
-#      --host_crosstool_top=@bazel_tools//tools/cpp:toolchain \
-#      --verbose_failures \
-#      //tensorflow/tfliteextern:libtfliteextern.so
-
 cd ..
 
-mkdir -p lib/android/$1
-cp -rf tensorflow/bazel-bin/tensorflow/tfliteextern/*.so lib/android/$1
+mkdir -p lib/android/$2
+cp -rf tensorflow/bazel-bin/tensorflow/tfliteextern/*.so lib/android/$2
