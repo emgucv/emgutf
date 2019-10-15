@@ -12,6 +12,7 @@ cd ../..
 cd tensorflow
 
 bazel build -c opt \
+
       --config=android_$1\
       --cxxopt='--std=c++11' \
       --action_env ANDROID_NDK_HOME=/usr/lib/android-ndk-r18b \
