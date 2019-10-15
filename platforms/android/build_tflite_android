@@ -11,19 +11,39 @@ cd "$(dirname "$0")"
 cd ../..
 cd tensorflow
 
-#bazel build -c opt //tensorflow/tfextern:libtfextern.so \
-#--crosstool_top=external:android/crosstool \
-#--host_crosstool_top=@bazel_tools//tools/cpp:toolchain \
-#--cpu=$1 
+bazel build -c opt \
+      --config=android_$1\
+      --cxxopt='--std=c++11' \
+      --action_env ANDROID_NDK_HOME=/usr/lib/android-ndk-r18b \
+      --action_env ANDROID_NDK_API_LEVEL=28 \
+      --action_env ANDROID_BUILD_TOOLS_VERSION=debian \
+      --action_env ANDROID_SDK_API_LEVEL=23 \
+      --action_env ANDROID_SDK_HOME=/usr/lib/android-sdk \
+      --verbose_failures \
+      //tensorflow/tfliteextern:libtfliteextern.so
+
+#bazel build -c opt \
+#      --config=android_$1\
+#      --cxxopt='--std=c++11' \
+#      --host_crosstool_top=@bazel_tools//tools/cpp:toolchain \
+#      --action_env ANDROID_NDK_HOME=/usr/lib/android-ndk \
+#      --action_env ANDROID_NDK_API_LEVEL=18 \
+#      --action_env ANDROID_BUILD_TOOLS_VERSION=debian \
+#      --action_env ANDROID_SDK_API_LEVEL=23 \
+#      --action_env ANDROID_SDK_HOME=/usr/lib/android-sdk \
+#      //tensorflow/tfliteextern:libtfliteextern.so
+
 #bazel clean
 
-bazel build -c opt \
-      --cpu=$1\
-      --cxxopt='--std=c++11' \
-      --crosstool_top=external:android/crosstool \
-      --host_crosstool_top=@bazel_tools//tools/cpp:toolchain \
-      //tensorflow/tfliteextern:libtfliteextern.so
-      
+#bazel build -c opt \
+#      --fat_apk_cpu=$1\
+#      --cpu=$1\
+#      --cxxopt='--std=c++11' \
+#      --crosstool_top=external:android/crosstool \
+#      --host_crosstool_top=@bazel_tools//tools/cpp:toolchain \
+#      --verbose_failures \
+#      //tensorflow/tfliteextern:libtfliteextern.so
+
 cd ..
 
 mkdir -p lib/android/$1
