@@ -55,17 +55,17 @@ public class CocoSsdMobilenetBehavior : MonoBehaviour
             drawableTexture.height != texture.height)
             drawableTexture = new Texture2D(texture.width, texture.height, TextureFormat.ARGB32, false);
         drawableTexture.SetPixels(texture.GetPixels());
-        NativeImageIO.Annotation[] annotations = new NativeImageIO.Annotation[results.Length];
+        Annotation[] annotations = new Annotation[results.Length];
         for (int i = 0; i < results.Length; i++)
         {
-            NativeImageIO.Annotation annotation = new NativeImageIO.Annotation();
+            Annotation annotation = new Annotation();
             annotation.Rectangle = results[i].Rectangle;
             annotation.Label = String.Format("{0}:({1:0.00}%)", results[i].Label, results[i].Score * 100);
             annotations[i] = annotation;
         }
 
         String objectNames= String.Empty;
-        foreach (NativeImageIO.Annotation annotation in annotations)
+        foreach (Annotation annotation in annotations)
         {
             float left = annotation.Rectangle[0] * drawableTexture.width;
             float top = annotation.Rectangle[1] * drawableTexture.height;
