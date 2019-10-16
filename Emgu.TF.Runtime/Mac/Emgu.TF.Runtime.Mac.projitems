@@ -20,11 +20,13 @@
 	<EmguTFMacErrorMessage2 Condition="!Exists('$(EmguTFMacNativeFile2)')">This package do not contain necessary binary for $(EmguTFMacLinkTarget). Missing $(EmguTFMacNativeFile2). PInvoke may fail on Mac OS.</EmguTFMacErrorMessage2>
     <EmguTFMacDeployMessage Condition="Exists('$(EmguTFMacNativeFile)')">$(EmguTFMacDeployMessage)MacOS x64 </EmguTFMacDeployMessage>
   </PropertyGroup>
-  <ItemGroup>
+  <ItemGroup Condition="Exists('$(EmguTFLiteMacNativeFile)')">
     <Content Include="$(EmguTFMacNativeFile)">
       <Link>libtfextern.dylib</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup Condition="Exists('$(EmguTFLiteMacNativeFile2)')">
 	<Content Include="$(EmguTFMacNativeFile2)">
       <Link>libtensorflow_framework.dylib</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
