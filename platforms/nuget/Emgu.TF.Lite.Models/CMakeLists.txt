@@ -2,7 +2,7 @@
 #  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-IF ( HAVE_WINDESKTOP_X64_LITE OR HAVE_OSX_LITE OR HAVE_ANDROID_LITE)
+IF ( TARGET Emgu.TF.Lite.Models.Netstandard )
   
   PROJECT(Emgu.TF.Lite.Models.nuget)
   IF(WIN32)

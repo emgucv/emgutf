@@ -2,8 +2,7 @@
 #  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-IF (HAVE_WINDESKTOP OR HAVE_ANDROID OR HAVE_OSX)
-  
+IF (TARGET Emgu.TF.Models.Netstandard)  
   PROJECT(Emgu.TF.Models.nuget)
   IF(WIN32)
     ADD_CUSTOM_TARGET(

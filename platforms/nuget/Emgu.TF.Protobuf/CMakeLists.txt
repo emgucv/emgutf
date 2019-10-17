@@ -2,7 +2,7 @@
 #  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-IF (HAVE_WINDESKTOP OR HAVE_ANDROID OR HAVE_OSX)
+IF (TARGET Emgu.TF.Protobuf.Netstandard)
   
   PROJECT(Emgu.TF.Protobuf.nuget)
   IF(WIN32)

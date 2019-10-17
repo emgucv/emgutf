@@ -7,7 +7,8 @@ cd tensorflow
 bazel build //tensorflow/tfextern:libtfextern.so 
 cd ..
 
-mkdir -p lib
-cp tensorflow/bazel-bin/tensorflow/tfextern/*.so lib/
-cp tensorflow/bazel-bin/tensorflow/*.so lib/
-ln -s lib/libtensorflow_framework.so lib/libtensorflow_framework.so.1
+mkdir -p lib/x64
+cp tensorflow/bazel-bin/tensorflow/tfextern/*.so lib/x64
+cp tensorflow/bazel-bin/tensorflow/*.so lib/x64
+cd lib/x64
+ln -s libtensorflow_framework.so libtensorflow_framework.so.1
