@@ -22,7 +22,7 @@ INSTALL(
   PATTERN "*Unity*" EXCLUDE
   )
 
-IF (NOT DOTNET-NOTFOUND)
+IF (DOTNET_FOUND)
 #  MESSAGE(STATUS "Adding Emgu.TF.Netstandard project")
   PROJECT(Emgu.TF.Netstandard)
   
