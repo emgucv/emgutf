@@ -301,7 +301,7 @@ namespace Emgu.TF.Models
 
         public static void DrawResults(Texture2D image, MultiboxGraph.Result[] results, float scoreThreshold, bool flipUpSideDown = false)
         {
-            NativeImageIO.Annotation[] annotations = FilterResults(results, scoreThreshold);
+            Annotation[] annotations = FilterResults(results, scoreThreshold);
             
             Color color = new Color(1.0f, 0, 0);//Set color to red
             for (int i = 0; i < annotations.Length; i++)
