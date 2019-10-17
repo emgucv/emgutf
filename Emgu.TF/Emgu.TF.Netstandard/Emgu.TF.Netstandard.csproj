@@ -3,22 +3,27 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	<AssemblyName>Emgu.TF.Netstandard</AssemblyName>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\..\lib\</OutputPath>
-    <DocumentationFile>..\..\lib\Emgu.TF.Netstandard.xml</DocumentationFile>
+    <OutputPath>..\..\lib\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
+    <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
     <DefineConstants>TRACE;__NETSTANDARD_2_0__</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\..\lib\</OutputPath>
-    <DocumentationFile>..\..\lib\Emgu.TF.Netstandard.xml</DocumentationFile>
+    <OutputPath>..\..\lib\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
+    <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
     <DefineConstants>TRACE;__NETSTANDARD_2_0__</DefineConstants>
   </PropertyGroup>
   
   <Import Project="..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems" Label="Shared" />
 
   <Import Project="..\Emgu.TF.Shared.projitems" Label="Shared" />
-
+  <Target Name="DeployBinary" AfterTargets="AfterBuild">
+    <Message Text="Copying $(OutputPath)$(AssemblyName).dll, $(OutputPath)$(AssemblyName).xml to ..\..\lib" Importance="high" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="..\..\lib" ContinueOnError="true" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).xml" DestinationFolder="..\..\lib" ContinueOnError="true" />
+  </Target>
 </Project>

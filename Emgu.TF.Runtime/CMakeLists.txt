@@ -46,7 +46,7 @@ IF(HAVE_IOS_LITE)
   ENDIF()	
 ENDIF()
 
-IF(HAVE_OSX)
+IF(HAVE_FULL_BUILD)
   #MacOS
   INSTALL(
     DIRECTORY
@@ -56,6 +56,34 @@ IF(HAVE_OSX)
     FILES_MATCHING 
     PATTERN "Emgu.TF.Runtime.Mac.shproj"
     PATTERN "Emgu.TF.Runtime.Mac.projitems"
+    PATTERN ".svn" EXCLUDE
+    PATTERN "obj" EXCLUDE
+    PATTERN "CMakeFiles" EXCLUDE
+    PATTERN "${PROJECT_NAME}.dir" EXCLUDE
+    )
+
+  INSTALL(
+    DIRECTORY
+    ${CMAKE_CURRENT_SOURCE_DIR}/Windows
+    DESTINATION .
+    COMPONENT emgutf_source
+    FILES_MATCHING 
+	PATTERN "Emgu.TF.Runtime.Windows.shproj"
+	PATTERN "Emgu.TF.Runtime.Windows.projitems"
+    PATTERN ".svn" EXCLUDE
+    PATTERN "obj" EXCLUDE
+    PATTERN "CMakeFiles" EXCLUDE
+    PATTERN "${PROJECT_NAME}.dir" EXCLUDE
+    )
+	
+  INSTALL(
+    DIRECTORY
+    ${CMAKE_CURRENT_SOURCE_DIR}/Ubuntu
+    DESTINATION .
+    COMPONENT emgutf_source
+    FILES_MATCHING 
+	PATTERN "Emgu.TF.Runtime.Ubuntu.shproj"
+	PATTERN "Emgu.TF.Runtime.Ubuntu.projitems"
     PATTERN ".svn" EXCLUDE
     PATTERN "obj" EXCLUDE
     PATTERN "CMakeFiles" EXCLUDE
@@ -89,23 +117,7 @@ IF(HAVE_ANDROID)
     COMPONENT emgutf_binary)
 ENDIF()
 
-IF(HAVE_WINDESKTOP_X64 OR HAVE_WINDESKTOP_X64_CUDA)
-  INSTALL(
-    DIRECTORY
-    ${CMAKE_CURRENT_SOURCE_DIR}/Windows
-    DESTINATION .
-    COMPONENT emgutf_source
-    FILES_MATCHING 
-	PATTERN "Emgu.TF.Runtime.Windows.shproj"
-	PATTERN "Emgu.TF.Runtime.Windows.projitems"
-    PATTERN ".svn" EXCLUDE
-    PATTERN "obj" EXCLUDE
-    PATTERN "CMakeFiles" EXCLUDE
-    PATTERN "${PROJECT_NAME}.dir" EXCLUDE
-    )
-ENDIF()
-
-IF(HAVE_OSX_LITE OR HAVE_WINDESKTOP_LITE)
+IF(HAVE_LITE_BUILD)
   INSTALL(
     DIRECTORY
     ${CMAKE_CURRENT_SOURCE_DIR}/Mac
@@ -127,6 +139,19 @@ IF(HAVE_OSX_LITE OR HAVE_WINDESKTOP_LITE)
     FILES_MATCHING 
 	PATTERN "Emgu.TF.Lite.Runtime.Windows.shproj"
 	PATTERN "Emgu.TF.Lite.Runtime.Windows.projitems"
+    PATTERN ".svn" EXCLUDE
+    PATTERN "obj" EXCLUDE
+    PATTERN "CMakeFiles" EXCLUDE
+    PATTERN "${PROJECT_NAME}.dir" EXCLUDE
+    )
+  INSTALL(
+    DIRECTORY
+    ${CMAKE_CURRENT_SOURCE_DIR}/Ubuntu
+    DESTINATION .
+    COMPONENT emgutf_source
+    FILES_MATCHING 
+	PATTERN "Emgu.TF.Lite.Runtime.Ubuntu.shproj"
+	PATTERN "Emgu.TF.Lite.Runtime.Ubuntu.projitems"
     PATTERN ".svn" EXCLUDE
     PATTERN "obj" EXCLUDE
     PATTERN "CMakeFiles" EXCLUDE

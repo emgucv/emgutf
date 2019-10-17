@@ -2,29 +2,17 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	<AssemblyName>Inception.Console.Lite.NetCore</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\..\lib\</OutputPath>
+    <OutputPath>..\..\lib\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
   </PropertyGroup>
-
-  <PropertyGroup>
-    <TensorflowBinaryDir>$(MSBuildThisFileDirectory)..\..\lib</TensorflowBinaryDir>
-    <TensorflowLiteOSXNativeFile>$(TensorflowBinaryDir)\osx\libtfliteextern.dylib</TensorflowLiteOSXNativeFile>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\..\lib\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
   </PropertyGroup>
-  
-  <Choose>
-    <!-- Copy macOS native binary -->
-    <When Condition="Exists('$(TensorflowLiteOSXNativeFile)')">
-      <ItemGroup>
-        <Content Include="$(TensorflowLiteOSXNativeFile)" Link="libtfliteextern.dylib">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-      </ItemGroup>
-    </When>
-  </Choose>
 	
   <ItemGroup>
     <Content Include="..\XamarinForms\XamarinForms\tulips.jpg" Link="tulips.jpg">
@@ -39,4 +27,10 @@
 
   <Import Project="..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems" Label="Shared" Condition="Exists('..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems')" />
   <Import Project="..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Lite.Runtime.Mac.projitems" Label="Shared" Condition="Exists('..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Lite.Runtime.Mac.projitems')" />
+  <Import Project="..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Lite.Runtime.Ubuntu.projitems" Label="Shared" />
+  
+  <Target Name="DeployBinary" AfterTargets="AfterBuild">
+    <Message Text="Copying $(OutputPath)$(AssemblyName).dll to ..\..\lib" Importance="high" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="..\..\lib" ContinueOnError="true" />
+  </Target>
 </Project>

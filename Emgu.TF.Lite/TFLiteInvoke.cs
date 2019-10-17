@@ -91,13 +91,21 @@ namespace Emgu.TF.Lite
                 subfolder = IntPtr.Size == 8 ? "x86_64" : "x86";
 #elif UNITY_STANDALONE_WIN
 #else
-                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows)
+                    || System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
                 {
-                    subfolder = IntPtr.Size == 8 ? "x64" : "x86";
+                    if (System.Runtime.InteropServices.RuntimeInformation.OSArchitecture == Architecture.X64)
+                        subfolder = "x64";
+                    else if (System.Runtime.InteropServices.RuntimeInformation.OSArchitecture == Architecture.X86)
+                        subfolder = "x86";
+                    else if (System.Runtime.InteropServices.RuntimeInformation.OSArchitecture == Architecture.Arm)
+                        subfolder = "arm";
+                    else if (System.Runtime.InteropServices.RuntimeInformation.OSArchitecture == Architecture.Arm64)
+                        subfolder = "arm64";
 
-                    if ("x86".Equals(subfolder))
+                    if ("x86".Equals(subfolder) && System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
                     {
-                        throw new Exception("Emgu TF is only compatible with 64bit mode in Windows (not compatible with 32bit x86 mode)");
+                        throw new Exception("Emgu TF Lite is only compatible with 64bit mode in Windows (not compatible with 32bit x86 mode)");
                     }
                 }
 #endif

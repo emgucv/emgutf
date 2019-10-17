@@ -12,23 +12,23 @@
     <TFLiteBinaryDir>$(MSBuildThisFileDirectory)..\..\lib</TFLiteBinaryDir>
   </PropertyGroup> 
           <PropertyGroup>
-        <EmguTFLiteWindowsLinkTarget>WindowsForms</EmguTFLiteWindowsLinkTarget>
-        <EmguTFLiteWindowsBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguTFLiteWindowsBuildX64>
-        <EmguTFLiteWindowsNativeFileX64>$(TFLiteBinaryDir)\x64\tfliteextern.dll</EmguTFLiteWindowsNativeFileX64>
-        <EmguTFLiteWindowsErrorMessage Condition="'$(EmguTFLiteWindowsBuildX64)'=='True' AND !Exists('$(EmguTFLiteWindowsNativeFileX64)')">This package do not contain necessary binary for $(EmguTFLiteWindowsLinkTarget). windows_x64 is targeted, but file $(EmguTFLiteWindowsNativeFileX64) is missing. PInvoke may fail on Windows.</EmguTFLiteWindowsErrorMessage>
-        <EmguTFLiteWindowsDeployMessage Condition="'$(EmguTFLiteWindowsBuildX64)'=='True' AND Exists('$(EmguTFLiteWindowsNativeFileX64)')">$(EmguTFLiteWindowsDeployMessage)x64 </EmguTFLiteWindowsDeployMessage>
+        <EmguTFLiteUbuntuLinkTarget>Ubuntu</EmguTFLiteUbuntuLinkTarget>
+        <EmguTFLiteUbuntuBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguTFLiteUbuntuBuildX64>
+        <EmguTFLiteUbuntuNativeFileX64>$(TFLiteBinaryDir)\x64\libtfliteextern.so</EmguTFLiteUbuntuNativeFileX64>
+        <EmguTFLiteUbuntuErrorMessage Condition="'$(EmguTFLiteUbuntuBuildX64)'=='True' AND !Exists('$(EmguTFLiteUbuntuNativeFileX64)')">This package do not contain necessary binary for $(EmguTFLiteUbuntuLinkTarget). ubuntu_x64 is targeted, but file $(EmguTFLiteUbuntuNativeFileX64) is missing. PInvoke may fail on Ubuntu.</EmguTFLiteUbuntuErrorMessage>
+        <EmguTFLiteUbuntuDeployMessage Condition="'$(EmguTFLiteUbuntuBuildX64)'=='True' AND Exists('$(EmguTFLiteUbuntuNativeFileX64)')">$(EmguTFLiteUbuntuDeployMessage)ubuntu_x64 </EmguTFLiteUbuntuDeployMessage>
       </PropertyGroup>
-      <ItemGroup Condition="'$(EmguTFLiteWindowsBuildX64)'=='True' AND Exists('$(EmguTFLiteWindowsNativeFileX64)')">
-        <Content Include="$(TFLiteBinaryDir)\x64\*.dll">
+      <ItemGroup Condition="'$(EmguTFLiteUbuntuBuildX64)'=='True' AND Exists('$(EmguTFLiteUbuntuNativeFileX64)')">
+        <Content Include="$(TFLiteBinaryDir)\x64\*.so">
           <Link>x64\%(RecursiveDir)%(Filename)%(Extension)</Link>
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
       </ItemGroup>
-    <Target Name="EmguTFLiteWindowsPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <!-- <Error Condition="'$(EmguTFLiteWindowsLinkTarget)'==''" Text="Emgu TF Lite is not able to detect the project type, please use the pre-compiled Emgu.TF.Lite.World dll or send a bug report to support@emgu.com" /> -->
-    <!-- <Message Condition="'$(EmguTFLiteWindowsLinkTarget)'!=''" Text="Emgu TF Lite shared project compiling against $(EmguTFLiteWindowsLinkTarget)" Importance="High" /> -->
-    <Warning Text="'$(EmguTFLiteWindowsErrorMessage)'" Condition="'$(EmguTFLiteWindowsErrorMessage)'!=''" />
-    <Message Text="Emgu TF Lite Compiling with $(EmguTFLiteWindowsDeployMessage)binary" Condition="'$(EmguTFLiteWindowsDeployMessage)'!=''" Importance="High" />
-    <Message Text="No native binary is deployed by the Emgu.TF shared project." Condition="'$(EmguTFLiteWindowsDeployMessage)'==''" Importance="High" />
+    <Target Name="EmguTFLiteUbuntuPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <!-- <Error Condition="'$(EmguTFLiteUbuntuLinkTarget)'==''" Text="Emgu TF Lite is not able to detect the project type, please use the pre-compiled Emgu.TF.Lite.World dll or send a bug report to support@emgu.com" /> -->
+    <!-- <Message Condition="'$(EmguTFLiteUbuntuLinkTarget)'!=''" Text="Emgu TF Lite shared project compiling against $(EmguTFLiteUbuntuLinkTarget)" Importance="High" /> -->
+    <Warning Text="'$(EmguTFLiteUbuntuErrorMessage)'" Condition="'$(EmguTFLiteUbuntuErrorMessage)'!=''" />
+    <Message Text="Emgu TF Lite Compiling with $(EmguTFLiteUbuntuDeployMessage)binary" Condition="'$(EmguTFLiteUbuntuDeployMessage)'!=''" Importance="High" />
+    <Message Text="No native binary is deployed by the Emgu.TF.Lite.Runtime.Ubuntu shared project." Condition="'$(EmguTFLiteUbuntuDeployMessage)'==''" Importance="High" />
   </Target>
 </Project>

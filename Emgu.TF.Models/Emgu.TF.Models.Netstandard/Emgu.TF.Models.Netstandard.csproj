@@ -3,16 +3,17 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	<AssemblyName>Emgu.TF.Models.Netstandard</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\..\lib</OutputPath>
-    <DocumentationFile>..\..\lib\Emgu.TF.Models.Netstandard.xml</DocumentationFile>
+    <OutputPath>..\..\lib\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
+    <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\..\lib</OutputPath>
-    <DocumentationFile>..\..\lib\Emgu.TF.Models.Netstandard.xml</DocumentationFile>
+    <OutputPath>..\..\lib\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
+    <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   
   <ItemGroup>
@@ -27,4 +28,10 @@
     <ProjectReference Include="..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj" />
   </ItemGroup>
 
+  <Target Name="DeployBinary" AfterTargets="AfterBuild">
+    <Message Text="Copying $(OutputPath)$(AssemblyName).dll, $(OutputPath)$(AssemblyName).xml to ..\..\lib" Importance="high" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="..\..\lib" ContinueOnError="true" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).xml" DestinationFolder="..\..\lib" ContinueOnError="true" />
+  </Target>
+  
 </Project>

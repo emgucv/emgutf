@@ -16,7 +16,7 @@
         <EmguTFLiteWindowsBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguTFLiteWindowsBuildX64>
         <EmguTFLiteWindowsNativeFileX64>$(TFLiteBinaryDir)\x64\tfliteextern.dll</EmguTFLiteWindowsNativeFileX64>
         <EmguTFLiteWindowsErrorMessage Condition="'$(EmguTFLiteWindowsBuildX64)'=='True' AND !Exists('$(EmguTFLiteWindowsNativeFileX64)')">This package do not contain necessary binary for $(EmguTFLiteWindowsLinkTarget). windows_x64 is targeted, but file $(EmguTFLiteWindowsNativeFileX64) is missing. PInvoke may fail on Windows.</EmguTFLiteWindowsErrorMessage>
-        <EmguTFLiteWindowsDeployMessage Condition="'$(EmguTFLiteWindowsBuildX64)'=='True' AND Exists('$(EmguTFLiteWindowsNativeFileX64)')">$(EmguTFLiteWindowsDeployMessage)x64 </EmguTFLiteWindowsDeployMessage>
+        <EmguTFLiteWindowsDeployMessage Condition="'$(EmguTFLiteWindowsBuildX64)'=='True' AND Exists('$(EmguTFLiteWindowsNativeFileX64)')">$(EmguTFLiteWindowsDeployMessage)windows_x64 </EmguTFLiteWindowsDeployMessage>
       </PropertyGroup>
       <ItemGroup Condition="'$(EmguTFLiteWindowsBuildX64)'=='True' AND Exists('$(EmguTFLiteWindowsNativeFileX64)')">
         <Content Include="$(TFLiteBinaryDir)\x64\*.dll">
@@ -29,6 +29,6 @@
     <!-- <Message Condition="'$(EmguTFLiteWindowsLinkTarget)'!=''" Text="Emgu TF Lite shared project compiling against $(EmguTFLiteWindowsLinkTarget)" Importance="High" /> -->
     <Warning Text="'$(EmguTFLiteWindowsErrorMessage)'" Condition="'$(EmguTFLiteWindowsErrorMessage)'!=''" />
     <Message Text="Emgu TF Lite Compiling with $(EmguTFLiteWindowsDeployMessage)binary" Condition="'$(EmguTFLiteWindowsDeployMessage)'!=''" Importance="High" />
-    <Message Text="No native binary is deployed by the Emgu.TF shared project." Condition="'$(EmguTFLiteWindowsDeployMessage)'==''" Importance="High" />
+    <Message Text="No native binary is deployed by the Emgu.TF.Lite.Runtime.Windows shared project." Condition="'$(EmguTFLiteWindowsDeployMessage)'==''" Importance="High" />
   </Target>
 </Project>

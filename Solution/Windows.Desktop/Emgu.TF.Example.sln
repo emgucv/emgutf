@@ -31,9 +31,14 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Windows", "
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Mac", "..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Runtime.Mac.shproj", "{B1E7D925-5D1C-4A1E-9BA0-35163883A110}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Ubuntu", "..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Runtime.Ubuntu.shproj", "{0F30EC5F-39DD-4A62-AD79-14EBCB894208}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms\XamarinForms.projitems*{0a7a7b86-35e5-4887-b337-96c2f1b1fcf8}*SharedItemsImports = 4
+		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Runtime.Windows.projitems*{0a7a7b86-35e5-4887-b337-96c2f1b1fcf8}*SharedItemsImports = 4
+		..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Runtime.Ubuntu.projitems*{0f30ec5f-39dd-4a62-ad79-14ebcb894208}*SharedItemsImports = 13
+		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Runtime.Windows.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms\XamarinForms.projitems*{26bdb58d-52d9-4ad1-9205-be5792781a98}*SharedItemsImports = 13
 		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Runtime.Windows.projitems*{3088794d-7022-4049-98bc-41e2949e48b4}*SharedItemsImports = 13
 		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{752279f0-17ef-4ec8-857c-8f5f897af0e8}*SharedItemsImports = 13

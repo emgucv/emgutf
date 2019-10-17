@@ -2,13 +2,17 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	<AssemblyName>Inception.Console.NetCore</AssemblyName>
   </PropertyGroup>
 
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutputPath>..\..\lib\</OutputPath>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\lib\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\..\lib\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
   </PropertyGroup>
 
 
@@ -26,7 +30,12 @@
 
   <Import Project="..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Runtime.Windows.projitems" Label="Shared" /> 
 
-  <Import Project="..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Runtime.Mac.projitems" Label="Shared" />
+  <Import Project="..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Runtime.Mac.projitems" Label="Shared" /> 
 
+  <Import Project="..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Runtime.Ubuntu.projitems" Label="Shared" />
 
+  <Target Name="DeployBinary" AfterTargets="AfterBuild">
+    <Message Text="Copying $(OutputPath)$(AssemblyName).dll to ..\..\lib" Importance="high" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="..\..\lib" ContinueOnError="true" />
+  </Target>
 </Project>
