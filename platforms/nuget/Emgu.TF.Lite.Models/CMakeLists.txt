@@ -5,17 +5,25 @@
 IF ( TARGET Emgu.TF.Lite.Models.Netstandard )
   
   PROJECT(Emgu.TF.Lite.Models.nuget)
-  IF(WIN32)
+  
+#  IF(WIN32)
+#    ADD_CUSTOM_TARGET(
+#      ${PROJECT_NAME} ALL
+#      COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../../../miscellaneous/nuget.exe" pack Package.nuspec -OutputDirectory "${CMAKE_CURRENT_SOURCE_DIR}/../"
+#      )
+#  ELSE()
+#    ADD_CUSTOM_TARGET(
+#      ${PROJECT_NAME} ALL
+#      COMMAND mono "${CMAKE_CURRENT_SOURCE_DIR}/../../../miscellaneous/nuget.exe" pack Package.nuspec -OutputDirectory "${CMAKE_CURRENT_SOURCE_DIR}/../"
+#      )
+#  ENDIF()
+
     ADD_CUSTOM_TARGET(
       ${PROJECT_NAME} ALL
-      COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../../../miscellaneous/nuget.exe" pack Package.nuspec -OutputDirectory "${CMAKE_CURRENT_SOURCE_DIR}/../"
+      COMMAND dotnet pack -c Release "${CMAKE_CURRENT_SOURCE_DIR}/../../../Emgu.TF.Lite.Models/Emgu.TF.Lite.Models.Netstandard/Emgu.TF.Lite.Models.Netstandard.csproj" -p:NuspecFile="${CMAKE_CURRENT_SOURCE_DIR}/Package.nuspec" -o "${CMAKE_CURRENT_SOURCE_DIR}/../"
+      WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
       )
-  ELSE()
-    ADD_CUSTOM_TARGET(
-      ${PROJECT_NAME} ALL
-      COMMAND mono "${CMAKE_CURRENT_SOURCE_DIR}/../../../miscellaneous/nuget.exe" pack Package.nuspec -OutputDirectory "${CMAKE_CURRENT_SOURCE_DIR}/../"
-      )
-  ENDIF()
+
   ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Models.Netstandard Emgu.TF.Lite.nuget)
   
   IF(TARGET Emgu.TF.Lite.Models.Mac)
