@@ -170,7 +170,7 @@ MACRO(BUILD_DOTNET_PROJ target csproj_file extra_flags)
   IF (DOTNET_EXECUTABLE)
     ADD_CUSTOM_COMMAND (
       TARGET ${target}
-      COMMAND "${DOTNET_EXECUTABLE}" build "${csproj_file}"
+      COMMAND "${DOTNET_EXECUTABLE}" build -c Release "${csproj_file}"
       COMMENT "Building ${target}")
   ELSE()
 	MESSAGE(FATAL_ERROR "DOTNET_EXECUTABLE not found!")

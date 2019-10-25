@@ -7,7 +7,7 @@ cd tensorflow
 bazel build --jobs=2 --config=monolithic --host_linkopt=-latomic //tensorflow/tfextern:libtfextern.so 
 cd ..
 
-mkdir -p lib
-cp tensorflow/bazel-bin/tensorflow/tfextern/*.so lib/
+mkdir -p lib/arm
+cp -r tensorflow/bazel-bin/tensorflow/tfextern/*.so lib/arm
 #cp tensorflow/bazel-bin/tensorflow/*.so lib/
 #ln -s lib/libtensorflow_framework.so lib/libtensorflow_framework.so.1
