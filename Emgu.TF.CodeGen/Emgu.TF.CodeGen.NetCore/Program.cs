@@ -18,6 +18,7 @@ namespace Emgu.TF.CodeGen
     {
         static void Main(string[] args)
         {
+            TfInvoke.CheckLibraryLoaded();	
             Console.WriteLine("Starting code generation");
             using (Buffer bf = TfInvoke.GetAllOpList())
             using (MemoryStream ms = bf.GetMemoryStream())

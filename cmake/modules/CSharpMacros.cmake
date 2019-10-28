@@ -138,26 +138,25 @@ MACRO(SET_CS_TARGET_FRAMEWORK)
   ADD_CS_FRAMEWORK_REFERENCES("${version}" "${FRAMEWORK_REFERENCES}")
 ENDMACRO(SET_CS_TARGET_FRAMEWORK)
 
+SET(DEFAULT_CS_CONFIG "Release" CACHE STRING "Default C# build configuration")
 MACRO(BUILD_CSPROJ target csproj_file extra_flags)
   ADD_CUSTOM_TARGET (${target} ${ARGV3})
   
   IF (WIN32 AND MSVC AND NOT ("${CMAKE_VS_DEVENV_COMMAND}" STREQUAL ""))
-    #MESSAGE(STATUS "Adding custom command: ${CMAKE_VS_DEVENV_COMMAND} /Build Release ${extra_flags} ${csproj_file}")
     ADD_CUSTOM_COMMAND (
       TARGET ${target}
-      COMMAND ${CMAKE_VS_DEVENV_COMMAND} /Build Release ${extra_flags} ${csproj_file}
+      COMMAND ${CMAKE_VS_DEVENV_COMMAND} /Build ${DEFAULT_CS_CONFIG} ${extra_flags} ${csproj_file}
       COMMENT "Building ${target}")
   ELSEIF(MSBUILD_EXECUTABLE)
-  #IF(MSBUILD_EXECUTABLE)
-    #MESSAGE(STATUS "Adding custom command: ${MSBUILD_EXECUTABLE} /t:Build /p:Configuration=Release ${extra_flags} ${csproj_file}")
+    #MESSAGE(STATUS "Adding custom command: ${MSBUILD_EXECUTABLE} /t:Build /p:Configuration=${DEFAULT_CS_CONFIG} ${extra_flags} ${csproj_file}")
     ADD_CUSTOM_COMMAND (
       TARGET ${target}
-      COMMAND ${MSBUILD_EXECUTABLE} /t:Build /p:Configuration=Release ${extra_flags} ${csproj_file}
+      COMMAND ${MSBUILD_EXECUTABLE} /t:Build /p:Configuration=${DEFAULT_CS_CONFIG} ${extra_flags} ${csproj_file}
       COMMENT "Building ${target}")
   ELSEIF (DOTNET_EXECUTABLE)
     ADD_CUSTOM_COMMAND (
       TARGET ${target}
-      COMMAND ${DOTNET_EXECUTABLE} build ${csproj_file}
+      COMMAND ${DOTNET_EXECUTABLE} build -c ${DEFAULT_CS_CONFIG} ${csproj_file}
       COMMENT "Building ${target}")
   ELSE()
     MESSAGE(FATAL_ERROR "Neither Visual Studio, msbuild nor dotnot is found!")
@@ -170,7 +169,7 @@ MACRO(BUILD_DOTNET_PROJ target csproj_file extra_flags)
   IF (DOTNET_EXECUTABLE)
     ADD_CUSTOM_COMMAND (
       TARGET ${target}
-      COMMAND "${DOTNET_EXECUTABLE}" build -c Release "${csproj_file}"
+      COMMAND "${DOTNET_EXECUTABLE}" build -c ${DEFAULT_CS_CONFIG} "${csproj_file}"
       COMMENT "Building ${target}")
   ELSE()
 	MESSAGE(FATAL_ERROR "DOTNET_EXECUTABLE not found!")

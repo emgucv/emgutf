@@ -321,7 +321,7 @@ namespace Emgu.TF
         /// </summary>
         static TfInvoke()
         {
-            //Debug.WriteLine(String.Format("Emgu TF Running in {0} bit mode.", IntPtr.Size));
+            Debug.WriteLine(String.Format("Emgu TF Running in {0} bit mode.", IntPtr.Size));
             List<String> modules = TfInvoke.TensorflowModuleList;
             modules.RemoveAll(String.IsNullOrEmpty);
 
