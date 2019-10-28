@@ -19,7 +19,7 @@ ELSE()
     PROJECT(Emgu.TF.Document.Html)
     ADD_CUSTOM_TARGET(
        ${PROJECT_NAME}
-       COMMAND ${MSBUILD_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.html.shfbproj
+       COMMAND ${MSBUILD_EXECUTABLE} /p:Configuration=Release ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.html.shfbproj
        SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.html.shfbproj
     )
     ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Netstandard)
@@ -27,7 +27,7 @@ ELSE()
     PROJECT(Emgu.TF.Documentation.chm)
     ADD_CUSTOM_TARGET(
        ${PROJECT_NAME} ALL
-       COMMAND ${MSBUILD_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.html.shfbproj /property:OutputPath=. /property:HelpFileFormat=HtmlHelp1
+       COMMAND ${MSBUILD_EXECUTABLE} /p:Configuration=Release ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.html.shfbproj /property:OutputPath=. /property:HelpFileFormat=HtmlHelp1
        SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.html.shfbproj
     )
     ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Netstandard)
@@ -44,7 +44,7 @@ ELSE()
     PROJECT(Emgu.TF.Lite.Document.Html)
     ADD_CUSTOM_TARGET(
        ${PROJECT_NAME}
-       COMMAND ${MSBUILD_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.html.shfbproj
+       COMMAND ${MSBUILD_EXECUTABLE} /p:Configuration=Release ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.html.shfbproj
        SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.html.shfbproj
     )
     ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Netstandard)
@@ -52,7 +52,7 @@ ELSE()
     PROJECT(Emgu.TF.Lite.Documentation.chm)
     ADD_CUSTOM_TARGET(
        ${PROJECT_NAME} ALL
-       COMMAND ${MSBUILD_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.html.shfbproj /property:OutputPath=. /property:HelpFileFormat=HtmlHelp1
+       COMMAND ${MSBUILD_EXECUTABLE} /p:Configuration=Release ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.html.shfbproj /property:OutputPath=. /property:HelpFileFormat=HtmlHelp1
        SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.html.shfbproj
     )
     ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Netstandard)
