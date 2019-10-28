@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>ee4e654c-f7e9-44ef-bcfc-626df8ef5dae</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Emgu.TF</Import_RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <EmguTFUbuntuBinaryDir>$(MSBuildThisFileDirectory)..\..\lib</EmguTFUbuntuBinaryDir>
+    <EmguTFUbuntuDir>$(MSBuildThisFileDirectory)</EmguTFUbuntuDir>
+  </PropertyGroup>
+  <PropertyGroup>
+    <EmguTFUbuntuLinkTarget>Ubuntu</EmguTFUbuntuLinkTarget>
+    <EmguTFUbuntuBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguTFUbuntuBuildX64>
+    <EmguTFUbuntuNativeFileX64>$(EmguTFUbuntuBinaryDir)\x64\libtfextern.so</EmguTFUbuntuNativeFileX64>
+    <EmguTFUbuntuErrorMessage Condition="'$(EmguTFUbuntuBuildX64)'=='True' AND !Exists('$(EmguTFUbuntuNativeFileX64)')">This package do not contain necessary binary for $(EmguTFUbuntuLinkTarget). Ubuntu x64 is targeted, but file $(EmguTFUbuntuNativeFileX64) is missing. PInvoke may fail on Ubuntu x64 platforms</EmguTFUbuntuErrorMessage>
+    <EmguTFUbuntuDeployMessage Condition="'$(EmguTFUbuntuBuildX64)'=='True' AND Exists('$(EmguTFUbuntuNativeFileX64)')">$(EmguTFUbuntuDeployMessage)ubuntu_x64 </EmguTFUbuntuDeployMessage>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(EmguTFUbuntuBuildX64)'=='True' AND Exists('$(EmguTFUbuntuNativeFileX64)')">
+    <Content Include="$(EmguTFUbuntuBinaryDir)\x64\*.so">
+      <Link>x64\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+	<Content Include="$(EmguTFUbuntuBinaryDir)\x64\*.so.1">
+      <Link>x64\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Target Name="EmguTFUbuntuPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <!-- <Message Condition="'$(EmguTFUbuntuLinkTarget)'!=''" Text="Emgu.TF.Runtime.Ubuntu shared project compiling against $(EmguTFUbuntuLinkTarget) Runtime" Importance="High" /> -->
+    <Warning Text="'$(EmguTFUbuntuErrorMessage)'" Condition="'$(EmguTFUbuntuErrorMessage)'!=''" />
+    <Message Text="Emgu TF Compiling with $(EmguTFUbuntuDeployMessage)binary" Condition="'$(EmguTFUbuntuDeployMessage)'!=''" Importance="High" />
+    <Message Text="Native binary is NOT deployed by the Emgu.TF.Runtime.Ubuntu shared project." Condition="'$(EmguTFUbuntuDeployMessage)'==''" Importance="High" />
+  </Target>
+</Project>
