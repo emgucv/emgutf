@@ -12,23 +12,21 @@
     <TFLiteBinaryDir>$(MSBuildThisFileDirectory)..\..\lib</TFLiteBinaryDir>
   </PropertyGroup> 
           <PropertyGroup>
-        <EmguTFLiteUbuntuLinkTarget>Ubuntu</EmguTFLiteUbuntuLinkTarget>
-        <EmguTFLiteUbuntuBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguTFLiteUbuntuBuildX64>
-        <EmguTFLiteUbuntuNativeFileX64>$(TFLiteBinaryDir)\x64\libtfliteextern.so</EmguTFLiteUbuntuNativeFileX64>
-        <EmguTFLiteUbuntuErrorMessage Condition="'$(EmguTFLiteUbuntuBuildX64)'=='True' AND !Exists('$(EmguTFLiteUbuntuNativeFileX64)')">This package do not contain necessary binary for $(EmguTFLiteUbuntuLinkTarget). ubuntu_x64 is targeted, but file $(EmguTFLiteUbuntuNativeFileX64) is missing. PInvoke may fail on Ubuntu.</EmguTFLiteUbuntuErrorMessage>
-        <EmguTFLiteUbuntuDeployMessage Condition="'$(EmguTFLiteUbuntuBuildX64)'=='True' AND Exists('$(EmguTFLiteUbuntuNativeFileX64)')">$(EmguTFLiteUbuntuDeployMessage)ubuntu_x64 </EmguTFLiteUbuntuDeployMessage>
+        <EmguTFLiteRaspbianLinkTarget>Raspbian</EmguTFLiteRaspbianLinkTarget>
+        <EmguTFLiteRaspbianBuildArm Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='ARM'">True</EmguTFLiteRaspbianBuildArm>
+        <EmguTFLiteRaspbianNativeFileArm>$(TFLiteBinaryDir)\arm\libtfliteextern.so</EmguTFLiteRaspbianNativeFileArm>
+        <EmguTFLiteRaspbianErrorMessage Condition="'$(EmguTFLiteRaspbianBuildArm)'=='True' AND !Exists('$(EmguTFLiteRaspbianNativeFileArm)')">This package do not contain necessary binary for $(EmguTFLiteRaspbianLinkTarget). Raspbian_arm is targeted, but file $(EmguTFLiteRaspbianNativeFileArm) is missing. PInvoke may fail on Raspbian.</EmguTFLiteRaspbianErrorMessage>
+        <EmguTFLiteRaspbianDeployMessage Condition="'$(EmguTFLiteRaspbianBuildArm)'=='True' AND Exists('$(EmguTFLiteRaspbianNativeFileArm)')">$(EmguTFLiteRaspbianDeployMessage)Raspbian_arm </EmguTFLiteRaspbianDeployMessage>
       </PropertyGroup>
-      <ItemGroup Condition="'$(EmguTFLiteUbuntuBuildX64)'=='True' AND Exists('$(EmguTFLiteUbuntuNativeFileX64)')">
-        <Content Include="$(TFLiteBinaryDir)\x64\*.so">
-          <Link>x64\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <ItemGroup Condition="'$(EmguTFLiteRaspbianBuildArm)'=='True' AND Exists('$(EmguTFLiteRaspbianNativeFileArm)')">
+        <Content Include="$(TFLiteBinaryDir)\arm\*.so">
+          <Link>arm\%(RecursiveDir)%(Filename)%(Extension)</Link>
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
       </ItemGroup>
-    <Target Name="EmguTFLiteUbuntuPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <!-- <Error Condition="'$(EmguTFLiteUbuntuLinkTarget)'==''" Text="Emgu TF Lite is not able to detect the project type, please use the pre-compiled Emgu.TF.Lite.World dll or send a bug report to support@emgu.com" /> -->
-    <!-- <Message Condition="'$(EmguTFLiteUbuntuLinkTarget)'!=''" Text="Emgu TF Lite shared project compiling against $(EmguTFLiteUbuntuLinkTarget)" Importance="High" /> -->
-    <Warning Text="'$(EmguTFLiteUbuntuErrorMessage)'" Condition="'$(EmguTFLiteUbuntuErrorMessage)'!=''" />
-    <Message Text="Emgu TF Lite Compiling with $(EmguTFLiteUbuntuDeployMessage)binary" Condition="'$(EmguTFLiteUbuntuDeployMessage)'!=''" Importance="High" />
-    <Message Text="No native binary is deployed by the Emgu.TF.Lite.Runtime.Ubuntu shared project." Condition="'$(EmguTFLiteUbuntuDeployMessage)'==''" Importance="High" />
+    <Target Name="EmguTFLiteRaspbianPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <Warning Text="'$(EmguTFLiteRaspbianErrorMessage)'" Condition="'$(EmguTFLiteRaspbianErrorMessage)'!=''" />
+    <Message Text="Emgu TF Lite Compiling with $(EmguTFLiteRaspbianDeployMessage)binary" Condition="'$(EmguTFLiteRaspbianDeployMessage)'!=''" Importance="High" />
+    <Message Text="No native binary is deployed by the Emgu.TF.Lite.Runtime.Raspbian shared project." Condition="'$(EmguTFLiteRaspbianDeployMessage)'==''" Importance="High" />
   </Target>
 </Project>

@@ -41,3 +41,11 @@ ENDIF()
 IF ( HAVE_IOS_LITE )
   add_subdirectory(runtime.ios.Emgu.TF.Lite)
 ENDIF()
+
+IF (HAVE_LINUX_X86_64_LITE)
+  add_subdirectory(runetime.ubuntu.Emgu.TF.Lite)
+ENDIF()
+
+IF (HAVE_LINUX_ARM_LITE)
+  add_subdirectory(runetime.raspbian.Emgu.TF.Lite)
+ENDIF()

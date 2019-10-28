@@ -212,9 +212,9 @@ CHECK_BINARY_EXIST("lib/osx" "libtensorflow_framework.dylib;libtfextern.dylib" H
 #CHECK_BINARY_EXIST("lib/osx" "libtfextern.dylib" HAVE_OSX OFF)
 CHECK_BINARY_EXIST("lib/osx" "libtfliteextern.dylib" HAVE_OSX_LITE OFF)
 CHECK_BINARY_EXIST("lib/x64" "libtfextern.so" HAVE_LINUX_X86_64 OFF)
-CHECK_BINARY_EXIST("lib/x64" "libtfliteextern.so" HAVE_LINUX_LITE_X86_64 OFF)
+CHECK_BINARY_EXIST("lib/x64" "libtfliteextern.so" HAVE_LINUX_X86_64_LITE OFF)
 CHECK_BINARY_EXIST("lib/arm" "libtfextern.so" HAVE_LINUX_ARM OFF)
-CHECK_BINARY_EXIST("lib/arm" "libtfliteextern.so" HAVE_LINUX_LITE_ARM OFF)
+CHECK_BINARY_EXIST("lib/arm" "libtfliteextern.so" HAVE_LINUX_ARM_LITE OFF)
 CHECK_BINARY_EXIST("lib/android/arm64-v8a" "libtfextern.so" HAVE_ANDROID_ARM64_V8A OFF)
 CHECK_BINARY_EXIST("lib/android/arm64-v8a" "libtfliteextern.so" HAVE_ANDROID_ARM64_V8A_LITE OFF)
 #CHECK_BINARY_EXIST("lib/android/armeabi" "libtfextern.so" HAVE_ANDROID_ARMEABI OFF)
@@ -233,7 +233,7 @@ IF(HAVE_LINUX_X86_64 OR HAVE_LINUX_ARM)
 ENDIF()
 
 SET(HAVE_LINUX_LITE OFF)
-IF(HAVE_LINUX_LITE_X86_64 OR HAVE_LINUX_LITE_ARM)
+IF(HAVE_LINUX_X86_64_LITE OR HAVE_LINUX_ARM_LITE)
   SET(HAVE_LINUX_LITE ON)
   MESSAGE(STATUS "HAVE_LINUX_LITE: ${HAVE_LINUX_LITE}")
 ENDIF()
@@ -544,8 +544,33 @@ IF(HAVE_OSX)
     </dependencies>") 
 ENDIF()
 
-IF(HAVE_LITE_BUILD)
+IF(HAVE_LINUX_X86_64)
+  SET(EMGUTF_UBUNTU_NUGET_ID "runtime.ubuntu.${EMGUTF_NUGET_ID}")  
+  SET(EMGUTF_UBUNTU_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Ubuntu")
+  SET(EMGUTF_UBUNTU_NUGET_FILE_LIST " 
+    <file src=\"..\\..\\..\\lib\\x64\\*.so\" target=\"build\" />
+	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
+	<file src=\"runtime.ubuntu.Emgu.TF.targets\" target=\"build\\${EMGUTF_UBUNTU_NUGET_ID}.targets\" />")
+  SET(EMGUTF_UBUNTU_NUGET_DEPENDENCY "${EMGUTF_UBUNTU_NUGET_DEPENDENCY}
+    <dependencies>
+		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
+    </dependencies>")   
+ENDIF()
 
+IF(HAVE_LINUX_ARM)
+  SET(EMGUTF_RASPBIAN_NUGET_ID "runtime.raspbian.${EMGUTF_NUGET_ID}")  
+  SET(EMGUTF_RASPBIAN_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Raspian")		
+  SET(EMGUTF_RASPBIAN_NUGET_FILE_LIST " 
+    <file src=\"..\\..\\..\\lib\\arm\\*.so\" target=\"build\" />
+	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
+	<file src=\"runtime.raspbian.Emgu.TF.targets\" target=\"build\\${EMGUTF_RASPBIAN_NUGET_ID}.targets\" />")
+  SET(EMGUTF_RASPBIAN_NUGET_DEPENDENCY "${EMGUTF_RASPBIAN_NUGET_DEPENDENCY}
+    <dependencies>
+		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
+    </dependencies>")
+ENDIF()
+
+IF(HAVE_LITE_BUILD)
   SET(EMGUTF_LITE_NUGET_ID "Emgu.TF.Lite")
   SET(EMGUTF_LITE_MODEL_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.Models")
   SET(EMGUTF_LITE_NUGET_TITLE "Emgu TF Lite")
@@ -564,6 +589,12 @@ IF(HAVE_LITE_BUILD)
   
   SET(EMGUTF_LITE_MACOS_NUGET_ID "runtime.macos.${EMGUTF_LITE_NUGET_ID}")  
   SET(EMGUTF_LITE_MACOS_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for MacOS")	
+  
+  SET(EMGUTF_LITE_UBUNTU_NUGET_ID "runtime.ubuntu.${EMGUTF_LITE_NUGET_ID}")  
+  SET(EMGUTF_LITE_UBUNTU_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Ubuntu")	
+  
+  SET(EMGUTF_LITE_RASPIAN_NUGET_ID "runtime.raspbian.${EMGUTF_LITE_NUGET_ID}")  
+  SET(EMGUTF_LITE_RASPIAN_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Raspian")	
 
   SET(EMGUTF_LITE_ANDROID_NUGET_ID "runtime.android.${EMGUTF_LITE_NUGET_ID}")  
   SET(EMGUTF_LITE_ANDROID_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Android")	
@@ -632,6 +663,26 @@ IF(HAVE_ANDROID_LITE)
     <dependencies>
 		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
     </dependencies>")
+ENDIF()
+IF (HAVE_LINUX_X86_64_LITE)
+  SET(EMGUTF_LITE_UBUNTU_NUGET_FILE_LIST "${EMGUTF_LITE_UBUNTU_NUGET_FILE_LIST} 
+    <file src=\"..\\..\\..\\lib\\x64\\*.so\" target=\"build\" />
+	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
+	<file src=\"runtime.ubuntu.Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_UBUNTU_NUGET_ID}.targets\" />")
+  SET(EMGUTF_LITE_UBUNTU_NUGET_DEPENDENCY "${EMGUTF_LITE_UBUNTU_NUGET_DEPENDENCY}
+    <dependencies>
+		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
+    </dependencies>")	
+ENDIF()
+IF (HAVE_LINUX_ARM_LITE)
+  SET(EMGUTF_LITE_RASPBIAN_NUGET_FILE_LIST "${EMGUTF_LITE_RASPBIAN_NUGET_FILE_LIST} 
+    <file src=\"..\\..\\..\\lib\\arm\\*.so\" target=\"build\" />
+	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
+	<file src=\"runtime.raspbian.Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_RASPBIAN_NUGET_ID}.targets\" />")
+  SET(EMGUTF_LITE_RASPBIAN_NUGET_DEPENDENCY "${EMGUTF_LITE_RASPBIAN_NUGET_DEPENDENCY}
+    <dependencies>
+		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
+    </dependencies>")	
 ENDIF()
 
 SET(EMGUTF_NUGET_DEPENDENCY "")
@@ -821,6 +872,10 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/runtime.windows.Emgu.TF.Lite.Pa
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/runtime.macos.Emgu.TF.Lite.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/runtime.macos.Emgu.TF.Lite/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/runtime.android.Emgu.TF.Lite.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/runtime.android.Emgu.TF.Lite/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/runtime.ios.Emgu.TF.Lite.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/runtime.ios.Emgu.TF.Lite/Package.nuspec)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/runtime.ubuntu.Emgu.TF.Lite.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/runtime.ubuntu.Emgu.TF.Lite/Package.nuspec)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/runtime.ubuntu.Emgu.TF.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/runtime.ubuntu.Emgu.TF/Package.nuspec)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/runtime.raspbian.Emgu.TF.Lite.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/runtime.raspbian.Emgu.TF.Lite/Package.nuspec)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/runtime.raspbian.Emgu.TF.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/runtime.raspbian.Emgu.TF/Package.nuspec)
 
 # ----------------------------------------------------------------------------
 #  Generate readme file for Emgu TF project

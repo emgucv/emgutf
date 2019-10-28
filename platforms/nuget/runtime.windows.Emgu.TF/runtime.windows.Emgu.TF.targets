@@ -13,7 +13,6 @@
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
       </ItemGroup>
-	  
   <Target Name="EmguTFPackageBuildImports" BeforeTargets="PrepareForBuild">
     <Error Condition="'$(EmguTFLinkTarget)'==''" Text="Emgu TF is not able to detect the project type, unloading and reloading the project may fix this problem. If you are still having difficulty, please send an email to support@emgu.com" />
     <Message Condition="'$(EmguTFLinkTarget)'!=''" Text="Emgu TF nuget package compiling against $(EmguTFLinkTarget)" Importance="High" />

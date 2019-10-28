@@ -32,7 +32,9 @@
 
   <Import Project="..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Runtime.Mac.projitems" Label="Shared" /> 
 
-  <Import Project="..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Runtime.Ubuntu.projitems" Label="Shared" />
+  <Import Project="..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Runtime.Ubuntu.projitems" Label="Shared" /> 
+
+  <Import Project="..\..\Emgu.TF.Runtime\Raspbian\Emgu.TF.Runtime.Raspbian.projitems" Label="Shared" />
 
   <!--
   <Target Name="DeployBinary" AfterTargets="AfterBuild">
