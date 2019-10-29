@@ -6,5 +6,5 @@ cd tensorflow
 
 bazel build //tensorflow/tfliteextern:libtfliteextern.so 
 cd ..
-mkdir -p lib
-cp tensorflow/bazel-bin/tensorflow/tfliteextern/*.so lib/
+mkdir -p lib/x64
+cp tensorflow/bazel-bin/tensorflow/tfliteextern/*.so lib/x64
