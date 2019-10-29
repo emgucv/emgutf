@@ -548,7 +548,8 @@ IF(HAVE_LINUX_X86_64)
   SET(EMGUTF_UBUNTU_NUGET_ID "runtime.ubuntu.${EMGUTF_NUGET_ID}")  
   SET(EMGUTF_UBUNTU_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Ubuntu")
   SET(EMGUTF_UBUNTU_NUGET_FILE_LIST " 
-    <file src=\"..\\..\\..\\lib\\x64\\*.so\" target=\"build\" />
+        <file src=\"..\\..\\..\\lib\\x64\\*.so\" target=\"build\" />
+        <file src=\"..\\..\\..\\lib\\x64\\*.so.1\" target=\"build\" />
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
 	<file src=\"runtime.ubuntu.Emgu.TF.targets\" target=\"build\\${EMGUTF_UBUNTU_NUGET_ID}.targets\" />")
   SET(EMGUTF_UBUNTU_NUGET_DEPENDENCY "${EMGUTF_UBUNTU_NUGET_DEPENDENCY}

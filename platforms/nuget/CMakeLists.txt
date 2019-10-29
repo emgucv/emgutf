@@ -20,6 +20,11 @@ IF(HAVE_OSX)
   add_subdirectory(runtime.macos.Emgu.TF)
 ENDIF()
 
+IF(HAVE_LINUX_X86_64)
+  add_subdirectory(runtime.ubuntu.Emgu.TF)
+ENDIF()
+  
+
 #MESSAGE(STATUS "-------HAVE_OSX_LITE: ${HAVE_OSX_LITE}")
 #MESSAGE(STATUS "-------HAVE_LITE_BUILD: ${HAVE_LITE_BUILD}")
 

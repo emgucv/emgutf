@@ -16,6 +16,6 @@
   <Target Name="EmguTFLiteUbuntuPackageBuildImports" BeforeTargets="PrepareForBuild">
     <Warning Text="'$(EmguTFLiteUbuntuErrorMessage)'" Condition="'$(EmguTFLiteUbuntuErrorMessage)'!=''" />
     <Message Text="Emgu TF Lite Compiling with $(EmguTFLiteUbuntuDeployMessage)binary" Condition="'$(EmguTFLiteUbuntuDeployMessage)'!=''" Importance="High" />
-    <Message Text="No native binary is deployed by the runtime.macos.Emgu.TF.Lite nuget package." Condition="'$(EmguTFLiteUbuntuDeployMessage)'==''" Importance="High" />
+    <Message Text="No native binary is deployed by the runtime.ubuntu.Emgu.TF.Lite nuget package." Condition="'$(EmguTFLiteUbuntuDeployMessage)'==''" Importance="High" />
   </Target>
 </Project>
