@@ -16,7 +16,7 @@
     <EmguTFRaspbianLinkTarget>Raspbian</EmguTFRaspbianLinkTarget>
     <EmguTFRaspbianBuildArm Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='ARM'">True</EmguTFRaspbianBuildArm>
     <EmguTFRaspbianNativeFileArm>$(EmguTFRaspbianBinaryDir)\arm\libtfextern.so</EmguTFRaspbianNativeFileArm>
-    <EmguTFRaspbianErrorMessage Condition="'$(EmguTFRaspbianBuildArm)'=='True' AND !Exists('$(EmguTFRaspbianNativeFileArm)')">This package do not contain necessary binary for $(EmguTFRaspbianLinkTarget). Raspbian x64 is targeted, but file $(EmguTFRaspbianNativeFileArm) is missing. PInvoke may fail on Raspbian x64 platforms</EmguTFRaspbianErrorMessage>
+    <EmguTFRaspbianErrorMessage Condition="'$(EmguTFRaspbianBuildArm)'=='True' AND !Exists('$(EmguTFRaspbianNativeFileArm)')">This package do not contain necessary binary for $(EmguTFRaspbianLinkTarget). Raspbian arm is targeted, but file $(EmguTFRaspbianNativeFileArm) is missing. PInvoke may fail on Raspbian arm platforms</EmguTFRaspbianErrorMessage>
     <EmguTFRaspbianDeployMessage Condition="'$(EmguTFRaspbianBuildArm)'=='True' AND Exists('$(EmguTFRaspbianNativeFileArm)')">$(EmguTFRaspbianDeployMessage)Raspbian_arm </EmguTFRaspbianDeployMessage>
   </PropertyGroup>
   <ItemGroup Condition="'$(EmguTFRaspbianBuildArm)'=='True' AND Exists('$(EmguTFRaspbianNativeFileArm)')">

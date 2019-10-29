@@ -18,7 +18,7 @@ IF (TARGET Emgu.TF.Models.Netstandard)
   
   ADD_CUSTOM_TARGET(
     ${PROJECT_NAME} ALL
-    COMMAND dotnet pack -c Release "${CMAKE_CURRENT_SOURCE_DIR}/../../../Emgu.TF.Model/Emgu.TF.Model.Netstandard/Emgu.TF.Model.Netstandard.csproj" -p:NuspecFile="${CMAKE_CURRENT_SOURCE_DIR}/Package.nuspec" -o "${CMAKE_CURRENT_SOURCE_DIR}/../"
+    COMMAND ${DOTNET_EXECUTABLE} pack -c ${DEFAULT_CS_CONFIG} "${CMAKE_CURRENT_SOURCE_DIR}/../../../Emgu.TF.Models/Emgu.TF.Models.Netstandard/Emgu.TF.Models.Netstandard.csproj" -p:NuspecFile="${CMAKE_CURRENT_SOURCE_DIR}/Package.nuspec" -o "${CMAKE_CURRENT_SOURCE_DIR}/../"
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
         )
   ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Models.Netstandard Emgu.TF.nuget)
