@@ -18,35 +18,35 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>$(TFLiteBinaryDir)\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>$(TFLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
-    <OutputPath>$(TFLiteBinaryDir)\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>$(TFLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>
     </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
-    <OutputPath>$(TFLiteBinaryDir)\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>$(TFLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' ">
-    <OutputPath>$(TFLiteBinaryDir)\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>$(TFLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' ">
-    <OutputPath>$(TFLiteBinaryDir)\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>$(TFLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
-    <OutputPath>$(TFLiteBinaryDir)\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>$(TFLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
-    <OutputPath>$(TFLiteBinaryDir)\Build\Runtime.iOS.$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>$(TFLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
   </PropertyGroup>
 
         <PropertyGroup>
