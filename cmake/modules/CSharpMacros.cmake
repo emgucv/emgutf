@@ -132,7 +132,7 @@ MACRO(SET_CS_TARGET_FRAMEWORK)
   ENDIF()
   
   IF(NOT NETFX_CORE)
-    LIST(APPEND FRAMEWORK_REFERENCES  System.Core.dll System.Xml.dll System.Drawing.dll System.Data.dll System.ServiceModel.dll System.Xml.Linq.dll)
+    LIST(APPEND FRAMEWORK_REFERENCES System.Core.dll System.Xml.dll System.Drawing.dll System.Data.dll System.ServiceModel.dll System.Xml.Linq.dll)
   ENDIF()
   #MESSAGE(STATUS "FRAMEWORK reference: ver: ${version}; ref: ${FRAMEWORK_REFERENCES}")
   ADD_CS_FRAMEWORK_REFERENCES("${version}" "${FRAMEWORK_REFERENCES}")
@@ -162,6 +162,25 @@ MACRO(BUILD_CSPROJ target csproj_file extra_flags)
     MESSAGE(FATAL_ERROR "Neither Visual Studio, msbuild nor dotnot is found!")
   ENDIF()
 ENDMACRO()
+
+MACRO(BUILD_CSPROJ_IN_SOLUTION target solution_file project_name extra_flags)
+  ADD_CUSTOM_TARGET (${target} ${ARGV4})
+  IF (WIN32 AND MSVC AND NOT ("${CMAKE_VS_DEVENV_COMMAND}" STREQUAL ""))
+    ADD_CUSTOM_COMMAND (
+      TARGET ${target}
+      COMMAND ${CMAKE_VS_DEVENV_COMMAND} /Build ${DEFAULT_CS_CONFIG} ${extra_flags} ${solution_file} /project ${project_name}
+      COMMENT "Building ${target}")
+  ELSEIF(MSBUILD_EXECUTABLE)
+    #MESSAGE(STATUS "Adding custom command: ${MSBUILD_EXECUTABLE} /t:Build /p:Configuration=${DEFAULT_CS_CONFIG} ${extra_flags} ${csproj_file}")
+    ADD_CUSTOM_COMMAND (
+      TARGET ${target}
+      COMMAND ${MSBUILD_EXECUTABLE}  /p:Configuration=${DEFAULT_CS_CONFIG} ${extra_flags} ${solution_file} -target:${project_name}:Build
+      COMMENT "Building ${target}")
+  ELSE()
+    MESSAGE(FATAL_ERROR "Neither Visual Studio, msbuild nor dotnot is found!")
+  ENDIF()
+ENDMACRO()
+
 
 MACRO(BUILD_DOTNET_PROJ target csproj_file extra_flags)
   ADD_CUSTOM_TARGET (${target} ${ARGV3})
