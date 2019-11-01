@@ -85,11 +85,12 @@ IF(HAVE_OSX)
       ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll 
       DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
       COMPONENT emgutf_binary)
+    IF(TARGET Emgu.TF.Models.Netstandard)
+      ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Models.Netstandard)
+    ENDIF()
   ENDIF()
   
-  IF(TARGET Emgu.TF.Models.Netstandard)
-    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Models.Netstandard)
-  ENDIF()
+
 ENDIF()
 
 IF(HAVE_ANDROID)
