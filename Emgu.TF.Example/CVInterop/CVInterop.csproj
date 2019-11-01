@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CVInterop</RootNamespace>
     <AssemblyName>CVInterop</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
@@ -77,7 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EMGU.CV">
-      <Version>4.1.0.3420</Version>
+      <Version>4.1.1.3497</Version>
     </PackageReference>
     <PackageReference Include="Google.Protobuf">
       <Version>3.8.0</Version>

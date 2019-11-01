@@ -3,20 +3,19 @@
 # --------------------------------------------------------
 
 IF(HAVE_WINDESKTOP)
-  PROJECT(Example.CVInterop)
-  
-  BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/CvInterop.csproj" "" ALL)
-  ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
-	PRE_BUILD
-	COMMAND ${MSBUILD_EXECUTABLE} /t:restore CvInterop.csproj
-	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
-	
+#  PROJECT(Example.CVInterop)
+#  BUILD_CSPROJ_IN_SOLUTION(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/../../Solution/Windows.Desktop/Emgu.TF.Example.sln" "CvInterop" "" ALL)
+#  ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
+#	PRE_BUILD
+# 	COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../../miscellaneous/nuget.exe" restore "Emgu.TF.Example.sln"
+#	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../../Solution/Windows.Desktop/")
+
   #copy the test image for this example
   SET(EXAMPLE_INCEPTION_DATA_FILES
   "${CMAKE_CURRENT_SOURCE_DIR}/dog416.png"
   )
   
-  FILE(GLOB SRC_Example_CVInterop RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.cs")
+  FILE(GLOB SRC_Example_CVInterop RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.cs") 
 
   INSTALL(FILES
     ${SRC_Example_CVInterop}
