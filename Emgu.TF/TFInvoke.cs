@@ -108,20 +108,20 @@ namespace Emgu.TF
                 {
                     //Not running on Android
 #if (UNITY_STANDALONE_WIN && !UNITY_EDITOR_WIN)
-				FileInfo file = new FileInfo(asm.Location);
-				DirectoryInfo directory = file.Directory;
-                if (directory.Parent != null)
-                {
-                   String unityAltFolder = Path.Combine(directory.Parent.FullName, "Plugins");
-                  
-                   if (Directory.Exists(unityAltFolder))
-                      loadDirectory = unityAltFolder;
-                   else
-                   {
-                      Debug.WriteLine("No suitable directory found to load unmanaged modules");
-                      return false;
-                   }
-                }
+                    FileInfo file = new FileInfo(asm.Location);
+                    DirectoryInfo directory = file.Directory;
+                    if (directory.Parent != null)
+                    {
+                        String unityAltFolder = Path.Combine(directory.Parent.FullName, "Plugins");
+
+                        if (Directory.Exists(unityAltFolder))
+                            loadDirectory = unityAltFolder;
+                        else
+                        {
+                            Debug.WriteLine("No suitable directory found to load unmanaged modules");
+                            return false;
+                        }
+                    }
 #elif UNITY_ANDROID
 #else
                     if (!Directory.Exists(loadDirectory))
@@ -186,8 +186,9 @@ namespace Emgu.TF
                         else
                             loadDirectory = altLoadDirectory;
                     }
-                }
+                
 #endif
+                }
             }
 
             String oldDir = Environment.CurrentDirectory;
