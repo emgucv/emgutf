@@ -42,10 +42,10 @@ namespace Emgu.TF.Util
                         int error = Marshal.GetLastWin32Error();
 
                         System.ComponentModel.Win32Exception ex = new System.ComponentModel.Win32Exception(error);
-                        System.Diagnostics.Debug.WriteLine(String.Format("LoadLibraryEx {0} failed with error code {1}: {2}", dllname, (uint)error, ex.Message));
+                        System.Diagnostics.Trace.WriteLine(String.Format("LoadLibraryEx {0} failed with error code {1}: {2}", dllname, (uint)error, ex.Message));
                         if (error == 5)
                         {
-                            System.Diagnostics.Debug.WriteLine(String.Format("Please check if the current user has execute permission for file: {0} ", dllname));
+                            System.Diagnostics.Trace.WriteLine(String.Format("Please check if the current user has execute permission for file: {0} ", dllname));
                         }
                     }
                     return handler;
@@ -54,17 +54,24 @@ namespace Emgu.TF.Util
             }
             else
             {
-                return Dlopen(dllname, 2); // 2 == RTLD_NOW
+                
+                IntPtr handler = Dlopen(dllname, 2); // 2 == RTLD_NOW
+                if (handler == IntPtr.Zero)
+                {
+                    System.Diagnostics.Trace.WriteLine(String.Format("Failed to use dlopen to load {0}", dllname));
+                }
+
+                return handler;
             }
 #endif
         }
 
         [DllImport("Kernel32.dll", SetLastError = true)]
         private static extern IntPtr LoadLibraryEx(
-           [MarshalAs(UnmanagedType.LPStr)]
-         String fileName,
-           IntPtr hFile,
-           int dwFlags);
+            [MarshalAs(UnmanagedType.LPStr)]
+            String fileName,
+            IntPtr hFile,
+            int dwFlags);
 
         [DllImport("dl", EntryPoint = "dlopen")]
         private static extern IntPtr Dlopen(
