@@ -20,7 +20,7 @@
       </PropertyGroup>
       <ItemGroup Condition="'$(EmguTFLiteRaspbianBuildArm)'=='True' AND Exists('$(EmguTFLiteRaspbianNativeFileArm)')">
         <Content Include="$(TFLiteBinaryDir)\arm\*.so">
-          <Link>arm\%(RecursiveDir)%(Filename)%(Extension)</Link>
+          <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
       </ItemGroup>

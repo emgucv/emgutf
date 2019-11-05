@@ -9,7 +9,7 @@
       </PropertyGroup>
       <ItemGroup Condition="'$(EmguTFLiteRaspbianBuildArm)'=='True' AND Exists('$(EmguTFLiteRaspbianNativeFileArm)')">
         <None Include="$(MSBuildThisFileDirectory)\arm\*.so">
-          <Link>arm\%(RecursiveDir)%(Filename)%(Extension)</Link>
+          <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
       </ItemGroup>

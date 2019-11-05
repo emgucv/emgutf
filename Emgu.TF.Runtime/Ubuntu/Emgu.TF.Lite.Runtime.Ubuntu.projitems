@@ -20,7 +20,7 @@
       </PropertyGroup>
       <ItemGroup Condition="'$(EmguTFLiteUbuntuBuildX64)'=='True' AND Exists('$(EmguTFLiteUbuntuNativeFileX64)')">
         <Content Include="$(TFLiteBinaryDir)\x64\*.so">
-          <Link>x64\%(RecursiveDir)%(Filename)%(Extension)</Link>
+          <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
       </ItemGroup>

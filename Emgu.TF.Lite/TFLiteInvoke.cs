@@ -92,7 +92,8 @@ namespace Emgu.TF.Lite
 #elif UNITY_STANDALONE_WIN
 #else
                 if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows)
-                    || System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
+                    //|| System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux)
+				)
                 {
                     if (System.Runtime.InteropServices.RuntimeInformation.OSArchitecture == Architecture.X64)
                         subfolder = "x64";

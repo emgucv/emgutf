@@ -11,11 +11,11 @@
   </PropertyGroup>
   <ItemGroup Condition="'$(EmguTFUbuntuBuildX64)'=='True' AND Exists('$(EmguTFUbuntuNativeFileX64)')">
     <None Include="$(MSBuildThisFileDirectory)\x64\*.so">
-      <Link>x64\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="$(MSBuildThisFileDirectory)\x64\*.so.1">
-      <Link>x64\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

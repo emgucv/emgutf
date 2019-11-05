@@ -9,7 +9,7 @@
       </PropertyGroup>
       <ItemGroup Condition="'$(EmguTFLiteUbuntuBuildX64)'=='True' AND Exists('$(EmguTFLiteUbuntuNativeFileX64)')">
         <None Include="$(MSBuildThisFileDirectory)\x64\*.so">
-          <Link>x64\%(RecursiveDir)%(Filename)%(Extension)</Link>
+          <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
       </ItemGroup>
