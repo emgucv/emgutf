@@ -548,8 +548,8 @@ IF(HAVE_LINUX_X86_64)
   SET(EMGUTF_UBUNTU_NUGET_ID "runtime.ubuntu.${EMGUTF_NUGET_ID}")  
   SET(EMGUTF_UBUNTU_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Ubuntu")
   SET(EMGUTF_UBUNTU_NUGET_FILE_LIST " 
-        <file src=\"..\\..\\..\\lib\\x64\\*.so\" target=\"build\" />
-        <file src=\"..\\..\\..\\lib\\x64\\*.so.1\" target=\"build\" />
+        <file src=\"..\\..\\..\\lib\\x64\\*.so\" target=\"build\\x64\" />
+        <file src=\"..\\..\\..\\lib\\x64\\*.so.1\" target=\"build\\x64\" />
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
 	<file src=\"runtime.ubuntu.Emgu.TF.targets\" target=\"build\\${EMGUTF_UBUNTU_NUGET_ID}.targets\" />")
   SET(EMGUTF_UBUNTU_NUGET_DEPENDENCY "${EMGUTF_UBUNTU_NUGET_DEPENDENCY}
@@ -562,7 +562,7 @@ IF(HAVE_LINUX_ARM)
   SET(EMGUTF_RASPBIAN_NUGET_ID "runtime.raspbian.${EMGUTF_NUGET_ID}")  
   SET(EMGUTF_RASPBIAN_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Raspian")		
   SET(EMGUTF_RASPBIAN_NUGET_FILE_LIST " 
-    <file src=\"..\\..\\..\\lib\\arm\\*.so\" target=\"build\" />
+    <file src=\"..\\..\\..\\lib\\arm\\*.so\" target=\"build\\arm\" />
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
 	<file src=\"runtime.raspbian.Emgu.TF.targets\" target=\"build\\${EMGUTF_RASPBIAN_NUGET_ID}.targets\" />")
   SET(EMGUTF_RASPBIAN_NUGET_DEPENDENCY "${EMGUTF_RASPBIAN_NUGET_DEPENDENCY}
@@ -667,7 +667,7 @@ IF(HAVE_ANDROID_LITE)
 ENDIF()
 IF (HAVE_LINUX_X86_64_LITE)
   SET(EMGUTF_LITE_UBUNTU_NUGET_FILE_LIST "${EMGUTF_LITE_UBUNTU_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\..\\lib\\x64\\*.so\" target=\"build\" />
+    <file src=\"..\\..\\..\\lib\\x64\\*.so\" target=\"build\\x64\" />
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
 	<file src=\"runtime.ubuntu.Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_UBUNTU_NUGET_ID}.targets\" />")
   SET(EMGUTF_LITE_UBUNTU_NUGET_DEPENDENCY "${EMGUTF_LITE_UBUNTU_NUGET_DEPENDENCY}
@@ -677,7 +677,7 @@ IF (HAVE_LINUX_X86_64_LITE)
 ENDIF()
 IF (HAVE_LINUX_ARM_LITE)
   SET(EMGUTF_LITE_RASPBIAN_NUGET_FILE_LIST "${EMGUTF_LITE_RASPBIAN_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\..\\lib\\arm\\*.so\" target=\"build\" />
+    <file src=\"..\\..\\..\\lib\\arm\\*.so\" target=\"build\\arm\" />
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
 	<file src=\"runtime.raspbian.Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_RASPBIAN_NUGET_ID}.targets\" />")
   SET(EMGUTF_LITE_RASPBIAN_NUGET_DEPENDENCY "${EMGUTF_LITE_RASPBIAN_NUGET_DEPENDENCY}

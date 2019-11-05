@@ -8,14 +8,14 @@
         <EmguTFLiteRaspbianDeployMessage Condition="'$(EmguTFLiteRaspbianBuildArm)'=='True' AND Exists('$(EmguTFLiteRaspbianNativeFileArm)')">$(EmguTFLiteRaspbianDeployMessage)arm </EmguTFLiteRaspbianDeployMessage >
       </PropertyGroup>
       <ItemGroup Condition="'$(EmguTFLiteRaspbianBuildArm)'=='True' AND Exists('$(EmguTFLiteRaspbianNativeFileArm)')">
-        <None Include="$(MSBuildThisFileDirectory)\*.dylib">
-          <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
+        <None Include="$(MSBuildThisFileDirectory)\arm\*.so">
+          <Link>arm\%(RecursiveDir)%(Filename)%(Extension)</Link>
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
       </ItemGroup>
   <Target Name="EmguTFLiteRaspbianPackageBuildImports" BeforeTargets="PrepareForBuild">
     <Warning Text="'$(EmguTFLiteRaspbianErrorMessage)'" Condition="'$(EmguTFLiteRaspbianErrorMessage)'!=''" />
     <Message Text="Emgu TF Lite Compiling with $(EmguTFLiteRaspbianDeployMessage)binary" Condition="'$(EmguTFLiteRaspbianDeployMessage)'!=''" Importance="High" />
-    <Message Text="No native binary is deployed by the runtime.macos.Emgu.TF.Lite nuget package." Condition="'$(EmguTFLiteRaspbianDeployMessage)'==''" Importance="High" />
+    <Message Text="No native binary is deployed by the runtime.raspbian.Emgu.TF.Lite nuget package." Condition="'$(EmguTFLiteRaspbianDeployMessage)'==''" Importance="High" />
   </Target>
 </Project>

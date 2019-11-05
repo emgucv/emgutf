@@ -3,13 +3,13 @@
       <PropertyGroup>
         <EmguTFLiteUbuntuLinkTarget>Ubuntu_x64</EmguTFLiteUbuntuLinkTarget>
         <EmguTFLiteUbuntuBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguTFLiteUbuntuBuildX64>
-        <EmguTFLiteUbuntuNativeFileX64>$(MSBuildThisFileDirectory)libtfliteextern.dylib</EmguTFLiteUbuntuNativeFileX64>
+        <EmguTFLiteUbuntuNativeFileX64>$(MSBuildThisFileDirectory)libtfliteextern.so</EmguTFLiteUbuntuNativeFileX64>
         <EmguTFLiteUbuntuErrorMessage Condition="'$(EmguTFLiteUbuntuBuildX64)'=='True' AND !Exists('$(EmguTFLiteUbuntuNativeFileX64)')">This package do not contain necessary binary for $(EmguTFLiteUbuntuLinkTarget). File $(EmguTFLiteUbuntuNativeFileX64) is missing.</EmguTFLiteUbuntuErrorMessage>
         <EmguTFLiteUbuntuDeployMessage Condition="'$(EmguTFLiteUbuntuBuildX64)'=='True' AND Exists('$(EmguTFLiteUbuntuNativeFileX64)')">$(EmguTFLiteUbuntuDeployMessage)x64 </EmguTFLiteUbuntuDeployMessage >
       </PropertyGroup>
       <ItemGroup Condition="'$(EmguTFLiteUbuntuBuildX64)'=='True' AND Exists('$(EmguTFLiteUbuntuNativeFileX64)')">
-        <None Include="$(MSBuildThisFileDirectory)\*.so">
-          <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
+        <None Include="$(MSBuildThisFileDirectory)\x64\*.so">
+          <Link>x64\%(RecursiveDir)%(Filename)%(Extension)</Link>
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
       </ItemGroup>
