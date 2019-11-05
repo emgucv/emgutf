@@ -3,7 +3,7 @@
       <PropertyGroup>
         <EmguTFLiteRaspbianLinkTarget>Raspbian_arm</EmguTFLiteRaspbianLinkTarget>
         <EmguTFLiteRaspbianBuildArm Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='ARM'">True</EmguTFLiteRaspbianBuildArm>
-        <EmguTFLiteRaspbianNativeFileArm>$(MSBuildThisFileDirectory)libtfliteextern.so</EmguTFLiteRaspbianNativeFileArm>
+        <EmguTFLiteRaspbianNativeFileArm>$(MSBuildThisFileDirectory)\arm\libtfliteextern.so</EmguTFLiteRaspbianNativeFileArm>
         <EmguTFLiteRaspbianErrorMessage Condition="'$(EmguTFLiteRaspbianBuildArm)'=='True' AND !Exists('$(EmguTFLiteRaspbianNativeFileArm)')">This package do not contain necessary binary for $(EmguTFLiteRaspbianLinkTarget). File $(EmguTFLiteRaspbianNativeFileArm) is missing.</EmguTFLiteRaspbianErrorMessage>
         <EmguTFLiteRaspbianDeployMessage Condition="'$(EmguTFLiteRaspbianBuildArm)'=='True' AND Exists('$(EmguTFLiteRaspbianNativeFileArm)')">$(EmguTFLiteRaspbianDeployMessage)arm </EmguTFLiteRaspbianDeployMessage >
       </PropertyGroup>

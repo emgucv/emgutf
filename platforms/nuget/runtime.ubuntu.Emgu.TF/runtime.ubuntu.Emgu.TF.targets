@@ -3,8 +3,8 @@
   <PropertyGroup>
     <EmguTFUbuntuLinkTarget>Ubuntu_x64</EmguTFUbuntuLinkTarget>
     <EmguTFUbuntuBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguTFUbuntuBuildX64>
-    <EmguTFUbuntuNativeFileX64>$(MSBuildThisFileDirectory)libtfextern.so</EmguTFUbuntuNativeFileX64>
-    <EmguTFUbuntuNativeFile2X64>$(MSBuildThisFileDirectory)libtensorflow_framework.so.1</EmguTFUbuntuNativeFile2X64>
+    <EmguTFUbuntuNativeFileX64>$(MSBuildThisFileDirectory)\x64\libtfextern.so</EmguTFUbuntuNativeFileX64>
+    <EmguTFUbuntuNativeFile2X64>$(MSBuildThisFileDirectory)\x64\libtensorflow_framework.so.1</EmguTFUbuntuNativeFile2X64>
     <EmguTFUbuntuErrorMessage Condition="'$(EmguTFUbuntuBuildX64)'=='True' AND !Exists('$(EmguTFUbuntuNativeFileX64)')">This package do not contain necessary binary for $(EmguTFUbuntuLinkTarget). File $(EmguTFUbuntuNativeFileX64) is missing. PInvoke may fail on Ubuntu</EmguTFUbuntuErrorMessage>
     <EmguTFUbuntuErrorMessage2 Condition="'$(EmguTFUbuntuBuildX64)'=='True' AND !Exists('$(EmguTFUbuntuNativeFile2X64)')">This package do not contain necessary binary for $(EmguTFUbuntuLinkTarget). File $(EmguTFUbuntuNativeFile2X64) is missing. PInvoke may fail on Ubuntu</EmguTFUbuntuErrorMessage2>
     <EmguTFUbuntuDeployMessage Condition="'$(EmguTFUbuntuBuildX64)'=='True' AND Exists('$(EmguTFUbuntuNativeFileX64)')">$(EmguTFUbuntuDeployMessage)x64 </EmguTFUbuntuDeployMessage >

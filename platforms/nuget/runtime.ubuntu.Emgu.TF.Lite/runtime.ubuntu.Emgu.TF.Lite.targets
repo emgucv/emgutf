@@ -3,7 +3,7 @@
       <PropertyGroup>
         <EmguTFLiteUbuntuLinkTarget>Ubuntu_x64</EmguTFLiteUbuntuLinkTarget>
         <EmguTFLiteUbuntuBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguTFLiteUbuntuBuildX64>
-        <EmguTFLiteUbuntuNativeFileX64>$(MSBuildThisFileDirectory)libtfliteextern.so</EmguTFLiteUbuntuNativeFileX64>
+        <EmguTFLiteUbuntuNativeFileX64>$(MSBuildThisFileDirectory)\x64\libtfliteextern.so</EmguTFLiteUbuntuNativeFileX64>
         <EmguTFLiteUbuntuErrorMessage Condition="'$(EmguTFLiteUbuntuBuildX64)'=='True' AND !Exists('$(EmguTFLiteUbuntuNativeFileX64)')">This package do not contain necessary binary for $(EmguTFLiteUbuntuLinkTarget). File $(EmguTFLiteUbuntuNativeFileX64) is missing.</EmguTFLiteUbuntuErrorMessage>
         <EmguTFLiteUbuntuDeployMessage Condition="'$(EmguTFLiteUbuntuBuildX64)'=='True' AND Exists('$(EmguTFLiteUbuntuNativeFileX64)')">$(EmguTFLiteUbuntuDeployMessage)x64 </EmguTFLiteUbuntuDeployMessage >
       </PropertyGroup>
