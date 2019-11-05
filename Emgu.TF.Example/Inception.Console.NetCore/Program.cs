@@ -18,6 +18,10 @@ namespace Inception.Console.Netstandard
 
         static void Main(string[] args)
         {
+#if DEBUG
+            ConsoleTraceListener consoleTraceListener = new ConsoleTraceListener();
+            Trace.Listeners.Add(consoleTraceListener);
+#endif
             new Thread(() => { Run(); }).Start();
 
             System.Console.ReadKey();

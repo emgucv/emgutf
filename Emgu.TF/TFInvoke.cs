@@ -118,7 +118,7 @@ namespace Emgu.TF
                             loadDirectory = unityAltFolder;
                         else
                         {
-                            Debug.WriteLine("No suitable directory found to load unmanaged modules");
+                            Trace.WriteLine("No suitable directory found to load unmanaged modules");
                             return false;
                         }
                     }
@@ -147,12 +147,12 @@ namespace Emgu.TF
                                Path.Combine(Path.Combine(Path.Combine(directory.Parent.Parent.FullName, "Assets"), "Emgu.TF"), "Plugins"),
                                subfolder);
                          
-	                     Debug.WriteLine("Trying unityAltFolder: " + unityAltFolder);
+	                     Trace.WriteLine("Trying unityAltFolder: " + unityAltFolder);
                          if (Directory.Exists(unityAltFolder))
                             loadDirectory = unityAltFolder;
                          else
                          {
-                            Debug.WriteLine("No suitable directory found to load unmanaged modules");
+                            Trace.WriteLine("No suitable directory found to load unmanaged modules");
                             return false;
                          }
                         
@@ -179,7 +179,7 @@ namespace Emgu.TF
                           else       
 #endif
                             {
-                                Debug.WriteLine("No suitable directory found to load unmanaged modules");
+                                Trace.WriteLine("No suitable directory found to load unmanaged modules");
                                 return false;
                             }
                         }
@@ -195,7 +195,7 @@ namespace Emgu.TF
             if (!String.IsNullOrEmpty(loadDirectory) && Directory.Exists(loadDirectory))
                 Environment.CurrentDirectory = loadDirectory;
 
-            System.Diagnostics.Debug.WriteLine(String.Format("Loading tensorflow binary from {0}", loadDirectory));
+            System.Diagnostics.Trace.WriteLine(String.Format("Loading tensorflow binary from {0}", loadDirectory));
 
             bool success = true;
             string prefix = string.Empty;
@@ -210,10 +210,10 @@ namespace Emgu.TF
 
                 bool fileExist = File.Exists(fullPath);
                 if (!fileExist)
-                    System.Diagnostics.Debug.WriteLine(String.Format("File {0} do not exist.", fullPath));
+                    System.Diagnostics.Trace.WriteLine(String.Format("File {0} do not exist.", fullPath));
                 bool fileExistAndLoaded = fileExist && !IntPtr.Zero.Equals(Toolbox.LoadLibrary(fullPath));
                 if (fileExist && (!fileExistAndLoaded))
-                    System.Diagnostics.Debug.WriteLine(String.Format("File {0} cannot be loaded.", fullPath));
+                    System.Diagnostics.Trace.WriteLine(String.Format("File {0} cannot be loaded.", fullPath));
                 success &= fileExistAndLoaded;
             }
 
@@ -322,7 +322,7 @@ namespace Emgu.TF
         /// </summary>
         static TfInvoke()
         {
-            Debug.WriteLine(String.Format("Emgu TF Running in {0} bit mode.", IntPtr.Size));
+            Trace.WriteLine(String.Format("Emgu TF Running in {0} bit mode.", IntPtr.Size * 8));
             List<String> modules = TfInvoke.TensorflowModuleList;
             modules.RemoveAll(String.IsNullOrEmpty);
 

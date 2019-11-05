@@ -16,6 +16,11 @@ namespace Inception.Console.Lite.Netstandard
         private static String fileName = "tulips.jpg";
         static void Main(string[] args)
         {
+#if DEBUG
+            ConsoleTraceListener consoleTraceListener = new ConsoleTraceListener();
+            Trace.Listeners.Add(consoleTraceListener);
+#endif
+
             new Thread(() => { Run(); }).Start();
 
             System.Console.ReadKey();
