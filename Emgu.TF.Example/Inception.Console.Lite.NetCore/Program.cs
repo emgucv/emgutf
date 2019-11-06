@@ -5,6 +5,7 @@
 using System;
 using System.IO;
 using System.Diagnostics;
+using System.Reflection;
 using System.Threading.Tasks;
 using Emgu.TF.Lite.Models;
 using System.Threading;
@@ -15,20 +16,21 @@ namespace Inception.Console.Lite.Netstandard
     {
         private static Emgu.TF.Lite.Models.Inception inception;
         private static FileInfo _inputFileInfo;
+
         static void Main(string[] args)
         {
 #if DEBUG
             ConsoleTraceListener consoleTraceListener = new ConsoleTraceListener();
             Trace.Listeners.Add(consoleTraceListener);
 #endif
-            String fileName = "tulips.jpg";
+            String fileName = Path.Join(AssemblyDirectory, "tulips.jpg");
             if (args.Length > 0)
                 fileName = args[0];
 
             _inputFileInfo = new FileInfo(fileName);
             if (!_inputFileInfo.Exists)
             {
-                System.Console.WriteLine(String.Format("File '{0}' does not exist. Please provide a valid file name as input parameter.", _inputFileInfo.FullName ));
+                System.Console.WriteLine(String.Format("File '{0}' does not exist. Please provide a valid file name as input parameter.", _inputFileInfo.FullName));
                 return;
             }
             Trace.WriteLine(String.Format("Working on file {0}", _inputFileInfo.FullName));
@@ -67,6 +69,21 @@ namespace Inception.Console.Lite.Netstandard
             System.Console.WriteLine(resStr);
             System.Console.WriteLine("Press any key to continue:");
 
+        }
+
+        /// <summary>
+        /// Get the directory from the assembly
+        /// </summary>
+        /// <remarks>https://stackoverflow.com/questions/52797/how-do-i-get-the-path-of-the-assembly-the-code-is-in</remarks>
+        public static string AssemblyDirectory
+        {
+            get
+            {
+                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                UriBuilder uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+                return Path.GetDirectoryName(path);
+            }
         }
     }
 }
