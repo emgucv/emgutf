@@ -3,6 +3,7 @@
 //----------------------------------------------------------------------------
 
 using System;
+using System.IO;
 using System.Diagnostics;
 using System.Threading;
 using Emgu.TF;
@@ -14,7 +15,7 @@ namespace Inception.Console.Netstandard
     class Program
     {
         private static Emgu.TF.Models.Inception _inceptionGraph;
-        private static String fileName = "tulips.jpg";
+        private static FileInfo _inputFileInfo;
 
         static void Main(string[] args)
         {
@@ -22,6 +23,18 @@ namespace Inception.Console.Netstandard
             ConsoleTraceListener consoleTraceListener = new ConsoleTraceListener();
             Trace.Listeners.Add(consoleTraceListener);
 #endif
+            String fileName = "tulips.jpg";
+            if (args.Length > 0)
+                fileName = args[0];
+
+            _inputFileInfo = new FileInfo(fileName);
+            if (!_inputFileInfo.Exists)
+            {
+                System.Console.WriteLine(String.Format("File '{0}' does not exist. Please provide a valid file name as input parameter.", _inputFileInfo.FullName));
+                return;
+            }
+            Trace.WriteLine(String.Format("Working on file {0}", _inputFileInfo.FullName));
+
             new Thread(() => { Run(); }).Start();
 
             System.Console.ReadKey();
@@ -61,7 +74,7 @@ namespace Inception.Console.Netstandard
         {
 
             Stopwatch watch = Stopwatch.StartNew();
-            Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(fileName, 299, 299, 0.0f, 1.0f / 255.0f, false, false);
+            Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(_inputFileInfo.FullName, 299, 299, 0.0f, 1.0f / 255.0f, false, false);
             var results = _inceptionGraph.Recognize(imageTensor);
             watch.Stop();
             String resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", results[0].Label, results[0].Probability * 100, watch.ElapsedMilliseconds);

@@ -3,6 +3,7 @@
 //----------------------------------------------------------------------------
 
 using System;
+using System.IO;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Emgu.TF.Lite.Models;
@@ -13,13 +14,24 @@ namespace Inception.Console.Lite.Netstandard
     class Program
     {
         private static Emgu.TF.Lite.Models.Inception inception;
-        private static String fileName = "tulips.jpg";
+        private static FileInfo _inputFileInfo;
         static void Main(string[] args)
         {
 #if DEBUG
             ConsoleTraceListener consoleTraceListener = new ConsoleTraceListener();
             Trace.Listeners.Add(consoleTraceListener);
 #endif
+            String fileName = "tulips.jpg";
+            if (args.Length > 0)
+                fileName = args[0];
+
+            _inputFileInfo = new FileInfo(fileName);
+            if (!_inputFileInfo.Exists)
+            {
+                System.Console.WriteLine(String.Format("File '{0}' does not exist. Please provide a valid file name as input parameter.", _inputFileInfo.FullName ));
+                return;
+            }
+            Trace.WriteLine(String.Format("Working on file {0}", _inputFileInfo.FullName));
 
             new Thread(() => { Run(); }).Start();
 
@@ -48,7 +60,7 @@ namespace Inception.Console.Lite.Netstandard
         {
 
             Stopwatch watch = Stopwatch.StartNew();
-            var result = inception.Recognize(fileName);
+            var result = inception.Recognize(_inputFileInfo.FullName);
             watch.Stop();
             String resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", result[0].Label, result[0].Probability * 100, watch.ElapsedMilliseconds);
 
