@@ -91,7 +91,7 @@ namespace Emgu.TF.XamarinForms
                     else
                     {
                         imageTensor =
-                            Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
+                            Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(image[0], 224, 224, 128.0f, 1.0f);
                     }
 
                     Inception.RecognitionResult result;
