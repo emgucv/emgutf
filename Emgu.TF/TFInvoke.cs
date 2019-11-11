@@ -328,6 +328,22 @@ namespace Emgu.TF
             modules.RemoveAll(String.IsNullOrEmpty);
 
             _libraryLoaded = DefaultLoadUnmanagedModules(modules.ToArray());
+
+            if (!_libraryLoaded)
+            {
+                Trace.WriteLine("Failed to load native binary. Please make sure a proper runtime.{platform}.Emgu.TF nuget package is added, or make sure the native binary can be found in the folder of executable.");
+            }
+
+            try
+            {
+                String version = Version;
+            }
+            catch (DllNotFoundException e)
+            {
+                String errMsg =
+                    "Unable to load native binary. Please make sure a proper runtime.{platform}.Emgu.TF nuget package is added, or make sure the native binary can be found in the folder of the executable.";Trace.WriteLine(errMsg);
+                throw new DllNotFoundException(errMsg, e);
+            }
         }
 
         /// <summary>

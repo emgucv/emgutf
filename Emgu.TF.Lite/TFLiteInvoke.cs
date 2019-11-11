@@ -367,9 +367,24 @@ namespace Emgu.TF.Lite
 
             _libraryLoaded = DefaultLoadUnmanagedModules(modules.ToArray());
 
+            if (!_libraryLoaded)
+            {
+                Trace.WriteLine("Failed to load native binary. Please make sure a proper runtime.{platform}.Emgu.TF.Lite nuget package is added, or make sure the native binary can be found in the folder of executable.");
+            }
+
 #if (!UNITY_IOS) || UNITY_EDITOR
-            //Use the custom error handler
-            RedirectError(TfliteErrorHandlerThrowException);
+            try
+            {
+                //Use the custom error handler
+                RedirectError(TfliteErrorHandlerThrowException);
+            }
+            catch (DllNotFoundException e)
+            {
+                String errMsg =
+                    "Unable to load native binary. Please make sure a proper runtime.{platform}.Emgu.TF.Lite nuget package is added, or make sure the native binary can be found in the folder of the executable.";
+                Trace.WriteLine(errMsg);
+                throw new DllNotFoundException(errMsg, e);
+            }
 #endif
         }
 

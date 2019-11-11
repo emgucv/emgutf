@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Xamarin.Forms.Platform.WPF;
+using Emgu.TF.Lite;
 
 namespace XamarinForms.Lite.WPF
 {
@@ -25,6 +26,7 @@ namespace XamarinForms.Lite.WPF
         {
             InitializeComponent();
             Xamarin.Forms.Forms.Init();
+            Emgu.TF.Lite.TfLiteInvoke.CheckLibraryLoaded();           
             LoadApplication(new Emgu.TF.XamarinForms.App());
         }
     }
