@@ -89,6 +89,20 @@ IF(HAVE_FULL_BUILD)
     PATTERN "CMakeFiles" EXCLUDE
     PATTERN "${PROJECT_NAME}.dir" EXCLUDE
     )
+	
+  INSTALL(
+    DIRECTORY
+    ${CMAKE_CURRENT_SOURCE_DIR}/Raspbian
+    DESTINATION Emgu.TF.Runtime
+    COMPONENT emgutf_source
+    FILES_MATCHING 
+	PATTERN "Emgu.TF.Runtime.Raspbian.shproj"
+	PATTERN "Emgu.TF.Runtime.Raspbian.projitems"
+    PATTERN ".svn" EXCLUDE
+    PATTERN "obj" EXCLUDE
+    PATTERN "CMakeFiles" EXCLUDE
+    PATTERN "${PROJECT_NAME}.dir" EXCLUDE
+    )
 ENDIF()
 
 IF(HAVE_ANDROID)
@@ -164,6 +178,19 @@ IF(HAVE_LITE_BUILD)
     COMPONENT emgutf_source
     FILES_MATCHING 
     PATTERN "Emgu.TF.Lite.Runtime.Android.csproj"
+    PATTERN ".svn" EXCLUDE
+    PATTERN "obj" EXCLUDE
+    PATTERN "CMakeFiles" EXCLUDE
+    PATTERN "${PROJECT_NAME}.dir" EXCLUDE
+    )
+  INSTALL(
+    DIRECTORY
+    ${CMAKE_CURRENT_SOURCE_DIR}/Raspbian
+    DESTINATION Emgu.TF.Runtime
+    COMPONENT emgutf_source
+    FILES_MATCHING 
+	PATTERN "Emgu.TF.Lite.Runtime.Raspbian.shproj"
+	PATTERN "Emgu.TF.Lite.Runtime.Raspbian.projitems"
     PATTERN ".svn" EXCLUDE
     PATTERN "obj" EXCLUDE
     PATTERN "CMakeFiles" EXCLUDE
