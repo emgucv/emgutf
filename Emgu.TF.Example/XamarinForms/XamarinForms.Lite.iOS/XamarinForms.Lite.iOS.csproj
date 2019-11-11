@@ -139,12 +139,12 @@
       <Version>4.0.1.5</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms">
-      <Version>4.2.0.815419</Version>
+      <Version>4.3.0.947036</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Emgu.TF.Runtime\Emgu.TF.Lite.Runtime.iOS.csproj">
-      <Project>{a14504ed-d613-43d1-ad3d-ae3f411c51ce}</Project>
+    <ProjectReference Include="..\..\..\Emgu.TF.Runtime\ios\Emgu.TF.Lite.Runtime.iOS.csproj">
+      <Project>{A14504ED-D613-43D1-AD3D-AE3F411C51CE}</Project>
       <Name>Emgu.TF.Lite.Runtime.iOS</Name>
     </ProjectReference>
   </ItemGroup>
