@@ -39,14 +39,14 @@ namespace Emgu.Models
             float scale = 1.0f, 
             bool flipUpSideDown = false,
             bool swapBR = false)
-            where T: struct
+            where T : struct
         {
             if (!File.Exists(fileName))
                 throw new FileNotFoundException(String.Format("File {0} do not exist.", fileName));
 
-        Texture2D texture = ReadTexture2DFromFile(fileName);
-            ReadTensorFromTexture2D<T>(texture, dest, inputHeight, inputWidth, inputMean, scale, flipUpSideDown, false);
-                    }
+            Texture2D texture = ReadTexture2DFromFile(fileName);
+            ReadTensorFromTexture2D<T>(texture, dest, inputHeight, inputWidth, inputMean, scale, flipUpSideDown, swapBR);
+        }
 
         public static Texture2D ReadTexture2DFromFile(String fileName)
         {
