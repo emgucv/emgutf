@@ -1,8 +1,7 @@
 # --------------------------------------------------------
 #  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
-
-PROJECT(Emgu.TF)
+IF(HAVE_FULL_BUILD)
 
 INSTALL(
   DIRECTORY
@@ -22,13 +21,9 @@ INSTALL(
   PATTERN "*Unity*" EXCLUDE
   )
 
-IF (DOTNET_FOUND)
-#  MESSAGE(STATUS "Adding Emgu.TF.Netstandard project")
-  PROJECT(Emgu.TF.Netstandard)
-  
   INSTALL(
     DIRECTORY
-    ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Netstandard
     DESTINATION Emgu.TF
     COMPONENT emgutf_source
     FILES_MATCHING 
@@ -43,13 +38,12 @@ IF (DOTNET_FOUND)
     PATTERN "x86" EXCLUDE #exclude build artifacts from Visual Studio build process
     PATTERN "${PROJECT_NAME}.dir" EXCLUDE
     )
+
+IF (DOTNET_FOUND)
+#  MESSAGE(STATUS "Adding Emgu.TF.Netstandard project")
+  PROJECT(Emgu.TF.Netstandard)
   
   BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj" "" ALL)
-  
-  # ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
-  #	PRE_BUILD
-  #	COMMAND dotnet restore ${PROJECT_NAME}.csproj
-  #	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}")
   
   INSTALL(
     FILES 
@@ -57,4 +51,5 @@ IF (DOTNET_FOUND)
     ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll 
     DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
     COMPONENT emgutf_binary)
+ENDIF()
 ENDIF()

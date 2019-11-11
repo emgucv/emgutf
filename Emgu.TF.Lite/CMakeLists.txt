@@ -2,6 +2,7 @@
 #  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
+IF(HAVE_LITE_BUILD)
 INSTALL(
   DIRECTORY
   ${CMAKE_CURRENT_SOURCE_DIR}
@@ -22,7 +23,7 @@ INSTALL(
 
 INSTALL(
   DIRECTORY
-  ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}
+  ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.Netstandard
   DESTINATION Emgu.TF.Lite
   COMPONENT emgutf_source
   FILES_MATCHING 
@@ -54,4 +55,5 @@ IF (DOTNET_FOUND)
     ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll 
     DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
     COMPONENT emgutf_binary)
+ENDIF()
 ENDIF()
