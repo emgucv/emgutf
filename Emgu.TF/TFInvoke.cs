@@ -267,16 +267,16 @@ namespace Emgu.TF
                         {
                             try
                             {
-                                Console.WriteLine(string.Format("Trying to load {0} ({1} bit).", module,
+                                Trace.WriteLine(string.Format("Trying to load {0} ({1} bit).", module,
                                     IntPtr.Size * 8));
                                 loadLibraryMethodInfo.Invoke(null, new object[] { module });
                                 //Java.Lang.JavaSystem.LoadLibrary(module);
-                                Console.WriteLine(string.Format("Loaded {0}.", module));
+                                Trace.WriteLine(string.Format("Loaded {0}.", module));
                             }
                             catch (Exception e)
                             {
                                 libraryLoaded = false;
-                                Console.WriteLine(String.Format("Failed to load {0}: {1}", module, e.Message));
+                                Trace.WriteLine(String.Format("Failed to load {0}: {1}", module, e.Message));
                             }
                         }
                         return libraryLoaded;
@@ -291,14 +291,14 @@ namespace Emgu.TF
          {
             try
             {
-               Console.WriteLine(string.Format("Trying to load {0} ({1} bit).", module, Marshal.SizeOf<IntPtr>() * 8));
+               Trace.WriteLine(string.Format("Trying to load {0} ({1} bit).", module, Marshal.SizeOf<IntPtr>() * 8));
                jo.CallStatic("loadLibrary", module); 
-               Console.WriteLine(string.Format("Loaded {0}.", module));
+               Trace.WriteLine(string.Format("Loaded {0}.", module));
             }
             catch (Exception e)
             {
                libraryLoaded = false;
-               Console.WriteLine(String.Format("Failed to load {0}: {1}", module, e.Message));
+               Trace.WriteLine(String.Format("Failed to load {0}: {1}", module, e.Message));
             }
          }
 #elif __IOS__ || UNITY_IOS || NETFX_CORE
