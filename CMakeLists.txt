@@ -532,7 +532,7 @@ IF(HAVE_ANDROID)
 ENDIF()
 
 IF(HAVE_OSX)
-  SET(EMGUTF_MACOS_NUGET_ID "runtime.mac.${EMGUTF_NUGET_ID}")
+  SET(EMGUTF_MACOS_NUGET_ID "runtime.macos.${EMGUTF_NUGET_ID}")
   SET(EMGUTF_MACOS_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for MacOS")	
   SET(EMGUTF_MACOS_NUGET_FILE_LIST " 
     <file src=\"..\\..\\..\\lib\\osx\\*.dylib\" target=\"build\" />
