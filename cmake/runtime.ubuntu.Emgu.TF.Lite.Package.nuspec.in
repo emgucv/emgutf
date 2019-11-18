@@ -13,7 +13,7 @@
 	<summary>Runtime package of Emgu TF Lite for Ubuntu</summary>
     <description>This package contains the native runtime of Emgu TF Lite for Ubuntu</description>
     <releaseNotes>This is the ${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX} release of Emgu TF Lite for Ubuntu. For online documentation please visit
-http://www.emgu.com/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}/document/</releaseNotes>
+http://www.emgu.com/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}/document-lite/</releaseNotes>
 	${EMGUTF_LITE_UBUNTU_NUGET_DEPENDENCY}
     <copyright>${CURRENT_YEAR} ${CPACK_PACKAGE_VENDOR}, all rights reserved</copyright>
     <tags>tensorflow lite emgu emgutf ai </tags>
