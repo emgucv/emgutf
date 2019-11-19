@@ -501,7 +501,8 @@ IF(HAVE_WINDESKTOP)
   ENDIF()
 
   SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "${EMGUTF_WINDOWS_NUGET_FILE_LIST}  
-	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />")
   SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "${EMGUTF_WINDOWS_NUGET_FILE_LIST} 
 	<file src=\"runtime.windows.Emgu.TF.targets\" target=\"build\\${EMGUTF_WINDOWS_NUGET_ID}.targets\" />")
   SET(EMGUTF_WINDOWS_NUGET_DEPENDENCY "${EMGUTF_WINDOWS_NUGET_DEPENDENCY}
@@ -684,6 +685,7 @@ IF(HAVE_FULL_BUILD)
   SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Netstandard.dll\" target=\"lib\\netstandard2.0\" />
 	<file src=\"..\\..\\..\\lib\\Emgu.TF.Netstandard.xml\" target=\"lib\\netstandard2.0\" />
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
 ENDIF()
 
@@ -818,6 +820,7 @@ ENDIF()
 SET(EMGUTF_MODEL_NUGET_FILE_LIST "
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.Netstandard.dll\" target=\"lib\\netstandard2.0\" />
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.Netstandard.xml\" target=\"lib\\netstandard2.0\" />
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
     <file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
 
 IF( HAVE_OSX ) 

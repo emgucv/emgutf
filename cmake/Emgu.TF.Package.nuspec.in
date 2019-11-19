@@ -8,7 +8,7 @@
     <owners>${CPACK_PACKAGE_VENDOR}</owners>
     <license type="file">${EMGUTF_LICENSE_FILE}</license>
     <projectUrl>${EMGUTF_MAIN_WEB_URL}</projectUrl>
-	<iconUrl>http://www.emgu.com/wiki/files/EmguTFLogo.png</iconUrl>
+	<icon>icon.png</icon>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
 	<summary>Emgu TF is a cross platform .Net wrapper for the Google Tensorflow library.</summary>
     <description>Emgu TF is a cross platform .Net wrapper for the Google Tensorflow library. Allows Tensorflow functions to be called from .NET compatible languages such as C#, VB, VC++, IronPython.</description>

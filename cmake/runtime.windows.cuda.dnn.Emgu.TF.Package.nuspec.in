@@ -8,7 +8,7 @@
     <owners>${CPACK_PACKAGE_VENDOR}</owners>
     <license type="file">cuDNN_SLA.txt</license>
     <projectUrl>${EMGUTF_MAIN_WEB_URL}</projectUrl>
-	<iconUrl>http://www.emgu.com/wiki/files/EmguTFLogo.png</iconUrl>
+	<icon>icon.png</icon>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
 	<summary>This package provides the native DNN dependencies for EMGU TF software libraries</summary>
     <description>This package provides the native DNN dependencies for EMGU TF software libraries</description>
@@ -19,6 +19,7 @@
   <files>
 	<file src="${EMGU_TF_DNN_ID}.targets" target="build\${EMGU_TF_DNN_ID}.targets" />
     <file src="..\..\..\lib\x64\cudnn*.dll" target="build\x64" />
+	<file src="..\..\..\miscellaneous\nuget_icon.png" target="icon.png" />
 	<file src="NVIDIA_SLA_cuDNN_Support.txt" target="cuDNN_SLA.txt" />
   </files>
 </package>
