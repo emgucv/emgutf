@@ -22,7 +22,7 @@ IF (TARGET Emgu.TF.Protobuf.Netstandard)
     COMMAND ${DOTNET_EXECUTABLE} pack -c ${DEFAULT_CS_CONFIG} "${CMAKE_CURRENT_SOURCE_DIR}/../../../Emgu.TF.Protobuf/Emgu.TF.Protobuf.Netstandard/Emgu.TF.Protobuf.Netstandard.csproj" -p:NuspecFile="${CMAKE_CURRENT_SOURCE_DIR}/Package.nuspec" -o "${CMAKE_CURRENT_SOURCE_DIR}/../"
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     )
-    
+
   ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Protobuf.Netstandard)
   
   if(ENABLE_SOLUTION_FOLDERS)
