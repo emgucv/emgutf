@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>EMGU.TF.CUFFT</id>
+    <id>${EMGU_TF_CUFFT_ID}</id>
 	<title>Native x64 CUDA FFT dependency for Emgu.TF</title>
     <version>${EMGU_TF_CUFFT_VERSION}</version>
     <authors>${CPACK_PACKAGE_VENDOR}</authors>
@@ -17,7 +17,7 @@
     <tags>emgu tensorflow cuda</tags>
   </metadata>
   <files>
-	<file src="Emgu.TF.Cufft.targets" target="build\EMGU.TF.CUFFT.targets" />
+	<file src="${EMGU_TF_CUFFT_ID}.targets" target="build\${EMGU_TF_CUFFT_ID}.targets" />
     <file src="..\..\..\lib\x64\cufft*.dll" target="build\x64" />
 	<file src="CUFFT_EULA.TXT" target="CUFFT_EULA.txt" />
   </files>
