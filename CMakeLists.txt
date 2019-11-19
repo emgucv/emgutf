@@ -504,10 +504,8 @@ IF(HAVE_WINDESKTOP)
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
   SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "${EMGUTF_WINDOWS_NUGET_FILE_LIST} 
 	<file src=\"runtime.windows.Emgu.TF.targets\" target=\"build\\${EMGUTF_WINDOWS_NUGET_ID}.targets\" />")
-  SET(EMGUTF_WINDOWS_NUGET_DEPENDENCY "${EMGUTF_ANDROID_NUGET_DEPENDENCY}
-    <dependencies>
-		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
-    </dependencies>") 
+  SET(EMGUTF_WINDOWS_NUGET_DEPENDENCY "${EMGUTF_WINDOWS_NUGET_DEPENDENCY}
+		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />") 
 ENDIF()
 
 
@@ -520,7 +518,7 @@ IF(HAVE_ANDROID)
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
   SET(EMGUTF_ANDROID_NUGET_DEPENDENCY "${EMGUTF_ANDROID_NUGET_DEPENDENCY}
     <dependencies>
-		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
+		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
     </dependencies>") 
 ENDIF()
 
@@ -533,7 +531,7 @@ IF(HAVE_OSX)
 	<file src=\"runtime.macos.Emgu.TF.targets\" target=\"build\\${EMGUTF_LITE_MACOS_NUGET_ID}.targets\" />")
   SET(EMGUTF_MACOS_NUGET_DEPENDENCY "${EMGUTF_MACOS_NUGET_DEPENDENCY}
     <dependencies>
-		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
+		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
     </dependencies>") 
 ENDIF()
 
@@ -547,7 +545,7 @@ IF(HAVE_LINUX_X86_64)
 	<file src=\"runtime.ubuntu.Emgu.TF.targets\" target=\"build\\${EMGUTF_UBUNTU_NUGET_ID}.targets\" />")
   SET(EMGUTF_UBUNTU_NUGET_DEPENDENCY "${EMGUTF_UBUNTU_NUGET_DEPENDENCY}
     <dependencies>
-		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
+		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
     </dependencies>")   
 ENDIF()
 
@@ -560,7 +558,7 @@ IF(HAVE_LINUX_ARM)
 	<file src=\"runtime.raspbian.Emgu.TF.targets\" target=\"build\\${EMGUTF_RASPBIAN_NUGET_ID}.targets\" />")
   SET(EMGUTF_RASPBIAN_NUGET_DEPENDENCY "${EMGUTF_RASPBIAN_NUGET_DEPENDENCY}
     <dependencies>
-		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
+		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
     </dependencies>")
 ENDIF()
 
@@ -611,7 +609,7 @@ IF(HAVE_LITE_BUILD)
     <file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
   SET(EMGUTF_LITE_MODEL_NUGET_DEPENDENCY "${EMGUTF_LITE_MODEL_NUGET_DEPENDENCY}
     <dependencies>
-		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
+		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
     </dependencies>")
 ENDIF()
 
@@ -622,7 +620,7 @@ IF( HAVE_WINDESKTOP_LITE )
 	<file src=\"runtime.windows.Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_WINDOWS_NUGET_ID}.targets\" />")
   SET(EMGUTF_LITE_WINDOWS_NUGET_DEPENDENCY "${EMGUTF_LITE_WINDOWS_NUGET_DEPENDENCY}
     <dependencies>
-		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
+		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
     </dependencies>")
 ENDIF()
 
@@ -636,7 +634,7 @@ IF( HAVE_OSX_LITE )
 	<file src=\"runtime.macos.Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_MACOS_NUGET_ID}.targets\" />")
   SET(EMGUTF_LITE_MACOS_NUGET_DEPENDENCY "${EMGUTF_LITE_MACOS_NUGET_DEPENDENCY}
     <dependencies>
-		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
+		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
     </dependencies>")	
 ENDIF()
 IF (HAVE_IOS_LITE)
@@ -655,7 +653,7 @@ IF(HAVE_ANDROID_LITE)
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
   SET(EMGUTF_LITE_ANDROID_NUGET_DEPENDENCY "${EMGUTF_LITE_ANDROID_NUGET_DEPENDENCY}
     <dependencies>
-		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
+		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
     </dependencies>")
 ENDIF()
 IF (HAVE_LINUX_X86_64_LITE)
@@ -665,7 +663,7 @@ IF (HAVE_LINUX_X86_64_LITE)
 	<file src=\"runtime.ubuntu.Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_UBUNTU_NUGET_ID}.targets\" />")
   SET(EMGUTF_LITE_UBUNTU_NUGET_DEPENDENCY "${EMGUTF_LITE_UBUNTU_NUGET_DEPENDENCY}
     <dependencies>
-		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
+		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
     </dependencies>")	
 ENDIF()
 IF (HAVE_LINUX_ARM_LITE)
@@ -675,7 +673,7 @@ IF (HAVE_LINUX_ARM_LITE)
 	<file src=\"runtime.raspbian.Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_RASPBIAN_NUGET_ID}.targets\" />")
   SET(EMGUTF_LITE_RASPBIAN_NUGET_DEPENDENCY "${EMGUTF_LITE_RASPBIAN_NUGET_DEPENDENCY}
     <dependencies>
-		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
+		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
     </dependencies>")	
 ENDIF()
 
@@ -805,11 +803,9 @@ IF(HAVE_WINDESKTOP)
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_DNN_ID}.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_DNN_ID}/${EMGU_TF_DNN_ID}.targets)
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_CUFFT_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_CUFFT_ID}/Package.nuspec)
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_CUFFT_ID}.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_CUFFT_ID}/${EMGU_TF_CUFFT_ID}.targets)
-    SET(EMGUTF_NUGET_DEPENDENCY "${EMGUTF_NUGET_DEPENDENCY}
-		<dependencies>
+    SET(EMGUTF_WINDOWS_NUGET_DEPENDENCY "${EMGUTF_WINDOWS_NUGET_DEPENDENCY}
 			<dependency id=\"${EMGU_TF_DNN_ID}\" version=\"[${EMGU_TF_DNN_VERSION}]\" />
-			<dependency id=\"${EMGU_TF_CUFFT_ID}\" version=\"[${EMGU_TF_CUFFT_VERSION}]\" />
-		</dependencies>")
+			<dependency id=\"${EMGU_TF_CUFFT_ID}\" version=\"[${EMGU_TF_CUFFT_VERSION}]\" />")
     SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "${EMGUTF_WINDOWS_NUGET_FILE_LIST} 
 	<file src=\"..\\..\\..\\lib\\x64\\*.dll\" exclude=\"..\\..\\..\\lib\\x64\\cudnn*.dll;..\\..\\..\\lib\\x64\\cufft*.dll\" target=\"build\\x64\" />")
   ELSE()
@@ -837,8 +833,8 @@ IF(HAVE_ANDROID)
 ENDIF()
 
 SET(EMGUTF_PROTOBUF_NUGET_FILE_LIST "
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.Netstandard.dll\" target=\"lib\\netstandard1.0\" />
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.Netstandard.XML\" target=\"lib\\netstandard1.0\" />
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.Netstandard.dll\" target=\"lib\\netstandard2.0\" />
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.Netstandard.xml\" target=\"lib\\netstandard2.0\" />
     <file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
 
 SET(EMGUTF_PROTOBUF_PROJECT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf/Emgu.TF.Protobuf.Netstandard/Emgu.TF.Protobuf.Netstandard.csproj")
@@ -849,10 +845,15 @@ string(REGEX REPLACE ".+Version=\"([0-9]+.[0-9]+.[0-9]+)\".*" "\\1" PROTOBUF_VER
 	
 SET(EMGUTF_PROTOBUF_NUGET_DEPENDENCY "${EMGUTF_PROTOBUF_NUGET_DEPENDENCY}
     <dependencies>
-		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}\" />
+		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
 		<dependency id=\"Google.Protobuf\" version=\"[${PROTOBUF_VERSION}]\" />
     </dependencies>") 
-	
+
+SET(EMGUTF_WINDOWS_NUGET_DEPENDENCY "
+	<dependencies>
+		${EMGUTF_WINDOWS_NUGET_DEPENDENCY}
+	</dependencies>")
+
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Models.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Models/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Protobuf.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Protobuf/Package.nuspec)
