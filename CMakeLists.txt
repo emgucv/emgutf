@@ -502,8 +502,7 @@ IF(HAVE_WINDESKTOP)
 
   SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "${EMGUTF_WINDOWS_NUGET_FILE_LIST}  
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
-	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />")
-  SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "${EMGUTF_WINDOWS_NUGET_FILE_LIST} 
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"runtime.windows.Emgu.TF.targets\" target=\"build\\${EMGUTF_WINDOWS_NUGET_ID}.targets\" />")
   SET(EMGUTF_WINDOWS_NUGET_DEPENDENCY "${EMGUTF_WINDOWS_NUGET_DEPENDENCY}
 		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />") 
@@ -515,7 +514,8 @@ IF(HAVE_ANDROID)
   SET(EMGUTF_ANDROID_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Android")	
   SET(EMGUTF_ANDROID_NUGET_FILE_LIST " 
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Runtime.Android.dll\" target=\"lib\\MonoAndroid50\" />
-	<file src=\"..\\..\\..\\lib\\Emgu.TF.Runtime.Android.XML\" target=\"lib\\MonoAndroid50\" />
+	<file src=\"..\\..\\..\\lib\\Emgu.TF.Runtime.Android.xml\" target=\"lib\\MonoAndroid50\" />
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
   SET(EMGUTF_ANDROID_NUGET_DEPENDENCY "${EMGUTF_ANDROID_NUGET_DEPENDENCY}
     <dependencies>
@@ -528,8 +528,9 @@ IF(HAVE_OSX)
   SET(EMGUTF_MACOS_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for MacOS")	
   SET(EMGUTF_MACOS_NUGET_FILE_LIST " 
     <file src=\"..\\..\\..\\lib\\osx\\*.dylib\" target=\"build\" />
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
-	<file src=\"runtime.macos.Emgu.TF.targets\" target=\"build\\${EMGUTF_LITE_MACOS_NUGET_ID}.targets\" />")
+	<file src=\"runtime.macos.Emgu.TF.targets\" target=\"build\\${EMGUTF_MACOS_NUGET_ID}.targets\" />")
   SET(EMGUTF_MACOS_NUGET_DEPENDENCY "${EMGUTF_MACOS_NUGET_DEPENDENCY}
     <dependencies>
 		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
@@ -540,8 +541,9 @@ IF(HAVE_LINUX_X86_64)
   SET(EMGUTF_UBUNTU_NUGET_ID "runtime.ubuntu.${EMGUTF_NUGET_ID}")  
   SET(EMGUTF_UBUNTU_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Ubuntu")
   SET(EMGUTF_UBUNTU_NUGET_FILE_LIST " 
-        <file src=\"..\\..\\..\\lib\\x64\\*.so\" target=\"build\\x64\" />
-        <file src=\"..\\..\\..\\lib\\x64\\*.so.1\" target=\"build\\x64\" />
+    <file src=\"..\\..\\..\\lib\\x64\\*.so\" target=\"build\\x64\" />
+    <file src=\"..\\..\\..\\lib\\x64\\*.so.1\" target=\"build\\x64\" />
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
 	<file src=\"runtime.ubuntu.Emgu.TF.targets\" target=\"build\\${EMGUTF_UBUNTU_NUGET_ID}.targets\" />")
   SET(EMGUTF_UBUNTU_NUGET_DEPENDENCY "${EMGUTF_UBUNTU_NUGET_DEPENDENCY}
@@ -555,6 +557,7 @@ IF(HAVE_LINUX_ARM)
   SET(EMGUTF_RASPBIAN_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Raspian")		
   SET(EMGUTF_RASPBIAN_NUGET_FILE_LIST " 
     <file src=\"..\\..\\..\\lib\\arm\\*.so\" target=\"build\\arm\" />
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
 	<file src=\"runtime.raspbian.Emgu.TF.targets\" target=\"build\\${EMGUTF_RASPBIAN_NUGET_ID}.targets\" />")
   SET(EMGUTF_RASPBIAN_NUGET_DEPENDENCY "${EMGUTF_RASPBIAN_NUGET_DEPENDENCY}
@@ -602,11 +605,13 @@ IF(HAVE_LITE_BUILD)
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Netstandard.dll\" target=\"lib\\netstandard2.0\" />
 	<file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Netstandard.xml\" target=\"lib\\netstandard2.0\" />")
   SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST}
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
   
   SET(EMGUTF_LITE_MODEL_NUGET_FILE_LIST "${EMGUTF_LITE_MODEL_NUGET_FILE_LIST} 
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.Netstandard.dll\" target=\"lib\\netstandard2.0\" />
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.Netstandard.xml\" target=\"lib\\netstandard2.0\" />
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
     <file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
   SET(EMGUTF_LITE_MODEL_NUGET_DEPENDENCY "${EMGUTF_LITE_MODEL_NUGET_DEPENDENCY}
     <dependencies>
@@ -618,6 +623,7 @@ IF( HAVE_WINDESKTOP_LITE )
   SET(EMGUTF_LITE_WINDOWS_NUGET_FILE_LIST "${EMGUTF_LITE_WINDOWS_NUGET_FILE_LIST} 
     <file src=\"..\\..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"runtime.windows.Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_WINDOWS_NUGET_ID}.targets\" />")
   SET(EMGUTF_LITE_WINDOWS_NUGET_DEPENDENCY "${EMGUTF_LITE_WINDOWS_NUGET_DEPENDENCY}
     <dependencies>
@@ -632,6 +638,7 @@ IF( HAVE_OSX_LITE )
   SET(EMGUTF_LITE_MACOS_NUGET_FILE_LIST "${EMGUTF_LITE_MACOS_NUGET_FILE_LIST} 
     <file src=\"..\\..\\..\\lib\\osx\\*.dylib\" target=\"build\" />
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"runtime.macos.Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_MACOS_NUGET_ID}.targets\" />")
   SET(EMGUTF_LITE_MACOS_NUGET_DEPENDENCY "${EMGUTF_LITE_MACOS_NUGET_DEPENDENCY}
     <dependencies>
@@ -642,6 +649,7 @@ IF (HAVE_IOS_LITE)
   SET(EMGUTF_LITE_IOS_NUGET_FILE_LIST "${EMGUTF_LITE_IOS_NUGET_FILE_LIST}
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Runtime.iOS.dll\" target=\"lib\\Xamarin.iOS10\" />
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Runtime.iOS.xml\" target=\"lib\\Xamarin.iOS10\" />
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
 ENDIF()
 IF(HAVE_ANDROID_LITE)
@@ -651,6 +659,7 @@ IF(HAVE_ANDROID_LITE)
   SET(EMGUTF_LITE_ANDROID_NUGET_FILE_LIST "${EMGUTF_LITE_ANDROID_NUGET_FILE_LIST}
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Runtime.Android.dll\" target=\"lib\\MonoAndroid90\" />
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Runtime.Android.xml\" target=\"lib\\MonoAndroid90\" />
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />")
   SET(EMGUTF_LITE_ANDROID_NUGET_DEPENDENCY "${EMGUTF_LITE_ANDROID_NUGET_DEPENDENCY}
     <dependencies>
@@ -660,6 +669,7 @@ ENDIF()
 IF (HAVE_LINUX_X86_64_LITE)
   SET(EMGUTF_LITE_UBUNTU_NUGET_FILE_LIST "${EMGUTF_LITE_UBUNTU_NUGET_FILE_LIST} 
     <file src=\"..\\..\\..\\lib\\x64\\*.so\" target=\"build\\x64\" />
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
 	<file src=\"runtime.ubuntu.Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_UBUNTU_NUGET_ID}.targets\" />")
   SET(EMGUTF_LITE_UBUNTU_NUGET_DEPENDENCY "${EMGUTF_LITE_UBUNTU_NUGET_DEPENDENCY}
@@ -671,6 +681,7 @@ IF (HAVE_LINUX_ARM_LITE)
   SET(EMGUTF_LITE_RASPBIAN_NUGET_FILE_LIST "${EMGUTF_LITE_RASPBIAN_NUGET_FILE_LIST} 
     <file src=\"..\\..\\..\\lib\\arm\\*.so\" target=\"build\\arm\" />
 	<file src=\"..\\..\\..\\${LICENSE_FILE_NAME}\" target=\"\" />
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"runtime.raspbian.Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_RASPBIAN_NUGET_ID}.targets\" />")
   SET(EMGUTF_LITE_RASPBIAN_NUGET_DEPENDENCY "${EMGUTF_LITE_RASPBIAN_NUGET_DEPENDENCY}
     <dependencies>

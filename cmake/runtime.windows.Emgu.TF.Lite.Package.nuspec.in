@@ -8,7 +8,7 @@
     <owners>${CPACK_PACKAGE_VENDOR}</owners>
     <license type="file">${EMGUTF_LICENSE_FILE}</license>
     <projectUrl>http://www.emgu.com/wiki/index.php/Emgu_TF</projectUrl>
-	<iconUrl>http://www.emgu.com/wiki/files/EmguTFLogo.png</iconUrl>
+	<icon>icon.png</icon>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
 	<summary>Runtime package of Emgu TF Lite for Windows</summary>
     <description>This package contains the native runtime of Emgu TF Lite for Windows</description>
