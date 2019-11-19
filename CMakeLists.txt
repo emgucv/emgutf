@@ -846,8 +846,10 @@ string(REGEX REPLACE ".+Version=\"([0-9]+.[0-9]+.[0-9]+)\".*" "\\1" PROTOBUF_VER
 	
 SET(EMGUTF_PROTOBUF_NUGET_DEPENDENCY "${EMGUTF_PROTOBUF_NUGET_DEPENDENCY}
     <dependencies>
-		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
-		<dependency id=\"Google.Protobuf\" version=\"[${PROTOBUF_VERSION}]\" />
+		<group targetFramework=\".NETStandard2.0\">
+			<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+			<dependency id=\"Google.Protobuf\" version=\"[${PROTOBUF_VERSION}]\" />
+		</group>
     </dependencies>") 
 
 SET(EMGUTF_WINDOWS_NUGET_DEPENDENCY "
