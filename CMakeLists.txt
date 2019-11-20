@@ -493,10 +493,10 @@ SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "")
 
 IF(HAVE_WINDESKTOP)
   IF(HAVE_WINDESKTOP_X64_CUDA)
-    SET(EMGUTF_WINDOWS_NUGET_ID "runtime.windows.cuda.${EMGUTF_NUGET_ID}")  
+    SET(EMGUTF_WINDOWS_NUGET_ID "${EMGUTF_NUGET_ID}.runtime.windows.cuda")  
     SET(EMGUTF_WINDOWS_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Windows with CUDA support")	
   ELSE()
-    SET(EMGUTF_WINDOWS_NUGET_ID "runtime.windows.${EMGUTF_NUGET_ID}")  
+    SET(EMGUTF_WINDOWS_NUGET_ID "${EMGUTF_NUGET_ID}.runtime.windows")  
     SET(EMGUTF_WINDOWS_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Windows")	
   ENDIF()
 
@@ -510,7 +510,7 @@ ENDIF()
 
 
 IF(HAVE_ANDROID)
-  SET(EMGUTF_ANDROID_NUGET_ID "runtime.android.${EMGUTF_NUGET_ID}")
+  SET(EMGUTF_ANDROID_NUGET_ID "${EMGUTF_NUGET_ID}.runtime.android")
   SET(EMGUTF_ANDROID_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Android")	
   SET(EMGUTF_ANDROID_NUGET_FILE_LIST " 
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Runtime.Android.dll\" target=\"lib\\MonoAndroid50\" />
@@ -524,7 +524,7 @@ IF(HAVE_ANDROID)
 ENDIF()
 
 IF(HAVE_OSX)
-  SET(EMGUTF_MACOS_NUGET_ID "runtime.macos.${EMGUTF_NUGET_ID}")
+  SET(EMGUTF_MACOS_NUGET_ID "${EMGUTF_NUGET_ID}.runtime.mac")
   SET(EMGUTF_MACOS_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for MacOS")	
   SET(EMGUTF_MACOS_NUGET_FILE_LIST " 
     <file src=\"..\\..\\..\\lib\\osx\\*.dylib\" target=\"build\" />
@@ -538,7 +538,7 @@ IF(HAVE_OSX)
 ENDIF()
 
 IF(HAVE_LINUX_X86_64)
-  SET(EMGUTF_UBUNTU_NUGET_ID "runtime.ubuntu.${EMGUTF_NUGET_ID}")  
+  SET(EMGUTF_UBUNTU_NUGET_ID "${EMGUTF_NUGET_ID}.runtime.ubuntu")  
   SET(EMGUTF_UBUNTU_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Ubuntu")
   SET(EMGUTF_UBUNTU_NUGET_FILE_LIST " 
     <file src=\"..\\..\\..\\lib\\x64\\*.so\" target=\"build\\x64\" />
@@ -553,7 +553,7 @@ IF(HAVE_LINUX_X86_64)
 ENDIF()
 
 IF(HAVE_LINUX_ARM)
-  SET(EMGUTF_RASPBIAN_NUGET_ID "runtime.raspbian.${EMGUTF_NUGET_ID}")  
+  SET(EMGUTF_RASPBIAN_NUGET_ID "${EMGUTF_NUGET_ID}.runtime.raspbian")  
   SET(EMGUTF_RASPBIAN_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Raspian")		
   SET(EMGUTF_RASPBIAN_NUGET_FILE_LIST " 
     <file src=\"..\\..\\..\\lib\\arm\\*.so\" target=\"build\\arm\" />
@@ -580,22 +580,22 @@ IF(HAVE_LITE_BUILD)
     SET(EMGUTF_LITE_MODEL_NUGET_TITLE "${EMGUTF_LITE_MODEL_NUGET_TITLE} Commercial Release")
   ENDIF()
   
-  SET(EMGUTF_LITE_WINDOWS_NUGET_ID "runtime.windows.${EMGUTF_LITE_NUGET_ID}")  
+  SET(EMGUTF_LITE_WINDOWS_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.windows")  
   SET(EMGUTF_LITE_WINDOWS_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Windows")	
   
-  SET(EMGUTF_LITE_MACOS_NUGET_ID "runtime.macos.${EMGUTF_LITE_NUGET_ID}")  
+  SET(EMGUTF_LITE_MACOS_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.mac")  
   SET(EMGUTF_LITE_MACOS_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for MacOS")	
   
-  SET(EMGUTF_LITE_UBUNTU_NUGET_ID "runtime.ubuntu.${EMGUTF_LITE_NUGET_ID}")  
+  SET(EMGUTF_LITE_UBUNTU_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.ubuntu")  
   SET(EMGUTF_LITE_UBUNTU_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Ubuntu")	
   
-  SET(EMGUTF_LITE_RASPBIAN_NUGET_ID "runtime.raspbian.${EMGUTF_LITE_NUGET_ID}")  
+  SET(EMGUTF_LITE_RASPBIAN_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.raspbian")  
   SET(EMGUTF_LITE_RASPBIAN_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Raspian")	
 
-  SET(EMGUTF_LITE_ANDROID_NUGET_ID "runtime.android.${EMGUTF_LITE_NUGET_ID}")  
+  SET(EMGUTF_LITE_ANDROID_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.android")  
   SET(EMGUTF_LITE_ANDROID_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Android")	
   
-  SET(EMGUTF_LITE_IOS_NUGET_ID "runtime.ios.${EMGUTF_LITE_NUGET_ID}")  
+  SET(EMGUTF_LITE_IOS_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.ios")  
   SET(EMGUTF_LITE_IOS_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for iOS")	
 
   SET(EMGUTF_LITE_MODEL_NUGET_TITLE "EMGU TF LITE MODELS")
