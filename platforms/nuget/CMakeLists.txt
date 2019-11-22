@@ -7,8 +7,8 @@ add_subdirectory(Emgu.TF.Models)
 add_subdirectory(Emgu.TF.Protobuf)
 
 IF (WIN32 AND HAVE_WINDESKTOP)
-  add_subdirectory(runtime.windows.cuda.dnn.Emgu.TF)
-  add_subdirectory(runtime.windows.cuda.cufft.Emgu.TF)
+  add_subdirectory(Emgu.TF.runtime.windows.cuda.dnn)
+  add_subdirectory(Emgu.TF.runtime.windows.cuda.cufft)
   add_subdirectory(runtime.windows.Emgu.TF)
 ENDIF()
 

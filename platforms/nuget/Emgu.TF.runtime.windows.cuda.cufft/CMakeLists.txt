@@ -4,7 +4,7 @@
 
 IF (WIN32 AND (HAVE_WINDESKTOP_X64_CUDA))
 
-  PROJECT(runtime.windows.cuda.cufft.Emgu.TF.nuget)
+  PROJECT(Emgu.TF.runtime.windows.cuda.cufft.nuget)
   ADD_CUSTOM_TARGET(
      ${PROJECT_NAME} ALL
      #COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../../../tensorflow/tensorflow/contrib/cmake/nuget/Cufft/Package.nuspec ${CMAKE_CURRENT_SOURCE_DIR}
