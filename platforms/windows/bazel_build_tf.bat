@@ -126,8 +126,10 @@ IF EXIST "%BAZEL_VC%\Redist\MSVC\14.21.27702\x64\Microsoft.VC142.CRT" SET VS2019
 IF EXIST "%BAZEL_VC%\Redist\MSVC\14.22.27821\x64\Microsoft.VC142.CRT" SET VS2019_REDIST=%BAZEL_VC%\Redist\MSVC\14.22.27821\x64\Microsoft.VC142.CRT
 IF EXIST "%BAZEL_VC%\Redist\MSVC\14.23.27820\x64\Microsoft.VC142.CRT" SET VS2019_REDIST=%BAZEL_VC%\Redist\MSVC\14.23.27820\x64\Microsoft.VC142.CRT
 
-copy /Y "%VS2019_REDIST%\*140.dll" lib\x64\
-rm lib\x64\vccorlib140.dll
+copy /Y "%VS2019_REDIST%\*.dll" lib\x64\
+copy /Y "%VS2019_REDIST%\*140_1.dll" lib\x64\
+copy /Y "%VS2019_REDIST%\*140_2.dll" lib\x64\
+REM rm lib\x64\vccorlib140.dll
 
 :END_OF_MSVC_DEPENDENCY
 
