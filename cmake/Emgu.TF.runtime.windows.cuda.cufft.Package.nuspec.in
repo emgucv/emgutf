@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>${EMGU_TF_CUFFT_ID}</id>
-	<title>Native x64 CUDA FFT dependency for Emgu.TF</title>
+	<title>Native x64 CUDA CUFFT dependency for Emgu.TF.runtime.windows.cuda package</title>
     <version>${EMGU_TF_CUFFT_VERSION}</version>
     <authors>${CPACK_PACKAGE_VENDOR}</authors>
     <owners>${CPACK_PACKAGE_VENDOR}</owners>
@@ -10,9 +10,9 @@
     <projectUrl>${EMGUTF_MAIN_WEB_URL}</projectUrl>
 	<icon>icon.png</icon>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-	<summary>This package provides the native CUDA FFT dependencies for EMGU TF software libraries</summary>
-    <description>This package provides the native CUDA FFT dependencies for EMGU TF software libraries</description>
-    <releaseNotes>This is the ${EMGU_TF_CUFFT_VERSION} release of CUDA. </releaseNotes>
+	<summary>This package provides the native CUDA CUFFT dependencies for Emgu.TF.runtime.windows.cuda package</summary>
+    <description>This package provides the native CUDA CUFFT dependencies for Emgu.TF.runtime.windows.cuda package</description>
+    <releaseNotes>This is the ${EMGU_TF_CUFFT_VERSION} release of CUDA CUFFT. </releaseNotes>
     <copyright>${CPACK_PACKAGE_VENDOR}, All Rights Reserved.</copyright>
     <tags>emgu tensorflow cuda</tags>
   </metadata>

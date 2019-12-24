@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>${EMGU_TF_DNN_ID}</id>
-	<title>Native x64 DNN binary for Emgu.TF</title>
+	<title>Native x64 DNN binary dependency for Emgu.TF.runtime.windows.cuda package</title>
     <version>${EMGU_TF_DNN_VERSION}</version>
     <authors>${CPACK_PACKAGE_VENDOR}</authors>
     <owners>${CPACK_PACKAGE_VENDOR}</owners>
@@ -10,8 +10,8 @@
     <projectUrl>${EMGUTF_MAIN_WEB_URL}</projectUrl>
 	<icon>icon.png</icon>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-	<summary>This package provides the native DNN dependencies for EMGU TF software libraries</summary>
-    <description>This package provides the native DNN dependencies for EMGU TF software libraries</description>
+	<summary>This package provides the native DNN dependencies for Emgu.TF.runtime.windows.cuda package</summary>
+    <description>This package provides the native DNN dependencies for for Emgu.TF.runtime.windows.cuda package</description>
     <releaseNotes>This is the ${EMGU_TF_DNN_VERSION} release of DNN for CUDA ${EMGU_TF_CUFFT_VERSION}. </releaseNotes>
     <copyright>${CPACK_PACKAGE_VENDOR}, All Rights Reserved.</copyright>
     <tags>emgu tensorflow dnn cuda</tags>
