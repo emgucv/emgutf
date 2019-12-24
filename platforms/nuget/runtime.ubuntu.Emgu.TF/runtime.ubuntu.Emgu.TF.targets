@@ -4,7 +4,7 @@
     <EmguTFUbuntuLinkTarget>Ubuntu_x64</EmguTFUbuntuLinkTarget>
     <EmguTFUbuntuBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguTFUbuntuBuildX64>
     <EmguTFUbuntuNativeFileX64>$(MSBuildThisFileDirectory)\x64\libtfextern.so</EmguTFUbuntuNativeFileX64>
-    <EmguTFUbuntuNativeFile2X64>$(MSBuildThisFileDirectory)\x64\libtensorflow_framework.so.1</EmguTFUbuntuNativeFile2X64>
+    <EmguTFUbuntuNativeFile2X64>$(MSBuildThisFileDirectory)\x64\libtensorflow_framework.so.2</EmguTFUbuntuNativeFile2X64>
     <EmguTFUbuntuErrorMessage Condition="'$(EmguTFUbuntuBuildX64)'=='True' AND !Exists('$(EmguTFUbuntuNativeFileX64)')">This package do not contain necessary binary for $(EmguTFUbuntuLinkTarget). File $(EmguTFUbuntuNativeFileX64) is missing. PInvoke may fail on Ubuntu</EmguTFUbuntuErrorMessage>
     <EmguTFUbuntuErrorMessage2 Condition="'$(EmguTFUbuntuBuildX64)'=='True' AND !Exists('$(EmguTFUbuntuNativeFile2X64)')">This package do not contain necessary binary for $(EmguTFUbuntuLinkTarget). File $(EmguTFUbuntuNativeFile2X64) is missing. PInvoke may fail on Ubuntu</EmguTFUbuntuErrorMessage2>
     <EmguTFUbuntuDeployMessage Condition="'$(EmguTFUbuntuBuildX64)'=='True' AND Exists('$(EmguTFUbuntuNativeFileX64)')">$(EmguTFUbuntuDeployMessage)x64 </EmguTFUbuntuDeployMessage >
@@ -14,7 +14,7 @@
       <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)\x64\*.so.1">
+    <None Include="$(MSBuildThisFileDirectory)\x64\*.so.*">
       <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
