@@ -61,8 +61,9 @@ namespace Emgu.TF.XamarinForms
             mainLayout.Spacing = 15;
             mainLayout.Padding = new Thickness(10, 10, 10, 10);
 
+
             DisplayImage.HorizontalOptions = LayoutOptions.Center;
-            
+
             /*
             DisplayImage.BackgroundColor = new Color(1, 0, 0);
             MessageLabel.BackgroundColor = new Color(0, 0, 1);
@@ -86,8 +87,33 @@ namespace Emgu.TF.XamarinForms
 #endif
 
 #if (__MACOS__) //Xamarin Mac
-            //use default images
-            InvokeOnImagesLoaded(imageNames);
+            String[] mats = new String[imageNames.Length];
+            for (int i = 0; i < mats.Length; i++)
+            {
+                String pickImgString = "Use Image from";
+                String action = await DisplayActionSheet(pickImgString, "Cancel", null, "Default", "Photo Library");
+                if (action.Equals("Default"))
+                {
+                    mats[i] = imageNames[i];
+                }
+                else if (action.Equals("Photo Library"))
+                {
+                    NSOpenPanel dlg = NSOpenPanel.OpenPanel;
+                    dlg.CanChooseFiles = true;
+                    dlg.CanChooseDirectories = false;
+                    dlg.AllowsMultipleSelection = false;
+                    dlg.AllowedFileTypes = new string[] { "jpg", "jpeg", "png", "bmp" };
+                    if (dlg.RunModal() == 1)
+                    {
+                        mats[i] = dlg.Url.Path;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+            }
+            InvokeOnImagesLoaded(mats);
 #else
 
             String[] mats = new String[imageNames.Length];
@@ -278,16 +304,5 @@ namespace Emgu.TF.XamarinForms
                 }
             );
         }
-
-        /*
-        public Xamarin.Forms.Button GetButton()
-        {
-            return this.TopButton;
-        }
-
-        public Image GetImage()
-        {
-            return this.DisplayImage;
-        }*/
     }
 }
