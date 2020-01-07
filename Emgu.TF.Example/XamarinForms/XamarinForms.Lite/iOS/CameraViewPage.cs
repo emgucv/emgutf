@@ -13,6 +13,7 @@ using System.Diagnostics;
 using Emgu.TF.Lite;
 using Emgu.Models;
 using Emgu.TF.Lite.Models;
+using Emgu.Util;
 
 using CoreGraphics;
 using Xamarin.Forms;
@@ -76,13 +77,10 @@ namespace Emgu.TF.XamarinForms
 
             _mobilenet = new CocoSsdMobilenet();
 
-
             SetMessage("Please wait...");
 
             InitModel();
 
-
-            //CheckVideoPermissionAndStart();
         }
 
         public void SetMessage(String message)
@@ -140,13 +138,6 @@ namespace Emgu.TF.XamarinForms
                 return;
             }
 
-            //Stopwatch watch = Stopwatch.StartNew();
-            //var result = _mobilenet.Recognize(_imageFiles[0]);
-            //watch.Stop();
-            //String resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", result[0].Label, result[0].Probability * 100, watch.ElapsedMilliseconds);
-
-            //SetImage(_imageFiles[0]);
-            //SetMessage(resStr);
             CheckVideoPermissionAndStart();
         }
 
@@ -164,7 +155,7 @@ namespace Emgu.TF.XamarinForms
                         }
                         else
                         {
-                            _label.Text = "Please grant Video Capture permission";
+                            SetMessage( "Please grant Video Capture permission" );
                             //RenderImageMessage("Please grant Video Capture permission");
                         }
                     });
@@ -174,8 +165,7 @@ namespace Emgu.TF.XamarinForms
                     break;
                 case AVAuthorizationStatus.Denied:
                 case AVAuthorizationStatus.Restricted:
-                    _label.Text = "Please grant Video Capture permission";
-                    //RenderImageMessage("Please grant Video Capture permission");
+                    SetMessage( "Please grant Video Capture permission" );
                     break;
                 default:
 
@@ -198,14 +188,16 @@ namespace Emgu.TF.XamarinForms
             if (captureDevice == null)
             {
                 //RenderImageMessage("Capture device not found.");
-                _label.Text = "Capture device not found.";
+                //_label.Text = "Capture device not found.";
+                SetMessage("Capture device not found.");
                 return;
             }
             var input = AVCaptureDeviceInput.FromDevice(captureDevice);
             if (input == null)
             {
                 //RenderImageMessage("No input device");
-                _label.Text = "No input device";
+                //_label.Text = "No input device";
+                SetMessage("No input from the capture Device.");
                 return;
             }
             session.AddInput(input);
@@ -268,49 +260,47 @@ namespace Emgu.TF.XamarinForms
             }
             return annotations;
         }
+
         public override void DidOutputSampleBuffer(AVCaptureOutput captureOutput, CMSampleBuffer sampleBuffer, AVCaptureConnection connection)
         {
             try
             {
                 _counter++;
 #if __IOS__
-                UIImage image = ImageFromSampleBuffer(sampleBuffer);
-#else
-                NSImage image = ImageFromSampleBuffer(sampleBuffer);
-#endif
+                UIImage image = sampleBuffer.ToUIImage();
                 CocoSsdMobilenet.RecognitionResult[] result = _mobilenet.Recognize(image, 0.5f);
                 Annotation[] annotations = GetAnnotations(result);
-
-#if __IOS__
                 UIImage annotatedImage = NativeImageIO.DrawAnnotations(image, annotations);
                 image.Dispose();
-
+#else
+                NSImage image = sampleBuffer.ToNSImage();
+                CocoSsdMobilenet.RecognitionResult[] result = _mobilenet.Recognize(image, 0.5f);
+                Annotation[] annotations = GetAnnotations(result);
 #endif
+
                 //Debug.WriteLine(image == null ? "null image" : String.Format(">image {0} x {1}", image.Size.Width, image.Size.Height));
                 // Do something with the image, we just stuff it in our main view.
                 BeginInvokeOnMainThread(delegate
                 {
                     //Debug.WriteLine(image == null ? "null image" : String.Format(">>image {0} x {1}", image.Size.Width, image.Size.Height));
-#if __MACOS__
+#if __IOS__
+                    if (_imageView.Frame.Size != annotatedImage.Size)
+                        _imageView.Frame = new CGRect(CGPoint.Empty, annotatedImage.Size);
+                    _label.Text = String.Format("{0} image", _counter);
+                    UIImage oldImage = _imageView.Image;
+                    _imageView.Image = annotatedImage;
+                    if (oldImage != null)
+                        oldImage.Dispose();
+#else
                     NativeImageIO.DrawAnnotations(image, annotations);
-#endif
                     if (_imageView.Frame.Size != image.Size)
                         _imageView.Frame = new CGRect(CGPoint.Empty, image.Size);
                     _label.Text = String.Format("{0} image", _counter);
-
-#if __IOS__
-                    UIImage oldImage = _imageView.Image;
-                    _imageView.Image = annotatedImage;
-#else
                     NSImage oldImage = _imageView.Image;
-
-                    //Debug.WriteLine(image == null ? "null image" : String.Format(">>>image {0} x {1}", image.Size.Width, image.Size.Height));
                     _imageView.Image = image;
-                    
-#endif
-
                     if (oldImage != null)
                         oldImage.Dispose();
+#endif
                 });
                 
                 //
@@ -322,74 +312,16 @@ namespace Emgu.TF.XamarinForms
                 sampleBuffer.Dispose();
                 //Console.WriteLine(String.Format("Frame at: {0}", DateTime.Now));
 
-                
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-
+                
                 BeginInvokeOnMainThread(delegate
                 {
                     _label.Text = String.Format("{0} image", e.Message);
                 });
             }
-        }
-
-        //private static MCvFont font = new MCvFont(Emgu.CV.CvEnum.FONT.CV_FONT_HERSHEY_PLAIN, 1.0, 1.0);
-#if __IOS__
-        UIImage ImageFromSampleBuffer(CMSampleBuffer sampleBuffer)
-#else
-        NSImage ImageFromSampleBuffer(CMSampleBuffer sampleBuffer)
-#endif
-        {
-#if __IOS__
-            UIImage image;
-#else
-            NSImage image;
-#endif
-
-            Random r = new Random();
-            int flag = r.Next();
-            // Get the CoreVideo image
-            using (CVPixelBuffer pixelBuffer = sampleBuffer.GetImageBuffer() as CVPixelBuffer)
-            {
-                // Lock the base address
-                pixelBuffer.Lock(CVPixelBufferLock.ReadOnly);
-                using (CIImage cIImage = new CIImage(pixelBuffer))
-                {
-#if __IOS__
-                    image = new UIImage(cIImage);
-#else
-                    image = null;
-
-                    AutoResetEvent e = new AutoResetEvent(false);
-                    //e.WaitOne();
-
-                    //Semaphore s = new Semaphore(1, 1);
-                    //s.WaitOne();
-                    BeginInvokeOnMainThread(delegate
-                    {
-                        NSCIImageRep rep = new NSCIImageRep(cIImage);
-                        Debug.WriteLine(String.Format("({2}) NSCIImageRep: {0}x{1}", rep.Size.Width, rep.Size.Height, flag));
-                        image = new NSImage(rep.Size);
-                        image.AddRepresentation(rep);
-                        //s.Release();
-                        //Monitor.Exit(this);
-                        Debug.WriteLine(String.Format("({2}) NSImage: {0}x{1}", image.Size.Width, image.Size.Height, flag));
-                        e.Set();
-                    });
-                    e.WaitOne();
-                    //Monitor.Enter(this);
-                    //Monitor.Exit(this);
-                    //s.WaitOne();
-                    //s.Release();
-                    
-#endif
-                }
-                pixelBuffer.Unlock(CVPixelBufferLock.ReadOnly);
-            }
-            Debug.WriteLine(String.Format("({2}) Received NSImage: {0}x{1}", image.Size.Width, image.Size.Height, flag));
-            return image;
         }
     }
 }
