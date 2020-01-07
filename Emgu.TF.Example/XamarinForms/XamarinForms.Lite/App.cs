@@ -50,7 +50,7 @@ namespace Emgu.TF.XamarinForms
                      {
                            multiboxDetectionButton,
                            //smartReplyButton,
-#if __IOS__ || __MACOS__
+#if __IOS__ 
                            cameraViewButton,
 #endif
                            mobilenetButton,

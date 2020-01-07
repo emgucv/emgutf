@@ -12,6 +12,7 @@ using System.Diagnostics;
 using Emgu.TF.Lite;
 using Emgu.Models;
 using Emgu.TF.Lite.Models;
+using Emgu.Util;
 
 #if __ANDROID__
 using Android.App;
@@ -41,12 +42,16 @@ namespace Emgu.TF.XamarinForms
         public CocoSsdMobilenetPage()
            : base()
         {
-
+            AllowAvCaptureSession = true;
             var button = this.TopButton;
             button.Text = "Perform Object Detection";
             button.Clicked += OnButtonClicked;
 
             _mobilenet = new CocoSsdMobilenet();
+
+#if __MACOS__
+            outputRecorder.BufferReceived += OutputRecorder_BufferReceived;
+#endif
 
             OnImagesLoaded += (sender, imageFiles) =>
             {
@@ -80,12 +85,84 @@ namespace Emgu.TF.XamarinForms
             };
         }
 
+#if __MACOS__ || __IOS__
+
+        private int _counter = 0;
+        private void OutputRecorder_BufferReceived(object sender, OutputRecorder.BufferReceivedEventArgs e)
+        {
+            try
+            {
+                _counter++;
+#if __IOS__
+                UIImage image = e.Buffer.ToUIImage();
+                CocoSsdMobilenet.RecognitionResult[] result = _mobilenet.Recognize(image, 0.5f);
+                Annotation[] annotations = GetAnnotations(result);
+                UIImage annotatedImage = NativeImageIO.DrawAnnotations(image, annotations);
+                image.Dispose();
+#else
+                NSImage image = e.Buffer.ToNSImage();
+                CocoSsdMobilenet.RecognitionResult[] result = _mobilenet.Recognize(image, 0.5f);
+                Annotation[] annotations = GetAnnotations(result);
+#endif
+
+                //Debug.WriteLine(image == null ? "null image" : String.Format(">image {0} x {1}", image.Size.Width, image.Size.Height));
+                // Do something with the image, we just stuff it in our main view.
+                Xamarin.Forms.Device.BeginInvokeOnMainThread(delegate
+                {
+                    //Debug.WriteLine(image == null ? "null image" : String.Format(">>image {0} x {1}", image.Size.Width, image.Size.Height));
+#if __IOS__
+                    if (ImageView.Frame.Size != annotatedImage.Size)
+                        ImageView.Frame = new CGRect(CGPoint.Empty, annotatedImage.Size);
+                    _label.Text = String.Format("{0} image", _counter);
+                    UIImage oldImage = ImageView.Image;
+                    ImageView.Image = annotatedImage;
+                    if (oldImage != null)
+                        oldImage.Dispose();
+#else
+                    NativeImageIO.DrawAnnotations(image, annotations);
+                    
+                    SetMessage(String.Format("{0} image", _counter));
+                    SetImage(image);
+#endif
+                });
+
+                //
+                // Although this looks innocent "Oh, he is just optimizing this case away"
+                // this is incredibly important to call on this callback, because the AVFoundation
+                // has a fixed number of buffers and if it runs out of free buffers, it will stop
+                // delivering frames. 
+                // 
+
+                Console.WriteLine(String.Format("Frame at: {0}", DateTime.Now));
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(e);
+                SetMessage(ex.Message);
+            }
+        }
+#endif
+
         private void onDownloadProgressChanged(object sender, System.Net.DownloadProgressChangedEventArgs e)
         {
             if (e.TotalBytesToReceive <= 0)
                 SetMessage(String.Format("{0} bytes downloaded.", e.BytesReceived, e.ProgressPercentage));
             else
                 SetMessage(String.Format("{0} of {1} bytes downloaded ({2}%)", e.BytesReceived, e.TotalBytesToReceive, e.ProgressPercentage));
+        }
+
+        private static Annotation[] GetAnnotations(CocoSsdMobilenet.RecognitionResult[] result)
+        {
+            Annotation[] annotations = new Annotation[result.Length];
+            for (int i = 0; i < result.Length; i++)
+            {
+                Annotation annotation = new Annotation();
+                annotation.Rectangle = result[i].Rectangle;
+                annotation.Label = String.Format("{0}:({1:0.00}%)", result[i].Label, result[i].Score * 100);
+                annotations[i] = annotation;
+            }
+            return annotations;
         }
 
         private void onDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
@@ -96,34 +173,58 @@ namespace Emgu.TF.XamarinForms
                 return;
             }
 
-            Stopwatch watch = Stopwatch.StartNew();
-            var result = _mobilenet.Recognize(_imageFiles[0], 0.5f);
-            watch.Stop();
+            String _imageFileName = _imageFiles[0];
 
-            Annotation[] annotations = new Annotation[result.Length];
-            for (int i = 0; i < result.Length; i++)
+            if (_imageFileName.Equals("Camera Stream"))
             {
-                Annotation annotation = new Annotation();
-                annotation.Rectangle = result[i].Rectangle;
-                annotation.Label = String.Format("{0}:({1:0.00}%)", result[i].Label, result[i].Score * 100);
-                annotations[i] = annotation;
+
+#if __MACOS__
+                this.TopButton.Text = "Stop";
+                CheckVideoPermissionAndStart();
+#else
+                
+#endif
             }
+            else
+            {
+                Stopwatch watch = Stopwatch.StartNew();
+                var result = _mobilenet.Recognize(_imageFiles[0], 0.5f);
+                watch.Stop();
+
+                Annotation[] annotations = GetAnnotations(result);
+                /*
+                Annotation[] annotations = new Annotation[result.Length];
+                for (int i = 0; i < result.Length; i++)
+                {
+                    Annotation annotation = new Annotation();
+                    annotation.Rectangle = result[i].Rectangle;
+                    annotation.Label = String.Format("{0}:({1:0.00}%)", result[i].Label, result[i].Score * 100);
+                    annotations[i] = annotation;
+                }*/
 
 
-            JpegData jpeg = NativeImageIO.ImageFileToJpeg(_imageFiles[0], annotations);
-            //NativeImageIO.JpegData jpeg = NativeImageIO.ImageFileToJpeg(_imageFiles[0]);
-            //String names = String.Join(";", Array.ConvertAll(result, r => r.Label));
-            SetImage(jpeg.Raw, jpeg.Width, jpeg.Height);
+                JpegData jpeg = NativeImageIO.ImageFileToJpeg(_imageFiles[0], annotations);
+                //NativeImageIO.JpegData jpeg = NativeImageIO.ImageFileToJpeg(_imageFiles[0]);
+                //String names = String.Join(";", Array.ConvertAll(result, r => r.Label));
+                SetImage(jpeg.Raw, jpeg.Width, jpeg.Height);
 
 
-            String resStr = String.Format("Detected {1} objects in {0} milliseconds.", watch.ElapsedMilliseconds, result.Length);
-            SetMessage(resStr);
+                String resStr = String.Format("Detected {1} objects in {0} milliseconds.", watch.ElapsedMilliseconds, result.Length);
+                SetMessage(resStr);
+            }
 
         }
 
         private void OnButtonClicked(Object sender, EventArgs args)
         {
-            LoadImages(new string[] { "dog416.png" });
+            if (this.TopButton.Text.Equals("Stop"))
+            { // Stop camera
+                this.StopCaptureSession();
+                this.TopButton.Text = "Perform Object Detection";
+            } else
+            {
+                LoadImages(new string[] { "dog416.png" });
+            }
         }
 
     }

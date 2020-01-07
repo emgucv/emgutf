@@ -22,6 +22,8 @@ namespace Emgu.Util
         protected OutputRecorder outputRecorder = new OutputRecorder();
         protected DispatchQueue queue;
 
+        public bool AllowAvCaptureSession { get; set; }
+
         protected void CheckVideoPermissionAndStart()
         {
             AVFoundation.AVAuthorizationStatus authorizationStatus = AVCaptureDevice.GetAuthorizationStatus(AVMediaType.Video);
@@ -62,52 +64,61 @@ namespace Emgu.Util
 
         protected void SetupCaptureSession()
         {
-            // configure the capture session for low resolution, change this if your code
-            // can cope with more data or volume
-            session = new AVCaptureSession()
+            if (session == null)
             {
-                SessionPreset = AVCaptureSession.PresetMedium
-            };
+                // configure the capture session for low resolution, change this if your code
+                // can cope with more data or volume
+                session = new AVCaptureSession()
+                {
+                    SessionPreset = AVCaptureSession.PresetMedium
+                };
 
-            // create a device input and attach it to the session
-            var captureDevice = AVCaptureDevice.GetDefaultDevice(AVMediaType.Video);
-            if (captureDevice == null)
-            {
-                //RenderImageMessage("Capture device not found.");
-                //_label.Text = "Capture device not found.";
-                SetMessage("Capture device not found.");
-                return;
+                // create a device input and attach it to the session
+                var captureDevice = AVCaptureDevice.GetDefaultDevice(AVMediaType.Video);
+                if (captureDevice == null)
+                {
+                    //RenderImageMessage("Capture device not found.");
+                    //_label.Text = "Capture device not found.";
+                    SetMessage("Capture device not found.");
+                    return;
+                }
+                var input = AVCaptureDeviceInput.FromDevice(captureDevice);
+                if (input == null)
+                {
+                    //RenderImageMessage("No input device");
+                    //_label.Text = "No input device";
+                    SetMessage("No input from the capture Device.");
+                    return;
+                }
+                session.AddInput(input);
+
+                // create a VideoDataOutput and add it to the sesion
+                AVVideoSettingsUncompressed settingUncomp = new AVVideoSettingsUncompressed();
+                settingUncomp.PixelFormatType = CVPixelFormatType.CV32BGRA;
+                var output = new AVCaptureVideoDataOutput()
+                {
+                    UncompressedVideoSetting = settingUncomp,
+
+                    // If you want to cap the frame rate at a given speed, in this sample: 15 frames per second
+                    //MinFrameDuration = new CMTime (1, 15)
+                };
+
+
+                // configure the output
+                queue = new DispatchQueue("myQueue");
+
+                output.SetSampleBufferDelegateQueue(outputRecorder, queue);
+                session.AddOutput(output);
             }
-            var input = AVCaptureDeviceInput.FromDevice(captureDevice);
-            if (input == null)
-            {
-                //RenderImageMessage("No input device");
-                //_label.Text = "No input device";
-                SetMessage("No input from the capture Device.");
-                return;
-            }
-            session.AddInput(input);
-
-            // create a VideoDataOutput and add it to the sesion
-            AVVideoSettingsUncompressed settingUncomp = new AVVideoSettingsUncompressed();
-            settingUncomp.PixelFormatType = CVPixelFormatType.CV32BGRA;
-            var output = new AVCaptureVideoDataOutput()
-            {
-                UncompressedVideoSetting = settingUncomp,
-
-                // If you want to cap the frame rate at a given speed, in this sample: 15 frames per second
-                //MinFrameDuration = new CMTime (1, 15)
-            };
-
-
-            // configure the output
-            queue = new DispatchQueue("myQueue");
-
-            output.SetSampleBufferDelegateQueue(outputRecorder, queue);
-            session.AddOutput(output);
-
             session.StartRunning();
 
+        }
+
+        public void StopCaptureSession()
+        {
+            session.StopRunning();
+            session.Dispose();
+            session = null;
         }
     }
 }

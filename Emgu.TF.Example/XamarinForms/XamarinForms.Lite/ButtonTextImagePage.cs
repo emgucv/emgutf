@@ -5,9 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-#if !__MACOS__
-using Plugin.Media;
-#endif
 using Xamarin.Forms;
 #if __ANDROID__
 using Plugin.CurrentActivity;
@@ -16,11 +13,19 @@ using Plugin.CurrentActivity;
 #if __MACOS__
 using AppKit;
 using CoreGraphics;
+using Xamarin.Forms.Platform.MacOS;
+#else
+using Plugin.Media;
 #endif
 
 namespace Emgu.TF.XamarinForms
 {
-    public partial class ButtonTextImagePage : ContentPage
+    public partial class ButtonTextImagePage
+#if __MACOS__
+        : Emgu.Util.AvCaptureSessionPage
+#else
+        : ContentPage
+#endif
     {
         private Button _topButton = new Button();
         public Button TopButton
@@ -40,6 +45,12 @@ namespace Emgu.TF.XamarinForms
         {
             get { return _displayImage; }
         }
+
+#if __MACOS__
+
+        public NSImageView NSImageView { get; set; }
+
+#endif
 
         public ButtonTextImagePage()
         {
@@ -74,6 +85,11 @@ namespace Emgu.TF.XamarinForms
             mainLayout.Children.Add(MessageLabel);
             mainLayout.Children.Add(DisplayImage);
 
+#if __MACOS__
+            NSImageView = new NSImageView();
+            NSImageView.ImageScaling = NSImageScale.None;
+            mainLayout.Children.Add(NSImageView.ToView());
+#endif
             Content = new ScrollView()
             {
                 Content = mainLayout
@@ -91,7 +107,12 @@ namespace Emgu.TF.XamarinForms
             for (int i = 0; i < mats.Length; i++)
             {
                 String pickImgString = "Use Image from";
-                String action = await DisplayActionSheet(pickImgString, "Cancel", null, "Default", "Photo Library");
+
+                String action;
+                if (AllowAvCaptureSession)
+                    action = await DisplayActionSheet(pickImgString, "Cancel", null, "Default", "Photo Library",  "Camera Stream");
+                else
+                    action = await DisplayActionSheet(pickImgString, "Cancel", null, "Default", "Photo Library");
                 if (action.Equals("Default"))
                 {
                     mats[i] = imageNames[i];
@@ -111,6 +132,10 @@ namespace Emgu.TF.XamarinForms
                     {
                         return;
                     }
+                }
+                else if (action.Equals("Camera Stream"))
+                {
+                    mats[i] = action;
                 }
             }
             InvokeOnImagesLoaded(mats);
@@ -252,11 +277,31 @@ namespace Emgu.TF.XamarinForms
                    NSImage image = new NSImage(fileName);
                    this.DisplayImage.WidthRequest = image.Size.Width;
                    this.DisplayImage.HeightRequest = image.Size.Height;
+                   NSImageView.Hidden = true;
+                   DisplayImage.IsVisible = true;
 #endif
                    this.DisplayImage.Focus();
                });
         }
 
+#if __MACOS__
+        public void SetImage(NSImage image)
+        {
+
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(
+               () =>
+               {
+                   if (NSImageView.Frame.Size != image.Size)
+                       NSImageView.Frame = new CGRect(CGPoint.Empty, image.Size);
+                   NSImage oldImage = NSImageView.Image;
+                   NSImageView.Image = image;
+                   if (oldImage != null)
+                       oldImage.Dispose();
+                   NSImageView.Hidden = false;
+                   DisplayImage.IsVisible = false;
+               });
+        }
+#endif
         public void SetImage(byte[] image = null, int widthRequest = -1, int heightRequest = -1)
         {
             Xamarin.Forms.Device.BeginInvokeOnMainThread(
@@ -274,8 +319,10 @@ namespace Emgu.TF.XamarinForms
                        this.DisplayImage.WidthRequest = widthRequest;
                    if (heightRequest > 0)
                        this.DisplayImage.HeightRequest = heightRequest;
-
-#if __IOS__
+#if __MACOS__
+                   NSImageView.Hidden = true;
+                   DisplayImage.IsVisible = true;
+#elif __IOS__
                     //Xamarin Form's Image class do not seems to re-render after Source is change
                     //forcing focus seems to force a re-rendering
                     this.DisplayImage.Focus();

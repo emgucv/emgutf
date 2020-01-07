@@ -99,7 +99,7 @@ namespace Emgu.TF.XamarinForms
             {
                 _counter++;
 #if __IOS__
-                UIImage image = sampleBuffer.ToUIImage();
+                UIImage image = e.Buffer.ToUIImage();
                 CocoSsdMobilenet.RecognitionResult[] result = _mobilenet.Recognize(image, 0.5f);
                 Annotation[] annotations = GetAnnotations(result);
                 UIImage annotatedImage = NativeImageIO.DrawAnnotations(image, annotations);
@@ -116,8 +116,8 @@ namespace Emgu.TF.XamarinForms
                 {
                     //Debug.WriteLine(image == null ? "null image" : String.Format(">>image {0} x {1}", image.Size.Width, image.Size.Height));
 #if __IOS__
-                    if (_imageView.Frame.Size != annotatedImage.Size)
-                        _imageView.Frame = new CGRect(CGPoint.Empty, annotatedImage.Size);
+                    if (ImageView.Frame.Size != annotatedImage.Size)
+                        ImageView.Frame = new CGRect(CGPoint.Empty, annotatedImage.Size);
                     _label.Text = String.Format("{0} image", _counter);
                     UIImage oldImage = ImageView.Image;
                     ImageView.Image = annotatedImage;
