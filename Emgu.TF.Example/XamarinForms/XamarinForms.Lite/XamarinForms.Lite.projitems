@@ -19,6 +19,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)iOS\CameraViewPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)iOS\CMSampleBufferExtensions.ios.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)iOS\CMSampleBufferExtensions.macos.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)iOS\AvCaptureSessionPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)iOS\OutputRecorder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)iOS\" />
