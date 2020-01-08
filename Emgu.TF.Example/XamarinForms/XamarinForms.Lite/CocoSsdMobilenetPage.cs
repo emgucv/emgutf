@@ -42,14 +42,16 @@ namespace Emgu.TF.XamarinForms
         public CocoSsdMobilenetPage()
            : base()
         {
+#if __MACOS__ || __IOS__
             AllowAvCaptureSession = true;
+#endif
             var button = this.TopButton;
             button.Text = "Perform Object Detection";
             button.Clicked += OnButtonClicked;
 
             _mobilenet = new CocoSsdMobilenet();
-
-#if __MACOS__
+            
+#if __MACOS__ || __IOS__
             outputRecorder.BufferReceived += OutputRecorder_BufferReceived;
 #endif
 
@@ -87,12 +89,12 @@ namespace Emgu.TF.XamarinForms
 
 #if __MACOS__ || __IOS__
 
-        private int _counter = 0;
+        //private int _counter = 0;
         private void OutputRecorder_BufferReceived(object sender, OutputRecorder.BufferReceivedEventArgs e)
         {
             try
             {
-                _counter++;
+                //_counter++;
 #if __IOS__
                 UIImage image = e.Buffer.ToUIImage();
                 CocoSsdMobilenet.RecognitionResult[] result = _mobilenet.Recognize(image, 0.5f);
@@ -111,13 +113,15 @@ namespace Emgu.TF.XamarinForms
                 {
                     //Debug.WriteLine(image == null ? "null image" : String.Format(">>image {0} x {1}", image.Size.Width, image.Size.Height));
 #if __IOS__
-                    if (ImageView.Frame.Size != annotatedImage.Size)
-                        ImageView.Frame = new CGRect(CGPoint.Empty, annotatedImage.Size);
-                    _label.Text = String.Format("{0} image", _counter);
-                    UIImage oldImage = ImageView.Image;
-                    ImageView.Image = annotatedImage;
-                    if (oldImage != null)
-                        oldImage.Dispose();
+
+                    //if (UIImageView.Frame.Size != annotatedImage.Size)
+                    //    UIImageView.Frame = new CGRect(CGPoint.Empty, annotatedImage.Size);
+                    //SetMessage( String.Format("{0} image", _counter) );
+                    //UIImage oldImage = UIImageView.Image;
+                    //UIImageView.Image = annotatedImage;
+                    //if (oldImage != null)
+                    //    oldImage.Dispose();
+                    SetImage(annotatedImage);
 #else
                     NativeImageIO.DrawAnnotations(image, annotations);
                     
@@ -133,7 +137,7 @@ namespace Emgu.TF.XamarinForms
                 // delivering frames. 
                 // 
 
-                Console.WriteLine(String.Format("Frame at: {0}", DateTime.Now));
+                //Console.WriteLine(String.Format("Frame at: {0}", DateTime.Now));
 
             }
             catch (Exception ex)
@@ -178,7 +182,8 @@ namespace Emgu.TF.XamarinForms
             if (_imageFileName.Equals("Camera Stream"))
             {
 
-#if __MACOS__
+#if __MACOS__ || __IOS__
+                SetMessage(String.Format("Model trained to recognize the following objects: {0}", String.Join("; ", _mobilenet.Labels)));
                 this.TopButton.Text = "Stop";
                 CheckVideoPermissionAndStart();
 #else

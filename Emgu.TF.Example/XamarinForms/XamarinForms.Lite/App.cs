@@ -30,6 +30,7 @@ namespace Emgu.TF.XamarinForms
             Button inceptionButton = new Button();
             inceptionButton.Text = "Flower recognition";
 
+            /*
 #if __IOS__ || __MACOS__
             Button cameraViewButton = new Button();
             cameraViewButton.Text = "Camera View";
@@ -37,7 +38,7 @@ namespace Emgu.TF.XamarinForms
             {
                 MainPage.Navigation.PushAsync(new CameraViewPage());
             };
-#endif
+#endif*/
 
             // The root page of your application
             ContentPage page =
@@ -50,9 +51,7 @@ namespace Emgu.TF.XamarinForms
                      {
                            multiboxDetectionButton,
                            //smartReplyButton,
-#if __IOS__ 
-                           cameraViewButton,
-#endif
+
                            mobilenetButton,
                            inceptionButton
                      }

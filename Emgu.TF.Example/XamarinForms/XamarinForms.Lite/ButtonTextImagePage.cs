@@ -14,6 +14,11 @@ using Plugin.CurrentActivity;
 using AppKit;
 using CoreGraphics;
 using Xamarin.Forms.Platform.MacOS;
+#elif __IOS__
+using UIKit;
+using CoreGraphics;
+using Xamarin.Forms.Platform.iOS;
+using Plugin.Media;
 #else
 using Plugin.Media;
 #endif
@@ -21,7 +26,7 @@ using Plugin.Media;
 namespace Emgu.TF.XamarinForms
 {
     public partial class ButtonTextImagePage
-#if __MACOS__
+#if __MACOS__ || __IOS__
         : Emgu.Util.AvCaptureSessionPage
 #else
         : ContentPage
@@ -49,7 +54,9 @@ namespace Emgu.TF.XamarinForms
 #if __MACOS__
 
         public NSImageView NSImageView { get; set; }
+#elif __IOS__
 
+        public UIImageView UIImageView { get; set; }
 #endif
 
         public ButtonTextImagePage()
@@ -89,6 +96,10 @@ namespace Emgu.TF.XamarinForms
             NSImageView = new NSImageView();
             NSImageView.ImageScaling = NSImageScale.None;
             mainLayout.Children.Add(NSImageView.ToView());
+#elif __IOS__
+            UIImageView = new UIImageView();
+            UIImageView.ContentMode = UIViewContentMode.ScaleAspectFit;
+            mainLayout.Children.Add(UIImageView.ToView());
 #endif
             Content = new ScrollView()
             {
@@ -149,11 +160,13 @@ namespace Emgu.TF.XamarinForms
                     pickImgString = labels[i];
                 bool haveCameraOption;
                 bool havePickImgOption;
+                bool haveLiveCameraOption = false;
                 if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
                 {
                     //CrossMedia is not implemented on Windows.
                     haveCameraOption = false;
                     havePickImgOption = true; //We will provide our implementation of pick image option
+                    
                 }
                 else
                 {
@@ -161,22 +174,22 @@ namespace Emgu.TF.XamarinForms
                         (CrossMedia.Current.IsCameraAvailable && CrossMedia.Current.IsTakePhotoSupported);
                     havePickImgOption =
                         CrossMedia.Current.IsPickVideoSupported;
-                }
 
-                String action;
-                if (haveCameraOption & havePickImgOption)
-                {
-                    action = await DisplayActionSheet(pickImgString, "Cancel", null, "Default", "Photo Library",
-                        "Camera");
                 }
-                else if (havePickImgOption)
-                {
-                    action = await DisplayActionSheet(pickImgString, "Cancel", null, "Default", "Photo Library");
-                }
-                else
-                {
-                    action = "Default";
-                }
+#if __IOS__
+                haveLiveCameraOption = AllowAvCaptureSession;
+#endif
+                List<String> options = new List<string>();
+                options.Add("Default");
+                if (havePickImgOption)
+                    options.Add("Photo Library");
+                if (haveCameraOption)
+                    options.Add("Photo from Camera");
+                if (haveLiveCameraOption)
+                    options.Add("Camera Stream");
+
+                String action = await DisplayActionSheet(pickImgString, "Cancel", null, options.ToArray());
+
 
 
                 if (action.Equals("Default"))
@@ -224,7 +237,7 @@ namespace Emgu.TF.XamarinForms
                         mats[i] = photoResult.Path;
                     }
                 }
-                else if (action.Equals("Camera"))
+                else if (action.Equals("Photo from Camera"))
                 {
                     var mediaOptions = new Plugin.Media.Abstractions.StoreCameraMediaOptions
                     {
@@ -235,6 +248,9 @@ namespace Emgu.TF.XamarinForms
                     if (takePhotoResult == null) //cancelled
                         return;
                     mats[i] = takePhotoResult.Path;
+                } else if (action.Equals("Camera Stream"))
+                {
+                    mats[i] = action;
                 }
 
                 //Handle user cancel
@@ -279,6 +295,9 @@ namespace Emgu.TF.XamarinForms
                    this.DisplayImage.HeightRequest = image.Size.Height;
                    NSImageView.Hidden = true;
                    DisplayImage.IsVisible = true;
+#elif __IOS__
+                   UIImageView.Hidden = true;
+                   DisplayImage.IsVisible = true;
 #endif
                    this.DisplayImage.Focus();
                });
@@ -298,6 +317,24 @@ namespace Emgu.TF.XamarinForms
                    if (oldImage != null)
                        oldImage.Dispose();
                    NSImageView.Hidden = false;
+                   DisplayImage.IsVisible = false;
+               });
+        }
+#elif __IOS__
+        public void SetImage(UIImage image)
+        {
+
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(
+               () =>
+               {
+                   if (UIImageView.Frame.Size != image.Size)
+                       UIImageView.Frame = new CGRect(CGPoint.Empty, image.Size);
+                   //SetMessage(String.Format("{0} image", _counter));
+                   UIImage oldImage = UIImageView.Image;
+                   UIImageView.Image = image;
+                   if (oldImage != null)
+                       oldImage.Dispose();
+                   UIImageView.Hidden = false;
                    DisplayImage.IsVisible = false;
                });
         }
@@ -323,9 +360,11 @@ namespace Emgu.TF.XamarinForms
                    NSImageView.Hidden = true;
                    DisplayImage.IsVisible = true;
 #elif __IOS__
-                    //Xamarin Form's Image class do not seems to re-render after Source is change
-                    //forcing focus seems to force a re-rendering
-                    this.DisplayImage.Focus();
+                   UIImageView.Hidden = true;
+                   DisplayImage.IsVisible = true;
+                   //Xamarin Form's Image class do not seems to re-render after Source is change
+                   //forcing focus seems to force a re-rendering
+                   this.DisplayImage.Focus();
 #endif
                });
 
@@ -337,7 +376,7 @@ namespace Emgu.TF.XamarinForms
             return this.MessageLabel;
         }*/
 
-        public void SetMessage(String message)
+        public override void SetMessage(String message)
         {
             Xamarin.Forms.Device.BeginInvokeOnMainThread(
                 () =>
