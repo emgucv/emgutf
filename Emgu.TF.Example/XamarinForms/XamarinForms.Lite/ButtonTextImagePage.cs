@@ -376,7 +376,11 @@ namespace Emgu.TF.XamarinForms
             return this.MessageLabel;
         }*/
 
-        public override void SetMessage(String message)
+        public
+#if __MACOS__ || __IOS__
+            override 
+#endif
+            void SetMessage(String message)
         {
             Xamarin.Forms.Device.BeginInvokeOnMainThread(
                 () =>

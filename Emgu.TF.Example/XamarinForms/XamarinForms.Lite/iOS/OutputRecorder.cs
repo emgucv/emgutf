@@ -2,6 +2,8 @@
 //  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
+#if __IOS__ || __MACOS__
+
 using System;
 using CoreGraphics;
 using Xamarin.Forms;
@@ -39,3 +41,5 @@ namespace Emgu.Util
         }
     }
 }
+
+#endif

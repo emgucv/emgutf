@@ -12,7 +12,6 @@ using System.Diagnostics;
 using Emgu.TF.Lite;
 using Emgu.Models;
 using Emgu.TF.Lite.Models;
-using Emgu.Util;
 
 #if __ANDROID__
 using Android.App;
@@ -23,12 +22,14 @@ using Android.Widget;
 using Android.OS;
 using Android.Graphics;
 using Android.Preferences;
-#elif __UNIFIED__ && !__IOS__
+#elif __MACOS__
 using AppKit;
 using CoreGraphics;
+using Emgu.Util;
 #elif __IOS__
 using UIKit;
 using CoreGraphics;
+using Emgu.Util;
 #endif
 
 namespace Emgu.TF.XamarinForms
@@ -223,8 +224,11 @@ namespace Emgu.TF.XamarinForms
         private void OnButtonClicked(Object sender, EventArgs args)
         {
             if (this.TopButton.Text.Equals("Stop"))
-            { // Stop camera
+            {
+                // Stop camera
+#if __IOS__ || __MACOS__
                 this.StopCaptureSession();
+#endif
                 this.TopButton.Text = "Perform Object Detection";
             } else
             {
