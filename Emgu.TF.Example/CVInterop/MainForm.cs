@@ -210,7 +210,7 @@ namespace CVInterop
             if (_renderMat == null)
                 _renderMat = new Mat();
             m.CopyTo(_renderMat);
-            Bitmap bmp = _renderMat.Bitmap;
+            Bitmap bmp = _renderMat.ToBitmap();
 
             if (InvokeRequired)
             {
