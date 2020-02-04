@@ -85,6 +85,9 @@ namespace Emgu.Models
             System.Reflection.Assembly monoAndroidAssembly = Emgu.TF.Util.Toolbox.FindAssembly("Mono.Android.dll");
             if (monoAndroidAssembly != null)
             {
+                String personalFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                return Path.Combine(personalFolder, fileName);
+                /*
                 //Running on Android
                 Type androidOsEnvironmentType = monoAndroidAssembly.GetType("Android.OS.Environment");
                 if (androidOsEnvironmentType != null)
@@ -99,7 +102,7 @@ namespace Emgu.Models
                     return System.IO.Path.Combine(
                         externalStorageDirectoryValue.ToString(),
                         directoryDownloadsValue.ToString(), fileName);
-                }
+                }*/
             }
 
             return fileName;
