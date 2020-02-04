@@ -29,7 +29,6 @@ namespace Emgu.TF.Lite.Models
     {
         private FileDownloadManager _downloadManager;
 
-
         private Interpreter _interpreter = null;
         private String[] _labels = null;
         private FlatBufferModel _model = null;
@@ -145,12 +144,31 @@ namespace Emgu.TF.Lite.Models
             {
                 _model = new FlatBufferModel(modelFileName);
                 if (!_model.CheckModelIdentifier())
-                    throw new Exception("Model indentifier check failed");
+                    throw new Exception("Model identifier check failed");
             }
 
             if (_interpreter == null)
             {
-                _interpreter = new Interpreter(_model);
+                _interpreter = new Interpreter();
+
+                bool isAndroid = false;
+#if UNITY_ANDROID && (!UNITY_EDITOR)
+                isAndroid = true;
+#else
+                System.Reflection.Assembly monoAndroidAssembly = Emgu.TF.Util.Toolbox.FindAssembly("Mono.Android.dll");
+                if (monoAndroidAssembly != null)
+                {
+                    isAndroid = true;
+                }
+#endif
+                if (isAndroid)
+                {
+                    _interpreter.ModifyGraphWithDelegate(TfLiteInvoke.DefaultNnApiDelegate);
+                    //_interpreter.UseNNAPI(true);
+                    //_interpreter.SetNumThreads(4);
+                }
+                _interpreter.Build(_model);
+
                 Status allocateTensorStatus = _interpreter.AllocateTensors();
                 if (allocateTensorStatus == Status.Error)
                     throw new Exception("Failed to allocate tensor");

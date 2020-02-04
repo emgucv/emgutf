@@ -17,21 +17,38 @@ namespace Emgu.TF.Lite
     public class Interpreter : Emgu.TF.Util.UnmanagedObject
     {
 
+        public Interpreter()
+        {
+            _ptr = TfLiteInvoke.tfeInterpreterCreate();
+        }
+
         /// <summary>
         /// Create an interpreter from a flatbuffer model
         /// </summary>
         /// <param name="flatBufferModel">The flat buffer model.</param>
         /// <param name="resolver">An instance that implements the Resolver interface which maps custom op names and builtin op codes to op registrations.</param>
         public Interpreter(FlatBufferModel flatBufferModel, IOpResolver resolver = null)
+        :this()
+        {
+            Build(flatBufferModel, resolver);
+        }
+
+        /// <summary>
+        /// Build the interpreter from a flatbuffer model
+        /// </summary>
+        /// <param name="flatBufferModel">The flat buffer model.</param>
+        /// <param name="resolver">An instance that implements the Resolver interface which maps custom op names and builtin op codes to op registrations.</param>
+        public void Build(FlatBufferModel flatBufferModel, IOpResolver resolver = null)
         {
             if (resolver == null)
             {
                 using (BuildinOpResolver buildinResolver = new BuildinOpResolver())
                 {
-                    _ptr = TfLiteInvoke.tfeInterpreterCreateFromModel(flatBufferModel.Ptr, ((IOpResolver) buildinResolver).OpResolverPtr);
+                     TfLiteInvoke.tfeInterpreterCreateFromModel(ref _ptr, flatBufferModel.Ptr, ((IOpResolver)buildinResolver).OpResolverPtr);
                 }
-            } else
-                _ptr = TfLiteInvoke.tfeInterpreterCreateFromModel(flatBufferModel.Ptr, resolver.OpResolverPtr);
+            }
+            else
+                TfLiteInvoke.tfeInterpreterCreateFromModel(ref _ptr, flatBufferModel.Ptr, resolver.OpResolverPtr);
         }
 
         /// <summary>
@@ -201,7 +218,7 @@ namespace Emgu.TF.Lite
         internal static extern IntPtr tfeInterpreterCreate();
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
-        internal static extern IntPtr tfeInterpreterCreateFromModel(IntPtr model, IntPtr opResolver);
+        internal static extern IntPtr tfeInterpreterCreateFromModel(ref IntPtr interpreter, IntPtr model, IntPtr opResolver);
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
         internal static extern Status tfeInterpreterAllocateTensors(IntPtr interpreter);
