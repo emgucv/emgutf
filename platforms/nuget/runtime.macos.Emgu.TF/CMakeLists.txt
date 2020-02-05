@@ -4,7 +4,7 @@
 
 IF(HAVE_OSX)
 
-PROJECT(runtime.macos.Emgu.TF.nuget)
+PROJECT(Emgu.TF.runtime.macos.nuget)
 IF(WIN32)
 ADD_CUSTOM_TARGET(
    ${PROJECT_NAME} ALL

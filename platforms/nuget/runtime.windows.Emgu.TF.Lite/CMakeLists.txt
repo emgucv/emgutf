@@ -4,7 +4,7 @@
 
 IF(HAVE_WINDESKTOP_X64_LITE)
 
-PROJECT(runtime.windows.Emgu.TF.Lite.nuget)
+PROJECT(Emgu.TF.Lite.runtime.windows.nuget)
 ADD_CUSTOM_TARGET(
    ${PROJECT_NAME} ALL
    COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../../../miscellaneous/nuget.exe" pack Package.nuspec -OutputDirectory "${CMAKE_CURRENT_SOURCE_DIR}/../"
