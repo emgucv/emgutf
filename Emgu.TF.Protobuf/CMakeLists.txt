@@ -29,6 +29,7 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
   PROJECT(Emgu.TF.Protobuf.Netstandard)
   BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj" "" ALL)
   
+  SET(PROTOBUF_TOOLS_NUGET_URL https://www.nuget.org/api/v2/package/Google.Protobuf.Tools/${PROTOBUF_VERSION})
   IF(WIN32)
     SET(PROTOBUF_TOOLS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../protobuf_archive)
     FIND_PROGRAM (PROTOC_EXE 
@@ -44,7 +45,7 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
       SET(PROTOBUF_INCLUDE_PATH ${PROTOBUF_TOOLS_PATH}/tools)
       ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
 	PRE_BUILD
-	COMMAND wget https://www.nuget.org/api/v2/package/Google.Protobuf.Tools/3.8.0 -O protobuf.tools.zip
+	COMMAND wget ${PROTOBUF_TOOLS_NUGET_URL} -O protobuf.tools.zip
 	COMMAND unzip -u protobuf.tools.zip -d protobuf.tools
 	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
       ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
@@ -65,7 +66,7 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
   ELSEIF(APPLE)
     ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
       PRE_BUILD
-      COMMAND wget https://www.nuget.org/api/v2/package/Google.Protobuf.Tools/3.8.0 -O protobuf.tools.zip
+      COMMAND wget ${PROTOBUF_TOOLS_NUGET_URL} -O protobuf.tools.zip
       COMMAND unzip -u protobuf.tools.zip -d protobuf.tools
       WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
     SET(PROTOBUF_TOOLS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/protobuf.tools)
