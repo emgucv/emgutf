@@ -102,7 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Google.Protobuf">
-      <Version>3.8.0</Version>
+      <Version>3.11.3</Version>
     </PackageReference>
     <PackageReference Include="WpfLightToolkit">
       <Version>1.0.3</Version>
@@ -111,10 +111,10 @@
       <Version>4.0.1.5</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms">
-      <Version>4.3.0.991211</Version>
+      <Version>4.4.0.991537</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms.Platform.WPF">
-      <Version>4.3.0.991211</Version>
+      <Version>4.4.0.991537</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

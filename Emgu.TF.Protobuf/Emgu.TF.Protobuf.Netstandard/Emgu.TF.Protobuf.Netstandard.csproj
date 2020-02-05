@@ -19,7 +19,7 @@
   <Import Project="..\Emgu.TF.Protobuf.Shared.projitems" Label="Shared" />
 
   <ItemGroup>
-    <PackageReference Include="Google.Protobuf" Version="3.8.0" />
+    <PackageReference Include="Google.Protobuf" Version="3.11.3" />
   </ItemGroup>
   
   <Target Name="DeployBinary" AfterTargets="AfterBuild">
