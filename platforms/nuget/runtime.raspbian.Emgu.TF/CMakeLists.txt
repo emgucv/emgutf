@@ -4,7 +4,7 @@
 
 IF(IS_RASPBIAN AND HAVE_LINUX_ARM)
   
-  PROJECT(runtime.raspbian.Emgu.TF.nuget)
+  PROJECT(Emgu.TF.runtime.raspbian.nuget)
   #IF(WIN32)
   #ADD_CUSTOM_TARGET(
   #   ${PROJECT_NAME} ALL

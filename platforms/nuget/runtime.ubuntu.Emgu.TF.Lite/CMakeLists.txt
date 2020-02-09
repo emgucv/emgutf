@@ -4,7 +4,7 @@
 
 IF(IS_UBUNTU AND HAVE_LINUX_LITE)
 
-  PROJECT(runtime.ubuntu.Emgu.TF.Lite.nuget)
+  PROJECT(Emgu.TF.Lite.runtime.ubuntu.nuget)
   #IF(WIN32)
   #ADD_CUSTOM_TARGET(
   #   ${PROJECT_NAME} ALL

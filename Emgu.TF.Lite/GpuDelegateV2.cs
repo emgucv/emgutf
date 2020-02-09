@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 
 namespace Emgu.TF.Lite
 {
-    public class StatefulNnApiDelegate : Emgu.TF.Util.UnmanagedObject, IDelegate
+    public class GpuDelegateV2 : Emgu.TF.Util.UnmanagedObject, IDelegate
     {
-        private IntPtr _delegatePtr;
-
-        public StatefulNnApiDelegate()
+        public GpuDelegateV2()
         {
-            _ptr = TfLiteInvoke.tfeStatefulNnApiDelegateCreate(ref _delegatePtr);
+            _ptr = TfLiteInvoke.tfeGpuDelegateV2Create();
         }
 
         /// <summary>
@@ -24,7 +22,7 @@ namespace Emgu.TF.Lite
         /// </summary>
         IntPtr IDelegate.DelegatePtr
         {
-            get { return _delegatePtr; }
+            get { return _ptr; }
         }
 
         /// <summary>
@@ -34,8 +32,7 @@ namespace Emgu.TF.Lite
         {
             if (IntPtr.Zero != _ptr)
             {
-                TfLiteInvoke.tfeStatefulNnApiDelegateRelease(ref _ptr);
-                _delegatePtr = IntPtr.Zero;
+                TfLiteInvoke.tfeGpuDelegateV2Delete(ref _ptr);
             }
         }
     }
@@ -43,23 +40,23 @@ namespace Emgu.TF.Lite
     public static partial class TfLiteInvoke
     {
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
-        internal static extern IntPtr tfeStatefulNnApiDelegateCreate(ref IntPtr delegatePtr);
+        internal static extern IntPtr tfeGpuDelegateV2Create();
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
-        internal static extern void tfeStatefulNnApiDelegateRelease(ref IntPtr delegatePtr);
+        internal static extern void tfeGpuDelegateV2Delete(ref IntPtr delegatePtr);
 
-        private static StatefulNnApiDelegate _nnApiDelegate;
+        private static GpuDelegateV2 _gpuDelegateV2;
 
-        public static StatefulNnApiDelegate DefaultNnApiDelegate
+        public static GpuDelegateV2 DefaultGpuDelegateV2
         {
             get
             {
-                if (_nnApiDelegate == null)
+                if (_gpuDelegateV2 == null)
                 {
-                    _nnApiDelegate = new StatefulNnApiDelegate();
+                    _gpuDelegateV2 = new GpuDelegateV2();
                 }
 
-                return _nnApiDelegate;
+                return _gpuDelegateV2;
             }
 
         }

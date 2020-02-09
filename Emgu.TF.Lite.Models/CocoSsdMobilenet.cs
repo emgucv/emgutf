@@ -10,6 +10,7 @@ using Emgu.TF.Lite;
 using Emgu.Models;
 using System.IO;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Net;
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
@@ -28,7 +29,6 @@ namespace Emgu.TF.Lite.Models
     public class CocoSsdMobilenet : Emgu.TF.Util.UnmanagedObject
     {
         private FileDownloadManager _downloadManager;
-
 
         private Interpreter _interpreter = null;
         private String[] _labels = null;
@@ -145,12 +145,32 @@ namespace Emgu.TF.Lite.Models
             {
                 _model = new FlatBufferModel(modelFileName);
                 if (!_model.CheckModelIdentifier())
-                    throw new Exception("Model indentifier check failed");
+                    throw new Exception("Model identifier check failed");
             }
 
             if (_interpreter == null)
             {
                 _interpreter = new Interpreter(_model);
+
+                bool isAndroid = false;
+#if UNITY_ANDROID && (!UNITY_EDITOR)
+                isAndroid = true;
+#else
+                System.Reflection.Assembly monoAndroidAssembly = Emgu.TF.Util.Toolbox.FindAssembly("Mono.Android.dll");
+                if (monoAndroidAssembly != null)
+                {
+                    isAndroid = true;
+                }
+#endif
+                if (isAndroid)
+                {
+                    //_interpreter.ModifyGraphWithDelegate(TfLiteInvoke.DefaultGpuDelegateV2);
+                    //_interpreter.ModifyGraphWithDelegate(TfLiteInvoke.DefaultNnApiDelegate);
+                    _interpreter.UseNNAPI(false);
+                    _interpreter.SetNumThreads(4);
+                }
+                //_interpreter.Build(_model);
+
                 Status allocateTensorStatus = _interpreter.AllocateTensors();
                 if (allocateTensorStatus == Status.Error)
                     throw new Exception("Failed to allocate tensor");
@@ -237,6 +257,13 @@ namespace Emgu.TF.Lite.Models
             return ConvertResults(scoreThreshold);
         }
 #endif
+        private void ReadImageFileToTensor(String imageFile)
+        {
+            int height = _inputTensor.Dims[1];
+            int width = _inputTensor.Dims[2];
+
+            NativeImageIO.ReadImageFileToTensor<byte>(imageFile, _inputTensor.DataPointer, height, width, 0.0f, 1.0f);
+        }
 
         /// <summary>
         /// Perform Coco Ssd Mobilenet detection
@@ -246,13 +273,10 @@ namespace Emgu.TF.Lite.Models
         /// <returns>The result of the detection.</returns>
         public RecognitionResult[] Recognize(String imageFile, float scoreThreshold = 0.0f)
         {
-            int height = _inputTensor.Dims[1];
-            int width = _inputTensor.Dims[2];
-
-            NativeImageIO.ReadImageFileToTensor<byte>(imageFile, _inputTensor.DataPointer, height, width, 0.0f, 1.0f);
-
+            ReadImageFileToTensor(imageFile);
+            //Stopwatch w = Stopwatch.StartNew();
             _interpreter.Invoke();
-
+            //w.Stop();
             return ConvertResults(scoreThreshold);
         }
 #endif

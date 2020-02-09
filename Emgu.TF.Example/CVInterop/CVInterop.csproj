@@ -83,7 +83,7 @@
       <Version>4.2.0.3636</Version>
     </PackageReference>
     <PackageReference Include="Google.Protobuf">
-      <Version>3.8.0</Version>
+      <Version>3.11.3</Version>
     </PackageReference>
     <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation">
       <Version>4.3.0</Version>

@@ -4,7 +4,7 @@
 
 IF ( HAVE_IOS_LITE )
 
-PROJECT(runtime.ios.Emgu.TF.Lite.nuget)
+PROJECT(Emgu.TF.Lite.runtime.ios.nuget)
 IF(WIN32)
 ADD_CUSTOM_TARGET(
    ${PROJECT_NAME} ALL
