@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)CocoSsdMobilenetPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)InceptionPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MobilenetPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ModelCheckerPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SmartReply.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)iOS\CMSampleBufferExtensions.ios.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)iOS\CMSampleBufferExtensions.macos.cs" />

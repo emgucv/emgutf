@@ -30,6 +30,9 @@ namespace Emgu.TF.XamarinForms
             Button inceptionButton = new Button();
             inceptionButton.Text = "Flower recognition";
 
+            Button modelCheckerButton = new Button();
+            modelCheckerButton.Text = "TF Lite model checker";
+
             /*
 #if __IOS__ || __MACOS__
             Button cameraViewButton = new Button();
@@ -51,9 +54,9 @@ namespace Emgu.TF.XamarinForms
                      {
                            multiboxDetectionButton,
                            //smartReplyButton,
-
                            mobilenetButton,
-                           inceptionButton
+                           inceptionButton, 
+                           modelCheckerButton
                      }
                    }
                };
@@ -98,7 +101,10 @@ namespace Emgu.TF.XamarinForms
                 MainPage.Navigation.PushAsync(new InceptionPage());
             };
 
-
+            modelCheckerButton.Clicked += (sender, args) =>
+            {
+                MainPage.Navigation.PushAsync(new ModelCheckerPage());
+            };
         }
 
         public Page CurrentPage

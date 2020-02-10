@@ -51,6 +51,13 @@ namespace Emgu.TF.XamarinForms
             get { return _displayImage; }
         }
 
+        private StackLayout _mainLayout;
+
+        public StackLayout MainLayout
+        {
+            get { return _mainLayout; }
+        }
+
 #if __MACOS__
 
         public NSImageView NSImageView { get; set; }
@@ -72,12 +79,12 @@ namespace Emgu.TF.XamarinForms
             MessageLabel.VerticalTextAlignment = TextAlignment.Center;
             MessageLabel.HorizontalTextAlignment = TextAlignment.Center;
 
-            StackLayout mainLayout = new StackLayout();
-            mainLayout.VerticalOptions = LayoutOptions.FillAndExpand;
-            mainLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
-            mainLayout.Orientation = StackOrientation.Vertical;
-            mainLayout.Spacing = 15;
-            mainLayout.Padding = new Thickness(10, 10, 10, 10);
+            _mainLayout = new StackLayout();
+            _mainLayout.VerticalOptions = LayoutOptions.FillAndExpand;
+            _mainLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
+            _mainLayout.Orientation = StackOrientation.Vertical;
+            _mainLayout.Spacing = 15;
+            _mainLayout.Padding = new Thickness(10, 10, 10, 10);
 
 
             DisplayImage.HorizontalOptions = LayoutOptions.Center;
@@ -88,9 +95,10 @@ namespace Emgu.TF.XamarinForms
             mainLayout.BackgroundColor = new Color(0, 1, 0);
             */
 
-            mainLayout.Children.Add(TopButton);
-            mainLayout.Children.Add(MessageLabel);
-            mainLayout.Children.Add(DisplayImage);
+            _mainLayout.Children.Add(TopButton);
+            _mainLayout.Children.Add(MessageLabel);
+            _mainLayout.Children.Add(DisplayImage);
+            //_mainLayout.BackgroundColor= Color.Bisque;
 
 #if __MACOS__
             NSImageView = new NSImageView();
@@ -103,7 +111,7 @@ namespace Emgu.TF.XamarinForms
 #endif
             Content = new ScrollView()
             {
-                Content = mainLayout
+                Content = _mainLayout
             };
         }
 
@@ -380,14 +388,14 @@ namespace Emgu.TF.XamarinForms
 #if __MACOS__ || __IOS__
             override 
 #endif
-            void SetMessage(String message)
+            void SetMessage(String message, int heightRequest = 60)
         {
             Xamarin.Forms.Device.BeginInvokeOnMainThread(
                 () =>
                 {
                     this.MessageLabel.Text = message;
                     this.MessageLabel.WidthRequest = this.Width;
-                    this.MessageLabel.HeightRequest = 60;
+                    this.MessageLabel.HeightRequest = heightRequest;
 
                     this.MessageLabel.LineBreakMode = LineBreakMode.WordWrap;
                     this.MessageLabel.Focus();
