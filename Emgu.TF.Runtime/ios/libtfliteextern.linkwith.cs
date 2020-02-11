@@ -9,7 +9,7 @@ using ObjCRuntime;
 
 [assembly: LinkWith (
    "libtfliteextern.a", 
-   LinkTarget.ArmV7s | LinkTarget.ArmV7 | LinkTarget.Simulator | LinkTarget.Arm64 | LinkTarget.Simulator64, 
+   LinkTarget.ArmV7s | LinkTarget.Simulator | LinkTarget.Arm64 | LinkTarget.Simulator64, 
    ForceLoad = true,
    SmartLink = true, 
    Frameworks="Foundation Accelerate CoreFoundation CoreGraphics AssetsLibrary AVFoundation CoreImage CoreMedia CoreVideo QuartzCore ImageIO", 
