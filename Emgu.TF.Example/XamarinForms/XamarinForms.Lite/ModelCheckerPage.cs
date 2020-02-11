@@ -96,7 +96,8 @@ namespace Emgu.TF.XamarinForms
             }
             catch (Exception ex)
             {
-                modelResult.Append(String.Format("Exception processing file {0}: {1}{2} ", fileName, ex.ToString(), Environment.NewLine))
+                modelResult.Append(String.Format("Exception processing file {0}: {1}{2} ", fileName, ex.ToString(),
+                    Environment.NewLine));
                 return modelResult.ToString();
             }
         }
