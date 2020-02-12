@@ -20,7 +20,7 @@ export TF_SET_ANDROID_WORKSPACE=0
 ./configure
 bazel build --verbose_failures --config=ios_fat -c opt //tensorflow/lite/experimental/ios:TensorFlowLiteC_framework
 unzip -o bazel-bin/tensorflow/lite/experimental/ios/TensorFlowLiteC_framework.zip
-cp -r TensorFlowLiteC.framework/TensorFlowLiteC ../lib/ios/tfliteextern.a
+cp -r TensorFlowLiteC.framework/TensorFlowLiteC ../lib/ios/libtfliteextern.a
 cd ..
 
 
