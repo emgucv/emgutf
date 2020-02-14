@@ -480,7 +480,7 @@ namespace Emgu.TF.Models
                 inputMean,
                 scale,
                 flipUpSideDown,
-                !swapBR //No swapping BR in tensorflow is swapping BR in Bitmap
+                !swapBR //No swapping BR in tensorflow is the equivalent of swapping BR in Bitmap
             );
             return t;
         }

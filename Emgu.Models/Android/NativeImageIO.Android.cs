@@ -80,7 +80,7 @@ namespace Emgu.Models
         /// <param name="inputMean">The mean value, it will be subtracted from the input image pixel values</param>
         /// <param name="scale">The scale, after mean is subtracted, the scale will be used to multiply the pixel values</param>
         /// <param name="flipUpSideDown">If true, the image needs to be flipped up side down</param>
-        /// <param name="swapBR">If true, will flip the Blue channel with the Red. e.g. If false, the tensor's color channel order will be RGB. If true, the tensor's color channle order will be BGR </param>
+        /// <param name="swapBR">If true, will flip the Blue channel with the Red. e.g. If false, the tensor's color channel order will be RGB. If true, the tensor's color channel order will be BGR </param>
         public static void ReadImageFileToTensor<T>(
             String fileName,
             IntPtr dest,
@@ -111,32 +111,42 @@ namespace Emgu.Models
                 bmp.Dispose();
                 bmp = flipped;
             }
+
+            
+            if (swapBR)
+            {
+                float[] swapBRColorTransform = new float[]
+                {
+                    0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+                    0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+                    1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                    0.0f, 0.0f, 0.0f, 1.0f, 0.0f
+                };
+                ColorMatrix swapBrColorMatrix = new ColorMatrix();
+                swapBrColorMatrix.Set(swapBRColorTransform);
+                ColorMatrixColorFilter colorFilter = new ColorMatrixColorFilter(swapBrColorMatrix);
+                Paint paint = new Paint();
+                paint.SetColorFilter(colorFilter);
+
+                //Bitmap swapBrBitmap = Bitmap.CreateBitmap(bmp, 0, 0, bmp.Width, bmp.Height);
+                //Canvas canvas = new Canvas(swapBrBitmap);
+                //canvas.DrawBitmap(swapBrBitmap, 0, 0, paint);
+
+                Canvas canvas = new Canvas(bmp);
+                canvas.DrawBitmap(bmp, 0, 0, paint);
+            }
             
             int[] intValues = new int[bmp.Width * bmp.Height];
             float[] floatValues = new float[bmp.Width * bmp.Height * 3];
             bmp.GetPixels(intValues, 0, bmp.Width, 0, 0, bmp.Width, bmp.Height);
 
-            if (swapBR)
+            for (int i = 0; i < intValues.Length; ++i)
             {
-                for (int i = 0; i < intValues.Length; ++i)
-                {
-                    int val = intValues[i];
-                    floatValues[i * 3 + 0] = ((val & 0xFF) - inputMean) * scale; 
-                    floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - inputMean) * scale;
-                    floatValues[i * 3 + 2] = (((val >> 16) & 0xFF) - inputMean) * scale;
-                }
+                int val = intValues[i];
+                floatValues[i * 3 + 0] = (((val >> 16) & 0xFF) - inputMean) * scale;
+                floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - inputMean) * scale;
+                floatValues[i * 3 + 2] = ((val & 0xFF) - inputMean) * scale;
             }
-            else
-            {
-                for (int i = 0; i < intValues.Length; ++i)
-                {
-                    int val = intValues[i];
-                    floatValues[i * 3 + 0] = (((val >> 16) & 0xFF) - inputMean) * scale;
-                    floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - inputMean) * scale;
-                    floatValues[i * 3 + 2] = ((val & 0xFF) - inputMean) * scale;
-                }
-            }
-
             if (typeof(T) == typeof(float))
             {
                 Marshal.Copy(floatValues, 0, dest, floatValues.Length);
