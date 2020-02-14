@@ -59,7 +59,7 @@ namespace Emgu.Util
             }
         }
 
-        public virtual void SetMessage(String message)
+        public virtual void SetMessage(String message, int heightRequest = 60)
         {
 
         }

@@ -126,7 +126,7 @@ namespace Emgu.TF.XamarinForms
 #else
                     NativeImageIO.DrawAnnotations(image, annotations);
                     
-                    SetMessage(String.Format("{0} image", _counter));
+                    //SetMessage(String.Format("{0} image", _counter));
                     SetImage(image);
 #endif
                 });

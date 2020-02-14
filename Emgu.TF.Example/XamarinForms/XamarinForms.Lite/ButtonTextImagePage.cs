@@ -92,7 +92,7 @@ namespace Emgu.TF.XamarinForms
             /*
             DisplayImage.BackgroundColor = new Color(1, 0, 0);
             MessageLabel.BackgroundColor = new Color(0, 0, 1);
-            mainLayout.BackgroundColor = new Color(0, 1, 0);
+            _mainLayout.BackgroundColor = new Color(0, 1, 0);
             */
 
             _mainLayout.Children.Add(TopButton);
@@ -103,11 +103,11 @@ namespace Emgu.TF.XamarinForms
 #if __MACOS__
             NSImageView = new NSImageView();
             NSImageView.ImageScaling = NSImageScale.None;
-            mainLayout.Children.Add(NSImageView.ToView());
+            _mainLayout.Children.Add(NSImageView.ToView());
 #elif __IOS__
             UIImageView = new UIImageView();
             UIImageView.ContentMode = UIViewContentMode.ScaleAspectFit;
-            mainLayout.Children.Add(UIImageView.ToView());
+            _mainLayout.Children.Add(UIImageView.ToView());
 #endif
             Content = new ScrollView()
             {

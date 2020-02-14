@@ -1,0 +1,26 @@
+#!/bin/sh
+
+cd "$(dirname "$0")"
+cd ../../
+mkdir -p lib/ios
+cd tensorflow
+
+export PYTHON_BIN_PATH="/usr/bin/python"
+export PYTHON_LIB_PATH="/Library/Python/2.7/site-packages"
+
+export TF_CONFIGURE_IOS='1'
+export TF_ENABLE_XLA=1
+export TF_NEED_CUDA=0
+export TF_NEED_ROCM=0
+export TF_NEED_OPENCL_SYCL=0
+export TF_DOWNLOAD_CLANG=0
+export CC_OPT_FLAGS="-match=native -Wno-sign-compare"
+export TF_SET_ANDROID_WORKSPACE=0
+
+./configure
+bazel build --verbose_failures --config=ios_fat -c opt //tensorflow/lite/experimental/ios:TensorFlowLiteC_framework
+unzip -o bazel-bin/tensorflow/lite/experimental/ios/TensorFlowLiteC_framework.zip
+cp -r TensorFlowLiteC.framework/TensorFlowLiteC ../lib/ios/libtfliteextern.a
+cd ..
+
+
