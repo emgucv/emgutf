@@ -3,7 +3,7 @@
       <PropertyGroup>
         <EmguTFLiteLinkTarget>WindowsForms</EmguTFLiteLinkTarget>
         <EmguTFLiteBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguTFLiteBuildX64>
-        <EmguTFLiteNativeFileX64>$(MSBuildThisFileDirectory)x64\tfextern.dll</EmguTFLiteNativeFileX64>
+        <EmguTFLiteNativeFileX64>$(MSBuildThisFileDirectory)x64\tfliteextern.dll</EmguTFLiteNativeFileX64>
         <EmguTFLiteErrorMessage Condition="'$(EmguTFLiteBuildX64)'=='True' AND !Exists('$(EmguTFLiteNativeFileX64)')">This package do not contain necessary binary for $(EmguTFLiteLinkTarget). X64 is targeted, but file $(EmguTFLiteNativeFileX64) is missing.</EmguTFLiteErrorMessage>
         <EmguTFLiteDeployMessage Condition="'$(EmguTFLiteBuildX64)'=='True' AND Exists('$(EmguTFLiteNativeFileX64)')">$(EmguTFLiteDeployMessage)x64 </EmguTFLiteDeployMessage >
       </PropertyGroup>
