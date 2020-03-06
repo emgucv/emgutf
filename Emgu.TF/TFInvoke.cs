@@ -218,6 +218,23 @@ namespace Emgu.TF
                 success &= fileExistAndLoaded;
             }
 
+
+
+            if (success)
+            {
+                bool IsGoogleCudaEnabled = TfInvoke.IsGoogleCudaEnabled;
+                String version = Emgu.TF.TfInvoke.Version;
+                String[] devices = ListAllPhysicalDevices();
+                System.Diagnostics.Trace.WriteLine(String.Format("Successfully loaded tensorflow {0} binary from {1}; IsGoogleCudaEnabled = {2}; PhysicalDevices=[{3}]", 
+                    version, 
+                    loadDirectory, 
+                    IsGoogleCudaEnabled, 
+                    String.Join(",", devices)));
+            }
+            else
+            {
+                System.Diagnostics.Trace.WriteLine(String.Format("Failed to load tensorflow binary from {0}", loadDirectory));
+            }
             Environment.CurrentDirectory = oldDir;
             return success;
         }
@@ -429,5 +446,28 @@ namespace Emgu.TF
             [MarshalAs(TfInvoke.StringMarshalType)]
             String operationName);
 
+
+        public static String[] ListAllPhysicalDevices(Status status = null)
+        {
+            using (StatusChecker checker = new StatusChecker(status))
+            {
+                byte[] nameBuffer = new byte[2048];
+
+                GCHandle nameHandle = GCHandle.Alloc(nameBuffer, GCHandleType.Pinned);
+
+                TfInvoke.tfeListAllPhysicalDevices(
+                    nameHandle.AddrOfPinnedObject(),
+                    checker.Status);
+
+                nameHandle.Free();
+                String nameResult = System.Text.Encoding.ASCII.GetString(nameBuffer);
+                String[] names = nameResult.TrimEnd('\0', '\n').Split('\n');
+                return names;
+                
+            }
+        }
+
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        private static extern void tfeListAllPhysicalDevices(IntPtr nameBuffer, IntPtr status);
     }
 }
