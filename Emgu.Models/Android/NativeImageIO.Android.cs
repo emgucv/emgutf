@@ -16,9 +16,9 @@ namespace Emgu.Models
     /// <summary>
     /// Platform specific implementation of Image IO
     /// </summary>
-    public partial class NativeImageIO
+    public static partial class NativeImageIO
     {
-                /// <summary>
+        /// <summary>
         /// Read the file and draw rectangles on it.
         /// </summary>
         /// <param name="fileName">The name of the file.</param>
@@ -26,55 +26,84 @@ namespace Emgu.Models
         /// <returns>The image in Jpeg stream format</returns>
         public static Emgu.Models.JpegData ImageFileToJpeg(String fileName, Annotation[] annotations = null)
         {
+            using (Android.Graphics.Bitmap bmp = ImageFileToBitmap(fileName, annotations))
+            {
+                return bmp.ToJpeg();
+            }
+        }
+
+        /// <summary>
+        /// Convert bitmap to jpeg
+        /// </summary>
+        /// <param name="bmp">The android bitmap</param>
+        /// <returns>The jpeg representation</returns>
+        public static Emgu.Models.JpegData ToJpeg(this Android.Graphics.Bitmap bmp)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bmp.Compress(Bitmap.CompressFormat.Jpeg, 90, ms);
+                JpegData result = new JpegData();
+                result.Raw = ms.ToArray();
+                result.Width = bmp.Width;
+                result.Height = bmp.Height;
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Read the file and draw rectangles on it.
+        /// </summary>
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="annotations">Annotations to be add to the image. Can consist of rectangles and labels</param>
+        /// <returns>The image in Bitmap format</returns>
+        public static Bitmap ImageFileToBitmap(String fileName, Annotation[] annotations = null)
+        {
             using (BitmapFactory.Options options = new BitmapFactory.Options())
             {
                 options.InMutable = true;
-                using (Android.Graphics.Bitmap bmp = BitmapFactory.DecodeFile(fileName, options))
+                Android.Graphics.Bitmap bmp = BitmapFactory.DecodeFile(fileName, options);
+                DrawAnnotations(bmp, annotations);
+                return bmp;
+            }
+        }
+
+        /// <summary>
+        /// Draw the annotations on the Bitmap
+        /// </summary>
+        /// <param name="bmp">The image where annotations will be drawn to</param>
+        /// <param name="annotations">The annotations to be drawn</param>
+        public static void DrawAnnotations(Android.Graphics.Bitmap bmp, Annotation[] annotations = null)
+        {
+            if (annotations != null)
+            {
+                using (Android.Graphics.Paint p = new Android.Graphics.Paint())
+                using (Canvas c = new Canvas(bmp))
                 {
-                    if (annotations != null)
+                    p.AntiAlias = true;
+                    p.Color = Android.Graphics.Color.Red;
+
+                    p.TextSize = 20;
+                    for (int i = 0; i < annotations.Length; i++)
                     {
-                        using (Android.Graphics.Paint p = new Android.Graphics.Paint())
-                        using (Canvas c = new Canvas(bmp))
-                        {
-                            p.AntiAlias = true;
-                            p.Color = Android.Graphics.Color.Red;
+                        p.SetStyle(Paint.Style.Stroke);
+                        float[] rects = ScaleLocation(annotations[i].Rectangle, bmp.Width, bmp.Height);
+                        Android.Graphics.Rect r = new Rect((int)rects[0], (int)rects[1], (int)rects[2],
+                            (int)rects[3]);
+                        c.DrawRect(r, p);
 
-                            p.TextSize = 20;
-                            for (int i = 0; i < annotations.Length; i++)
-                            {
-                                p.SetStyle(Paint.Style.Stroke);
-                                float[] rects = ScaleLocation(annotations[i].Rectangle, bmp.Width, bmp.Height);
-                                Android.Graphics.Rect r = new Rect((int) rects[0], (int) rects[1], (int) rects[2],
-                                    (int) rects[3]);
-                                c.DrawRect(r, p);
-
-                                p.SetStyle(Paint.Style.Fill);
-                                c.DrawText(annotations[i].Label, (int) rects[0], (int) rects[1], p);
-                            }
-                        }
-                    }
-
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        bmp.Compress(Bitmap.CompressFormat.Jpeg, 90, ms);
-                        JpegData result = new JpegData();
-                        result.Raw = ms.ToArray();
-                        result.Width = bmp.Width;
-                        result.Height = bmp.Height;
-                        return result;
+                        p.SetStyle(Paint.Style.Fill);
+                        c.DrawText(annotations[i].Label, (int)rects[0], (int)rects[1], p);
                     }
                 }
             }
         }
-
-	
 
         /// <summary>
         /// Read an image file, covert the data and save it to the native pointer
         /// </summary>
         /// <typeparam name="T">The type of the data to covert the image pixel values to. e.g. "float" or "byte"</typeparam>
         /// <param name="fileName">The name of the image file</param>
-        /// <param name="dest">The native pointer where the image pixels values will be saved to.</param>
+        /// <param name="dest">The native pointer where the image pixels values will be saved to. The pixel will have 3 color channles (BGR or RGB depends on the swapBR flag).</param>
         /// <param name="inputHeight">The height of the image, must match the height requirement for the tensor</param>
         /// <param name="inputWidth">The width of the image, must match the width requirement for the tensor</param>
         /// <param name="inputMean">The mean value, it will be subtracted from the input image pixel values</param>
@@ -87,20 +116,20 @@ namespace Emgu.Models
             int inputHeight = -1,
             int inputWidth = -1,
             float inputMean = 0.0f,
-            float scale = 1.0f, 
+            float scale = 1.0f,
             bool flipUpSideDown = false,
             bool swapBR = false)
-            where T: struct
+            where T : struct
         {
             if (!File.Exists(fileName))
                 throw new FileNotFoundException(String.Format("File {0} do not exist.", fileName));
 
             Android.Graphics.Bitmap bmp = BitmapFactory.DecodeFile(fileName);
-            if (inputHeight > 0 || inputWidth >  0)
+            if (inputHeight > 0 || inputWidth > 0)
             {
                 Bitmap resized = Bitmap.CreateScaledBitmap(bmp, inputWidth, inputHeight, false);
                 bmp.Dispose();
-                bmp = resized;                
+                bmp = resized;
             }
 
             if (flipUpSideDown)
@@ -112,7 +141,7 @@ namespace Emgu.Models
                 bmp = flipped;
             }
 
-            
+
             if (swapBR)
             {
                 float[] swapBRColorTransform = new float[]
@@ -135,7 +164,7 @@ namespace Emgu.Models
                 Canvas canvas = new Canvas(bmp);
                 canvas.DrawBitmap(bmp, 0, 0, paint);
             }
-            
+
             int[] intValues = new int[bmp.Width * bmp.Height];
             float[] floatValues = new float[bmp.Width * bmp.Height * 3];
             bmp.GetPixels(intValues, 0, bmp.Width, 0, 0, bmp.Width, bmp.Height);
@@ -156,7 +185,7 @@ namespace Emgu.Models
                 //copy float to bytes
                 byte[] byteValues = new byte[floatValues.Length];
                 for (int i = 0; i < floatValues.Length; i++)
-                    byteValues[i] = (byte) floatValues[i];
+                    byteValues[i] = (byte)floatValues[i];
                 Marshal.Copy(byteValues, 0, dest, byteValues.Length);
             }
             else
@@ -173,22 +202,22 @@ namespace Emgu.Models
         /// <param name="height">The height of the image</param>
         /// <param name="channels">The number of channels</param>
         /// <returns>The jpeg stream</returns>
-        public static byte[] PixelToJpeg(byte[] rawPixel, int width, int height, int channels)
+        public static Emgu.Models.JpegData PixelToJpeg(byte[] rawPixel, int width, int height, int channels)
+        {
+            using (Bitmap bmp = PixelToBitmap(rawPixel, width, height, channels))
+                return bmp.ToJpeg();
+        }
+
+        public static Bitmap PixelToBitmap(byte[] rawPixel, int width, int height, int channels)
         {
             if (channels != 4)
                 throw new NotImplementedException("Only 4 channel pixel input is supported.");
-            using (Bitmap bitmap = Bitmap.CreateBitmap(width, height, Bitmap.Config.Argb8888))
-            using (MemoryStream ms = new MemoryStream())
-            {
-                IntPtr ptr = bitmap.LockPixels();
-                //GCHandle handle = GCHandle.Alloc(colors, GCHandleType.Pinned);
-                Marshal.Copy(rawPixel, 0, ptr, rawPixel.Length);
 
-                bitmap.UnlockPixels();
-
-                bitmap.Compress(Bitmap.CompressFormat.Jpeg, 90, ms);
-                return ms.ToArray();
-            }
+            Bitmap bitmap = Bitmap.CreateBitmap(width, height, Bitmap.Config.Argb8888);
+            IntPtr ptr = bitmap.LockPixels();
+            Marshal.Copy(rawPixel, 0, ptr, rawPixel.Length);
+            bitmap.UnlockPixels();
+            return bitmap;
         }
     }
 }

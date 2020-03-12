@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 
 
@@ -73,13 +73,18 @@ namespace Emgu.TF.XamarinForms
             Content = _mainLayout;
         }
 
-        public virtual async void LoadImages(String[] imageNames, String[] labels = null)
+        /// <summary>
+        /// Allow user to pick the images.
+        /// </summary>
+        /// <param name="imageNames">The default image names</param>
+        /// <param name="labels">The labels use for the pick image dialog, corresponsing to each image</param>
+        /// <returns>null if user canceled. Otherwise the list of images.</returns>
+        public virtual async Task<String[]> LoadImages(String[] imageNames, String[] labels = null)
         {
             if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
             {
                 //use default images
-                InvokeOnImagesLoaded(imageNames);
-                return;
+                return imageNames;
             }
 
             if (!(System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX)
@@ -204,7 +209,7 @@ namespace Emgu.TF.XamarinForms
                                 }
                                 else
                                 {
-                                    return;
+                                    return null;
                                 }
                             }
                         }
@@ -214,7 +219,7 @@ namespace Emgu.TF.XamarinForms
                     {
                         var photoResult = await Plugin.Media.CrossMedia.Current.PickPhotoAsync();
                         if (photoResult == null) //canceled
-                            return;
+                            return null;
                         mats[i] = photoResult.Path;
                     }
                 }
@@ -227,31 +232,24 @@ namespace Emgu.TF.XamarinForms
                     };
                     var takePhotoResult = await Plugin.Media.CrossMedia.Current.TakePhotoAsync(mediaOptions);
                     if (takePhotoResult == null) //canceled
-                        return;
+                        return null;
                     mats[i] = takePhotoResult.Path;
                 }
 
                 //Handle user cancel
                 if (action == null)
-                    return;
+                    return null;
             }
-            InvokeOnImagesLoaded(mats);
+            //InvokeOnImagesLoaded(mats);
+            if (mats == null) //cancelled
+                return null;
+
+            for (int i = 0; i < mats.Length; i++)
+                if (mats[i] == null)
+                    return null; //canceled
+
+            return mats;
         }
-
-        public void InvokeOnImagesLoaded(string[] imageFiles)
-        {
-            if (imageFiles == null) //cancelled
-                return;
-
-            for (int i = 0; i < imageFiles.Length; i++)
-                if (imageFiles[i] == null)
-                    return; //cancelled
-
-            if (OnImagesLoaded != null)
-                OnImagesLoaded(this, imageFiles);
-        }
-
-        public event EventHandler<string[]> OnImagesLoaded;
 
         public void SetImage(byte[] image = null, int widthRequest = -1, int heightRequest = -1)
         {
@@ -292,6 +290,32 @@ namespace Emgu.TF.XamarinForms
                     this.MessageLabel.Focus();
                 }
             );
+        }
+
+        private static String ByteToSizeStr(long byteCount)
+        {
+            if (byteCount < 1024)
+            {
+                return String.Format("{0} B", byteCount);
+            }
+            else if (byteCount < 1024 * 1024)
+            {
+                return String.Format("{0} KB", byteCount / 1024);
+            }
+            else
+            {
+                return String.Format("{0} MB", byteCount / (1024 * 1024));
+            }
+        }
+
+        protected void onDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            String msg;
+            if (e.TotalBytesToReceive > 0)
+                msg = String.Format("{0} of {1} downloaded ({2}%)", ByteToSizeStr(e.BytesReceived), ByteToSizeStr(e.TotalBytesToReceive), e.ProgressPercentage);
+            else
+                msg = String.Format("{0} downloaded", ByteToSizeStr(e.BytesReceived));
+            SetMessage(msg);
         }
     }
 }

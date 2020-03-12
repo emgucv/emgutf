@@ -17,6 +17,8 @@ using System.ComponentModel;
 using UnityEngine;
 #else
 using System.Drawing;
+using System.Threading.Tasks;
+
 #endif
 
 namespace Emgu.TF.Models
@@ -66,38 +68,28 @@ namespace Emgu.TF.Models
             _downloadManager = new FileDownloadManager();
 
             _downloadManager.OnDownloadProgressChanged += onDownloadProgressChanged;
-            _downloadManager.OnDownloadCompleted += onDownloadCompleted;
-        }
-
-        private void onDownloadCompleted(object sender, AsyncCompletedEventArgs e)
-        {
-            ImportGraph();
-            if (OnDownloadCompleted != null)
-            {
-                OnDownloadCompleted(sender, e);
-            }
         }
 
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
-        public event System.ComponentModel.AsyncCompletedEventHandler OnDownloadCompleted;
 
         public
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             IEnumerator
 #else
-            void
+            async Task
 #endif
-            Init(String[] modelFiles = null, String downloadUrl = null)
+            Init(String[] modelFiles = null, String downloadUrl = null, String localModelFolder = "Multibox")
         {
             _downloadManager.Clear();
             String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/mobile_multibox_v1a/" : downloadUrl;
             String[] fileNames = modelFiles == null ? new string[] { "multibox_model.pb", "multibox_location_priors.txt" } : modelFiles;
             for (int i = 0; i < fileNames.Length; i++)
-                _downloadManager.AddFile(url + fileNames[i]);
+                _downloadManager.AddFile(url + fileNames[i], localModelFolder);
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             yield return _downloadManager.Download();
 #else
-            _downloadManager.Download();
+            await _downloadManager.Download();
+            ImportGraph();
 #endif
         }
 
@@ -253,7 +245,6 @@ namespace Emgu.TF.Models
             }
             return scores;
         }
-
 
         public static Annotation[] FilterResults(MultiboxGraph.Result[] results, float scoreThreshold)
         {

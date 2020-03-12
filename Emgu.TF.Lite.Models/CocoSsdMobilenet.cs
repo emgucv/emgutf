@@ -12,6 +12,7 @@ using System.IO;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Net;
+using System.Threading.Tasks;
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
 using UnityEngine;
@@ -65,19 +66,7 @@ namespace Emgu.TF.Lite.Models
         public CocoSsdMobilenet()
         {
             _downloadManager = new FileDownloadManager();
-
             _downloadManager.OnDownloadProgressChanged += onDownloadProgressChanged;
-            _downloadManager.OnDownloadCompleted += onDownloadCompleted;
-                
-        }
-
-        private void onDownloadCompleted(object sender, AsyncCompletedEventArgs e)
-        {
-            ImportGraph();
-            if (OnDownloadCompleted != null)
-            {
-                OnDownloadCompleted(sender, e);
-            }
         }
 
         private void onDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
@@ -87,28 +76,30 @@ namespace Emgu.TF.Lite.Models
         }
 
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
-        public event System.ComponentModel.AsyncCompletedEventHandler OnDownloadCompleted;
-
 
         public
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             IEnumerator
 #else
-            void
+            async Task
 #endif
-            Init(String[] modelFiles = null, String downloadUrl = null)
+            Init(
+                String[] modelFiles = null, 
+                String downloadUrl = null,
+                String localModelFolder = "CocoSsdMobilenet")
         {
 
             _downloadManager.Clear();
             String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/coco_ssd_mobilenet_v1_1.0_quant_2018_06_29/" : downloadUrl;
             String[] fileNames = modelFiles == null ? new string[] { "detect.tflite", "labelmap.txt" } : modelFiles;
             for (int i = 0; i < fileNames.Length; i++)
-                _downloadManager.AddFile(url + fileNames[i]);
+                _downloadManager.AddFile(url + fileNames[i], localModelFolder);
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             yield return _downloadManager.Download();
 #else
-            _downloadManager.Download();
+            await _downloadManager.Download();
+            ImportGraph();
 #endif
         }
 
@@ -122,27 +113,30 @@ namespace Emgu.TF.Lite.Models
 
         private void ImportGraph()
         {
-            if (_interpreter != null)
-                _interpreter.Dispose();
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             UnityEngine.Debug.Log("Reading model definition");
 #endif
 
-            String modelFileName = _downloadManager.Files[0].LocalFile;
-            String labelFileName = _downloadManager.Files[1].LocalFile;
-
-            System.Diagnostics.Debug.Assert(File.Exists(modelFileName), String.Format("File {0} doesn't exist", modelFileName));
-            System.Diagnostics.Debug.Assert(File.Exists(labelFileName), String.Format("File {0} doesn't exist", labelFileName));
-
-            if (!File.Exists(modelFileName) || !File.Exists(labelFileName))
-                return;
-
             if (_labels == null)
+            {
+                String labelFileName = _downloadManager.Files[1].LocalFile;
+                System.Diagnostics.Debug.Assert(File.Exists(labelFileName), String.Format("File {0} doesn't exist", labelFileName));
+
+                if (!File.Exists(labelFileName))
+                    throw new Exception("Label file does not exist!");
                 _labels = File.ReadAllLines(labelFileName);
+            }
 
             if (_model == null)
             {
+                String modelFileName = _downloadManager.Files[0].LocalFile;
+                System.Diagnostics.Debug.Assert(File.Exists(modelFileName), String.Format("File {0} doesn't exist", modelFileName));
+
+                if (!File.Exists(modelFileName))
+                {
+                    throw new Exception("Model file does not exist!");
+                }
                 _model = new FlatBufferModel(modelFileName);
                 if (!_model.CheckModelIdentifier())
                     throw new Exception("Model identifier check failed");

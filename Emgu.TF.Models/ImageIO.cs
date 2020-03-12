@@ -292,17 +292,17 @@ namespace Emgu.TF.Models
 #if __ANDROID__         
             byte[] rawPixel = TensorToPixel(image, scale, mean, 4);
             int[] dim = image.Dim;
-            return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 4);
+            return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 4).Raw;
 #elif __IOS__
             if (mean != 0.0)
                 throw new NotImplemenetedException("Not able to accept mean values on this platform");
             byte[] rawPixel = TensorToPixel(image, scale, mean, 3);
             int[] dim = image.Dim;
-            return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 3);
+            return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 3).Raw;
 #elif __UNIFIED__ //Mac OSX
             byte[] rawPixel = TensorToPixel(image, scale, mean, 4);
             int[] dim = image.Dim;
-            return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 4);
+            return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 4).Raw;
 #else
             return EncodeJpeg(image, 1.0f, 0.0f);
 #endif

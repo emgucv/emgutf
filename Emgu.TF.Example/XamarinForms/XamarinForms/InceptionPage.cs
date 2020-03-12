@@ -9,6 +9,7 @@ using System.IO;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Net;
 using Emgu.TF;
 using Emgu.Models;
 using Emgu.TF.Models;
@@ -16,7 +17,12 @@ using Tensorflow;
 
 namespace Emgu.TF.XamarinForms
 {
-    public class InceptionPage : ModelButtonTextImagePage
+    public class InceptionPage
+#if __ANDROID__
+        : AndroidCameraPage
+#else
+        : ButtonTextImagePage
+#endif
     {
         /// <summary>
         /// The inception model to use.
@@ -37,25 +43,8 @@ namespace Emgu.TF.XamarinForms
 
         private Inception _inceptionGraph;
 
-        private bool _coldSession = true;
-
-        public override String GetButtonName(ButtonMode mode)
+        private async Task Init(DownloadProgressChangedEventHandler onProgressChanged)
         {
-            switch (mode)
-            {
-                case ButtonMode.WaitingModelDownload:
-                    return "Download Model";
-                default:
-                    return "Recognize object";
-            }
-        }
-
-        public InceptionPage(Model model)
-            : base()
-        {
-            Title = model == Model.Flower ? "Flower Recognition" : "Object recognition (Inception)";
-            _model = model;
-
             if (_inceptionGraph == null)
             {
                 SessionOptions so = new SessionOptions();
@@ -67,31 +56,83 @@ namespace Emgu.TF.XamarinForms
                     so.SetConfig(config.ToProtobuf());
                 }
                 _inceptionGraph = new Inception(null, so);
-                _inceptionGraph.OnDownloadProgressChanged += onDownloadProgressChanged;
-                _inceptionGraph.OnDownloadCompleted += onDownloadCompleted;
-                _inceptionGraph.OnDownloadCompleted += (sender, e) =>
+                _inceptionGraph.OnDownloadProgressChanged += onProgressChanged;
+
+                if (_model == Model.Flower)
                 {
-                    OnButtonClicked(sender, e);
-                };
+                    //use a retrained model to recognize followers
+                    await _inceptionGraph.Init(
+                        new string[] { "optimized_graph.pb", "output_labels.txt" },
+                        "https://github.com/emgucv/models/raw/master/inception_flower_retrain/",
+                        "Placeholder",
+                        "final_result");
+                }
+                else
+                {
+                    //The original inception model
+                    await _inceptionGraph.Init();
+                }
+                //await _inceptionGraph.Init();
             }
-            OnImagesLoaded += (sender, image) =>
+        }
+
+        private bool _coldSession = true;
+
+        /*
+        public override String GetButtonName(ButtonMode mode)
+        {
+            switch (mode)
+            {
+                case ButtonMode.WaitingModelDownload:
+                    return "Download Model";
+                default:
+                    return "Recognize object";
+            }
+        }*/
+
+        public InceptionPage(Model model)
+            : base()
+        {
+            Title = model == Model.Flower ? "Flower Recognition" : "Object recognition (Inception)";
+            _model = model;
+
+            this.TopButton.Text = "Recognize object";
+
+            this.TopButton.Clicked += async (sender, e) =>
             {
 #if !DEBUG
                 try
 #endif
                 {
+                    this.TopButton.IsEnabled = false;
                     SetMessage("Please wait...");
                     SetImage();
+
+                    SetMessage("Please wait while we download the model from internet.");
+                    await Init(this.onDownloadProgressChanged);
+                    String[] images;
+                    if (_model == Model.Flower)
+                    {
+                        images = await LoadImages(new string[] {"tulips.jpg"});
+                    }
+                    else
+                    {
+                        images = await LoadImages(new string[] {"space_shuttle.jpg"});
+                    }
+
+                    if (images == null)
+                        return;
 
                     Tensor imageTensor;
                     if (_model == Model.Flower)
                     {
-                        imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(image[0], 299, 299, 0.0f, 1.0f / 255.0f, false, false);
+                        imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(images[0], 299, 299, 0.0f,
+                            1.0f / 255.0f, false, false);
                     }
                     else
                     {
                         imageTensor =
-                            Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(image[0], 224, 224, 128.0f, 1.0f);
+                            Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(images[0], 224, 224, 128.0f, 1.0f);
                     }
 
                     Inception.RecognitionResult result;
@@ -109,23 +150,29 @@ namespace Emgu.TF.XamarinForms
                     result = _inceptionGraph.Recognize(imageTensor)[0];
                     sw.Stop();
 
-                    String msg = String.Format("Object is {0} with {1}% probability. Recognized in {2} milliseconds.", result.Label, result.Probability * 100, sw.ElapsedMilliseconds);
+                    String msg = String.Format("Object is {0} with {1}% probability. Recognized in {2} milliseconds.",
+                        result.Label, result.Probability * 100, sw.ElapsedMilliseconds);
                     SetMessage(msg);
 
-                    var jpeg = Emgu.Models.NativeImageIO.ImageFileToJpeg(image[0]);
+#if __ANDROID__
+                    var bmp = Emgu.Models.NativeImageIO.ImageFileToBitmap(images[0]);
+                    SetImage(bmp);
+#else
+                    var jpeg = Emgu.Models.NativeImageIO.ImageFileToJpeg(images[0]);
                     SetImage(jpeg.Raw, jpeg.Width, jpeg.Height);
+#endif
                 }
-#if  !DEBUG
-                catch (Exception excpt)
-                {
-                    String msg = excpt.Message.Replace(System.Environment.NewLine, " ");
-                    SetMessage(msg);
-                }
+#if !DEBUG
+                    catch (Exception excpt)
+                    {
+                        String msg = excpt.Message.Replace(System.Environment.NewLine, " ");
+                        SetMessage(msg);
+                    }
 #endif
             };
-
         }
 
+        /*
         public override void OnButtonClicked(Object sender, EventArgs args)
         {
             base.OnButtonClicked(sender, args);
@@ -143,7 +190,7 @@ namespace Emgu.TF.XamarinForms
                 }
                 else
                 {
-                    //The inception model
+                    //The original inception model
                     _inceptionGraph.Init();
                 }
 
@@ -160,6 +207,6 @@ namespace Emgu.TF.XamarinForms
                 }
 
             }
-        }
+        }*/
     }
 }

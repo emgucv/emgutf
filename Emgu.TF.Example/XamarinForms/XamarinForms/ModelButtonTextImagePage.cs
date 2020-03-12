@@ -27,7 +27,12 @@ using System.Diagnostics;
 
 namespace Emgu.TF.XamarinForms
 {
-    public abstract class ModelButtonTextImagePage : ButtonTextImagePage
+    public abstract class ModelButtonTextImagePage
+#if __ANDROID__
+        : AndroidCameraPage
+#else
+        : ButtonTextImagePage
+#endif
     {
         protected ButtonMode _buttonMode = ButtonMode.WaitingModelDownload;
 
@@ -58,6 +63,7 @@ namespace Emgu.TF.XamarinForms
             }
         }
 
+        
         protected void onDownloadCompleted(object sender, AsyncCompletedEventArgs e)
         {
             SetMessage("Models downloaded.");
@@ -65,31 +71,8 @@ namespace Emgu.TF.XamarinForms
             _buttonMode = ButtonMode.Ready;
             button.Text = GetButtonName(_buttonMode);
             button.IsEnabled = true;
-
         }
 
-        private static String ByteToSizeStr(long byteCount)
-        {
-            if (byteCount < 1024)
-            {
-                return String.Format("{0} B", byteCount);
-            } else if (byteCount < 1024 * 1024)
-            {
-                return String.Format("{0} KB", byteCount / 1024);
-            } else
-            {
-                return String.Format("{0} MB", byteCount / (1024 * 1024));
-            }
-        }
 
-        protected void onDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
-        {
-            String msg;
-            if (e.TotalBytesToReceive > 0)
-                msg = String.Format("{0} of {1} downloaded ({2}%)", ByteToSizeStr(e.BytesReceived), ByteToSizeStr(e.TotalBytesToReceive), e.ProgressPercentage);
-            else
-                msg = String.Format("{0} downloaded", ByteToSizeStr(e.BytesReceived));
-            SetMessage(msg);
-        }
     }
 }

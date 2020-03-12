@@ -66,7 +66,6 @@ namespace Emgu.TF.XamarinForms
                     {
                         SetMessage("Please wait while the Inception Model is being downloaded...");
                         _inception.OnDownloadProgressChanged += onDownloadProgressChanged;
-                        _inception.OnDownloadCompleted += onDownloadCompleted;
                         _inception.Init();
                     }
                 }

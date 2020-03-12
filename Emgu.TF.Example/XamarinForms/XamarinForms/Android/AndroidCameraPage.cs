@@ -14,7 +14,7 @@ using Xamarin.Forms.Platform.Android;
 
 namespace Emgu.TF.XamarinForms
 {
-    public class AndroidCameraPage : ButtonTextImagePage
+    public abstract class AndroidCameraPage : ButtonTextImagePage
     {
         private AndroidCameraManager _cameraManager;
         private Bitmap[] _renderBuffer = new Bitmap[2];
@@ -32,7 +32,7 @@ namespace Emgu.TF.XamarinForms
         {
             _imageView = new ImageView(Android.App.Application.Context);
             Xamarin.Forms.View xView = _imageView.ToView();
-            //xView.BackgroundColor = Color.Aqua;
+            xView.BackgroundColor = Xamarin.Forms.Color.Aqua;
             MainLayout.Children.Add(xView);
             base.DisplayImage.IsVisible = false;
             
@@ -69,14 +69,13 @@ namespace Emgu.TF.XamarinForms
 
         public void SetImage(Bitmap image)
         {
-            if (image == null)
+            
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
             {
-                Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
-                {
-                    _imageView.SetImageBitmap(null);
-                });
-                return;
-            }
+                _imageView.SetImageBitmap(image);
+            });
+            return;
+            
         }
     }
 }

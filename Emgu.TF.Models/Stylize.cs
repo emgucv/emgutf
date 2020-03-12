@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using Emgu.Models;
 
 namespace Emgu.TF.Models
@@ -29,29 +30,21 @@ namespace Emgu.TF.Models
             _downloadManager = new FileDownloadManager();
             
             _downloadManager.OnDownloadProgressChanged += onDownloadProgressChanged;
-            _downloadManager.OnDownloadCompleted += onDownloadCompleted;
         }
 
-        private void onDownloadCompleted(object sender, AsyncCompletedEventArgs e)
-        {
-            ImportGraph();
-            if (OnDownloadCompleted != null)
-            {
-                OnDownloadCompleted(sender, e);
-            }
-        }
 
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
         public event System.ComponentModel.AsyncCompletedEventHandler OnDownloadCompleted;
 
-        public void Init(String[] modelFiles = null, String downloadUrl = null)
+        public async Task Init(String[] modelFiles = null, String downloadUrl = null, String localModelFolder = "stylize")
         {
             _downloadManager.Clear();
             String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/stylize_v1/" : downloadUrl;
             String[] fileNames = modelFiles == null ? new string[] { "stylize_quantized.pb" } : modelFiles;
             for (int i = 0; i < fileNames.Length; i++)
-                _downloadManager.AddFile(url + fileNames[i]);
-            _downloadManager.Download();
+                _downloadManager.AddFile(url + fileNames[i], localModelFolder);
+            await _downloadManager.Download();
+            ImportGraph();
         }
 
         private void onDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)

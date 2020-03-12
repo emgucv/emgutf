@@ -28,26 +28,17 @@ using Tensorflow;
 
 namespace Emgu.TF.XamarinForms
 {
-    public class StylizePage : ModelButtonTextImagePage
-    {        
+    public class StylizePage
+#if __ANDROID__
+        : AndroidCameraPage
+#else
+        : ButtonTextImagePage
+#endif
+    {
         private StylizeGraph _stylizeGraph;
         
-        public override String GetButtonName(ButtonMode mode)
+        private async Task Init(DownloadProgressChangedEventHandler onProgressChanged)
         {
-            switch(mode)
-            {
-                case ButtonMode.WaitingModelDownload:
-                    return "Download Model";
-                default:
-                    return "Stylize";
-            }
-        }
-
-        public StylizePage()
-            : base()
-        {
-            Title = "Stylize";
-
             if (_stylizeGraph == null)
             {
                 SessionOptions so = new SessionOptions();
@@ -59,24 +50,50 @@ namespace Emgu.TF.XamarinForms
                     so.SetConfig(config.ToProtobuf());
                 }
                 _stylizeGraph = new StylizeGraph(null, so);
-                _stylizeGraph.OnDownloadProgressChanged += onDownloadProgressChanged;
-                _stylizeGraph.OnDownloadCompleted += onDownloadCompleted;
-                _stylizeGraph.OnDownloadCompleted += (sender, e) =>
-                {
-                    OnButtonClicked(sender, e);
-                };
-            }
+                _stylizeGraph.OnDownloadProgressChanged += onProgressChanged;
 
-            OnImagesLoaded += (sender, image) =>
+                await _stylizeGraph.Init();
+
+            }
+        }
+
+
+        public StylizePage()
+            : base()
+        {
+            Title = "Stylize";
+            this.TopButton.Text = "Stylize";
+
+            this.TopButton.Clicked += async (sender, args) =>
             {
                 try
                 {
+                    this.TopButton.IsEnabled = false;
                     SetMessage("Please wait...");
                     SetImage();
+
+                    SetMessage("Please wait while we download the model from internet.");
+                    await Init(this.onDownloadProgressChanged);
+
+                    String[] images = await LoadImages(new string[] { "surfers.jpg" });
+                    if (images == null)
+                        return;
+
+#if __ANDROID__
                     Stopwatch watch = Stopwatch.StartNew();
-                    byte[] jpeg = _stylizeGraph.StylizeToJpeg(image[0], 1);
+                    Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(images[0], 224, 224, 128.0f, 1.0f / 128.0f);
+                    Tensor stylizedImage = _stylizeGraph.Stylize(imageTensor, 0);
+                    watch.Stop();
+                    byte[] rawPixel = Emgu.TF.Models.ImageIO.TensorToPixel(stylizedImage, 255.0f, 0.0f, 4);
+                    int[] dim = stylizedImage.Dim;
+                    Bitmap bmp = NativeImageIO.PixelToBitmap(rawPixel, dim[2], dim[1], 4);
+                    SetImage(bmp);
+#else
+                    Stopwatch watch = Stopwatch.StartNew();
+                    byte[] jpeg = _stylizeGraph.StylizeToJpeg(images[0], 1);
                     watch.Stop();
                     SetImage(jpeg);
+#endif
 #if __MACOS__
                     NSImage img = new NSImage(image[0]);
                     var displayImage = this.DisplayImage;
@@ -84,27 +101,22 @@ namespace Emgu.TF.XamarinForms
                     displayImage.HeightRequest = img.Size.Height;
 #endif
                     SetMessage(String.Format("Stylized in {0} milliseconds.", watch.ElapsedMilliseconds));
+
+
                 }
                 catch (Exception excpt)
                 {
                     String msg = excpt.Message.Replace(System.Environment.NewLine, " ");
                     SetMessage(msg);
                 }
+                finally
+                {
+                    this.TopButton.IsEnabled = true;
+                }
+
             };
+ 
         }
 
-        public override void OnButtonClicked(Object sender, EventArgs args)
-        {
-            base.OnButtonClicked(sender, args);
-
-            if (_buttonMode == ButtonMode.WaitingModelDownload)
-            {
-                _stylizeGraph.Init();
-            }
-            else
-            {
-                LoadImages(new string[] { "surfers.jpg" });
-            }
-        }
     }
 }

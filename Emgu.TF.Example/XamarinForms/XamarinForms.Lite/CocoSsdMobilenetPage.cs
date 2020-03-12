@@ -74,7 +74,6 @@ namespace Emgu.TF.XamarinForms
                     {
                         SetMessage("Please wait while the Coco SSD Mobilenet Model is being downloaded...");
                         _mobilenet.OnDownloadProgressChanged += onDownloadProgressChanged;
-                        _mobilenet.OnDownloadCompleted += onDownloadCompleted;
                         _mobilenet.Init();
                     }
                 }

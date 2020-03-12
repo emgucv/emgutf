@@ -56,16 +56,7 @@ namespace Emgu.TF.Models
             _downloadManager = new FileDownloadManager();
 
             _downloadManager.OnDownloadProgressChanged += onDownloadProgressChanged;
-            _downloadManager.OnDownloadCompleted += onDownloadCompleted;
-        }
-
-        private void onDownloadCompleted(object sender, AsyncCompletedEventArgs e)
-        {
-            ImportGraph();
-            if (OnDownloadCompleted != null)
-            {
-                OnDownloadCompleted(sender, e);
-            }
+            //_downloadManager.OnDownloadCompleted += onDownloadCompleted;
         }
 
         private void onDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
@@ -75,16 +66,14 @@ namespace Emgu.TF.Models
         }
 
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
-        public event System.ComponentModel.AsyncCompletedEventHandler OnDownloadCompleted;
-
-
+        
         public
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             IEnumerator
 #else
             void
 #endif
-            Init(String[] modelFiles = null, String downloadUrl = null)
+            Init(String[] modelFiles = null, String downloadUrl = null, String localModelFolder = "MaskRcnn")
         {
             
 
@@ -92,7 +81,7 @@ namespace Emgu.TF.Models
             String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/mask_rcnn_inception_v2_coco_2018_01_28/" : downloadUrl;
             String[] fileNames = modelFiles == null ? new string[] { "frozen_inference_graph.pb", "coco-labels-paper.txt" } : modelFiles;
             for (int i = 0; i < fileNames.Length; i++)
-                _downloadManager.AddFile(url + fileNames[i]);
+                _downloadManager.AddFile(url + fileNames[i], localModelFolder);
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             yield return _downloadManager.Download();
