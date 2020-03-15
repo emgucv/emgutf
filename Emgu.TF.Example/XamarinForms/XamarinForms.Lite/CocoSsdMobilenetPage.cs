@@ -36,9 +36,7 @@ namespace Emgu.TF.XamarinForms
 {
     public class CocoSsdMobilenetPage : ButtonTextImagePage
     {
-
         private CocoSsdMobilenet _mobilenet;
-        private string[] _imageFiles = null;
 
         public CocoSsdMobilenetPage()
            : base()
@@ -51,40 +49,12 @@ namespace Emgu.TF.XamarinForms
             button.Clicked += OnButtonClicked;
 
             _mobilenet = new CocoSsdMobilenet();
-            
+            _mobilenet.OnDownloadProgressChanged += onDownloadProgressChanged;
+
 #if __MACOS__ || __IOS__
             outputRecorder.BufferReceived += OutputRecorder_BufferReceived;
 #endif
 
-            OnImagesLoaded += (sender, imageFiles) =>
-            {
-                SetMessage("Please wait...");
-                SetImage();
-                _imageFiles = imageFiles;
-
-#if !DEBUG
-                try
-#endif
-                {
-                    if (_mobilenet.Imported)
-                    {
-                        onDownloadCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(null, false, null));
-                    }
-                    else
-                    {
-                        SetMessage("Please wait while the Coco SSD Mobilenet Model is being downloaded...");
-                        _mobilenet.OnDownloadProgressChanged += onDownloadProgressChanged;
-                        _mobilenet.Init();
-                    }
-                }
-#if !DEBUG
-                catch (Exception e)
-                {
-                    String msg = e.Message.Replace(System.Environment.NewLine, " ");
-                    SetMessage(msg);     
-                }
-#endif
-            };
         }
 
 #if __MACOS__ || __IOS__
@@ -169,59 +139,23 @@ namespace Emgu.TF.XamarinForms
             return annotations;
         }
 
-        private void onDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        private async void OnButtonClicked(Object sender, EventArgs args)
         {
-            if (e != null && e.Error != null)
-            {
-                SetMessage(e.Error.Message);
-                return;
-            }
-
-            String _imageFileName = _imageFiles[0];
-
-            if (_imageFileName.Equals("Camera Stream"))
-            {
-
-#if __MACOS__ || __IOS__
-                SetMessage(String.Format("Model trained to recognize the following objects: {0}", String.Join("; ", _mobilenet.Labels)));
-                this.TopButton.Text = "Stop";
-                CheckVideoPermissionAndStart();
-#else
-                
+            SetMessage("Please wait while the Coco SSD Mobilenet Model is being downloaded...");
+#if !DEBUG
+            try
 #endif
-            }
-            else
             {
-                Stopwatch watch = Stopwatch.StartNew();
-                var result = _mobilenet.Recognize(_imageFiles[0], 0.5f);
-                watch.Stop();
-
-                Annotation[] annotations = GetAnnotations(result);
-                /*
-                Annotation[] annotations = new Annotation[result.Length];
-                for (int i = 0; i < result.Length; i++)
-                {
-                    Annotation annotation = new Annotation();
-                    annotation.Rectangle = result[i].Rectangle;
-                    annotation.Label = String.Format("{0}:({1:0.00}%)", result[i].Label, result[i].Score * 100);
-                    annotations[i] = annotation;
-                }*/
-
-
-                JpegData jpeg = NativeImageIO.ImageFileToJpeg(_imageFiles[0], annotations);
-                //NativeImageIO.JpegData jpeg = NativeImageIO.ImageFileToJpeg(_imageFiles[0]);
-                //String names = String.Join(";", Array.ConvertAll(result, r => r.Label));
-                SetImage(jpeg.Raw, jpeg.Width, jpeg.Height);
-
-
-                String resStr = String.Format("Detected {1} objects in {0} milliseconds.", watch.ElapsedMilliseconds, result.Length);
-                SetMessage(resStr);
+                await _mobilenet.Init();
             }
+#if !DEBUG
+                catch (Exception e)
+                {
+                    String msg = e.Message.Replace(System.Environment.NewLine, " ");
+                    SetMessage(msg);     
+                }
+#endif
 
-        }
-
-        private void OnButtonClicked(Object sender, EventArgs args)
-        {
             if (this.TopButton.Text.Equals("Stop"))
             {
                 // Stop camera
@@ -231,7 +165,37 @@ namespace Emgu.TF.XamarinForms
                 this.TopButton.Text = "Perform Object Detection";
             } else
             {
-                LoadImages(new string[] { "dog416.png" });
+                String[] imageFiles = await LoadImages(new string[] { "dog416.png" });
+
+                String imageFileName = imageFiles[0];
+
+                if (imageFileName.Equals("Camera Stream"))
+                {
+
+#if __MACOS__ || __IOS__
+                SetMessage(String.Format("Model trained to recognize the following objects: {0}", String.Join("; ", _mobilenet.Labels)));
+                this.TopButton.Text = "Stop";
+                CheckVideoPermissionAndStart();
+#else
+
+#endif
+                }
+                else
+                {
+                    Stopwatch watch = Stopwatch.StartNew();
+                    var result = _mobilenet.Recognize(imageFileName, 0.5f);
+                    watch.Stop();
+
+                    Annotation[] annotations = GetAnnotations(result);
+                    
+                    JpegData jpeg = NativeImageIO.ImageFileToJpeg(imageFileName, annotations);
+                    //NativeImageIO.JpegData jpeg = NativeImageIO.ImageFileToJpeg(_imageFiles[0]);
+                    //String names = String.Join(";", Array.ConvertAll(result, r => r.Label));
+                    SetImage(jpeg.Raw, jpeg.Width, jpeg.Height);
+
+                    String resStr = String.Format("Detected {1} objects in {0} milliseconds.", watch.ElapsedMilliseconds, result.Length);
+                    SetMessage(resStr);
+                }
             }
         }
 

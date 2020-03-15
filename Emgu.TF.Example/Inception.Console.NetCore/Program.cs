@@ -41,7 +41,7 @@ namespace Inception.Console.Netstandard
             System.Console.ReadKey();
         }
 
-        private static void Run()
+        private static async void Run()
         {
             SessionOptions so = new SessionOptions();
             if (TfInvoke.IsGoogleCudaEnabled)
@@ -53,14 +53,23 @@ namespace Inception.Console.Netstandard
             }
             _inceptionGraph = new Emgu.TF.Models.Inception(null, so);
             _inceptionGraph.OnDownloadProgressChanged += onDownloadProgressChanged;
-            _inceptionGraph.OnDownloadCompleted += onDownloadCompleted;
+            //_inceptionGraph.OnDownloadCompleted += onDownloadCompleted;
 
             //use a retrained model to recognize followers
-            _inceptionGraph.Init(
+            await _inceptionGraph.Init(
                 new string[] { "optimized_graph.pb", "output_labels.txt" },
                 "https://github.com/emgucv/models/raw/master/inception_flower_retrain/",
                 "Placeholder",
                 "final_result");
+
+            Stopwatch watch = Stopwatch.StartNew();
+            Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(_inputFileInfo.FullName, 299, 299, 0.0f, 1.0f / 255.0f, false, false);
+            var results = _inceptionGraph.Recognize(imageTensor);
+            watch.Stop();
+            String resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", results[0].Label, results[0].Probability * 100, watch.ElapsedMilliseconds);
+
+            System.Console.WriteLine(resStr);
+            System.Console.WriteLine("Press any key to continue:");
         }
 
         private static void onDownloadProgressChanged(object sender, System.Net.DownloadProgressChangedEventArgs e)
@@ -69,21 +78,6 @@ namespace Inception.Console.Netstandard
                 System.Console.WriteLine(String.Format("{0} bytes downloaded", e.BytesReceived, e.ProgressPercentage));
             else
                 System.Console.WriteLine(String.Format("{0} of {1} bytes downloaded ({2}%)", e.BytesReceived, e.TotalBytesToReceive, e.ProgressPercentage));
-        }
-
-        private static void onDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-        {
-
-            Stopwatch watch = Stopwatch.StartNew();
-            Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(_inputFileInfo.FullName, 299, 299, 0.0f, 1.0f / 255.0f, false, false);
-            var results = _inceptionGraph.Recognize(imageTensor);
-            watch.Stop();
-            String resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", results[0].Label, results[0].Probability * 100, watch.ElapsedMilliseconds);
-
-
-            System.Console.WriteLine(resStr);
-            System.Console.WriteLine("Press any key to continue:");
-
         }
 
         /// <summary>

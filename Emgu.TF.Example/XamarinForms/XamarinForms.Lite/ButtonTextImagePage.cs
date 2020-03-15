@@ -115,7 +115,7 @@ namespace Emgu.TF.XamarinForms
             };
         }
 
-        public virtual async void LoadImages(String[] imageNames, String[] labels = null)
+        public virtual async Task<String[]> LoadImages(String[] imageNames, String[] labels = null)
         {
 #if __ANDROID__ || __IOS__
             await CrossMedia.Current.Initialize();
@@ -198,8 +198,6 @@ namespace Emgu.TF.XamarinForms
 
                 String action = await DisplayActionSheet(pickImgString, "Cancel", null, options.ToArray());
 
-
-
                 if (action.Equals("Default"))
                 {
 #if __ANDROID__
@@ -212,7 +210,6 @@ namespace Emgu.TF.XamarinForms
                     mats[i] = imageNames[i];
             
 #endif
-
                 }
                 else if (action.Equals("Photo Library"))
                 {
@@ -231,7 +228,8 @@ namespace Emgu.TF.XamarinForms
                             }
                             else
                             {
-                                return; 
+                                //canceled
+                                return null; 
                             }
                         }
 #endif
@@ -240,8 +238,8 @@ namespace Emgu.TF.XamarinForms
                     else
                     {
                         var photoResult = await CrossMedia.Current.PickPhotoAsync();
-                        if (photoResult == null) //cancelled
-                            return;
+                        if (photoResult == null) //canceled
+                            return null;
                         mats[i] = photoResult.Path;
                     }
                 }
@@ -253,8 +251,8 @@ namespace Emgu.TF.XamarinForms
                         Name = $"{DateTime.UtcNow}.jpg"
                     };
                     var takePhotoResult = await CrossMedia.Current.TakePhotoAsync(mediaOptions);
-                    if (takePhotoResult == null) //cancelled
-                        return;
+                    if (takePhotoResult == null) //canceled
+                        return null;
                     mats[i] = takePhotoResult.Path;
                 } else if (action.Equals("Camera Stream"))
                 {
@@ -263,12 +261,14 @@ namespace Emgu.TF.XamarinForms
 
                 //Handle user cancel
                 if (action == null)
-                    return;
+                    return null;
             }
-            InvokeOnImagesLoaded(mats);
+            //InvokeOnImagesLoaded(mats);
+            return mats;
 #endif
         }
 
+        /*
         public void InvokeOnImagesLoaded(string[] imageFiles)
         {
             if (imageFiles == null) //cancelled
@@ -283,7 +283,7 @@ namespace Emgu.TF.XamarinForms
         }
 
         public event EventHandler<string[]> OnImagesLoaded;
-
+        */
         public void SetImage(String fileName)
         {
             if (!File.Exists(fileName))
