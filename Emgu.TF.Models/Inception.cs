@@ -115,8 +115,8 @@ namespace Emgu.TF.Models
             yield return _downloadManager.Download();
 #else
             await _downloadManager.Download();
-            ImportGraph();
 #endif
+            ImportGraph();
         }
 
         /// <summary>

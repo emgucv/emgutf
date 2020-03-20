@@ -96,11 +96,8 @@ namespace Emgu.Models
                     }
                 }
             }
-            if (OnDownloadCompleted != null)
-            {
-                UnityEngine.Debug.Log("All download completed.");
-                OnDownloadCompleted(this, null);
-            }
+
+            UnityEngine.Debug.Log("All download completed.");
         }
 #else
         public async Task Download(int retry = 1)
