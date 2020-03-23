@@ -10,6 +10,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 
 using Android.Graphics;
+using Android.Provider;
 
 namespace Emgu.Models
 {
@@ -102,6 +103,123 @@ namespace Emgu.Models
         /// Read an image file, covert the data and save it to the native pointer
         /// </summary>
         /// <typeparam name="T">The type of the data to covert the image pixel values to. e.g. "float" or "byte"</typeparam>
+        /// <param name="bmp">The bitmap</param>
+        /// <param name="dest">The native pointer where the image pixels values will be saved to. The pixel will have 3 color channles (BGR or RGB depends on the swapBR flag).</param>
+        /// <param name="inputHeight">The height of the image, must match the height requirement for the tensor</param>
+        /// <param name="inputWidth">The width of the image, must match the width requirement for the tensor</param>
+        /// <param name="inputMean">The mean value, it will be subtracted from the input image pixel values</param>
+        /// <param name="scale">The scale, after mean is subtracted, the scale will be used to multiply the pixel values</param>
+        /// <param name="flipUpSideDown">If true, the image needs to be flipped up side down</param>
+        /// <param name="swapBR">If true, will flip the Blue channel with the Red. e.g. If false, the tensor's color channel order will be RGB. If true, the tensor's color channel order will be BGR </param>
+        public static void ReadBitmapToTensor<T>(
+            Bitmap bmp,
+            IntPtr dest,
+            int inputHeight = -1,
+            int inputWidth = -1,
+            float inputMean = 0.0f,
+            float scale = 1.0f,
+            bool flipUpSideDown = false,
+            bool swapBR = false)
+            where T : struct
+        {
+
+            Bitmap resized;
+            if (inputHeight > 0 || inputWidth > 0)
+            {
+                resized = Bitmap.CreateScaledBitmap(bmp, inputWidth, inputHeight, false);
+            }
+            else
+            {
+                resized = bmp;
+            }
+
+            try
+            {
+                Bitmap flipped;
+                if (flipUpSideDown)
+                {
+                    Matrix matrix = new Matrix();
+                    matrix.PostScale(1, -1, resized.Width / 2, resized.Height / 2);
+                    flipped = Bitmap.CreateBitmap(resized, 0, 0, resized.Width, resized.Height, matrix, true);
+                }
+                else
+                {
+                    flipped = resized;
+                }
+
+                try
+                {
+                    if (swapBR)
+                    {
+                        float[] swapBRColorTransform = new float[]
+                        {
+                            0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+                            0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+                            1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                            0.0f, 0.0f, 0.0f, 1.0f, 0.0f
+                        };
+                        ColorMatrix swapBrColorMatrix = new ColorMatrix();
+                        swapBrColorMatrix.Set(swapBRColorTransform);
+                        ColorMatrixColorFilter colorFilter = new ColorMatrixColorFilter(swapBrColorMatrix);
+                        Paint paint = new Paint();
+                        paint.SetColorFilter(colorFilter);
+
+                        //Bitmap swapBrBitmap = Bitmap.CreateBitmap(bmp, 0, 0, bmp.Width, bmp.Height);
+                        //Canvas canvas = new Canvas(swapBrBitmap);
+                        //canvas.DrawBitmap(swapBrBitmap, 0, 0, paint);
+
+                        Canvas canvas = new Canvas(flipped);
+                        canvas.DrawBitmap(flipped, 0, 0, paint);
+                    }
+
+                    int[] intValues = new int[flipped.Width * flipped.Height];
+                    float[] floatValues = new float[flipped.Width * flipped.Height * 3];
+                    bmp.GetPixels(intValues, 0, flipped.Width, 0, 0, flipped.Width, flipped.Height);
+
+                    for (int i = 0; i < intValues.Length; ++i)
+                    {
+                        int val = intValues[i];
+                        floatValues[i * 3 + 0] = (((val >> 16) & 0xFF) - inputMean) * scale;
+                        floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - inputMean) * scale;
+                        floatValues[i * 3 + 2] = ((val & 0xFF) - inputMean) * scale;
+                    }
+
+                    if (typeof(T) == typeof(float))
+                    {
+                        Marshal.Copy(floatValues, 0, dest, floatValues.Length);
+                    }
+                    else if (typeof(T) == typeof(byte))
+                    {
+                        //copy float to bytes
+                        byte[] byteValues = new byte[floatValues.Length];
+                        for (int i = 0; i < floatValues.Length; i++)
+                            byteValues[i] = (byte) floatValues[i];
+                        Marshal.Copy(byteValues, 0, dest, byteValues.Length);
+                    }
+                    else
+                    {
+                        throw new NotImplementedException(String.Format("Destination data type {0} is not supported.",
+                            typeof(T).ToString()));
+                    }
+                }
+                finally
+                {
+                    if (flipped != resized)
+                        flipped.Dispose();
+                }
+            }
+            finally
+            {
+                if (resized != bmp)
+                    resized.Dispose();
+            }
+
+        }
+
+        /// <summary>
+        /// Read an image file, covert the data and save it to the native pointer
+        /// </summary>
+        /// <typeparam name="T">The type of the data to covert the image pixel values to. e.g. "float" or "byte"</typeparam>
         /// <param name="fileName">The name of the image file</param>
         /// <param name="dest">The native pointer where the image pixels values will be saved to. The pixel will have 3 color channles (BGR or RGB depends on the swapBR flag).</param>
         /// <param name="inputHeight">The height of the image, must match the height requirement for the tensor</param>
@@ -124,74 +242,9 @@ namespace Emgu.Models
             if (!File.Exists(fileName))
                 throw new FileNotFoundException(String.Format("File {0} do not exist.", fileName));
 
-            Android.Graphics.Bitmap bmp = BitmapFactory.DecodeFile(fileName);
-            if (inputHeight > 0 || inputWidth > 0)
-            {
-                Bitmap resized = Bitmap.CreateScaledBitmap(bmp, inputWidth, inputHeight, false);
-                bmp.Dispose();
-                bmp = resized;
-            }
-
-            if (flipUpSideDown)
-            {
-                Matrix matrix = new Matrix();
-                matrix.PostScale(1, -1, bmp.Width / 2, bmp.Height / 2);
-                Bitmap flipped = Bitmap.CreateBitmap(bmp, 0, 0, bmp.Width, bmp.Height, matrix, true);
-                bmp.Dispose();
-                bmp = flipped;
-            }
-
-
-            if (swapBR)
-            {
-                float[] swapBRColorTransform = new float[]
-                {
-                    0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-                    0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-                    1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-                    0.0f, 0.0f, 0.0f, 1.0f, 0.0f
-                };
-                ColorMatrix swapBrColorMatrix = new ColorMatrix();
-                swapBrColorMatrix.Set(swapBRColorTransform);
-                ColorMatrixColorFilter colorFilter = new ColorMatrixColorFilter(swapBrColorMatrix);
-                Paint paint = new Paint();
-                paint.SetColorFilter(colorFilter);
-
-                //Bitmap swapBrBitmap = Bitmap.CreateBitmap(bmp, 0, 0, bmp.Width, bmp.Height);
-                //Canvas canvas = new Canvas(swapBrBitmap);
-                //canvas.DrawBitmap(swapBrBitmap, 0, 0, paint);
-
-                Canvas canvas = new Canvas(bmp);
-                canvas.DrawBitmap(bmp, 0, 0, paint);
-            }
-
-            int[] intValues = new int[bmp.Width * bmp.Height];
-            float[] floatValues = new float[bmp.Width * bmp.Height * 3];
-            bmp.GetPixels(intValues, 0, bmp.Width, 0, 0, bmp.Width, bmp.Height);
-
-            for (int i = 0; i < intValues.Length; ++i)
-            {
-                int val = intValues[i];
-                floatValues[i * 3 + 0] = (((val >> 16) & 0xFF) - inputMean) * scale;
-                floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - inputMean) * scale;
-                floatValues[i * 3 + 2] = ((val & 0xFF) - inputMean) * scale;
-            }
-            if (typeof(T) == typeof(float))
-            {
-                Marshal.Copy(floatValues, 0, dest, floatValues.Length);
-            }
-            else if (typeof(T) == typeof(byte))
-            {
-                //copy float to bytes
-                byte[] byteValues = new byte[floatValues.Length];
-                for (int i = 0; i < floatValues.Length; i++)
-                    byteValues[i] = (byte)floatValues[i];
-                Marshal.Copy(byteValues, 0, dest, byteValues.Length);
-            }
-            else
-            {
-                throw new NotImplementedException(String.Format("Destination data type {0} is not supported.", typeof(T).ToString()));
-            }
+            using (Android.Graphics.Bitmap bmp = BitmapFactory.DecodeFile(fileName))
+                ReadBitmapToTensor<T>(bmp, dest, inputHeight, inputWidth, inputMean, scale, flipUpSideDown, swapBR);
+            
         }
 
         /// <summary>

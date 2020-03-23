@@ -31,6 +31,8 @@ Global
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{b8c8535c-d4b3-49e3-82e7-8c16f607d624}*SharedItemsImports = 4
 		..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems*{b8c8535c-d4b3-49e3-82e7-8c16f607d624}*SharedItemsImports = 4
 		..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems*{e956dd26-1294-4731-8a90-c4cba9f291b6}*SharedItemsImports = 13
+		..\..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.projitems*{fdab1bd5-2bc7-4839-83a6-3dcd6e8c4b5a}*SharedItemsImports = 5
+		..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems*{fdab1bd5-2bc7-4839-83a6-3dcd6e8c4b5a}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU

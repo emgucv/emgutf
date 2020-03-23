@@ -73,6 +73,8 @@ namespace Emgu.TF.XamarinForms
             Content = _mainLayout;
         }
 
+        public bool HasCameraOption { get; set; }
+
         /// <summary>
         /// Allow user to pick the images.
         /// </summary>
@@ -114,6 +116,28 @@ namespace Emgu.TF.XamarinForms
                 }
 
                 String action;
+                List<String> options = new List<string>();
+                options.Add("Default");
+                if (havePickImgOption)
+                    options.Add("Photo Library");
+                if (haveCameraOption)
+                    options.Add("Photo from Camera");
+
+#if __IOS__ || __ANDROID__
+                if (this.HasCameraOption && haveCameraOption)
+                    options.Add("Camera");
+#endif
+                if (options.Count == 1)
+                {
+                    action = "Default";
+                }
+                else
+                {
+                    action = await DisplayActionSheet(pickImgString, "Cancel", null, options.ToArray());
+                    if (action == null) //user clicked outside of action sheet
+                        return null;
+                }
+                /*
                 if (haveCameraOption & havePickImgOption)
                 {
                     action = await DisplayActionSheet(pickImgString, "Cancel", null, "Default", "Photo Library",
@@ -126,7 +150,7 @@ namespace Emgu.TF.XamarinForms
                 else
                 {
                     action = "Default";
-                }
+                }*/
 
 
                 if (action.Equals("Default"))
@@ -223,7 +247,7 @@ namespace Emgu.TF.XamarinForms
                         mats[i] = photoResult.Path;
                     }
                 }
-                else if (action.Equals("Camera"))
+                else if (action.Equals("Photo from Camera"))
                 {
                     var mediaOptions = new Plugin.Media.Abstractions.StoreCameraMediaOptions
                     {
@@ -234,6 +258,9 @@ namespace Emgu.TF.XamarinForms
                     if (takePhotoResult == null) //canceled
                         return null;
                     mats[i] = takePhotoResult.Path;
+                } else if (action.Equals("Camera"))
+                {
+                    mats[i] = "Camera";
                 }
 
                 //Handle user cancel
