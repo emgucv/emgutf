@@ -27,7 +27,7 @@ using AppKit;
 
 namespace Emgu.TF.Lite.Models
 {
-    public class CocoSsdMobilenet : Emgu.TF.Util.UnmanagedObject
+    public class CocoSsdMobilenetV1 : Emgu.TF.Util.UnmanagedObject
     {
         private FileDownloadManager _downloadManager;
 
@@ -63,7 +63,7 @@ namespace Emgu.TF.Lite.Models
         }
 #endif
 
-        public CocoSsdMobilenet()
+        public CocoSsdMobilenetV1()
         {
             _downloadManager = new FileDownloadManager();
             _downloadManager.OnDownloadProgressChanged += onDownloadProgressChanged;
@@ -86,7 +86,7 @@ namespace Emgu.TF.Lite.Models
             Init(
                 String[] modelFiles = null, 
                 String downloadUrl = null,
-                String localModelFolder = "CocoSsdMobilenet")
+                String localModelFolder = "CocoSsdMobilenetV1")
         {
 
             _downloadManager.Clear();
