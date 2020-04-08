@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using Emgu.TF.Util;
@@ -25,7 +26,38 @@ namespace Emgu.TF.Lite
         /// <param name="filename">The name of the file where the FlatBufferModel will be loaded from.</param>
         public FlatBufferModel(String filename)
         {
-            _ptr = TfLiteInvoke.tfeFlatBufferModelBuildFromFile(filename);
+            if (!File.Exists(filename))
+                throw new FileNotFoundException(String.Format("File {0} does not exist", filename));
+
+            try
+            {
+                _ptr = TfLiteInvoke.tfeFlatBufferModelBuildFromFile(filename);
+            }
+            catch (Exception e)
+            {
+                byte[] buffer = File.ReadAllBytes(filename);
+                if (buffer.Length == 0)
+                    throw new FileNotFoundException(String.Format("File {0} is empty", filename));
+                ReadModelFromBuffer(buffer);
+            }
+            
+        }
+
+        private void ReadModelFromBuffer(byte[] buffer)
+        {
+            _buffer = new byte[buffer.Length];
+            Array.Copy(buffer, _buffer, _buffer.Length);
+            _handle = GCHandle.Alloc(_buffer, GCHandleType.Pinned);
+            try
+            {
+                _ptr = TfLiteInvoke.tfeFlatBufferModelBuildFromBuffer(_handle.AddrOfPinnedObject(), buffer.Length);
+            }
+            catch
+            {
+                _handle.Free();
+                _buffer = null;
+                throw;
+            }
         }
 
         /// <summary>
@@ -34,19 +66,7 @@ namespace Emgu.TF.Lite
         /// <param name="buffer">The buffer where the FlatBufferModel will be loaded from.</param>
         public FlatBufferModel(byte[] buffer)
         {
-            _buffer = new byte[buffer.Length];
-            Array.Copy(buffer, _buffer, _buffer.Length);
-            _handle = GCHandle.Alloc(_buffer, GCHandleType.Pinned);
-            try
-            {
-                _ptr = TfLiteInvoke.tfeFlatBufferModelBuildFromBuffer(_handle.AddrOfPinnedObject(), buffer.Length);
-            } catch
-            {
-                _handle.Free();
-                _buffer = null;
-                throw;
-            }
-
+            ReadModelFromBuffer(buffer);
         }
 
         /// <summary>

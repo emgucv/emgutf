@@ -36,7 +36,7 @@ namespace Emgu.TF.XamarinForms
 {
     public class CocoSsdMobilenetPage : ButtonTextImagePage
     {
-        private CocoSsdMobilenet _mobilenet;
+        private CocoSsdMobilenetV3 _mobilenet;
 
         public CocoSsdMobilenetPage()
            : base()
@@ -48,7 +48,7 @@ namespace Emgu.TF.XamarinForms
             button.Text = "Perform Object Detection";
             button.Clicked += OnButtonClicked;
 
-            _mobilenet = new CocoSsdMobilenet();
+            _mobilenet = new CocoSsdMobilenetV3();
             _mobilenet.OnDownloadProgressChanged += onDownloadProgressChanged;
 
 #if __MACOS__ || __IOS__
@@ -126,7 +126,7 @@ namespace Emgu.TF.XamarinForms
                 SetMessage(String.Format("{0} of {1} bytes downloaded ({2}%)", e.BytesReceived, e.TotalBytesToReceive, e.ProgressPercentage));
         }
 
-        private static Annotation[] GetAnnotations(CocoSsdMobilenet.RecognitionResult[] result)
+        private static Annotation[] GetAnnotations(CocoSsdMobilenetV3.RecognitionResult[] result)
         {
             Annotation[] annotations = new Annotation[result.Length];
             for (int i = 0; i < result.Length; i++)

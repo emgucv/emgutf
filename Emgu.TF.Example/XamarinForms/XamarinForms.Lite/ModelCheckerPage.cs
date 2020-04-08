@@ -109,7 +109,8 @@ namespace Emgu.TF.XamarinForms
             if (fileData == null)
                 return; // user canceled file picking
 
-            string fileName = fileData.FileName;
+            //string fileName = fileData.FileName;
+            string fileName = fileData.FilePath;
 
             SetEditorMessage(GetModelInfo(fileName), 600);
 
