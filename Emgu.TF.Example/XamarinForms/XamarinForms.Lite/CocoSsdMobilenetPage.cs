@@ -166,6 +166,11 @@ namespace Emgu.TF.XamarinForms
             } else
             {
                 String[] imageFiles = await LoadImages(new string[] { "dog416.png" });
+                if (imageFiles == null)
+                {
+                    //User canceled
+                    return;
+                }
 
                 String imageFileName = imageFiles[0];
 
