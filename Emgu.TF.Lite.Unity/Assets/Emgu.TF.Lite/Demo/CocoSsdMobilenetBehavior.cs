@@ -35,7 +35,7 @@ public class CocoSsdMobilenetBehavior : MonoBehaviour
     private bool _staticViewRendered = false;
 
 
-    private CocoSsdMobilenet _mobilenet = null;
+    private CocoSsdMobilenetV3 _mobilenet = null;
 
     public Text DisplayText;
 
@@ -102,7 +102,7 @@ public class CocoSsdMobilenetBehavior : MonoBehaviour
     {
         bool loaded = Emgu.TF.Lite.TfLiteInvoke.CheckLibraryLoaded();
 
-        _mobilenet = new Emgu.TF.Lite.Models.CocoSsdMobilenet();
+        _mobilenet = new Emgu.TF.Lite.Models.CocoSsdMobilenetV3();
 
         _liveCameraView = false;
         /*

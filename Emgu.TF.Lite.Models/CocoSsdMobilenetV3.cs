@@ -39,7 +39,13 @@ namespace Emgu.TF.Lite.Models
                 ? "https://github.com/emgucv/models/raw/master/coco_ssd_mobilenet_v3_small_2010_01_14/"
                 : downloadUrl);
             modelFiles = (modelFiles == null ? new string[] {"model.tflite", "labelmap.txt"} : modelFiles);
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+            var e = base.Init(modelFiles, downloadUrl, localModelFolder);
+            while (e.MoveNext())
+                yield return e.Current;
+#else
             await base.Init(modelFiles, downloadUrl, localModelFolder);
+#endif
         }
     }
 }
