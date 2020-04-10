@@ -13,8 +13,8 @@ cd tensorflow
 set -x
 bazel build -c opt \
       --config=android_$1\
-      --cxxopt='--std=c++11' \
-      --action_env ANDROID_NDK_HOME=/usr/lib/android-ndk-r18b \
+      --cxxopt='--std=c++14' \
+      --action_env ANDROID_NDK_HOME=/usr/lib/android-ndk-r20b \
       --action_env ANDROID_NDK_API_LEVEL=28 \
       --action_env ANDROID_BUILD_TOOLS_VERSION=debian \
       --action_env ANDROID_SDK_API_LEVEL=23 \
