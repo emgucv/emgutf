@@ -105,7 +105,7 @@ public class CocoSsdMobilenetBehavior : MonoBehaviour
         _mobilenet = new Emgu.TF.Lite.Models.CocoSsdMobilenetV3();
 
         _liveCameraView = false;
-        /*
+        
         WebCamDevice[] devices = WebCamTexture.devices;
         cameraCount = devices.Length;
 
@@ -121,7 +121,7 @@ public class CocoSsdMobilenetBehavior : MonoBehaviour
             baseRotation = transform.rotation;
             webcamTexture.Play();
             //data = new Color32[webcamTexture.width * webcamTexture.height];
-        }*/
+        }
         DisplayText.text = "Downloading model, please wait...";
         StartCoroutine(_mobilenet.Init());
     }
@@ -191,7 +191,7 @@ public class CocoSsdMobilenetBehavior : MonoBehaviour
 
                 RecognizeAndUpdateText(resultTexture);
 
-                RenderTexture(resultTexture);
+                RenderTexture(drawableTexture);
                 //count++;
 
             }
