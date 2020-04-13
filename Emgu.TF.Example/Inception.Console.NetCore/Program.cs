@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Threading;
 using Emgu.TF;
 using Emgu.TF.Models;
+using System.Threading.Tasks;
 using Tensorflow;
 
 namespace Inception.Console.Netstandard
@@ -18,8 +19,9 @@ namespace Inception.Console.Netstandard
         private static Emgu.TF.Models.Inception _inceptionGraph;
         private static FileInfo _inputFileInfo;
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
+            System.Console.WriteLine("Starting...");
 #if DEBUG
             ConsoleTraceListener consoleTraceListener = new ConsoleTraceListener();
             Trace.Listeners.Add(consoleTraceListener);
@@ -35,13 +37,13 @@ namespace Inception.Console.Netstandard
                 return;
             }
             Trace.WriteLine(String.Format("Working on file {0}", _inputFileInfo.FullName));
-
-            new Thread(() => { Run(); }).Start();
-
-            System.Console.ReadKey();
+ 
+            await Run();
+            //System.Console.WriteLine("Press any key to continue:");
+            //System.Console.ReadKey();
         }
 
-        private static async void Run()
+        private static async Task Run()
         {
             SessionOptions so = new SessionOptions();
             if (TfInvoke.IsGoogleCudaEnabled)
@@ -69,7 +71,7 @@ namespace Inception.Console.Netstandard
             String resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", results[0].Label, results[0].Probability * 100, watch.ElapsedMilliseconds);
 
             System.Console.WriteLine(resStr);
-            System.Console.WriteLine("Press any key to continue:");
+            
         }
 
         private static void onDownloadProgressChanged(object sender, System.Net.DownloadProgressChangedEventArgs e)
