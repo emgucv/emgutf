@@ -4,7 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Plugin.FilePicker;
+using Plugin.FilePicker.Abstractions;
 using Xamarin.Forms;
 #if __ANDROID__
 using Plugin.CurrentActivity;
@@ -149,7 +150,7 @@ namespace Emgu.TF.XamarinForms
                     }
                     else
                     {
-                        //cancelled
+                        //canceled
                         return null;
                     }
                 }
@@ -158,7 +159,7 @@ namespace Emgu.TF.XamarinForms
                     mats[i] = action;
                 } else if (action.Equals("Cancel"))
                 {
-                    //cancelled
+                    //canceled
                     return null;
                 }
             }
@@ -220,25 +221,10 @@ namespace Emgu.TF.XamarinForms
                 {
                     if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
                     {
-                        // our implementation of pick image
-#if !(__ANDROID__ || __IOS__ || __MACOS__)
-                        using (System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog())
-                        {
-                            dialog.Multiselect = false;
-                            dialog.Title = "Select an Image File";
-                            dialog.Filter = "Image | *.jpg;*.jpeg;*.png;*.bmp;*.gif | All Files | *";
-                            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                            {
-                                mats[i] = dialog.FileName;
-                            }
-                            else
-                            {
-                                //canceled
-                                return null; 
-                            }
-                        }
-#endif
-
+                        FileData fileData = await CrossFilePicker.Current.PickFile(new string[] {"Image | *.jpg;*.jpeg;*.png;*.bmp;*.gif | All Files | *"});
+                        if (fileData == null)
+                            return null;
+                        mats[i] = fileData.FilePath;
                     }
                     else
                     {
@@ -273,22 +259,6 @@ namespace Emgu.TF.XamarinForms
 #endif
         }
 
-        /*
-        public void InvokeOnImagesLoaded(string[] imageFiles)
-        {
-            if (imageFiles == null) //cancelled
-                return;
-
-            for (int i = 0; i < imageFiles.Length; i++)
-                if (imageFiles[i] == null)
-                    return; //cancelled
-
-            if (OnImagesLoaded != null)
-                OnImagesLoaded(this, imageFiles);
-        }
-
-        public event EventHandler<string[]> OnImagesLoaded;
-        */
         public void SetImage(String fileName)
         {
             if (!File.Exists(fileName))
