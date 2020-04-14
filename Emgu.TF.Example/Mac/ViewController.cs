@@ -7,52 +7,12 @@ using CoreGraphics;
 
 using Emgu.TF;
 using Emgu.TF.Models;
+using System.Threading.Tasks;
 
 namespace Example.OSX
 {
     public partial class ViewController : NSViewController
     {
-		void inceptionGraph_OnDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-		{
-			String fileName = "space_shuttle.jpg";
-
-            Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
-            
-            var recognitionResults = _inceptionGraph.Recognize(imageTensor);
-            String resStr = String.Empty;
-            if (recognitionResults != null && recognitionResults.Length > 0)
-            {
-                resStr = String.Format("Object is {0} with {1}% probability.", recognitionResults[0].Label, recognitionResults[0].Probability * 100);
-            }
-            SetMessage(resStr);
-            SetImage(new NSImage(fileName));
-		}
-
-		void multiboxGraph_OnDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-		{
-			String fileName = "surfers.jpg";
-            
-            Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
-			MultiboxGraph.Result[] detectResult = _multiboxGraph.Detect(imageTensor);
-            Emgu.Models.Annotation[] annotations = MultiboxGraph.FilterResults(detectResult, 0.1f);
-
-            NSImage img = new NSImage(fileName);
-            Emgu.Models.NativeImageIO.DrawAnnotations(img, annotations);
-
-            SetImage(img);
-		}
-
-		void stylizeGraph_OnDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-		{
-            byte[] jpeg = _stylizeGraph.StylizeToJpeg("surfers.jpg", 0);
-            using (System.IO.Stream s = new System.IO.MemoryStream(jpeg))
-            {
-                NSImage newImg = NSImage.FromStream(s);
-                SetImage(newImg);
-            }
-		}
-
-
         public ViewController(IntPtr handle) : base(handle)
         {
         }
@@ -129,7 +89,8 @@ namespace Example.OSX
 				});
 		}
 
-        partial void inceptionClicked(NSObject sender)
+        [Action("inceptionClicked:")]
+        async void inceptionClicked(NSObject sender)
         {
             
 			SetMessage("Please wait while we download Inception model from internet...");
@@ -139,13 +100,26 @@ namespace Example.OSX
 			{
 				_inceptionGraph = new Inception();
 				_inceptionGraph.OnDownloadProgressChanged += OnDownloadProgressChanged;
-				_inceptionGraph.OnDownloadCompleted += inceptionGraph_OnDownloadCompleted;
+				//_inceptionGraph.OnDownloadCompleted += inceptionGraph_OnDownloadCompleted;
 			}
-			_inceptionGraph.Init();
-            
+			await _inceptionGraph.Init();
+
+            String fileName = "space_shuttle.jpg";
+
+            //Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
+            Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(fileName, 224, 224, 128.0f, 1.0f);
+            var recognitionResults = _inceptionGraph.Recognize(imageTensor);
+            String resStr = String.Empty;
+            if (recognitionResults != null && recognitionResults.Length > 0)
+            {
+                resStr = String.Format("Object is {0} with {1}% probability.", recognitionResults[0].Label, recognitionResults[0].Probability * 100);
+            }
+            SetMessage(resStr);
+            SetImage(new NSImage(fileName));
         }
 
-        partial void multiboxClicked(NSObject sender)
+        [Action("multiboxClicked:")]
+        async void multiboxClicked(NSObject sender)
         {
 			SetMessage("Please wait while we download Multibox model from internet...");
             SetImage(null);
@@ -154,13 +128,26 @@ namespace Example.OSX
 			{
 				_multiboxGraph = new MultiboxGraph();
 				_multiboxGraph.OnDownloadProgressChanged += OnDownloadProgressChanged;
-				_multiboxGraph.OnDownloadCompleted += multiboxGraph_OnDownloadCompleted;
+				//_multiboxGraph.OnDownloadCompleted += multiboxGraph_OnDownloadCompleted;
 			}
-			_multiboxGraph.Init();
+			await _multiboxGraph.Init();
+            SetMessage("");
 
+            String fileName = "surfers.jpg";
+
+            Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(fileName, 224, 224, 128.0f, 1.0f / 128.0f);
+            MultiboxGraph.Result[] detectResult = _multiboxGraph.Detect(imageTensor);
+            Emgu.Models.Annotation[] annotations = MultiboxGraph.FilterResults(detectResult, 0.1f);
+
+            NSImage img = new NSImage(fileName);
+            Emgu.Models.NativeImageIO.DrawAnnotations(img, annotations);
+
+            SetImage(img);
+            
         }
 
-        partial void stylizeClicked(NSObject sender)
+        [Action("stylizeClicked:")]
+        async void stylizeClicked(NSObject sender)
         {
 			SetMessage("Please wait while we download Stylize model from internet...");
             SetImage(null);
@@ -169,10 +156,17 @@ namespace Example.OSX
 			{
 				_stylizeGraph = new StylizeGraph();
 				_stylizeGraph.OnDownloadProgressChanged += OnDownloadProgressChanged;
-				_stylizeGraph.OnDownloadCompleted += stylizeGraph_OnDownloadCompleted;
+				//_stylizeGraph.OnDownloadCompleted += stylizeGraph_OnDownloadCompleted;
 			}
-			_stylizeGraph.Init();
-            
+			await _stylizeGraph.Init();
+            SetMessage("");
+
+            byte[] jpeg = _stylizeGraph.StylizeToJpeg("surfers.jpg", 0);
+            using (System.IO.Stream s = new System.IO.MemoryStream(jpeg))
+            {
+                NSImage newImg = NSImage.FromStream(s);
+                SetImage(newImg);
+            }
         }
     }
 }

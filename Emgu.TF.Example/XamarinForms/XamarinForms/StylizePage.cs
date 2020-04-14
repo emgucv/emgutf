@@ -95,7 +95,7 @@ namespace Emgu.TF.XamarinForms
                     SetImage(jpeg);
 #endif
 #if __MACOS__
-                    NSImage img = new NSImage(image[0]);
+                    NSImage img = new NSImage(images[0]);
                     var displayImage = this.DisplayImage;
                     displayImage.WidthRequest = img.Size.Width;
                     displayImage.HeightRequest = img.Size.Height;
