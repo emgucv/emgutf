@@ -149,15 +149,20 @@ namespace Emgu.TF.XamarinForms
                     }
                     else
                     {
-                        return;
+                        //cancelled
+                        return null;
                     }
                 }
                 else if (action.Equals("Camera Stream"))
                 {
                     mats[i] = action;
+                } else if (action.Equals("Cancel"))
+                {
+                    //cancelled
+                    return null;
                 }
             }
-            InvokeOnImagesLoaded(mats);
+            return mats;
 #else
 
             String[] mats = new String[imageNames.Length];
