@@ -118,10 +118,7 @@ namespace Emgu.TF.XamarinForms
 
         public virtual async Task<String[]> LoadImages(String[] imageNames, String[] labels = null)
         {
-#if __ANDROID__ || __IOS__
-            await CrossMedia.Current.Initialize();
-#endif
-
+            /*
 #if (__MACOS__) //Xamarin Mac
             String[] mats = new String[imageNames.Length];
             for (int i = 0; i < mats.Length; i++)
@@ -164,7 +161,10 @@ namespace Emgu.TF.XamarinForms
                 }
             }
             return mats;
-#else
+#else*/
+
+            if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+                await CrossMedia.Current.Initialize();
 
             String[] mats = new String[imageNames.Length];
             for (int i = 0; i < mats.Length; i++)
@@ -179,8 +179,14 @@ namespace Emgu.TF.XamarinForms
                 {
                     //CrossMedia is not implemented on Windows.
                     haveCameraOption = false;
-                    havePickImgOption = true; //We will provide our implementation of pick image option
-                    
+                    havePickImgOption = true; //We will CrossFilePicker.Current.PickFile to pick image
+                } else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices
+                    .OSPlatform.OSX))
+                {
+#if __MACOS__
+                    haveLiveCameraOption = AllowAvCaptureSession;
+#endif
+                    havePickImgOption = true; //We will CrossFilePicker.Current.PickFile to pick image
                 }
                 else
                 {
@@ -211,7 +217,6 @@ namespace Emgu.TF.XamarinForms
                         Emgu.TF.Util.AndroidFileAsset.OverwriteMethod.AlwaysOverwrite);
 
                     mats[i] = fi.FullName;
-
 #else
                     mats[i] = imageNames[i];
             
@@ -222,6 +227,15 @@ namespace Emgu.TF.XamarinForms
                     if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
                     {
                         FileData fileData = await CrossFilePicker.Current.PickFile(new string[] {"Image | *.jpg;*.jpeg;*.png;*.bmp;*.gif | All Files | *"});
+                        if (fileData == null)
+                            return null;
+                        mats[i] = fileData.FilePath;
+                    }
+                    else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime
+                        .InteropServices
+                        .OSPlatform.OSX))
+                    {
+                        FileData fileData = await CrossFilePicker.Current.PickFile(new string[] { "jpg", "jpeg", "png", "bmp" });
                         if (fileData == null)
                             return null;
                         mats[i] = fileData.FilePath;
@@ -249,6 +263,11 @@ namespace Emgu.TF.XamarinForms
                 {
                     mats[i] = action;
                 }
+                else if (action.Equals("Cancel"))
+                {
+                    //canceled
+                    return null;
+                }
 
                 //Handle user cancel
                 if (action == null)
@@ -256,8 +275,8 @@ namespace Emgu.TF.XamarinForms
             }
             //InvokeOnImagesLoaded(mats);
             return mats;
-#endif
-        }
+//#endif
+                }
 
         public void SetImage(String fileName)
         {
