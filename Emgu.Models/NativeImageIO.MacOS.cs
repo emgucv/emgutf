@@ -166,8 +166,13 @@ namespace Emgu.Models
         /// <returns>The image in Jpeg stream format</returns>
         public static JpegData ImageFileToJpeg(String fileName, Annotation[] annotations = null)
         {
-            NSImage img = NSImage.ImageNamed(fileName);
+            NSImage img;
 
+            if (File.Exists(fileName))
+                img = new NSImage(fileName); //full path
+            else
+                img = NSImage.ImageNamed(fileName); //image included in the package
+           
             if (annotations != null && annotations.Length > 0)
                 DrawAnnotations(img, annotations);
 
