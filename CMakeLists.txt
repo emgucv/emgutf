@@ -799,20 +799,21 @@ IF(HAVE_WINDESKTOP)
       SET(CUDA_TOOLKIT_ROOT_DIR "${BAZEL_CUDA_TOOLKIT_PATH}")
       
       IF((${npp_major} GREATER 10) OR (("${npp_major}" STREQUAL "10") AND (${npp_minor} GREATER 0)))
-	SET(NPP_POSTFIX "${npp_major}")
-	LIST(APPEND TFEXTERN_DEPENDENCY_DLLS 
-	  "${CUDA_TOOLKIT_ROOT_DIR}/bin/cublasLt${CUDA_POSTFIX}_${NPP_POSTFIX}.dll")
+	    SET(NPP_POSTFIX "${npp_major}")
+	    LIST(APPEND TFEXTERN_DEPENDENCY_DLLS 
+	      "${CUDA_TOOLKIT_ROOT_DIR}/bin/cublasLt${CUDA_POSTFIX}_${NPP_POSTFIX}.dll")
       ELSE()
-	SET(NPP_POSTFIX "${npp_major}${npp_minor}")
+	    SET(NPP_POSTFIX "${npp_major}${npp_minor}")
       ENDIF()
-      
+	  
+      FILE(GLOB CUDART_FILES "${CUDA_TOOLKIT_ROOT_DIR}/bin/cudart${CUDA_POSTFIX}_*.dll")
       LIST(APPEND TFEXTERN_DEPENDENCY_DLLS 
-	"${CUDA_TOOLKIT_ROOT_DIR}/bin/cudart${CUDA_POSTFIX}_${npp_major}${npp_minor}.dll"
-	"${CUDA_TOOLKIT_ROOT_DIR}/bin/cufft${CUDA_POSTFIX}_${NPP_POSTFIX}.dll"
-	"${CUDA_TOOLKIT_ROOT_DIR}/bin/cublas${CUDA_POSTFIX}_${NPP_POSTFIX}.dll"
-	"${CUDA_TOOLKIT_ROOT_DIR}/bin/curand${CUDA_POSTFIX}_${NPP_POSTFIX}.dll"
-	"${CUDA_TOOLKIT_ROOT_DIR}/bin/cusolver${CUDA_POSTFIX}_${NPP_POSTFIX}.dll"
-	)
+	    ${CUDART_FILES}
+	    "${CUDA_TOOLKIT_ROOT_DIR}/bin/cufft${CUDA_POSTFIX}_${NPP_POSTFIX}.dll"
+	    "${CUDA_TOOLKIT_ROOT_DIR}/bin/cublas${CUDA_POSTFIX}_${NPP_POSTFIX}.dll"
+	    "${CUDA_TOOLKIT_ROOT_DIR}/bin/curand${CUDA_POSTFIX}_${NPP_POSTFIX}.dll"
+	    "${CUDA_TOOLKIT_ROOT_DIR}/bin/cusolver${CUDA_POSTFIX}_${NPP_POSTFIX}.dll"
+	  )
       SET(EMGU_TF_CUFFT_FILE_VERSION "${NPP_POSTFIX}")
 #    ELSE()
 #      MESSAGE(FATAL_ERROR "-- Unable to find CUFFT version")
