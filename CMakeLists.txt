@@ -449,7 +449,10 @@ SET(EMGU_TF_EXAMPLE_BUILD ON CACHE BOOL "Build Emgu TF Example")
 # ----------------------------------------------------------------------------
 INCLUDE(Today)
 TODAY() #set the variable CURRENT_YEAR
+
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CommonAssemblyInfo.cs.in ${CMAKE_CURRENT_SOURCE_DIR}/CommonAssemblyInfo.cs)
+
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Directory.Build.props)
 
 
 # ----------------------------------------------------------------------------
