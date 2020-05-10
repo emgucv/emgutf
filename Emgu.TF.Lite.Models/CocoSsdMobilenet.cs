@@ -197,12 +197,12 @@ namespace Emgu.TF.Lite.Models
 
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-        public RecognitionResult[] Recognize(Texture2D texture2D, bool flipUpsideDown = true, bool swapBR = false, float scoreThreshold = 0.0f)
+        public RecognitionResult[] Recognize(Texture texture, bool flipUpsideDown = true, bool swapBR = false, float scoreThreshold = 0.0f)
         {
             int height = _inputTensor.Dims[1];
             int width = _inputTensor.Dims[2];
-            NativeImageIO.ReadTensorFromTexture2D<byte>(
-                texture2D,
+            NativeImageIO.ReadTensorFromTexture<byte>(
+                texture,
                 _inputTensor.DataPointer,
                 height, width, 0.0f, 1.0f,
                 flipUpsideDown,

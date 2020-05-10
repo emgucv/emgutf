@@ -45,7 +45,7 @@ namespace Emgu.Models
                 throw new FileNotFoundException(String.Format("File {0} do not exist.", fileName));
 
             Texture2D texture = ReadTexture2DFromFile(fileName);
-            ReadTensorFromTexture2D<T>(texture, dest, inputHeight, inputWidth, inputMean, scale, flipUpSideDown, swapBR);
+            ReadTensorFromTexture<T>(texture, dest, inputHeight, inputWidth, inputMean, scale, flipUpSideDown, swapBR);
         }
 
         public static Texture2D ReadTexture2DFromFile(String fileName)
@@ -62,45 +62,48 @@ namespace Emgu.Models
             return texture;
         }
 
-        public static Texture2D Resize(Texture2D source, int newWidth, int newHeight)
+        public static void Resize(Texture source, Texture2D dst) 
         {
+            int newWidth = dst.width;
+            int newHeight = dst.height;
             source.filterMode = FilterMode.Bilinear;
             UnityEngine.RenderTexture rt = UnityEngine.RenderTexture.GetTemporary(newWidth, newHeight);
             rt.filterMode = FilterMode.Bilinear;
 
             UnityEngine.RenderTexture.active = rt;
             Graphics.Blit(source, rt);
-            var nTex = new Texture2D(newWidth, newHeight);
-            nTex.ReadPixels(new Rect(0, 0, newWidth, newHeight), 0, 0);
-            nTex.Apply();
+            //var nTex = new Texture2D(newWidth, newHeight);
+            dst.ReadPixels(new Rect(0, 0, newWidth, newHeight), 0, 0);
+            dst.Apply();
             UnityEngine.RenderTexture.active = null;
             UnityEngine.RenderTexture.ReleaseTemporary(rt);
-            return nTex;
+            //return nTex;
         }
 
-        public static void ReadTensorFromTexture2D<T>(
-            Texture2D texture, IntPtr dest, int inputHeight = -1, int inputWidth = -1,
+        public static void ReadTensorFromTexture<T>(
+            Texture texture, IntPtr dest, int inputHeight = -1, int inputWidth = -1,
             float inputMean = 0.0f, float scale = 1.0f, bool flipUpsideDown = false, bool swapBR = false) where T : struct
         {
-            Color32[] colors;
-
             int width, height;
-            if (inputHeight > 0 || inputWidth > 0)
-            {
-                Texture2D small = Resize(texture, inputWidth, inputHeight);
-                colors = small.GetPixels32();
-                width = inputWidth;
-                height = inputHeight;
-            }
+            if (inputWidth < 0)
+                width = texture.width;
             else
             {
-                width = texture.width;
+                width = inputWidth;
+            }
+            if (inputHeight < 0)
                 height = texture.height;
-                colors = texture.GetPixels32();
+            else
+            {
+                height = inputHeight;
             }
 
-            float[] floatValues = new float[colors.Length * 3];
+            Texture2D resized = new Texture2D(inputWidth, inputHeight);
+            Resize(texture, resized);
+            Color32[] colors = resized.GetPixels32();
 
+            float[] floatValues = new float[colors.Length * 3];
+            int idx = 0;
             if (flipUpsideDown)
             {
                 //handle flip upside down
@@ -108,18 +111,17 @@ namespace Emgu.Models
                     for (int j = 0; j < width; j++)
                     {
                         Color32 val = colors[(height - i - 1) * width + j];
-                        int idx = i * width + j;
                         if (swapBR)
                         {
-                            floatValues[idx * 3 + 0] = (val.b - inputMean) * scale;
-                            floatValues[idx * 3 + 1] = (val.g - inputMean) * scale;
-                            floatValues[idx * 3 + 2] = (val.r - inputMean) * scale;
+                            floatValues[idx++] = (val.b - inputMean) * scale;
+                            floatValues[idx++] = (val.g - inputMean) * scale;
+                            floatValues[idx++] = (val.r - inputMean) * scale;
                         }
                         else
                         {
-                            floatValues[idx * 3 + 0] = (val.r - inputMean) * scale;
-                            floatValues[idx * 3 + 1] = (val.g - inputMean) * scale;
-                            floatValues[idx * 3 + 2] = (val.b - inputMean) * scale;
+                            floatValues[idx++] = (val.r - inputMean) * scale;
+                            floatValues[idx++] = (val.g - inputMean) * scale;
+                            floatValues[idx++] = (val.b - inputMean) * scale;
                         }
                     }
             }
@@ -130,15 +132,15 @@ namespace Emgu.Models
                     Color32 val = colors[i];
                     if (swapBR)
                     {
-                        floatValues[i * 3 + 0] = (val.b - inputMean) * scale;
-                        floatValues[i * 3 + 1] = (val.g - inputMean) * scale;
-                        floatValues[i * 3 + 2] = (val.r - inputMean) * scale;
+                        floatValues[idx++] = (val.b - inputMean) * scale;
+                        floatValues[idx++] = (val.g - inputMean) * scale;
+                        floatValues[idx++] = (val.r - inputMean) * scale;
                     }
                     else
                     {
-                        floatValues[i * 3 + 0] = (val.r - inputMean) * scale;
-                        floatValues[i * 3 + 1] = (val.g - inputMean) * scale;
-                        floatValues[i * 3 + 2] = (val.b - inputMean) * scale;
+                        floatValues[idx++] = (val.r - inputMean) * scale;
+                        floatValues[idx++] = (val.g - inputMean) * scale;
+                        floatValues[idx++] = (val.b - inputMean) * scale;
                     }
                 }
             }

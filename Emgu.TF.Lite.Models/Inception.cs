@@ -232,7 +232,7 @@ namespace Emgu.TF.Lite.Models
             bool flipUpsideDown=true, 
             bool swapBR = false)
         {
-            NativeImageIO.ReadTensorFromTexture2D<float>(
+            NativeImageIO.ReadTensorFromTexture<float>(
                 texture2D, 
                 _inputTensor.DataPointer, 
                 inputHeight, 
