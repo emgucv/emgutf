@@ -1,4 +1,15 @@
 #!/bin/sh
-cd ../..
-cmake .
+
+cd "$(dirname "$0")"
+
+mkdir -p build
+
+cd build 
+
+#cd ../..
+
+cmake ../../..
+
 make
+
+cd ..

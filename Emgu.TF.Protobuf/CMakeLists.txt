@@ -39,27 +39,28 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
       )
     SET(PROTOBUF_INCLUDE_PATH ${PROTOBUF_TOOLS_PATH}/src)
     
-    if ("${PROTOC_EXE}" STREQUAL "PROTOC_EXE-NOTFOUND")
+    if (("${PROTOC_EXE}" STREQUAL "PROTOC_EXE-NOTFOUND") OR NOT (EXISTS ${PROTOBUF_INCLUDE_PATH}))
       SET(PROTOBUF_TOOLS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/protobuf.tools)
       SET(PROTOC_EXE "${PROTOBUF_TOOLS_PATH}/tools/windows_x64/protoc.exe")
       SET(PROTOBUF_INCLUDE_PATH ${PROTOBUF_TOOLS_PATH}/tools)
       ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
-	PRE_BUILD
-	COMMAND wget ${PROTOBUF_TOOLS_NUGET_URL} -O protobuf.tools.zip
-	COMMAND unzip -u protobuf.tools.zip -d protobuf.tools
-	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
+	    PRE_BUILD
+	    COMMAND wget ${PROTOBUF_TOOLS_NUGET_URL} -O protobuf.tools.zip
+	    COMMAND unzip -u protobuf.tools.zip -d protobuf.tools
+        COMMENT "Downloading and extractiong protobuf from ${PROTOBUF_TOOLS_NUGET_URL} to 'protobuf.tools' folder under ${CMAKE_CURRENT_SOURCE_DIR};"
+	    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
       ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
-	PRE_BUILD
-	COMMAND icacls protoc.exe /grant %USERNAME%:RX
-	WORKING_DIRECTORY "${PROTOBUF_TOOLS_PATH}/tools/windows_x64/"
-	)
+	    PRE_BUILD
+	    COMMAND icacls protoc.exe /grant %USERNAME%:RX
+        COMMENT "Adding execute permission to protoc.exe;"
+	    WORKING_DIRECTORY "${PROTOBUF_TOOLS_PATH}/tools/windows_x64/")
     ELSE()
       get_filename_component(PROTOC_EXEC_EXT "${PROTOC_EXE}" EXT)
       IF("${PROTOC_EXEC_EXT}" STREQUAL "")	
-	#FILE(COPY "${PROTOC_EXE}" "${PROTOC_EXE}.exe")
-	CONFIGURE_FILE("${PROTOC_EXE}" "${PROTOC_EXE}.exe" COPYONLY)
-	SET(PROTOC_EXE "${PROTOC_EXE}.exe")
-	#MESSAGE(STATUS "PROTOC_EXE EXTENSION: ${PROTOC_EXEC_EXT}")
+	    #FILE(COPY "${PROTOC_EXE}" "${PROTOC_EXE}.exe")
+	    CONFIGURE_FILE("${PROTOC_EXE}" "${PROTOC_EXE}.exe" COPYONLY)
+	    SET(PROTOC_EXE "${PROTOC_EXE}.exe")
+	    #MESSAGE(STATUS "PROTOC_EXE EXTENSION: ${PROTOC_EXEC_EXT}")
       ENDIF()
       MESSAGE(STATUS "FOUND PROTOC_EXE: ${PROTOC_EXE}")
     endif()
@@ -68,6 +69,7 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
       PRE_BUILD
       COMMAND wget ${PROTOBUF_TOOLS_NUGET_URL} -O protobuf.tools.zip
       COMMAND unzip -u protobuf.tools.zip -d protobuf.tools
+      COMMENT "Downloading and extractiong protobuf from ${PROTOBUF_TOOLS_NUGET_URL} to 'protobuf.tools' folder under ${CMAKE_CURRENT_SOURCE_DIR};"
       WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
     SET(PROTOBUF_TOOLS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/protobuf.tools)
     SET(PROTOC_EXE "${PROTOBUF_TOOLS_PATH}/tools/macosx_x64/protoc")
@@ -75,6 +77,7 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
     ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
       PRE_BUILD
       COMMAND chmod u+rx ${PROTOC_EXE}
+      COMMENT "Adding execute permission to ${PROTOC_EXE};"
       WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
   ELSEIF(IS_UBUNTU)
     FIND_PROGRAM (PROTOC_EXE 
@@ -84,7 +87,6 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
   ELSE()
     SET(PROTOC_EXE "protoc")
   ENDIF()
-  
   
   SET(PROTO_SOURCE)
   FILE(GLOB PROTO_SOURCE_FILES_FRAME_WORK RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/framework/" "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/framework/*.proto")
@@ -123,9 +125,6 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
     LIST(APPEND PROTO_SOURCE "tensorflow/stream_executor/dnn.proto" )
   ENDIF()
   
-  
-  MESSAGE(STATUS "PROTO_SOURCE: ${PROTO_SOURCE}")
-  
   SET(PROTO_GEN_COMMAND "${PROTOC_EXE}" "--proto_path=." "--proto_path=\"${PROTOBUF_INCLUDE_PATH}\""  "--csharp_out=\"${CMAKE_CURRENT_SOURCE_DIR}\"" "--csharp_opt=file_extension=.g.cs" ${PROTO_SOURCE})
   
   #IF(NOT WIN32)
@@ -143,6 +142,7 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
   ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
     PRE_BUILD
     COMMAND ${PROTO_GEN_COMMAND}
+    COMMENT "PROTO_GEN_COMMAND: ${PROTO_GEN_COMMAND}"
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/"
     )
   

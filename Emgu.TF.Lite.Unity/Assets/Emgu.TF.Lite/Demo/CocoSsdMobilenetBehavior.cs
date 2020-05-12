@@ -22,39 +22,24 @@ using Color = UnityEngine.Color;
 
 public class CocoSsdMobilenetBehavior : MonoBehaviour
 {
-    private WebCamTexture webcamTexture;
-    private Texture2D resultTexture;
-    private Texture2D drawableTexture;
-    private Color32[] data;
-    private byte[] bytes;
-    private WebCamDevice[] devices;
-    public int cameraCount = 0;
-    private bool _textureResized = false;
+    private WebCamTexture _webcamTexture;
+    private Texture2D _drawableTexture;
+    
     private Quaternion baseRotation;
-    private bool _liveCameraView = false;
     private bool _staticViewRendered = false;
-
 
     private CocoSsdMobilenetV3 _mobilenet = null;
 
     public Text DisplayText;
+    private String _displayMessage = String.Empty;
 
-    private void RecognizeAndUpdateText(Texture2D texture)
+    private Annotation[] Recognize(Texture texture)
     {
-        if (_mobilenet == null)
-        {
-            _displayMessage = "Waiting for mobile net model to be loaded...";
-            return;
-        }
-
-        Stopwatch watch = Stopwatch.StartNew();
         CocoSsdMobilenet.RecognitionResult[] results = _mobilenet.Recognize(texture, true, false, 0.5f);
-        watch.Stop();
 
-        if (drawableTexture == null || drawableTexture.width != texture.width ||
-            drawableTexture.height != texture.height)
-            drawableTexture = new Texture2D(texture.width, texture.height, TextureFormat.ARGB32, false);
-        drawableTexture.SetPixels(texture.GetPixels());
+        if (results == null)
+            return null;
+
         Annotation[] annotations = new Annotation[results.Length];
         for (int i = 0; i < results.Length; i++)
         {
@@ -64,37 +49,72 @@ public class CocoSsdMobilenetBehavior : MonoBehaviour
             annotations[i] = annotation;
         }
 
-        String objectNames= String.Empty;
+        return annotations;
+    }
+
+    private void DrawToTexture(Texture texture, Annotation[] annotations, Texture2D results)
+    {
+        if (texture is Texture2D)
+        {
+            Texture2D t2d = texture as Texture2D;
+            _drawableTexture.SetPixels32(t2d.GetPixels32());
+        }
+        else
+        {
+            Texture2D tmp = new Texture2D(texture.width, texture.height);
+            Graphics.CopyTexture(texture, tmp);
+            _drawableTexture.SetPixels32(tmp.GetPixels32());
+        }
+
         foreach (Annotation annotation in annotations)
         {
-            float left = annotation.Rectangle[0] * drawableTexture.width;
-            float top = annotation.Rectangle[1] * drawableTexture.height;
-            float right = annotation.Rectangle[2] * drawableTexture.width;
-            float bottom = annotation.Rectangle[3] * drawableTexture.height;
+            float left = annotation.Rectangle[0] * _drawableTexture.width;
+            float top = annotation.Rectangle[1] * _drawableTexture.height;
+            float right = annotation.Rectangle[2] * _drawableTexture.width;
+            float bottom = annotation.Rectangle[3] * _drawableTexture.height;
 
             Rect scaledLocation = new Rect(left, top, right - left, bottom - top);
 
             scaledLocation.y = texture.height - scaledLocation.y;
             scaledLocation.height = -scaledLocation.height;
-            
-            NativeImageIO.DrawRect(drawableTexture, scaledLocation, Color.red);
 
+            NativeImageIO.DrawRect(_drawableTexture, scaledLocation, Color.red);
+        }
+        results.Apply();
+    }
+
+    private void RecognizeAndUpdateText(Texture texture)
+    {
+        if (_mobilenet == null)
+        {
+            _displayMessage = "Waiting for mobile net model to be loaded...";
+            return;
+        }
+        Stopwatch watch = Stopwatch.StartNew();
+        Annotation[] annotations = Recognize(texture);
+        watch.Stop();
+
+        if (_drawableTexture == null || _drawableTexture.width != texture.width ||
+            _drawableTexture.height != texture.height)
+        {
+            _drawableTexture = new Texture2D(texture.width, texture.height, TextureFormat.ARGB32, false);
+        }
+        DrawToTexture(texture, annotations, _drawableTexture);
+
+        String objectNames = String.Empty;
+        foreach (Annotation annotation in annotations)
+        {
             objectNames = objectNames + annotation.Label + ";";
         }
-        drawableTexture.Apply();
-        //MultiboxGraph.DrawResults(drawableTexture, results, 0.2f, true);
         if (!String.IsNullOrEmpty(objectNames))
             objectNames = String.Format("({0})", objectNames);
-
         String resStr = String.Empty;
-        if (results != null)
+        if (annotations != null)
         {
-            resStr = String.Format("{0} objects detected{1}. Recognition completed in {2} milliseconds.", annotations.Length,  objectNames, watch.ElapsedMilliseconds);
-            //resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", results[0].Label, results[0].Probability * 100, watch.ElapsedMilliseconds);
+            resStr = String.Format("{0} objects detected{1}. Recognition completed in {2} milliseconds.", annotations.Length, objectNames, watch.ElapsedMilliseconds);
         }
 
         _displayMessage = resStr;
-
     }
 
     // Use this for initialization
@@ -104,30 +124,17 @@ public class CocoSsdMobilenetBehavior : MonoBehaviour
 
         _mobilenet = new Emgu.TF.Lite.Models.CocoSsdMobilenetV3();
 
-        _liveCameraView = false;
-        
         WebCamDevice[] devices = WebCamTexture.devices;
-        cameraCount = devices.Length;
-
-        if (cameraCount == 0)
+        if (false)
+        //if (devices.Length != 0)
         {
-            _liveCameraView = false;
-        }
-        else
-        {
-            _liveCameraView = true;
-            webcamTexture = new WebCamTexture(devices[0].name);
-
+            _webcamTexture = new WebCamTexture(devices[0].name);
             baseRotation = transform.rotation;
-            webcamTexture.Play();
-            //data = new Color32[webcamTexture.width * webcamTexture.height];
+            _webcamTexture.Play();
         }
         DisplayText.text = "Downloading model, please wait...";
         StartCoroutine(_mobilenet.Init());
     }
-
-    private String _displayMessage = String.Empty;
-
 
     private void onDownloadProgressChanged(object sender, System.Net.DownloadProgressChangedEventArgs e)
     {
@@ -143,59 +150,21 @@ public class CocoSsdMobilenetBehavior : MonoBehaviour
         }
         else if (!_mobilenet.Imported)
         {
-            _displayMessage = String.Format("Downloading Inception model files, {0} % of file {1}...", _mobilenet.DownloadProgress * 100, _mobilenet.DownloadFileName);
+            _displayMessage = String.Format("Downloading model files, {0} % of file {1}...", _mobilenet.DownloadProgress * 100, _mobilenet.DownloadFileName);
         }
-        else if (_liveCameraView)
+        else if (_webcamTexture != null)
         {
-            if (webcamTexture != null && webcamTexture.didUpdateThisFrame)
+            if (_webcamTexture.didUpdateThisFrame)
             {
-                #region convert the webcam texture to RGBA bytes
-
-                if (data == null || (data.Length != webcamTexture.width * webcamTexture.height))
-                {
-                    data = new Color32[webcamTexture.width * webcamTexture.height];
-                }
-                webcamTexture.GetPixels32(data);
-
-                if (bytes == null || bytes.Length != data.Length * 4)
-                {
-                    bytes = new byte[data.Length * 4];
-                }
-                GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-                Marshal.Copy(handle.AddrOfPinnedObject(), bytes, 0, bytes.Length);
-                handle.Free();
-
-                #endregion
-
-                #region convert the RGBA bytes to texture2D
-
-                if (resultTexture == null || resultTexture.width != webcamTexture.width ||
-                    resultTexture.height != webcamTexture.height)
-                {
-                    resultTexture = new Texture2D(webcamTexture.width, webcamTexture.height, TextureFormat.RGBA32,
-                        false);
-                }
-
-                resultTexture.LoadRawTextureData(bytes);
-                resultTexture.Apply();
-
-                #endregion
-
-                if (!_textureResized)
-                {
-                    ResizeTexture(resultTexture);
-                    _textureResized = true;
-                }
-
-                transform.rotation = baseRotation * Quaternion.AngleAxis(webcamTexture.videoRotationAngle, Vector3.up);
-
-                RecognizeAndUpdateText(resultTexture);
-
-                RenderTexture(drawableTexture);
+                RecognizeAndUpdateText(_webcamTexture);
+                RenderTexture(_drawableTexture);
+                ResizeTexture(_drawableTexture);
                 //count++;
-
             }
-            //DisplayText.text = _displayMessage;
+            else
+            {
+                _displayMessage = "_webcamTexture has not been updated.";
+            }
         }
         else if (!_staticViewRendered)
         {
@@ -205,14 +174,11 @@ public class CocoSsdMobilenetBehavior : MonoBehaviour
             UnityEngine.Debug.Log("Starting recognition");
 
             RecognizeAndUpdateText(texture);
-
-            UnityEngine.Debug.Log("Rendering result");
-
-            RenderTexture(drawableTexture);
-            ResizeTexture(drawableTexture);
+            UnityEngine.Debug.Log("Rendering...");
+            RenderTexture(_drawableTexture);
+            ResizeTexture(_drawableTexture);
 
             _staticViewRendered = true;
-            //DisplayText.text = _displayMessage;
         }
 
         DisplayText.text = _displayMessage;
@@ -228,9 +194,9 @@ public class CocoSsdMobilenetBehavior : MonoBehaviour
     private void ResizeTexture(Texture2D texture)
     {
         Image image = this.GetComponent<Image>();
-        var transform = image.rectTransform;
-        transform.sizeDelta = new Vector2(texture.width, texture.height);
-        transform.position = new Vector3(-texture.width / 2, -texture.height / 2);
-        transform.anchoredPosition = new Vector2(0, 0);
+        var rectTransform = image.rectTransform;
+        rectTransform.sizeDelta = new Vector2(texture.width, texture.height);
+        rectTransform.position = new Vector3(-texture.width / 2, -texture.height / 2);
+        rectTransform.anchoredPosition = new Vector2(0, 0);
     }
 }
