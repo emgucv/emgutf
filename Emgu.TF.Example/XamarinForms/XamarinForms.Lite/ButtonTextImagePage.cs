@@ -172,8 +172,8 @@ namespace Emgu.TF.XamarinForms
                 String pickImgString = "Use Image from";
                 if (labels != null && labels.Length > i)
                     pickImgString = labels[i];
-                bool haveCameraOption;
-                bool havePickImgOption;
+                bool haveCameraOption = false;
+                bool havePickImgOption = false;
                 bool haveLiveCameraOption = false;
                 if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
                 {
