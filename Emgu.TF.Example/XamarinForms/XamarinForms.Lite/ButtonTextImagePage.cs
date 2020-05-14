@@ -24,6 +24,7 @@ using Plugin.Media;
 using Plugin.Media;
 #endif
 
+
 namespace Emgu.TF.XamarinForms
 {
     public partial class ButtonTextImagePage
@@ -163,8 +164,10 @@ namespace Emgu.TF.XamarinForms
             return mats;
 #else*/
 
+#if !__MACOS__
             if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
                 await CrossMedia.Current.Initialize();
+#endif
 
             String[] mats = new String[imageNames.Length];
             for (int i = 0; i < mats.Length; i++)
@@ -190,11 +193,12 @@ namespace Emgu.TF.XamarinForms
                 }
                 else
                 {
+#if !__MACOS__
                     haveCameraOption =
                         (CrossMedia.Current.IsCameraAvailable && CrossMedia.Current.IsTakePhotoSupported);
                     havePickImgOption =
                         CrossMedia.Current.IsPickVideoSupported;
-
+#endif
                 }
 #if __IOS__
                 haveLiveCameraOption = AllowAvCaptureSession;
@@ -242,14 +246,17 @@ namespace Emgu.TF.XamarinForms
                     }
                     else
                     {
+#if !__MACOS__
                         var photoResult = await CrossMedia.Current.PickPhotoAsync();
                         if (photoResult == null) //canceled
                             return null;
                         mats[i] = photoResult.Path;
+#endif
                     }
                 }
                 else if (action.Equals("Photo from Camera"))
                 {
+#if !__MACOS__
                     var mediaOptions = new Plugin.Media.Abstractions.StoreCameraMediaOptions
                     {
                         Directory = "Emgu",
@@ -259,6 +266,7 @@ namespace Emgu.TF.XamarinForms
                     if (takePhotoResult == null) //canceled
                         return null;
                     mats[i] = takePhotoResult.Path;
+#endif
                 } else if (action.Equals("Camera Stream"))
                 {
                     mats[i] = action;
@@ -275,8 +283,8 @@ namespace Emgu.TF.XamarinForms
             }
             //InvokeOnImagesLoaded(mats);
             return mats;
-//#endif
-                }
+
+        }
 
         public void SetImage(String fileName)
         {
