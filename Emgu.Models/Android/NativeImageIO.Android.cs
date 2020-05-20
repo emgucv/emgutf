@@ -174,7 +174,7 @@ namespace Emgu.Models
 
                     int[] intValues = new int[flipped.Width * flipped.Height];
                     float[] floatValues = new float[flipped.Width * flipped.Height * 3];
-                    bmp.GetPixels(intValues, 0, flipped.Width, 0, 0, flipped.Width, flipped.Height);
+                    flipped.GetPixels(intValues, 0, flipped.Width, 0, 0, flipped.Width, flipped.Height);
 
                     for (int i = 0; i < intValues.Length; ++i)
                     {
