@@ -24,7 +24,7 @@ http://www.emgu.com/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PAC
 			<dependency id="System.Drawing.Common" version="[4.5.1]" />
         </group>
     </dependencies>
-    <copyright>${CURRENT_YEAR} ${CPACK_PACKAGE_VENDOR}, all rights reserved</copyright>
+    <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved</copyright>
     <tags>tensorflow emgu emgutf ai </tags>
   </metadata>
   <files>

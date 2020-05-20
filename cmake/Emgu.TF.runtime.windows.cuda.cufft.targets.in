@@ -20,6 +20,6 @@
     <Message Condition="'$(EmguCufftLinkTarget)'!=''" Text="Emgu Cufft nuget package compiling against $(EmguCufftLinkTarget)" Importance="High" />
     <Error Text="'$(EmguCufftErrorMessage)'" Condition="'$(EmguCufftErrorMessage)'!=''" />
     <Message Text="Emgu Cufft dependency Compiling with $(EmguCufftDeployMessage)binary" Condition="'$(EmguCufftDeployMessage)'!=''" Importance="High" />
-    <Message Text="No native binary is deployed by the Emgu DNN package." Condition="'$(EmguCufftDeployMessage)'==''" Importance="High" />
+    <Message Text="No native binary is deployed by the Emgu Cufft package." Condition="'$(EmguCufftDeployMessage)'==''" Importance="High" />
   </Target>
 </Project>

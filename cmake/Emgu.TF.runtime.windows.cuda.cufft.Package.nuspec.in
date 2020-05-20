@@ -13,7 +13,7 @@
 	<summary>This package provides the native CUDA CUFFT dependencies for Emgu.TF.runtime.windows.cuda package</summary>
     <description>This package provides the native CUDA CUFFT dependencies for Emgu.TF.runtime.windows.cuda package</description>
     <releaseNotes>This is the ${EMGU_TF_CUFFT_VERSION} release of CUDA CUFFT. </releaseNotes>
-    <copyright>${CPACK_PACKAGE_VENDOR}, All Rights Reserved.</copyright>
+    <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved</copyright>
     <tags>emgu tensorflow cuda</tags>
   </metadata>
   <files>

@@ -797,6 +797,7 @@ IF(HAVE_WINDESKTOP)
 	  MESSAGE(FATAL_ERROR "Not able to find NPP header")
 	  ENDIF()
       
+	  SET(EMGU_TF_CUDA_VERSION "${npp_major}.${npp_minor}.${npp_build}") 
       SET(EMGU_TF_CUFFT_VERSION "${npp_major}.${npp_minor}.${npp_build}") 
       #SET(CUDA_TOOLKIT_ROOT_DIR "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v${npp_major}.${npp_minor}")
       SET(CUDA_TOOLKIT_ROOT_DIR "${BAZEL_CUDA_TOOLKIT_PATH}")
@@ -816,13 +817,14 @@ IF(HAVE_WINDESKTOP)
 	    "${CUDA_TOOLKIT_ROOT_DIR}/bin/cublas${CUDA_POSTFIX}_${NPP_POSTFIX}.dll"
 	    "${CUDA_TOOLKIT_ROOT_DIR}/bin/curand${CUDA_POSTFIX}_${NPP_POSTFIX}.dll"
 	    "${CUDA_TOOLKIT_ROOT_DIR}/bin/cusolver${CUDA_POSTFIX}_${NPP_POSTFIX}.dll"
+		"${CUDA_TOOLKIT_ROOT_DIR}/bin/cusparse${CUDA_POSTFIX}_${NPP_POSTFIX}.dll"
 	  )
       SET(EMGU_TF_CUFFT_FILE_VERSION "${NPP_POSTFIX}")
 #    ELSE()
 #      MESSAGE(FATAL_ERROR "-- Unable to find CUFFT version")
     ENDIF()
     
-    MESSAGE(STATUS "CUDA release using CUFFT: ${EMGU_TF_CUFFT_VERSION}; File Version: ${EMGU_TF_CUFFT_FILE_VERSION}")	
+    MESSAGE(STATUS "CUDA release using CUDA runtime: ${EMGU_TF_CUDA_VERSION}; File Version: ${EMGU_TF_CUFFT_FILE_VERSION}")	
     
     SET(CMAKE_GENERATED_DNN_VERSION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/tensorflow/contrib/cmake/emgu.tf.dnn.version.txt")
     
@@ -868,16 +870,23 @@ IF(HAVE_WINDESKTOP)
     
     SET(EMGU_TF_DNN_ID "Emgu.TF.runtime.windows.cuda.dnn")
     SET(EMGU_TF_CUFFT_ID "Emgu.TF.runtime.windows.cuda.cufft")
+	SET(EMGU_TF_CUDART_ID "Emgu.TF.runtime.windows.cuda.rt")
     
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_DNN_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_DNN_ID}/Package.nuspec)
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_DNN_ID}.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_DNN_ID}/${EMGU_TF_DNN_ID}.targets)
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_CUFFT_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_CUFFT_ID}/Package.nuspec)
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_CUFFT_ID}.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_CUFFT_ID}/${EMGU_TF_CUFFT_ID}.targets)
-    SET(EMGUTF_WINDOWS_NUGET_DEPENDENCY "${EMGUTF_WINDOWS_NUGET_DEPENDENCY}
+	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_CUDART_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_CUDART_ID}/Package.nuspec)
+	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_CUDART_ID}.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_CUDART_ID}/${EMGU_TF_CUDART_ID}.targets)
+	
+	SET(EMGUTF_CUDART_NUGET_DEPENDENCY "${EMGUTF_CUDART_NUGET_DEPENDENCY}
 			<dependency id=\"${EMGU_TF_DNN_ID}\" version=\"[${EMGU_TF_DNN_VERSION}]\" />
 			<dependency id=\"${EMGU_TF_CUFFT_ID}\" version=\"[${EMGU_TF_CUFFT_VERSION}]\" />")
+			
+    SET(EMGUTF_WINDOWS_NUGET_DEPENDENCY "${EMGUTF_WINDOWS_NUGET_DEPENDENCY}
+			<dependency id=\"${EMGU_TF_CUDART_ID}\" version=\"[${EMGU_TF_CUDA_VERSION}]\" />")
     SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "${EMGUTF_WINDOWS_NUGET_FILE_LIST} 
-	<file src=\"..\\..\\..\\lib\\x64\\*.dll\" exclude=\"..\\..\\..\\lib\\x64\\cudnn*.dll;..\\..\\..\\lib\\x64\\cufft*.dll\" target=\"build\\x64\" />")
+	<file src=\"..\\..\\..\\lib\\x64\\*.dll\" exclude=\"..\\..\\..\\lib\\x64\\cu*.dll;\" target=\"build\\x64\" />")
   ELSE()
     SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "${EMGUTF_WINDOWS_NUGET_FILE_LIST} 
 	<file src=\"..\\..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />")
@@ -943,7 +952,7 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.macos.Pack
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.android.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/runtime.android.Emgu.TF.Lite/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.ios.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/runtime.ios.Emgu.TF.Lite/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.ubuntu.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/runtime.ubuntu.Emgu.TF.Lite/Package.nuspec)
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.ubuntu.ackage.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/runtime.ubuntu.Emgu.TF/Package.nuspec)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.ubuntu.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/runtime.ubuntu.Emgu.TF/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.raspbian.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/runtime.raspbian.Emgu.TF.Lite/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.raspbian.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/runtime.raspbian.Emgu.TF/Package.nuspec)
 
