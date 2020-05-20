@@ -18,18 +18,15 @@ using Emgu.TF.Lite.Models;
 using System.IO;
 using System.Diagnostics;
 using System.Drawing;
+using UnityEngine.Experimental.Rendering;
 using Color = UnityEngine.Color;
 
 public class CocoSsdMobilenetBehavior : MonoBehaviour
 {
     private WebCamTexture _webcamTexture;
     private Texture2D _drawableTexture;
-    
-    private Quaternion baseRotation;
     private bool _staticViewRendered = false;
-
     private CocoSsdMobilenetV3 _mobilenet = null;
-
     public Text DisplayText;
     private String _displayMessage = String.Empty;
 
@@ -61,7 +58,7 @@ public class CocoSsdMobilenetBehavior : MonoBehaviour
         }
         else
         {
-            Texture2D tmp = new Texture2D(texture.width, texture.height);
+            Texture2D tmp = new Texture2D(texture.width, texture.height, GraphicsFormat.R8G8B8A8_SRGB, texture.mipmapCount, TextureCreationFlags.None);
             Graphics.CopyTexture(texture, tmp);
             _drawableTexture.SetPixels32(tmp.GetPixels32());
         }
@@ -120,16 +117,17 @@ public class CocoSsdMobilenetBehavior : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        bool tryUseCamera = false;
+
         bool loaded = Emgu.TF.Lite.TfLiteInvoke.CheckLibraryLoaded();
 
         _mobilenet = new Emgu.TF.Lite.Models.CocoSsdMobilenetV3();
 
         WebCamDevice[] devices = WebCamTexture.devices;
-        if (false)
-        //if (devices.Length != 0)
+
+        if (tryUseCamera && devices.Length != 0)
         {
             _webcamTexture = new WebCamTexture(devices[0].name);
-            baseRotation = transform.rotation;
             _webcamTexture.Play();
         }
         DisplayText.text = "Downloading model, please wait...";
@@ -158,8 +156,20 @@ public class CocoSsdMobilenetBehavior : MonoBehaviour
             {
                 RecognizeAndUpdateText(_webcamTexture);
                 RenderTexture(_drawableTexture);
-                ResizeTexture(_drawableTexture);
-                //count++;
+                RawImage image = this.GetComponent<RawImage>();
+                if (image.texture != _drawableTexture)
+                    image.texture = _drawableTexture;
+
+                var rectTransform = image.rectTransform;
+                rectTransform.sizeDelta = new Vector2(_drawableTexture.width, _drawableTexture.height);
+                rectTransform.position = new Vector3(-_drawableTexture.width / 2, -_drawableTexture.height / 2);
+                rectTransform.anchoredPosition = new Vector2(0, 0);
+
+                float scaleY = _webcamTexture.videoVerticallyMirrored ? -1.0f : 1.0f;
+                rectTransform.localScale = new Vector3(1.0f, scaleY, 1.0f);
+
+                int orient = -_webcamTexture.videoRotationAngle;
+                rectTransform.localEulerAngles = new Vector3(0, 0, orient);
             }
             else
             {
@@ -175,6 +185,7 @@ public class CocoSsdMobilenetBehavior : MonoBehaviour
 
             RecognizeAndUpdateText(texture);
             UnityEngine.Debug.Log("Rendering...");
+            
             RenderTexture(_drawableTexture);
             ResizeTexture(_drawableTexture);
 
@@ -184,16 +195,16 @@ public class CocoSsdMobilenetBehavior : MonoBehaviour
         DisplayText.text = _displayMessage;
     }
 
-
-    private void RenderTexture(Texture2D texture)
+    private void RenderTexture(Texture texture)
     {
-        Image image = this.GetComponent<Image>();
-        image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        RawImage image = this.GetComponent<RawImage>();
+        if (image.texture != texture)
+            image.texture = texture;
     }
 
-    private void ResizeTexture(Texture2D texture)
+    private void ResizeTexture(Texture texture)
     {
-        Image image = this.GetComponent<Image>();
+        RawImage image = this.GetComponent<RawImage>();
         var rectTransform = image.rectTransform;
         rectTransform.sizeDelta = new Vector2(texture.width, texture.height);
         rectTransform.position = new Vector3(-texture.width / 2, -texture.height / 2);
