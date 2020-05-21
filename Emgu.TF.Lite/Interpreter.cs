@@ -130,10 +130,10 @@ namespace Emgu.TF.Lite
             get
             {
                 int[] outputIdx = OutputIndices;
-                Tensor[] inputs = new Tensor[outputIdx.Length];
-                for (int i = 0; i < inputs.Length; i++)
-                    inputs[i] = GetTensor(outputIdx[i]);
-                return inputs;
+                Tensor[] outputs = new Tensor[outputIdx.Length];
+                for (int i = 0; i < outputs.Length; i++)
+                    outputs[i] = GetTensor(outputIdx[i]);
+                return outputs;
             }
 
         }

@@ -28,19 +28,28 @@ public class MobilenetBehavior : MonoBehaviour
     private String _displayMessage = String.Empty;
 
     // Use this for initialization
-    void Start()
+    IEnumerator Start()
     {
+        bool tryUseCamera = true;
         bool loaded = Emgu.TF.Lite.TfLiteInvoke.CheckLibraryLoaded();
 
         _mobilenet = new Emgu.TF.Lite.Models.Mobilenet();
 
         WebCamDevice[] devices = WebCamTexture.devices;
-        if (false)
-        //if (devices.Length != 0)
+        
+        if (tryUseCamera && devices.Length != 0)
         {
-            _webcamTexture = new WebCamTexture(devices[0].name);
-            baseRotation = transform.rotation;
-            _webcamTexture.Play();
+            yield return Application.RequestUserAuthorization(UserAuthorization.WebCam);
+            if (Application.HasUserAuthorization(UserAuthorization.WebCam))
+            {
+                UnityEngine.Debug.Log("webcam use authorized");
+                _webcamTexture = new WebCamTexture(devices[0].name);
+
+                RawImage image = this.GetComponent<RawImage>();
+                image.texture = _webcamTexture;
+
+                _webcamTexture.Play();
+            }
         }
         DisplayText.text = "Downloading model, please wait...";
         StartCoroutine(_mobilenet.Init());
@@ -64,7 +73,18 @@ public class MobilenetBehavior : MonoBehaviour
                 transform.rotation = baseRotation * Quaternion.AngleAxis(_webcamTexture.videoRotationAngle, Vector3.up);
 
                 RecognizeAndUpdateText(_webcamTexture);
-                RenderTexture(_webcamTexture);
+                RawImage image = this.GetComponent<RawImage>();
+                var rectTransform = image.rectTransform;
+                rectTransform.sizeDelta = new Vector2(_webcamTexture.width, _webcamTexture.height);
+                rectTransform.position = new Vector3(-_webcamTexture.width / 2, -_webcamTexture.height / 2);
+                rectTransform.anchoredPosition = new Vector2(0, 0);
+
+                float scaleY = _webcamTexture.videoVerticallyMirrored ? -1.0f : 1.0f;
+                rectTransform.localScale = new Vector3(1.0f, scaleY, 1.0f);
+
+                int orient = -_webcamTexture.videoRotationAngle;
+                rectTransform.localEulerAngles = new Vector3(0, 0, orient);
+
             }
             else
             {

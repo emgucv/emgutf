@@ -290,8 +290,8 @@ namespace Emgu.TF.Lite.Models
             int labelOffset = 1;
             for (int i = 0; i < numDetections; i++)
             {
-                if (classes[i] == 0) //background class
-                    continue;
+                //if (classes[i] == 0) //background class
+                //    continue;
 
                 if (scoreThreshold > 0.0f && scores[i] < scoreThreshold)
                     continue;
