@@ -192,6 +192,9 @@ namespace Emgu.TF
                 }
             }
 
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+            bool success = true;
+#else
             String oldDir = Environment.CurrentDirectory;
             if (!String.IsNullOrEmpty(loadDirectory) && Directory.Exists(loadDirectory))
                 Environment.CurrentDirectory = loadDirectory;
@@ -217,7 +220,7 @@ namespace Emgu.TF
                     System.Diagnostics.Trace.WriteLine(String.Format("File {0} cannot be loaded.", fullPath));
                 success &= fileExistAndLoaded;
             }
-
+#endif
 
 
             if (success)
@@ -235,7 +238,11 @@ namespace Emgu.TF
             {
                 System.Diagnostics.Trace.WriteLine(String.Format("Failed to load tensorflow binary from {0}", loadDirectory));
             }
+
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+#else
             Environment.CurrentDirectory = oldDir;
+#endif
             return success;
         }
 
