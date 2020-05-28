@@ -155,15 +155,17 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
         DisplayText.text = _displayMessage;
     }
 
-    private void RenderTexture(Texture2D texture)
+    private void RenderTexture(Texture texture)
     {
-        Image image = this.GetComponent<Image>();
-        image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        RawImage image = this.GetComponent<RawImage>();
+        if (image.texture != texture)
+            image.texture = texture;
+        //image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
     }
 
-    private void ResizeTexture(Texture2D texture)
+    private void ResizeTexture(Texture texture)
     {
-        Image image = this.GetComponent<Image>();
+        RawImage image = this.GetComponent<RawImage>();
         var transform = image.rectTransform;
         transform.sizeDelta = new Vector2(texture.width, texture.height);
         transform.position = new Vector3(-texture.width / 2, -texture.height / 2);
