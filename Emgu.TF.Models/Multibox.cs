@@ -12,7 +12,7 @@ using System.Text;
 using Emgu.Models;
 using System.Net;
 using System.ComponentModel;
-
+using System.Globalization;
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
 using UnityEngine;
 #else
@@ -199,7 +199,8 @@ namespace Emgu.TF.Models
                 foreach (var token in tokens)
                 {
                     float result = 0;
-                    if (float.TryParse(token.Trim(), out result))
+                    //if (float.TryParse(token.Trim(), out result))
+                    if (float.TryParse(token.Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out result))
                         priors.Add(result);
                 }
             }
