@@ -37,8 +37,6 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        _multiboxGraph = new MultiboxGraph();
-
         bool loaded = TfInvoke.CheckLibraryLoaded();
         //DisplayText.text = String.Format("Tensorflow library loaded: {0}", loaded);
 
@@ -61,7 +59,6 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
             webcamTexture.Play(); 
         }*/
 
-        StartCoroutine(_multiboxGraph.Init());
     }
 
     private String _displayMessage = String.Empty;
@@ -69,8 +66,12 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (!_multiboxGraph.Imported)
+        if (_multiboxGraph == null)
+        {
+            _multiboxGraph = new MultiboxGraph();
+            StartCoroutine(_multiboxGraph.Init());
+        }
+        else if (!_multiboxGraph.Imported)
         {
             _displayMessage = String.Format("Downloading multibox model files, {0} % of file {1}...", _multiboxGraph.DownloadProgress * 100, _multiboxGraph.DownloadFileName);
         } else if (_liveCameraView)
@@ -137,7 +138,6 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
 
             //byte[] raw = ImageIO.EncodeJpeg(imageTensor, 128.0f, 128.0f);
             //System.IO.File.WriteAllBytes("surfers_out.jpg", raw);
-
 
             MultiboxGraph.Result[] results = _multiboxGraph.Detect(imageTensor);
 
