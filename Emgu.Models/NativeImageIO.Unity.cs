@@ -101,6 +101,7 @@ namespace Emgu.Models
             Texture2D resized = new Texture2D(inputWidth, inputHeight);
             Resize(texture, resized);
             Color32[] colors = resized.GetPixels32();
+            Texture2D.Destroy(resized);
 
             float[] floatValues = new float[colors.Length * 3];
             int idx = 0;
