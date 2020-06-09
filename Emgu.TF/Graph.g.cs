@@ -17,8 +17,6 @@ namespace Emgu.TF
               // Skipped function _Arg
         // Skipped function _ArrayToList
         // Skipped function _ConfigureDistributedTPU
-        // Skipped function _CopyFromGpuToHost
-        // Skipped function _CopyFromHostToGpu
         // Skipped function _DeviceArg
         // Skipped function _DeviceRetval
         // Skipped function _DisconnectHostFromDistributedTPUSystem
