@@ -74,6 +74,7 @@ namespace Emgu.TF.Lite
         /// </summary>
         public const UnmanagedType BoolToIntMarshalType = UnmanagedType.Bool;
 
+#if !(UNITY_ANDROID || UNITY_IOS || UNITY_EDITOR || UNITY_STANDALONE)
         /// <summary>
         /// Attempts to load tensorflow modules from the specific location
         /// </summary>
@@ -87,10 +88,7 @@ namespace Emgu.TF.Lite
             if (loadDirectory == null)
             {
                 String subfolder = String.Empty;
-#if UNITY_EDITOR_WIN
-                subfolder = IntPtr.Size == 8 ? "x86_64" : "x86";
-#elif UNITY_STANDALONE_WIN
-#else
+
                 if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows)
                     //|| System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux)
 				)
@@ -109,7 +107,6 @@ namespace Emgu.TF.Lite
                         throw new Exception("Emgu TF Lite is only compatible with 64bit mode in Windows (not compatible with 32bit x86 mode)");
                     }
                 }
-#endif
 
                 System.Reflection.Assembly asm = typeof(TfLiteInvoke).Assembly; //System.Reflection.Assembly.GetExecutingAssembly();
                 if ((String.IsNullOrEmpty(asm.Location) || !System.IO.File.Exists(asm.Location)))
@@ -147,23 +144,6 @@ namespace Emgu.TF.Lite
                 if (monoAndroidAssembly == null)
                 {
                     //Not running on Android
-#if (UNITY_STANDALONE_WIN && !UNITY_EDITOR_WIN)
-				    FileInfo file = new FileInfo(asm.Location);
-				    DirectoryInfo directory = file.Directory;
-                    if (directory.Parent != null)
-                    {
-                       String unityAltFolder = Path.Combine(directory.Parent.FullName, "Plugins");
-              
-                       if (Directory.Exists(unityAltFolder))
-                          loadDirectory = unityAltFolder;
-                       else
-                       {
-                          Trace.WriteLine("No suitable directory found to load unmanaged modules");
-                          return false;
-                       }
-                    }
-#elif UNITY_ANDROID
-#else
                     if (!Directory.Exists(loadDirectory))
                     {
                         //try to find an alternative loadDirectory path
@@ -179,60 +159,21 @@ namespace Emgu.TF.Lite
                         {
                             FileInfo file = new FileInfo(asm.Location);
                             DirectoryInfo directory = file.Directory;
-#if UNITY_EDITOR_WIN
-                        if (directory.Parent != null && directory.Parent.Parent != null)
-                            {
-                                String unityAltFolder =
-                                Path.Combine(
-                                    Path.Combine(Path.Combine(Path.Combine(directory.Parent.Parent.FullName, "Assets"), "Emgu.TF.Lite"), "Plugins"),
-                                    subfolder);
-                     
-			                    Trace.WriteLine("Trying unityAltFolder: " + unityAltFolder);
-                                if (Directory.Exists(unityAltFolder))
-                                loadDirectory = unityAltFolder;
-                                else
-                                {
-                                Trace.WriteLine("No suitable directory found to load unmanaged modules");
-                                return false;
-                                }
-                    
-                            }
-                            else
-#elif (UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX)
-                            if (directory.Parent != null && directory.Parent.Parent != null)
-                            {
-                                String unityAltFolder =
-                                Path.Combine(Path.Combine(Path.Combine(
-                                    Path.Combine(Path.Combine(directory.Parent.Parent.FullName, "Assets"), "Plugins"),
-                                    "emgutflite.bundle"), "Contents"), "MacOS");
-                     
-                                if (Directory.Exists(unityAltFolder))
-                                {
-                                    loadDirectory = unityAltFolder;
-                                }
-                                else
-                                {
-                                    return false;
-                                }                     
-                            }
-                            else       
-#endif
-                            {
-                                System.Diagnostics.Trace.WriteLine("No suitable directory found to load unmanaged modules, please make sure a Emgu.TF.Lite.Runtime project / nuget package is referenced.");
-                                return false;
-                            }
+
+                            System.Diagnostics.Trace.WriteLine("No suitable directory found to load unmanaged modules, please make sure a Emgu.TF.Lite.Runtime project / nuget package is referenced.");
+                            return false;
+
                         }
                         else
                             loadDirectory = altLoadDirectory;
                     }
-#endif
+
                 }
             }
 
             String oldDir = Environment.CurrentDirectory;
             if (!String.IsNullOrEmpty(loadDirectory) && Directory.Exists(loadDirectory))
                 Environment.CurrentDirectory = loadDirectory;
-
 
             System.Diagnostics.Trace.WriteLine(String.Format("Loading tensorflow lite binary from {0}", loadDirectory));
             bool success = true;
@@ -267,11 +208,6 @@ namespace Emgu.TF.Lite
         /// <returns>On Windows, "{0}".dll will be returned; On Linux, "lib{0}.so" will be returned; Otherwise {0} is returned.</returns>
         public static String GetModuleFormatString()
         {
-#if UNITY_EDITOR_WIN
-            return "{0}.dll";
-#elif UNITY_EDITOR_OSX
-            return "lib{0}.dylib";
-#else
             String formatString = "{0}";
             if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
                 formatString = "{0}.dll";
@@ -280,8 +216,9 @@ namespace Emgu.TF.Lite
             else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
                 formatString = "lib{0}.dylib";
             return formatString;
-#endif
         }
+
+#endif
 
         /// <summary>
         /// Attempts to load tensorflow modules from the specific location
@@ -291,7 +228,7 @@ namespace Emgu.TF.Lite
         public static bool DefaultLoadUnmanagedModules(String[] modules)
         {
             bool libraryLoaded = true;
-            
+#if !(UNITY_ANDROID || UNITY_IOS || UNITY_EDITOR || UNITY_STANDALONE)
             System.Reflection.Assembly monoAndroidAssembly = Emgu.TF.Util.Toolbox.FindAssembly("Mono.Android.dll");
             if (monoAndroidAssembly != null)
             {
@@ -323,28 +260,7 @@ namespace Emgu.TF.Lite
                 }
             }
 
-#if UNITY_ANDROID && !UNITY_EDITOR
-
-            UnityEngine.AndroidJavaObject jo = new UnityEngine.AndroidJavaObject("java.lang.System");
-            foreach (String module in modules)
-            {
-                try
-                {
-                    Console.WriteLine(string.Format("Trying to load {0}.", module));
-                    jo.CallStatic("loadLibrary", module); 
-                    Console.WriteLine(string.Format("Loaded {0}.", module));
-                }
-                catch (Exception e)
-                {
-                    libraryLoaded = false;
-                    Console.WriteLine(String.Format("Failed to load {0}: {1}", module, e.Message));
-                }
-            }
-#elif __IOS__ || UNITY_IOS || NETFX_CORE
-#else
-#if !(UNITY_EDITOR || UNITY_STANDALONE || UNITY_ANDROID)
             if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
-#endif
             {
                 String formatString = GetModuleFormatString();
                 for (int i = 0; i < modules.Length; ++i)
@@ -372,7 +288,6 @@ namespace Emgu.TF.Lite
                 Trace.WriteLine("Failed to load native binary. Please make sure a proper runtime.{platform}.Emgu.TF.Lite nuget package is added, or make sure the native binary can be found in the folder of executable.");
             }
 
-#if (!UNITY_IOS) || UNITY_EDITOR
             try
             {
                 //Use the custom error handler
@@ -385,7 +300,6 @@ namespace Emgu.TF.Lite
                 Trace.WriteLine(errMsg);
                 throw new DllNotFoundException(errMsg, e);
             }
-#endif
         }
 
         /// <summary>
