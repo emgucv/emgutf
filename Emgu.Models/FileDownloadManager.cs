@@ -47,7 +47,6 @@ namespace Emgu.Models
         /// Add a file to download
         /// </summary>
         /// <param name="url">The url of the file to be downloaded</param>
-        /// <param name="localSubfolder">The local subfolder name to download the model to.</param>
         public void AddFile(String url, String localSubfolder)
         {
             _files.Add(new DownloadableFile(url, localSubfolder));
