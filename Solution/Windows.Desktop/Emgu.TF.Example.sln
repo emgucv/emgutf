@@ -9,8 +9,6 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Util.Shared", "..\.
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Models.Shared", "..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.shproj", "{752279F0-17EF-4EC8-857C-8F5F897AF0E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CVInterop", "..\..\Emgu.TF.Example\CVInterop\CVInterop.csproj", "{149E78F6-349D-42B7-8E03-3EDEB6EF348E}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.Models.Shared", "..\..\Emgu.Models\Emgu.Models.Shared.shproj", "{8EDCE0C8-BA71-4396-9428-35D05877258C}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "XamarinForms", "..\..\Emgu.TF.Example\XamarinForms\XamarinForms\XamarinForms.shproj", "{26BDB58D-52D9-4AD1-9205-BE5792781A98}"
@@ -35,12 +33,13 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Ubuntu", ".
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Raspbian", "..\..\Emgu.TF.Runtime\Raspbian\Emgu.TF.Runtime.Raspbian.shproj", "{61FEA54E-4DD5-4552-BCFC-860610295873}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVInterop.NetCore", "..\..\Emgu.TF.Example\CVInterop\CVInterop.NetCore.csproj", "{E9C01169-799F-46B3-B4BC-E11ED7D39907}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms\XamarinForms.projitems*{0a7a7b86-35e5-4887-b337-96c2f1b1fcf8}*SharedItemsImports = 4
 		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Runtime.Windows.projitems*{0a7a7b86-35e5-4887-b337-96c2f1b1fcf8}*SharedItemsImports = 4
 		..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Runtime.Ubuntu.projitems*{0f30ec5f-39dd-4a62-ad79-14ebcb894208}*SharedItemsImports = 13
-		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Runtime.Windows.projitems*{149e78f6-349d-42b7-8e03-3edeb6ef348e}*SharedItemsImports = 4
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{1e761de9-f20c-4133-9c52-f790eebce34a}*SharedItemsImports = 5
 		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{1e761de9-f20c-4133-9c52-f790eebce34a}*SharedItemsImports = 5
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms\XamarinForms.projitems*{26bdb58d-52d9-4ad1-9205-be5792781a98}*SharedItemsImports = 13
@@ -59,6 +58,12 @@ Global
 		..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Runtime.Mac.projitems*{b1e7d925-5d1c-4a1e-9ba0-35163883a110}*SharedItemsImports = 13
 		..\..\Emgu.TF\Emgu.TF.Shared.projitems*{d47d776e-9970-4552-bc8a-24cadcbea009}*SharedItemsImports = 13
 		..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems*{db17df2e-d7a4-4cd4-b4d9-fc3447e5afd8}*SharedItemsImports = 5
+		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{e9c01169-799f-46b3-b4bc-e11ed7d39907}*SharedItemsImports = 5
+		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{e9c01169-799f-46b3-b4bc-e11ed7d39907}*SharedItemsImports = 5
+		..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems*{e9c01169-799f-46b3-b4bc-e11ed7d39907}*SharedItemsImports = 5
+		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Runtime.Windows.projitems*{e9c01169-799f-46b3-b4bc-e11ed7d39907}*SharedItemsImports = 5
+		..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems*{e9c01169-799f-46b3-b4bc-e11ed7d39907}*SharedItemsImports = 5
+		..\..\Emgu.TF\Emgu.TF.Shared.projitems*{e9c01169-799f-46b3-b4bc-e11ed7d39907}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,18 +74,6 @@ Global
 		Release|iPhoneSimulator = Release|iPhoneSimulator
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{149E78F6-349D-42B7-8E03-3EDEB6EF348E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{149E78F6-349D-42B7-8E03-3EDEB6EF348E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{149E78F6-349D-42B7-8E03-3EDEB6EF348E}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{149E78F6-349D-42B7-8E03-3EDEB6EF348E}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{149E78F6-349D-42B7-8E03-3EDEB6EF348E}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{149E78F6-349D-42B7-8E03-3EDEB6EF348E}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{149E78F6-349D-42B7-8E03-3EDEB6EF348E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{149E78F6-349D-42B7-8E03-3EDEB6EF348E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{149E78F6-349D-42B7-8E03-3EDEB6EF348E}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{149E78F6-349D-42B7-8E03-3EDEB6EF348E}.Release|iPhone.Build.0 = Release|Any CPU
-		{149E78F6-349D-42B7-8E03-3EDEB6EF348E}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{149E78F6-349D-42B7-8E03-3EDEB6EF348E}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Debug|iPhone.ActiveCfg = Debug|Any CPU
@@ -141,6 +134,18 @@ Global
 		{DB17DF2E-D7A4-4CD4-B4D9-FC3447E5AFD8}.Release|iPhone.Build.0 = Release|Any CPU
 		{DB17DF2E-D7A4-4CD4-B4D9-FC3447E5AFD8}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{DB17DF2E-D7A4-4CD4-B4D9-FC3447E5AFD8}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{E9C01169-799F-46B3-B4BC-E11ED7D39907}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9C01169-799F-46B3-B4BC-E11ED7D39907}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9C01169-799F-46B3-B4BC-E11ED7D39907}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{E9C01169-799F-46B3-B4BC-E11ED7D39907}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{E9C01169-799F-46B3-B4BC-E11ED7D39907}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{E9C01169-799F-46B3-B4BC-E11ED7D39907}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{E9C01169-799F-46B3-B4BC-E11ED7D39907}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9C01169-799F-46B3-B4BC-E11ED7D39907}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9C01169-799F-46B3-B4BC-E11ED7D39907}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{E9C01169-799F-46B3-B4BC-E11ED7D39907}.Release|iPhone.Build.0 = Release|Any CPU
+		{E9C01169-799F-46B3-B4BC-E11ED7D39907}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{E9C01169-799F-46B3-B4BC-E11ED7D39907}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
