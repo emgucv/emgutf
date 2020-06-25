@@ -66,6 +66,19 @@ namespace Emgu.Models
         }
 
         /// <summary>
+        /// Return the directory where the local file is
+        /// </summary>
+        public String LocalFolder
+        {
+            get
+            {
+                String localFile = LocalFile;
+                System.IO.FileInfo fi = new FileInfo(localFile);
+                return fi.DirectoryName;
+            }
+        }
+
+        /// <summary>
         /// The local path to the local file given the file name
         /// </summary>
         /// <param name="fileName">The name of the file</param>

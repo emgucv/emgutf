@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using Emgu.TF.Util;
 using System.Runtime.InteropServices;
@@ -29,16 +30,28 @@ namespace Emgu.TF
         }
 
         /// <summary>
+        /// The buffer that holds the MetaGraphDef if the session is created from a saved model.
+        /// </summary>
+        public Buffer MetaGraphDefBuffer
+        {
+            get
+            {
+                return _metaGraphDef;
+            }
+
+        }
+
+        /// <summary>
         /// Create a Session from a SavedModel. If successful, populates the internal graph with the contents of the Graph and
         /// <paramref name="metaGraphDef"/> with the MetaGraphDef of the loaded model.
         /// </summary>
         /// <param name="exportDir">Must be set to the path of the exported SavedModel.</param>
-        /// <param name="tags">Must include the set of tags used to identify one MetaGraphDef in the SavedModel.</param>
+        /// <param name="tags">Must include the set of tags used to identify one MetaGraphDef in the SavedModel. Could be "serve", "tpu", "gpu", "train" or other values.</param>
         /// <param name="sessionOptions">Session options</param>
         /// <param name="runOptions"></param>
         /// <param name="status">The status</param>
         public Session(
-            String exportDir, 
+            String exportDir,
             String[] tags, 
             SessionOptions sessionOptions = null, 
             Buffer runOptions = null,
@@ -48,12 +61,24 @@ namespace Emgu.TF
             _graphNeedDispose = true;
             _metaGraphDef = new Buffer();
 
-            IntPtr exportDirPtr = Marshal.StringToHGlobalAuto(exportDir);
+            IntPtr exportDirPtr = Marshal.StringToHGlobalAnsi(exportDir);
 
-            IntPtr[] tagsNative = new IntPtr[tags.Length];
-            for (int i = 0; i < tags.Length; i++)
-                tagsNative[i] = Marshal.StringToHGlobalAuto(tags[i]);
-            GCHandle tagsNativeHandle = GCHandle.Alloc(tagsNative, GCHandleType.Pinned);
+            IntPtr[] tagsNative;
+            GCHandle tagsNativeHandle;
+            IntPtr tagsNativePointer = IntPtr.Zero;
+            if (tags != null)
+            {
+                tagsNative = new IntPtr[tags.Length];
+                for (int i = 0; i < tags.Length; i++)
+                    tagsNative[i] = Marshal.StringToHGlobalAnsi(tags[i]);
+                tagsNativeHandle = GCHandle.Alloc(tagsNative, GCHandleType.Pinned);
+                tagsNativePointer = tagsNativeHandle.AddrOfPinnedObject();
+            }
+            else
+            {
+                tagsNative = new IntPtr[0];
+            }
+
             try
             {
                 using (StatusChecker checker = new StatusChecker(status))
@@ -61,24 +86,29 @@ namespace Emgu.TF
                         sessionOptions,
                         runOptions,
                         exportDirPtr,
-                        tagsNativeHandle.AddrOfPinnedObject(),
+                        tagsNativePointer,
                         tagsNative.Length,
                         _graph,
                         _metaGraphDef,
                         checker.Status
                         );
             }
-            catch (Exception)
+            catch (Exception excpt)
             {
+                Trace.WriteLine(excpt.Message);
                 throw;
             }
             finally
             {
                 Marshal.FreeHGlobal(exportDirPtr);
-                tagsNativeHandle.Free();
-                for (int i = 0; i < tags.Length; i++)
+
+                if (tags != null)
                 {
-                    Marshal.FreeHGlobal(tagsNative[i]);
+                    tagsNativeHandle.Free();
+                    for (int i = 0; i < tags.Length; i++)
+                    {
+                        Marshal.FreeHGlobal(tagsNative[i]);
+                    }
                 }
             }
             
@@ -127,6 +157,13 @@ namespace Emgu.TF
             if (_graphNeedDispose && _graph != null)
             {
                 _graph.Dispose();
+                _graph = null;
+            }
+
+            if (_metaGraphDef != null)
+            {
+                _metaGraphDef.Dispose();
+                _metaGraphDef = null;
             }
 
             _graph = null;
