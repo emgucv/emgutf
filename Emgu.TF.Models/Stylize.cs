@@ -35,7 +35,6 @@ namespace Emgu.TF.Models
 
 
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
-        //public event System.ComponentModel.AsyncCompletedEventHandler OnDownloadCompleted;
 
         public async Task Init(String[] modelFiles = null, String downloadUrl = null, String localModelFolder = "stylize")
         {

@@ -10,7 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)AboutPage.cs" />
-	<Compile Include="$(MSBuildThisFileDirectory)Android\AndroidCameraManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Android\AndroidCameraManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Android\AndroidCameraPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Android\CameraCaptureSessionCallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Android\OnYuvImageAvailableListener.cs" />
@@ -21,6 +21,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)InceptionPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ModelButtonTextImagePage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MultiboxDetectionPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ResnetPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StylizePage.cs" />
   </ItemGroup>
 </Project>
