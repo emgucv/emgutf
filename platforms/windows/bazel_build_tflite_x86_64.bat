@@ -54,6 +54,7 @@ IF "%DEVENV%"=="%VS2017%" SET BAZEL_VS=%VS2017:\Common7\IDE\devenv.com=%
 IF "%DEVENV%"=="%VS2019%" SET BAZEL_VS=%VS2019:\Common7\IDE\devenv.com=%
 IF NOT "%BAZEL_VS%"=="" SET BAZEL_VC=%BAZEL_VS%\VC
 REM SET BAZEL_VS="%BAZEL_VS%"
+ECHO Using BAZEL_VC=%BAZEL_VC%
 
 cd tensorflow
 
@@ -89,7 +90,7 @@ REM　rm lib\x64\vccorlib140.dll
 GOTO END_OF_MSVC_DEPENDENCY
 
 :VS2019_DEPEDENCY
-for /d %%i in ( "%BAZEL_VC%\Redist\MSVC\*" ) do SET VS2019_REDIST=%%i\x64\Microsoft.VC142.CRT
+for /d %%i in ( "%BAZEL_VC%\Redist\MSVC\14*" ) do SET VS2019_REDIST=%%i\x64\Microsoft.VC142.CRT
 copy /Y "%VS2019_REDIST%\*140.dll" lib\x64\
 copy /Y "%VS2019_REDIST%\*140_1.dll" lib\x64\
 copy /Y "%VS2019_REDIST%\*140_2.dll" lib\x64\
