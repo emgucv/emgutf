@@ -24,6 +24,8 @@ namespace Emgu.TF.XamarinForms
             tabbedPage.Children.Add(new MultiboxDetectionPage());
             tabbedPage.Children.Add(new InceptionPage(InceptionPage.Model.Default));
             tabbedPage.Children.Add(new InceptionPage(InceptionPage.Model.Flower));
+            tabbedPage.Children.Add(new ResnetPage());
+
             if (TfInvoke.OpHasKernel("QuantizeV2"))
             {
                 tabbedPage.Children.Add(new StylizePage());
@@ -111,7 +113,6 @@ namespace Emgu.TF.XamarinForms
                 return np.CurrentPage;
             }
         }
-
 
         protected override void OnStart()
         {

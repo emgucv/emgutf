@@ -278,7 +278,8 @@ namespace Emgu.TF
 
                 if (meta.TotalSize == 0)
                     return null;
-                Int64[] shape = new Int64[meta.ListSize];
+
+                Int64[] shape = new Int64[meta.IsList? meta.ListSize : meta.TotalSize];
                 GCHandle handle = GCHandle.Alloc(shape, GCHandleType.Pinned);
                 try
                 {

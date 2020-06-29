@@ -15,13 +15,14 @@ using Emgu.Models;
 
 namespace Emgu.TF.Models
 {
-    public class StylizeGraph
+    public class StylizeGraph : Emgu.TF.Util.UnmanagedObject
     {
         private FileDownloadManager _downloadManager;
         private Graph _graph = null;
         private Status _status = null;
         private SessionOptions _sessionOptions = null;
         private Session _session = null;
+
 
         public StylizeGraph(Status status = null, SessionOptions sessionOptions = null)
         {
@@ -34,7 +35,6 @@ namespace Emgu.TF.Models
 
 
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
-        public event System.ComponentModel.AsyncCompletedEventHandler OnDownloadCompleted;
 
         public async Task Init(String[] modelFiles = null, String downloadUrl = null, String localModelFolder = "stylize")
         {
@@ -116,6 +116,24 @@ namespace Emgu.TF.Models
 
             return Emgu.TF.Models.ImageIO.TensorToJpeg(stylizedImage, 255.0f);
             
+        }
+
+        /// <summary>
+        /// Release the memory associated with this inception graph
+        /// </summary>
+        protected override void DisposeObject()
+        {
+            if (_graph != null)
+            {
+                _graph.Dispose();
+                _graph = null;
+            }
+
+            if (_session != null)
+            {
+                _session.Dispose();
+                _session = null;
+            }
         }
     }
 }

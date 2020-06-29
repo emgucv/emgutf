@@ -15,6 +15,7 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using Emgu.Models;
 using Emgu.TF.Models;
 using Tensorflow;
@@ -40,122 +41,179 @@ namespace Emgu.TF.Test
         }*/
 
         [TestMethod]
-        public void TestInception()
+        public async Task TestInception()
         {
             using (Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>("grace_hopper.jpg", 224, 224, 128.0f, 1.0f))
             using (Inception inceptionGraph = new Inception())
             {
-                bool processCompleted = false;
-                inceptionGraph.OnDownloadCompleted += (sender, e) =>
+                await inceptionGraph.Init();
+
+                HashSet<string> opNames = new HashSet<string>();
+                HashSet<string> couldBeInputs = new HashSet<string>();
+                HashSet<string> couldBeOutputs = new HashSet<string>();
+                foreach (Operation op in inceptionGraph.Graph)
                 {
-                    HashSet<string> opNames = new HashSet<string>();
-                    HashSet<string> couldBeInputs = new HashSet<string>();
-                    HashSet<string> couldBeOutputs = new HashSet<string>();
-                    foreach (Operation op in inceptionGraph.Graph)
+
+                    String name = op.Name;
+                    opNames.Add(name);
+
+                    if (op.NumInputs == 0 && op.OpType.Equals("Placeholder"))
                     {
-
-                        String name = op.Name;
-                        opNames.Add(name);
-
-                        if (op.NumInputs == 0 && op.OpType.Equals("Placeholder"))
-                        {
-                            couldBeInputs.Add(op.Name);
-                            AttrMetadata dtypeMeta = op.GetAttrMetadata("dtype");
-                            AttrMetadata shapeMeta = op.GetAttrMetadata("shape");
-                            DataType type = op.GetAttrType("dtype");
-                            Int64[] shape = op.GetAttrShape("shape");
-                            Buffer valueBuffer = op.GetAttrValueProto("shape");
-                            Buffer shapeBuffer = op.GetAttrTensorShapeProto("shape");
-                            Tensorflow.TensorShapeProto shapeProto =
-                                Tensorflow.TensorShapeProto.Parser.ParseFrom(shapeBuffer.Data);
-                        }
-
-                        if (op.OpType.Equals("Const"))
-                        {
-                            AttrMetadata dtypeMeta = op.GetAttrMetadata("dtype");
-                            AttrMetadata valueMeta = op.GetAttrMetadata("value");
-                            using (Tensor valueTensor = op.GetAttrTensor("value"))
-                            {
-                                var dim = valueTensor.Dim;
-                            }
-                        }
-
-                        if (op.OpType.Equals("Conv2D"))
-                        {
-                            AttrMetadata stridesMeta = op.GetAttrMetadata("strides");
-                            AttrMetadata paddingMeta = op.GetAttrMetadata("padding");
-                            AttrMetadata boolMeta = op.GetAttrMetadata("use_cudnn_on_gpu");
-                            Int64[] strides = op.GetAttrIntList("strides");
-                            bool useCudnn = op.GetAttrBool("use_cudnn_on_gpu");
-                            String padding = op.GetAttrString("padding");
-                        }
-
-                        foreach (Output output in op.Outputs)
-                        {
-                            int[] shape = inceptionGraph.Graph.GetTensorShape(output);
-                            if (output.NumConsumers == 0)
-                            {
-                                couldBeOutputs.Add(name);
-                            }
-                        }
-
-                        Buffer buffer = inceptionGraph.Graph.GetOpDef(op.OpType);
-                        Tensorflow.OpDef opDef = Tensorflow.OpDef.Parser.ParseFrom(buffer.Data);
+                        couldBeInputs.Add(op.Name);
+                        AttrMetadata dtypeMeta = op.GetAttrMetadata("dtype");
+                        AttrMetadata shapeMeta = op.GetAttrMetadata("shape");
+                        DataType type = op.GetAttrType("dtype");
+                        Int64[] shape = op.GetAttrShape("shape");
+                        Buffer valueBuffer = op.GetAttrValueProto("shape");
+                        Buffer shapeBuffer = op.GetAttrTensorShapeProto("shape");
+                        Tensorflow.TensorShapeProto shapeProto =
+                            Tensorflow.TensorShapeProto.Parser.ParseFrom(shapeBuffer.Data);
                     }
 
-                    using (Buffer versionDef = inceptionGraph.Graph.Versions())
+                    if (op.OpType.Equals("Const"))
                     {
-                        int l = versionDef.Length;
+                        AttrMetadata dtypeMeta = op.GetAttrMetadata("dtype");
+                        AttrMetadata valueMeta = op.GetAttrMetadata("value");
+                        using (Tensor valueTensor = op.GetAttrTensor("value"))
+                        {
+                            var dim = valueTensor.Dim;
+                        }
                     }
 
-                    Inception.RecognitionResult[] results = inceptionGraph.Recognize(imageTensor);
-                    
-                    Trace.WriteLine(String.Format("Object is {0} with {1}% probability", results[0].Label, results[0].Probability * 100));
-                    
-                    processCompleted = true;
-                };
+                    if (op.OpType.Equals("Conv2D"))
+                    {
+                        AttrMetadata stridesMeta = op.GetAttrMetadata("strides");
+                        AttrMetadata paddingMeta = op.GetAttrMetadata("padding");
+                        AttrMetadata boolMeta = op.GetAttrMetadata("use_cudnn_on_gpu");
+                        Int64[] strides = op.GetAttrIntList("strides");
+                        bool useCudnn = op.GetAttrBool("use_cudnn_on_gpu");
+                        String padding = op.GetAttrString("padding");
+                    }
 
-                inceptionGraph.Init();
-                while (!processCompleted)
-                {
-                    Thread.Sleep(1000);
+                    foreach (Output output in op.Outputs)
+                    {
+                        int[] shape = inceptionGraph.Graph.GetTensorShape(output);
+                        if (output.NumConsumers == 0)
+                        {
+                            couldBeOutputs.Add(name);
+                        }
+                    }
+
+                    Buffer buffer = inceptionGraph.Graph.GetOpDef(op.OpType);
+                    Tensorflow.OpDef opDef = Tensorflow.OpDef.Parser.ParseFrom(buffer.Data);
                 }
+
+                using (Buffer versionDef = inceptionGraph.Graph.Versions())
+                {
+                    int l = versionDef.Length;
+                }
+
+                Inception.RecognitionResult[] results = inceptionGraph.Recognize(imageTensor);
+
+                Trace.WriteLine(String.Format("Object is {0} with {1}% probability", results[0].Label, results[0].Probability * 100));
+
             }
         }
 
         [TestMethod]
-        public void TestMultiboxPeopleDetect()
+        public async Task TestResnet()
+        {
+            using (Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>("surfers.jpg", 224, 224, 0, 1.0f/255.0f))
+            using (Resnet resnet = new Resnet())
+            {
+                await resnet.Init();
+
+                MetaGraphDef metaGraphDef = MetaGraphDef.Parser.ParseFrom(resnet.MetaGraphDefBuffer.Data);
+                var signatureDef = metaGraphDef.SignatureDef["serving_default"];
+                var inputNode = signatureDef.Inputs;
+                var outputNode = signatureDef.Outputs;
+
+                HashSet<string> opNames = new HashSet<string>();
+                HashSet<string> couldBeInputs = new HashSet<string>();
+                HashSet<string> couldBeOutputs = new HashSet<string>();
+                foreach (Operation op in resnet.Graph)
+                {
+
+                    String name = op.Name;
+                    opNames.Add(name);
+
+                    if (op.NumInputs == 0 && op.OpType.Equals("Placeholder"))
+                    {
+                        couldBeInputs.Add(op.Name);
+                        AttrMetadata dtypeMeta = op.GetAttrMetadata("dtype");
+                        AttrMetadata shapeMeta = op.GetAttrMetadata("shape");
+                        DataType type = op.GetAttrType("dtype");
+                        Int64[] shape = op.GetAttrShape("shape");
+                        Buffer valueBuffer = op.GetAttrValueProto("shape");
+                        Buffer shapeBuffer = op.GetAttrTensorShapeProto("shape");
+                        Tensorflow.TensorShapeProto shapeProto =
+                            Tensorflow.TensorShapeProto.Parser.ParseFrom(shapeBuffer.Data);
+                    }
+
+                    if (op.OpType.Equals("Const"))
+                    {
+                        AttrMetadata dtypeMeta = op.GetAttrMetadata("dtype");
+                        AttrMetadata valueMeta = op.GetAttrMetadata("value");
+                        using (Tensor valueTensor = op.GetAttrTensor("value"))
+                        {
+                            var dim = valueTensor.Dim;
+                        }
+                    }
+
+                    if (op.OpType.Equals("Conv2D"))
+                    {
+                        AttrMetadata stridesMeta = op.GetAttrMetadata("strides");
+                        AttrMetadata paddingMeta = op.GetAttrMetadata("padding");
+                        AttrMetadata boolMeta = op.GetAttrMetadata("use_cudnn_on_gpu");
+                        Int64[] strides = op.GetAttrIntList("strides");
+                        bool useCudnn = op.GetAttrBool("use_cudnn_on_gpu");
+                        String padding = op.GetAttrString("padding");
+                    }
+
+                    foreach (Output output in op.Outputs)
+                    {
+                        int[] shape = resnet.Graph.GetTensorShape(output);
+                        if (output.NumConsumers == 0)
+                        {
+                            couldBeOutputs.Add(name);
+                        }
+                    }
+
+                    Buffer buffer = resnet.Graph.GetOpDef(op.OpType);
+                    Tensorflow.OpDef opDef = Tensorflow.OpDef.Parser.ParseFrom(buffer.Data);
+                }
+
+                using (Buffer versionDef = resnet.Graph.Versions())
+                {
+                    int l = versionDef.Length;
+                }
+
+                Resnet.RecognitionResult[] results = resnet.Recognize(imageTensor);
+
+            }
+        }
+
+        [TestMethod]
+        public async Task TestMultiboxPeopleDetect()
         {
             Tensor imageResults = ImageIO.ReadTensorFromImageFile<float>("surfers.jpg", 224, 224, 128.0f, 1.0f / 128.0f);
 
             MultiboxGraph multiboxGraph = new MultiboxGraph();
-            bool processCompleted = false;
+            //bool processCompleted = false;
 
-            multiboxGraph.OnDownloadCompleted += (sender, e) =>
-            {
-                MultiboxGraph.Result[] result = multiboxGraph.Detect(imageResults);
+            await multiboxGraph.Init();
 
-                //Bitmap bmp = new Bitmap("surfers.jpg");
-                //MultiboxGraph.DrawResults(bmp, result, 0.1f);
-                //MultiboxGraph.
-                //bmp.Save("surfers_result.jpg");
-                processCompleted = true;
-            };
+            MultiboxGraph.Result[] result = multiboxGraph.Detect(imageResults);
 
-            multiboxGraph.Init();
-
-            while (!processCompleted)
-            {
-                Thread.Sleep(1000);
-            }
         }
 
 
 
         [TestMethod]
-        public void TestStylize()
+        public async Task TestStylize()
         {
             StylizeGraph stylizeGraph = new StylizeGraph();
+            await stylizeGraph.Init();
             Tensor image = ImageIO.ReadTensorFromImageFile<float>("surfers.jpg");
             Tensor stylizedImage = stylizeGraph.Stylize(image, 0);
         }
@@ -169,7 +227,7 @@ namespace Emgu.TF.Test
         [TestMethod]
         public void TestEncodeJpeg()
         {
-            Tensor image = ImageIO.ReadTensorFromImageFile<float>("surfers.jpg", 299, 299, 0, 1.0f/255.0f, true, false);
+            Tensor image = ImageIO.ReadTensorFromImageFile<float>("surfers.jpg", 299, 299, 0, 1.0f / 255.0f, true, false);
             byte[] jpegRaw = ImageIO.TensorToJpeg(image, 255.0f, 0.0f);
             File.WriteAllBytes("surefers_out.jpg", jpegRaw);
         }
@@ -198,7 +256,7 @@ namespace Emgu.TF.Test
             ClusterDef clusterDef = new ClusterDef();
             JobDef jd = new JobDef();
             clusterDef.Job.Add(jd);
-            
+
             def.Cluster = clusterDef;
             byte[] pbuff;
             using (MemoryStream ms = new MemoryStream())
@@ -349,35 +407,23 @@ namespace Emgu.TF.Test
 
         }
 
+        /*
         [TestMethod]
-        public void TestMultiSession()
+        public async void TestMultiSession()
         {
             Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>("grace_hopper.jpg", 224, 224, 128.0f, 1.0f);
             int sessionCount = 10;
 
             Inception[] graphs = new Inception[sessionCount];
-            bool[] processCompleted = new bool[sessionCount];
             for (int i = 0; i < sessionCount; i++)
             {
                 graphs[i] = new Inception();
-                processCompleted[i] = false;
-
-                graphs[i].OnDownloadCompleted += (sender, e) =>
-                {
-                    Inception.RecognitionResult[] results = graphs[i].Recognize(imageTensor);
-
-                    processCompleted[i] = true;
-                };
-
-                graphs[i].Init();
-                Trace.WriteLine(System.String.Format("Reading graph {0}", i));
-                Thread.Sleep(1000);
+                await graphs[i].Init();
             }
-
-            while (!processCompleted.All((v) => v))
+            for (int i = 0; i < sessionCount; i++)
             {
-                Thread.Sleep(1000);
+                Inception.RecognitionResult[] results = graphs[i].Recognize(imageTensor);
             }
-        }
+        }*/
     }
 }
