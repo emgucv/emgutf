@@ -84,6 +84,7 @@ IF NOT "%4%"=="nuget" GOTO BUILD
 SET CMAKE_BUILD_TARGET=%CMAKE_BUILD_TARGET% Emgu.TF.Lite.Models.nuget Emgu.TF.Lite.nuget
 
 :BUILD
+ECHO BUILDING TARGETS: %CMAKE_BUILD_TARGET%
 %CMAKE% --build . --config Release --target %CMAKE_BUILD_TARGET%
 
 :END_OF_SCRIPT
