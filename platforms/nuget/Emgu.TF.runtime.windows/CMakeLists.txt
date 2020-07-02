@@ -12,6 +12,10 @@ ADD_CUSTOM_TARGET(
 
 ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.nuget)
 
+IF (TARGET Emgu.TF.runtime.windows.cuda.rt.nuget)
+  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.runtime.windows.cuda.rt.nuget)
+ENDIF()
+
 if(ENABLE_SOLUTION_FOLDERS)
   set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "NUGET")
 endif() 
