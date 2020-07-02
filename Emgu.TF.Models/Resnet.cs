@@ -150,7 +150,8 @@ namespace Emgu.TF.Models
 
             _session = new Session(
                 _savedModelDir,
-                new string[] { "serve" }
+                new string[] { "serve" },
+                _sessionOptions
             );
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
