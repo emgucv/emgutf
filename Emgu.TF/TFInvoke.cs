@@ -133,7 +133,13 @@ namespace Emgu.TF
 
             String oldDir = Environment.CurrentDirectory;
             if (!String.IsNullOrEmpty(loadDirectory) && Directory.Exists(loadDirectory))
+            {
                 Environment.CurrentDirectory = loadDirectory;
+                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+                {
+                    bool setDllDirectorySuccess = Emgu.TF.Util.Toolbox.SetDllDirectory(loadDirectory);
+                }
+            }
 
             System.Diagnostics.Trace.WriteLine(String.Format("Loading tensorflow binary from {0}", loadDirectory));
 
