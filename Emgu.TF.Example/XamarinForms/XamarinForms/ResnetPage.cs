@@ -94,15 +94,19 @@ namespace Emgu.TF.XamarinForms
                     SetMessage("Please wait...");
                     SetImage();
 
-                    SetMessage("Please wait while we download the model from internet.");
+                    SetMessage("Please wait while we download / initialize the model ...");
                     await Init(this.onDownloadProgressChanged);
+                    SetMessage("Model Loaded.");
+
                     String[] images;
-                    
                     images = await LoadImages(new string[] {"space_shuttle.jpg"});
                     
-
                     if (images == null)
+                    {
+                        //User canceled
+                        this.TopButton.IsEnabled = true;
                         return;
+                    }
 
                     if (images[0] == "Camera")
                     {
@@ -161,7 +165,7 @@ namespace Emgu.TF.XamarinForms
                         Tensor imageTensor;
                         
                         imageTensor =
-                            Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(images[0], 224, 224, 0.0f, 1.0f/255.0f);
+                            Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(images[0], 224, 224, 0.0f, 1.0f/255.0f, false, false);
                         
 
                         Resnet.RecognitionResult result;
@@ -190,6 +194,7 @@ namespace Emgu.TF.XamarinForms
                         var jpeg = Emgu.Models.NativeImageIO.ImageFileToJpeg(images[0]);
                         SetImage(jpeg.Raw, jpeg.Width, jpeg.Height);
 #endif
+                        this.TopButton.IsEnabled = true;
                     }
 
 

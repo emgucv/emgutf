@@ -6,6 +6,8 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Plugin.FilePicker;
+using Plugin.FilePicker.Abstractions;
 using Xamarin.Forms;
 
 
@@ -79,7 +81,7 @@ namespace Emgu.TF.XamarinForms
         /// Allow user to pick the images.
         /// </summary>
         /// <param name="imageNames">The default image names</param>
-        /// <param name="labels">The labels use for the pick image dialog, corresponsing to each image</param>
+        /// <param name="labels">The labels use for the pick image dialog, corresponding to each image</param>
         /// <returns>null if user canceled. Otherwise the list of images.</returns>
         public virtual async Task<String[]> LoadImages(String[] imageNames, String[] labels = null)
         {
@@ -170,73 +172,10 @@ namespace Emgu.TF.XamarinForms
                 {
                     if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
                     {
-                        // our implementation of pick image for Windows
-                        /*
-                        using (System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog())
-                        {
-                            dialog.Multiselect = false;
-                            dialog.Title = "Select an Image File";
-                            dialog.Filter = "Image | *.jpg;*.jpeg;*.png;*.bmp;*.gif | All Files | *";
-                            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                            {
-                                mats[i] = dialog.FileName;
-                            }
-                            else
-                            {
-                                return; 
-                            }
-                        }*/
-                        System.Reflection.Assembly windowsFormsAssembly = Emgu.TF.Util.Toolbox.FindAssembly("System.Windows.Forms.dll");
-                        if (windowsFormsAssembly != null)
-                        {
-                            //Running on Windows
-                            Type openFileDialogType = windowsFormsAssembly.GetType("System.Windows.Forms.OpenFileDialog");
-                            Type dialogResultType = windowsFormsAssembly.GetType("System.Windows.Forms.DialogResult");
-                            if (openFileDialogType != null && dialogResultType != null)
-                            {
-                                object dialog = Activator.CreateInstance(openFileDialogType);
-                                openFileDialogType.InvokeMember(
-                                    "Multiselect",
-                                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.SetProperty,
-                                    Type.DefaultBinder,
-                                    dialog,
-                                    new object[] { (object) false });
-                                openFileDialogType.InvokeMember(
-                                    "Title", 
-                                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.SetProperty,
-                                    Type.DefaultBinder, 
-                                    dialog, 
-                                    new object[] { (object) "Select an Image File"});
-                                openFileDialogType.InvokeMember(
-                                    "Filter",
-                                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.SetProperty,
-                                    Type.DefaultBinder,
-                                    dialog,
-                                    new object[] { (object)"Image | *.jpg;*.jpeg;*.png;*.bmp;*.gif | All Files | *" });
-                                object dialogResult = openFileDialogType.InvokeMember(
-                                    "ShowDialog",
-                                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.InvokeMethod,
-                                    Type.DefaultBinder,
-                                    dialog,
-                                    null);
-                                String dialogResultStr = Enum.GetName(dialogResultType, dialogResult);
-                                if (dialogResultStr.Equals("OK"))
-                                {
-                                    //mats[i] = dialog.FileName;
-                                    String fileName = openFileDialogType.InvokeMember(
-                                        "FileName",
-                                        BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetProperty,
-                                        Type.DefaultBinder,
-                                        dialog,
-                                        null) as String;
-                                    mats[i] = fileName;
-                                }
-                                else
-                                {
-                                    return null;
-                                }
-                            }
-                        }
+                        FileData fileData = await CrossFilePicker.Current.PickFile(new string[] { "Image | *.jpg;*.jpeg;*.png;*.bmp;*.gif | All Files | *" });
+                        if (fileData == null)
+                            return null;
+                        mats[i] = fileData.FilePath;
 
                     }
                     else
@@ -268,7 +207,7 @@ namespace Emgu.TF.XamarinForms
                     return null;
             }
             //InvokeOnImagesLoaded(mats);
-            if (mats == null) //cancelled
+            if (mats == null) //canceled
                 return null;
 
             for (int i = 0; i < mats.Length; i++)

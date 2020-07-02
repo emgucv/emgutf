@@ -198,7 +198,7 @@ namespace Emgu.TF.Models
             RecognitionResult[] results = new RecognitionResult[Math.Min(_labels.Length, probabilities.Length)];
             for (int i = 0; i < results.Length; i++)
             {
-                results[i] = new RecognitionResult(_labels[i], probabilities[i]);
+                results[i] = new RecognitionResult(_labels[ (i+1) % _labels.Length ], probabilities[i]);
             }
             Array.Sort<RecognitionResult>(results, new Comparison<RecognitionResult>((a, b) => -a.Probability.CompareTo(b.Probability)));
             return results;

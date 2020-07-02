@@ -77,7 +77,9 @@ namespace Emgu.TF.XamarinForms
 
                     String[] images = await LoadImages(new string[] { "surfers.jpg" });
                     if (images == null)
+                    {
                         return;
+                    }
 
 #if __ANDROID__
                     Stopwatch watch = Stopwatch.StartNew();
@@ -101,7 +103,6 @@ namespace Emgu.TF.XamarinForms
                     displayImage.HeightRequest = img.Size.Height;
 #endif
                     SetMessage(String.Format("Stylized in {0} milliseconds.", watch.ElapsedMilliseconds));
-
 
                 }
                 catch (Exception excpt)

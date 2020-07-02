@@ -402,11 +402,11 @@ namespace Emgu.TF.Models
 
                     Tensor mean = new Tensor(inputMean);
                     Operation meanOp = graph.Const(mean, mean.Type, opName: "mean");
-                    Operation substracted = graph.Sub(resized, meanOp);
+                    Operation subtracted = graph.Sub(resized, meanOp);
 
                     Tensor scaleTensor = new Tensor(scale);
                     Operation scaleOp = graph.Const(scaleTensor, scaleTensor.Type, opName: "scale");
-                    Operation scaled = graph.Mul(substracted, scaleOp);
+                    Operation scaled = graph.Mul(subtracted, scaleOp);
 
                     Operation swapedBR;
                     if (swapBR)

@@ -117,11 +117,11 @@ namespace Emgu.TF.XamarinForms
 #endif
                 {
                     this.TopButton.IsEnabled = false;
-                    SetMessage("Please wait...");
                     SetImage();
 
-                    SetMessage("Please wait while we download the model from internet.");
+                    SetMessage("Please wait while we download / initialize the model ...");
                     await Init(this.onDownloadProgressChanged);
+                    SetMessage("Model Loaded.");
                     String[] images;
                     if (_model == Model.Flower)
                     {
@@ -133,7 +133,11 @@ namespace Emgu.TF.XamarinForms
                     }
 
                     if (images == null)
+                    {
+                        //User canceled
+                        this.TopButton.IsEnabled = true;
                         return;
+                    }
 
                     if (images[0] == "Camera")
                     {
@@ -227,9 +231,8 @@ namespace Emgu.TF.XamarinForms
                         var jpeg = Emgu.Models.NativeImageIO.ImageFileToJpeg(images[0]);
                         SetImage(jpeg.Raw, jpeg.Width, jpeg.Height);
 #endif
+                        this.TopButton.IsEnabled = true;
                     }
-
-
                 }
 #if !DEBUG
                     catch (Exception excpt)
