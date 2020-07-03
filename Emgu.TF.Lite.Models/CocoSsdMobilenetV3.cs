@@ -23,7 +23,7 @@ namespace Emgu.TF.Lite.Models
         {
         }
 
-        public virtual
+        public override
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             IEnumerator
 #else

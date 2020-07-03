@@ -39,6 +39,7 @@ namespace Emgu.TF.Lite
         /// Fill content into a string tensor.
         /// </summary>
         /// <param name="tensor">The string tensor</param>
+        /// <param name="newShape">The new shape</param>
         public void WriteToTensor(Tensor tensor, IntArray newShape = null)
         {
             TfLiteInvoke.tfeDynamicBufferWriteToTensor(_ptr, tensor, newShape == null ? IntPtr.Zero : newShape);

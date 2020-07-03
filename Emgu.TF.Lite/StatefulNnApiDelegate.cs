@@ -10,10 +10,16 @@ using System.Runtime.InteropServices;
 
 namespace Emgu.TF.Lite
 {
+    /// <summary>
+    /// Stateful NNAPI delegate
+    /// </summary>
     public class StatefulNnApiDelegate : Emgu.TF.Util.UnmanagedObject, IDelegate
     {
         private IntPtr _delegatePtr;
 
+        /// <summary>
+        /// Create a Stategul NNAPI delegate
+        /// </summary>
         public StatefulNnApiDelegate()
         {
             _ptr = TfLiteInvoke.tfeStatefulNnApiDelegateCreate(ref _delegatePtr);
@@ -50,6 +56,9 @@ namespace Emgu.TF.Lite
 
         private static StatefulNnApiDelegate _nnApiDelegate;
 
+        /// <summary>
+        /// Get the default stateful NNAPI delegate.
+        /// </summary>
         public static StatefulNnApiDelegate DefaultNnApiDelegate
         {
             get

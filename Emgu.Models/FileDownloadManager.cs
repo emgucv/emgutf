@@ -53,6 +53,9 @@ namespace Emgu.Models
             _files.Add(new DownloadableFile(url, localSubfolder));
         }
 
+        /// <summary>
+        /// Get the files that will be downloaded by this download manager.
+        /// </summary>
         public DownloadableFile[] Files
         {
             get
@@ -101,6 +104,11 @@ namespace Emgu.Models
             UnityEngine.Debug.Log("All download completed.");
         }
 #else
+        /// <summary>
+        /// Download the files. 
+        /// </summary>
+        /// <param name="retry">The number of retries.</param>
+        /// <returns>The async Task</returns>
         public async Task Download(int retry = 1)
         {
             await Download( _files.ToArray(), retry, this.OnDownloadProgressChanged);

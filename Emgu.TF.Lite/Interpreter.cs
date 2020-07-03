@@ -16,7 +16,9 @@ namespace Emgu.TF.Lite
     /// </summary>
     public class Interpreter : Emgu.TF.Util.UnmanagedObject
     {
-
+        /// <summary>
+        /// Create a new tensorflow lite interpreter.
+        /// </summary>
         public Interpreter()
         {
             _ptr = TfLiteInvoke.tfeInterpreterCreate();

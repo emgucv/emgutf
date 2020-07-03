@@ -16,15 +16,20 @@ using System.Threading.Tasks;
 
 namespace Emgu.TF.Lite.Models
 {
+    /// <summary>
+    /// Coco SSD Mobilenet V1
+    /// </summary>
     public class CocoSsdMobilenetV1 : CocoSsdMobilenet
     {
-
+        /// <summary>
+        /// Create Coco SSD Mobilenet V1
+        /// </summary>
         public CocoSsdMobilenetV1()
         : base()
         {
         }
 
-        public virtual 
+        public override 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             IEnumerator
 #else

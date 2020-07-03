@@ -89,6 +89,7 @@ namespace Emgu.TF.Lite.Models
         /// </summary>
         /// <param name="modelFiles">The model file names as an array. First one is the ".tflite" file and the second one should be the label names.</param>
         /// <param name="downloadUrl">The url where the files can be downloaded from.</param>
+        /// <param name="localModelFolder">The subfolder where the file will be stored.</param>
         public
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             IEnumerator

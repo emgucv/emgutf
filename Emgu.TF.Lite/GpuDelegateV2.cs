@@ -10,8 +10,14 @@ using System.Runtime.InteropServices;
 
 namespace Emgu.TF.Lite
 {
+    /// <summary>
+    /// Gpu Delegate V2
+    /// </summary>
     public class GpuDelegateV2 : Emgu.TF.Util.UnmanagedObject, IDelegate
     {
+        /// <summary>
+        /// Gpu Delegate V2. 
+        /// </summary>
         public GpuDelegateV2()
         {
             _ptr = TfLiteInvoke.tfeGpuDelegateV2Create();
@@ -47,6 +53,9 @@ namespace Emgu.TF.Lite
 
         private static GpuDelegateV2 _gpuDelegateV2;
 
+        /// <summary>
+        /// Get tge default Gpu Delegate V2
+        /// </summary>
         public static GpuDelegateV2 DefaultGpuDelegateV2
         {
             get

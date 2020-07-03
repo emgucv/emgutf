@@ -27,6 +27,9 @@ using AppKit;
 
 namespace Emgu.TF.Lite.Models
 {
+    /// <summary>
+    /// Coco ssd mobile net base model
+    /// </summary>
     public class CocoSsdMobilenet : Emgu.TF.Util.UnmanagedObject
     {
         private FileDownloadManager _downloadManager;
@@ -63,6 +66,9 @@ namespace Emgu.TF.Lite.Models
         }
 #endif
 
+        /// <summary>
+        /// Create a new coco ssd mobilenet model.
+        /// </summary>
         public CocoSsdMobilenet()
         {
             _downloadManager = new FileDownloadManager();
@@ -75,6 +81,9 @@ namespace Emgu.TF.Lite.Models
                 OnDownloadProgressChanged(sender, e);
         }
 
+        /// <summary>
+        /// Event handler that triggers when download progress changed.
+        /// </summary>
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
 
         public virtual
@@ -103,6 +112,9 @@ namespace Emgu.TF.Lite.Models
             ImportGraph();
         }
 
+        /// <summary>
+        /// Return true if the graph has been imported
+        /// </summary>
         public bool Imported
         {
             get
@@ -181,7 +193,9 @@ namespace Emgu.TF.Lite.Models
             }
         }
 
-        
+        /// <summary>
+        /// Get the interpreter
+        /// </summary>
         public Interpreter Interpreter
         {
             get
@@ -190,6 +204,9 @@ namespace Emgu.TF.Lite.Models
             }
         }
 
+        /// <summary>
+        /// Get the labels
+        /// </summary>
         public String[] Labels
         {
             get { return _labels; }
@@ -312,6 +329,9 @@ namespace Emgu.TF.Lite.Models
             return results.ToArray();
         }
 
+        /// <summary>
+        /// Coco SSD mobile net recognition result.
+        /// </summary>
         public class RecognitionResult
         {
             /// <summary>
@@ -332,6 +352,9 @@ namespace Emgu.TF.Lite.Models
             public int Class;
         }
 
+        /// <summary>
+        /// Release unmanaged memory associated with this coco ssd mobilenet model.
+        /// </summary>
         protected override void DisposeObject()
         {
             
