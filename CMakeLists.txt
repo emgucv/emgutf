@@ -545,7 +545,7 @@ IF(HAVE_OSX)
     <file src=\"..\\..\\..\\lib\\osx\\*.dylib\" target=\"build\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
-	<file src=\"runtime.macos.Emgu.TF.targets\" target=\"build\\${EMGUTF_MACOS_NUGET_ID}.targets\" />")
+	<file src=\"Emgu.TF.runtime.macos.targets\" target=\"build\\${EMGUTF_MACOS_NUGET_ID}.targets\" />")
   SET(EMGUTF_MACOS_NUGET_DEPENDENCY "${EMGUTF_MACOS_NUGET_DEPENDENCY}
     <dependencies>
 		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
@@ -563,7 +563,7 @@ IF(HAVE_LINUX_X86_64)
     <file src=\"..\\..\\..\\lib\\x64\\*.so.1\" target=\"build\\x64\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
-	<file src=\"runtime.ubuntu.Emgu.TF.targets\" target=\"build\\${EMGUTF_UBUNTU_NUGET_ID}.targets\" />")
+	<file src=\"Emgu.TF.runtime.ubuntu.targets\" target=\"build\\${EMGUTF_UBUNTU_NUGET_ID}.targets\" />")
   SET(EMGUTF_UBUNTU_NUGET_DEPENDENCY "${EMGUTF_UBUNTU_NUGET_DEPENDENCY}
     <dependencies>
 		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
@@ -580,7 +580,7 @@ IF(HAVE_LINUX_ARM)
     <file src=\"..\\..\\..\\lib\\arm\\*.so\" target=\"build\\arm\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
-	<file src=\"runtime.raspbian.Emgu.TF.targets\" target=\"build\\${EMGUTF_RASPBIAN_NUGET_ID}.targets\" />")
+	<file src=\"Emgu.TF.runtime.raspbian.targets\" target=\"build\\${EMGUTF_RASPBIAN_NUGET_ID}.targets\" />")
   SET(EMGUTF_RASPBIAN_NUGET_DEPENDENCY "${EMGUTF_RASPBIAN_NUGET_DEPENDENCY}
     <dependencies>
 		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
@@ -679,7 +679,7 @@ IF( HAVE_OSX_LITE )
     <file src=\"..\\..\\..\\lib\\osx\\*.dylib\" target=\"build\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
-	<file src=\"runtime.macos.Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_MACOS_NUGET_ID}.targets\" />")
+	<file src=\"Emgu.TF.Lite.runtime.macos.targets\" target=\"build\\${EMGUTF_LITE_MACOS_NUGET_ID}.targets\" />")
   SET(EMGUTF_LITE_MACOS_NUGET_DEPENDENCY "${EMGUTF_LITE_MACOS_NUGET_DEPENDENCY}
     <dependencies>
 		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
@@ -711,7 +711,7 @@ IF (HAVE_LINUX_X86_64_LITE)
     <file src=\"..\\..\\..\\lib\\x64\\*.so\" target=\"build\\x64\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
-	<file src=\"runtime.ubuntu.Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_UBUNTU_NUGET_ID}.targets\" />")
+	<file src=\"Emgu.TF.Lite.runtime.ubuntu.targets\" target=\"build\\${EMGUTF_LITE_UBUNTU_NUGET_ID}.targets\" />")
   SET(EMGUTF_LITE_UBUNTU_NUGET_DEPENDENCY "${EMGUTF_LITE_UBUNTU_NUGET_DEPENDENCY}
     <dependencies>
 		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
@@ -722,7 +722,7 @@ IF (HAVE_LINUX_ARM_LITE)
     <file src=\"..\\..\\..\\lib\\arm\\*.so\" target=\"build\\arm\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
-	<file src=\"runtime.raspbian.Emgu.TF.Lite.targets\" target=\"build\\${EMGUTF_LITE_RASPBIAN_NUGET_ID}.targets\" />")
+	<file src=\"Emgu.TF.Lite.runtime.raspbian.targets\" target=\"build\\${EMGUTF_LITE_RASPBIAN_NUGET_ID}.targets\" />")
   SET(EMGUTF_LITE_RASPBIAN_NUGET_DEPENDENCY "${EMGUTF_LITE_RASPBIAN_NUGET_DEPENDENCY}
     <dependencies>
 		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
