@@ -16,7 +16,6 @@
         </None>
       </ItemGroup>
   <Target Name="EmguTFMacPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <!-- <Message Condition="'$(EmguTFMacLinkTarget)'!=''" Text="Emgu TF nuget package compiling against $(EmguTFMacLinkTarget)" Importance="High" /> -->
     <Warning Text="'$(EmguTFMacErrorMessage)'" Condition="'$(EmguTFMacErrorMessage)'!=''" />
 	<Warning Text="'$(EmguTFMacErrorMessage2)'" Condition="'$(EmguTFMacErrorMessage2)'!=''" />
     <Message Text="Emgu TF Compiling with $(EmguTFMacDeployMessage)binary" Condition="'$(EmguTFMacDeployMessage)'!=''" Importance="High" />

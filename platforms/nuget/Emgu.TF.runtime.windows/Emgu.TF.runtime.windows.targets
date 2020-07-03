@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
       <PropertyGroup>
-        <EmguTFLinkTarget>WindowsForms</EmguTFLinkTarget>
+        <EmguTFLinkTarget>Windows</EmguTFLinkTarget>
         <EmguTFBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguTFBuildX64>
         <EmguTFNativeFileX64>$(MSBuildThisFileDirectory)x64\tfextern.dll</EmguTFNativeFileX64>
-        <EmguTFErrorMessage Condition="'$(EmguTFBuildX64)'=='True' AND !Exists('$(EmguTFNativeFileX64)')">This package do not contain necessary binary for $(EmguTFLinkTarget). X64 is targeted, but file $(EmguTFNativeFileX64) is missing.</EmguTFErrorMessage>
+        <EmguTFErrorMessage Condition="'$(EmguTFBuildX64)'=='True' AND !Exists('$(EmguTFNativeFileX64)')">This package do not contain necessary binary for $(EmguTFLinkTarget). X64 is targeted, but file $(EmguTFNativeFileX64) is missing. PInvoke may fail on Windows X64 platform.</EmguTFErrorMessage>
         <EmguTFDeployMessage Condition="'$(EmguTFBuildX64)'=='True' AND Exists('$(EmguTFNativeFileX64)')">$(EmguTFDeployMessage)x64 </EmguTFDeployMessage >
+		<EmguTFBuildX86 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x86'">True</EmguTFBuildX86>
+        <EmguTFNativeFileX86>$(MSBuildThisFileDirectory)x86\tfextern.dll</EmguTFNativeFileX86>
+        <EmguTFErrorMessage Condition="'$(EmguTFBuildX86)'=='True' AND !Exists('$(EmguTFNativeFileX86)')">X86 or AnyCPU is targeted, but Emgu TF do not support x86 for $(EmguTFLinkTarget). PInvoke may fail on Windows X86 platform.</EmguTFErrorMessage>
       </PropertyGroup>
       <ItemGroup Condition="'$(EmguTFBuildX64)'=='True' AND Exists('$(EmguTFNativeFileX64)')">
         <None Include="$(MSBuildThisFileDirectory)\x64\*.dll">
@@ -14,9 +17,8 @@
         </None>
       </ItemGroup>
   <Target Name="EmguTFPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <Error Condition="'$(EmguTFLinkTarget)'==''" Text="Emgu TF is not able to detect the project type, unloading and reloading the project may fix this problem. If you are still having difficulty, please send an email to support@emgu.com" />
     <Message Condition="'$(EmguTFLinkTarget)'!=''" Text="Emgu TF nuget package compiling against $(EmguTFLinkTarget)" Importance="High" />
-    <Error Text="'$(EmguTFErrorMessage)'" Condition="'$(EmguTFErrorMessage)'!=''" />
+    <Warning Text="'$(EmguTFErrorMessage)'" Condition="'$(EmguTFErrorMessage)'!=''" />
     <Message Text="Emgu TF Compiling with $(EmguTFDeployMessage)binary" Condition="'$(EmguTFDeployMessage)'!=''" Importance="High" />
     <Message Text="No native binary is deployed by the Emgu.TF nuget package." Condition="'$(EmguTFDeployMessage)'==''" Importance="High" />
   </Target>
