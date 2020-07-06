@@ -17,6 +17,8 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
+    - name: Check out submodules
+      run: git submodule update --init --recursive
     - name: Build Emgu TF Lite native binary
       run: ./platforms/ubuntu/docker/docker_build_tflite
     - name: Build Emgu TF Lite package
