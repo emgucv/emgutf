@@ -19,7 +19,8 @@ docker run \
   -w /src/workspace/tensorflow \
   $BAZELTF_IMAGE \
   --output_user_root=/tmp/build_output \
-  build //tensorflow/tfliteextern:libtfliteextern.so 
+  build //tensorflow/tfextern:libtfextern.so 
 
 mkdir -p lib/x64
-cp -f tensorflow/bazel-bin/tensorflow/tfliteextern/*.so lib/x64
+cp -f tensorflow/bazel-bin/tensorflow/tfextern/*.so lib/x64
+cp -f tensorflow/bazel-bin/tensorflow/libtensorflow_framework.so lib/x64/libtensorflow_framework.so.2
