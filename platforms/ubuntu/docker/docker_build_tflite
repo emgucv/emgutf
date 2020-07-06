@@ -1,0 +1,24 @@
+#!/bin/sh
+
+BAZELTF_IMAGE=bazeltf:3.1.0
+cd "$(dirname "$0")"
+
+docker image inspect $BAZELTF_IMAGE >/dev/null 2>&1 && echo "image already exist!" || docker build --no-cache -t $BAZELTF_IMAGE bazeltf 
+
+
+mkdir -p /tmp/build_output
+
+cd ../../..
+
+docker run \
+  -e USER="$(id -u)" \
+  -u="0" \
+  -v $(pwd):/src/workspace \
+  -v /tmp/build_output:/tmp/build_output \
+  -w /src/workspace/tensorflow \
+  $BAZELTF_IMAGE \
+  --output_user_root=/tmp/build_output \
+  build --python_path=/usr/bin/python3 //tensorflow/tfliteextern:libtfliteextern.so 
+
+mkdir -p lib/x64
+cp -f tensorflow/bazel-bin/tensorflow/tfliteextern/*.so lib/x64
