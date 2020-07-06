@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
+//  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
 using System;
@@ -278,7 +278,8 @@ namespace Emgu.TF
 
                 if (meta.TotalSize == 0)
                     return null;
-                Int64[] shape = new Int64[meta.ListSize];
+
+                Int64[] shape = new Int64[meta.IsList? meta.ListSize : meta.TotalSize];
                 GCHandle handle = GCHandle.Alloc(shape, GCHandleType.Pinned);
                 try
                 {

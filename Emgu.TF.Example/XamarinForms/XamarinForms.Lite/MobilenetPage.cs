@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
+//  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
 using System;
@@ -34,9 +34,7 @@ namespace Emgu.TF.XamarinForms
 {
     public class MobilenetPage : ButtonTextImagePage
     {
-
         private Mobilenet _mobilenet;
-        private string[] _imageFiles = null;
 
         public MobilenetPage()
            : base()
@@ -47,37 +45,8 @@ namespace Emgu.TF.XamarinForms
             button.Clicked += OnButtonClicked;
 
             _mobilenet = new Mobilenet();
+            _mobilenet.OnDownloadProgressChanged += onDownloadProgressChanged;
 
-            OnImagesLoaded += (sender, imageFiles) =>
-            {
-                SetMessage("Please wait...");
-                SetImage();
-                _imageFiles = imageFiles;
-
-#if !DEBUG
-                try
-#endif
-                {
-                    if (_mobilenet.Imported)
-                    {
-                        onDownloadCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(null, false, null));
-                    }
-                    else
-                    {
-                        SetMessage("Please wait while the Mobilenet Model is being downloaded...");
-                        _mobilenet.OnDownloadProgressChanged += onDownloadProgressChanged;
-                        _mobilenet.OnDownloadCompleted += onDownloadCompleted;
-                        _mobilenet.Init();
-                    }
-                }
-#if !DEBUG
-                catch (Exception e)
-                {
-                    String msg = e.Message.Replace(System.Environment.NewLine, " ");
-                    SetMessage(msg);     
-                }
-#endif
-            };
         }
 
         private void onDownloadProgressChanged(object sender, System.Net.DownloadProgressChangedEventArgs e)
@@ -88,27 +57,24 @@ namespace Emgu.TF.XamarinForms
                 SetMessage(String.Format("{0} of {1} bytes downloaded ({2}%)", e.BytesReceived, e.TotalBytesToReceive, e.ProgressPercentage));
         }
 
-        private void onDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        private async void OnButtonClicked(Object sender, EventArgs args)
         {
-            if (e != null && e.Error != null)
+            SetMessage("Please wait while the Mobilenet Model is being downloaded...");
+            await _mobilenet.Init();
+
+            SetImage();
+            String[] imageFiles = await LoadImages(new string[] { "space_shuttle.jpg" });
+            if (imageFiles == null || (imageFiles.Length > 0 && imageFiles[0] == null))
             {
-                SetMessage(e.Error.Message);
+                SetMessage("");
                 return;
             }
-
             Stopwatch watch = Stopwatch.StartNew();
-            var result = _mobilenet.Recognize(_imageFiles[0]);
+            var result = _mobilenet.Recognize(imageFiles[0]);
             watch.Stop();
             String resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", result[0].Label, result[0].Probability * 100, watch.ElapsedMilliseconds);
-
-            SetImage(_imageFiles[0]);
+            SetImage(imageFiles[0]);
             SetMessage(resStr);
-            
-        }
-
-        private void OnButtonClicked(Object sender, EventArgs args)
-        {
-            LoadImages(new string[] { "space_shuttle.jpg" });
         }
 
     }

@@ -1,5 +1,5 @@
 # --------------------------------------------------------
-#  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.
+#  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
 IF(HAVE_WINDESKTOP)
@@ -20,12 +20,12 @@ IF(HAVE_WINDESKTOP)
   INSTALL(FILES
     ${SRC_Example_CVInterop}
 	${EXAMPLE_INCEPTION_DATA_FILES}
-    ${CMAKE_CURRENT_SOURCE_DIR}/CVInterop.csproj
-    ${CMAKE_CURRENT_SOURCE_DIR}/App.config
+    ${CMAKE_CURRENT_SOURCE_DIR}/CVInterop.NetCore.csproj
+    #${CMAKE_CURRENT_SOURCE_DIR}/App.config
     DESTINATION Emgu.TF.Example/CVInterop COMPONENT emgutf_example_source)
   INSTALL(FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/Properties/AssemblyInfo.cs
     DESTINATION Emgu.TF.Example/CVInterop/Properties COMPONENT emgutf_example_source)
   
-  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Protobuf.Netstandard)
+  #ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Protobuf.Netstandard)
 ENDIF()

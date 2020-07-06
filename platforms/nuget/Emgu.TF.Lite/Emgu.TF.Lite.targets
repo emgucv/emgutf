@@ -15,7 +15,6 @@
       </ItemGroup>
 	  
   <Target Name="EmguTFLitePackageBuildImports" BeforeTargets="PrepareForBuild">
-    <Error Condition="'$(EmguTFLiteLinkTarget)'==''" Text="Emgu TF is not able to detect the project type, unloading and reloading the project may fix this problem. If you are still having difficulty, please send an email to support@emgu.com" />
     <Message Condition="'$(EmguTFLiteLinkTarget)'!=''" Text="Emgu TF nuget package compiling against $(EmguTFLiteLinkTarget)" Importance="High" />
     <Error Text="'$(EmguTFLiteErrorMessage)'" Condition="'$(EmguTFLiteErrorMessage)'!=''" />
     <Message Text="Emgu TF Compiling with $(EmguTFLiteDeployMessage)binary" Condition="'$(EmguTFLiteDeployMessage)'!=''" Importance="High" />

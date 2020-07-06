@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
+//  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
 using System;
@@ -11,6 +11,7 @@ using Emgu.Models;
 using System.IO;
 using System.ComponentModel;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace Emgu.TF.Models
 {
@@ -56,16 +57,7 @@ namespace Emgu.TF.Models
             _downloadManager = new FileDownloadManager();
 
             _downloadManager.OnDownloadProgressChanged += onDownloadProgressChanged;
-            _downloadManager.OnDownloadCompleted += onDownloadCompleted;
-        }
-
-        private void onDownloadCompleted(object sender, AsyncCompletedEventArgs e)
-        {
-            ImportGraph();
-            if (OnDownloadCompleted != null)
-            {
-                OnDownloadCompleted(sender, e);
-            }
+            //_downloadManager.OnDownloadCompleted += onDownloadCompleted;
         }
 
         private void onDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
@@ -75,30 +67,34 @@ namespace Emgu.TF.Models
         }
 
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
-        public event System.ComponentModel.AsyncCompletedEventHandler OnDownloadCompleted;
-
-
+        
         public
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             IEnumerator
 #else
-            void
+            async Task
 #endif
-            Init(String[] modelFiles = null, String downloadUrl = null)
+            Init(String[] modelFiles = null, String downloadUrl = null, String localModelFolder = "MaskRcnn")
         {
-            
-
-            _downloadManager.Clear();
-            String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/mask_rcnn_inception_v2_coco_2018_01_28/" : downloadUrl;
-            String[] fileNames = modelFiles == null ? new string[] { "frozen_inference_graph.pb", "coco-labels-paper.txt" } : modelFiles;
-            for (int i = 0; i < fileNames.Length; i++)
-                _downloadManager.AddFile(url + fileNames[i]);
+            if (_graph == null)
+            {
+                _downloadManager.Clear();
+                String url = downloadUrl == null
+                    ? "https://github.com/emgucv/models/raw/master/mask_rcnn_inception_v2_coco_2018_01_28/"
+                    : downloadUrl;
+                String[] fileNames = modelFiles == null
+                    ? new string[] {"frozen_inference_graph.pb", "coco-labels-paper.txt"}
+                    : modelFiles;
+                for (int i = 0; i < fileNames.Length; i++)
+                    _downloadManager.AddFile(url + fileNames[i], localModelFolder);
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-            yield return _downloadManager.Download();
+                yield return _downloadManager.Download();
 #else
-            _downloadManager.Download();
+                await _downloadManager.Download();
+                ImportGraph();
 #endif
+            }
         }
 
         public bool Imported

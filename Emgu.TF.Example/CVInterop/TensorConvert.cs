@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
+//  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
 using System;
@@ -17,7 +17,7 @@ namespace Emgu.TF
         /// <param name="image">The input Emgu CV Mat</param>
         /// <param name="inputHeight">The height of the image in the output tensor, if it is -1, the height will not be changed.</param>
         /// <param name="inputWidth">The width of the image in the output tensor, if it is -1, the width will not be changed.</param>
-        /// <param name="inputMean">The mean, if it is not 0, the value will be substracted from the pixel values</param>
+        /// <param name="inputMean">The mean, if it is not 0, the value will be subtracted from the pixel values</param>
         /// <param name="scale">The optional scale</param>
         /// <param name="dataType">The type of the data in the tensor</param>
         /// <param name="status">The tensorflow status</param>
@@ -39,7 +39,7 @@ namespace Emgu.TF
         /// <param name="tensor">The pre-allocated output tensor. Dimension must match (1, inputHeight, inputWidth, 3)</param>
         /// <param name="inputHeight">The height of the image in the output tensor, if it is -1, the height will not be changed.</param>
         /// <param name="inputWidth">The width of the image in the output tensor, if it is -1, the width will not be changed.</param>
-        /// <param name="inputMean">The mean, if it is not 0, the value will be substracted from the pixel values</param>
+        /// <param name="inputMean">The mean, if it is not 0, the value will be subtracted from the pixel values</param>
         /// <param name="scale">The optional scale</param>
         /// <param name="status">The tensorflow status</param>
         /// <returns>The tensorflow tensor</returns>

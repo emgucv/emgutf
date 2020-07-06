@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
+//  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
 using System;
@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Diagnostics;
+using System.Threading.Tasks;
+
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
 using UnityEngine;
 #endif
@@ -31,11 +33,6 @@ namespace Emgu.Models
         /// </summary>
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
 
-        /// <summary>
-        /// This event will be fired when the download is completed
-        /// </summary>
-        public event System.ComponentModel.AsyncCompletedEventHandler OnDownloadCompleted;
-
         private List<DownloadableFile> _files = new List<DownloadableFile>();
         
         /// <summary>
@@ -50,11 +47,15 @@ namespace Emgu.Models
         /// Add a file to download
         /// </summary>
         /// <param name="url">The url of the file to be downloaded</param>
-        public void AddFile(String url)
+        /// <param name="localSubfolder">The local subfolder name to download the model to.</param>
+        public void AddFile(String url, String localSubfolder)
         {
-            _files.Add(new DownloadableFile(url));
+            _files.Add(new DownloadableFile(url, localSubfolder));
         }
 
+        /// <summary>
+        /// Get the files that will be downloaded by this download manager.
+        /// </summary>
         public DownloadableFile[] Files
         {
             get
@@ -99,59 +100,55 @@ namespace Emgu.Models
                     }
                 }
             }
-            if (OnDownloadCompleted != null)
-            {
-                UnityEngine.Debug.Log("All download completed.");
-                OnDownloadCompleted(this, null);
-            }
+
+            UnityEngine.Debug.Log("All download completed.");
         }
 #else
-        public void Download(int retry = 1)
+        /// <summary>
+        /// Download the files. 
+        /// </summary>
+        /// <param name="retry">The number of retries.</param>
+        /// <returns>The async Task</returns>
+        public async Task Download(int retry = 1)
         {
-            Download( _files.ToArray(), retry, this.OnDownloadProgressChanged, this.OnDownloadCompleted);
+            await Download( _files.ToArray(), retry, this.OnDownloadProgressChanged);
         }
 
-        private static void Download(
+        private static async Task Download(
             DownloadableFile[] files,
             int retry = 1,
-            System.Net.DownloadProgressChangedEventHandler onDownloadProgressChanged = null,
-            System.ComponentModel.AsyncCompletedEventHandler onDownloadFileCompleted = null)
+            System.Net.DownloadProgressChangedEventHandler onDownloadProgressChanged = null)
         {
-            DownloadHelper(files, retry, onDownloadProgressChanged, onDownloadFileCompleted);
+            await DownloadHelperMultiple(files, retry, onDownloadProgressChanged);
         }
 
-        private static void DownloadHelper(
+        private static async Task DownloadHelperMultiple(
             DownloadableFile[] downloadableFiles,
             int retry = 1, 
-            System.Net.DownloadProgressChangedEventHandler onDownloadProgressChanged = null,
-            System.ComponentModel.AsyncCompletedEventHandler onDownloadFileCompleted = null)
+            System.Net.DownloadProgressChangedEventHandler onDownloadProgressChanged = null)
         {
             if (downloadableFiles == null || downloadableFiles.Length == 0)
             {
-                if (onDownloadFileCompleted != null)
-                    onDownloadFileCompleted(null, null);
+                return;
             } else if (downloadableFiles.Length == 1)
             {
-                DownloadHelper(downloadableFiles[0], retry, onDownloadProgressChanged, onDownloadFileCompleted);
+                await DownloadHelper(downloadableFiles[0], retry, onDownloadProgressChanged);
             } else
             {
                 DownloadableFile currentFile = downloadableFiles[0];
                 DownloadableFile[] remainingFiles = new DownloadableFile[downloadableFiles.Length - 1];
                 Array.Copy(downloadableFiles, 1, remainingFiles, 0, remainingFiles.Length);
-                DownloadHelper(currentFile, retry, onDownloadProgressChanged,
-                    (object sender, System.ComponentModel.AsyncCompletedEventArgs e) =>
-                    {
-                        DownloadHelper(remainingFiles, retry, onDownloadProgressChanged, onDownloadFileCompleted);
-                    }
-                    );
+                await DownloadHelper(currentFile, retry, onDownloadProgressChanged);
+                    
+                await DownloadHelperMultiple(remainingFiles, retry, onDownloadProgressChanged);
+                    
             }
         }
 
-        private static void DownloadHelper(
+        private static async Task DownloadHelper(
             DownloadableFile downloadableFile,
             int retry = 1, 
-            System.Net.DownloadProgressChangedEventHandler onDownloadProgressChanged = null,
-            System.ComponentModel.AsyncCompletedEventHandler onDownloadFileCompleted = null
+            System.Net.DownloadProgressChangedEventHandler onDownloadProgressChanged = null
             )
         {
             if (downloadableFile.Url == null)
@@ -169,21 +166,13 @@ namespace Emgu.Models
                     
                     if (onDownloadProgressChanged != null)
                         downloadClient.DownloadProgressChanged += onDownloadProgressChanged;
-                    if (onDownloadFileCompleted != null)
-                        downloadClient.DownloadFileCompleted +=
-                            (sender, e) =>
-                            {
-                                bool fileExist = File.Exists(downloadableFile.LocalFile);
-                                if (fileExist)
-                                    fileExist = new FileInfo(downloadableFile.LocalFile).Length > 0;
-
-                                if (!fileExist)
-                                    e = new System.ComponentModel.AsyncCompletedEventArgs(new FileNotFoundException("Failed to download file"), e.Cancelled, e.UserState);
-
-                                onDownloadFileCompleted(sender, e);                                
-                            };
-
-                    downloadClient.DownloadFileAsync(new Uri(downloadableFile.Url), downloadableFile.LocalFile);
+                    
+                    FileInfo fi = new FileInfo(downloadableFile.LocalFile);
+                    if (!fi.Directory.Exists)
+                    {
+                        fi.Directory.Create();
+                    }
+                    await downloadClient.DownloadFileTaskAsync(new Uri(downloadableFile.Url), downloadableFile.LocalFile);
                     
                 }
                 catch (Exception e)
@@ -194,23 +183,19 @@ namespace Emgu.Models
 
                     if (retry > 0)
                     {
-                        DownloadHelper( downloadableFile,  retry - 1);
+                        await DownloadHelper( downloadableFile,  retry - 1);
                     }
                     else
                     {
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
                         UnityEngine.Debug.Log(e.StackTrace);
 #else
-                        Debug.WriteLine(e);
+                        Trace.WriteLine(e);
 #endif
                         throw;
                     }
                 }
-            } else
-            {
-                if (onDownloadFileCompleted != null)
-                     onDownloadFileCompleted(null, null);
-            }
+            } 
         }
 #endif
     }

@@ -32,9 +32,9 @@
     </BuildLogFile>
     <HelpFileFormat>Website</HelpFileFormat>
     <CppCommentsFixup>False</CppCommentsFixup>
-    <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
+    <FrameworkVersion>Cross-platform (.NET Core/.NET Standard)</FrameworkVersion>
     <HelpTitle>Emgu TF Library Documentation</HelpTitle>
-    <CopyrightText>2019 Emgu Corporation, All Rights Reserved,</CopyrightText>
+    <CopyrightText>2020 Emgu Corporation, All Rights Reserved,</CopyrightText>
     <FeedbackEMailAddress>support%40emgu.com</FeedbackEMailAddress>
     <HeaderText>http://www.emgu.com</HeaderText>
     <FooterText>For questions and discussions please visit https://github.com/emgucv/emgutf/issues</FooterText>

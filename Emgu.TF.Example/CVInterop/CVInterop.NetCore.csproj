@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="dog416.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Emgu.CV.runtime.windows" Version="4.3.0.3890" />
+    <PackageReference Include="Google.Protobuf" Version="3.11.3" />
+  </ItemGroup>
+
+  <Import Project="..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Runtime.Windows.projitems" Label="Shared" />
+
+  <Import Project="..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems" Label="Shared" />
+
+  <Import Project="..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems" Label="Shared" />
+
+  <Import Project="..\..\Emgu.TF\Emgu.TF.Shared.projitems" Label="Shared" />
+
+  <Import Project="..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems" Label="Shared" />
+
+  <Import Project="..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" />
+
+</Project>

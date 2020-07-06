@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
+//  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
 using System;
@@ -24,6 +24,8 @@ namespace Emgu.TF.XamarinForms
             tabbedPage.Children.Add(new MultiboxDetectionPage());
             tabbedPage.Children.Add(new InceptionPage(InceptionPage.Model.Default));
             tabbedPage.Children.Add(new InceptionPage(InceptionPage.Model.Flower));
+            tabbedPage.Children.Add(new ResnetPage());
+
             if (TfInvoke.OpHasKernel("QuantizeV2"))
             {
                 tabbedPage.Children.Add(new StylizePage());
@@ -111,7 +113,6 @@ namespace Emgu.TF.XamarinForms
                 return np.CurrentPage;
             }
         }
-
 
         protected override void OnStart()
         {

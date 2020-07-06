@@ -1,6 +1,8 @@
 # --------------------------------------------------------
-#  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.
+#  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
+
+IF(HAVE_FULL_BUILD)
 
 INSTALL(
   DIRECTORY
@@ -19,11 +21,9 @@ INSTALL(
   PATTERN "${PROJECT_NAME}.dir" EXCLUDE
   )
 
-IF (DOTNET_FOUND)
-  PROJECT(Emgu.TF.Models.Netstandard)
   INSTALL(
     DIRECTORY
-    ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Models.Netstandard
     DESTINATION .
     COMPONENT emgutf_source
     FILES_MATCHING 
@@ -38,6 +38,9 @@ IF (DOTNET_FOUND)
     PATTERN "x86" EXCLUDE #exclude build artifacts from Visual Studio build process
     PATTERN "${PROJECT_NAME}.dir" EXCLUDE
     )
+
+IF (DOTNET_FOUND)
+  PROJECT(Emgu.TF.Models.Netstandard)
   
   BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj" "" ALL)
   
@@ -138,4 +141,4 @@ IF(HAVE_ANDROID)
   
 ENDIF()
 
-
+ENDIF()

@@ -136,15 +136,18 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xam.Plugin.Media">
-      <Version>4.0.1.5</Version>
+      <Version>5.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms">
-      <Version>4.2.0.815419</Version>
+      <Version>4.6.0.726</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Plugin.FilePicker">
+      <Version>2.1.34</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Emgu.TF.Runtime\Emgu.TF.Lite.Runtime.iOS.csproj">
-      <Project>{a14504ed-d613-43d1-ad3d-ae3f411c51ce}</Project>
+    <ProjectReference Include="..\..\..\Emgu.TF.Runtime\ios\Emgu.TF.Lite.Runtime.iOS.csproj">
+      <Project>{A14504ED-D613-43D1-AD3D-AE3F411C51CE}</Project>
       <Name>Emgu.TF.Lite.Runtime.iOS</Name>
     </ProjectReference>
   </ItemGroup>

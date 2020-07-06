@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
+//  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
 using System;
@@ -31,7 +31,7 @@ namespace CVInterop
             messageLabel.Text = String.Empty;
             cameraButton.Text = _startCameraText;
 
-            DisableUI();
+            //DisableUI();
 
             SessionOptions so = new SessionOptions();
             if (TfInvoke.IsGoogleCudaEnabled)
@@ -44,11 +44,11 @@ namespace CVInterop
             _inceptionGraph = new MaskRcnnInceptionV2Coco(null, so );
 
             _inceptionGraph.OnDownloadProgressChanged += OnDownloadProgressChangedEventHandler;
-            _inceptionGraph.OnDownloadCompleted += onDownloadCompleted;
 
-            _inceptionGraph.Init();
+            //_inceptionGraph.Init();
         }
 
+        /*
         public void onDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             EnableUI();
@@ -57,7 +57,7 @@ namespace CVInterop
             // https://github.com/opencv/opencv_extra/blob/master/testdata/dnn/dog416.png
             Recognize("dog416.png");
 
-        }
+        }*/
 
         public void DisableUI()
         {
@@ -91,7 +91,6 @@ namespace CVInterop
                 openFileButton.Enabled = true;
                 cameraButton.Enabled = true;
             }
-
         }
 
         public void OnDownloadProgressChangedEventHandler(object sender, System.Net.DownloadProgressChangedEventArgs e)
@@ -120,8 +119,6 @@ namespace CVInterop
 
         public void Recognize(Mat m)
         {
-
-
             int[] dim = new int[] {1, m.Height, m.Width, 3};
             if (_imageTensor == null)
             {
@@ -210,19 +207,19 @@ namespace CVInterop
             if (_renderMat == null)
                 _renderMat = new Mat();
             m.CopyTo(_renderMat);
-            Bitmap bmp = _renderMat.Bitmap;
+            //Bitmap bmp = _renderMat.ToBitmap();
 
             if (InvokeRequired)
             {
                 this.Invoke( (MethodInvoker)  (() =>
                    {
                        messageLabel.Text = resStr;
-                       pictureBox.Image = bmp;
+                       pictureBox.Image = _renderMat;
                    }));
             } else
             {
                 messageLabel.Text = resStr;
-                pictureBox.Image = bmp;
+                pictureBox.Image = _renderMat;
             }
         }
 
@@ -239,8 +236,14 @@ namespace CVInterop
             }
         }
 
-        private void openFileButton_Click(object sender, EventArgs e)
+        public async Task Init()
         {
+            await _inceptionGraph.Init();
+        }
+
+        private async void openFileButton_Click(object sender, EventArgs e)
+        {
+            await Init();
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.CheckFileExists = true;
             ofd.Multiselect = false;
@@ -253,10 +256,11 @@ namespace CVInterop
 
         private VideoCapture _capture = null;
 
-        private void cameraButton_Click(object sender, EventArgs e)
+        private async void cameraButton_Click(object sender, EventArgs e)
         {
             if (cameraButton.Text.Equals(_startCameraText))
             {
+                await Init();
                 if (_capture == null)
                 {
                     _capture = new VideoCapture(0);

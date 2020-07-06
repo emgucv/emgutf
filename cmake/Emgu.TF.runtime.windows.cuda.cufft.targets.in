@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+      <PropertyGroup>
+        <EmguCufftLinkTarget>Windows</EmguCufftLinkTarget>
+		<EmguCufftBuildX86 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x86'">True</EmguCufftBuildX86>
+        <EmguCufftBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguCufftBuildX64>
+		<EmguCufftNativeFileX64>$(MSBuildThisFileDirectory)x64\cufft64_${EMGU_TF_CUFFT_FILE_VERSION}.dll</EmguCufftNativeFileX64>
+		<EmguCufftErrorMessage Condition="'$(EmguCufftBuildX86)'=='True'">X86 or AnyCPU is targeted, but this CUDA CUFFT package do not support 32-bit. PInvoke may fail on Windows X86 platform.</EmguCufftErrorMessage>
+        <EmguCufftDeployMessage Condition="'$(EmguCufftBuildX64)'=='True' AND Exists('$(EmguCufftNativeFileX64)')">$(EmguCufftDeployMessage)x64 </EmguCufftDeployMessage>
+        <EmguCufftErrorMessage Condition="'$(EmguCufftBuildX64)'=='True' AND !Exists('$(EmguCufftNativeFileX64)')">This package do not contain necessary binary for $(EmguCufftLinkTarget). X64 is targeted, but file $(EmguCufftNativeFileX64) is missing.  PInvoke may fail on Windows X64 platform. </EmguCufftErrorMessage>
+      </PropertyGroup>
+      <ItemGroup Condition="'$(EmguCufftBuildX64)'=='True' AND Exists('$(EmguCufftNativeFileX64)')">
+        <None Include="$(MSBuildThisFileDirectory)\x64\*.dll">
+          <Link>x64\%(RecursiveDir)%(Filename)%(Extension)</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+      </ItemGroup>
+	    <Target Name="EmguCufftPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <Message Condition="'$(EmguCufftLinkTarget)'!=''" Text="Emgu Cufft nuget package compiling with $(EmguCufftLinkTarget) runtime." Importance="High" />
+    <Warning Text="'$(EmguCufftErrorMessage)'" Condition="'$(EmguCufftErrorMessage)'!=''" />
+    <Message Text="Emgu Cufft dependency Compiling with $(EmguCufftDeployMessage) runtime" Condition="'$(EmguCufftDeployMessage)'!=''" Importance="High" />
+    <Message Text="No native binary is being deployed by the Emgu Cufft package." Condition="'$(EmguCufftDeployMessage)'==''" Importance="High" />
+  </Target>
+</Project>

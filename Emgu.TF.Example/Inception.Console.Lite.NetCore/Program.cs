@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
+//  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
 using System;
@@ -17,7 +17,7 @@ namespace Inception.Console.Lite.Netstandard
         private static Emgu.TF.Lite.Models.Inception inception;
         private static FileInfo _inputFileInfo;
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
 #if DEBUG
             ConsoleTraceListener consoleTraceListener = new ConsoleTraceListener();
@@ -35,19 +35,21 @@ namespace Inception.Console.Lite.Netstandard
             }
             Trace.WriteLine(String.Format("Working on file {0}", _inputFileInfo.FullName));
 
-            new Thread(() => { Run(); }).Start();
-
-            System.Console.ReadKey();
-        }
-
-        private static void Run()
-        {
             inception = new Emgu.TF.Lite.Models.Inception();
             inception.OnDownloadProgressChanged += onDownloadProgressChanged;
-            inception.OnDownloadCompleted += onDownloadCompleted;
 
             System.Console.WriteLine("Initializing inception");
-            inception.Init();
+            await inception.Init();
+
+            Stopwatch watch = Stopwatch.StartNew();
+            var result = inception.Recognize(_inputFileInfo.FullName);
+            watch.Stop();
+            String resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", result[0].Label, result[0].Probability * 100, watch.ElapsedMilliseconds);
+
+            System.Console.WriteLine(resStr);
+            System.Console.WriteLine("Press any key to continue:");
+
+            System.Console.ReadKey();
         }
 
         private static void onDownloadProgressChanged(object sender, System.Net.DownloadProgressChangedEventArgs e)
@@ -58,18 +60,6 @@ namespace Inception.Console.Lite.Netstandard
                 System.Console.WriteLine(String.Format("{0} of {1} bytes downloaded ({2}%)", e.BytesReceived, e.TotalBytesToReceive, e.ProgressPercentage));
         }
 
-        private static void onDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-        {
-
-            Stopwatch watch = Stopwatch.StartNew();
-            var result = inception.Recognize(_inputFileInfo.FullName);
-            watch.Stop();
-            String resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", result[0].Label, result[0].Probability * 100, watch.ElapsedMilliseconds);
-
-            System.Console.WriteLine(resStr);
-            System.Console.WriteLine("Press any key to continue:");
-
-        }
 
         /// <summary>
         /// Get the directory from the assembly

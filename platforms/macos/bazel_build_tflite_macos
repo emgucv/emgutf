@@ -1,6 +1,6 @@
 #!/bin/sh
-#mkdir -p darwin_x86_64
-#mkdir -p darwin
+
+cd "$(dirname "$0")"
 cd ../../
 mkdir -p lib/osx
 cd tensorflow

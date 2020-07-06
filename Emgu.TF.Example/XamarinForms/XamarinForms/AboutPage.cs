@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Tensorflow;
 using Xamarin.Forms;
 
 
@@ -16,7 +16,14 @@ namespace Emgu.TF.XamarinForms
         /// <returns></returns>
         private static Session.Device[] GetSessionDevices()
         {
-            SessionOptions sessionOptions = null;
+            SessionOptions so = new SessionOptions();
+            if (TfInvoke.IsGoogleCudaEnabled)
+            {
+                Tensorflow.ConfigProto config = new Tensorflow.ConfigProto();
+                config.GpuOptions = new Tensorflow.GPUOptions();
+                config.GpuOptions.AllowGrowth = true;
+                so.SetConfig(config.ToProtobuf());
+            }
             int a = 1;
             int b = 1;
             //Creating tensor from value a
@@ -33,13 +40,15 @@ namespace Emgu.TF.XamarinForms
             Operation sumOp = graph.Add(opA, opB, "sum");
 
             //Create a new session
-            Session session = new Session(graph, sessionOptions);
+            using (Session session = new Session(graph, so))
+            {
+                //Execute the session and get the sum
+                Tensor[] results = session.Run(new Output[] {opA, opB}, new Tensor[] {tensorA, tensorB},
+                    new Output[] {sumOp});
 
-            //Execute the session and get the sum
-            Tensor[] results = session.Run(new Output[] { opA, opB }, new Tensor[] { tensorA, tensorB }, new Output[] { sumOp });
-
-            Session.Device[] devices = session.ListDevices(null);
-            return devices;
+                Session.Device[] devices = session.ListDevices(null);
+                return devices;
+            }
         }
 
         public AboutPage()

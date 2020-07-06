@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
+//  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
 using System;
@@ -16,6 +16,13 @@ namespace Emgu.TF.Lite
     /// </summary>
     public class Interpreter : Emgu.TF.Util.UnmanagedObject
     {
+        /// <summary>
+        /// Create a new tensorflow lite interpreter.
+        /// </summary>
+        public Interpreter()
+        {
+            _ptr = TfLiteInvoke.tfeInterpreterCreate();
+        }
 
         /// <summary>
         /// Create an interpreter from a flatbuffer model
@@ -23,15 +30,27 @@ namespace Emgu.TF.Lite
         /// <param name="flatBufferModel">The flat buffer model.</param>
         /// <param name="resolver">An instance that implements the Resolver interface which maps custom op names and builtin op codes to op registrations.</param>
         public Interpreter(FlatBufferModel flatBufferModel, IOpResolver resolver = null)
+        :this()
+        {
+            Build(flatBufferModel, resolver);
+        }
+
+        /// <summary>
+        /// Build the interpreter from a flatbuffer model
+        /// </summary>
+        /// <param name="flatBufferModel">The flat buffer model.</param>
+        /// <param name="resolver">An instance that implements the Resolver interface which maps custom op names and builtin op codes to op registrations.</param>
+        public void Build(FlatBufferModel flatBufferModel, IOpResolver resolver = null)
         {
             if (resolver == null)
             {
                 using (BuildinOpResolver buildinResolver = new BuildinOpResolver())
                 {
-                    _ptr = TfLiteInvoke.tfeInterpreterCreateFromModel(flatBufferModel.Ptr, ((IOpResolver) buildinResolver).OpResolverPtr);
+                     TfLiteInvoke.tfeInterpreterCreateFromModel(ref _ptr, flatBufferModel.Ptr, ((IOpResolver)buildinResolver).OpResolverPtr);
                 }
-            } else
-                _ptr = TfLiteInvoke.tfeInterpreterCreateFromModel(flatBufferModel.Ptr, resolver.OpResolverPtr);
+            }
+            else
+                TfLiteInvoke.tfeInterpreterCreateFromModel(ref _ptr, flatBufferModel.Ptr, resolver.OpResolverPtr);
         }
 
         /// <summary>
@@ -113,10 +132,10 @@ namespace Emgu.TF.Lite
             get
             {
                 int[] outputIdx = OutputIndices;
-                Tensor[] inputs = new Tensor[outputIdx.Length];
-                for (int i = 0; i < inputs.Length; i++)
-                    inputs[i] = GetTensor(outputIdx[i]);
-                return inputs;
+                Tensor[] outputs = new Tensor[outputIdx.Length];
+                for (int i = 0; i < outputs.Length; i++)
+                    outputs[i] = GetTensor(outputIdx[i]);
+                return outputs;
             }
 
         }
@@ -201,7 +220,7 @@ namespace Emgu.TF.Lite
         internal static extern IntPtr tfeInterpreterCreate();
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
-        internal static extern IntPtr tfeInterpreterCreateFromModel(IntPtr model, IntPtr opResolver);
+        internal static extern IntPtr tfeInterpreterCreateFromModel(ref IntPtr interpreter, IntPtr model, IntPtr opResolver);
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
         internal static extern Status tfeInterpreterAllocateTensors(IntPtr interpreter);

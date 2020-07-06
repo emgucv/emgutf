@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
+//  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
 using System;
@@ -292,17 +292,17 @@ namespace Emgu.TF.Models
 #if __ANDROID__         
             byte[] rawPixel = TensorToPixel(image, scale, mean, 4);
             int[] dim = image.Dim;
-            return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 4);
+            return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 4).Raw;
 #elif __IOS__
             if (mean != 0.0)
                 throw new NotImplemenetedException("Not able to accept mean values on this platform");
             byte[] rawPixel = TensorToPixel(image, scale, mean, 3);
             int[] dim = image.Dim;
-            return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 3);
+            return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 3).Raw;
 #elif __UNIFIED__ //Mac OSX
             byte[] rawPixel = TensorToPixel(image, scale, mean, 4);
             int[] dim = image.Dim;
-            return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 4);
+            return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 4).Raw;
 #else
             return EncodeJpeg(image, 1.0f, 0.0f);
 #endif
@@ -402,11 +402,11 @@ namespace Emgu.TF.Models
 
                     Tensor mean = new Tensor(inputMean);
                     Operation meanOp = graph.Const(mean, mean.Type, opName: "mean");
-                    Operation substracted = graph.Sub(resized, meanOp);
+                    Operation subtracted = graph.Sub(resized, meanOp);
 
                     Tensor scaleTensor = new Tensor(scale);
                     Operation scaleOp = graph.Const(scaleTensor, scaleTensor.Type, opName: "scale");
-                    Operation scaled = graph.Mul(substracted, scaleOp);
+                    Operation scaled = graph.Mul(subtracted, scaleOp);
 
                     Operation swapedBR;
                     if (swapBR)
@@ -480,7 +480,7 @@ namespace Emgu.TF.Models
                 inputMean,
                 scale,
                 flipUpSideDown,
-                !swapBR //No swapping BR in tensorflow is swapping BR in Bitmap
+                !swapBR //No swapping BR in tensorflow is the equivalent of swapping BR in Bitmap
             );
             return t;
         }

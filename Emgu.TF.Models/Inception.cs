@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
+//  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
 using System;
@@ -12,6 +12,7 @@ using System.IO;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace Emgu.TF.Models
 {
@@ -67,17 +68,8 @@ namespace Emgu.TF.Models
             _downloadManager = new FileDownloadManager();
 
             _downloadManager.OnDownloadProgressChanged += onDownloadProgressChanged;
-            _downloadManager.OnDownloadCompleted += onDownloadCompleted;
         }
 
-        private void onDownloadCompleted(object sender, AsyncCompletedEventArgs e)
-        {
-            ImportGraph();
-            if (OnDownloadCompleted != null)
-            {
-                OnDownloadCompleted(sender, e);
-            }
-        }
 
         private void onDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
@@ -91,11 +83,6 @@ namespace Emgu.TF.Models
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
 
         /// <summary>
-        /// Callback when graph download progress is completed.
-        /// </summary>
-        public event System.ComponentModel.AsyncCompletedEventHandler OnDownloadCompleted;
-
-        /// <summary>
         /// Initiate the graph by checking if the graph file exit on disk, if not download the graph from internet.
         /// </summary>
         /// <param name="modelFiles">An array where the first file is the tensorflow graph and the second file are the object class labels. </param>
@@ -106,12 +93,14 @@ namespace Emgu.TF.Models
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             IEnumerator
 #else
-            void
+            async Task
 #endif
             Init(String[] modelFiles = null, 
                 String downloadUrl = null, 
                 String inputName = null, 
-                String outputName = null)
+                String outputName = null,
+                String localModelFolder = "Inception" 
+                )
         {
             _inputName = inputName == null ? "input" : inputName;
             _outputName = outputName == null ? "output" : outputName;
@@ -120,13 +109,14 @@ namespace Emgu.TF.Models
             String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/inception/" : downloadUrl;
             String[] fileNames = modelFiles == null ? new string[] { "tensorflow_inception_graph.pb", "imagenet_comp_graph_label_strings.txt" } : modelFiles;
             for (int i = 0; i < fileNames.Length; i++)
-                _downloadManager.AddFile(url + fileNames[i]);
+                _downloadManager.AddFile(url + fileNames[i], localModelFolder);
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             yield return _downloadManager.Download();
 #else
-            _downloadManager.Download();
+            await _downloadManager.Download();
 #endif
+            ImportGraph();
         }
 
         /// <summary>

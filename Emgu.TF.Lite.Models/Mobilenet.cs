@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
+//  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
 using System;
@@ -11,6 +11,7 @@ using Emgu.Models;
 using System.IO;
 using System.ComponentModel;
 using System.Net;
+using System.Threading.Tasks;
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
 using UnityEngine;
@@ -69,20 +70,7 @@ namespace Emgu.TF.Lite.Models
         public Mobilenet()
         {
             _downloadManager = new FileDownloadManager();
-
             _downloadManager.OnDownloadProgressChanged += onDownloadProgressChanged;
-            _downloadManager.OnDownloadCompleted += onDownloadCompleted;
-
-                
-        }
-
-        private void onDownloadCompleted(object sender, AsyncCompletedEventArgs e)
-        {
-            ImportGraph();
-            if (OnDownloadCompleted != null)
-            {
-                OnDownloadCompleted(sender, e);
-            }
         }
 
         private void onDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
@@ -97,35 +85,35 @@ namespace Emgu.TF.Lite.Models
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
 
         /// <summary>
-        /// Callback when the download is completed.
-        /// </summary>
-        public event System.ComponentModel.AsyncCompletedEventHandler OnDownloadCompleted;
-
-        /// <summary>
         /// Initialize the graph by downloading the model from the internet
         /// </summary>
         /// <param name="modelFiles">The model file names as an array. First one is the ".tflite" file and the second one should be the label names.</param>
         /// <param name="downloadUrl">The url where the files can be downloaded from.</param>
+        /// <param name="localModelFolder">The subfolder where the file will be stored.</param>
         public
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             IEnumerator
 #else
-            void
+            async Task
 #endif
-            Init(String[] modelFiles = null, String downloadUrl = null)
+            Init(
+                String[] modelFiles = null, 
+                String downloadUrl = null,
+                String localModelFolder = "Mobilenet")
         {
 
             _downloadManager.Clear();
             String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/mobilenet_v1_1.0_224_float_2017_11_08/" : downloadUrl;
             String[] fileNames = modelFiles == null ? new string[] { "mobilenet_v1_1.0_224.tflite", "labels.txt" } : modelFiles;
             for (int i = 0; i < fileNames.Length; i++)
-                _downloadManager.AddFile(url + fileNames[i]);
+                _downloadManager.AddFile(url + fileNames[i], localModelFolder);
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             yield return _downloadManager.Download();
 #else
-            _downloadManager.Download();
+            await _downloadManager.Download();
 #endif
+            ImportGraph();
         }
 
         /// <summary>
@@ -141,28 +129,25 @@ namespace Emgu.TF.Lite.Models
 
         private void ImportGraph()
         {
-            if (_interpreter != null)
-                _interpreter.Dispose();
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             UnityEngine.Debug.Log("Reading model definition");
 #endif
 
-            String modelFileName = _downloadManager.Files[0].LocalFile;
-            String labelFileName = _downloadManager.Files[1].LocalFile;
-
-            System.Diagnostics.Debug.Assert(File.Exists(modelFileName), String.Format("File {0} doesn't exist", modelFileName));
-            System.Diagnostics.Debug.Assert(File.Exists(labelFileName), String.Format("File {0} doesn't exist", labelFileName));
-
-            if (!File.Exists(modelFileName) || !File.Exists(labelFileName))
-                return;
-
             if (_labels == null)
+            {
+                String labelFileName = _downloadManager.Files[1].LocalFile;
+                if (!File.Exists(labelFileName))
+                    throw new Exception(String.Format("File {0} doesn't exist", labelFileName));
                 _labels = File.ReadAllLines(labelFileName);
+            }
 
             if (_model == null)
             {
+                String modelFileName = _downloadManager.Files[0].LocalFile;
                 _model = new FlatBufferModel(modelFileName);
+                if (!File.Exists(modelFileName))
+                    throw new Exception(String.Format("File {0} doesn't exist", modelFileName));
                 if (!_model.CheckModelIdentifier())
                     throw new Exception("Model identifier check failed");
             }
@@ -177,10 +162,8 @@ namespace Emgu.TF.Lite.Models
 
             if (_inputTensor == null)
             {
-
                 int[] input = _interpreter.InputIndices;
                 _inputTensor = _interpreter.GetTensor(input[0]);
-                
             }
 
             if (_outputTensor == null)
@@ -229,10 +212,10 @@ namespace Emgu.TF.Lite.Models
         }
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-        public RecognitionResult[] Recognize(Texture2D texture2D, bool flipUpsideDown=true, bool swapBR = false)
+        public RecognitionResult[] Recognize(Texture texture, bool flipUpsideDown=true, bool swapBR = false)
         {
-            NativeImageIO.ReadTensorFromTexture2D<float>(
-                texture2D, 
+            NativeImageIO.ReadTensorFromTexture<float>(
+                texture, 
                 _inputTensor.DataPointer, 
                 224, 224, 128.0f, 1.0f / 128.0f,
                 flipUpsideDown,

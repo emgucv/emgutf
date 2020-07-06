@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
+//  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
 using System;
@@ -9,6 +9,7 @@ using System.IO;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Net;
 using Emgu.TF;
 using Emgu.TF.Models;
 using Emgu.Models;
@@ -33,26 +34,17 @@ using CoreGraphics;
 
 namespace Emgu.TF.XamarinForms
 {
-    public class MultiboxDetectionPage : ModelButtonTextImagePage
+    public class MultiboxDetectionPage
+#if __ANDROID__
+        : AndroidCameraPage
+#else
+        : ButtonTextImagePage
+#endif
     {
         private MultiboxGraph _multiboxGraph;
 
-        public override String GetButtonName(ButtonMode mode)
+        private async Task InitMultibox(DownloadProgressChangedEventHandler onProgressChanged)
         {
-            switch (mode)
-            {
-                case ButtonMode.WaitingModelDownload:
-                    return "Download Model";
-                default:
-                    return "Detect People";
-            }
-        }
-
-        public MultiboxDetectionPage()
-           : base()
-        {
-            Title = "Multibox People Detection";
-
             if (_multiboxGraph == null)
             {
                 SessionOptions so = new SessionOptions();
@@ -64,35 +56,53 @@ namespace Emgu.TF.XamarinForms
                     so.SetConfig(config.ToProtobuf());
                 }
                 _multiboxGraph = new MultiboxGraph(null, so);
-                _multiboxGraph.OnDownloadProgressChanged += onDownloadProgressChanged;
-                _multiboxGraph.OnDownloadCompleted += onDownloadCompleted;
-                _multiboxGraph.OnDownloadCompleted += (sender, e) =>
-                {
-                    OnButtonClicked(sender, e);
-                };
+                _multiboxGraph.OnDownloadProgressChanged += onProgressChanged;
+                await _multiboxGraph.Init();
             }
+        }
 
-            OnImagesLoaded += (sender, image) =>
+        public MultiboxDetectionPage()
+           : base()
+        {
+            Title = "Multibox People Detection";
+            this.TopButton.Text = "Detect People";
+
+
+            this.TopButton.Clicked += async (sender, e) =>
             {
                 try
                 {
+                    this.TopButton.IsEnabled = false;
                     SetMessage("Please wait...");
                     SetImage();
+
+                    SetMessage("Please wait while we download the model from internet.");
+                    await InitMultibox(this.onDownloadProgressChanged);
+                    
+                    String[] images = await LoadImages(new string[] { "surfers.jpg" });
+                    if (images == null)
+                        return;
+
                     Stopwatch watch = Stopwatch.StartNew();
 
-                    Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(image[0], 224, 224, 128.0f, 1.0f / 128.0f);
+                    Tensor imageTensor =
+                        Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(images[0], 224, 224, 128.0f,
+                            1.0f / 128.0f);
                     MultiboxGraph.Result[] detectResult = _multiboxGraph.Detect(imageTensor);
                     watch.Stop();
                     Emgu.Models.Annotation[] annotations = MultiboxGraph.FilterResults(detectResult, 0.1f);
 
-                    var jpeg = Emgu.Models.NativeImageIO.ImageFileToJpeg(image[0], annotations);
-
-                    watch.Stop();
+#if __ANDROID__
+                    var bmp = Emgu.Models.NativeImageIO.ImageFileToBitmap(images[0], annotations);
+                    SetImage(bmp);
+#else
+                    var jpeg = Emgu.Models.NativeImageIO.ImageFileToJpeg(images[0], annotations);
                     SetImage(jpeg.Raw, jpeg.Width, jpeg.Height);
 #if __MACOS__
                     var displayImage = this.DisplayImage;
                     displayImage.WidthRequest = jpeg.Width;
                     displayImage.HeightRequest = jpeg.Height;
+#endif
 #endif
 
                     SetMessage(String.Format("Detected in {0} milliseconds.", watch.ElapsedMilliseconds));
@@ -102,21 +112,12 @@ namespace Emgu.TF.XamarinForms
                     String msg = excpt.Message.Replace(System.Environment.NewLine, " ");
                     SetMessage(msg);
                 }
+                finally
+                {
+                    this.TopButton.IsEnabled = true;
+                }
+
             };
-        }
-
-        public override void OnButtonClicked(Object sender, EventArgs args)
-        {
-            base.OnButtonClicked(sender, args);
-
-            if (_buttonMode == ButtonMode.WaitingModelDownload)
-            {
-                _multiboxGraph.Init();
-            }
-            else
-            {
-                LoadImages(new string[] { "surfers.jpg" });
-            }
         }
 
     }

@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
+//  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
 using System;
@@ -39,6 +39,7 @@ namespace Emgu.TF.Lite
         /// Fill content into a string tensor.
         /// </summary>
         /// <param name="tensor">The string tensor</param>
+        /// <param name="newShape">The new shape</param>
         public void WriteToTensor(Tensor tensor, IntArray newShape = null)
         {
             TfLiteInvoke.tfeDynamicBufferWriteToTensor(_ptr, tensor, newShape == null ? IntPtr.Zero : newShape);

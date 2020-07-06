@@ -24,11 +24,17 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Shared", "..\..\Emg
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Mac", "..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Runtime.Mac.shproj", "{B1E7D925-5D1C-4A1E-9BA0-35163883A110}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inception.Console.NetCore", "..\..\Emgu.TF.Example\Inception.Console.NetCore\Inception.Console.NetCore.csproj", "{476CD8E3-3C26-4D27-AC6E-85298F4D3F62}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inception.Console.NetCore", "..\..\Emgu.TF.Example\Inception.Console.NetCore\Inception.Console.NetCore.csproj", "{476CD8E3-3C26-4D27-AC6E-85298F4D3F62}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Windows", "..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Runtime.Windows.shproj", "{3088794D-7022-4049-98BC-41E2949E48B4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Models.Mac", "..\..\Emgu.TF.Models\Emgu.TF.Models.Mac\Emgu.TF.Models.Mac.csproj", "{1D693B5F-E979-4102-A2AE-D67F150174FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Models.Netstandard", "..\..\Emgu.TF.Models\Emgu.TF.Models.Netstandard\Emgu.TF.Models.Netstandard.csproj", "{261EA8FD-875D-4287-A380-CC167833E168}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Ubuntu", "..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Runtime.Ubuntu.shproj", "{0F30EC5F-39DD-4A62-AD79-14EBCB894208}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Raspbian", "..\..\Emgu.TF.Runtime\Raspbian\Emgu.TF.Runtime.Raspbian.shproj", "{61FEA54E-4DD5-4552-BCFC-860610295873}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -75,6 +81,10 @@ Global
 		{1D693B5F-E979-4102-A2AE-D67F150174FA}.Debug|x64.Build.0 = Debug|Any CPU
 		{1D693B5F-E979-4102-A2AE-D67F150174FA}.Release|x64.ActiveCfg = Release|Any CPU
 		{1D693B5F-E979-4102-A2AE-D67F150174FA}.Release|x64.Build.0 = Release|Any CPU
+		{261EA8FD-875D-4287-A380-CC167833E168}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{261EA8FD-875D-4287-A380-CC167833E168}.Debug|x64.Build.0 = Debug|Any CPU
+		{261EA8FD-875D-4287-A380-CC167833E168}.Release|x64.ActiveCfg = Release|Any CPU
+		{261EA8FD-875D-4287-A380-CC167833E168}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

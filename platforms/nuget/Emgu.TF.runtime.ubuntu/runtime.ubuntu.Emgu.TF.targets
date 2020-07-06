@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <EmguTFUbuntuLinkTarget>Ubuntu_x64</EmguTFUbuntuLinkTarget>
+    <EmguTFUbuntuBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguTFUbuntuBuildX64>
+    <EmguTFUbuntuNativeFileX64>$(MSBuildThisFileDirectory)\x64\libtfextern.so</EmguTFUbuntuNativeFileX64>
+    <EmguTFUbuntuNativeFile2X64>$(MSBuildThisFileDirectory)\x64\libtensorflow_framework.so.2</EmguTFUbuntuNativeFile2X64>
+    <EmguTFUbuntuErrorMessage Condition="'$(EmguTFUbuntuBuildX64)'=='True' AND !Exists('$(EmguTFUbuntuNativeFileX64)')">This package do not contain necessary binary for $(EmguTFUbuntuLinkTarget). File $(EmguTFUbuntuNativeFileX64) is missing. PInvoke may fail on Ubuntu</EmguTFUbuntuErrorMessage>
+    <EmguTFUbuntuErrorMessage2 Condition="'$(EmguTFUbuntuBuildX64)'=='True' AND !Exists('$(EmguTFUbuntuNativeFile2X64)')">This package do not contain necessary binary for $(EmguTFUbuntuLinkTarget). File $(EmguTFUbuntuNativeFile2X64) is missing. PInvoke may fail on Ubuntu</EmguTFUbuntuErrorMessage2>
+    <EmguTFUbuntuDeployMessage Condition="'$(EmguTFUbuntuBuildX64)'=='True' AND Exists('$(EmguTFUbuntuNativeFileX64)')">$(EmguTFUbuntuDeployMessage)x64 </EmguTFUbuntuDeployMessage >
+  </PropertyGroup>
+  <ItemGroup Condition="'$(EmguTFUbuntuBuildX64)'=='True' AND Exists('$(EmguTFUbuntuNativeFileX64)')">
+    <None Include="$(MSBuildThisFileDirectory)\x64\*.so">
+      <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)\x64\*.so.*">
+      <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Target Name="EmguTFUbuntuPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <Warning Text="'$(EmguTFUbuntuErrorMessage)'" Condition="'$(EmguTFUbuntuErrorMessage)'!=''" />
+    <Warning Text="'$(EmguTFUbuntuErrorMessage2)'" Condition="'$(EmguTFUbuntuErrorMessage2)'!=''" />
+    <Message Text="Emgu TF Compiling with $(EmguTFUbuntuDeployMessage)binary" Condition="'$(EmguTFUbuntuDeployMessage)'!=''" Importance="High" />
+    <Message Text="No native binary is deployed by the runtime.ubuntu.Emgu.TF nuget package." Condition="'$(EmguTFUbuntuDeployMessage)'==''" Importance="High" />
+  </Target>
+</Project>

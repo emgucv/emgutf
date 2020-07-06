@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>${EMGUTF_WINDOWS_NUGET_ID}</id>
+	<title>${EMGUTF_WINDOWS_NUGET_TITLE}</title>
+    <version>${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}</version>
+    <authors>${CPACK_PACKAGE_VENDOR}</authors>
+    <owners>${CPACK_PACKAGE_VENDOR}</owners>
+    <license type="file">${EMGUTF_LICENSE_FILE}</license>
+    <projectUrl>http://www.emgu.com/wiki/index.php/Emgu_TF</projectUrl>
+	<repository type="git" url="https://github.com/emgucv/emgutf" />
+	<icon>icon.png</icon>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+	<summary>Runtime package of Emgu TF for Windows</summary>
+    <description>This package contains the native runtime of Emgu TF for Windows</description>
+    <releaseNotes>This is the ${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX} release of Emgu TF for Windows. For online documentation please visit
+http://www.emgu.com/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}/document/</releaseNotes>
+	${EMGUTF_WINDOWS_NUGET_DEPENDENCY}
+    <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved.</copyright>
+    <tags>tensorflow emgu emgutf ai </tags>
+  </metadata>
+  <files>
+  ${EMGUTF_WINDOWS_NUGET_FILE_LIST}
+  </files>
+</package>

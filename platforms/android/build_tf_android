@@ -18,12 +18,12 @@ fi
 set -x
 bazel build -c opt \
       --config=android_$1 \
-      --action_env ANDROID_NDK_HOME=/usr/lib/android-ndk-r18b \
+      --action_env ANDROID_NDK_HOME=/usr/lib/android-ndk-r20b \
       --action_env ANDROID_NDK_API_LEVEL=28 \
       --action_env ANDROID_BUILD_TOOLS_VERSION=debian \
       --action_env ANDROID_SDK_API_LEVEL=23 \
       --action_env ANDROID_SDK_HOME=/usr/lib/android-sdk \
-      --cxxopt='--std=c++11' \
+      --cxxopt='--std=c++14' \
       --config monolithic \
       --verbose_failures \
       //tensorflow/tfextern:libtfextern.so \

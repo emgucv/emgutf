@@ -18,15 +18,6 @@ namespace Example.OSX
 		[Outlet]
 		AppKit.NSTextField messageLabel { get; set; }
 
-		[Action ("inceptionClicked:")]
-		partial void inceptionClicked (Foundation.NSObject sender);
-
-		[Action ("multiboxClicked:")]
-		partial void multiboxClicked (Foundation.NSObject sender);
-
-		[Action ("stylizeClicked:")]
-		partial void stylizeClicked (Foundation.NSObject sender);
-		
 		void ReleaseDesignerOutlets ()
 		{
 			if (messageLabel != null) {

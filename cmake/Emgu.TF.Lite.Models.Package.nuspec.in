@@ -8,7 +8,8 @@
     <owners>${CPACK_PACKAGE_VENDOR}</owners>
     <license type="file">${EMGUTF_LICENSE_FILE}</license>
     <projectUrl>${EMGUTF_MAIN_WEB_URL}</projectUrl>
-	<iconUrl>http://www.emgu.com/wiki/files/EmguTFLogo.png</iconUrl>
+    <repository type="git" url="https://github.com/emgucv/emgutf" />
+	<icon>icon.png</icon>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
 	<summary>Utility to download Tensorflow models for Emgu TF Lite</summary>
     <description>Emgu TF Lite is a cross platform .Net wrapper for the Google Tensorflow Lite library. Allows Tensorflow Lite functions to be called from .NET compatible languages such as C#, VB, VC++, IronPython.</description>
@@ -23,7 +24,7 @@ http://www.emgu.com/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PAC
 			<dependency id="System.Drawing.Common" version="[4.5.1]" />
         </group>
     </dependencies>
-    <copyright>${CURRENT_YEAR} ${CPACK_PACKAGE_VENDOR}, all rights reserved</copyright>
+    <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved</copyright>
     <tags>tensorflow emgu emgutf ai </tags>
   </metadata>
   <files>

@@ -1,3 +1,5 @@
 [submodule "tensorflow"]
 	path = tensorflow
 	url = https://github.com/emgucv/tensorflow.git
+	ignore = dirty
+	

@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
+//  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 #if __MACOS__
 using System;
@@ -166,8 +166,13 @@ namespace Emgu.Models
         /// <returns>The image in Jpeg stream format</returns>
         public static JpegData ImageFileToJpeg(String fileName, Annotation[] annotations = null)
         {
-            NSImage img = NSImage.ImageNamed(fileName);
+            NSImage img;
 
+            if (File.Exists(fileName))
+                img = new NSImage(fileName); //full path
+            else
+                img = NSImage.ImageNamed(fileName); //image included in the package
+           
             if (annotations != null && annotations.Length > 0)
                 DrawAnnotations(img, annotations);
 
@@ -224,11 +229,11 @@ namespace Emgu.Models
         /// <param name="height">The height of the image</param>
         /// <param name="channels">The number of channels</param>
         /// <returns>The jpeg stream</returns>
-        public static byte[] PixelToJpeg(byte[] rawPixel, int width, int height, int channels)
+        public static JpegData PixelToJpeg(byte[] rawPixel, int width, int height, int channels)
         {
-                    if (channels != 4)
+            if (channels != 4)
                 throw new NotImplementedException("Only 4 channel pixel input is supported.");
-                                    System.Drawing.Size sz = new System.Drawing.Size(width, height);
+            System.Drawing.Size sz = new System.Drawing.Size(width, height);
 
             using (CGColorSpace cspace = CGColorSpace.CreateDeviceRGB())
             using (CGBitmapContext context = new CGBitmapContext(
@@ -242,12 +247,16 @@ namespace Emgu.Models
 
             using (NSBitmapImageRep newImg = new NSBitmapImageRep(cgImage))
             {
-                var jpegData = newImg.RepresentationUsingTypeProperties(NSBitmapImageFileType.Jpeg);
+                JpegData result = new JpegData();
+                var rawJpegData = newImg.RepresentationUsingTypeProperties(NSBitmapImageFileType.Jpeg);
 
-                byte[] raw = new byte[jpegData.Length];
-                System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, raw, 0,
-                    (int)jpegData.Length);
-                return raw;
+                byte[] raw = new byte[rawJpegData.Length];
+                System.Runtime.InteropServices.Marshal.Copy(rawJpegData.Bytes, raw, 0,
+                    (int)rawJpegData.Length);
+                result.Raw = raw;
+                result.Width = sz.Width;
+                result.Height = sz.Height;
+                return result;
             }
         }
     }

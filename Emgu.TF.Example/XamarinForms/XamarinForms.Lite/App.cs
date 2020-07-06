@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
+//  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
 using System;
@@ -30,6 +30,10 @@ namespace Emgu.TF.XamarinForms
             Button inceptionButton = new Button();
             inceptionButton.Text = "Flower recognition";
 
+            Button modelCheckerButton = new Button();
+            modelCheckerButton.Text = "TF Lite model checker";
+
+            /*
 #if __IOS__ || __MACOS__
             Button cameraViewButton = new Button();
             cameraViewButton.Text = "Camera View";
@@ -37,7 +41,7 @@ namespace Emgu.TF.XamarinForms
             {
                 MainPage.Navigation.PushAsync(new CameraViewPage());
             };
-#endif
+#endif*/
 
             // The root page of your application
             ContentPage page =
@@ -50,11 +54,9 @@ namespace Emgu.TF.XamarinForms
                      {
                            multiboxDetectionButton,
                            //smartReplyButton,
-#if __IOS__ || __MACOS__
-                           cameraViewButton,
-#endif
                            mobilenetButton,
-                           inceptionButton
+                           inceptionButton, 
+                           modelCheckerButton
                      }
                    }
                };
@@ -99,7 +101,10 @@ namespace Emgu.TF.XamarinForms
                 MainPage.Navigation.PushAsync(new InceptionPage());
             };
 
-
+            modelCheckerButton.Clicked += (sender, args) =>
+            {
+                MainPage.Navigation.PushAsync(new ModelCheckerPage());
+            };
         }
 
         public Page CurrentPage

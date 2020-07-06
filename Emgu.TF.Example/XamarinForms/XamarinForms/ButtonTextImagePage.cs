@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-
+using Plugin.FilePicker;
+using Plugin.FilePicker.Abstractions;
 using Xamarin.Forms;
 
 
@@ -32,9 +34,15 @@ namespace Emgu.TF.XamarinForms
             get { return _displayImage; }
         }
 
+        private StackLayout _mainLayout;
+
+        public StackLayout MainLayout
+        {
+            get { return _mainLayout; }
+        }
+
         public ButtonTextImagePage()
         {
-            
             TopButton.Text = "Click me";
             TopButton.IsEnabled = true;
             TopButton.HorizontalOptions = LayoutOptions.Center;
@@ -45,12 +53,12 @@ namespace Emgu.TF.XamarinForms
             MessageLabel.VerticalTextAlignment = TextAlignment.Center;
             MessageLabel.HorizontalTextAlignment = TextAlignment.Center;
 
-            StackLayout mainLayout = new StackLayout();
-            mainLayout.VerticalOptions = LayoutOptions.FillAndExpand;
-            mainLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
-            mainLayout.Orientation = StackOrientation.Vertical;
-            mainLayout.Spacing = 15;
-            mainLayout.Padding = new Thickness(10, 10, 10, 10);
+            _mainLayout = new StackLayout();
+            _mainLayout.VerticalOptions = LayoutOptions.FillAndExpand;
+            _mainLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
+            _mainLayout.Orientation = StackOrientation.Vertical;
+            _mainLayout.Spacing = 15;
+            _mainLayout.Padding = new Thickness(10, 10, 10, 10);
 
             DisplayImage.HorizontalOptions = LayoutOptions.Center;
             
@@ -60,20 +68,27 @@ namespace Emgu.TF.XamarinForms
             mainLayout.BackgroundColor = new Color(0, 1, 0);
             */
 
-            mainLayout.Children.Add(TopButton);
-            mainLayout.Children.Add(MessageLabel);
-            mainLayout.Children.Add(DisplayImage);
+            _mainLayout.Children.Add(TopButton);
+            _mainLayout.Children.Add(MessageLabel);
+            _mainLayout.Children.Add(DisplayImage);
             
-            Content = mainLayout;
+            Content = _mainLayout;
         }
 
-        public virtual async void LoadImages(String[] imageNames, String[] labels = null)
+        public bool HasCameraOption { get; set; }
+
+        /// <summary>
+        /// Allow user to pick the images.
+        /// </summary>
+        /// <param name="imageNames">The default image names</param>
+        /// <param name="labels">The labels use for the pick image dialog, corresponding to each image</param>
+        /// <returns>null if user canceled. Otherwise the list of images.</returns>
+        public virtual async Task<String[]> LoadImages(String[] imageNames, String[] labels = null)
         {
             if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
             {
                 //use default images
-                InvokeOnImagesLoaded(imageNames);
-                return;
+                return imageNames;
             }
 
             if (!(System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX)
@@ -103,6 +118,28 @@ namespace Emgu.TF.XamarinForms
                 }
 
                 String action;
+                List<String> options = new List<string>();
+                options.Add("Default");
+                if (havePickImgOption)
+                    options.Add("Photo Library");
+                if (haveCameraOption)
+                    options.Add("Photo from Camera");
+
+#if __IOS__ || __ANDROID__
+                if (this.HasCameraOption && haveCameraOption)
+                    options.Add("Camera");
+#endif
+                if (options.Count == 1)
+                {
+                    action = "Default";
+                }
+                else
+                {
+                    action = await DisplayActionSheet(pickImgString, "Cancel", null, options.ToArray());
+                    if (action == null) //user clicked outside of action sheet
+                        return null;
+                }
+                /*
                 if (haveCameraOption & havePickImgOption)
                 {
                     action = await DisplayActionSheet(pickImgString, "Cancel", null, "Default", "Photo Library",
@@ -115,7 +152,7 @@ namespace Emgu.TF.XamarinForms
                 else
                 {
                     action = "Default";
-                }
+                }*/
 
 
                 if (action.Equals("Default"))
@@ -135,84 +172,21 @@ namespace Emgu.TF.XamarinForms
                 {
                     if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
                     {
-                        // our implementation of pick image for Windows
-                        /*
-                        using (System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog())
-                        {
-                            dialog.Multiselect = false;
-                            dialog.Title = "Select an Image File";
-                            dialog.Filter = "Image | *.jpg;*.jpeg;*.png;*.bmp;*.gif | All Files | *";
-                            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                            {
-                                mats[i] = dialog.FileName;
-                            }
-                            else
-                            {
-                                return; 
-                            }
-                        }*/
-                        System.Reflection.Assembly windowsFormsAssembly = Emgu.TF.Util.Toolbox.FindAssembly("System.Windows.Forms.dll");
-                        if (windowsFormsAssembly != null)
-                        {
-                            //Running on Windows
-                            Type openFileDialogType = windowsFormsAssembly.GetType("System.Windows.Forms.OpenFileDialog");
-                            Type dialogResultType = windowsFormsAssembly.GetType("System.Windows.Forms.DialogResult");
-                            if (openFileDialogType != null && dialogResultType != null)
-                            {
-                                object dialog = Activator.CreateInstance(openFileDialogType);
-                                openFileDialogType.InvokeMember(
-                                    "Multiselect",
-                                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.SetProperty,
-                                    Type.DefaultBinder,
-                                    dialog,
-                                    new object[] { (object) false });
-                                openFileDialogType.InvokeMember(
-                                    "Title", 
-                                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.SetProperty,
-                                    Type.DefaultBinder, 
-                                    dialog, 
-                                    new object[] { (object) "Select an Image File"});
-                                openFileDialogType.InvokeMember(
-                                    "Filter",
-                                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.SetProperty,
-                                    Type.DefaultBinder,
-                                    dialog,
-                                    new object[] { (object)"Image | *.jpg;*.jpeg;*.png;*.bmp;*.gif | All Files | *" });
-                                object dialogResult = openFileDialogType.InvokeMember(
-                                    "ShowDialog",
-                                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.InvokeMethod,
-                                    Type.DefaultBinder,
-                                    dialog,
-                                    null);
-                                String dialogResultStr = Enum.GetName(dialogResultType, dialogResult);
-                                if (dialogResultStr.Equals("OK"))
-                                {
-                                    //mats[i] = dialog.FileName;
-                                    String fileName = openFileDialogType.InvokeMember(
-                                        "FileName",
-                                        BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetProperty,
-                                        Type.DefaultBinder,
-                                        dialog,
-                                        null) as String;
-                                    mats[i] = fileName;
-                                }
-                                else
-                                {
-                                    return;
-                                }
-                            }
-                        }
+                        FileData fileData = await CrossFilePicker.Current.PickFile(new string[] { "Image | *.jpg;*.jpeg;*.png;*.bmp;*.gif | All Files | *" });
+                        if (fileData == null)
+                            return null;
+                        mats[i] = fileData.FilePath;
 
                     }
                     else
                     {
                         var photoResult = await Plugin.Media.CrossMedia.Current.PickPhotoAsync();
                         if (photoResult == null) //canceled
-                            return;
+                            return null;
                         mats[i] = photoResult.Path;
                     }
                 }
-                else if (action.Equals("Camera"))
+                else if (action.Equals("Photo from Camera"))
                 {
                     var mediaOptions = new Plugin.Media.Abstractions.StoreCameraMediaOptions
                     {
@@ -221,31 +195,27 @@ namespace Emgu.TF.XamarinForms
                     };
                     var takePhotoResult = await Plugin.Media.CrossMedia.Current.TakePhotoAsync(mediaOptions);
                     if (takePhotoResult == null) //canceled
-                        return;
+                        return null;
                     mats[i] = takePhotoResult.Path;
+                } else if (action.Equals("Camera"))
+                {
+                    mats[i] = "Camera";
                 }
 
                 //Handle user cancel
                 if (action == null)
-                    return;
+                    return null;
             }
-            InvokeOnImagesLoaded(mats);
+            //InvokeOnImagesLoaded(mats);
+            if (mats == null) //canceled
+                return null;
+
+            for (int i = 0; i < mats.Length; i++)
+                if (mats[i] == null)
+                    return null; //canceled
+
+            return mats;
         }
-
-        public void InvokeOnImagesLoaded(string[] imageFiles)
-        {
-            if (imageFiles == null) //cancelled
-                return;
-
-            for (int i = 0; i < imageFiles.Length; i++)
-                if (imageFiles[i] == null)
-                    return; //cancelled
-
-            if (OnImagesLoaded != null)
-                OnImagesLoaded(this, imageFiles);
-        }
-
-        public event EventHandler<string[]> OnImagesLoaded;
 
         public void SetImage(byte[] image = null, int widthRequest = -1, int heightRequest = -1)
         {
@@ -286,6 +256,32 @@ namespace Emgu.TF.XamarinForms
                     this.MessageLabel.Focus();
                 }
             );
+        }
+
+        private static String ByteToSizeStr(long byteCount)
+        {
+            if (byteCount < 1024)
+            {
+                return String.Format("{0} B", byteCount);
+            }
+            else if (byteCount < 1024 * 1024)
+            {
+                return String.Format("{0} KB", byteCount / 1024);
+            }
+            else
+            {
+                return String.Format("{0} MB", byteCount / (1024 * 1024));
+            }
+        }
+
+        protected void onDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            String msg;
+            if (e.TotalBytesToReceive > 0)
+                msg = String.Format("{0} of {1} downloaded ({2}%)", ByteToSizeStr(e.BytesReceived), ByteToSizeStr(e.TotalBytesToReceive), e.ProgressPercentage);
+            else
+                msg = String.Format("{0} downloaded", ByteToSizeStr(e.BytesReceived));
+            SetMessage(msg);
         }
     }
 }

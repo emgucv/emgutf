@@ -32,13 +32,21 @@ Global
 		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems*{0d7c99ea-3aae-4f45-9ba7-3b4af8313753}*SharedItemsImports = 13
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite\XamarinForms.Lite.projitems*{2475c64a-227a-442f-a1c8-8d488ce2fd08}*SharedItemsImports = 4
 		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems*{2475c64a-227a-442f-a1c8-8d488ce2fd08}*SharedItemsImports = 4
+		..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Lite.Runtime.Mac.projitems*{2622cba3-4b2d-4b2b-8075-1fa9f5f5bf16}*SharedItemsImports = 5
+		..\..\Emgu.TF.Runtime\Raspbian\Emgu.TF.Lite.Runtime.Raspbian.projitems*{2622cba3-4b2d-4b2b-8075-1fa9f5f5bf16}*SharedItemsImports = 5
+		..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Lite.Runtime.Ubuntu.projitems*{2622cba3-4b2d-4b2b-8075-1fa9f5f5bf16}*SharedItemsImports = 5
+		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems*{2622cba3-4b2d-4b2b-8075-1fa9f5f5bf16}*SharedItemsImports = 5
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite\XamarinForms.Lite.projitems*{26f4d7af-57b6-4d2d-9a1c-aafa757ddc4a}*SharedItemsImports = 13
 		..\..\Emgu.TF.Runtime\Raspbian\Emgu.TF.Lite.Runtime.Raspbian.projitems*{32ebeb2c-7258-4987-9c05-c1952471f8c4}*SharedItemsImports = 13
+		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{8d1cdaf7-e886-4a3c-b9d9-39bfe193e07c}*SharedItemsImports = 5
+		..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems*{8d1cdaf7-e886-4a3c-b9d9-39bfe193e07c}*SharedItemsImports = 5
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{8edce0c8-ba71-4396-9428-35d05877258c}*SharedItemsImports = 13
 		..\..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.projitems*{8f587fb9-bba6-4c30-9329-8cbac7020fe0}*SharedItemsImports = 13
 		..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems*{98561642-5ec3-4244-baf9-6876d9ba5527}*SharedItemsImports = 13
 		..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Lite.Runtime.Ubuntu.projitems*{a481cd6d-f3fd-40d3-ba64-64b46219d09e}*SharedItemsImports = 13
 		..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems*{e956dd26-1294-4731-8a90-c4cba9f291b6}*SharedItemsImports = 13
+		..\..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.projitems*{ec62d093-7446-4af0-a3c8-61d497cf3d7e}*SharedItemsImports = 5
+		..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems*{ec62d093-7446-4af0-a3c8-61d497cf3d7e}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

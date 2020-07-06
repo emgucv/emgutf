@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
+//  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
 using System;
@@ -7,9 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Diagnostics;
-#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-using UnityEngine;
-#endif
+using System.Runtime.InteropServices;
 
 namespace Emgu.Models
 {
@@ -19,14 +17,16 @@ namespace Emgu.Models
     public class DownloadableFile
     {
         private String _url;
+        private String _localSubfolder;
 
         /// <summary>
         /// Create a downloadable file from the url
         /// </summary>
         /// <param name="url">The url where the file can be downloaded from</param>
-        public DownloadableFile(String url)
+        public DownloadableFile(String url, String localSubfolder)
         {
             _url = url;
+            _localSubfolder = localSubfolder;
         }
 
         private String _localFile = null;
@@ -65,44 +65,31 @@ namespace Emgu.Models
             }
         }
 
-#if __IOS__
-        public static String PersistentDataPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-#elif UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-        public static String PersistentDataPath = Application.persistentDataPath;
-#endif
+        /// <summary>
+        /// Return the directory where the local file is
+        /// </summary>
+        public String LocalFolder
+        {
+            get
+            {
+                String localFile = LocalFile;
+                System.IO.FileInfo fi = new FileInfo(localFile);
+                return fi.DirectoryName;
+            }
+        }
 
         /// <summary>
         /// The local path to the local file given the file name
         /// </summary>
         /// <param name="fileName">The name of the file</param>
         /// <returns>The local path of the file</returns>
-        public static String GetLocalFileName(String fileName)
+        public String GetLocalFileName(String fileName)
         {
-#if __IOS__ || UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-            return System.IO.Path.Combine(PersistentDataPath, fileName);
+#if  UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+            return System.IO.Path.Combine(UnityEngine.Application.persistentDataPath, _localSubfolder, fileName);
 #else
-
-            System.Reflection.Assembly monoAndroidAssembly = Emgu.TF.Util.Toolbox.FindAssembly("Mono.Android.dll");
-            if (monoAndroidAssembly != null)
-            {
-                //Running on Android
-                Type androidOsEnvironmentType = monoAndroidAssembly.GetType("Android.OS.Environment");
-                if (androidOsEnvironmentType != null)
-                {
-                    var externalStorageDirectoryProperty = androidOsEnvironmentType.GetProperty("ExternalStorageDirectory");
-                    object externalStorageDirectoryValue = externalStorageDirectoryProperty.GetValue(null);
-
-                    var directoryDownloadsProperty = androidOsEnvironmentType.GetProperty("DirectoryDownloads");
-                    object directoryDownloadsValue = directoryDownloadsProperty.GetValue(null);
-
-                    //System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, Android.OS.Environment.DirectoryDownloads);
-                    return System.IO.Path.Combine(
-                        externalStorageDirectoryValue.ToString(),
-                        directoryDownloadsValue.ToString(), fileName);
-                }
-            }
-
-            return fileName;
+            String personalFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            return Path.Combine(personalFolder, _localSubfolder, fileName);
 #endif
         }
     }

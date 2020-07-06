@@ -1,9 +1,0 @@
-#!/bin/sh
-cd ../../..
-cd tensorflow
-
-bazel build //tensorflow/tfextern:libtfextern.so 
-cd ..
-
-mkdir -p lib
-cp tensorflow/bazel-bin/tensorflow/tfextern/*.so lib/

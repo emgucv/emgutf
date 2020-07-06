@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
+//  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
 using System;
@@ -34,9 +34,7 @@ namespace Emgu.TF.XamarinForms
 {
     public class InceptionPage : ButtonTextImagePage
     {
-
         private Inception _inception;
-        private string[] _imageFiles = null;
 
         public InceptionPage()
            : base()
@@ -47,37 +45,8 @@ namespace Emgu.TF.XamarinForms
             button.Clicked += OnButtonClicked;
 
             _inception = new Inception();
+            _inception.OnDownloadProgressChanged += onDownloadProgressChanged;
 
-            OnImagesLoaded += (sender, imageFiles) =>
-            {
-                SetMessage("Please wait...");
-                SetImage();
-                _imageFiles = imageFiles;
-
-#if !DEBUG
-                try
-#endif
-                {
-                    if (_inception.Imported)
-                    {
-                        onDownloadCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(null, false, null));
-                    }
-                    else
-                    {
-                        SetMessage("Please wait while the Inception Model is being downloaded...");
-                        _inception.OnDownloadProgressChanged += onDownloadProgressChanged;
-                        _inception.OnDownloadCompleted += onDownloadCompleted;
-                        _inception.Init();
-                    }
-                }
-#if !DEBUG
-                catch (Exception e)
-                {
-                    String msg = e.Message.Replace(System.Environment.NewLine, " ");
-                    SetMessage(msg);     
-                }
-#endif
-            };
         }
 
         private void onDownloadProgressChanged(object sender, System.Net.DownloadProgressChangedEventArgs e)
@@ -95,20 +64,23 @@ namespace Emgu.TF.XamarinForms
                 SetMessage(e.Error.Message);
                 return;
             }
+        }
+
+        private async void OnButtonClicked(Object sender, EventArgs args)
+        {
+            SetMessage("Please wait while the Inception Model is being downloaded...");
+            await _inception.Init();
+
+            SetImage();
+            String[] imageFiles = await LoadImages(new string[] { "tulips.jpg" });
 
             Stopwatch watch = Stopwatch.StartNew();
-            var result = _inception.Recognize(_imageFiles[0]);
+            var result = _inception.Recognize(imageFiles[0]);
             watch.Stop();
             String resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", result[0].Label, result[0].Probability * 100, watch.ElapsedMilliseconds);
 
-            SetImage(_imageFiles[0]);
+            SetImage(imageFiles[0]);
             SetMessage(resStr);
-            
-        }
-
-        private void OnButtonClicked(Object sender, EventArgs args)
-        {
-            LoadImages(new string[] { "tulips.jpg" });
         }
 
     }

@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------------
-//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
+//  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 using System;
 using System.Text;
@@ -87,6 +87,7 @@ namespace Emgu.TF.Util
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool FreeLibrary(IntPtr handle);
+        */
 
         /// <summary>
         /// Adds a directory to the search path used to locate DLLs for the application
@@ -96,7 +97,7 @@ namespace Emgu.TF.Util
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool SetDllDirectory(String path);
-        */
+        
 
         /// <summary>
         /// Find the loaded assembly with the specific assembly name
@@ -105,13 +106,19 @@ namespace Emgu.TF.Util
         /// <returns></returns>
         public static System.Reflection.Assembly FindAssembly(String assembleName)
         {
-            System.Reflection.Assembly[] asms = AppDomain.CurrentDomain.GetAssemblies();
-            foreach (System.Reflection.Assembly asm in asms)
+            try
             {
-                if (asm.ManifestModule.Name.Equals(assembleName))
-                    return asm;
+                System.Reflection.Assembly[] asms = AppDomain.CurrentDomain.GetAssemblies();
+                foreach (System.Reflection.Assembly asm in asms)
+                {
+                    if (asm.ManifestModule.Name.Equals(assembleName))
+                        return asm;
+                }
             }
+            catch
+            {
 
+            }
             return null;
         }
     }

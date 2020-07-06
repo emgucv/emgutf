@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>${EMGU_TF_CUDART_ID}</id>
+	<title>Native x64 CUDA runtime dependency for Emgu.TF.runtime.windows.cuda package</title>
+    <version>${EMGU_TF_CUDA_VERSION}</version>
+    <authors>${CPACK_PACKAGE_VENDOR}</authors>
+    <owners>${CPACK_PACKAGE_VENDOR}</owners>
+    <license type="file">CUDA_EULA.txt</license>
+    <projectUrl>${EMGUTF_MAIN_WEB_URL}</projectUrl>
+	<icon>icon.png</icon>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+	<summary>This package provides the native CUDA runtime dependencies for Emgu.TF.runtime.windows.cuda package</summary>
+    <description>This package provides the native CUDA runtime dependencies for Emgu.TF.runtime.windows.cuda package</description>
+    <releaseNotes>This is the ${EMGU_TF_CUDA_VERSION} release of CUDA runtime. </releaseNotes>
+	${EMGUTF_CUDART_NUGET_DEPENDENCY}
+    <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved</copyright>
+    <tags>emgu tensorflow cuda</tags>
+  </metadata>
+  <files>
+	<file src="${EMGU_TF_CUDART_ID}.targets" target="build\${EMGU_TF_CUDART_ID}.targets" />
+	<file src="..\..\..\lib\x64\cu*.dll" exclude="..\..\..\lib\x64\cudnn*.dll;..\..\..\lib\x64\cufft*.dll" target="build\x64" />
+	<file src="..\..\..\miscellaneous\nuget_icon.png" target="icon.png" />
+	<file src="CUDA_EULA.TXT" target="CUDA_EULA.txt" />
+  </files>
+</package>

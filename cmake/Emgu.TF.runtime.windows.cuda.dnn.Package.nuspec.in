@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>${EMGU_TF_DNN_ID}</id>
+	<title>Native x64 DNN binary dependency for Emgu.TF.runtime.windows.cuda package</title>
+    <version>${EMGU_TF_DNN_VERSION}</version>
+    <authors>${CPACK_PACKAGE_VENDOR}</authors>
+    <owners>${CPACK_PACKAGE_VENDOR}</owners>
+    <license type="file">cuDNN_SLA.txt</license>
+    <projectUrl>${EMGUTF_MAIN_WEB_URL}</projectUrl>
+	<icon>icon.png</icon>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+	<summary>This package provides the native DNN dependencies for Emgu.TF.runtime.windows.cuda package</summary>
+    <description>This package provides the native DNN dependencies for for Emgu.TF.runtime.windows.cuda package</description>
+    <releaseNotes>This is the ${EMGU_TF_DNN_VERSION} release of DNN for CUDA ${EMGU_TF_CUFFT_VERSION}. </releaseNotes>
+    <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved</copyright>
+    <tags>emgu tensorflow dnn cuda</tags>
+  </metadata>
+  <files>
+	<file src="${EMGU_TF_DNN_ID}.targets" target="build\${EMGU_TF_DNN_ID}.targets" />
+    <file src="..\..\..\lib\x64\cudnn*.dll" target="build\x64" />
+	<file src="..\..\..\miscellaneous\nuget_icon.png" target="icon.png" />
+	<file src="NVIDIA_SLA_cuDNN_Support.txt" target="cuDNN_SLA.txt" />
+  </files>
+</package>

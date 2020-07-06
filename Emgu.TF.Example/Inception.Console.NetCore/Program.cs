@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
+//  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
 using System;
@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Threading;
 using Emgu.TF;
 using Emgu.TF.Models;
+using System.Threading.Tasks;
 using Tensorflow;
 
 namespace Inception.Console.Netstandard
@@ -18,8 +19,9 @@ namespace Inception.Console.Netstandard
         private static Emgu.TF.Models.Inception _inceptionGraph;
         private static FileInfo _inputFileInfo;
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
+            System.Console.WriteLine("Starting...");
 #if DEBUG
             ConsoleTraceListener consoleTraceListener = new ConsoleTraceListener();
             Trace.Listeners.Add(consoleTraceListener);
@@ -35,13 +37,13 @@ namespace Inception.Console.Netstandard
                 return;
             }
             Trace.WriteLine(String.Format("Working on file {0}", _inputFileInfo.FullName));
-
-            new Thread(() => { Run(); }).Start();
-
-            System.Console.ReadKey();
+ 
+            await Run();
+            //System.Console.WriteLine("Press any key to continue:");
+            //System.Console.ReadKey();
         }
 
-        private static void Run()
+        private static async Task Run()
         {
             SessionOptions so = new SessionOptions();
             if (TfInvoke.IsGoogleCudaEnabled)
@@ -53,14 +55,23 @@ namespace Inception.Console.Netstandard
             }
             _inceptionGraph = new Emgu.TF.Models.Inception(null, so);
             _inceptionGraph.OnDownloadProgressChanged += onDownloadProgressChanged;
-            _inceptionGraph.OnDownloadCompleted += onDownloadCompleted;
+            //_inceptionGraph.OnDownloadCompleted += onDownloadCompleted;
 
             //use a retrained model to recognize followers
-            _inceptionGraph.Init(
+            await _inceptionGraph.Init(
                 new string[] { "optimized_graph.pb", "output_labels.txt" },
                 "https://github.com/emgucv/models/raw/master/inception_flower_retrain/",
                 "Placeholder",
                 "final_result");
+
+            Stopwatch watch = Stopwatch.StartNew();
+            Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(_inputFileInfo.FullName, 299, 299, 0.0f, 1.0f / 255.0f, false, false);
+            var results = _inceptionGraph.Recognize(imageTensor);
+            watch.Stop();
+            String resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", results[0].Label, results[0].Probability * 100, watch.ElapsedMilliseconds);
+
+            System.Console.WriteLine(resStr);
+            
         }
 
         private static void onDownloadProgressChanged(object sender, System.Net.DownloadProgressChangedEventArgs e)
@@ -69,21 +80,6 @@ namespace Inception.Console.Netstandard
                 System.Console.WriteLine(String.Format("{0} bytes downloaded", e.BytesReceived, e.ProgressPercentage));
             else
                 System.Console.WriteLine(String.Format("{0} of {1} bytes downloaded ({2}%)", e.BytesReceived, e.TotalBytesToReceive, e.ProgressPercentage));
-        }
-
-        private static void onDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-        {
-
-            Stopwatch watch = Stopwatch.StartNew();
-            Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(_inputFileInfo.FullName, 299, 299, 0.0f, 1.0f / 255.0f, false, false);
-            var results = _inceptionGraph.Recognize(imageTensor);
-            watch.Stop();
-            String resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", results[0].Label, results[0].Probability * 100, watch.ElapsedMilliseconds);
-
-
-            System.Console.WriteLine(resStr);
-            System.Console.WriteLine("Press any key to continue:");
-
         }
 
         /// <summary>

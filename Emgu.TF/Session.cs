@@ -1,9 +1,10 @@
 ﻿//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
+//  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using Emgu.TF.Util;
 using System.Runtime.InteropServices;
@@ -15,7 +16,103 @@ namespace Emgu.TF
     /// </summary>
     public class Session : UnmanagedObject
     {
+        private bool _graphNeedDispose = false;
+
         private Graph _graph;
+        private Buffer _metaGraphDef;
+
+        /// <summary>
+        /// The Graph of this session
+        /// </summary>
+        public Graph Graph
+        {
+            get { return _graph; }
+        }
+
+        /// <summary>
+        /// The buffer that holds the MetaGraphDef if the session is created from a saved model.
+        /// </summary>
+        public Buffer MetaGraphDefBuffer
+        {
+            get
+            {
+                return _metaGraphDef;
+            }
+
+        }
+
+        /// <summary>
+        /// Create a Session from a SavedModel. If successful, populates the internal graph with the contents of the Graph and
+        /// <paramref name="metaGraphDef"/> with the MetaGraphDef of the loaded model.
+        /// </summary>
+        /// <param name="exportDir">Must be set to the path of the exported SavedModel.</param>
+        /// <param name="tags">Must include the set of tags used to identify one MetaGraphDef in the SavedModel. Could be "serve", "tpu", "gpu", "train" or other values.</param>
+        /// <param name="sessionOptions">Session options</param>
+        /// <param name="runOptions"></param>
+        /// <param name="status">The status</param>
+        public Session(
+            String exportDir,
+            String[] tags, 
+            SessionOptions sessionOptions = null, 
+            Buffer runOptions = null,
+            Status status = null)
+        {
+            _graph = new Graph();
+            _graphNeedDispose = true;
+            _metaGraphDef = new Buffer();
+
+            IntPtr exportDirPtr = Marshal.StringToHGlobalAnsi(exportDir);
+
+            IntPtr[] tagsNative;
+            GCHandle tagsNativeHandle;
+            IntPtr tagsNativePointer = IntPtr.Zero;
+            if (tags != null)
+            {
+                tagsNative = new IntPtr[tags.Length];
+                for (int i = 0; i < tags.Length; i++)
+                    tagsNative[i] = Marshal.StringToHGlobalAnsi(tags[i]);
+                tagsNativeHandle = GCHandle.Alloc(tagsNative, GCHandleType.Pinned);
+                tagsNativePointer = tagsNativeHandle.AddrOfPinnedObject();
+            }
+            else
+            {
+                tagsNative = new IntPtr[0];
+            }
+
+            try
+            {
+                using (StatusChecker checker = new StatusChecker(status))
+                    _ptr = TfInvoke.tfeLoadSessionFromSavedModel(
+                        sessionOptions,
+                        runOptions,
+                        exportDirPtr,
+                        tagsNativePointer,
+                        tagsNative.Length,
+                        _graph,
+                        _metaGraphDef,
+                        checker.Status
+                        );
+            }
+            catch (Exception excpt)
+            {
+                Trace.WriteLine(excpt.Message);
+                throw;
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(exportDirPtr);
+
+                if (tags != null)
+                {
+                    tagsNativeHandle.Free();
+                    for (int i = 0; i < tags.Length; i++)
+                    {
+                        Marshal.FreeHGlobal(tagsNative[i]);
+                    }
+                }
+            }
+            
+        }
 
         /// <summary>
         /// Return a new execution session with the associated graph.
@@ -29,6 +126,7 @@ namespace Emgu.TF
         public Session(Graph graph, SessionOptions sessionOptions = null, Status status = null)
         {
             _graph = graph;
+            _graphNeedDispose = false;
 
             using (StatusChecker checker = new StatusChecker(status))
                 _ptr = TfInvoke.tfeNewSession(graph, sessionOptions, checker.Status);
@@ -54,6 +152,18 @@ namespace Emgu.TF
             {
                 using (StatusChecker checker = new StatusChecker(null))
                     TfInvoke.tfeDeleteSession(ref _ptr, checker.Status);
+            }
+
+            if (_graphNeedDispose && _graph != null)
+            {
+                _graph.Dispose();
+                _graph = null;
+            }
+
+            if (_metaGraphDef != null)
+            {
+                _metaGraphDef.Dispose();
+                _metaGraphDef = null;
             }
 
             _graph = null;
@@ -219,6 +329,17 @@ namespace Emgu.TF
 
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         internal static extern IntPtr tfeNewSession(IntPtr graph, IntPtr opts, IntPtr status);
+
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        internal static extern IntPtr tfeLoadSessionFromSavedModel(
+            IntPtr sessionOptions, 
+            IntPtr runOptions,
+            IntPtr exportDir, 
+            IntPtr tags, 
+            int tagsLen,
+            IntPtr graph, 
+            IntPtr metaGraphDef, 
+            IntPtr status);
 
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         internal static extern void tfeDeleteSession(ref IntPtr session, IntPtr status);

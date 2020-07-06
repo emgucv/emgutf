@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.       
+//  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
 using System;
@@ -45,6 +45,7 @@ namespace Emgu.TF
         /// </summary>
         public const UnmanagedType BoolToIntMarshalType = UnmanagedType.Bool;
 
+#if !(UNITY_EDITOR || UNITY_STANDALONE || UNITY_ANDROID)
         /// <summary>
         /// Attempts to load Tensorflow modules from the specific location
         /// </summary>
@@ -54,13 +55,10 @@ namespace Emgu.TF
         /// <remarks>If <paramref name="loadDirectory"/> is null, the default location on windows is the dll's path appended by either "x64" or "x86", depends on the applications current mode.</remarks>
         public static bool LoadUnmanagedModules(String loadDirectory, params String[] unmanagedModules)
         {
+
             if (loadDirectory == null)
             {
                 String subfolder = String.Empty;
-#if UNITY_EDITOR_WIN
-                subfolder = IntPtr.Size == 8 ? "x86_64" : "x86";
-#elif UNITY_STANDALONE_WIN
-#else
                 if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows)
                 //|| System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux)
 			    )
@@ -79,7 +77,6 @@ namespace Emgu.TF
                         throw new Exception("Emgu TF is only compatible with 64bit mode in Windows (not compatible with 32bit x86 mode)");
                     }
                 }
-#endif
 
                 System.Reflection.Assembly asm = typeof(TfInvoke).Assembly; //System.Reflection.Assembly.GetExecutingAssembly();
                 if ((String.IsNullOrEmpty(asm.Location) || !System.IO.File.Exists(asm.Location)) && AppDomain.CurrentDomain.BaseDirectory != null)
@@ -108,23 +105,6 @@ namespace Emgu.TF
                 if (monoAndroidAssembly == null)
                 {
                     //Not running on Android
-#if (UNITY_STANDALONE_WIN && !UNITY_EDITOR_WIN)
-                    FileInfo file = new FileInfo(asm.Location);
-                    DirectoryInfo directory = file.Directory;
-                    if (directory.Parent != null)
-                    {
-                        String unityAltFolder = Path.Combine(directory.Parent.FullName, "Plugins");
-
-                        if (Directory.Exists(unityAltFolder))
-                            loadDirectory = unityAltFolder;
-                        else
-                        {
-                            Trace.WriteLine("No suitable directory found to load unmanaged modules");
-                            return false;
-                        }
-                    }
-#elif UNITY_ANDROID
-#else
                     if (!Directory.Exists(loadDirectory))
                     {
                         //try to find an alternative loadDirectory path
@@ -140,61 +120,26 @@ namespace Emgu.TF
                         {
                             FileInfo file = new FileInfo(asm.Location);
                             DirectoryInfo directory = file.Directory;
-#if UNITY_EDITOR_WIN
-                    if (directory.Parent != null && directory.Parent.Parent != null)
-                      {
-                         String unityAltFolder =
-                            Path.Combine(
-                               Path.Combine(Path.Combine(Path.Combine(directory.Parent.Parent.FullName, "Assets"), "Emgu.TF"), "Plugins"),
-                               subfolder);
-                         
-	                     Trace.WriteLine("Trying unityAltFolder: " + unityAltFolder);
-                         if (Directory.Exists(unityAltFolder))
-                            loadDirectory = unityAltFolder;
-                         else
-                         {
+                            
                             Trace.WriteLine("No suitable directory found to load unmanaged modules");
                             return false;
-                         }
-                        
-                      }
-                      else
-#elif (UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX)
-                         if (directory.Parent != null && directory.Parent.Parent != null)
-                          {
-                             String unityAltFolder =
-                                Path.Combine(Path.Combine(Path.Combine(
-                                   Path.Combine(Path.Combine(directory.Parent.Parent.FullName, "Assets"), "Plugins"),
-                                   "emgucv.bundle"), "Contents"), "MacOS");
-                         
-                             if (Directory.Exists(unityAltFolder))
-                             {
-                                loadDirectory = unityAltFolder;
-                             }
-                             else
-                             {
-                                return false;
-                             }
-                         
-                          }
-                          else       
-#endif
-                            {
-                                Trace.WriteLine("No suitable directory found to load unmanaged modules");
-                                return false;
-                            }
                         }
                         else
                             loadDirectory = altLoadDirectory;
                     }
-                
-#endif
+
                 }
             }
 
             String oldDir = Environment.CurrentDirectory;
             if (!String.IsNullOrEmpty(loadDirectory) && Directory.Exists(loadDirectory))
+            {
                 Environment.CurrentDirectory = loadDirectory;
+                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+                {
+                    bool setDllDirectorySuccess = Emgu.TF.Util.Toolbox.SetDllDirectory(loadDirectory);
+                }
+            }
 
             System.Diagnostics.Trace.WriteLine(String.Format("Loading tensorflow binary from {0}", loadDirectory));
 
@@ -218,30 +163,25 @@ namespace Emgu.TF
                 success &= fileExistAndLoaded;
             }
 
-            Environment.CurrentDirectory = oldDir;
-            return success;
-        }
+            if (success)
+            {
+                bool IsGoogleCudaEnabled = TfInvoke.IsGoogleCudaEnabled;
+                String version = Emgu.TF.TfInvoke.Version;
+                String[] devices = ListAllPhysicalDevices();
+                System.Diagnostics.Trace.WriteLine(String.Format("Successfully loaded tensorflow {0} binary from {1}; IsGoogleCudaEnabled = {2}; PhysicalDevices=[{3}]", 
+                    version, 
+                    loadDirectory, 
+                    IsGoogleCudaEnabled, 
+                    String.Join(",", devices)));
+            }
+            else
+            {
+                System.Diagnostics.Trace.WriteLine(String.Format("Failed to load tensorflow binary from {0}", loadDirectory));
+            }
 
-        /// <summary>
-        /// Get the module format string.
-        /// </summary>
-        /// <returns>On Windows, "{0}".dll will be returned; On Linux, "lib{0}.so" will be returned; Otherwise {0} is returned.</returns>
-        public static String GetModuleFormatString()
-        {
-#if UNITY_EDITOR_WIN
-         return "{0}.dll";
-#elif UNITY_EDITOR_OSX
-         return "lib{0}.dylib";
-#else
-            String formatString = "{0}";
-            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
-                formatString = "{0}.dll";
-            else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
-                formatString = "lib{0}.so";
-            else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
-                formatString = "lib{0}.dylib";
-            return formatString;
-#endif
+            Environment.CurrentDirectory = oldDir;
+
+            return success;
         }
 
         /// <summary>
@@ -267,16 +207,16 @@ namespace Emgu.TF
                         {
                             try
                             {
-                                Console.WriteLine(string.Format("Trying to load {0} ({1} bit).", module,
+                                Trace.WriteLine(string.Format("Trying to load {0} ({1} bit).", module,
                                     IntPtr.Size * 8));
                                 loadLibraryMethodInfo.Invoke(null, new object[] { module });
                                 //Java.Lang.JavaSystem.LoadLibrary(module);
-                                Console.WriteLine(string.Format("Loaded {0}.", module));
+                                Trace.WriteLine(string.Format("Loaded {0}.", module));
                             }
                             catch (Exception e)
                             {
                                 libraryLoaded = false;
-                                Console.WriteLine(String.Format("Failed to load {0}: {1}", module, e.Message));
+                                Trace.WriteLine(String.Format("Failed to load {0}: {1}", module, e.Message));
                             }
                         }
                         return libraryLoaded;
@@ -284,29 +224,8 @@ namespace Emgu.TF
                 }
             }
 
-#if (UNITY_ANDROID && !UNITY_EDITOR)
-         UnityEngine.AndroidJavaObject jo = new UnityEngine.AndroidJavaObject("java.lang.System");
-
-         foreach (String module in modules)
-         {
-            try
-            {
-               Console.WriteLine(string.Format("Trying to load {0} ({1} bit).", module, Marshal.SizeOf<IntPtr>() * 8));
-               jo.CallStatic("loadLibrary", module); 
-               Console.WriteLine(string.Format("Loaded {0}.", module));
-            }
-            catch (Exception e)
-            {
-               libraryLoaded = false;
-               Console.WriteLine(String.Format("Failed to load {0}: {1}", module, e.Message));
-            }
-         }
-#elif __IOS__ || UNITY_IOS || NETFX_CORE
-#else
-#if !(UNITY_EDITOR || UNITY_STANDALONE || UNITY_ANDROID)
             if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices
                 .OSPlatform.OSX))
-#endif
             {
                 String formatString = GetModuleFormatString();
                 for (int i = 0; i < modules.Length; ++i)
@@ -314,9 +233,25 @@ namespace Emgu.TF
 
                 libraryLoaded &= LoadUnmanagedModules(null, modules);
             }
-#endif
             return libraryLoaded;
         }
+
+        /// <summary>
+        /// Get the module format string.
+        /// </summary>
+        /// <returns>On Windows, "{0}".dll will be returned; On Linux, "lib{0}.so" will be returned; Otherwise {0} is returned.</returns>
+        public static String GetModuleFormatString()
+        {
+            String formatString = "{0}";
+            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+                formatString = "{0}.dll";
+            else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
+                formatString = "lib{0}.so";
+            else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
+                formatString = "lib{0}.dylib";
+            return formatString;
+        }
+#endif
 
         /// <summary>
         /// Static Constructor to setup tensorflow environment
@@ -327,7 +262,28 @@ namespace Emgu.TF
             List<String> modules = TfInvoke.TensorflowModuleList;
             modules.RemoveAll(String.IsNullOrEmpty);
 
+#if (UNITY_EDITOR || UNITY_STANDALONE || UNITY_ANDROID)
+            _libraryLoaded = true;
+#else
             _libraryLoaded = DefaultLoadUnmanagedModules(modules.ToArray());
+#endif
+
+            if (!_libraryLoaded)
+            {
+                Trace.WriteLine("Failed to load native binary. Please make sure a proper Emgu.TF.runtime.{platform} nuget package is added, or make sure the native binary can be found in the folder of executable.");
+            }
+
+            try
+            {
+                String version = Version;
+            }
+            catch (DllNotFoundException e)
+            {
+                String errMsg =
+                    "Unable to load native binary. Please make sure a proper Emgu.TF.runtime.{platform} nuget package is added, or make sure the native binary can be found in the folder of the executable.";
+                Trace.WriteLine(errMsg);
+                throw new DllNotFoundException(errMsg, e);
+            }
         }
 
         /// <summary>
@@ -413,5 +369,28 @@ namespace Emgu.TF
             [MarshalAs(TfInvoke.StringMarshalType)]
             String operationName);
 
+
+        public static String[] ListAllPhysicalDevices(Status status = null)
+        {
+            using (StatusChecker checker = new StatusChecker(status))
+            {
+                byte[] nameBuffer = new byte[2048];
+
+                GCHandle nameHandle = GCHandle.Alloc(nameBuffer, GCHandleType.Pinned);
+
+                TfInvoke.tfeListAllPhysicalDevices(
+                    nameHandle.AddrOfPinnedObject(),
+                    checker.Status);
+
+                nameHandle.Free();
+                String nameResult = System.Text.Encoding.ASCII.GetString(nameBuffer);
+                String[] names = nameResult.TrimEnd('\0', '\n').Split('\n');
+                return names;
+
+            }
+        }
+
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        private static extern void tfeListAllPhysicalDevices(IntPtr nameBuffer, IntPtr status);
     }
 }

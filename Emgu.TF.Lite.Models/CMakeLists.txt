@@ -1,7 +1,8 @@
 # --------------------------------------------------------
-#  Copyright (C) 2004-2019 by EMGU Corporation. All rights reserved.
+#  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
+IF(HAVE_LITE_BUILD) 
 INSTALL(
   DIRECTORY
   ${CMAKE_CURRENT_SOURCE_DIR}
@@ -19,7 +20,6 @@ INSTALL(
   PATTERN "${PROJECT_NAME}.dir" EXCLUDE
   )
 
-IF(HAVE_LITE_BUILD) 
   INSTALL(
     DIRECTORY
     ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.Models.Netstandard
