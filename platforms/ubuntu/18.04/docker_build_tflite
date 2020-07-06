@@ -1,0 +1,14 @@
+#!/bin/sh
+
+cd "$(dirname "$0")"
+cd ../../..
+
+docker run \
+  -e USER="$(id -u)" \
+  -u="$(id -u)" \
+  -v .:/src/workspace \
+  -v /tmp/build_output:/tmp/build_output \
+  -w /src/workspace \
+  l.gcr.io/google/bazel:3.1.0 \
+  --output_user_root=/tmp/build_output \
+  platforms/ubuntu/18.04/bazel_build_tflite
