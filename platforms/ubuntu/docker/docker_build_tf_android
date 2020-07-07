@@ -1,0 +1,46 @@
+#!/bin/sh
+
+if [ \( -n "$1" \) -o \( -n "$2" \) ]; then
+    echo "Building with config android_$1 for $2 architecture"
+else
+    echo "Please specify the android config and architecture to build. e.g. $0 x86 x86; $0 x86_64 x86_64; $0 arm armeabi-v7a; $0 arm64 arm64-v8a;"
+    exit 1
+fi
+
+cd "$(dirname "$0")"
+
+mkdir -p /tmp/build_output
+
+cd ../../..
+
+extra_param=
+if [ "$1" = "x86" ]; then
+    extra_param=--copt=-march=i686
+fi
+
+docker run \
+  -e USER="$(id -u)" \
+  -u="$(id -u)" \
+  -v $(pwd):/src/workspace \
+  -v /tmp/build_output:/tmp/build_output \
+  -v /etc/passwd:/etc/passwd \
+  -w /src/workspace/tensorflow \
+  emgu/bazel-android:latest \
+  bazel \
+  --output_user_root=/tmp/build_output \
+  build -c opt \
+      --config=android_$1\
+      --cxxopt='--std=c++14' \
+      --action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/20.1.5948944 \
+      --action_env ANDROID_NDK_API_LEVEL=28 \
+      --action_env ANDROID_BUILD_TOOLS_VERSION=debian \
+      --action_env ANDROID_SDK_API_LEVEL=23 \
+      --action_env ANDROID_SDK_HOME=/usr/lib/android-sdk \
+      --verbose_failures \
+      --config monolithic \
+      //tensorflow/tfextern:libtfextern.so \
+      $extra_param
+
+mkdir -p lib/android/$2
+cp -rf tensorflow/bazel-bin/tensorflow/tfextern/*.so lib/android/$2
+

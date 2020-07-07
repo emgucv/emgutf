@@ -1,10 +1,6 @@
 #!/bin/sh
 
-BAZELTF_IMAGE=bazeltf:3.1.0
 cd "$(dirname "$0")"
-
-docker image inspect $BAZELTF_IMAGE >/dev/null 2>&1 && echo "image already exist!" || docker build --no-cache -t $BAZELTF_IMAGE bazeltf
-#docker build --no-cache -t $BAZELTF_IMAGE bazeltf 
 
 mkdir -p /tmp/build_output
 
@@ -17,7 +13,8 @@ docker run \
   -v /tmp/build_output:/tmp/build_output \
   -v /etc/passwd:/etc/passwd \
   -w /src/workspace/tensorflow \
-  $BAZELTF_IMAGE \
+  emgu/bazel-android:latest \
+  bazel \
   --output_user_root=/tmp/build_output \
   build //tensorflow/tfextern:libtfextern.so 
 
