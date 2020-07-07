@@ -1,0 +1,49 @@
+name: .NET Core
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+    - name: Check out submodules
+      run: git submodule update --init --recursive
+    - name: Build Emgu TF Lite native binary
+      run: ./platforms/ubuntu/docker/docker_build_tflite
+    - name: Build Emgu TF Lite package
+      run: ./platforms/ubuntu/docker/docker_build_emgutf
+    - name: Create emgu tf lite artifact folder
+      run: mkdir -p emgutf_lite_packages
+    - uses: actions/upload-artifact@v2
+      with:
+        name: emgutflite-ubuntu-zip-package
+        path: ${{ github.workspace }}/b/*.zip
+    - uses: actions/upload-artifact@v2
+      with:
+        name: emgutflite-ubuntu-nuget-package
+        path: ${{ github.workspace }}/platforms/nuget/*.nupkg 
+    - name: clean up the source folder
+      run: miscellaneous/git-clean
+    - name: Build Emgu TF native binary
+      run: ./platforms/ubuntu/docker/docker_build_tf
+    - name: Build Emgu TF package
+      run: ./platforms/ubuntu/docker/docker_build_emgutf
+    - uses: actions/upload-artifact@v2
+      with:
+        name: emgutf-ubuntu-zip-package
+        path: ${{ github.workspace }}/b/*.zip
+    - uses: actions/upload-artifact@v2
+      with:
+        name: emgutf-ubuntu-nuget-package
+        path: ${{ github.workspace }}/platforms/nuget/*.nupkg 

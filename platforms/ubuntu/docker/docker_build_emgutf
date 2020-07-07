@@ -1,0 +1,21 @@
+#!/bin/sh
+
+DOTNETTF_IMAGE=dotnettf:3.1
+cd "$(dirname "$0")"
+
+docker image inspect $DOTNETTF_IMAGE >/dev/null 2>&1 && echo "image already exist!" || docker build --no-cache -t $DOTNETTF_IMAGE dotnettf
+#docker build --no-cache -t $DOTNETTF_IMAGE dotnettf 
+
+cd ../../..
+
+docker run \
+  -e USER="$(id -u)" \
+  -u="$(id -u)" \
+  -v $(pwd):/src/workspace \
+  -v /etc/passwd:/etc/passwd \
+  -w /src/workspace \
+  $DOTNETTF_IMAGE \
+  /bin/bash -c "mkdir -p b; cd b; cmake ..; make; make package"
+   
+#mkdir -p lib/x64
+#cp -f tensorflow/bazel-bin/tensorflow/tfliteextern/*.so lib/x64
