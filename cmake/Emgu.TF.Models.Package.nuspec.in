@@ -15,9 +15,7 @@
     <description>Emgu TF is a cross platform .Net wrapper for the Google Tensorflow library. Allows Tensorflow functions to be called from .NET compatible languages such as C#, VB, VC++, IronPython.</description>
     <releaseNotes>This is the Emgu.TF.Models component for the ${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX} release of Emgu TF. For online documentation please visit
 http://www.emgu.com/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}/document/</releaseNotes>
-    <dependencies>
-		<dependency id="${EMGUTF_NUGET_ID}" version="[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]" />
-    </dependencies>
+    ${EMGUTF_MODEL_NUGET_DEPENDENCY}
     <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved</copyright>
     <tags>tensorflow emgu emgutf ai </tags>
   </metadata>

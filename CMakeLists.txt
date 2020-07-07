@@ -73,7 +73,7 @@ MACRO(CHECK_LICENSE_TYPE)
   
   STRING(STRIP "${TMP}" TMP)
   STRING(LENGTH "${TMP}" GPL_LICENSE_LENGTH)
-  SET (LICENSE_TYPE "OpenSource")
+  SET (LICENSE_TYPE "Dual License")
   #SET (EMGUTF_LICENSE_FILE ${LICENSE_FILE_NAME})
   #SET (EMGUTF_LICENSE_URL "https://www.gnu.org/licenses/gpl-3.0.txt")
   IF(${GPL_LICENSE_LENGTH} EQUAL 0)
@@ -903,18 +903,37 @@ SET(EMGUTF_MODEL_NUGET_FILE_LIST "
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.Netstandard.xml\" target=\"lib\\netstandard2.0\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
     <file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+	
+SET(EMGUTF_MODEL_NUGET_DEPENDENCY "${EMGUTF_MODEL_NUGET_DEPENDENCY}
+    <group targetFramework=\".NETStandard2.0\">
+		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+		<dependency id=\"System.Drawing.Common\" version=\"4.7.0\" exclude=\"Build,Analyzers\" />
+	</group>")
 
 IF( HAVE_OSX ) 
   SET(EMGUTF_MODEL_NUGET_FILE_LIST "${EMGUTF_MODEL_NUGET_FILE_LIST}
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.Mac.dll\" target=\"lib\\xamarinmac20\" />
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.Mac.xml\" target=\"lib\\xamarinmac20\" />")
+  SET(EMGUTF_MODEL_NUGET_DEPENDENCY "${EMGUTF_MODEL_NUGET_DEPENDENCY}
+    <group targetFramework=\"Xamarin.Mac2.0\">
+		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+	</group>")
 ENDIF()
 
 IF(HAVE_ANDROID)
   SET(EMGUTF_MODEL_NUGET_FILE_LIST "${EMGUTF_MODEL_NUGET_FILE_LIST}
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.Android.dll\" target=\"lib\\MonoAndroid90\" />
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.Android.xml\" target=\"lib\\MonoAndroid90\" />")
+  SET(EMGUTF_MODEL_NUGET_DEPENDENCY "${EMGUTF_MODEL_NUGET_DEPENDENCY}
+    <group targetFramework=\"MonoAndroid1.0\">
+		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+	</group>")
 ENDIF()
+
+SET(EMGUTF_MODEL_NUGET_DEPENDENCY "
+    <dependencies>
+		${EMGUTF_MODEL_NUGET_DEPENDENCY}
+    </dependencies>")
 
 SET(EMGUTF_PROTOBUF_NUGET_FILE_LIST "
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.Netstandard.dll\" target=\"lib\\netstandard2.0\" />
