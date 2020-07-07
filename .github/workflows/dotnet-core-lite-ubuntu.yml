@@ -25,11 +25,15 @@ jobs:
       run: ./platforms/ubuntu/docker/docker_build_emgutf
     - name: Create emgu tf lite artifact folder
       run: mkdir -p emgutf_lite_packages
-    - name: Copy zip file to artifact folder
-      run: cp b/*.zip emgutf_lite_packages/
-    - name: Copy nuget files to artifact folder
-      run: cp platforms/nuget/*.nupkg emgutf_lite_packages/
+    #- name: Copy zip file to artifact folder
+    #  run: cp b/*.zip emgutf_lite_packages/
+    #- name: Copy nuget files to artifact folder
+    #  run: cp platforms/nuget/*.nupkg emgutf_lite_packages/
     - uses: actions/upload-artifact@v2
       with:
-        path: emgutf_lite_packages
-
+        name: emgutflite-ubuntu-zip-package
+        path: ${{ github.workspace }}/b/*.zip
+    - uses: actions/upload-artifact@v2
+      with:
+        name: emgutflite-ubuntu-nuget-package
+        path: ${{ github.workspace }}/platforms/nuget/*.nupkg 
