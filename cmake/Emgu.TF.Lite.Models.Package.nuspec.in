@@ -21,7 +21,7 @@ http://www.emgu.com/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PAC
 		</group>
 		<group targetFramework="netstandard2.0">
 			<dependency id="${EMGUTF_LITE_NUGET_ID}" version="[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]" />
-			<dependency id="System.Drawing.Common" version="[4.5.1]" />
+			<dependency id="System.Drawing.Common" version="4.7.0" />
         </group>
     </dependencies>
     <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved</copyright>
