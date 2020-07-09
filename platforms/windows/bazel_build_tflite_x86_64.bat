@@ -10,7 +10,11 @@ SET OS_MODE=
 IF "%1%"=="64" SET OS_MODE= Win64
 IF "%1%"=="ARM" SET OS_MODE= ARM
 
-IF NOT "%2%"=="clean" GOTO END_OF_CLEAN
+IF NOT "%2%"=="xnn" GOTO END_OF_XNN
+SET BAZEL_XNN_FLAGS=--define tflite_with_xnnpack=true
+:END_OF_XNN
+
+IF NOT "%3%"=="clean" GOTO END_OF_CLEAN
 rm -rf %USERPROFILE%\_bazel_%USERNAME%
 :END_OF_CLEAN
 
@@ -62,7 +66,7 @@ SET MSYS_PATH=C:\msys64
 SET MSYS_BIN=%MSYS_PATH%\usr\bin
 
 
-%MSYS_BIN%\bazel build -c opt //tensorflow/tfliteextern:libtfliteextern.so --verbose_failures
+%MSYS_BIN%\bazel build %BAZEL_XNN_FLAGS% -c opt //tensorflow/tfliteextern:libtfliteextern.so --verbose_failures
       
 cd ..
 
