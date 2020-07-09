@@ -647,15 +647,30 @@ IF(HAVE_LITE_BUILD)
   SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST}
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+
+  SET(EMGUTF_LITE_NUGET_DEPENDENCY "${EMGUTF_LITE_NUGET_DEPENDENCY}
+    <group targetFramework=\".NETStandard2.0\">
+        <dependency id=\"System.Runtime.InteropServices.RuntimeInformation\" version=\"4.3.0\" />
+    </group>")
+  SET(EMGUTF_LITE_NUGET_DEPENDENCY "
+    <dependencies>
+		${EMGUTF_LITE_NUGET_DEPENDENCY}
+    </dependencies>")
   
   SET(EMGUTF_LITE_MODEL_NUGET_FILE_LIST "${EMGUTF_LITE_MODEL_NUGET_FILE_LIST} 
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.Netstandard.dll\" target=\"lib\\netstandard2.0\" />
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.Netstandard.xml\" target=\"lib\\netstandard2.0\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
     <file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+
   SET(EMGUTF_LITE_MODEL_NUGET_DEPENDENCY "${EMGUTF_LITE_MODEL_NUGET_DEPENDENCY}
+    <group targetFramework=\".NETStandard2.0\">
+        <dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+        <dependency id=\"System.Drawing.Common\" version=\"4.7.0\" exclude=\"Build,Analyzers\"/>
+    </group>")
+  SET(EMGUTF_LITE_MODEL_NUGET_DEPENDENCY "
     <dependencies>
-		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+		${EMGUTF_LITE_MODEL_NUGET_DEPENDENCY}
     </dependencies>")
 ENDIF()
 
@@ -910,12 +925,8 @@ SET(EMGUTF_MODEL_NUGET_DEPENDENCY "${EMGUTF_MODEL_NUGET_DEPENDENCY}
 		<dependency id=\"System.Drawing.Common\" version=\"4.7.0\" exclude=\"Build,Analyzers\" />
 	</group>")
 
-SET(EMGUTF_LITE_MODEL_NUGET_DEPENDENCY "${EMGUTF_LITE_MODEL_NUGET_DEPENDENCY}
-    <group targetFramework="netstandard2.0">
-        <dependency id="${EMGUTF_LITE_NUGET_ID}" version="[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]" />
-        <dependency id="System.Drawing.Common" version="4.7.0" exclude=\"Build,Analyzers\"/>
-    </group>")
 
+	
 IF( HAVE_OSX ) 
   SET(EMGUTF_MODEL_NUGET_FILE_LIST "${EMGUTF_MODEL_NUGET_FILE_LIST}
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.Mac.dll\" target=\"lib\\xamarinmac20\" />
@@ -941,10 +952,7 @@ SET(EMGUTF_MODEL_NUGET_DEPENDENCY "
 		${EMGUTF_MODEL_NUGET_DEPENDENCY}
     </dependencies>")
 	
-SET(EMGUTF_LITE_MODEL_NUGET_DEPENDENCY "
-    <dependencies>
-		${EMGUTF_LITE_MODEL_NUGET_DEPENDENCY}
-    </dependencies>")
+
 
 SET(EMGUTF_PROTOBUF_NUGET_FILE_LIST "
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.Netstandard.dll\" target=\"lib\\netstandard2.0\" />

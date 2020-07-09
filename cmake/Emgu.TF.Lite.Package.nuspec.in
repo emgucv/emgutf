@@ -18,9 +18,6 @@ http://www.emgu.com/wiki/files/emgutflite/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK
 	${EMGUTF_LITE_NUGET_DEPENDENCY}
     <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved</copyright>
     <tags>tensorflow lite emgu emgutflite ai </tags>
-	<dependencies>
-		<dependency id="System.Runtime.InteropServices.RuntimeInformation" version="[4.3.0]" />
-    </dependencies>
   </metadata>
   <files>
   ${EMGUTF_LITE_NUGET_FILE_LIST}
