@@ -62,11 +62,12 @@ ECHO Using BAZEL_VC=%BAZEL_VC%
 
 cd tensorflow
 
+SET BAZEL_COMMAND=bazel.exe
 SET MSYS_PATH=C:\msys64
 SET MSYS_BIN=%MSYS_PATH%\usr\bin
+IF EXIST "%MSYS_BIN%\bazel.exe" SET BAZEL_COMMAND=%MSYS_BIN%\bazel.exe
 
-
-%MSYS_BIN%\bazel build %BAZEL_XNN_FLAGS% -c opt //tensorflow/tfliteextern:libtfliteextern.so --verbose_failures
+call %BAZEL_COMMAND% build %BAZEL_XNN_FLAGS% -c opt //tensorflow/tfliteextern:libtfliteextern.so --verbose_failures
       
 cd ..
 
