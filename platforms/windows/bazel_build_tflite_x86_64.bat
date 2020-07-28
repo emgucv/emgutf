@@ -2,13 +2,47 @@
 pushd %~p0
 cd ../..
 
-IF "%1%"=="64" ECHO "BUILDING 64bit solution" 
-IF "%1%"=="ARM" ECHO "BUILDING ARM solution"
-IF "%1%"=="32" ECHO "BUILDING 32bit solution"
+SET BUILD_FOLDER=build
 
-SET OS_MODE=
-IF "%1%"=="64" SET OS_MODE= Win64
-IF "%1%"=="ARM" SET OS_MODE= ARM
+IF "%1%"=="32" GOTO ENV_x86
+IF "%1%"=="64" GOTO ENV_x64
+IF "%1%"=="ARM" GOTO ENV_ARM
+IF "%1%"=="ARM64" GOTO ENV_ARM64
+
+GOTO ENV_END
+
+:ENV_x86
+REM SET BUILD_FOLDER=%BUILD_FOLDER%_x86
+ECHO "BUILDING 32bit solution in %BUILD_FOLDER%"
+IF EXIST "c:\BuildTools\vc\Auxiliary\Build\vcvars32.bat" SET ENV_SETUP_SCRIPT=c:\BuildTools\vc\Auxiliary\Build\vcvars32.bat
+GOTO ENV_END
+
+:ENV_x64
+REM SET BUILD_FOLDER=%BUILD_FOLDER%_x64
+ECHO "BUILDING 64bit solution in %BUILD_FOLDER%" 
+IF EXIST "c:\BuildTools\vc\Auxiliary\Build\vcvars64.bat" SET ENV_SETUP_SCRIPT=c:\BuildTools\vc\Auxiliary\Build\vcvars64.bat
+GOTO ENV_END
+
+:ENV_ARM
+REM SET BUILD_FOLDER=%BUILD_FOLDER%_ARM
+ECHO "BUILDING ARM solution in %BUILD_FOLDER%"
+IF EXIST "c:\BuildTools\vc\Auxiliary\Build\vcvarsamd64_arm.bat" SET ENV_SETUP_SCRIPT=c:\BuildTools\vc\Auxiliary\Build\vcvarsamd64_arm.bat
+GOTO ENV_END
+
+:ENV_ARM64
+REM SET BUILD_FOLDER=%BUILD_FOLDER%_ARM64
+ECHO "BUILDING ARM64 solution in %BUILD_FOLDER%"
+IF EXIST "c:\BuildTools\vc\Auxiliary\Build\vcvarsamd64_arm64.bat" SET ENV_SETUP_SCRIPT=c:\BuildTools\vc\Auxiliary\Build\vcvarsamd64_arm64.bat
+
+:ENV_END
+IF "%ENV_SETUP_SCRIPT%"=="" GOTO ENV_SETUP_END
+
+call %ENV_SETUP_SCRIPT%
+
+@echo on
+
+:ENV_SETUP_END
+
 
 IF NOT "%2%"=="xnn" GOTO END_OF_XNN
 SET BAZEL_XNN_FLAGS=--define tflite_with_xnnpack=true
@@ -28,6 +62,7 @@ SET VS2017=%VS2017_DIR%\Common7\IDE\devenv.com
 
 FOR /F "tokens=* USEBACKQ" %%F IN (`miscellaneous\vswhere.exe -version [16.0^,17.0^) -property installationPath`) DO SET VS2019_DIR=%%F
 SET VS2019=%VS2019_DIR%\Common7\IDE\devenv.com
+
 SET BUILDTOOLS=C:\BuildTools
 
 IF EXIST "%windir%\Microsoft.NET\Framework\v3.5\MSBuild.exe" SET MSBUILD35=%windir%\Microsoft.NET\Framework\v3.5\MSBuild.exe
