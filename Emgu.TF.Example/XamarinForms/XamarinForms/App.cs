@@ -16,7 +16,7 @@ namespace Emgu.TF.XamarinForms
         public App()
         {
             Emgu.TF.TfInvoke.CheckLibraryLoaded();
-
+            /*
             TabbedPage tabbedPage = new TabbedPage();
             tabbedPage.Title = "Emgu TF Demos";
             tabbedPage.Children.Add(new AboutPage());
@@ -31,7 +31,7 @@ namespace Emgu.TF.XamarinForms
                 tabbedPage.Children.Add(new StylizePage());
             }
             MainPage = tabbedPage;
-            /*
+            */
             List<View> buttons = new List<View>();
 
             Button multiboxDetectionButton = new Button();
@@ -57,6 +57,14 @@ namespace Emgu.TF.XamarinForms
                 MainPage.Navigation.PushAsync(new InceptionPage(InceptionPage.Model.Flower));
             };
             buttons.Add(flowerButton);
+
+            Button resnetButton = new Button();
+            resnetButton.Text = "Resnet Object Recognition";
+            resnetButton.Clicked += (sender, args) =>
+            {
+                MainPage.Navigation.PushAsync(new ResnetPage());
+            };
+            buttons.Add(resnetButton);
 
             //Only include stylize demo if QuantizeV2 is available.
             if (TfInvoke.OpHasKernel("QuantizeV2"))
@@ -102,7 +110,7 @@ namespace Emgu.TF.XamarinForms
                }
             );
             page.ToolbarItems.Add(aboutItem);
-            */
+            
         }
 
         public Page CurrentPage
