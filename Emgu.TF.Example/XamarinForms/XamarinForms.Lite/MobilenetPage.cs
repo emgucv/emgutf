@@ -64,11 +64,13 @@ namespace Emgu.TF.XamarinForms
 
             SetImage();
             String[] imageFiles = await LoadImages(new string[] { "space_shuttle.jpg" });
+            //handle user cancel
             if (imageFiles == null || (imageFiles.Length > 0 && imageFiles[0] == null))
             {
                 SetMessage("");
                 return;
             }
+
             Stopwatch watch = Stopwatch.StartNew();
             var result = _mobilenet.Recognize(imageFiles[0]);
             watch.Stop();

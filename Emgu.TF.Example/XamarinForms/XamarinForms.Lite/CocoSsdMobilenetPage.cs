@@ -166,9 +166,10 @@ namespace Emgu.TF.XamarinForms
             } else
             {
                 String[] imageFiles = await LoadImages(new string[] { "dog416.png" });
-                if (imageFiles == null)
+                //handle user cancel
+                if (imageFiles == null || (imageFiles.Length > 0 && imageFiles[0] == null))
                 {
-                    //User canceled
+                    SetMessage("");
                     return;
                 }
 
@@ -178,11 +179,9 @@ namespace Emgu.TF.XamarinForms
                 {
 
 #if __MACOS__ || __IOS__
-                SetMessage(String.Format("Model trained to recognize the following objects: {0}", String.Join("; ", _mobilenet.Labels)));
-                this.TopButton.Text = "Stop";
-                CheckVideoPermissionAndStart();
-#else
-
+                    SetMessage(String.Format("Model trained to recognize the following objects: {0}", String.Join("; ", _mobilenet.Labels)));
+                    this.TopButton.Text = "Stop";
+                    CheckVideoPermissionAndStart();
 #endif
                 }
                 else
