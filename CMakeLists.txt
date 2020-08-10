@@ -781,8 +781,13 @@ IF(HAVE_WINDESKTOP)
       #STRING(REGEX REPLACE "\n" "" BAZEL_CUDA_TOOLKIT_PATH "${BAZEL_CUDA_TOOLKIT_PATH}")
       STRING(STRIP "${BAZEL_CUDA_TOOLKIT_PATH_RAW}" BAZEL_CUDA_TOOLKIT_PATH)
       #MESSAGE(STATUS "The Cuda path is: '${BAZEL_CUDA_TOOLKIT_PATH}'")
-	  SET(BAZEL_GENERATED_DNN_VERSION_FILE "${BAZEL_CUDA_TOOLKIT_PATH}/include/cudnn.h")
-	  
+	  IF (EXISTS "${BAZEL_CUDA_TOOLKIT_PATH}/include/cudnn_version.h")
+	    SET(BAZEL_GENERATED_DNN_VERSION_FILE "${BAZEL_CUDA_TOOLKIT_PATH}/include/cudnn_version.h")
+	  ELSEIF(EXISTS "${BAZEL_CUDA_TOOLKIT_PATH}/include/cudnn.h")
+	    SET(BAZEL_GENERATED_DNN_VERSION_FILE "${BAZEL_CUDA_TOOLKIT_PATH}/include/cudnn.h")
+	  ELSE()
+	    MESSAGE(STATUS "!!!!!!!!! CUDNN version file does not exist !!!!!!!!!")
+	  ENDIF()
       
       IF(EXISTS "${BAZEL_CUDA_TOOLKIT_PATH}/include/nppversion.h")
 	  SET(BAZEL_GENERATED_CUFFT_VERSION_FILE "${BAZEL_CUDA_TOOLKIT_PATH}/include/nppversion.h")
@@ -821,20 +826,25 @@ IF(HAVE_WINDESKTOP)
       
       IF((${npp_major} GREATER 10) OR (("${npp_major}" STREQUAL "10") AND (${npp_minor} GREATER 0)))
 	    SET(NPP_POSTFIX "${npp_major}")
-	    LIST(APPEND TFEXTERN_DEPENDENCY_DLLS 
-	      "${CUDA_TOOLKIT_ROOT_DIR}/bin/cublasLt${CUDA_POSTFIX}_${NPP_POSTFIX}.dll")
+	    #LIST(APPEND TFEXTERN_DEPENDENCY_DLLS 
+	    #  "${CUDA_TOOLKIT_ROOT_DIR}/bin/cublasLt${CUDA_POSTFIX}_${NPP_POSTFIX}.dll")
       ELSE()
 	    SET(NPP_POSTFIX "${npp_major}${npp_minor}")
       ENDIF()
 	  
       FILE(GLOB CUDART_FILES "${CUDA_TOOLKIT_ROOT_DIR}/bin/cudart${CUDA_POSTFIX}_*.dll")
+	  FILE(GLOB CUFFT_DEPENDENCY_DLLS "${CUDA_TOOLKIT_ROOT_DIR}/bin/cufft*.dll")
+	  FILE(GLOB CUBLAS_DEPENDENCY_DLLS "${CUDA_TOOLKIT_ROOT_DIR}/bin/cublas*.dll")
+	  FILE(GLOB CURAND_DEPENDENCY_DLLS "${CUDA_TOOLKIT_ROOT_DIR}/bin/curand*.dll")
+	  FILE(GLOB CUSOLVER_DEPENDENCY_DLLS "${CUDA_TOOLKIT_ROOT_DIR}/bin/cusolver*.dll")
+	  FILE(GLOB CUSPARSE_DEPENDENCY_DLLS "${CUDA_TOOLKIT_ROOT_DIR}/bin/cusparse*.dll")
       LIST(APPEND TFEXTERN_DEPENDENCY_DLLS 
 	    ${CUDART_FILES}
-	    "${CUDA_TOOLKIT_ROOT_DIR}/bin/cufft${CUDA_POSTFIX}_${NPP_POSTFIX}.dll"
-	    "${CUDA_TOOLKIT_ROOT_DIR}/bin/cublas${CUDA_POSTFIX}_${NPP_POSTFIX}.dll"
-	    "${CUDA_TOOLKIT_ROOT_DIR}/bin/curand${CUDA_POSTFIX}_${NPP_POSTFIX}.dll"
-	    "${CUDA_TOOLKIT_ROOT_DIR}/bin/cusolver${CUDA_POSTFIX}_${NPP_POSTFIX}.dll"
-		"${CUDA_TOOLKIT_ROOT_DIR}/bin/cusparse${CUDA_POSTFIX}_${NPP_POSTFIX}.dll"
+	    ${CUFFT_DEPENDENCY_DLLS}
+		${CUBLAS_DEPENDENCY_DLLS}
+	    ${CURAND_DEPENDENCY_DLLS}
+	    ${CUSOLVER_DEPENDENCY_DLLS}
+		${CUSPARSE_DEPENDENCY_DLLS}
 	  )
       SET(EMGU_TF_CUFFT_FILE_VERSION "${NPP_POSTFIX}")
 #    ELSE()
@@ -847,11 +857,11 @@ IF(HAVE_WINDESKTOP)
     
     IF(EXISTS ${CMAKE_GENERATED_DNN_VERSION_FILE})
       #The native binary is built with CMake
-      MESSAGE(STATUS "-- Native tensorflow is build with cudnn and cmake")
+      MESSAGE(STATUS "Native tensorflow is build with cudnn and cmake")
       FILE(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/tensorflow/contrib/cmake/emgu.tf.dnn.version.txt" EMGU_TF_DNN_VERSION)
     ELSEIF(EXISTS ${BAZEL_GENERATED_DNN_VERSION_FILE})
       #The native binary is built with bazel
-      MESSAGE(STATUS "-- Native tensorflow is build with cudnn and bazel")
+      MESSAGE(STATUS "Native tensorflow is build with cudnn and bazel. Getting DNN version from ${BAZEL_GENERATED_DNN_VERSION_FILE}")
       file( STRINGS "${BAZEL_GENERATED_DNN_VERSION_FILE}" dnn_major REGEX "#define CUDNN_MAJOR.*")
       file( STRINGS "${BAZEL_GENERATED_DNN_VERSION_FILE}" dnn_minor REGEX "#define CUDNN_MINOR.*")
       file( STRINGS "${BAZEL_GENERATED_DNN_VERSION_FILE}" dnn_patchlevel REGEX "#define CUDNN_PATCHLEVEL.*")
@@ -864,7 +874,7 @@ IF(HAVE_WINDESKTOP)
       string( REGEX MATCH "[0-9]+" dnn_minor ${dnn_minor} ) 
       string( REGEX MATCH "[0-9]+" dnn_patchlevel ${dnn_patchlevel} ) 	
       SET(EMGU_TF_DNN_VERSION "${dnn_major}.${dnn_minor}.${dnn_patchlevel}")
-      SET(CUDA_TOOLKIT_ROOT_DIR "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v${npp_major}.${npp_minor}")
+      #SET(CUDA_TOOLKIT_ROOT_DIR "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v${npp_major}.${npp_minor}")
       LIST(APPEND TFEXTERN_DEPENDENCY_DLLS "${CUDA_TOOLKIT_ROOT_DIR}/bin/cudnn${CUDA_POSTFIX}_${dnn_major}.dll")
     ENDIF()
     
