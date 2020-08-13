@@ -1,4 +1,4 @@
-name: Ubuntu Builder
+name: Ubuntu TF Lite Builder
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
       run: ./platforms/ubuntu/docker/docker_build_tflite
     - name: Build Emgu TF Lite package
       run: ./platforms/ubuntu/docker/docker_build_emgutf
-    - name: Create emgu tf lite artifact folder
+    - name: Create Emgu TF Lite artifact folder
       run: mkdir -p emgutf_lite_packages
     - uses: actions/upload-artifact@v2
       with:
@@ -35,23 +35,5 @@ jobs:
         path: ${{ github.workspace }}/platforms/nuget/*.nupkg 
     - name: clean up the source folder
       run: miscellaneous/git-clean
-    - name: Build Emgu TF Lite Android native binary
+    - name: Build Emgu TF Lite Android arm64-v8a native binary
       run: ./platforms/ubuntu/docker/docker_build_tflite_android arm64 arm64-v8a
-    - name: clean up the source folder
-      run: miscellaneous/git-clean
-    - name: Build Emgu TF native binary
-      run: ./platforms/ubuntu/docker/docker_build_tf
-    - name: Build Emgu TF package
-      run: ./platforms/ubuntu/docker/docker_build_emgutf
-    - uses: actions/upload-artifact@v2
-      with:
-        name: emgutf-ubuntu-zip-package
-        path: ${{ github.workspace }}/b/*.zip
-    - uses: actions/upload-artifact@v2
-      with:
-        name: emgutf-ubuntu-nuget-package
-        path: ${{ github.workspace }}/platforms/nuget/*.nupkg 
-    - name: clean up the source folder
-      run: miscellaneous/git-clean
-    - name: Build Emgu TF Android native binary
-      run: ./platforms/ubuntu/docker/docker_build_tf_android arm64 arm64-v8a
