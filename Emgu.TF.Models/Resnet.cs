@@ -91,7 +91,7 @@ namespace Emgu.TF.Models
 
         public
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-            IEnumerator
+            System.Collections.IEnumerator
 #else
             async Task
 #endif
