@@ -76,6 +76,8 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
             _displayMessage = String.Format("Downloading multibox model files, {0} % of file {1}...", _multiboxGraph.DownloadProgress * 100, _multiboxGraph.DownloadFileName);
         } else if (_liveCameraView)
         {
+            _displayMessage = String.Empty;
+
             if (webcamTexture != null && webcamTexture.didUpdateThisFrame)
             {
                 #region convert the webcam texture to RGBA bytes
@@ -117,8 +119,10 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
 
                 if (drawableTexture == null || drawableTexture.width != resultTexture.width ||
                     drawableTexture.height != resultTexture.height)
-                    drawableTexture = new Texture2D(resultTexture.width, resultTexture.height, TextureFormat.ARGB32, false);
-                drawableTexture.SetPixels(resultTexture.GetPixels());
+                    drawableTexture = new Texture2D(resultTexture.width, resultTexture.height, TextureFormat.RGBA32, false);
+                //drawableTexture.SetPixels(resultTexture.GetPixels()); //slower implementation
+                drawableTexture.LoadRawTextureData(resultTexture.GetRawTextureData()); //faster implementation
+
                 MultiboxGraph.DrawResults(drawableTexture, results, 0.2f, true);
 
                 if (!_textureResized)
