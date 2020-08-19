@@ -67,6 +67,9 @@ cd tensorflow\tensorflow\tools\ci_build\windows
 SET MSYS64_PATH=c:\msys64
 SET MSYS64_BIN=%MSYS64_PATH%\usr\bin
 
+IF NOT EXIST %~dp0tmp mkdir %~dp0tmp
+SET TMPDIR=%~dp0tmp
+
 IF "%2%" == "gpu" GOTO BUILD_GPU
 :BUILD_CPU
 call cmd.exe /v /c "set PATH=%MSYS64_BIN%;%PATH% & %MSYS64_BIN%\bash.exe libtensorflow_cpu.sh"

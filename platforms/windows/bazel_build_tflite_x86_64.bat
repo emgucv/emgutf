@@ -98,7 +98,10 @@ SET MSYS_PATH=C:\msys64
 SET MSYS_BIN=%MSYS_PATH%\usr\bin
 IF EXIST "%MSYS_BIN%\bazel.exe" SET BAZEL_COMMAND=%MSYS_BIN%\bazel.exe
 
-call %BAZEL_COMMAND% build %BAZEL_XNN_FLAGS% -c opt //tensorflow/tfliteextern:libtfliteextern.so --verbose_failures
+IF NOT EXIST %~dp0tmp mkdir %~dp0tmp
+SET TMPDIR=%~dp0tmp
+
+call %BAZEL_COMMAND% --output_user_root=%TMPDIR% build %BAZEL_XNN_FLAGS% -c opt //tensorflow/tfliteextern:libtfliteextern.so --verbose_failures
       
 cd ..
 
