@@ -379,10 +379,10 @@ IF(HAVE_ANDROID_LITE OR HAVE_IOS_LITE OR HAVE_OSX_LITE OR HAVE_WINDESKTOP_LITE O
   MESSAGE(STATUS "Have Tensorflow Lite build: ${HAVE_LITE_BUILD}")
 ENDIF()
 
-if ("${LICENSE_TYPE}" STREQUAL "OpenSource")
-  SET(LICENSE_LABEL "")
-ELSE()
+if ("${LICENSE_TYPE}" STREQUAL "Commercial")
   SET(LICENSE_LABEL "-cr")
+ELSE()
+  SET(LICENSE_LABEL "")
 ENDIF()
 	
 # ----------------------------------------------------------------------------
