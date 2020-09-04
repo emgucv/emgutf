@@ -52,8 +52,8 @@ namespace Emgu.TF
         /// <param name="status">The status</param>
         public Session(
             String exportDir,
-            String[] tags, 
-            SessionOptions sessionOptions = null, 
+            String[] tags,
+            SessionOptions sessionOptions = null,
             Buffer runOptions = null,
             Status status = null)
         {
@@ -76,6 +76,7 @@ namespace Emgu.TF
             }
             else
             {
+                tagsNativeHandle = new GCHandle();
                 tagsNative = new IntPtr[0];
             }
 
@@ -102,16 +103,17 @@ namespace Emgu.TF
             {
                 Marshal.FreeHGlobal(exportDirPtr);
 
-                if (tags != null)
+                if (tagsNativeHandle.IsAllocated)
                 {
                     tagsNativeHandle.Free();
-                    for (int i = 0; i < tags.Length; i++)
-                    {
-                        Marshal.FreeHGlobal(tagsNative[i]);
-                    }
+                }
+
+                for (int i = 0; i < tagsNative.Length; i++)
+                {
+                    Marshal.FreeHGlobal(tagsNative[i]);
                 }
             }
-            
+
         }
 
         /// <summary>
@@ -269,8 +271,8 @@ namespace Emgu.TF
                 GCHandle memorySizeHandle = GCHandle.Alloc(memorySizeBuffer, GCHandleType.Pinned);
 
                 TfInvoke.tfeSessionListDevices(
-                    _ptr, 
-                    nameHandle.AddrOfPinnedObject(), 
+                    _ptr,
+                    nameHandle.AddrOfPinnedObject(),
                     typeHandle.AddrOfPinnedObject(),
                     memorySizeHandle.AddrOfPinnedObject(),
                     checker.Status);
@@ -332,13 +334,13 @@ namespace Emgu.TF
 
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         internal static extern IntPtr tfeLoadSessionFromSavedModel(
-            IntPtr sessionOptions, 
+            IntPtr sessionOptions,
             IntPtr runOptions,
-            IntPtr exportDir, 
-            IntPtr tags, 
+            IntPtr exportDir,
+            IntPtr tags,
             int tagsLen,
-            IntPtr graph, 
-            IntPtr metaGraphDef, 
+            IntPtr graph,
+            IntPtr metaGraphDef,
             IntPtr status);
 
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]

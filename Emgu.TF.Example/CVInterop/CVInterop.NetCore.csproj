@@ -13,7 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Emgu.CV.runtime.windows" Version="4.3.0.3890" />
+    <PackageReference Include="Emgu.CV" Version="4.4.0.4061" />
+    <PackageReference Include="Emgu.CV.runtime.windows" Version="4.4.0.4061" />
+    <PackageReference Include="Emgu.CV.UI" Version="4.4.0.4061" />
     <PackageReference Include="Google.Protobuf" Version="3.11.3" />
   </ItemGroup>
 
