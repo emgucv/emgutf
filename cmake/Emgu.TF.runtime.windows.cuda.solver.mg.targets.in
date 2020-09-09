@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+      <PropertyGroup>
+        <EmguCusolverMgLinkTarget>Windows</EmguCusolverMgLinkTarget>
+		<EmguCusolverMgBuildX86 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x86'">True</EmguCusolverMgBuildX86>
+        <EmguCusolverMgBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguCusolverMgBuildX64>
+		<EmguCusolverMgNativeFileX64>$(MSBuildThisFileDirectory)x64\cucusolverMg64_${EMGU_TF_CUFFT_FILE_VERSION}.dll</EmguCusolverMgNativeFileX64>
+		<EmguCusolverMgErrorMessage Condition="'$(EmguCusolverMgBuildX86)'=='True'">X86 or AnyCPU is targeted, but this CUDA Solver package do not support 32-bit. PInvoke may fail on Windows X86 platform.</EmguCusolverMgErrorMessage>
+        <EmguCusolverMgDeployMessage Condition="'$(EmguCusolverMgBuildX64)'=='True' AND Exists('$(EmguCusolverMgNativeFileX64)')">$(EmguCusolverMgDeployMessage)x64 </EmguCusolverMgDeployMessage>
+        <EmguCusolverMgErrorMessage Condition="'$(EmguCusolverMgBuildX64)'=='True' AND !Exists('$(EmguCusolverMgNativeFileX64)')">This package do not contain necessary binary for $(EmguCusolverMgLinkTarget). X64 is targeted, but file $(EmguCusolverMgNativeFileX64) is missing.  PInvoke may fail on Windows X64 platform. </EmguCusolverMgErrorMessage>
+      </PropertyGroup>
+      <ItemGroup Condition="'$(EmguCusolverMgBuildX64)'=='True' AND Exists('$(EmguCusolverMgNativeFileX64)')">
+        <None Include="$(MSBuildThisFileDirectory)\x64\*.dll">
+          <Link>x64\%(RecursiveDir)%(Filename)%(Extension)</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+      </ItemGroup>
+	    <Target Name="EmguCusolverMgPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <Message Condition="'$(EmguCusolverMgLinkTarget)'!=''" Text="Emgu Cufft nuget package compiling with $(EmguCusolverMgLinkTarget) runtime." Importance="High" />
+    <Warning Text="'$(EmguCusolverMgErrorMessage)'" Condition="'$(EmguCusolverMgErrorMessage)'!=''" />
+    <Message Text="Emgu Cufft dependency Compiling with $(EmguCusolverMgDeployMessage) runtime" Condition="'$(EmguCusolverMgDeployMessage)'!=''" Importance="High" />
+    <Message Text="No native binary is being deployed by the Emgu Cufft package." Condition="'$(EmguCusolverMgDeployMessage)'==''" Importance="High" />
+  </Target>
+</Project>

@@ -19,7 +19,7 @@
   </metadata>
   <files>
 	<file src="${EMGU_TF_CUDART_ID}.targets" target="build\${EMGU_TF_CUDART_ID}.targets" />
-	<file src="..\..\..\lib\x64\cu*.dll" exclude="..\..\..\lib\x64\cudnn*.dll;..\..\..\lib\x64\cufft*.dll" target="build\x64" />
+	<file src="..\..\..\lib\x64\cu*.dll" exclude="..\..\..\lib\x64\cudnn*.dll;..\..\..\lib\x64\cufft*.dll;..\..\..\lib\x64\cublas*.dll;..\..\..\lib\x64\cusolver*.dll" target="build\x64" />
 	<file src="..\..\..\miscellaneous\nuget_icon.png" target="icon.png" />
 	<file src="CUDA_EULA.TXT" target="CUDA_EULA.txt" />
   </files>

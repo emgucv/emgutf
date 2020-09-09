@@ -6,7 +6,7 @@
     <version>${EMGU_TF_CUFFT_VERSION}</version>
     <authors>${CPACK_PACKAGE_VENDOR}</authors>
     <owners>${CPACK_PACKAGE_VENDOR}</owners>
-    <license type="file">CUFFT_EULA.txt</license>
+    <license type="file">CUDA_EULA.txt</license>
     <projectUrl>${EMGUTF_MAIN_WEB_URL}</projectUrl>
 	<icon>icon.png</icon>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -20,6 +20,6 @@
 	<file src="${EMGU_TF_CUFFT_ID}.targets" target="build\${EMGU_TF_CUFFT_ID}.targets" />
     <file src="..\..\..\lib\x64\cufft*.dll" target="build\x64" />
 	<file src="..\..\..\miscellaneous\nuget_icon.png" target="icon.png" />
-	<file src="CUFFT_EULA.TXT" target="CUFFT_EULA.txt" />
+	<file src="CUDA_EULA.TXT" target="CUDA_EULA.txt" />
   </files>
 </package>
