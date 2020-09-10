@@ -138,14 +138,13 @@ IF "%2%" == "gpu" GOTO DEPLOY_DEPENDENCY_GPU
 GOTO END_OF_DEPLOY_DEPENDENCY_GPU
 :DEPLOY_DEPENDENCY_GPU
 SET CUDA_TOOLKIT_BIN_PATH=%CUDA_TOOLKIT_PATH%/bin
-copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cusolver64_*.dll" lib\x64\ 
-copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cublas64_*.dll" lib\x64\
-copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cudnn64_*.dll" lib\x64\
-copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cudnn_*.dll" lib\x64\
-copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cufft64_*.dll" lib\x64\
-copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\curand64_*.dll" lib\x64\
+copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cusolver*.dll" lib\x64\ 
+copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cublas*.dll" lib\x64\
+copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cudnn*.dll" lib\x64\
+copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cufft*.dll" lib\x64\
+copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\curand*.dll" lib\x64\
 copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cudart64_*.dll" lib\x64\
-copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cusparse64_*.dll" lib\x64\
+copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cusparse*.dll" lib\x64\
 :END_OF_DEPLOY_DEPENDENCY_GPU
 
 cp -rf tensorflow\bazel-bin\external\protobuf_archive .
