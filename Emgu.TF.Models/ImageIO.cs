@@ -315,8 +315,7 @@ namespace Emgu.TF.Models
             float inputMean = 0.0f, 
             float scale = 1.0f,
             bool flipUpSideDown = false,
-            bool swapBR = false,
-            Status status = null) where T: struct
+            bool swapBR = false) where T: struct
         {
 #if __ANDROID__
             return NativeReadTensorFromImageFile<T>(fileName, inputHeight, inputWidth, inputMean, scale,
@@ -372,7 +371,6 @@ namespace Emgu.TF.Models
                 || extension.Equals(".png")
                 || extension.Equals(".gif")))
             {
-                //using (StatusChecker checker = new StatusChecker(status))
                 using(Graph graph = new Graph())
                 {
                     Operation input = graph.Placeholder(DataType.String);
@@ -434,7 +432,8 @@ namespace Emgu.TF.Models
 
                     using (Session session = new Session(graph))
                     {
-                        Tensor imageTensor = Tensor.FromString(File.ReadAllBytes(fileName), status);
+                        Tensor imageTensor = Tensor.FromString(File.ReadAllBytes(fileName));
+                        
                         Tensor[] imageResults = session.Run(new Output[] { input }, new Tensor[] { imageTensor },
                             new Output[] { flipped });
                         return imageResults[0];

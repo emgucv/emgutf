@@ -320,6 +320,7 @@ namespace Emgu.TF
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         private static extern IntPtr tfeGetAllOpList();
 
+        /*
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         internal static extern int tfeStringEncodedSize(int len);
 
@@ -328,6 +329,7 @@ namespace Emgu.TF
 
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         internal static extern int tfeStringDecode(IntPtr src, int srcLen, ref IntPtr dst, ref IntPtr dstLen, IntPtr status);
+        */
 
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         internal static extern void tfeMemcpy(IntPtr dst, IntPtr src, int length);

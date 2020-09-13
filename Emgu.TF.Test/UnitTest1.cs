@@ -41,6 +41,19 @@ namespace Emgu.TF.Test
         }*/
 
         [TestMethod]
+        public void TestTString()
+        {
+            byte[] data = File.ReadAllBytes("grace_hopper.jpg");
+            TString s = new TString(data);
+            byte[] data2 = s.Data;
+            Assert.AreEqual(data.Length, data2.Length);
+            for (int i = 0; i < data.Length; i++)
+            {
+                Assert.AreEqual(data[i], data2[i]);
+            }
+        }
+
+        [TestMethod]
         public async Task TestInception()
         {
             using (Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>("grace_hopper.jpg", 224, 224, 128.0f, 1.0f))
