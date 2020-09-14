@@ -304,7 +304,7 @@ namespace Emgu.TF.Models
             int[] dim = image.Dim;
             return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 4).Raw;
 #else
-            return EncodeJpeg(image, 1.0f, 0.0f);
+            return EncodeJpeg(image, scale, mean);
 #endif
         }
 
