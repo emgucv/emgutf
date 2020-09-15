@@ -24,6 +24,8 @@ bazel build -c opt \
       --action_env ANDROID_SDK_API_LEVEL=23 \
       --action_env ANDROID_SDK_HOME=/usr/lib/android-sdk \
       --cxxopt='--std=c++14' \
+      --cxxopt='-fpic' \
+      --copt='-fpic' \
       --config monolithic \
       --verbose_failures \
       //tensorflow/tfextern:libtfextern.so \
