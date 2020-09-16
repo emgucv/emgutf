@@ -16,22 +16,7 @@ namespace Emgu.TF.XamarinForms
         public App()
         {
             Emgu.TF.TfInvoke.CheckLibraryLoaded();
-            /*
-            TabbedPage tabbedPage = new TabbedPage();
-            tabbedPage.Title = "Emgu TF Demos";
-            tabbedPage.Children.Add(new AboutPage());
-
-            tabbedPage.Children.Add(new MultiboxDetectionPage());
-            tabbedPage.Children.Add(new InceptionPage(InceptionPage.Model.Default));
-            tabbedPage.Children.Add(new InceptionPage(InceptionPage.Model.Flower));
-            tabbedPage.Children.Add(new ResnetPage());
-
-            if (TfInvoke.OpHasKernel("QuantizeV2"))
-            {
-                tabbedPage.Children.Add(new StylizePage());
-            }
-            MainPage = tabbedPage;
-            */
+            
             List<View> buttons = new List<View>();
 
             Button multiboxDetectionButton = new Button();
@@ -58,13 +43,14 @@ namespace Emgu.TF.XamarinForms
             };
             buttons.Add(flowerButton);
 
-            Button resnetButton = new Button();
-            resnetButton.Text = "Resnet Object Recognition";
-            resnetButton.Clicked += (sender, args) =>
+            if (Device.RuntimePlatform != Device.Android)
             {
-                MainPage.Navigation.PushAsync(new ResnetPage());
-            };
-            buttons.Add(resnetButton);
+                //LoadSavedModel is not available for Android
+                Button resnetButton = new Button();
+                resnetButton.Text = "Resnet Object Recognition";
+                resnetButton.Clicked += (sender, args) => { MainPage.Navigation.PushAsync(new ResnetPage()); };
+                buttons.Add(resnetButton);
+            }
 
             //Only include stylize demo if QuantizeV2 is available.
             if (TfInvoke.OpHasKernel("QuantizeV2"))

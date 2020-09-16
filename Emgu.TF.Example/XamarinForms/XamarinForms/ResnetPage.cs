@@ -110,10 +110,10 @@ namespace Emgu.TF.XamarinForms
 
                     if (images[0] == "Camera")
                     {
-                        //TODO: handle camera stream
+                        //handle camera stream
 #if __ANDROID__
                         this.TopButton.Text = _StopCameraButtonText;
-                        StartCapture(async delegate (Object sender, Android.Graphics.Bitmap m)
+                        StartCapture(async delegate (Object s, Android.Graphics.Bitmap m)
                         {
                             //Skip the frame if busy, 
                             //Otherwise too many frames arriving and will eventually saturated the memory.
@@ -126,21 +126,9 @@ namespace Emgu.TF.XamarinForms
                                     Resnet.RecognitionResult result;
                                     //await Task.Run(() =>
                                     //{
-                                        Tensor imageTensor;
-
-                                        if (_model == Model.Flower)
-                                        {
-                                            imageTensor = new Tensor(DataType.Float, new int[] {1, 299, 299, 3} );
-                                            Emgu.Models.NativeImageIO.ReadBitmapToTensor<float>(m, imageTensor.DataPointer, 299, 299, 0.0f,
-                                                1.0f / 255.0f, false, false);
-
-                                        }
-                                        else
-                                        {
-                                            imageTensor = new Tensor(DataType.Float, new int[] { 1, 224, 224, 3 });
-                                            Emgu.Models.NativeImageIO.ReadBitmapToTensor<float>(m, imageTensor.DataPointer, 224, 224, 128.0f, 
-                                                    1.0f);
-                                        }
+                                        Tensor imageTensor = new Tensor(DataType.Float, new int[] { 1, 224, 224, 3 });
+                                        Emgu.Models.NativeImageIO.ReadBitmapToTensor<float>(m, imageTensor.DataPointer, 224, 224, 0.0f,
+                                            1.0f / 255.0f, false, false);
                                         result = _resnet.Recognize(imageTensor)[0];
                                     //});
                                     watch.Stop();
@@ -152,7 +140,6 @@ namespace Emgu.TF.XamarinForms
                                 finally
                                 {
                                     _isBusy = false;
-                                    
                                 }
                             }
                         });
@@ -162,12 +149,9 @@ namespace Emgu.TF.XamarinForms
                     }
                     else
                     {
-                        Tensor imageTensor;
-                        
-                        imageTensor =
+                        Tensor imageTensor =
                             Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(images[0], 224, 224, 0.0f, 1.0f/255.0f, false, false);
                         
-
                         Resnet.RecognitionResult result;
                         if (_coldSession)
                         {
@@ -196,7 +180,6 @@ namespace Emgu.TF.XamarinForms
 #endif
                         this.TopButton.IsEnabled = true;
                     }
-
 
                 }
 #if !DEBUG
