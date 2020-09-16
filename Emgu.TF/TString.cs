@@ -13,7 +13,7 @@ namespace Emgu.TF
 {
     public class TString : UnmanagedObject
     {
-        private static int _sizeOfTString;
+        private static readonly int _sizeOfTString;
 
         static TString()
         {
@@ -36,6 +36,10 @@ namespace Emgu.TF
             _ptr = TfInvoke.tfeTStringCreate();
         }
 
+        /// <summary>
+        /// Create a new TString from input data
+        /// </summary>
+        /// <param name="data">input data</param>
         public TString(byte[] data)
             : this()
         {
@@ -62,6 +66,14 @@ namespace Emgu.TF
         }
 
         /// <summary>
+        /// Get the type of the TString
+        /// </summary>
+        public TStringType Type
+        {
+            get { return TfInvoke.tfeTStringGetType(_ptr); }
+        }
+
+        /// <summary>
         /// Returns the size of the string.
         /// </summary>
         public int Size
@@ -69,6 +81,9 @@ namespace Emgu.TF
             get { return TfInvoke.tfeTStringGetSize(_ptr); }
         }
 
+        /// <summary>
+        /// Return the capacity of the string
+        /// </summary>
         public int Capacity
         {
             get { return TfInvoke.tfeTStringGetCapacity(_ptr); }
@@ -100,6 +115,18 @@ namespace Emgu.TF
                 _ptr = IntPtr.Zero;
             }
         }
+
+        /// <summary>
+        /// TString type
+        /// </summary>
+        public enum TStringType
+        {
+            Small = 0x00,
+            Large = 0x01,
+            Offset = 0x02,
+            View = 0x03,
+            Mask = 0x03
+        }
     }
 
     /// <summary>
@@ -129,7 +156,7 @@ namespace Emgu.TF
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         internal static extern int tfeTStringGetCapacity(IntPtr str);
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
-        internal static extern int tfeTStringGetType(IntPtr str);
+        internal static extern TString.TStringType tfeTStringGetType(IntPtr str);
 
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         internal static extern int tfeTStringTypeSize();
