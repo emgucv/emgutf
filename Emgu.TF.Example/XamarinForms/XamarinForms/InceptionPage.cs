@@ -47,8 +47,8 @@ namespace Emgu.TF.XamarinForms
             : base()
         {
 #if __ANDROID__
-            HasCameraOption = true;
-            //HasCameraOption = false;
+            //HasCameraOption = true;
+            HasCameraOption = false;
 #endif
 
             Title = model == Model.Flower ? "Flower Recognition" : "Object recognition (Inception)";
@@ -63,33 +63,35 @@ namespace Emgu.TF.XamarinForms
         {
             if (_inceptionGraph == null)
             {
-                SessionOptions so = new SessionOptions();
-                if (TfInvoke.IsGoogleCudaEnabled)
+                using (SessionOptions so = new SessionOptions())
                 {
-                    Tensorflow.ConfigProto config = new Tensorflow.ConfigProto();
-                    config.GpuOptions = new Tensorflow.GPUOptions();
-                    config.GpuOptions.AllowGrowth = true;
-                    so.SetConfig(config.ToProtobuf());
-                }
-                _inceptionGraph = new Inception(null, so);
-                _inceptionGraph.OnDownloadProgressChanged += onProgressChanged;
+                    if (TfInvoke.IsGoogleCudaEnabled)
+                    {
+                        Tensorflow.ConfigProto config = new Tensorflow.ConfigProto();
+                        config.GpuOptions = new Tensorflow.GPUOptions();
+                        config.GpuOptions.AllowGrowth = true;
+                        so.SetConfig(config.ToProtobuf());
+                    }
 
-                if (_model == Model.Flower)
-                {
-                    //use a retrained model to recognize followers
-                    await _inceptionGraph.Init(
-                        new string[] { "optimized_graph.pb", "output_labels.txt" },
-                        "https://github.com/emgucv/models/raw/master/inception_flower_retrain/",
-                        "Placeholder",
-                        "final_result",
-                        "InceptionFlower");
+                    _inceptionGraph = new Inception(null, so);
+                    _inceptionGraph.OnDownloadProgressChanged += onProgressChanged;
+
+                    if (_model == Model.Flower)
+                    {
+                        //use a retrained model to recognize followers
+                        await _inceptionGraph.Init(
+                            new string[] { "optimized_graph.pb", "output_labels.txt" },
+                            "https://github.com/emgucv/models/raw/master/inception_flower_retrain/",
+                            "Placeholder",
+                            "final_result",
+                            "InceptionFlower");
+                    }
+                    else
+                    {
+                        //The original inception model
+                        await _inceptionGraph.Init();
+                    }
                 }
-                else
-                {
-                    //The original inception model
-                    await _inceptionGraph.Init();
-                }
-                //await _inceptionGraph.Init();
             }
         }
 
