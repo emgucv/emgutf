@@ -13,6 +13,7 @@
 	<summary>This package provides the native CNN components of the DNN dependencies for Emgu.TF.runtime.windows.cuda package</summary>
     <description>This package provides the native CNN components of the DNN dependencies for for Emgu.TF.runtime.windows.cuda package</description>
     <releaseNotes>This is the ${EMGU_TF_DNN_VERSION} release of DNN for CUDA ${EMGU_TF_CUFFT_VERSION}. </releaseNotes>
+	${EMGU_TF_DNN_CNN_DEPENDENCY}
     <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved</copyright>
     <tags>emgu tensorflow dnn cuda</tags>
   </metadata>

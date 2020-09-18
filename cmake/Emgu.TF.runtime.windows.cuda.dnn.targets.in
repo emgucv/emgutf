@@ -5,9 +5,9 @@
 		<EmguDnnBuildX86 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x86'">True</EmguDnnBuildX86>
         <EmguDnnBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguDnnBuildX64>
 		<EmguDnnNativeFileX64>$(MSBuildThisFileDirectory)\x64\cudnn64_${EMGU_TF_DNN_FILE_VERSION}.dll</EmguDnnNativeFileX64>
-		<EmguDnnErrorMessage Condition="'$(EmguDnnBuildX86)'=='True'">X86 or AnyCPU is targeted, but this DNN package do not support 32-bit. PInvoke may fail on Windows X86 platform.</EmguDnnErrorMessage>
+		<EmguDnnErrorMessage Condition="'$(EmguDnnBuildX86)'=='True'">X86 or AnyCPU is targeted, but ${EMGU_TF_DNN_ID} nuget package do not support 32-bit. PInvoke may fail on Windows X86 platform.</EmguDnnErrorMessage>
         <EmguDnnDeployMessage Condition="'$(EmguDnnBuildX64)'=='True' AND Exists('$(EmguDnnNativeFileX64)')">$(EmguCudaDeployMessage)x64 </EmguDnnDeployMessage>
-        <EmguDnnErrorMessage Condition="'$(EmguDnnBuildX64)'=='True' AND !Exists('$(EmguDnnNativeFileX64)')">This package do not contain necessary binary for $(EmguDnnLinkTarget). X64 is targeted, but file $(EmguDnnNativeFileX64) is missing. PInvoke may fail on Windows X86 platform.</EmguDnnErrorMessage>
+        <EmguDnnErrorMessage Condition="'$(EmguDnnBuildX64)'=='True' AND !Exists('$(EmguDnnNativeFileX64)')">${EMGU_TF_DNN_ID} nuget package do not contain necessary binary for $(EmguDnnLinkTarget). X64 is targeted, but file $(EmguDnnNativeFileX64) is missing. PInvoke may fail on Windows X86 platform.</EmguDnnErrorMessage>
       </PropertyGroup>
       <ItemGroup Condition="'$(EmguDnnBuildX64)'=='True' AND Exists('$(EmguDnnNativeFileX64)')">
         <None Include="$(MSBuildThisFileDirectory)\x64\*.dll">
@@ -16,9 +16,9 @@
         </None>
       </ItemGroup>
 	    <Target Name="EmguDNNPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <Message Condition="'$(EmguDnnLinkTarget)'!=''" Text="Emgu DNN nuget package compiling with $(EmguDnnLinkTarget) runtime." Importance="High" />
+    <Message Condition="'$(EmguDnnLinkTarget)'!=''" Text="${EMGU_TF_DNN_ID} nuget package compiling with $(EmguDnnLinkTarget) runtime." Importance="High" />
     <Warning Text="'$(EmguDnnErrorMessage)'" Condition="'$(EmguDnnErrorMessage)'!=''" />
-    <Message Text="Emgu DNN dependency Compiling with $(EmguDnnDeployMessage) runtime." Condition="'$(EmguDnnDeployMessage)'!=''" Importance="High" />
-    <Message Text="No native binary is being deployed by the Emgu DNN package." Condition="'$(EmguDnnDeployMessage)'==''" Importance="High" />
+    <Message Text="${EMGU_TF_DNN_ID} nuget package compiling with $(EmguDnnDeployMessage) runtime." Condition="'$(EmguDnnDeployMessage)'!=''" Importance="High" />
+    <Message Text="No native binary is being deployed by the ${EMGU_TF_DNN_ID} nuget package." Condition="'$(EmguDnnDeployMessage)'==''" Importance="High" />
   </Target>
 </Project>

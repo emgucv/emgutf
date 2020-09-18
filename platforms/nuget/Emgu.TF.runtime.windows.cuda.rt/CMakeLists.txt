@@ -10,7 +10,7 @@ IF (WIN32 AND (HAVE_WINDESKTOP_X64_CUDA))
      COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../../../miscellaneous/nuget.exe" pack Package.nuspec  -OutputDirectory "${CMAKE_CURRENT_SOURCE_DIR}/../"
      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   )
-  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.runtime.windows.cuda.dnn.nuget Emgu.TF.runtime.windows.cuda.fft.nuget Emgu.TF.runtime.windows.cuda.solver.mg.nuget Emgu.TF.runtime.windows.cuda.blas.nuget)
+#  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.runtime.windows.cuda.dnn.nuget Emgu.TF.runtime.windows.cuda.fft.nuget Emgu.TF.runtime.windows.cuda.solver.mg.nuget Emgu.TF.runtime.windows.cuda.blas.nuget)
 
   if(ENABLE_SOLUTION_FOLDERS)
     set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "NUGET")

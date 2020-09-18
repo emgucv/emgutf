@@ -13,6 +13,7 @@
 	<summary>This package provides the native CUDA solver dependencies for Emgu.TF.runtime.windows.cuda package</summary>
     <description>This package provides the native CUDA solver dependencies for Emgu.TF.runtime.windows.cuda package</description>
     <releaseNotes>This is the ${EMGU_TF_CUDA_VERSION} release of CUDA. </releaseNotes>
+	${EMGU_TF_CUSOLVER_DEPENDENCY}
     <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved</copyright>
     <tags>emgu tensorflow cuda</tags>
   </metadata>
