@@ -35,37 +35,47 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <OutputPath>$(TFLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
+	<DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' ">
     <OutputPath>$(TFLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
+	<DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' ">
     <OutputPath>$(TFLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
+	<DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <OutputPath>$(TFLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
+	<DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <OutputPath>$(TFLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
+	<DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
-
-        <PropertyGroup>
-        <EmguTFLiteLinkTarget>Xamarin iOS Native Binding Library</EmguTFLiteLinkTarget>
-        <EmguTFLiteNativeFile>$(TFLiteBinaryDir)\ios\libtfliteextern.a</EmguTFLiteNativeFile>
-        <EmguTFLiteErrorMessage Condition="!Exists('$(EmguTFLiteNativeFile)')"> This package do not contain necessary binary for $(EmguTFLiteLinkTarget). Emgu TF Lite for iOS Commercial License is required. Missing $(EmguTFLiteNativeFile) </EmguTFLiteErrorMessage>
-        <EmguTFLiteDeployMessage Condition="Exists('$(EmguTFLiteNativeFile)')">$(EmguTFLiteDeployMessage)ios </EmguTFLiteDeployMessage>
-        <EmguTFLiteLinkWithFile>$(MSBuildThisFileDirectory)libtfliteextern.linkwith.cs</EmguTFLiteLinkWithFile>
-        <EmguTFLiteErrorMessage Condition="!Exists('$(EmguTFLiteLinkWithFile)')"> This package do not contain necessary file for $(EmguTFLiteLinkTarget). Emgu TF Lite for iOS Commercial License is required. Missing $(EmguTFLiteLinkWithFile) </EmguTFLiteErrorMessage>
-      </PropertyGroup>
-      <ItemGroup>
-        <ObjcBindingNativeLibrary Include="$(EmguTFLiteNativeFile)" Condition="Exists('$(EmguTFLiteNativeFile)')" />
-      </ItemGroup>
-      <ItemGroup>
-        <Compile Include="$(EmguTFLiteLinkWithFile)" Condition="Exists('$(EmguTFLiteLinkWithFile)')">
-          <DependentUpon>libtfliteextern.a</DependentUpon>
-        </Compile>
-      </ItemGroup>
+  <PropertyGroup>
+    <EmguTFLiteLinkTarget>Xamarin iOS Native Binding Library</EmguTFLiteLinkTarget>
+    <EmguTFLiteNativeFile>$(TFLiteBinaryDir)\ios\libtfliteextern.a</EmguTFLiteNativeFile>
+    <EmguTFLiteErrorMessage Condition="!Exists('$(EmguTFLiteNativeFile)')"> This package do not contain necessary binary for $(EmguTFLiteLinkTarget). Emgu TF Lite for iOS Commercial License is required. Missing $(EmguTFLiteNativeFile) </EmguTFLiteErrorMessage>
+    <EmguTFLiteDeployMessage Condition="Exists('$(EmguTFLiteNativeFile)')">$(EmguTFLiteDeployMessage)ios </EmguTFLiteDeployMessage>
+    <EmguTFLiteLinkWithFile>$(MSBuildThisFileDirectory)libtfliteextern.linkwith.cs</EmguTFLiteLinkWithFile>
+    <EmguTFLiteErrorMessage Condition="!Exists('$(EmguTFLiteLinkWithFile)')"> This package do not contain necessary file for $(EmguTFLiteLinkTarget). Emgu TF Lite for iOS Commercial License is required. Missing $(EmguTFLiteLinkWithFile) </EmguTFLiteErrorMessage>
+  </PropertyGroup>
   <ItemGroup>
+    <ObjcBindingNativeLibrary Include="$(EmguTFLiteNativeFile)" Condition="Exists('$(EmguTFLiteNativeFile)')" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(EmguTFLiteLinkWithFile)" Condition="Exists('$(EmguTFLiteLinkWithFile)')">
+      <DependentUpon>libtfliteextern.a</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="netstandard">
+      <!-- HintPath for macOS -->
+      <HintPath Condition="Exists('/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/Xamarin.iOS/Facades/System.Drawing.Common.dll')">/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/Xamarin.iOS/Facades/netstandard.dll</HintPath>
+      <!-- HintPath for Windows -->
+      <HintPath Condition="Exists('$(TargetFrameworkRootPath)\Xamarin.iOS\v1.0\Facades\System.Drawing.Common.dll')">$(TargetFrameworkRootPath)\Xamarin.iOS\v1.0\Facades\netstandard.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK-1.0" />
     <Reference Include="System" />
     <Reference Include="System.ServiceModel" />
@@ -74,8 +84,12 @@
   <ItemGroup>
     <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
   </ItemGroup>
-  <Import Project="..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems" Label="Shared" Condition="Exists('..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems')" />
-  <Import Project="..\..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.projitems" Label="Shared" Condition="Exists('..\..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.projitems')" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard.IOS\Emgu.TF.Lite.Netstandard.IOS.csproj">
+      <Project>{f167aea1-eba9-4164-b944-5ca6c8bc1914}</Project>
+      <Name>Emgu.TF.Lite.Netstandard.IOS</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems')" />
   <Import Project="..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" Condition="Exists('..\..\Emgu.Models\Emgu.Models.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.ObjCBinding.CSharp.targets" />

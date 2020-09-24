@@ -15,7 +15,7 @@ namespace Emgu.TF.Lite
     public static partial class TfLiteInvoke
     {
 #if __IOS__
-        [ObjCRuntime.MonoPInvokeCallback(typeof(TfliteErrorCallback))]
+        //[ObjCRuntime.MonoPInvokeCallback(typeof(TfliteErrorCallback))]
 #elif UNITY_ANDROID || UNITY_IOS || UNITY_EDITOR || UNITY_STANDALONE
         [AOT.MonoPInvokeCallback(typeof(TfliteErrorCallback))]
 #endif
