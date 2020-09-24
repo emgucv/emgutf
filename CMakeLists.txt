@@ -669,10 +669,19 @@ IF(HAVE_LITE_BUILD)
     <dependencies>
 		${EMGUTF_LITE_NUGET_DEPENDENCY}
     </dependencies>")
-  
+	
+  IF (HAVE_IOS_LITE)
   SET(EMGUTF_LITE_MODEL_NUGET_FILE_LIST "${EMGUTF_LITE_MODEL_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.Netstandard.dll\" target=\"lib\\netstandard2.0\" />
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.Netstandard.xml\" target=\"lib\\netstandard2.0\" />
+    <file src=\"..\\..\\..\\lib\\ios\\Emgu.TF.Lite.Models.dll\" target=\"lib\\xamarinios10\" />
+	<file src=\"..\\..\\..\\lib\\ios\\Emgu.TF.Lite.Models.xml\" target=\"lib\\xamarinios10\" />")
+  SET(EMGUTF_LITE_MODEL_NUGET_DEPENDENCY "${EMGUTF_LITE_MODEL_NUGET_DEPENDENCY}
+    <group targetFramework=\"Xamarin.iOS1.0\">
+        <dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+    </group>")	
+  ENDIF()
+  SET(EMGUTF_LITE_MODEL_NUGET_FILE_LIST "${EMGUTF_LITE_MODEL_NUGET_FILE_LIST} 
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.dll\" target=\"lib\\netstandard2.0\" />
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.xml\" target=\"lib\\netstandard2.0\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
     <file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
 
