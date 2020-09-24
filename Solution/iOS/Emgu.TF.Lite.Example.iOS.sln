@@ -25,12 +25,12 @@ Global
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{8edce0c8-ba71-4396-9428-35d05877258c}*SharedItemsImports = 13
 		..\..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.projitems*{8f587fb9-bba6-4c30-9329-8cbac7020fe0}*SharedItemsImports = 13
 		..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems*{98561642-5ec3-4244-baf9-6876d9ba5527}*SharedItemsImports = 13
-		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{a14504ed-d613-43d1-ad3d-ae3f411c51ce}*SharedItemsImports = 4
-		..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems*{a14504ed-d613-43d1-ad3d-ae3f411c51ce}*SharedItemsImports = 4
 		..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems*{e956dd26-1294-4731-8a90-c4cba9f291b6}*SharedItemsImports = 13
 		..\..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.projitems*{f167aea1-eba9-4164-b944-5ca6c8bc1914}*SharedItemsImports = 5
 		..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems*{f167aea1-eba9-4164-b944-5ca6c8bc1914}*SharedItemsImports = 5
+		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{fb5cf614-195e-4d5a-abdb-1b831a5f8f79}*SharedItemsImports = 4
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite\XamarinForms.Lite.projitems*{fb5cf614-195e-4d5a-abdb-1b831a5f8f79}*SharedItemsImports = 4
+		..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems*{fb5cf614-195e-4d5a-abdb-1b831a5f8f79}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU

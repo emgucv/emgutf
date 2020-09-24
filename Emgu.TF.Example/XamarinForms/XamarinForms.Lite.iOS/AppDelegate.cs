@@ -1,4 +1,6 @@
-﻿using Foundation;
+﻿using Emgu.TF;
+using Emgu.TF.Lite;
+using Foundation;
 using UIKit;
 
 namespace EmguTFLite
@@ -22,6 +24,9 @@ namespace EmguTFLite
             // If not required for your application you can safely delete this method
 
             global::Xamarin.Forms.Forms.Init();
+
+            TfLiteInvokeIOS.CheckLibraryLoaded();
+
             LoadApplication(new Emgu.TF.XamarinForms.App());
 
             return base.FinishedLaunching(application, launchOptions);
