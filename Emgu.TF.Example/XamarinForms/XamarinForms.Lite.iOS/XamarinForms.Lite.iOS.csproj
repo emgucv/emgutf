@@ -146,6 +146,12 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.IOS\Emgu.TF.Lite.Models.IOS.csproj">
+      <Project>{7bd4df97-8015-4554-846a-c6a8979cd8db}</Project>
+      <Name>Emgu.TF.Lite.Models.IOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard.IOS\Emgu.TF.Lite.Netstandard.IOS.csproj">
       <Project>{f167aea1-eba9-4164-b944-5ca6c8bc1914}</Project>
       <Name>Emgu.TF.Lite.Netstandard.IOS</Name>
@@ -156,7 +162,5 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\XamarinForms.Lite\XamarinForms.Lite.projitems" Label="Shared" Condition="Exists('..\XamarinForms.Lite\XamarinForms.Lite.projitems')" />
-  <Import Project="..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems" Label="Shared" />
-  <Import Project="..\..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
