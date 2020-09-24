@@ -34,6 +34,10 @@ IF ( TARGET Emgu.TF.Lite.Models.Netstandard )
     ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Models.Android)
   ENDIF()
   
+  IF(TARGET Emgu.TF.Lite.Models.IOS)
+    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Models.IOS)
+  ENDIF()
+  
   if(ENABLE_SOLUTION_FOLDERS)
     set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "NUGET")
   endif() 
