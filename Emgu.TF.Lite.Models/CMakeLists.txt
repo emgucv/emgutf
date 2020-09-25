@@ -71,8 +71,8 @@ IF(HAVE_OSX_LITE)
     )
   INSTALL(
     FILES 
-    ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Lite.Models.Mac.xml
-    ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Lite.Models.Mac.dll 
+    ${LIBRARY_OUTPUT_PATH}/macos/Emgu.TF.Lite.Models.xml
+    ${LIBRARY_OUTPUT_PATH}/macos/Emgu.TF.Lite.Models.dll 
     DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
     COMPONENT emgutf_binary)
   
