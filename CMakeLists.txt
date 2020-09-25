@@ -204,12 +204,8 @@ MACRO(CHECK_BINARY_EXIST folder patterns property_name second_check)
 ENDMACRO()
 
 
-#CHECK_BINARY_EXIST("lib/ios" "libtfextern.a" HAVE_IOS OFF)
 CHECK_BINARY_EXIST("lib/ios" "libtfliteextern.a" HAVE_IOS_LITE OFF)
-#CHECK_BINARY_EXIST("lib/osx" "{libtfextern|libtensorflow_framework}.dylib" HAVE_OSX OFF)
 CHECK_BINARY_EXIST("lib/macos" "libtensorflow_framework.dylib;libtfextern.dylib" HAVE_OSX OFF)
-#CHECK_BINARY_EXIST("lib/osx" "*.dylib" HAVE_OSX OFF)
-#CHECK_BINARY_EXIST("lib/osx" "libtfextern.dylib" HAVE_OSX OFF)
 CHECK_BINARY_EXIST("lib/macos" "libtfliteextern.dylib" HAVE_OSX_LITE OFF)
 CHECK_BINARY_EXIST("lib/x64" "libtfextern.so" HAVE_LINUX_X86_64 OFF)
 CHECK_BINARY_EXIST("lib/x64" "libtfliteextern.so" HAVE_LINUX_X86_64_LITE OFF)
@@ -217,8 +213,6 @@ CHECK_BINARY_EXIST("lib/arm" "libtfextern.so" HAVE_LINUX_ARM OFF)
 CHECK_BINARY_EXIST("lib/arm" "libtfliteextern.so" HAVE_LINUX_ARM_LITE OFF)
 CHECK_BINARY_EXIST("lib/android/arm64-v8a" "libtfextern.so" HAVE_ANDROID_ARM64_V8A OFF)
 CHECK_BINARY_EXIST("lib/android/arm64-v8a" "libtfliteextern.so" HAVE_ANDROID_ARM64_V8A_LITE OFF)
-#CHECK_BINARY_EXIST("lib/android/armeabi" "libtfextern.so" HAVE_ANDROID_ARMEABI OFF)
-#CHECK_BINARY_EXIST("lib/android/armeabi" "libtfliteextern.so" HAVE_ANDROID_ARMEABI_LITE OFF)
 CHECK_BINARY_EXIST("lib/android/armeabi-v7a" "libtfextern.so" HAVE_ANDROID_ARMEABI_V7A OFF)
 CHECK_BINARY_EXIST("lib/android/armeabi-v7a" "libtfliteextern.so" HAVE_ANDROID_ARMEABI_V7A_LITE OFF)
 CHECK_BINARY_EXIST("lib/android/x86" "libtfextern.so" HAVE_ANDROID_X86 OFF)
@@ -676,8 +670,8 @@ IF(HAVE_LITE_BUILD)
 	
 IF( HAVE_OSX_LITE ) 
   SET(EMGUTF_LITE_MODEL_NUGET_FILE_LIST "${EMGUTF_LITE_MODEL_NUGET_FILE_LIST}
-    <file src=\"..\\..\\..\\lib\\macos\Emgu.TF.Lite.Models.dll\" target=\"lib\\Xamarin.Mac20\" />
-    <file src=\"..\\..\\..\\lib\\macos\Emgu.TF.Lite.Models.xml\" target=\"lib\\Xamarin.Mac20\" />")
+    <file src=\"..\\..\\..\\lib\\macos\\Emgu.TF.Lite.Models.dll\" target=\"lib\\Xamarin.Mac20\" />
+    <file src=\"..\\..\\..\\lib\\macos\\Emgu.TF.Lite.Models.xml\" target=\"lib\\Xamarin.Mac20\" />")
   SET(EMGUTF_LITE_MODEL_NUGET_DEPENDENCY "${EMGUTF_LITE_MODEL_NUGET_DEPENDENCY}
     <group targetFramework=\"Xamarin.Mac2.0\">
         <dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
