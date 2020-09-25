@@ -9,7 +9,7 @@
     <Import_RootNamespace>Emgu.TF</Import_RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
-    <EmguTFMacBinaryDir>$(MSBuildThisFileDirectory)..\..\lib\osx</EmguTFMacBinaryDir>
+    <EmguTFMacBinaryDir>$(MSBuildThisFileDirectory)..\..\lib\macos</EmguTFMacBinaryDir>
     <EmguTFMacDir>$(MSBuildThisFileDirectory)</EmguTFMacDir>
   </PropertyGroup>
   <PropertyGroup>

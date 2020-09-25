@@ -207,10 +207,10 @@ ENDMACRO()
 #CHECK_BINARY_EXIST("lib/ios" "libtfextern.a" HAVE_IOS OFF)
 CHECK_BINARY_EXIST("lib/ios" "libtfliteextern.a" HAVE_IOS_LITE OFF)
 #CHECK_BINARY_EXIST("lib/osx" "{libtfextern|libtensorflow_framework}.dylib" HAVE_OSX OFF)
-CHECK_BINARY_EXIST("lib/osx" "libtensorflow_framework.dylib;libtfextern.dylib" HAVE_OSX OFF)
+CHECK_BINARY_EXIST("lib/macos" "libtensorflow_framework.dylib;libtfextern.dylib" HAVE_OSX OFF)
 #CHECK_BINARY_EXIST("lib/osx" "*.dylib" HAVE_OSX OFF)
 #CHECK_BINARY_EXIST("lib/osx" "libtfextern.dylib" HAVE_OSX OFF)
-CHECK_BINARY_EXIST("lib/osx" "libtfliteextern.dylib" HAVE_OSX_LITE OFF)
+CHECK_BINARY_EXIST("lib/macos" "libtfliteextern.dylib" HAVE_OSX_LITE OFF)
 CHECK_BINARY_EXIST("lib/x64" "libtfextern.so" HAVE_LINUX_X86_64 OFF)
 CHECK_BINARY_EXIST("lib/x64" "libtfliteextern.so" HAVE_LINUX_X86_64_LITE OFF)
 CHECK_BINARY_EXIST("lib/arm" "libtfextern.so" HAVE_LINUX_ARM OFF)
@@ -308,13 +308,13 @@ ENDIF()
 SET(OSX_LABEL "")
 IF(HAVE_OSX)
   #MESSAGE(STATUS "HAVE_OSX: ${HAVE_OSX}")
-  SET(OSX_LABEL "-osx")
+  SET(OSX_LABEL "-macos")
 ENDIF()	
 
 SET(OSX_LITE_LABEL "")
 IF(HAVE_OSX_LITE)
   #MESSAGE(STATUS "HAVE_OSX_LITE: ${HAVE_OSX_LITE}")
-  SET(OSX_LITE_LABEL "-osx")
+  SET(OSX_LITE_LABEL "-macos")
 ENDIF()
 
 SET(ANDROID_LABEL "")
@@ -397,7 +397,7 @@ SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Emgu TF is a cross platform .Net wrapper 
 SET(FULL_BUILD_LABEL "")
 IF(HAVE_FULL_BUILD)
   SET(FULL_BUILD_LABEL "${ANDROID_LABEL}${WINDOWS_LABEL}${OSX_LABEL}")
-  IF("${FULL_BUILD_LABEL}" STREQUAL "-android-windesktop_x64-osx")
+  IF("${FULL_BUILD_LABEL}" STREQUAL "-android-windesktop_x64-macos")
     SET(FULL_BUILD_LABEL "-pro")
   ENDIF()
   SET(FULL_BUILD_LABEL "tf${FULL_BUILD_LABEL}")
@@ -405,7 +405,7 @@ ENDIF()
 SET(LITE_BUILD_LABEL "")
 IF(HAVE_LITE_BUILD)
   SET(LITE_BUILD_LABEL "${IOS_LITE_LABEL}${ANDROID_LITE_LABEL}${WINDESKTOP_LITE_LABEL}${OSX_LITE_LABEL}")
-  IF("${LITE_BUILD_LABEL}" STREQUAL "-ios-android-windesktop_x64_xnn-osx")
+  IF("${LITE_BUILD_LABEL}" STREQUAL "-ios-android-windesktop_x64_xnn-macos")
     SET(LITE_BUILD_LABEL "-pro")
   ENDIF()
   SET(LITE_BUILD_LABEL "tflite${LITE_BUILD_LABEL}")
@@ -546,7 +546,7 @@ IF(HAVE_OSX)
   ENDIF()
   SET(EMGUTF_MACOS_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for MacOS")	
   SET(EMGUTF_MACOS_NUGET_FILE_LIST " 
-    <file src=\"..\\..\\..\\lib\\osx\\*.dylib\" target=\"build\" />
+    <file src=\"..\\..\\..\\lib\\macos\\*.dylib\" target=\"build\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
 	<file src=\"Emgu.TF.runtime.macos.targets\" target=\"build\\${EMGUTF_MACOS_NUGET_ID}.targets\" />")
@@ -652,6 +652,10 @@ IF(HAVE_LITE_BUILD)
   SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
     <file src=\"..\\..\\..\\lib\\ios\\Emgu.TF.Lite.Netstandard.dll\" target=\"lib\\xamarinios10\" />
 	<file src=\"..\\..\\..\\lib\\ios\\Emgu.TF.Lite.Netstandard.xml\" target=\"lib\\xamarinios10\" />")
+  SET(EMGUTF_LITE_NUGET_DEPENDENCY "${EMGUTF_LITE_NUGET_DEPENDENCY}
+    <group targetFramework=\"Xamarin.iOS1.0\">
+        <dependency id=\"System.Runtime.InteropServices.RuntimeInformation\" version=\"4.3.0\" />
+    </group>")
   ENDIF()
   
   SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
@@ -670,6 +674,15 @@ IF(HAVE_LITE_BUILD)
 		${EMGUTF_LITE_NUGET_DEPENDENCY}
     </dependencies>")
 	
+IF( HAVE_OSX_LITE ) 
+  SET(EMGUTF_LITE_MODEL_NUGET_FILE_LIST "${EMGUTF_LITE_MODEL_NUGET_FILE_LIST}
+    <file src=\"..\\..\\..\\lib\\macos\Emgu.TF.Lite.Models.dll\" target=\"lib\\Xamarin.Mac20\" />
+    <file src=\"..\\..\\..\\lib\\macos\Emgu.TF.Lite.Models.xml\" target=\"lib\\Xamarin.Mac20\" />")
+  SET(EMGUTF_LITE_MODEL_NUGET_DEPENDENCY "${EMGUTF_LITE_MODEL_NUGET_DEPENDENCY}
+    <group targetFramework=\"Xamarin.Mac2.0\">
+        <dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+    </group>")	
+ENDIF()	
   IF (HAVE_IOS_LITE)
   SET(EMGUTF_LITE_MODEL_NUGET_FILE_LIST "${EMGUTF_LITE_MODEL_NUGET_FILE_LIST} 
     <file src=\"..\\..\\..\\lib\\ios\\Emgu.TF.Lite.Models.dll\" target=\"lib\\xamarinios10\" />
@@ -684,7 +697,7 @@ IF(HAVE_LITE_BUILD)
     <file src=\"..\\..\\..\\lib\\android\\Emgu.TF.Lite.Models.dll\" target=\"lib\\MonoAndroid10\" />
 	<file src=\"..\\..\\..\\lib\\android\\Emgu.TF.Lite.Models.xml\" target=\"lib\\MonoAndroid10\" />")
   SET(EMGUTF_LITE_MODEL_NUGET_DEPENDENCY "${EMGUTF_LITE_MODEL_NUGET_DEPENDENCY}
-    <group targetFramework=\"MonoAndroid\">
+    <group targetFramework=\"MonoAndroid1.0\">
         <dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
     </group>")	  
   ENDIF()
@@ -718,11 +731,8 @@ IF( HAVE_WINDESKTOP_LITE )
 ENDIF()
 
 IF( HAVE_OSX_LITE ) 
-  SET(EMGUTF_LITE_MODEL_NUGET_FILE_LIST "${EMGUTF_LITE_MODEL_NUGET_FILE_LIST}
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.Mac.dll\" target=\"lib\\xamarinmac20\" />
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.Mac.xml\" target=\"lib\\xamarinmac20\" />")
   SET(EMGUTF_LITE_MACOS_NUGET_FILE_LIST "${EMGUTF_LITE_MACOS_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\..\\lib\\osx\\*.dylib\" target=\"build\" />
+    <file src=\"..\\..\\..\\lib\\macos\\*.dylib\" target=\"build\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"Emgu.TF.Lite.runtime.macos.targets\" target=\"build\\${EMGUTF_LITE_MACOS_NUGET_ID}.targets\" />")
@@ -746,7 +756,10 @@ IF(HAVE_ANDROID_LITE)
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
   SET(EMGUTF_LITE_ANDROID_NUGET_DEPENDENCY "${EMGUTF_LITE_ANDROID_NUGET_DEPENDENCY}
     <dependencies>
+	    <group targetFramework=\"MonoAndroid1.0\">
 		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+		<dependency id=\"Xamarin.Android.Support.v7.AppCompat\" version=\"28.0.0.3\" />
+		</group>
     </dependencies>")
 ENDIF()
 IF (HAVE_LINUX_X86_64_LITE)
