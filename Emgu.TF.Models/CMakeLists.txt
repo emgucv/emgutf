@@ -84,8 +84,8 @@ IF(HAVE_OSX)
     BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj" "" ALL)
     INSTALL(
       FILES 
-      ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.xml
-      ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll 
+      ${LIBRARY_OUTPUT_PATH}/macos/Emgu.TF.Models.xml
+      ${LIBRARY_OUTPUT_PATH}/macos/Emgu.TF.Models.dll 
       DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
       COMPONENT emgutf_binary)
     IF(TARGET Emgu.TF.Models.Netstandard)
