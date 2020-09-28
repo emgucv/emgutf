@@ -530,6 +530,7 @@ IF(HAVE_ANDROID)
   SET(EMGUTF_ANDROID_NUGET_DEPENDENCY "${EMGUTF_ANDROID_NUGET_DEPENDENCY}
     <dependencies>
 		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+		<dependency id=\"Xamarin.Android.Support.v7.AppCompat\" version=\"28.0.0.3\" />
     </dependencies>") 
 ENDIF()
 
@@ -1017,8 +1018,8 @@ IF(HAVE_WINDESKTOP)
 ENDIF()
 
 SET(EMGUTF_MODEL_NUGET_FILE_LIST "
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.Netstandard.dll\" target=\"lib\\netstandard2.0\" />
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.Netstandard.xml\" target=\"lib\\netstandard2.0\" />
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.dll\" target=\"lib\\netstandard2.0\" />
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.xml\" target=\"lib\\netstandard2.0\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
     <file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
 	
@@ -1030,8 +1031,8 @@ SET(EMGUTF_MODEL_NUGET_DEPENDENCY "${EMGUTF_MODEL_NUGET_DEPENDENCY}
 
 IF( HAVE_OSX ) 
   SET(EMGUTF_MODEL_NUGET_FILE_LIST "${EMGUTF_MODEL_NUGET_FILE_LIST}
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.Mac.dll\" target=\"lib\\xamarinmac20\" />
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.Mac.xml\" target=\"lib\\xamarinmac20\" />")
+    <file src=\"..\\..\\..\\lib\\macos\\Emgu.TF.Models.dll\" target=\"lib\\xamarinmac20\" />
+    <file src=\"..\\..\\..\\lib\\macos\\Emgu.TF.Models.xml\" target=\"lib\\xamarinmac20\" />")
   SET(EMGUTF_MODEL_NUGET_DEPENDENCY "${EMGUTF_MODEL_NUGET_DEPENDENCY}
     <group targetFramework=\"Xamarin.Mac2.0\">
 		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
@@ -1040,11 +1041,12 @@ ENDIF()
 
 IF(HAVE_ANDROID)
   SET(EMGUTF_MODEL_NUGET_FILE_LIST "${EMGUTF_MODEL_NUGET_FILE_LIST}
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.Android.dll\" target=\"lib\\MonoAndroid10\" />
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.Android.xml\" target=\"lib\\MonoAndroid10\" />")
+    <file src=\"..\\..\\..\\lib\\android\\Emgu.TF.Models.dll\" target=\"lib\\MonoAndroid10\" />
+    <file src=\"..\\..\\..\\lib\\android\\Emgu.TF.Models.xml\" target=\"lib\\MonoAndroid10\" />")
   SET(EMGUTF_MODEL_NUGET_DEPENDENCY "${EMGUTF_MODEL_NUGET_DEPENDENCY}
     <group targetFramework=\"MonoAndroid1.0\">
 		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+		<dependency id=\"Xamarin.Android.Support.v7.AppCompat\" version=\"28.0.0.3\" />
 	</group>")
 ENDIF()
 
@@ -1052,8 +1054,6 @@ SET(EMGUTF_MODEL_NUGET_DEPENDENCY "
     <dependencies>
 		${EMGUTF_MODEL_NUGET_DEPENDENCY}
     </dependencies>")
-	
-
 
 SET(EMGUTF_PROTOBUF_NUGET_FILE_LIST "
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.Netstandard.dll\" target=\"lib\\netstandard2.0\" />

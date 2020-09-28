@@ -51,8 +51,8 @@ IF (DOTNET_FOUND)
   
   INSTALL(
     FILES 
-    ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.xml
-    ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll 
+    ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Models.xml
+    ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Models.dll 
     DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
     COMPONENT emgutf_binary)
   
@@ -88,6 +88,9 @@ IF(HAVE_OSX)
       ${LIBRARY_OUTPUT_PATH}/macos/Emgu.TF.Models.dll 
       DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
       COMPONENT emgutf_binary)
+	  
+	ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Netstandard)
+	
     IF(TARGET Emgu.TF.Models.Netstandard)
       ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Models.Netstandard)
     ENDIF()
@@ -124,8 +127,8 @@ IF(HAVE_ANDROID)
   
   INSTALL(
     FILES 
-    ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.xml
-    ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll 
+    ${LIBRARY_OUTPUT_PATH}/android/Emgu.TF.Models.xml
+    ${LIBRARY_OUTPUT_PATH}/android/Emgu.TF.Models.dll 
     DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
     COMPONENT emgutf_binary)
   
@@ -135,9 +138,9 @@ IF(HAVE_ANDROID)
     ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Models.Netstandard)
   ENDIF()
   
-  IF(TARGET Emgu.TF.Protobuf.Netstandard)
-    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Protobuf.Netstandard)
-  ENDIF()
+  #IF(TARGET Emgu.TF.Protobuf.Netstandard)
+  #  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Protobuf.Netstandard)
+  #ENDIF()
   
 ENDIF()
 
