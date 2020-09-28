@@ -559,7 +559,7 @@ IF(HAVE_LINUX_X86_64)
   SET(EMGUTF_UBUNTU_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Ubuntu")
   SET(EMGUTF_UBUNTU_NUGET_FILE_LIST " 
     <file src=\"..\\..\\..\\lib\\x64\\*.so\" target=\"build\\x64\" />
-    <file src=\"..\\..\\..\\lib\\x64\\*.so.1\" target=\"build\\x64\" />
+    <file src=\"..\\..\\..\\lib\\x64\\*.so.${TENSORFLOW_VERSION_MAJOR}\" target=\"build\\x64\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
 	<file src=\"Emgu.TF.runtime.ubuntu.targets\" target=\"build\\${EMGUTF_UBUNTU_NUGET_ID}.targets\" />")
@@ -1306,6 +1306,7 @@ INSTALL(
   PATTERN "*.dll"
   PATTERN "*.dylib"
   PATTERN "*.so"
+  PATTERN "*.so.*"
   PATTERN "*.txt"
   PATTERN "*.xml"
   PATTERN ".git" EXCLUDE
