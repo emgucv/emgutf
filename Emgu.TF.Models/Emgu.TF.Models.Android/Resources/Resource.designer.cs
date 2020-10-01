@@ -2538,16 +2538,10 @@ namespace Emgu.TF.Models
 			public static int abc_toolbar_collapse_description = 2131361830;
 			
 			// aapt resource value: 0x7F0A0027
-			public static int app_name = 2131361831;
+			public static int search_menu_title = 2131361831;
 			
 			// aapt resource value: 0x7F0A0028
-			public static int hello = 2131361832;
-			
-			// aapt resource value: 0x7F0A0029
-			public static int search_menu_title = 2131361833;
-			
-			// aapt resource value: 0x7F0A002A
-			public static int status_bar_notification_info_overflow = 2131361834;
+			public static int status_bar_notification_info_overflow = 2131361832;
 			
 			static String()
 			{
