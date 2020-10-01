@@ -11,8 +11,6 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "XamarinForms.Lite", "..\..\
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.Models.Shared", "..\..\Emgu.Models\Emgu.Models.Shared.shproj", "{8EDCE0C8-BA71-4396-9428-35D05877258C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinForms.Lite.WPF", "..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite.WPF\XamarinForms.Lite.WPF.csproj", "{2475C64A-227A-442F-A1C8-8D488CE2FD08}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Models.Shared", "..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.shproj", "{E956DD26-1294-4731-8A90-C4CBA9F291B6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.NetStandard", "..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.NetStandard.csproj", "{EC62D093-7446-4AF0-A3C8-61D497CF3D7E}"
@@ -27,17 +25,19 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Runtime.Ubuntu
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Runtime.Raspbian", "..\..\Emgu.TF.Runtime\Raspbian\Emgu.TF.Lite.Runtime.Raspbian.shproj", "{32EBEB2C-7258-4987-9C05-C1952471F8C4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamarinForms.Lite.WPF", "..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite.WPF\XamarinForms.Lite.WPF.csproj", "{49943DC0-CC57-4CEE-837D-9984DB9DF902}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems*{0d7c99ea-3aae-4f45-9ba7-3b4af8313753}*SharedItemsImports = 13
-		..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite\XamarinForms.Lite.projitems*{2475c64a-227a-442f-a1c8-8d488ce2fd08}*SharedItemsImports = 4
-		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems*{2475c64a-227a-442f-a1c8-8d488ce2fd08}*SharedItemsImports = 4
 		..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Lite.Runtime.Mac.projitems*{2622cba3-4b2d-4b2b-8075-1fa9f5f5bf16}*SharedItemsImports = 5
 		..\..\Emgu.TF.Runtime\Raspbian\Emgu.TF.Lite.Runtime.Raspbian.projitems*{2622cba3-4b2d-4b2b-8075-1fa9f5f5bf16}*SharedItemsImports = 5
 		..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Lite.Runtime.Ubuntu.projitems*{2622cba3-4b2d-4b2b-8075-1fa9f5f5bf16}*SharedItemsImports = 5
 		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems*{2622cba3-4b2d-4b2b-8075-1fa9f5f5bf16}*SharedItemsImports = 5
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite\XamarinForms.Lite.projitems*{26f4d7af-57b6-4d2d-9a1c-aafa757ddc4a}*SharedItemsImports = 13
 		..\..\Emgu.TF.Runtime\Raspbian\Emgu.TF.Lite.Runtime.Raspbian.projitems*{32ebeb2c-7258-4987-9c05-c1952471f8c4}*SharedItemsImports = 13
+		..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite\XamarinForms.Lite.projitems*{49943dc0-cc57-4cee-837d-9984db9df902}*SharedItemsImports = 5
+		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems*{49943dc0-cc57-4cee-837d-9984db9df902}*SharedItemsImports = 5
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{8d1cdaf7-e886-4a3c-b9d9-39bfe193e07c}*SharedItemsImports = 5
 		..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems*{8d1cdaf7-e886-4a3c-b9d9-39bfe193e07c}*SharedItemsImports = 5
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{8edce0c8-ba71-4396-9428-35d05877258c}*SharedItemsImports = 13
@@ -51,42 +51,60 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2475C64A-227A-442F-A1C8-8D488CE2FD08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2475C64A-227A-442F-A1C8-8D488CE2FD08}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2475C64A-227A-442F-A1C8-8D488CE2FD08}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{2475C64A-227A-442F-A1C8-8D488CE2FD08}.Debug|x64.Build.0 = Debug|Any CPU
-		{2475C64A-227A-442F-A1C8-8D488CE2FD08}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2475C64A-227A-442F-A1C8-8D488CE2FD08}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2475C64A-227A-442F-A1C8-8D488CE2FD08}.Release|x64.ActiveCfg = Release|Any CPU
-		{2475C64A-227A-442F-A1C8-8D488CE2FD08}.Release|x64.Build.0 = Release|Any CPU
 		{EC62D093-7446-4AF0-A3C8-61D497CF3D7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EC62D093-7446-4AF0-A3C8-61D497CF3D7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC62D093-7446-4AF0-A3C8-61D497CF3D7E}.Debug|x64.ActiveCfg = Debug|Any CPU
 		{EC62D093-7446-4AF0-A3C8-61D497CF3D7E}.Debug|x64.Build.0 = Debug|Any CPU
+		{EC62D093-7446-4AF0-A3C8-61D497CF3D7E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EC62D093-7446-4AF0-A3C8-61D497CF3D7E}.Debug|x86.Build.0 = Debug|Any CPU
 		{EC62D093-7446-4AF0-A3C8-61D497CF3D7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC62D093-7446-4AF0-A3C8-61D497CF3D7E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EC62D093-7446-4AF0-A3C8-61D497CF3D7E}.Release|x64.ActiveCfg = Release|Any CPU
 		{EC62D093-7446-4AF0-A3C8-61D497CF3D7E}.Release|x64.Build.0 = Release|Any CPU
+		{EC62D093-7446-4AF0-A3C8-61D497CF3D7E}.Release|x86.ActiveCfg = Release|Any CPU
+		{EC62D093-7446-4AF0-A3C8-61D497CF3D7E}.Release|x86.Build.0 = Release|Any CPU
 		{8D1CDAF7-E886-4A3C-B9D9-39BFE193E07C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8D1CDAF7-E886-4A3C-B9D9-39BFE193E07C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D1CDAF7-E886-4A3C-B9D9-39BFE193E07C}.Debug|x64.ActiveCfg = Debug|Any CPU
 		{8D1CDAF7-E886-4A3C-B9D9-39BFE193E07C}.Debug|x64.Build.0 = Debug|Any CPU
+		{8D1CDAF7-E886-4A3C-B9D9-39BFE193E07C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8D1CDAF7-E886-4A3C-B9D9-39BFE193E07C}.Debug|x86.Build.0 = Debug|Any CPU
 		{8D1CDAF7-E886-4A3C-B9D9-39BFE193E07C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D1CDAF7-E886-4A3C-B9D9-39BFE193E07C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8D1CDAF7-E886-4A3C-B9D9-39BFE193E07C}.Release|x64.ActiveCfg = Release|Any CPU
 		{8D1CDAF7-E886-4A3C-B9D9-39BFE193E07C}.Release|x64.Build.0 = Release|Any CPU
+		{8D1CDAF7-E886-4A3C-B9D9-39BFE193E07C}.Release|x86.ActiveCfg = Release|Any CPU
+		{8D1CDAF7-E886-4A3C-B9D9-39BFE193E07C}.Release|x86.Build.0 = Release|Any CPU
 		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Debug|x64.ActiveCfg = Debug|Any CPU
 		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Debug|x64.Build.0 = Debug|Any CPU
+		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Debug|x86.Build.0 = Debug|Any CPU
 		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Release|x64.ActiveCfg = Release|Any CPU
 		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Release|x64.Build.0 = Release|Any CPU
+		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Release|x86.ActiveCfg = Release|Any CPU
+		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Release|x86.Build.0 = Release|Any CPU
+		{49943DC0-CC57-4CEE-837D-9984DB9DF902}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49943DC0-CC57-4CEE-837D-9984DB9DF902}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49943DC0-CC57-4CEE-837D-9984DB9DF902}.Debug|x64.ActiveCfg = Debug|x64
+		{49943DC0-CC57-4CEE-837D-9984DB9DF902}.Debug|x64.Build.0 = Debug|x64
+		{49943DC0-CC57-4CEE-837D-9984DB9DF902}.Debug|x86.ActiveCfg = Debug|x86
+		{49943DC0-CC57-4CEE-837D-9984DB9DF902}.Debug|x86.Build.0 = Debug|x86
+		{49943DC0-CC57-4CEE-837D-9984DB9DF902}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49943DC0-CC57-4CEE-837D-9984DB9DF902}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49943DC0-CC57-4CEE-837D-9984DB9DF902}.Release|x64.ActiveCfg = Release|x64
+		{49943DC0-CC57-4CEE-837D-9984DB9DF902}.Release|x64.Build.0 = Release|x64
+		{49943DC0-CC57-4CEE-837D-9984DB9DF902}.Release|x86.ActiveCfg = Release|x86
+		{49943DC0-CC57-4CEE-837D-9984DB9DF902}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,5 +13,10 @@ namespace XamarinForms.Lite.WPF
     /// </summary>
     public partial class App : Application
     {
+        /*
+        public App()
+        {
+            StartupUri = new Uri("MainWindow.xaml");
+        }*/
     }
 }

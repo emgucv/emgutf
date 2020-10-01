@@ -10697,28 +10697,22 @@ namespace XamarinForms.Droid
 			public const int view_offset_helper = 2131231019;
 			
 			// aapt resource value: 0x7F08012C
-			public const int view_tree_lifecycle_owner = 2131231020;
+			public const int view_tree_saved_state_registry_owner = 2131231020;
 			
 			// aapt resource value: 0x7F08012D
-			public const int view_tree_saved_state_registry_owner = 2131231021;
+			public const int visible = 2131231021;
 			
 			// aapt resource value: 0x7F08012E
-			public const int view_tree_view_model_store_owner = 2131231022;
+			public const int visible_removing_fragment_view_tag = 2131231022;
 			
 			// aapt resource value: 0x7F08012F
-			public const int visible = 2131231023;
+			public const int volume_item_container = 2131231023;
 			
 			// aapt resource value: 0x7F080130
-			public const int visible_removing_fragment_view_tag = 2131231024;
+			public const int withText = 2131231024;
 			
 			// aapt resource value: 0x7F080131
-			public const int volume_item_container = 2131231025;
-			
-			// aapt resource value: 0x7F080132
-			public const int withText = 2131231026;
-			
-			// aapt resource value: 0x7F080133
-			public const int wrap_content = 2131231027;
+			public const int wrap_content = 2131231025;
 			
 			static Id()
 			{
