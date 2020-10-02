@@ -233,15 +233,9 @@ namespace Emgu.TF.XamarinForms
                         throw new NotImplementedException(String.Format("Action '{0}' is not implemented", action));
 #endif
                     }
-                    else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime
-                        .InteropServices
-                        .OSPlatform.OSX))
-                    {
-                        throw new NotImplementedException(String.Format("Action '{0}' is not implemented", action));
-                    }
                     else
                     {
-#if __ANDROID__ || __IOS__
+#if __ANDROID__ || __IOS__ || __MACOS__
                         var fileResult = await Xamarin.Essentials.FilePicker.PickAsync(PickOptions.Images);
                         if (fileResult == null) //canceled
                             return null;
