@@ -135,9 +135,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xam.Plugin.Media">
-      <Version>5.0.1</Version>
-    </PackageReference>
     <PackageReference Include="Xamarin.Essentials">
       <Version>1.6.0-pre2</Version>
     </PackageReference>

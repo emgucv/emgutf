@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-
 #if __MACOS__
 using AppKit;
 using CoreGraphics;
@@ -16,9 +15,7 @@ using Xamarin.Forms.Platform.MacOS;
 using UIKit;
 using CoreGraphics;
 using Xamarin.Forms.Platform.iOS;
-using Plugin.Media;
 #endif
-
 
 namespace Emgu.TF.XamarinForms
 {
@@ -82,7 +79,6 @@ namespace Emgu.TF.XamarinForms
             _mainLayout.Orientation = StackOrientation.Vertical;
             _mainLayout.Spacing = 15;
             _mainLayout.Padding = new Thickness(10, 10, 10, 10);
-
 
             DisplayImage.HorizontalOptions = LayoutOptions.Center;
 
@@ -159,11 +155,6 @@ namespace Emgu.TF.XamarinForms
             return mats;
 #else*/
 
-#if __ANDROID__ || __IOS__
-            //if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
-                await  Plugin.Media.CrossMedia.Current.Initialize();
-#endif
-
             String[] mats = new String[imageNames.Length];
             for (int i = 0; i < mats.Length; i++)
             {
@@ -189,8 +180,7 @@ namespace Emgu.TF.XamarinForms
                 else
                 {
 #if __ANDROID__ || __IOS__
-                    haveCameraOption =
-                        (Plugin.Media.CrossMedia.Current.IsCameraAvailable && Plugin.Media.CrossMedia.Current.IsTakePhotoSupported);
+                    haveCameraOption = Xamarin.Essentials.MediaPicker.IsCaptureSupported;
 #else
                     haveCameraOption = false;
 #endif
@@ -214,7 +204,10 @@ namespace Emgu.TF.XamarinForms
                 if (action.Equals("Default"))
                 {
 #if __ANDROID__
-                    FileInfo fi = Emgu.TF.Util.AndroidFileAsset.WritePermanentFileAsset(CrossCurrentActivity.Current.Activity, imageNames[i], "tmp",
+                    FileInfo fi = Emgu.TF.Util.AndroidFileAsset.WritePermanentFileAsset(
+                        Android.App.Application.Context, 
+                        imageNames[i], 
+                        "tmp",
                         Emgu.TF.Util.AndroidFileAsset.OverwriteMethod.AlwaysOverwrite);
 
                     mats[i] = fi.FullName;
@@ -238,11 +231,6 @@ namespace Emgu.TF.XamarinForms
                         mats[i] = dialog.FileName;
 #else
                         throw new NotImplementedException(String.Format("Action '{0}' is not implemented", action));
-                        /*
-                        FileData fileData = await CrossFilePicker.Current.PickFile(new string[] {"Image | *.jpg;*.jpeg;*.png;*.bmp;*.gif | All Files | *"});
-                        if (fileData == null)
-                            return null;
-                        mats[i] = fileData.FilePath;*/
 #endif
                     }
                     else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime
@@ -250,11 +238,6 @@ namespace Emgu.TF.XamarinForms
                         .OSPlatform.OSX))
                     {
                         throw new NotImplementedException(String.Format("Action '{0}' is not implemented", action));
-                        /*
-                        FileData fileData = await CrossFilePicker.Current.PickFile(new string[] { "jpg", "jpeg", "png", "bmp" });
-                        if (fileData == null)
-                            return null;
-                        mats[i] = fileData.FilePath;*/
                     }
                     else
                     {
@@ -271,15 +254,15 @@ namespace Emgu.TF.XamarinForms
                 else if (action.Equals("Photo from Camera"))
                 {
 #if __ANDROID__ || __IOS__
-                    var mediaOptions = new Plugin.Media.Abstractions.StoreCameraMediaOptions
+                    var mediaOptions = new Xamarin.Essentials.MediaPickerOptions()
                     {
-                        Directory = "Emgu",
-                        Name = $"{DateTime.UtcNow}.jpg"
+                        Title = $"Emgu_{DateTime.UtcNow}.jpg"
                     };
-                    var takePhotoResult = await Plugin.Media.CrossMedia.Current.TakePhotoAsync(mediaOptions);
+                    var takePhotoResult = await Xamarin.Essentials.MediaPicker.CapturePhotoAsync(mediaOptions);
+                    
                     if (takePhotoResult == null) //canceled
                         return null;
-                    mats[i] = takePhotoResult.Path;
+                    mats[i] = takePhotoResult.FullPath;
 #else
                     throw new NotImplementedException(String.Format("Action '{0}' is not implemented", action));
 #endif
