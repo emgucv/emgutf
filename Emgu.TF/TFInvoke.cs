@@ -287,7 +287,7 @@ namespace Emgu.TF
         }
 
         /// <summary>
-        /// Get the tensor flow version
+        /// Get the tensorflow version
         /// </summary>
         public static String Version
         {
@@ -304,8 +304,8 @@ namespace Emgu.TF
         /// <summary>
         /// Get the size of the datatype in bytes.
         /// </summary>
-        /// <param name="dt"></param>
-        /// <returns></returns>
+        /// <param name="dt">The data type</param>
+        /// <returns>The size of the data type in bytes</returns>
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention, EntryPoint = "tfeDataTypeSize")]
         public static extern int DataTypeSize(DataType dt);
 
@@ -335,7 +335,7 @@ namespace Emgu.TF
         internal static extern void tfeMemcpy(IntPtr dst, IntPtr src, int length);
 
         /// <summary>
-        /// Returns true if GOOGLE_CUDA is defined.
+        /// Returns true if CUDA is defined.
         /// </summary>
         public static bool IsGoogleCudaEnabled
         {
@@ -348,6 +348,8 @@ namespace Emgu.TF
         /// <summary>
         /// Returns true if the operation is registered.
         /// </summary>
+        /// <param name="operationName">The name of the operation</param>
+        /// <returns>True if the operation is registered</returns>
         public static bool OpIsRegistered(String operationName)
         {
             return tfeOpIsRegistered(operationName);
@@ -361,6 +363,8 @@ namespace Emgu.TF
         /// <summary>
         /// Returns true if the operation has a kernel
         /// </summary>
+        /// <param name="operationName">The name of the operation</param>
+        /// <returns>True if the operation has a kernel</returns>
         public static bool OpHasKernel(String operationName)
         {
             return tfeOpHasKernel(operationName);
@@ -372,6 +376,11 @@ namespace Emgu.TF
             String operationName);
 
 
+        /// <summary>
+        /// Get a list of all physical devices
+        /// </summary>
+        /// <param name="status">Optional status</param>
+        /// <returns>A list of all physical devices</returns>
         public static String[] ListAllPhysicalDevices(Status status = null)
         {
             using (StatusChecker checker = new StatusChecker(status))

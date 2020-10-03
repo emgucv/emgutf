@@ -17,7 +17,7 @@ using Android.Graphics;
 #elif __IOS__
 using CoreGraphics;
 using UIKit;
-#elif __UNIFIED__
+#elif __MACOS__
 using AppKit;
 using CoreGraphics;
 #endif
@@ -58,9 +58,18 @@ namespace Emgu.TF.Models
             return raw[0].DecodeString();
         }
 
-        public static byte[] TensorToPixel(Tensor imageTensorF, float scale = 1.0f, float mean = 0.0f, int dstChannels = 3, Status status = null)
+        /// <summary>
+        /// Convert the tensor that contains pixels values to an array of bytes
+        /// </summary>
+        /// <param name="imageTensor">Image tensor. Only [1, height, width, 3] tensor input type is supported.</param>
+        /// <param name="scale">The scale that will be used to multiple the pixel values</param>
+        /// <param name="mean">The mean value that will be added back to the pixels</param>
+        /// <param name="dstChannels">Can be 3 or 4. If 4 channels, the last channel is filled with 255</param>
+        /// <param name="status">The status</param>
+        /// <returns>The array of bytes that contains the pixel value of the tensor</returns>
+        public static byte[] TensorToPixel(Tensor imageTensor, float scale = 1.0f, float mean = 0.0f, int dstChannels = 3, Status status = null)
         {
-            int[] dim = imageTensorF.Dim;
+            int[] dim = imageTensor.Dim;
             if (dim[0] != 1 || dim[3] != 3)
             {
                 throw new NotImplementedException("Only [1, height, width, 3] tensor input type is supported.");
@@ -69,10 +78,10 @@ namespace Emgu.TF.Models
             using (StatusChecker checker = new StatusChecker(status))
             {
                 var graph = new Graph();
-                Operation input = graph.Placeholder(imageTensorF.Type);
+                Operation input = graph.Placeholder(imageTensor.Type);
 
                 Operation floatCaster;
-                if (imageTensorF.Type != DataType.Float)
+                if (imageTensor.Type != DataType.Float)
                 {
                     floatCaster = graph.Cast(input, DstT: DataType.Float);
                 } else
@@ -96,7 +105,7 @@ namespace Emgu.TF.Models
                 //run the graph
                 using (Session session = new Session(graph))
                 {
-                    Tensor[] imageResults = session.Run(new Output[] {input}, new Tensor[] {imageTensorF},
+                    Tensor[] imageResults = session.Run(new Output[] {input}, new Tensor[] {imageTensor},
                         new Output[] {byteCaster});
 
                     //get the raw data
@@ -127,7 +136,6 @@ namespace Emgu.TF.Models
                             dstChannels));
                     }
                 }
-
             }
         }
 
@@ -287,6 +295,14 @@ namespace Emgu.TF.Models
         }*/
 #else
 
+        /// <summary>
+        /// Encode the tensor to raw jpeg data
+        /// </summary>
+        /// <param name="image">The image tensor</param>
+        /// <param name="scale">The scale used to multiply with the pixel values</param>
+        /// <param name="mean">The mean value that will be added to the pixel values</param>
+        /// <param name="status">Optional status</param>
+        /// <returns>The raw jpeg data converted from the image tensor</returns>
         public static byte[] TensorToJpeg(Tensor image, float scale = 1.0f, float mean = 0.0f, Status status = null)
         {
 #if __ANDROID__         
@@ -299,7 +315,7 @@ namespace Emgu.TF.Models
             byte[] rawPixel = TensorToPixel(image, scale, mean, 3);
             int[] dim = image.Dim;
             return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 3).Raw;
-#elif __UNIFIED__ //Mac OSX
+#elif __MACOS__
             byte[] rawPixel = TensorToPixel(image, scale, mean, 4);
             int[] dim = image.Dim;
             return NativeImageIO.PixelToJpeg(rawPixel, dim[2], dim[1], 4).Raw;

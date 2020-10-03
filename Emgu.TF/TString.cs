@@ -11,6 +11,9 @@ using System.Runtime.InteropServices;
 
 namespace Emgu.TF
 {
+    /// <summary>
+    /// TString type
+    /// </summary>
     public class TString : UnmanagedObject
     {
         private static readonly int _sizeOfTString;
@@ -121,10 +124,25 @@ namespace Emgu.TF
         /// </summary>
         public enum TStringType
         {
+            /// <summary>
+            /// Small
+            /// </summary>
             Small = 0x00,
+            /// <summary>
+            /// Large
+            /// </summary>
             Large = 0x01,
+            /// <summary>
+            /// Offset
+            /// </summary>
             Offset = 0x02,
+            /// <summary>
+            /// View
+            /// </summary>
             View = 0x03,
+            /// <summary>
+            /// Mask
+            /// </summary>
             Mask = 0x03
         }
     }
