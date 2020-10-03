@@ -155,7 +155,7 @@ namespace Emgu.TF.XamarinForms
                         dialog.Filter = "Image | *.jpg;*.jpeg;*.png;*.bmp;*.gif | All Files | *";
                         if (dialog.ShowDialog() == false)
                             return null;
-                        mats[i] = CvInvoke.Imread(dialog.FileName, ImreadModes.AnyColor);
+                        mats[i] = dialog.FileName;
 #endif
                     }
                     else
