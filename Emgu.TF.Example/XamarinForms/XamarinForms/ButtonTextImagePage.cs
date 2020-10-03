@@ -117,7 +117,7 @@ namespace Emgu.TF.XamarinForms
                     options.Add("Photo from Camera");
 
 #if __IOS__ || __ANDROID__
-                if (this.HasCameraOption && haveCameraOption)
+                if (this.HasCameraOption && captureSupported)
                     options.Add("Camera");
 #endif
                 if (options.Count == 1)
