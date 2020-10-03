@@ -529,8 +529,10 @@ IF(HAVE_ANDROID)
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
   SET(EMGUTF_ANDROID_NUGET_DEPENDENCY "${EMGUTF_ANDROID_NUGET_DEPENDENCY}
     <dependencies>
-		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
-		<dependency id=\"Xamarin.Android.Support.v7.AppCompat\" version=\"28.0.0.3\" />
+	    <group targetFramework=\"MonoAndroid1.0\">
+		    <dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+		    <dependency id=\"Xamarin.Android.Support.v7.AppCompat\" version=\"28.0.0.3\" />
+		</group>
     </dependencies>") 
 ENDIF()
 
