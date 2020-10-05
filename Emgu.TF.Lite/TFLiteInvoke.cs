@@ -285,7 +285,7 @@ namespace Emgu.TF.Lite
 
             if (!_libraryLoaded)
             {
-                Trace.WriteLine("Failed to load native binary. Please make sure a proper runtime.{platform}.Emgu.TF.Lite nuget package is added, or make sure the native binary can be found in the folder of executable.");
+                Trace.WriteLine("Failed to load native binary. Please make sure a proper Emgu.TF.Lite.runtime.{platform} nuget package is added, or make sure the native binary can be found in the folder of executable.");
             }
 
             try
@@ -296,7 +296,7 @@ namespace Emgu.TF.Lite
             catch (DllNotFoundException e)
             {
                 String errMsg =
-                    "Unable to load native binary. Please make sure a proper runtime.{platform}.Emgu.TF.Lite nuget package is added, or make sure the native binary can be found in the folder of the executable.";
+                    "Unable to load native binary. Please make sure a proper Emgu.TF.Lite.runtime.{platform} nuget package is added, or make sure the native binary can be found in the folder of the executable.";
                 Trace.WriteLine(errMsg);
                 throw new DllNotFoundException(errMsg, e);
             }
