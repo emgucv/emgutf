@@ -6,8 +6,6 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Plugin.FilePicker;
-using Plugin.FilePicker.Abstractions;
 using Xamarin.Forms;
 
 
@@ -85,15 +83,11 @@ namespace Emgu.TF.XamarinForms
         /// <returns>null if user canceled. Otherwise the list of images.</returns>
         public virtual async Task<String[]> LoadImages(String[] imageNames, String[] labels = null)
         {
-            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
-            {
-                //use default images
-                return imageNames;
-            }
-
-            if (!(System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX)
-            || System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows)))
-                await Plugin.Media.CrossMedia.Current.Initialize(); //Implementation only available for iOS, Android
+            //if (Device.RuntimePlatform == Device.macOS)
+            //{
+            //    //use default images
+            //    return imageNames;
+            //}
 
             String[] mats = new String[imageNames.Length];
             for (int i = 0; i < mats.Length; i++)
@@ -101,32 +95,29 @@ namespace Emgu.TF.XamarinForms
                 String pickImgString = "Use Image from";
                 if (labels != null && labels.Length > i)
                     pickImgString = labels[i];
-                bool haveCameraOption;
-                bool havePickImgOption;
-                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+
+                bool captureSupported;
+
+                if (Device.RuntimePlatform == Device.WPF
+                    || Device.RuntimePlatform == Device.macOS)
                 {
-                    //CrossMedia is not implemented on Windows.
-                    haveCameraOption = false;
-                    havePickImgOption = true; //We will provide our implementation of pick image option
+                    //Pick image from camera is not implemented on WPF.
+                    captureSupported = false;
                 }
                 else
                 {
-                    haveCameraOption =
-                        (Plugin.Media.CrossMedia.Current.IsCameraAvailable && Plugin.Media.CrossMedia.Current.IsTakePhotoSupported);
-                    havePickImgOption =
-                        Plugin.Media.CrossMedia.Current.IsPickVideoSupported;
+                    captureSupported = Xamarin.Essentials.MediaPicker.IsCaptureSupported;
                 }
 
                 String action;
                 List<String> options = new List<string>();
                 options.Add("Default");
-                if (havePickImgOption)
-                    options.Add("Photo Library");
-                if (haveCameraOption)
+                options.Add("Photo Library");
+                if (captureSupported)
                     options.Add("Photo from Camera");
 
 #if __IOS__ || __ANDROID__
-                if (this.HasCameraOption && haveCameraOption)
+                if (this.HasCameraOption && captureSupported)
                     options.Add("Camera");
 #endif
                 if (options.Count == 1)
@@ -139,21 +130,6 @@ namespace Emgu.TF.XamarinForms
                     if (action == null) //user clicked outside of action sheet
                         return null;
                 }
-                /*
-                if (haveCameraOption & havePickImgOption)
-                {
-                    action = await DisplayActionSheet(pickImgString, "Cancel", null, "Default", "Photo Library",
-                        "Camera");
-                }
-                else if (havePickImgOption)
-                {
-                    action = await DisplayActionSheet(pickImgString, "Cancel", null, "Default", "Photo Library");
-                }
-                else
-                {
-                    action = "Default";
-                }*/
-
 
                 if (action.Equals("Default"))
                 {
@@ -170,33 +146,34 @@ namespace Emgu.TF.XamarinForms
                 }
                 else if (action.Equals("Photo Library"))
                 {
-                    if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+                    if (Device.RuntimePlatform == Device.WPF)
                     {
-                        FileData fileData = await CrossFilePicker.Current.PickFile(new string[] { "Image | *.jpg;*.jpeg;*.png;*.bmp;*.gif | All Files | *" });
-                        if (fileData == null)
+#if !( __MACOS__ || __ANDROID__ || __IOS__ || NETFX_CORE )
+                        Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
+                        dialog.Multiselect = false;
+                        dialog.Title = "Select an Image File";
+                        dialog.Filter = "Image | *.jpg;*.jpeg;*.png;*.bmp;*.gif | All Files | *";
+                        if (dialog.ShowDialog() == false)
                             return null;
-                        mats[i] = fileData.FilePath;
-
+                        mats[i] = dialog.FileName;
+#endif
                     }
                     else
                     {
-                        var photoResult = await Plugin.Media.CrossMedia.Current.PickPhotoAsync();
-                        if (photoResult == null) //canceled
+                        var fileResult = await Xamarin.Essentials.FilePicker.PickAsync(Xamarin.Essentials.PickOptions.Images);
+                        if (fileResult == null) //canceled
                             return null;
-                        mats[i] = photoResult.Path;
+                        
+                        mats[i] = fileResult.FullPath;
                     }
                 }
                 else if (action.Equals("Photo from Camera"))
                 {
-                    var mediaOptions = new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                    {
-                        Directory = "Emgu",
-                        Name = $"{DateTime.UtcNow}.jpg"
-                    };
-                    var takePhotoResult = await Plugin.Media.CrossMedia.Current.TakePhotoAsync(mediaOptions);
+                    var takePhotoResult = await Xamarin.Essentials.MediaPicker.CapturePhotoAsync();
+
                     if (takePhotoResult == null) //canceled
                         return null;
-                    mats[i] = takePhotoResult.Path;
+                    mats[i] = takePhotoResult.FullPath;
                 } else if (action.Equals("Camera"))
                 {
                     mats[i] = "Camera";
@@ -216,6 +193,7 @@ namespace Emgu.TF.XamarinForms
 
             return mats;
         }
+
 
         public void SetImage(byte[] image = null, int widthRequest = -1, int heightRequest = -1)
         {
