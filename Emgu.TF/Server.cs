@@ -24,7 +24,7 @@ namespace Emgu.TF
         /// <summary>
         /// Construct and return the tensorflow Server
         /// </summary>
-        /// <param name="proto">Serialized FunctionDef</param>
+        /// <param name="proto">Serialized ServerDef protocol buffer</param>
         /// <param name="status">The status</param>
         public Server(byte[] proto, Status status = null)
         {
