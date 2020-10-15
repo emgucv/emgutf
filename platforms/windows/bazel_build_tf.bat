@@ -93,7 +93,7 @@ REM SET TF_CUDA_COMPUTE_CAPABILITIES=7.0
 SET CUDA_TOOLKIT_PATH=C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v%TF_CUDA_VERSION%
 SET CUDNN_INSTALL_PATH=%CUDA_TOOLKIT_PATH%
 echo %CUDA_TOOLKIT_PATH% > ../../CUDA_TOOLKIT_PATH.txt
-call cmd.exe /v /c "set PATH=%MSYS64_BIN%;%PATH% & %MSYS64_BIN%\bash.exe libtensorflow_gpu.sh"
+call cmd.exe /v /c "set PATH=%MSYS64_BIN%;%CUDA_TOOLKIT_PATH%/extras/CUPTI/lib64;%PATH% & %MSYS64_BIN%\bash.exe libtensorflow_gpu.sh"
 
 :END_OF_BUILD
 
