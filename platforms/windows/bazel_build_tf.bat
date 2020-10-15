@@ -105,7 +105,7 @@ IF NOT EXIST lib\x64 mkdir lib\x64
 
 REM one more try to make sure it builds, in-case bazel doesn't like msys64 bash.
 cd tensorflow
-call bazel build //tensorflow/tfextern:libtfextern.so --verbose_failures
+call bazel build //tensorflow/tfextern:libtfextern.so --verbose_failures --local_ram_resources="HOST_RAM*.4" --local_cpu_resources="HOST_CPUS*.5"
 cd ..
 
 cp -f tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so lib/x64/tfextern.dll
