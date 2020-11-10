@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Emgu.TF.Models
 {
+    /// <summary>
+    /// Resnet image recognition model
+    /// </summary>
     public class Resnet : Emgu.TF.Util.UnmanagedObject
     {
         private FileDownloadManager _downloadManager;
@@ -20,6 +23,9 @@ namespace Emgu.TF.Models
         private String _outputName = null;
         private String _savedModelDir = null;
 
+        /// <summary>
+        /// Get the TF graph from the resnet model
+        /// </summary>
         public Graph Graph
         {
             get
@@ -30,6 +36,9 @@ namespace Emgu.TF.Models
             }
         }
 
+        /// <summary>
+        /// Get the MetaGraphDefBuffer
+        /// </summary>
         public Buffer MetaGraphDefBuffer
         {
             get
@@ -80,15 +89,25 @@ namespace Emgu.TF.Models
             _downloadManager.OnDownloadProgressChanged += onDownloadProgressChanged;
         }
 
-
         private void onDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             if (OnDownloadProgressChanged != null)
                 OnDownloadProgressChanged(sender, e);
         }
 
+        /// <summary>
+        /// Callback when the model download progress is changed.
+        /// </summary>
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
 
+        /// <summary>
+        /// Initiate the graph by checking if the model file exist locally, if not download the graph from internet.
+        /// </summary>
+        /// <param name="modelFiles">An array where the first file is the tensorflow graph and the second file are the object class labels. </param>
+        /// <param name="downloadUrl">The url where the file can be downloaded</param>
+        /// <param name="inputName">The input operation name. Default to "input" if not specified.</param>
+        /// <param name="outputName">The output operation name. Default to "output" if not specified.</param>
+        /// <param name="localModelFolder">The local folder to store the model</param>
         public
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             System.Collections.IEnumerator
@@ -232,7 +251,7 @@ namespace Emgu.TF.Models
         }
 
         /// <summary>
-        /// Release the memory associated with this inception graph
+        /// Release the memory associated with the Resnet
         /// </summary>
         protected override void DisposeObject()
         {

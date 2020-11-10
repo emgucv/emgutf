@@ -43,6 +43,7 @@ namespace Emgu.TF.XamarinForms
         {
 #if __MACOS__ || __IOS__
             AllowAvCaptureSession = true;
+            outputRecorder.BufferReceived += OutputRecorder_BufferReceived;
 #endif
             var button = this.TopButton;
             button.Text = "Perform Object Detection";
@@ -50,10 +51,6 @@ namespace Emgu.TF.XamarinForms
 
             _mobilenet = new CocoSsdMobilenetV3();
             _mobilenet.OnDownloadProgressChanged += onDownloadProgressChanged;
-
-#if __MACOS__ || __IOS__
-            outputRecorder.BufferReceived += OutputRecorder_BufferReceived;
-#endif
 
         }
 

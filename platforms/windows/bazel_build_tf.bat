@@ -88,12 +88,12 @@ SET TF_CUDNN_VERSION=7
 REM SET TF_CUDNN_VERSION=8
 REM SET TF_CUDA_COMPUTE_CAPABILITIES=3.5,7.0
 REM SET TF_CUDA_COMPUTE_CAPABILITIES=3.7
-REM SET TF_CUDA_COMPUTE_CAPABILITIES=6.0
-SET TF_CUDA_COMPUTE_CAPABILITIES=7.0
+SET TF_CUDA_COMPUTE_CAPABILITIES=6.0
+REM SET TF_CUDA_COMPUTE_CAPABILITIES=7.0
 SET CUDA_TOOLKIT_PATH=C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v%TF_CUDA_VERSION%
 SET CUDNN_INSTALL_PATH=%CUDA_TOOLKIT_PATH%
 echo %CUDA_TOOLKIT_PATH% > ../../CUDA_TOOLKIT_PATH.txt
-call cmd.exe /v /c "set PATH=%MSYS64_BIN%;%PATH% & %MSYS64_BIN%\bash.exe libtensorflow_gpu.sh"
+call cmd.exe /v /c "set PATH=%MSYS64_BIN%;%CUDA_TOOLKIT_PATH%/extras/CUPTI/lib64;%PATH% & %MSYS64_BIN%\bash.exe libtensorflow_gpu.sh"
 
 :END_OF_BUILD
 
@@ -105,7 +105,7 @@ IF NOT EXIST lib\x64 mkdir lib\x64
 
 REM one more try to make sure it builds, in-case bazel doesn't like msys64 bash.
 cd tensorflow
-call bazel build //tensorflow/tfextern:libtfextern.so --verbose_failures
+call bazel build //tensorflow/tfextern:libtfextern.so --verbose_failures --local_ram_resources="HOST_RAM*.4" --local_cpu_resources="HOST_CPUS*.5"
 cd ..
 
 cp -f tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so lib/x64/tfextern.dll
@@ -114,7 +114,7 @@ cp -f tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so lib/x64/tfextern.d
 IF "%BAZEL_VC%"=="" GOTO END_OF_MSVC_DEPENDENCY
 IF "%DEVENV%"=="%VS2017%" GOTO VS2017_DEPENDENCY
 IF "%DEVENV%"=="%VS2019%" GOTO VS2019_DEPENDENCY
-IF "%DEVENV%"=="%BUILD_TOOLS_FOLDER%" GOTO VS2019_DEPEDENCY
+IF "%DEVENV%"=="%BUILD_TOOLS_FOLDER%" GOTO VS2019_DEPENDENCY
 GOTO END_OF_MSVC_DEPENDENCY
 
 :VS2017_DEPENDENCY

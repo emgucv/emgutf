@@ -141,13 +141,13 @@ ENDMACRO(SET_CS_TARGET_FRAMEWORK)
 SET(DEFAULT_CS_CONFIG "Release" CACHE STRING "Default C# build configuration")
 MACRO(BUILD_CSPROJ target csproj_file extra_flags)
   ADD_CUSTOM_TARGET (${target} ${ARGV3} SOURCES ${csproj_file} )
-  
-  IF (WIN32 AND MSVC AND NOT ("${CMAKE_VS_DEVENV_COMMAND}" STREQUAL ""))
-    ADD_CUSTOM_COMMAND (
-      TARGET ${target}
-      COMMAND ${CMAKE_VS_DEVENV_COMMAND} /Build ${DEFAULT_CS_CONFIG} ${extra_flags} ${csproj_file}
-      COMMENT "Building ${target}")
-  ELSEIF(MSBUILD_EXECUTABLE)
+  #IF (WIN32 AND MSVC AND NOT ("${CMAKE_VS_DEVENV_COMMAND}" STREQUAL ""))
+  #  ADD_CUSTOM_COMMAND (
+  #    TARGET ${target}
+  #    COMMAND ${CMAKE_VS_DEVENV_COMMAND} /Build ${DEFAULT_CS_CONFIG} ${extra_flags} ${csproj_file}
+  #    COMMENT "Building ${target}")
+  #ELSEIF(MSBUILD_EXECUTABLE)
+  IF(MSBUILD_EXECUTABLE)
     #MESSAGE(STATUS "Adding custom command: ${MSBUILD_EXECUTABLE} /t:Build /p:Configuration=${DEFAULT_CS_CONFIG} ${extra_flags} ${csproj_file}")
     ADD_CUSTOM_COMMAND (
       TARGET ${target}
@@ -165,16 +165,20 @@ ENDMACRO()
 
 MACRO(BUILD_CSPROJ_IN_SOLUTION target solution_file project_name extra_flags)
   ADD_CUSTOM_TARGET (${target} ${ARGV4})
-  IF (WIN32 AND MSVC AND NOT ("${CMAKE_VS_DEVENV_COMMAND}" STREQUAL ""))
-    ADD_CUSTOM_COMMAND (
-      TARGET ${target}
-      COMMAND ${CMAKE_VS_DEVENV_COMMAND} /Build ${DEFAULT_CS_CONFIG} ${extra_flags} ${solution_file} /project ${project_name}
-      COMMENT "Building ${target}")
-  ELSEIF(MSBUILD_EXECUTABLE)
+  #IF (WIN32 AND MSVC AND NOT ("${CMAKE_VS_DEVENV_COMMAND}" STREQUAL ""))
+  #  ADD_CUSTOM_COMMAND (
+  #    TARGET ${target}
+  #    COMMAND ${CMAKE_VS_DEVENV_COMMAND} /Build ${DEFAULT_CS_CONFIG} ${extra_flags} ${solution_file} /project ${project_name}
+  #    COMMENT "Building ${target}")
+  #ELSEIF(MSBUILD_EXECUTABLE)
+  IF(MSBUILD_EXECUTABLE)
     #MESSAGE(STATUS "Adding custom command: ${MSBUILD_EXECUTABLE} /t:Build /p:Configuration=${DEFAULT_CS_CONFIG} ${extra_flags} ${csproj_file}")
+	STRING(REGEX REPLACE "\\." "_" msbuild_project_name ${project_name} )
+	#MESSAGE(STATUS "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKK   ${msbuild_project_name}")
     ADD_CUSTOM_COMMAND (
       TARGET ${target}
-      COMMAND ${MSBUILD_EXECUTABLE}  /p:Configuration=${DEFAULT_CS_CONFIG} ${extra_flags} ${solution_file} -target:${project_name}:Build
+      #COMMAND ${MSBUILD_EXECUTABLE} /p:Configuration=${DEFAULT_CS_CONFIG} ${extra_flags} ${solution_file} -target:${msbuild_project_name}:Build
+	  COMMAND ${MSBUILD_EXECUTABLE} /p:Configuration=${DEFAULT_CS_CONFIG} ${extra_flags} ${solution_file} -target:${msbuild_project_name}
       COMMENT "Building ${target}")
   ELSE()
     MESSAGE(FATAL_ERROR "Neither Visual Studio, msbuild nor dotnot is found!")

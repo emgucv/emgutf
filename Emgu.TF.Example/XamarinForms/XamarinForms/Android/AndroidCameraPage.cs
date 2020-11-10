@@ -32,7 +32,7 @@ namespace Emgu.TF.XamarinForms
         {
             _imageView = new ImageView(Android.App.Application.Context);
             Xamarin.Forms.View xView = _imageView.ToView();
-            xView.BackgroundColor = Xamarin.Forms.Color.Aqua;
+            //xView.BackgroundColor = Xamarin.Forms.Color.Aqua;
             MainLayout.Children.Add(xView);
             base.DisplayImage.IsVisible = false;
             

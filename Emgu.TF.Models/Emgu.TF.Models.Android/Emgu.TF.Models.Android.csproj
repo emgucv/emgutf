@@ -11,19 +11,19 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Emgu.TF.Models</RootNamespace>
-    <AssemblyName>Emgu.TF.Models.Android</AssemblyName>
+    <AssemblyName>Emgu.TF.Models</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v11.0</TargetFrameworkVersion>
     <AndroidUseAapt2>true</AndroidUseAapt2>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>portable</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\lib\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>..\..\lib\Build\android\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -32,7 +32,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>portable</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\lib\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>..\..\lib\Build\android\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -53,16 +53,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\AboutResources.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="28.0.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\values\strings.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Resources\drawable\" />
+    <Folder Include="Resources\values\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj">
@@ -81,8 +76,8 @@
   </Target>
   -->
   <Target Name="AfterBuild">
-    <Message Text="Copying $(OutputPath)$(AssemblyName).dll, $(OutputPath)$(AssemblyName).xml to ..\..\lib" Importance="high" />
-    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="..\..\lib" ContinueOnError="true" />
-    <Copy SourceFiles="$(OutputPath)$(AssemblyName).xml" DestinationFolder="..\..\lib" ContinueOnError="true" />
+    <Message Text="Copying $(OutputPath)$(AssemblyName).dll, $(OutputPath)$(AssemblyName).xml to ..\..\lib\android" Importance="high" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="..\..\lib\android" ContinueOnError="true" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).xml" DestinationFolder="..\..\lib\android" ContinueOnError="true" />
   </Target>
 </Project>

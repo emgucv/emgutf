@@ -78,17 +78,18 @@ namespace Emgu.TF.Models
         }
 
         /// <summary>
-        /// Callback when graph download progress is changed.
+        /// Callback when model download progress is changed.
         /// </summary>
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
 
         /// <summary>
-        /// Initiate the graph by checking if the graph file exit on disk, if not download the graph from internet.
+        /// Initiate the graph by checking if the model file exist locally, if not download the graph from internet.
         /// </summary>
         /// <param name="modelFiles">An array where the first file is the tensorflow graph and the second file are the object class labels. </param>
         /// <param name="downloadUrl">The url where the file can be downloaded</param>
         /// <param name="inputName">The input operation name. Default to "input" if not specified.</param>
         /// <param name="outputName">The output operation name. Default to "output" if not specified.</param>
+        /// <param name="localModelFolder">The local folder to store the model</param>
         public
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             IEnumerator
@@ -159,7 +160,7 @@ namespace Emgu.TF.Models
         }
 
         /// <summary>
-        /// Get the graph from this inception model
+        /// Get the TF graph from this inception model
         /// </summary>
         public Graph Graph
         {

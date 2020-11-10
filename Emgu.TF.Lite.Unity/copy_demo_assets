@@ -2,5 +2,5 @@
 cd "$(dirname "$0")"
 
 convert ../tensorflow/tensorflow/examples/label_image/data/grace_hopper.jpg Assets/Emgu.TF.Lite/Demo/Resources/grace_hopper.png
-cp ../Emgu.TF.Example/CvInterop/dog416.png Assets/Emgu.TF.Lite/Demo/Resources/dog416.png
+cp ../Emgu.TF.Example/CVInterop/dog416.png Assets/Emgu.TF.Lite/Demo/Resources/dog416.png
 cp unityStoreIcons/EmguTFLogo_128x128.png Assets/Emgu.TF.Lite/Demo/EmguTFLogo.png

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+      <PropertyGroup>
+        <EmguCudnnCnnLinkTarget>Windows runtime</EmguCudnnCnnLinkTarget>
+		<EmguCudnnCnnBuildX86 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x86'">True</EmguCudnnCnnBuildX86>
+        <EmguCudnnCnnBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguCudnnCnnBuildX64>
+		<EmguCudnnCnnNativeFileX64>$(MSBuildThisFileDirectory)\x64\cudnn_cnn_infer64_${EMGU_TF_DNN_FILE_VERSION}.dll</EmguCudnnCnnNativeFileX64>
+		<EmguCudnnCnnErrorMessage Condition="'$(EmguCudnnCnnBuildX86)'=='True'">X86 or AnyCPU is targeted, but ${EMGU_TF_DNN_CNN_ID} nuget package do not support 32-bit. PInvoke may fail on Windows X86 platform.</EmguCudnnCnnErrorMessage>
+        <EmguCudnnCnnDeployMessage Condition="'$(EmguCudnnCnnBuildX64)'=='True' AND Exists('$(EmguCudnnCnnNativeFileX64)')">$(EmguCudnnCnnDeployMessage)x64 </EmguCudnnCnnDeployMessage>
+        <EmguCudnnCnnErrorMessage Condition="'$(EmguCudnnCnnBuildX64)'=='True' AND !Exists('$(EmguCudnnCnnNativeFileX64)')">${EMGU_TF_DNN_CNN_ID} nuget package do not contain necessary binary for $(EmguCudnnCnnLinkTarget). X64 is targeted, but file $(EmguCudnnCnnNativeFileX64) is missing. PInvoke may fail on Windows X86 platform.</EmguCudnnCnnErrorMessage>
+      </PropertyGroup>
+      <ItemGroup Condition="'$(EmguCudnnCnnBuildX64)'=='True' AND Exists('$(EmguCudnnCnnNativeFileX64)')">
+        <None Include="$(MSBuildThisFileDirectory)\x64\*.dll">
+          <Link>x64\%(RecursiveDir)%(Filename)%(Extension)</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+      </ItemGroup>
+	    <Target Name="EmguCudnnCnnPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <Message Condition="'$(EmguCudnnCnnLinkTarget)'!=''" Text="${EMGU_TF_DNN_CNN_ID} nuget package compiling with $(EmguCudnnCnnLinkTarget) runtime." Importance="High" />
+    <Warning Text="'$(EmguCudnnCnnErrorMessage)'" Condition="'$(EmguCudnnCnnErrorMessage)'!=''" />
+    <Message Text="${EMGU_TF_DNN_CNN_ID} nuget package compiling with $(EmguCudnnCnnDeployMessage) runtime." Condition="'$(EmguCudnnCnnDeployMessage)'!=''" Importance="High" />
+    <Message Text="No native binary is being deployed by the ${EMGU_TF_DNN_CNN_ID} nuget package." Condition="'$(EmguCudnnCnnDeployMessage)'==''" Importance="High" />
+  </Target>
+</Project>

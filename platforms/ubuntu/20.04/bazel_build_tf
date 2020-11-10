@@ -1,0 +1,14 @@
+#!/bin/sh
+
+cd "$(dirname "$0")"
+cd ../../..
+cd tensorflow
+
+bazel build //tensorflow/tfextern:libtfextern.so 
+cd ..
+
+mkdir -p lib/x64
+cp -f tensorflow/bazel-bin/tensorflow/tfextern/*.so lib/x64
+cp -f tensorflow/bazel-bin/tensorflow/libtensorflow_framework.so lib/x64/libtensorflow_framework.so.2
+#cd lib/x64
+#ln -s libtensorflow_framework.so libtensorflow_framework.so.1
