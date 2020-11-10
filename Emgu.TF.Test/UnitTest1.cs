@@ -20,6 +20,7 @@ using Emgu.Models;
 using Emgu.TF.Models;
 using Tensorflow;
 using Google.Protobuf;
+using Google.Protobuf.Collections;
 
 namespace Emgu.TF.Test
 {
@@ -39,6 +40,19 @@ namespace Emgu.TF.Test
         {
             Inception inceptionGraph = new Inception(null, new string[] { "optimized_graph.pb", "output_labels.txt" }, "https://github.com/emgucv/models/raw/master/inception_flower_retrain/", "Mul", "final_result");
         }*/
+
+        [TestMethod]
+        public void TestTString()
+        {
+            byte[] data = File.ReadAllBytes("grace_hopper.jpg");
+            TString s = new TString(data);
+            byte[] data2 = s.Data;
+            Assert.AreEqual(data.Length, data2.Length);
+            for (int i = 0; i < data.Length; i++)
+            {
+                Assert.AreEqual(data[i], data2[i]);
+            }
+        }
 
         [TestMethod]
         public async Task TestInception()
@@ -250,31 +264,6 @@ namespace Emgu.TF.Test
         }
 
         [TestMethod]
-        public void TestServer()
-        {
-            Tensorflow.ServerDef def = new ServerDef();
-            ClusterDef clusterDef = new ClusterDef();
-            JobDef jd = new JobDef();
-            clusterDef.Job.Add(jd);
-
-            def.Cluster = clusterDef;
-            byte[] pbuff;
-            using (MemoryStream ms = new MemoryStream())
-            {
-                def.WriteTo(ms);
-                pbuff = ms.ToArray();
-            }
-
-            /*
-            using (Emgu.TF.Server s = new Emgu.TF.Server(pbuff))
-            {
-                String target = s.Target;
-            }*/
-
-        }
-
-
-        [TestMethod]
         public void TestChooseDevice()
         {
             SessionOptions so = new SessionOptions();
@@ -425,5 +414,55 @@ namespace Emgu.TF.Test
                 Inception.RecognitionResult[] results = graphs[i].Recognize(imageTensor);
             }
         }*/
+
+        [TestMethod]
+        public void TestServer1()
+        {
+            Tensorflow.ServerDef def = new ServerDef();
+            ClusterDef clusterDef = new ClusterDef();
+            JobDef jd = new JobDef();
+            clusterDef.Job.Add(jd);
+
+            def.Cluster = clusterDef;
+            byte[] pbuff;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                def.WriteTo(ms);
+                pbuff = ms.ToArray();
+            }
+
+            /*
+            using (Emgu.TF.Server s = new Emgu.TF.Server(pbuff))
+            {
+                String target = s.Target;
+            }*/
+
+        }
+
+        /*
+        [TestMethod]
+        public void TestServer2()
+        {
+            ServerDef serverDef = new ServerDef();
+            ClusterDef cd = new ClusterDef();
+            JobDef jd0 = new JobDef();
+            
+            jd0.Name = "worker";
+            jd0.Tasks[0] = "127.0.0.1:5555";
+            cd.Job.Add(jd0);
+
+            serverDef.Cluster = cd;
+            serverDef.JobName = "worker";
+            serverDef.TaskIndex = 0;
+            
+            Emgu.TF.Server server = new Server(serverDef.ToByteArray());
+            using (Status s1 = new Status())
+                server.Start(s1);
+            using (Status s2 = new Status())
+                server.Stop(s2);
+        }*/
     }
+
+    
+
 }

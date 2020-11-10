@@ -205,7 +205,7 @@ IF(HAVE_ANDROID_LITE)
 	PRE_BUILD
 	COMMAND ${DOTNET_EXECUTABLE} restore ${PROJECT_NAME}.csproj
 	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/Android"
-	COMMENT "Restpring nuget packages")
+	COMMENT "Restoring nuget packages")
   INSTALL(
     FILES 
     ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.xml

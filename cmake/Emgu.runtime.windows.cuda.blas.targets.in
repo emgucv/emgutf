@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+      <PropertyGroup>
+        <EmguCufftLinkTarget>Windows</EmguCufftLinkTarget>
+		<EmguCublasBuildX86 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x86'">True</EmguCublasBuildX86>
+        <EmguCublasBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguCublasBuildX64>
+		<EmguCublasNativeFileX64>$(MSBuildThisFileDirectory)x64\cublas64_${EMGU_TF_CUFFT_FILE_VERSION}.dll</EmguCublasNativeFileX64>
+		<EmguCublasErrorMessage Condition="'$(EmguCublasBuildX86)'=='True'">X86 or AnyCPU is targeted, but ${EMGU_TF_CUBLAS_ID} nuget package do not support 32-bit. PInvoke may fail on Windows X86 platform.</EmguCublasErrorMessage>
+        <EmguCublasDeployMessage Condition="'$(EmguCublasBuildX64)'=='True' AND Exists('$(EmguCublasNativeFileX64)')">$(EmguCublasDeployMessage)x64 </EmguCublasDeployMessage>
+        <EmguCublasErrorMessage Condition="'$(EmguCublasBuildX64)'=='True' AND !Exists('$(EmguCublasNativeFileX64)')">This package do not contain necessary binary for $(EmguCublasLinkTarget). X64 is targeted, but file $(EmguCublasNativeFileX64) is missing.  PInvoke may fail on Windows X64 platform. </EmguCublasErrorMessage>
+      </PropertyGroup>
+      <ItemGroup Condition="'$(EmguCublasBuildX64)'=='True' AND Exists('$(EmguCublasNativeFileX64)')">
+        <None Include="$(MSBuildThisFileDirectory)\x64\*.dll">
+          <Link>x64\%(RecursiveDir)%(Filename)%(Extension)</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+      </ItemGroup>
+	    <Target Name="EmguCublasPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <Message Condition="'$(EmguCublasLinkTarget)'!=''" Text="${EMGU_TF_CUBLAS_ID} nuget package compiling with $(EmguCublasLinkTarget) runtime." Importance="High" />
+    <Warning Text="'$(EmguCublasErrorMessage)'" Condition="'$(EmguCublasErrorMessage)'!=''" />
+    <Message Text="${EMGU_TF_CUBLAS_ID} nuget package compiling with $(EmguCublasDeployMessage) runtime" Condition="'$(EmguCublasDeployMessage)'!=''" Importance="High" />
+    <Message Text="No native binary is being deployed by the ${EMGU_TF_CUBLAS_ID} nuget package." Condition="'$(EmguCublasDeployMessage)'==''" Importance="High" />
+  </Target>
+</Project>

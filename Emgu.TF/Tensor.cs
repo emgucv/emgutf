@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Emgu.TF.Util;
 using System.Runtime.InteropServices;
@@ -207,49 +208,41 @@ namespace Emgu.TF
             dimHandle.Free();
         }
 
+
         /// <summary>
         /// Convert a byte array to a Tensor
         /// </summary>
         /// <param name="value">The byte array</param>
-        /// <param name="status">Optional status</param>
         /// <returns>The tensor</returns>
-        public static Tensor FromString(byte[] value, Status status = null)
+        public static Tensor FromString(byte[] value)
         {
-            using (StatusChecker checker = new StatusChecker(status))
-            {
-                int length = TfInvoke.tfeStringEncodedSize(value.Length);
-                Tensor tensor = new Tensor(DataType.String, length + 8);
-                IntPtr ptr = tensor.DataPointer;
-                Marshal.WriteInt64(ptr, 0);
-                GCHandle handle = GCHandle.Alloc(value, GCHandleType.Pinned);
-                TfInvoke.tfeStringEncode(handle.AddrOfPinnedObject(), value.Length, new IntPtr(ptr.ToInt64() + 8),
-                    length,
-                    checker.Status);
-                handle.Free();
-                return tensor;
-            }
+            Tensor tensor = new Tensor(DataType.String, TString.TypeSize);
+
+            TfInvoke.tfeTStringInit(tensor.DataPointer);
+            GCHandle handle = GCHandle.Alloc(value, GCHandleType.Pinned);
+            TfInvoke.tfeTStringCopy(tensor.DataPointer, handle.AddrOfPinnedObject(), value.Length);
+            handle.Free();
+            return tensor;
         }
 
         /// <summary>
         /// Decode a string encoded
         /// </summary>
-        /// <param name="status">The status</param>
         /// <returns>The decoded string.</returns>
-        public byte[] DecodeString(Status status = null)
+        public byte[] DecodeString()
         {
-            using (StatusChecker checker = new StatusChecker(status))
+            if (Type != DataType.String)
             {
-                IntPtr ptr = DataPointer;
-                IntPtr stringPtr = new IntPtr();
-                IntPtr stringLen = new IntPtr();
-                TfInvoke.tfeStringDecode(new IntPtr(ptr.ToInt64() + 8), ByteSize - 8, ref stringPtr, ref stringLen,
-                    checker.Status);
-                int len = stringLen.ToInt32();
-                byte[] bytes = new byte[len];
-                Marshal.Copy(stringPtr, bytes, 0, bytes.Length);
-                return bytes;
+                return null;
+            }
+
+            using(TString tstr = new TString(this.DataPointer, false))
+            {
+                return tstr.Data;
             }
         }
+
+        
 
         /// <summary>
         /// Create a Tensor that consist of a single int16 value
@@ -373,7 +366,13 @@ namespace Emgu.TF
         protected override void DisposeObject()
         {
             if (IntPtr.Zero != _ptr)
+            {
+                if (Type == DataType.String)
+                    TfInvoke.tfeTStringDealloc(DataPointer);
+
                 TfInvoke.tfeDeleteTensor(ref _ptr);
+            }
+                
         }
 
         /// <summary>

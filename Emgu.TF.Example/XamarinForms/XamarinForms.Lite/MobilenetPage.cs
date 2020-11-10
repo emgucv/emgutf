@@ -22,11 +22,11 @@ using Android.Widget;
 using Android.OS;
 using Android.Graphics;
 using Android.Preferences;
-#elif __UNIFIED__ && !__IOS__
-using AppKit;
-using CoreGraphics;
 #elif __IOS__
 using UIKit;
+using CoreGraphics;
+#elif __MACOS__ 
+using AppKit;
 using CoreGraphics;
 #endif
 

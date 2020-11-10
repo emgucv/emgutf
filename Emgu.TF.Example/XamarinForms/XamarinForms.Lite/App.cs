@@ -61,18 +61,15 @@ namespace Emgu.TF.XamarinForms
                    }
                };
 
-#if NETFX_CORE
-		    String aboutIcon = "questionmark.png";
-#else
-            String aboutIcon = null;
-#endif
+            NavigationPage navigationPage = new NavigationPage(page);
 
-            MainPage =
-             new NavigationPage(
-                page
-             );
+            //Fix for UWP navigation text
+            if (Device.RuntimePlatform == Device.WPF)
+                navigationPage.BarTextColor = Color.Green;
 
-            ToolbarItem aboutItem = new ToolbarItem("About", aboutIcon,
+            MainPage = navigationPage;
+
+            ToolbarItem aboutItem = new ToolbarItem("About", null,
                () =>
                {
                    MainPage.Navigation.PushAsync(new AboutPage());

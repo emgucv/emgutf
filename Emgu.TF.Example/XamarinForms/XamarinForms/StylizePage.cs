@@ -7,24 +7,22 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-
 using System.Threading.Tasks;
-#if __ANDROID__
-using Android.Graphics;
-#elif __IOS__
+using Emgu.TF;
+using Emgu.Models;
+using Emgu.TF.Models;
+using System.Net;
+using System.Diagnostics;
+using Tensorflow;
+
+#if __IOS__
 using UIKit;
 using CoreGraphics;
 #elif __UNIFIED__
 using AppKit;
 using CoreGraphics;
 #endif
-using Emgu.TF;
-using Emgu.Models;
-using Emgu.TF.Models;
-using System.Net;
-using System.ComponentModel;
-using System.Diagnostics;
-using Tensorflow;
+
 
 namespace Emgu.TF.XamarinForms
 {
@@ -88,7 +86,7 @@ namespace Emgu.TF.XamarinForms
                     watch.Stop();
                     byte[] rawPixel = Emgu.TF.Models.ImageIO.TensorToPixel(stylizedImage, 255.0f, 0.0f, 4);
                     int[] dim = stylizedImage.Dim;
-                    Bitmap bmp = NativeImageIO.PixelToBitmap(rawPixel, dim[2], dim[1], 4);
+                    Android.Graphics.Bitmap bmp = NativeImageIO.PixelToBitmap(rawPixel, dim[2], dim[1], 4);
                     SetImage(bmp);
 #else
                     Stopwatch watch = Stopwatch.StartNew();
@@ -96,12 +94,15 @@ namespace Emgu.TF.XamarinForms
                     watch.Stop();
                     SetImage(jpeg);
 #endif
+                    /*
 #if __MACOS__
                     NSImage img = new NSImage(images[0]);
                     var displayImage = this.DisplayImage;
                     displayImage.WidthRequest = img.Size.Width;
                     displayImage.HeightRequest = img.Size.Height;
 #endif
+                    */
+
                     SetMessage(String.Format("Stylized in {0} milliseconds.", watch.ElapsedMilliseconds));
 
                 }
@@ -114,10 +115,7 @@ namespace Emgu.TF.XamarinForms
                 {
                     this.TopButton.IsEnabled = true;
                 }
-
             };
- 
         }
-
     }
 }

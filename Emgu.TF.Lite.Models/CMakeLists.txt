@@ -44,8 +44,8 @@ INSTALL(
     ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Netstandard)
     INSTALL(
       FILES 
-      ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Lite.Models.Netstandard.dll
-      ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Lite.Models.Netstandard.xml
+      ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Lite.Models.dll
+      ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Lite.Models.xml
       DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
       COMPONENT emgutf_binary)
   ENDIF()
@@ -71,13 +71,45 @@ IF(HAVE_OSX_LITE)
     )
   INSTALL(
     FILES 
-    ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Lite.Models.Mac.xml
-    ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Lite.Models.Mac.dll 
+    ${LIBRARY_OUTPUT_PATH}/macos/Emgu.TF.Lite.Models.xml
+    ${LIBRARY_OUTPUT_PATH}/macos/Emgu.TF.Lite.Models.dll 
     DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
     COMPONENT emgutf_binary)
   
   IF(APPLE)
     PROJECT(Emgu.TF.Lite.Models.Mac)
+    BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj" "" ALL)    
+    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Netstandard)
+  ENDIF()
+ENDIF()
+
+IF(HAVE_IOS_LITE)
+  INSTALL(
+    DIRECTORY
+    ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.Models.IOS
+    DESTINATION .
+    COMPONENT emgutf_source
+    FILES_MATCHING 
+    PATTERN "*.cs"
+    PATTERN "*.projitems"
+    PATTERN "*.shproj"
+    PATTERN "*.csproj"
+    PATTERN ".svn" EXCLUDE
+    PATTERN "obj" EXCLUDE
+    PATTERN "CMakeFiles" EXCLUDE
+    PATTERN "x64" EXCLUDE #exclude build artifacts from Visual Studio build process
+    PATTERN "x86" EXCLUDE #exclude build artifacts from Visual Studio build process
+    PATTERN "${PROJECT_NAME}.dir" EXCLUDE
+    )
+  INSTALL(
+    FILES 
+    ${LIBRARY_OUTPUT_PATH}/ios/Emgu.TF.Lite.Models.xml
+    ${LIBRARY_OUTPUT_PATH}/ios/Emgu.TF.Lite.Models.dll 
+    DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
+    COMPONENT emgutf_binary)
+  
+  IF(APPLE)
+    PROJECT(Emgu.TF.Lite.Models.IOS)
     BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj" "" ALL)    
     ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Netstandard)
   ENDIF()
@@ -117,8 +149,8 @@ IF(HAVE_ANDROID_LITE)
   
   INSTALL(
     FILES 
-    ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.xml
-    ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll 
+    ${LIBRARY_OUTPUT_PATH}/android/Emgu.TF.Lite.Models.xml
+    ${LIBRARY_OUTPUT_PATH}/android/Emgu.TF.Lite.Models.dll 
     DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
     COMPONENT emgutf_binary)
   

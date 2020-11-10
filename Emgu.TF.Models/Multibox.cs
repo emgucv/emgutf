@@ -61,6 +61,11 @@ namespace Emgu.TF.Models
         }
 #endif
 
+        /// <summary>
+        /// Create a new multibox graph  
+        /// </summary>
+        /// <param name="status">The status object that can be used to keep track of error or exceptions</param>
+        /// <param name="sessionOptions">The options for running the tensorflow session.</param>
         public MultiboxGraph(Status status = null, SessionOptions sessionOptions = null)
         {
             _status = status;
@@ -70,8 +75,17 @@ namespace Emgu.TF.Models
             _downloadManager.OnDownloadProgressChanged += onDownloadProgressChanged;
         }
 
+        /// <summary>
+        /// Callback when the model download progress is changed.
+        /// </summary>
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
 
+        /// <summary>
+        /// Initiate the graph by checking if the model file exist locally, if not download the graph from internet.
+        /// </summary>
+        /// <param name="modelFiles">An array where the first file is the tensorflow graph and the second file is the object class labels. </param>
+        /// <param name="downloadUrl">The url where the file can be downloaded</param>
+        /// <param name="localModelFolder">The local folder to store the model</param>
         public
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             IEnumerator
@@ -99,6 +113,9 @@ namespace Emgu.TF.Models
                 OnDownloadProgressChanged(sender, e);
         }
 
+        /// <summary>
+        /// Return true if the graph has been imported
+        /// </summary>
         public bool Imported
         {
             get
@@ -323,6 +340,10 @@ namespace Emgu.TF.Models
         }
 
 #endif
+
+        /// <summary>
+        /// Release the memory associated with the Multibox
+        /// </summary>
         protected override void DisposeObject()
         {
             if (_graph != null)

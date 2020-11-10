@@ -4,12 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Plugin.FilePicker;
-using Plugin.FilePicker.Abstractions;
+using Xamarin.Essentials;
 using Xamarin.Forms;
-#if __ANDROID__
-using Plugin.CurrentActivity;
-#endif
 
 #if __MACOS__
 using AppKit;
@@ -19,11 +15,7 @@ using Xamarin.Forms.Platform.MacOS;
 using UIKit;
 using CoreGraphics;
 using Xamarin.Forms.Platform.iOS;
-using Plugin.Media;
-#else
-using Plugin.Media;
 #endif
-
 
 namespace Emgu.TF.XamarinForms
 {
@@ -87,7 +79,6 @@ namespace Emgu.TF.XamarinForms
             _mainLayout.Orientation = StackOrientation.Vertical;
             _mainLayout.Spacing = 15;
             _mainLayout.Padding = new Thickness(10, 10, 10, 10);
-
 
             DisplayImage.HorizontalOptions = LayoutOptions.Center;
 
@@ -164,11 +155,6 @@ namespace Emgu.TF.XamarinForms
             return mats;
 #else*/
 
-#if !__MACOS__
-            if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
-                await CrossMedia.Current.Initialize();
-#endif
-
             String[] mats = new String[imageNames.Length];
             for (int i = 0; i < mats.Length; i++)
             {
@@ -176,33 +162,34 @@ namespace Emgu.TF.XamarinForms
                 if (labels != null && labels.Length > i)
                     pickImgString = labels[i];
                 bool haveCameraOption = false;
-                bool havePickImgOption = false;
+                bool havePickImgOption = true;
                 bool haveLiveCameraOption = false;
+                
                 if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
                 {
                     //CrossMedia is not implemented on Windows.
                     haveCameraOption = false;
-                    havePickImgOption = true; //We will CrossFilePicker.Current.PickFile to pick image
+                    
                 } else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices
                     .OSPlatform.OSX))
                 {
 #if __MACOS__
                     haveLiveCameraOption = AllowAvCaptureSession;
 #endif
-                    havePickImgOption = true; //We will CrossFilePicker.Current.PickFile to pick image
                 }
                 else
                 {
-#if !__MACOS__
-                    haveCameraOption =
-                        (CrossMedia.Current.IsCameraAvailable && CrossMedia.Current.IsTakePhotoSupported);
-                    havePickImgOption =
-                        CrossMedia.Current.IsPickVideoSupported;
+#if __ANDROID__ || __IOS__
+                    haveCameraOption = Xamarin.Essentials.MediaPicker.IsCaptureSupported;
+#else
+                    haveCameraOption = false;
+#endif
+
+#if __IOS__
+                    haveLiveCameraOption = AllowAvCaptureSession;
 #endif
                 }
-#if __IOS__
-                haveLiveCameraOption = AllowAvCaptureSession;
-#endif
+
                 List<String> options = new List<string>();
                 options.Add("Default");
                 if (havePickImgOption)
@@ -217,7 +204,10 @@ namespace Emgu.TF.XamarinForms
                 if (action.Equals("Default"))
                 {
 #if __ANDROID__
-                    FileInfo fi = Emgu.TF.Util.AndroidFileAsset.WritePermanentFileAsset(CrossCurrentActivity.Current.Activity, imageNames[i], "tmp",
+                    FileInfo fi = Emgu.TF.Util.AndroidFileAsset.WritePermanentFileAsset(
+                        Android.App.Application.Context, 
+                        imageNames[i], 
+                        "tmp",
                         Emgu.TF.Util.AndroidFileAsset.OverwriteMethod.AlwaysOverwrite);
 
                     mats[i] = fi.FullName;
@@ -230,44 +220,48 @@ namespace Emgu.TF.XamarinForms
                 {
                     if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
                     {
-                        FileData fileData = await CrossFilePicker.Current.PickFile(new string[] {"Image | *.jpg;*.jpeg;*.png;*.bmp;*.gif | All Files | *"});
-                        if (fileData == null)
+                        // our implementation of pick image
+#if !(__ANDROID__ || __IOS__ || __MACOS__)
+                        Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
+                        dialog.Multiselect = false;
+                        dialog.Title = "Select an Image File";
+                        dialog.Filter = "Image | *.jpg;*.jpeg;*.png;*.bmp;*.gif | All Files | *";
+                        if (dialog.ShowDialog() == false)
                             return null;
-                        mats[i] = fileData.FilePath;
-                    }
-                    else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime
-                        .InteropServices
-                        .OSPlatform.OSX))
-                    {
-                        FileData fileData = await CrossFilePicker.Current.PickFile(new string[] { "jpg", "jpeg", "png", "bmp" });
-                        if (fileData == null)
-                            return null;
-                        mats[i] = fileData.FilePath;
+                        mats[i] = dialog.FileName;
+#else
+                        throw new NotImplementedException(String.Format("Action '{0}' is not implemented", action));
+#endif
                     }
                     else
                     {
-#if !__MACOS__
-                        var photoResult = await CrossMedia.Current.PickPhotoAsync();
-                        if (photoResult == null) //canceled
+#if __ANDROID__ || __IOS__ || __MACOS__
+                        var fileResult = await Xamarin.Essentials.FilePicker.PickAsync(PickOptions.Images);
+                        if (fileResult == null) //canceled
                             return null;
-                        mats[i] = photoResult.Path;
+                        mats[i] = fileResult.FullPath;
+#else
+                        throw new NotImplementedException(String.Format("Action '{0}' is not implemented", action));
 #endif
                     }
                 }
                 else if (action.Equals("Photo from Camera"))
                 {
-#if !__MACOS__
-                    var mediaOptions = new Plugin.Media.Abstractions.StoreCameraMediaOptions
+#if __ANDROID__ || __IOS__
+                    var mediaOptions = new Xamarin.Essentials.MediaPickerOptions()
                     {
-                        Directory = "Emgu",
-                        Name = $"{DateTime.UtcNow}.jpg"
+                        Title = $"Emgu_{DateTime.UtcNow}.jpg"
                     };
-                    var takePhotoResult = await CrossMedia.Current.TakePhotoAsync(mediaOptions);
+                    var takePhotoResult = await Xamarin.Essentials.MediaPicker.CapturePhotoAsync(mediaOptions);
+                    
                     if (takePhotoResult == null) //canceled
                         return null;
-                    mats[i] = takePhotoResult.Path;
+                    mats[i] = takePhotoResult.FullPath;
+#else
+                    throw new NotImplementedException(String.Format("Action '{0}' is not implemented", action));
 #endif
-                } else if (action.Equals("Camera Stream"))
+                }
+                else if (action.Equals("Camera Stream"))
                 {
                     mats[i] = action;
                 }

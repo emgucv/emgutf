@@ -15,23 +15,6 @@ using Emgu.TF.Models;
 using Emgu.Models;
 using Tensorflow;
 
-#if __ANDROID__
-using Android.App;
-using Android.Content;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Android.OS;
-using Android.Graphics;
-using Android.Preferences;
-#elif __UNIFIED__ && !__IOS__
-using AppKit;
-using CoreGraphics;
-#elif __IOS__
-using UIKit;
-using CoreGraphics;
-#endif
-
 namespace Emgu.TF.XamarinForms
 {
     public class MultiboxDetectionPage
@@ -116,9 +99,7 @@ namespace Emgu.TF.XamarinForms
                 {
                     this.TopButton.IsEnabled = true;
                 }
-
             };
         }
-
     }
 }

@@ -5,17 +5,6 @@
 IF ( TARGET Emgu.TF.Lite.Netstandard )
   
   PROJECT(Emgu.TF.Lite.nuget)
-#  IF(WIN32)
-#    ADD_CUSTOM_TARGET(
-#      ${PROJECT_NAME} ALL
-#      COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../../../miscellaneous/nuget.exe" pack Package.nuspec -OutputDirectory "${CMAKE_CURRENT_SOURCE_DIR}/../"
-#      )
-#  ELSE()
-#    ADD_CUSTOM_TARGET(
-#      ${PROJECT_NAME} ALL
-#      COMMAND mono "${CMAKE_CURRENT_SOURCE_DIR}/../../../miscellaneous/nuget.exe" pack Package.nuspec -OutputDirectory "${CMAKE_CURRENT_SOURCE_DIR}/../"
-#      )
-#  ENDIF()
 
     ADD_CUSTOM_TARGET(
       ${PROJECT_NAME} ALL

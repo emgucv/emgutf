@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using Emgu.TF.Lite;
-using Plugin.FilePicker;
-using Plugin.FilePicker.Abstractions;
 using Xamarin.Forms;
 
 namespace Emgu.TF.XamarinForms
@@ -105,13 +103,20 @@ namespace Emgu.TF.XamarinForms
         private async void OnButtonClicked(Object sender, EventArgs args)
         {
 
-            FileData fileData = await CrossFilePicker.Current.PickFile();
-            if (fileData == null)
-                return; // user canceled file picking
-
-            //string fileName = fileData.FileName;
-            string fileName = fileData.FilePath;
-
+#if !(__ANDROID__ || __IOS__ || __MACOS__)
+            Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
+            dialog.Multiselect = false;
+            dialog.Title = "Select a TF Lite Model File";
+            if (dialog.ShowDialog() == false) //canceled
+                return;
+            string fileName = dialog.FileName;
+#else
+            var fileResult = await Xamarin.Essentials.FilePicker.PickAsync(Xamarin.Essentials.PickOptions.Images);
+            if (fileResult == null) //canceled
+                return;
+            string fileName = fileResult.FullPath;
+#endif
+            
             SetEditorMessage(GetModelInfo(fileName), 600);
 
         }

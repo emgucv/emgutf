@@ -13,12 +13,12 @@
   </PropertyGroup>  
   <PropertyGroup>
     <EmguTFLiteMacLinkTarget>Xamarin.Mac</EmguTFLiteMacLinkTarget>
-    <EmguTFLiteMacNativeFile>$(TFLiteBinaryDir)\osx\libtfliteextern.dylib</EmguTFLiteMacNativeFile>
+    <EmguTFLiteMacNativeFile>$(TFLiteBinaryDir)\macos\libtfliteextern.dylib</EmguTFLiteMacNativeFile>
     <EmguTFLiteMacErrorMessage Condition="!Exists('$(EmguTFLiteMacNativeFile)')"> This package do not contain necessary binary for $(EmguTFLiteMacLinkTarget). Missing $(EmguTFLiteMacNativeFile). PInvoke may fail on Mac OS.</EmguTFLiteMacErrorMessage>
     <EmguTFLiteMacDeployMessage Condition="Exists('$(EmguTFLiteMacNativeFile)')">$(EmguTFLiteMacDeployMessage)macOS_x64 </EmguTFLiteMacDeployMessage>
   </PropertyGroup>
       <ItemGroup Condition="Exists('$(EmguTFLiteMacNativeFile)')">
-        <Content Include="$(TFLiteBinaryDir)\osx\libtfliteextern.dylib">
+        <Content Include="$(TFLiteBinaryDir)\macos\libtfliteextern.dylib">
           <Link>libtfliteextern.dylib</Link>
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
