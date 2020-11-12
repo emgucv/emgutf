@@ -31,15 +31,16 @@ docker run \
   build -c opt \
       --config=android_$1\
       --cxxopt='--std=c++14' \
-      --action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/20.1.5948944 \
+      --action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk-bundle \
       --action_env ANDROID_NDK_API_LEVEL=28 \
-      --action_env ANDROID_BUILD_TOOLS_VERSION=debian \
       --action_env ANDROID_SDK_API_LEVEL=23 \
       --action_env ANDROID_SDK_HOME=/usr/lib/android-sdk \
       --verbose_failures \
       --config monolithic \
       //tensorflow/tfextern:libtfextern.so \
       $extra_param
+
+#      --action_env ANDROID_BUILD_TOOLS_VERSION=debian \
 
 mkdir -p lib/android/$2
 cp -rf tensorflow/bazel-bin/tensorflow/tfextern/*.so lib/android/$2
