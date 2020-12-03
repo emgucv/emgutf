@@ -290,8 +290,12 @@ namespace Emgu.TF.Lite
 
             try
             {
-                //Use the custom error handler
-                RedirectError(TfliteErrorHandlerThrowException);
+                if (Emgu.TF.Util.Toolbox.FindAssembly("Xamarin.iOS.dll") == null)
+                {
+                    //Not running on iOS
+                    //Use the custom error handler
+                    RedirectError(TfliteErrorHandlerThrowException);
+                }
             }
             catch (DllNotFoundException e)
             {
