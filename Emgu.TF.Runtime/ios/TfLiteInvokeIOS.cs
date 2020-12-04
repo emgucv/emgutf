@@ -14,7 +14,14 @@ namespace Emgu.TF
     /// </summary>
     public static class TfLiteInvokeIOS
     {
+        private static readonly bool _libraryLoaded;
 
+        static TfLiteInvokeIOS()
+        {
+            _libraryLoaded = TfLiteInvoke.CheckLibraryLoaded();
+            if (_libraryLoaded)
+                TfLiteInvoke.RedirectError(TfLiteInvokeIOS.TfliteErrorHandlerThrowException);
+        }
         [ObjCRuntime.MonoPInvokeCallback(typeof(TfLiteInvoke.TfliteErrorCallback))]
         private static int TfliteErrorHandler(
            int status,
@@ -29,10 +36,7 @@ namespace Emgu.TF
         /// </summary>
         public static bool CheckLibraryLoaded()
         {
-            bool loaded = TfLiteInvoke.CheckLibraryLoaded();
-            if (loaded)
-                TfLiteInvoke.RedirectError(TfLiteInvokeIOS.TfliteErrorHandlerThrowException);
-            return loaded;
+            return _libraryLoaded;
         }
 
 
