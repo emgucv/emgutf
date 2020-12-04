@@ -5,20 +5,41 @@
 
 using System;
 using Emgu.TF.Lite;
+using System.Runtime.InteropServices;
 
 namespace Emgu.TF
 {
-   /// <summary>
-   /// TfInvoke for iOS
-   /// </summary>
-   public static class TfLiteInvokeIOS
-   {
-      /// <summary>
-      /// Return true if the class is loaded.
-      /// </summary>
-      public static bool CheckLibraryLoaded ()
-      {
-         return TfLiteInvoke.CheckLibraryLoaded ();
-      }
-   }
+    /// <summary>
+    /// TfInvoke for iOS
+    /// </summary>
+    public static class TfLiteInvokeIOS
+    {
+
+        [ObjCRuntime.MonoPInvokeCallback(typeof(TfLiteInvoke.TfliteErrorCallback))]
+        private static int TfliteErrorHandler(
+           int status,
+           IntPtr errMsg)
+        {
+            String msg = Marshal.PtrToStringAnsi(errMsg);
+            throw new Exception(msg);
+        }
+
+        /// <summary>
+        /// Return true if the class is loaded.
+        /// </summary>
+        public static bool CheckLibraryLoaded()
+        {
+            bool loaded = TfLiteInvoke.CheckLibraryLoaded();
+            if (loaded)
+                TfLiteInvoke.RedirectError(TfLiteInvokeIOS.TfliteErrorHandlerThrowException);
+            return loaded;
+        }
+
+
+        /// <summary>
+        /// The default error handler for tensorflow lite
+        /// </summary>
+
+        public static readonly TfLiteInvoke.TfliteErrorCallback TfliteErrorHandlerThrowException = (TfLiteInvoke.TfliteErrorCallback)TfliteErrorHandler;
+    }
 }
