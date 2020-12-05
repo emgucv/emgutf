@@ -466,6 +466,7 @@ SET(EMGUTF_NUGET_BASE_ID "Emgu.TF")
 SET(EMGUTF_NUGET_ID "${EMGUTF_NUGET_BASE_ID}")
 SET(EMGUTF_MODEL_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.Models")
 SET(EMGUTF_PROTOBUF_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.Protobuf")
+SET(EMGU_WINDOWS_MSVCRT_X64_NUGET_ID "Emgu.runtime.windows.msvc.rt.x64")
 
 SET(EMGUTF_NUGET_TITLE_ARCH "")
 IF(HAVE_WINDESKTOP_X86)
@@ -726,6 +727,21 @@ IF( HAVE_WINDESKTOP_LITE )
     <dependencies>
 		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
     </dependencies>")
+ENDIF()
+
+IF (HAVE_WINDESKTOP OR HAVE_WINDESKTOP_LITE)
+	SET(EMGU_WINDOWS_MSVCRT_X64_NUGET_FILE_LIST "${EMGU_WINDOWS_MSVCRT_X86_NUGET_FILE_LIST} 
+	<file src=\"..\\..\\..\\lib\\x64\\concrt*.dll\" target=\"build\\x64\" /> 
+	<file src=\"..\\..\\..\\lib\\x64\\msvcp*.dll\" target=\"build\\x64\" /> 
+	<file src=\"..\\..\\..\\lib\\x64\\vcruntime*.dll\" target=\"build\\x64\" />     
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
+    <file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+	IF(MSVC)
+      SET(EMGU_WINDOWS_MSVCRT_VERSION ${CMAKE_CXX_COMPILER_VERSION})
+	  SET(EMGUTF_WINDOWS_NUGET_DEPENDENCY "${EMGUTF_WINDOWS_NUGET_DEPENDENCY}
+	  <dependency id=\"${EMGU_WINDOWS_MSVCRT_X64_NUGET_ID}\" version=\"[${EMGU_WINDOWS_MSVCRT_VERSION}]\" />
+	  ")	
+    ENDIF()
 ENDIF()
 
 IF( HAVE_OSX_LITE ) 
@@ -989,7 +1005,7 @@ IF(HAVE_WINDESKTOP)
 			<dependency id=\"${EMGU_TF_DNN_CNN_ID}\" version=\"[${EMGU_TF_DNN_VERSION}]\" />
 			<dependency id=\"${EMGU_TF_CUFFT_ID}\" version=\"[${EMGU_TF_CUDA_VERSION}]\" />
 			<dependency id=\"${EMGU_TF_CUBLAS_ID}\" version=\"[${EMGU_TF_CUDA_VERSION}]\" />")
-	
+
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_DNN_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_DNN_ID}/Package.nuspec)
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_DNN_ID}.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_DNN_ID}/${EMGU_TF_DNN_ID}.targets)
 	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_DNN_ADV_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_DNN_ADV_ID}/Package.nuspec)
@@ -1008,7 +1024,6 @@ IF(HAVE_WINDESKTOP)
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_CUSOLVER_MG_ID}.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_CUSOLVER_MG_ID}/${EMGU_TF_CUSOLVER_MG_ID}.targets)
 	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_CUDART_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_CUDART_ID}/Package.nuspec)
 	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_CUDART_ID}.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_CUDART_ID}/${EMGU_TF_CUDART_ID}.targets)
-	
 
     SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "${EMGUTF_WINDOWS_NUGET_FILE_LIST} 
 	<file src=\"..\\..\\..\\lib\\x64\\*.dll\" exclude=\"..\\..\\..\\lib\\x64\\cu*.dll;\" target=\"build\\x64\" />")
@@ -1017,6 +1032,11 @@ IF(HAVE_WINDESKTOP)
 	<file src=\"..\\..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />")
   ENDIF()
   
+ENDIF()
+
+IF (HAVE_WINDESKTOP OR HAVE_WINDESKTOP_LITE)
+    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_WINDOWS_MSVCRT_X64_NUGET_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_WINDOWS_MSVCRT_X64_NUGET_ID}/Package.nuspec)
+    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_WINDOWS_MSVCRT_X64_NUGET_ID}.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_WINDOWS_MSVCRT_X64_NUGET_ID}/${EMGU_WINDOWS_MSVCRT_X64_NUGET_ID}.targets)
 ENDIF()
 
 SET(EMGUTF_MODEL_NUGET_FILE_LIST "

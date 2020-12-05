@@ -42,6 +42,10 @@ IF (HAVE_WINDESKTOP_X64_LITE)
   add_subdirectory(Emgu.TF.Lite.runtime.windows)
 ENDIF()
 
+IF (HAVE_WINDESKTOP_X64_LITE OR HAVE_WINDESKTOP)
+  ADD_SUBDIRECTORY(Emgu.runtime.windows.msvc.rt.x64)
+ENDIF()
+
 IF(HAVE_OSX_LITE)
   add_subdirectory(Emgu.TF.Lite.runtime.macos)
 ENDIF()
