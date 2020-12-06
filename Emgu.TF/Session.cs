@@ -43,7 +43,7 @@ namespace Emgu.TF
 
         /// <summary>
         /// Create a Session from a SavedModel. If successful, populates the internal graph with the contents of the Graph and
-        /// <paramref name="metaGraphDef"/> with the MetaGraphDef of the loaded model.
+        /// with the MetaGraphDef of the loaded model.
         /// </summary>
         /// <param name="exportDir">Must be set to the path of the exported SavedModel.</param>
         /// <param name="tags">Must include the set of tags used to identify one MetaGraphDef in the SavedModel. Could be "serve", "tpu", "gpu", "train" or other values.</param>
