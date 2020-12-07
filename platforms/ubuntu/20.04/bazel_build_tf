@@ -1,10 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
 cd "$(dirname "$0")"
 cd ../../..
+BAZEL_TMP_FOLDER=$PWD/bazel_tmp
 cd tensorflow
 
-bazel build //tensorflow/tfextern:libtfextern.so 
+bazel --output_user_root=$BAZEL_TMP_FOLDER build --verbose_failures //tensorflow/tfextern:libtfextern.so 
 cd ..
 
 mkdir -p lib/x64
