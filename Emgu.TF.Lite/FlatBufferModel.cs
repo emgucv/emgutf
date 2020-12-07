@@ -37,7 +37,7 @@ namespace Emgu.TF.Lite
             {
                 byte[] buffer = File.ReadAllBytes(filename);
                 if (buffer.Length == 0)
-                    throw new FileNotFoundException(String.Format("File {0} is empty", filename));
+                    throw new FileNotFoundException(String.Format("File {0} is empty", filename), e);
                 ReadModelFromBuffer(buffer);
             }
             
