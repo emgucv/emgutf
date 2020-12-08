@@ -55,7 +55,7 @@ namespace Emgu.TF.Util
             else
             {
                 
-                IntPtr handler = Dlopen(dllname, 2); // 2 == RTLD_NOW
+                IntPtr handler = Dlopen(dllname, 0x00102); // 0x00002 == RTLD_NOW, 0x00100 = RTL_GLOBAL
                 if (handler == IntPtr.Zero)
                 {
                     System.Diagnostics.Trace.WriteLine(String.Format("Failed to use dlopen to load {0}", dllname));
@@ -87,7 +87,7 @@ namespace Emgu.TF.Util
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool FreeLibrary(IntPtr handle);
-        */
+        
 
         /// <summary>
         /// Adds a directory to the search path used to locate DLLs for the application
@@ -97,8 +97,17 @@ namespace Emgu.TF.Util
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool SetDllDirectory(String path);
-        
+        */
 
+        /// <summary>
+        /// Adds a directory to the search path used to locate DLLs for the application
+        /// </summary>
+        /// <param name="path">The directory to be searched for DLLs</param>
+        /// <returns>True if success</returns>
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool AddDllDirectory(String path);
+        
         /// <summary>
         /// Find the loaded assembly with the specific assembly name
         /// </summary>

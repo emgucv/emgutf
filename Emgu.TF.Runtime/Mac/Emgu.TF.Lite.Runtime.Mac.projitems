@@ -27,6 +27,6 @@
     <!-- <Message Condition="'$(EmguTFLiteMacLinkTarget)'!=''" Text="Emgu TF Lite shared project compiling against $(EmguTFLiteMacLinkTarget)" Importance="High" /> -->
     <Warning Text="'$(EmguTFLiteMacErrorMessage)'" Condition="'$(EmguTFLiteMacErrorMessage)'!=''" />
     <Message Text="Emgu TF Lite Compiling with $(EmguTFLiteMacDeployMessage)binary" Condition="'$(EmguTFLiteMacDeployMessage)'!=''" Importance="High" />
-    <Message Text="No native binary is deployed by the Emgu.TF shared project." Condition="'$(EmguTFLiteMacDeployMessage)'==''" Importance="High" />
+    <Message Text="No native binary is deployed by the Emgu.TF.Lite.Runtime.Mac shared project." Condition="'$(EmguTFLiteMacDeployMessage)'==''" Importance="High" />
   </Target>
 </Project>

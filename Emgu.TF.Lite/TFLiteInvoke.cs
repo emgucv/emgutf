@@ -82,6 +82,15 @@ namespace Emgu.TF.Lite
         /// <remarks>If <paramref name="loadDirectory"/> is null, the default location on windows is the dll's path appended by either "x64" or "x86", depends on the applications current mode.</remarks>
         public static bool LoadUnmanagedModules(String loadDirectory, params String[] unmanagedModules)
         {
+#if UNITY_WSA || UNITY_STANDALONE || UNITY_EDITOR || UNITY_ANDROID || UNITY_IOS
+            if (loadDirectory != null)
+            {
+                throw new NotImplementedException("Loading modules from a specific directory is not implemented in Windows Store App");
+            }
+            //Let unity handle the library loading
+            return true;
+#else
+            String oldDir = String.Empty;
 
             if (loadDirectory == null)
             {
@@ -105,9 +114,8 @@ namespace Emgu.TF.Lite
                         throw new Exception("Emgu TF Lite is only compatible with 64bit mode in Windows (not compatible with 32bit x86 mode)");
                     }
                 }
-
                 System.Reflection.Assembly asm = typeof(TfLiteInvoke).Assembly; //System.Reflection.Assembly.GetExecutingAssembly();
-                if ((String.IsNullOrEmpty(asm.Location) || !System.IO.File.Exists(asm.Location)))
+                if ((String.IsNullOrEmpty(asm.Location) || !File.Exists(asm.Location)))
                 {
                     if (String.IsNullOrEmpty(AppDomain.CurrentDomain.BaseDirectory))
                     {
@@ -115,27 +123,46 @@ namespace Emgu.TF.Lite
                     }
                     else
                     {
-                        //if may be running in a debugger visualizer under a unit test in this case
-                        String visualStudioDir = AppDomain.CurrentDomain.BaseDirectory;
-                        DirectoryInfo visualStudioDirInfo = new DirectoryInfo(visualStudioDir);
-                        String debuggerVisualzerPath =
-                            Path.Combine(Path.Combine(Path.Combine(
-                                visualStudioDirInfo.Parent.FullName, "Packages"), "Debugger"), "Visualizers");
+                        //we may be running in a debugger visualizer under a unit test in this case
+                        String baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                        DirectoryInfo baseDirectoryInfo = new DirectoryInfo(baseDirectory);
+                        String debuggerVisualizerPath = String.Empty;
+                        if (baseDirectoryInfo.Parent != null)
+                            debuggerVisualizerPath = Path.Combine(baseDirectoryInfo.Parent.FullName, "Packages", "Debugger", "Visualizers");
 
-                        if (Directory.Exists(debuggerVisualzerPath))
-                            loadDirectory = debuggerVisualzerPath;
+                        if (!debuggerVisualizerPath.Equals(String.Empty) && Directory.Exists(debuggerVisualizerPath))
+                            loadDirectory = debuggerVisualizerPath;
                         else
-                            loadDirectory = String.Empty;
-                        
+                        {
+                            loadDirectory = baseDirectoryInfo.FullName;
+                            if (!Directory.Exists(Path.Combine(baseDirectoryInfo.FullName, subfolder)))
+                            {
+                                subfolder = String.Empty;
+                            }
+                        }
                     }
                 }
                 else
                 {
                     loadDirectory = Path.GetDirectoryName(asm.Location);
+                    if ((loadDirectory != null) && (!Directory.Exists(Path.Combine(loadDirectory, subfolder))))
+                    {
+                        subfolder = String.Empty;
+                    }
                 }
 
                 if (!String.IsNullOrEmpty(subfolder))
-                    loadDirectory = Path.Combine(loadDirectory, subfolder);
+                {
+                    var temp = Path.Combine(loadDirectory, subfolder);
+                    if (Directory.Exists(temp))
+                    {
+                        loadDirectory = temp;
+                    }
+                    else
+                    {
+                        loadDirectory = Path.Combine(Path.GetFullPath("."), subfolder);
+                    }
+                }
 
 
                 System.Reflection.Assembly monoAndroidAssembly = Emgu.TF.Util.Toolbox.FindAssembly("Mono.Android.dll");
@@ -169,18 +196,81 @@ namespace Emgu.TF.Lite
                 }
             }
 
-            String oldDir = Environment.CurrentDirectory;
+            bool addDllDirectorySuccess = false;
             if (!String.IsNullOrEmpty(loadDirectory) && Directory.Exists(loadDirectory))
-                Environment.CurrentDirectory = loadDirectory;
+            {
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    addDllDirectorySuccess = Emgu.TF.Util.Toolbox.AddDllDirectory(loadDirectory);
+                    if (!addDllDirectorySuccess)
+                    {
+                        System.Diagnostics.Debug.WriteLine(String.Format("Failed to add dll directory: {0}", loadDirectory));
+                    }
+                } else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    /*
+                    var native_search_dirs = AppContext.GetData("NATIVE_DLL_SEARCH_DIRECTORIES");
+                    if (native_search_dirs == null)
+                    {
+                        System.Diagnostics.Debug.WriteLine("NATIVE_DLL_SEARCH_DIRECTORIES: NULL");
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine(String.Format("NATIVE_DLL_SEARCH_DIRECTORIES: {0}", native_search_dirs));
+                    }
+                    
+                    String ldLibraryPath = Environment.GetEnvironmentVariable("LD_LIBRARY_PATH");
+                    if (ldLibraryPath == null)
+                    {
+                        Environment.SetEnvironmentVariable("LD_LIBRARY_PATH", loadDirectory);
+                        String verifyPath = Environment.GetEnvironmentVariable("LD_LIBRARY_PATH");
+                    } else if (!ldLibraryPath.Contains(loadDirectory))
+                    {
+                        String newLdLibraryPath = String.Format("{0};{1}", loadDirectory, ldLibraryPath);
+                        Environment.SetEnvironmentVariable("LD_LIBRARY_PATH", newLdLibraryPath);
+                    }
+                    addDllDirectorySuccess = true;*/
+                }
+                else if (Emgu.TF.Util.Toolbox.FindAssembly("Xamarin.iOS.dll") != null)
+                {
+                    //do nothing
+                    System.Diagnostics.Debug.WriteLine("iOS required static linking, Setting loadDirectory is not supported");
+                }
+                else
+                {
+                    oldDir = Environment.CurrentDirectory;
+                    Environment.CurrentDirectory = loadDirectory;
+                }
+            }
 
+            if (addDllDirectorySuccess)
+            {
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        String.Format(
+                            "Loading TF Lite binary for default locations. Current directory: {0}; Additional load folder: {1}",
+                            Environment.CurrentDirectory,
+                            loadDirectory));                    
+                }
+                
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    String.Format(
+                        "Loading TF Lite binary for default locations. Current directory: {0}", 
+                        Environment.CurrentDirectory));
+            }
+            
             System.Diagnostics.Trace.WriteLine(String.Format("Loading tensorflow lite binary from {0}", loadDirectory));
             bool success = true;
 
             string prefix = string.Empty;
-
+            String formatString = GetModuleFormatString();
             foreach (String module in unmanagedModules)
             {
-                string mName = module;
+                string mName = String.Format(formatString, module);
 
                 String fullPath = Path.Combine(prefix, mName);
 
@@ -190,14 +280,44 @@ namespace Emgu.TF.Lite
                 bool fileExist = File.Exists(fullPath);
                 if (!fileExist)
                     System.Diagnostics.Trace.WriteLine(String.Format("File {0} do not exist.", fullPath));
-                bool fileExistAndLoaded = fileExist && !IntPtr.Zero.Equals(Toolbox.LoadLibrary(fullPath));
-                if (fileExist && (!fileExistAndLoaded))
-                    System.Diagnostics.Trace.WriteLine(String.Format("File {0} cannot be loaded.", fullPath));
-                success &= fileExistAndLoaded;
+                
+                bool loaded;
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    loaded = fileExist && !IntPtr.Zero.Equals(Toolbox.LoadLibrary(fullPath));
+                    if (loaded)
+                    {
+                        System.Diagnostics.Trace.WriteLine(String.Format("File {0} loaded.", fullPath));
+                    }
+                    else
+                    {
+                        System.Diagnostics.Trace.WriteLine(String.Format("File {0} cannot be loaded.", fullPath));
+                    }
+                }
+                else
+                {
+                    loaded = true;
+                    /*
+                    loaded = fileExist && !IntPtr.Zero.Equals(Toolbox.LoadLibrary(module));
+                    if (loaded)
+                    {
+                        System.Diagnostics.Trace.WriteLine(String.Format("File {0} loaded.", fullPath));
+                    }
+                    else
+                    {
+                        System.Diagnostics.Trace.WriteLine(String.Format("File {0} cannot be loaded.", fullPath));
+                    }*/
+                }
+
+                success &= (fileExist && loaded);
             }
 
-            Environment.CurrentDirectory = oldDir;
+            if (!oldDir.Equals(String.Empty))
+            {
+                Environment.CurrentDirectory = oldDir;
+            }
             return success;
+#endif
         }
 
         /// <summary>
@@ -260,9 +380,9 @@ namespace Emgu.TF.Lite
 
             if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
             {
-                String formatString = GetModuleFormatString();
-                for (int i = 0; i < modules.Length; ++i)
-                    modules[i] = String.Format(formatString, modules[i]);
+                //String formatString = GetModuleFormatString();
+                //for (int i = 0; i < modules.Length; ++i)
+                //    modules[i] = String.Format(formatString, modules[i]);
 
                 libraryLoaded &= LoadUnmanagedModules(null, modules);
             }
@@ -281,7 +401,7 @@ namespace Emgu.TF.Lite
 
             _libraryLoaded = DefaultLoadUnmanagedModules(modules.ToArray());
 
-            if (!_libraryLoaded)
+            if ((!_libraryLoaded) && RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 Trace.WriteLine("Failed to load native binary. Please make sure a proper Emgu.TF.Lite.runtime.{platform} nuget package is added, or make sure the native binary can be found in the folder of executable.");
             }
