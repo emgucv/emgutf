@@ -22,7 +22,6 @@ bazel --output_user_root=$OUTPUT_USER_ROOT \
       --config=android_$1 \
       --action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk-bundle \
       --action_env ANDROID_NDK_API_LEVEL=28 \
-      --action_env ANDROID_BUILD_TOOLS_VERSION=debian \
       --action_env ANDROID_SDK_API_LEVEL=23 \
       --action_env ANDROID_SDK_HOME=/usr/lib/android-sdk \
       --cxxopt='--std=c++14' \
@@ -32,6 +31,9 @@ bazel --output_user_root=$OUTPUT_USER_ROOT \
       --verbose_failures \
       //tensorflow/tfextern:libtfextern.so \
       $extra_param 
+
+#      --action_env ANDROID_BUILD_TOOLS_VERSION=debian \
+
 set +x
 cd ..
 
