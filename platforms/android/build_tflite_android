@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ \( -n "$1" \) -o \( -n "$2" \) ]; then
     echo "Building with config android_$1 for $2 architecture"
@@ -8,13 +8,15 @@ else
 fi
 
 cd "$(dirname "$0")"
+OUTPUT_USER_ROOT=$PWD/bazel_output_lite_$1
 cd ../..
 cd tensorflow
 set -x
-bazel build -c opt \
+bazel --output_user_root=$OUTPUT_USER_ROOT \
+      build -c opt \
       --config=android_$1\
       --cxxopt='--std=c++14' \
-      --action_env ANDROID_NDK_HOME=/usr/lib/android-ndk-r20b \
+      --action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk-bundle \
       --action_env ANDROID_NDK_API_LEVEL=28 \
       --action_env ANDROID_SDK_API_LEVEL=23 \
       --action_env ANDROID_SDK_HOME=/usr/lib/android-sdk \
