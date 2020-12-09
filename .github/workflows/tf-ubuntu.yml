@@ -9,20 +9,18 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64]
 
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.101
     - name: Check out submodules
       run: git submodule update --init --recursive
     - name: Build Emgu TF native binary
-      run: ./platforms/ubuntu/docker/docker_build_tf
+      run: ./bazel_build_tf
+      working-directory: ${{ github.workspace }}/platforms/ubuntu/20.04
     - name: Build Emgu TF package
-      run: ./platforms/ubuntu/docker/docker_build_emgutf
+      run: ./build_emgutf
+      working-directory: ${{ github.workspace }}/platforms/ubuntu/20.04
     - uses: actions/upload-artifact@v2
       with:
         name: emgutf-ubuntu-zip-package
