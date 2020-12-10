@@ -18,7 +18,7 @@ jobs:
     - name: Build Emgu TF Lite native binary
       run: ./platforms/ubuntu/20.04/bazel_build_tflite
     - name: Build Emgu TF Lite package
-      run: ./platforms/ubuntu/20.04/build_emgutf
+      run: ./platforms/ubuntu/20.04/build_emgutf package
     - name: Create Emgu TF Lite artifact folder
       run: mkdir -p emgutf_lite_packages
     - uses: actions/upload-artifact@v2
