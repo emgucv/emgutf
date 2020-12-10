@@ -13,7 +13,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.Models.Shared", "..\..
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Models.Shared", "..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.shproj", "{E956DD26-1294-4731-8A90-C4CBA9F291B6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.NetStandard", "..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.Netstandard.csproj", "{EC62D093-7446-4AF0-A3C8-61D497CF3D7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Netstandard", "..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.Netstandard.csproj", "{EC62D093-7446-4AF0-A3C8-61D497CF3D7E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Models.Netstandard", "..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Netstandard\Emgu.TF.Lite.Models.Netstandard.csproj", "{8D1CDAF7-E886-4A3C-B9D9-39BFE193E07C}"
 EndProject
@@ -83,16 +83,16 @@ Global
 		{8D1CDAF7-E886-4A3C-B9D9-39BFE193E07C}.Release|x86.Build.0 = Release|Any CPU
 		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Debug|x64.Build.0 = Debug|Any CPU
-		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Debug|x86.Build.0 = Debug|Any CPU
+		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Debug|x64.ActiveCfg = Debug|x64
+		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Debug|x64.Build.0 = Debug|x64
+		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Debug|x86.ActiveCfg = Debug|x86
+		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Debug|x86.Build.0 = Debug|x86
 		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Release|x64.ActiveCfg = Release|Any CPU
-		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Release|x64.Build.0 = Release|Any CPU
-		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Release|x86.ActiveCfg = Release|Any CPU
-		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Release|x86.Build.0 = Release|Any CPU
+		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Release|x64.ActiveCfg = Release|x64
+		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Release|x64.Build.0 = Release|x64
+		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Release|x86.ActiveCfg = Release|x86
+		{2622CBA3-4B2D-4B2B-8075-1FA9F5F5BF16}.Release|x86.Build.0 = Release|x86
 		{49943DC0-CC57-4CEE-837D-9984DB9DF902}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{49943DC0-CC57-4CEE-837D-9984DB9DF902}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49943DC0-CC57-4CEE-837D-9984DB9DF902}.Debug|x64.ActiveCfg = Debug|x64
