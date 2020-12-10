@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ \( -n "$1" \) -o \( -n "$2" \) ]; then
     echo "Building with config android_$1 for $2 architecture"
