@@ -2,5 +2,7 @@
 
 cd "$(dirname "$0")"
 cd ../../..
-cmake .
+mkdir -p b
+cd b
+cmake ..
 make "$@"
