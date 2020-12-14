@@ -19,7 +19,7 @@ jobs:
     - name: Check out submodules
       run: git submodule update --init --recursive
     - name: Build Emgu TF native binary
-      run: ./bazel_build_tf
+      run: ./bazel_build_tf --jobs=1
       working-directory: ${{ github.workspace }}/platforms/ubuntu/20.04
     - name: Build Emgu TF package
       run: ./build_emgutf
