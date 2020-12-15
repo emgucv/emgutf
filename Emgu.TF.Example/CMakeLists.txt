@@ -400,4 +400,5 @@ ENDIF()
 #add_subdirectory(MultiboxPeopleDetection)
 #add_subdirectory(InceptionObjectRecognition)
 add_subdirectory(CVInterop)
+add_subdirectory(CVInterop.Lite)
 

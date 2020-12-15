@@ -227,7 +227,7 @@ namespace Emgu.TF.Lite.Models
 
             _interpreter.Invoke();
 
-            return ConvertResults(scoreThreshold);
+            return GetResults(scoreThreshold);
         }
 #else
 
@@ -247,7 +247,7 @@ namespace Emgu.TF.Lite.Models
 
             _interpreter.Invoke();
 
-            return ConvertResults(scoreThreshold);
+            return GetResults(scoreThreshold);
         }
 #elif __MACOS__
         /// <summary>
@@ -265,7 +265,7 @@ namespace Emgu.TF.Lite.Models
 
             _interpreter.Invoke();
 
-            return ConvertResults(scoreThreshold);
+            return GetResults(scoreThreshold);
         }
 #endif
         private void ReadImageFileToTensor(String imageFile)
@@ -288,11 +288,16 @@ namespace Emgu.TF.Lite.Models
             //Stopwatch w = Stopwatch.StartNew();
             _interpreter.Invoke();
             //w.Stop();
-            return ConvertResults(scoreThreshold);
+            return GetResults(scoreThreshold);
         }
 #endif
 
-        private RecognitionResult[] ConvertResults(float scoreThreshold)
+        /// <summary>
+        /// Get the result for running the model
+        /// </summary>
+        /// <param name="scoreThreshold">The score threshold, objects that has a score lower than this will not be return</param>
+        /// <returns>A list of recognition results.</returns>
+        public RecognitionResult[] GetResults(float scoreThreshold)
         {
             float[,,] outputLocations = _interpreter.Outputs[0].JaggedData as float[,,];
             float[] classes = _interpreter.Outputs[1].Data as float[];

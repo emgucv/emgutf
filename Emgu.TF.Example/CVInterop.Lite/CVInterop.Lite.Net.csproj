@@ -2,9 +2,13 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="dog416.png" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="dog416.png">
@@ -14,21 +18,20 @@
 
   <ItemGroup>
     <PackageReference Include="Emgu.CV" Version="4.4.0.4099" />
+    <PackageReference Include="Emgu.CV.Bitmap" Version="4.4.0.4099" />
     <PackageReference Include="Emgu.CV.runtime.windows" Version="4.4.0.4099" />
     <PackageReference Include="Emgu.CV.UI" Version="4.4.0.4099" />
     <PackageReference Include="Google.Protobuf" Version="3.14.0" />
   </ItemGroup>
 
-  <Import Project="..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Runtime.Windows.projitems" Label="Shared" />
-
-  <Import Project="..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems" Label="Shared" />
-
-  <Import Project="..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems" Label="Shared" />
-
-  <Import Project="..\..\Emgu.TF\Emgu.TF.Shared.projitems" Label="Shared" />
-
-  <Import Project="..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems" Label="Shared" />
+  <Import Project="..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems" Label="Shared" />
 
   <Import Project="..\..\Emgu.Models\Emgu.Models.Shared.projitems" Label="Shared" />
+
+  <Import Project="..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems" Label="Shared" />
+
+  <Import Project="..\..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.projitems" Label="Shared" />
+
+  <Import Project="..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems" Label="Shared" />
 
 </Project>

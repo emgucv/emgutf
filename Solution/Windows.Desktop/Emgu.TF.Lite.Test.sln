@@ -28,6 +28,10 @@ Global
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{8edce0c8-ba71-4396-9428-35d05877258c}*SharedItemsImports = 13
 		..\..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.projitems*{8f587fb9-bba6-4c30-9329-8cbac7020fe0}*SharedItemsImports = 13
 		..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems*{98561642-5ec3-4244-baf9-6876d9ba5527}*SharedItemsImports = 13
+		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{b3ce21ad-95de-4bca-bdbc-9eaf87cadac4}*SharedItemsImports = 5
+		..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems*{b3ce21ad-95de-4bca-bdbc-9eaf87cadac4}*SharedItemsImports = 5
+		..\..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.projitems*{b7f55b47-f2ab-4b5b-97a2-08a027f11002}*SharedItemsImports = 5
+		..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems*{b7f55b47-f2ab-4b5b-97a2-08a027f11002}*SharedItemsImports = 5
 		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems*{d1f84983-691b-4e10-b202-448229f6564e}*SharedItemsImports = 4
 		..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems*{e956dd26-1294-4731-8a90-c4cba9f291b6}*SharedItemsImports = 13
 	EndGlobalSection
