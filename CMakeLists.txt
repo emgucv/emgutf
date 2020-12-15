@@ -100,6 +100,36 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ${ENABLE_SOLUTION_FOLDERS})
 INCLUDE (CheckTargetArch)
 CHECK_TARGET_ARCH()
 
+IF ( TARGET_ARCH_64 )
+  IF (TARGET_ARM)
+    SET(NUGET_NATIVE_PLATFORM_ID_ARCH "arm64")
+  ELSE()
+    SET(NUGET_NATIVE_PLATFORM_ID_ARCH "x64")
+  ENDIF()
+ELSE()
+  IF (TARGET_ARM)
+    SET(NUGET_NATIVE_PLATFORM_ID_ARCH "arm")
+  ELSE()
+    SET(NUGET_NATIVE_PLATFORM_ID_ARCH "x86")
+  ENDIF()
+ENDIF()
+
+IF ( IS_UBUNTU )
+  #MESSAGE(STATUS "TARGET_ARCH_64: ${TARGET_ARCH_64}")
+  SET(NUGET_NATIVE_PLATFORM_ID_UBUNTU "${LSB_RELEASE_ID_SHORT}.${LSB_RELEASE_RELEASE_SHORT}-${NUGET_NATIVE_PLATFORM_ID_ARCH}")
+  STRING(TOLOWER "${NUGET_NATIVE_PLATFORM_ID_UBUNTU}" NUGET_NATIVE_PLATFORM_ID_UBUNTU)
+  MESSAGE(STATUS "NUGET_NATIVE_PLATFORM_ID_UBUNTU: ${NUGET_NATIVE_PLATFORM_ID_UBUNTU}")
+ELSE()
+  SET(NUGET_NATIVE_PLATFORM_ID_UBUNTU "ubuntu-${NUGET_NATIVE_PLATFORM_ID_ARCH}")
+ENDIF()
+
+SET(NUGET_NATIVE_PLATFORM_ID_RASPBIAN "linux-${NUGET_NATIVE_PLATFORM_ID_ARCH}")
+STRING(TOLOWER "${NUGET_NATIVE_PLATFORM_ID_RASPBIAN}" NUGET_NATIVE_PLATFORM_ID_RASPBIAN)
+
+IF ( IS_RASPBIAN )
+  MESSAGE(STATUS "NUGET_NATIVE_PLATFORM_ID_RASPBIAN: ${NUGET_NATIVE_PLATFORM_ID_RASPBIAN}") 
+ENDIF()
+
 IF (WIN32)
   MESSAGE(STATUS "CMAKE_SYSTEM_NAME: ${CMAKE_SYSTEM_NAME}")
   IF(TARGET_ARCH_64)
@@ -131,40 +161,12 @@ MESSAGE(STATUS "Building for ${EMGUTF_ARCH}")
 SET(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib)
 IF(WIN32)
   IF ("${EMGUTF_ARCH}" STREQUAL "win64")
-    IF("${CMAKE_SYSTEM_NAME}" STREQUAL "WindowsStore")
-      IF(CMAKE_SYSTEM_VERSION MATCHES 8.1)
-	SET(UNMANAGED_LIBRARY_OUTPUT_SUBFOLDER "/store8_1_x64")
-      ELSE()
-	SET(UNMANAGED_LIBRARY_OUTPUT_SUBFOLDER "/UWP_x64")
-      ENDIF()
-    ELSE()
       SET(UNMANAGED_LIBRARY_OUTPUT_SUBFOLDER "/x64")
-    ENDIF()
   ELSEIF("${EMGUTF_ARCH}" STREQUAL "arm")
-    IF("${CMAKE_SYSTEM_NAME}" STREQUAL "WindowsPhone")
-      SET(UNMANAGED_LIBRARY_OUTPUT_SUBFOLDER "/phone8_1_arm")
-    ELSE()
-      IF(CMAKE_SYSTEM_VERSION MATCHES 10.0)
-	SET(UNMANAGED_LIBRARY_OUTPUT_SUBFOLDER "/UWP_arm")
-      ELSE()
 	SET(UNMANAGED_LIBRARY_OUTPUT_SUBFOLDER "/arm")
-      ENDIF()
-    ENDIF()
   ELSE()
-    IF("${CMAKE_SYSTEM_NAME}" STREQUAL "WindowsPhone")
-      SET(UNMANAGED_LIBRARY_OUTPUT_SUBFOLDER "/phone8_1_x86")
-    ELSEIF("${CMAKE_SYSTEM_NAME}" STREQUAL "WindowsStore")
-      IF(CMAKE_SYSTEM_VERSION MATCHES 10.0)
-	SET(UNMANAGED_LIBRARY_OUTPUT_SUBFOLDER "/UWP_x86")
-      ELSE()
-	SET(UNMANAGED_LIBRARY_OUTPUT_SUBFOLDER "/store8_1_x86")
-      ENDIF()
-    ELSE()
-      SET(UNMANAGED_LIBRARY_OUTPUT_SUBFOLDER "/x86")
-    ENDIF()
+    SET(UNMANAGED_LIBRARY_OUTPUT_SUBFOLDER "/x86")
   ENDIF()
-  #ELSEIF(APPLE)
-  #  SET(UNMANAGED_LIBRARY_OUTPUT_SUBFOLDER "/lib")
 ELSEIF()
   SET(UNMANAGED_LIBRARY_OUTPUT_SUBFOLDER "")
 ENDIF()
@@ -383,7 +385,7 @@ ENDIF()
 #  Setup Package information
 # ----------------------------------------------------------------------------
 SET(PACKAGE "${PROJECT_NAME}")
-SET(CPACK_PACKAGE_CONTACT "Emgu TF SUPPORT <support@emgu.com>")
+SET(CPACK_PACKAGE_CONTACT "Emgu TF support <support@emgu.com>")
 SET(PACKAGE_BUGREPORT "${CPACK_PACKAGE_CONTACT}")
 SET(PACKAGE_NAME "${PROJECT_NAME}")
 
@@ -505,9 +507,9 @@ IF(HAVE_WINDESKTOP)
     SET(EMGUTF_WINDOWS_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Windows")	
   ENDIF()
 
-  IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
-    SET(EMGUTF_WINDOWS_NUGET_ID "${EMGUTF_WINDOWS_NUGET_ID}-CR")
-  ENDIF()
+  #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
+  #  SET(EMGUTF_WINDOWS_NUGET_ID "${EMGUTF_WINDOWS_NUGET_ID}-CR")
+  #ENDIF()
   SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "${EMGUTF_WINDOWS_NUGET_FILE_LIST}  
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
@@ -519,9 +521,9 @@ ENDIF()
 
 IF(HAVE_ANDROID)
   SET(EMGUTF_ANDROID_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.runtime.android")
-  IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
-    SET(EMGUTF_ANDROID_NUGET_ID "${EMGUTF_ANDROID_NUGET_ID}-CR")  
-  ENDIF()
+  #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
+  #  SET(EMGUTF_ANDROID_NUGET_ID "${EMGUTF_ANDROID_NUGET_ID}-CR")  
+  #ENDIF()
   SET(EMGUTF_ANDROID_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Android")	
   SET(EMGUTF_ANDROID_NUGET_FILE_LIST " 
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Runtime.Android.dll\" target=\"lib\\MonoAndroid10\" />
@@ -539,15 +541,15 @@ ENDIF()
 
 IF(HAVE_OSX)
   SET(EMGUTF_MACOS_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.runtime.mac")
-  IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
-    SET(EMGUTF_MACOS_NUGET_ID "${EMGUTF_MACOS_NUGET_ID}-CR")  
-  ENDIF()
+  #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
+  #  SET(EMGUTF_MACOS_NUGET_ID "${EMGUTF_MACOS_NUGET_ID}-CR")  
+  #ENDIF()
   SET(EMGUTF_MACOS_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for MacOS")	
   SET(EMGUTF_MACOS_NUGET_FILE_LIST " 
-    <file src=\"..\\..\\..\\lib\\macos\\*.dylib\" target=\"build\" />
+    <file src=\"..\\..\\..\\lib\\macos\\*.dylib\" target=\"runtimes\\osx\\native\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
-	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
-	<file src=\"Emgu.TF.runtime.macos.targets\" target=\"build\\${EMGUTF_MACOS_NUGET_ID}.targets\" />")
+	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+	#<file src=\"Emgu.TF.runtime.macos.targets\" target=\"build\\${EMGUTF_MACOS_NUGET_ID}.targets\" />")
   SET(EMGUTF_MACOS_NUGET_DEPENDENCY "${EMGUTF_MACOS_NUGET_DEPENDENCY}
     <dependencies>
 		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
@@ -555,17 +557,17 @@ IF(HAVE_OSX)
 ENDIF()
 
 IF(HAVE_LINUX_X86_64)
-  SET(EMGUTF_UBUNTU_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.runtime.ubuntu")
-  IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
-    SET(EMGUTF_UBUNTU_NUGET_ID "${EMGUTF_UBUNTU_NUGET_ID}-CR")  
-  ENDIF()
+  SET(EMGUTF_UBUNTU_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.runtime.${NUGET_NATIVE_PLATFORM_ID_UBUNTU}")
+  #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
+  #  SET(EMGUTF_UBUNTU_NUGET_ID "${EMGUTF_UBUNTU_NUGET_ID}-CR")  
+  #ENDIF()
   SET(EMGUTF_UBUNTU_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Ubuntu")
   SET(EMGUTF_UBUNTU_NUGET_FILE_LIST " 
-    <file src=\"..\\..\\..\\lib\\x64\\*.so\" target=\"build\\x64\" />
-    <file src=\"..\\..\\..\\lib\\x64\\*.so.${TENSORFLOW_VERSION_MAJOR}\" target=\"build\\x64\" />
+    <file src=\"..\\..\\..\\lib\\x64\\*.so\" target=\"runtimes\\${NUGET_NATIVE_PLATFORM_ID_UBUNTU}\\native\" />
+    <file src=\"..\\..\\..\\lib\\x64\\*.so.${TENSORFLOW_VERSION_MAJOR}\" target=\"runtimes\\${NUGET_NATIVE_PLATFORM_ID_UBUNTU}\\native\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
-	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
-	<file src=\"Emgu.TF.runtime.ubuntu.targets\" target=\"build\\${EMGUTF_UBUNTU_NUGET_ID}.targets\" />")
+	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+	#<file src=\"Emgu.TF.runtime.ubuntu.targets\" target=\"build\\${EMGUTF_UBUNTU_NUGET_ID}.targets\" />")
   SET(EMGUTF_UBUNTU_NUGET_DEPENDENCY "${EMGUTF_UBUNTU_NUGET_DEPENDENCY}
     <dependencies>
 		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
@@ -573,16 +575,16 @@ IF(HAVE_LINUX_X86_64)
 ENDIF()
 
 IF(HAVE_LINUX_ARM)
-  SET(EMGUTF_RASPBIAN_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.runtime.raspbian")
-  IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
-    SET(EMGUTF_RASPBIAN_NUGET_ID "${EMGUTF_RASPBIAN_NUGET_ID}-CR")  
-  ENDIF()
+  SET(EMGUTF_RASPBIAN_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.runtime.${NUGET_NATIVE_PLATFORM_ID_RASPBIAN}")
+  #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
+  #  SET(EMGUTF_RASPBIAN_NUGET_ID "${EMGUTF_RASPBIAN_NUGET_ID}-CR")  
+  #ENDIF()
   SET(EMGUTF_RASPBIAN_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Raspian")		
   SET(EMGUTF_RASPBIAN_NUGET_FILE_LIST " 
-    <file src=\"..\\..\\..\\lib\\arm\\*.so\" target=\"build\\arm\" />
+    <file src=\"..\\..\\..\\lib\\arm\\*.so\" target=\"runtimes\\${NUGET_NATIVE_PLATFORM_ID_UBUNTU}\\native\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
-	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
-	<file src=\"Emgu.TF.runtime.raspbian.targets\" target=\"build\\${EMGUTF_RASPBIAN_NUGET_ID}.targets\" />")
+	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+	#<file src=\"Emgu.TF.runtime.raspbian.targets\" target=\"build\\${EMGUTF_RASPBIAN_NUGET_ID}.targets\" />")
   SET(EMGUTF_RASPBIAN_NUGET_DEPENDENCY "${EMGUTF_RASPBIAN_NUGET_DEPENDENCY}
     <dependencies>
 		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
@@ -591,60 +593,60 @@ ENDIF()
 
 IF(HAVE_LITE_BUILD)
   SET(EMGUTF_LITE_NUGET_ID "Emgu.TF.Lite")
+  SET(EMGUTF_LITE_NUGET_TITLE "Emgu TF Lite")
+	
   SET(EMGUTF_LITE_MODEL_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.Models")
-  
   
   SET(EMGUTF_LITE_WINDOWS_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.windows")  
   IF (HAVE_WINDESKTOP_X64_LITE_XNN)
     SET(EMGUTF_LITE_WINDOWS_NUGET_ID "${EMGUTF_LITE_WINDOWS_NUGET_ID}.xnn")  
   ENDIF()
-  IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
-    SET(EMGUTF_LITE_WINDOWS_NUGET_ID "${EMGUTF_LITE_WINDOWS_NUGET_ID}-CR")  
-  ENDIF()
+  #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
+  #  SET(EMGUTF_LITE_WINDOWS_NUGET_ID "${EMGUTF_LITE_WINDOWS_NUGET_ID}-CR")  
+  #ENDIF()
   SET(EMGUTF_LITE_WINDOWS_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Windows")	
   
   SET(EMGUTF_LITE_MACOS_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.mac")
-  IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
-    SET(EMGUTF_LITE_MACOS_NUGET_ID "${EMGUTF_LITE_MACOS_NUGET_ID}-CR")  
-  ENDIF()
+  #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
+  #  SET(EMGUTF_LITE_MACOS_NUGET_ID "${EMGUTF_LITE_MACOS_NUGET_ID}-CR")  
+  #ENDIF()
   SET(EMGUTF_LITE_MACOS_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for MacOS")	
   
-  SET(EMGUTF_LITE_UBUNTU_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.ubuntu") 
-  IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
-    SET(EMGUTF_LITE_UBUNTU_NUGET_ID "${EMGUTF_LITE_UBUNTU_NUGET_ID}-CR")  
-  ENDIF()  
+  SET(EMGUTF_LITE_UBUNTU_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.${NUGET_NATIVE_PLATFORM_ID_UBUNTU}") 
+  #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
+  #  SET(EMGUTF_LITE_UBUNTU_NUGET_ID "${EMGUTF_LITE_UBUNTU_NUGET_ID}-CR")  
+  #ENDIF()  
   SET(EMGUTF_LITE_UBUNTU_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Ubuntu")	
   
-  SET(EMGUTF_LITE_RASPBIAN_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.raspbian")
-  IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
-    SET(EMGUTF_LITE_RASPBIAN_NUGET_ID "${EMGUTF_LITE_RASPBIAN_NUGET_ID}-CR")  
-  ENDIF()
+  SET(EMGUTF_LITE_RASPBIAN_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.${NUGET_NATIVE_PLATFORM_ID_RASPBIAN}")
+  #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
+  #  SET(EMGUTF_LITE_RASPBIAN_NUGET_ID "${EMGUTF_LITE_RASPBIAN_NUGET_ID}-CR")  
+  #ENDIF()
   SET(EMGUTF_LITE_RASPBIAN_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Raspian")	
 
   SET(EMGUTF_LITE_ANDROID_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.android")  
-  IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
-    SET(EMGUTF_LITE_ANDROID_NUGET_ID "${EMGUTF_LITE_ANDROID_NUGET_ID}-CR")  
-  ENDIF()
+  #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
+  #  SET(EMGUTF_LITE_ANDROID_NUGET_ID "${EMGUTF_LITE_ANDROID_NUGET_ID}-CR")  
+  #ENDIF()
   SET(EMGUTF_LITE_ANDROID_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Android")	
   
   SET(EMGUTF_LITE_IOS_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.ios")  
-  IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
-    SET(EMGUTF_LITE_IOS_NUGET_ID "${EMGUTF_LITE_IOS_NUGET_ID}-CR")  
-  ENDIF()
+  #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
+  #  SET(EMGUTF_LITE_IOS_NUGET_ID "${EMGUTF_LITE_IOS_NUGET_ID}-CR")  
+  #ENDIF()
   SET(EMGUTF_LITE_IOS_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for iOS")	
 
-  SET(EMGUTF_LITE_NUGET_TITLE "Emgu TF Lite")
   SET(EMGUTF_LITE_MODEL_NUGET_TITLE "Emgu TF Lite Models")
   #MESSAGE(STATUS ">>> HAVE_WINDESKTOP_LITE: ${HAVE_WINDESKTOP_LITE}")
   
-  IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
-    #MESSAGE(STATUS ">>> TF Lite Commercial license")
-    SET(EMGUTF_LITE_NUGET_ID "${EMGUTF_LITE_NUGET_ID}-CR")
-    SET(EMGUTF_LITE_MODEL_NUGET_ID "${EMGUTF_LITE_MODEL_NUGET_ID}-CR")
-    
-    SET(EMGUTF_LITE_NUGET_TITLE "${EMGUTF_LITE_NUGET_TITLE} Commercial Release")
-    SET(EMGUTF_LITE_MODEL_NUGET_TITLE "${EMGUTF_LITE_MODEL_NUGET_TITLE} Commercial Release")
-  ENDIF()  
+  #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
+  #  #MESSAGE(STATUS ">>> TF Lite Commercial license")
+  #  SET(EMGUTF_LITE_NUGET_ID "${EMGUTF_LITE_NUGET_ID}-CR")
+  #  SET(EMGUTF_LITE_MODEL_NUGET_ID "${EMGUTF_LITE_MODEL_NUGET_ID}-CR")
+  #  
+  #  SET(EMGUTF_LITE_NUGET_TITLE "${EMGUTF_LITE_NUGET_TITLE} Commercial Release")
+  #  SET(EMGUTF_LITE_MODEL_NUGET_TITLE "${EMGUTF_LITE_MODEL_NUGET_TITLE} Commercial Release")
+  #ENDIF()  
   
   IF (HAVE_IOS_LITE)
   SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
@@ -721,10 +723,10 @@ ENDIF()
 
 IF (HAVE_WINDESKTOP OR HAVE_WINDESKTOP_LITE)
 	SET(EMGU_WINDOWS_MSVCRT_X64_NUGET_FILE_LIST "${EMGU_WINDOWS_MSVCRT_X86_NUGET_FILE_LIST} 
-	<file src=\"..\\..\\..\\lib\\x64\\concrt*.dll\" target=\"build\\x64\" /> 
-	<file src=\"..\\..\\..\\lib\\x64\\msvcp*.dll\" target=\"build\\x64\" /> 
-	<file src=\"..\\..\\..\\lib\\x64\\vcruntime*.dll\" target=\"build\\x64\" />     
-	<file src=\"..\\..\\..\\lib\\x64\\vccorlib*.dll\" target=\"build\\x64\" />     
+	<file src=\"..\\..\\..\\lib\\x64\\concrt*.dll\" target=\"runtimes\\win-x64\\native\" /> 
+	<file src=\"..\\..\\..\\lib\\x64\\msvcp*.dll\" target=\"runtimes\\win-x64\\native\" /> 
+	<file src=\"..\\..\\..\\lib\\x64\\vcruntime*.dll\" target=\"runtimes\\win-x64\\native\" />     
+	<file src=\"..\\..\\..\\lib\\x64\\vccorlib*.dll\" target=\"runtimes\\win-x64\\native\" />     
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
     <file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
 	IF(MSVC)
@@ -740,10 +742,10 @@ ENDIF()
 
 IF( HAVE_WINDESKTOP_LITE )
   SET(EMGUTF_LITE_WINDOWS_NUGET_FILE_LIST "${EMGUTF_LITE_WINDOWS_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\..\\lib\\x64\\*.dll\" exclude=\"..\\..\\..\\lib\\x64\\concrt*.dll;..\\..\\..\\lib\\x64\\msvcp*.dll;..\\..\\..\\lib\\x64\\vcruntime*.dll;..\\..\\..\\lib\\x64\\vccorlib*.dll\" target=\"build\\x64\" />
+    <file src=\"..\\..\\..\\lib\\x64\\*.dll\" exclude=\"..\\..\\..\\lib\\x64\\concrt*.dll;..\\..\\..\\lib\\x64\\msvcp*.dll;..\\..\\..\\lib\\x64\\vcruntime*.dll;..\\..\\..\\lib\\x64\\vccorlib*.dll\" target=\"runtimes\\win-x64\\native\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
-	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
-	<file src=\"Emgu.TF.Lite.runtime.windows.targets\" target=\"build\\${EMGUTF_LITE_WINDOWS_NUGET_ID}.targets\" />")
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />")
+	#<file src=\"Emgu.TF.Lite.runtime.windows.targets\" target=\"build\\${EMGUTF_LITE_WINDOWS_NUGET_ID}.targets\" />")
   SET(EMGUTF_LITE_WINDOWS_NUGET_DEPENDENCY "
     <dependencies>
 	    ${EMGUTF_LITE_WINDOWS_NUGET_DEPENDENCY}
@@ -753,10 +755,10 @@ ENDIF()
 
 IF( HAVE_OSX_LITE ) 
   SET(EMGUTF_LITE_MACOS_NUGET_FILE_LIST "${EMGUTF_LITE_MACOS_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\..\\lib\\macos\\*.dylib\" target=\"build\" />
+    <file src=\"..\\..\\..\\lib\\macos\\*.dylib\" target=\"runtimes\\osx\\native\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
-	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
-	<file src=\"Emgu.TF.Lite.runtime.macos.targets\" target=\"build\\${EMGUTF_LITE_MACOS_NUGET_ID}.targets\" />")
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />")
+	#<file src=\"Emgu.TF.Lite.runtime.macos.targets\" target=\"build\\${EMGUTF_LITE_MACOS_NUGET_ID}.targets\" />")
   SET(EMGUTF_LITE_MACOS_NUGET_DEPENDENCY "${EMGUTF_LITE_MACOS_NUGET_DEPENDENCY}
     <dependencies>
 		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
@@ -785,10 +787,10 @@ IF(HAVE_ANDROID_LITE)
 ENDIF()
 IF (HAVE_LINUX_X86_64_LITE)
   SET(EMGUTF_LITE_UBUNTU_NUGET_FILE_LIST "${EMGUTF_LITE_UBUNTU_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\..\\lib\\x64\\*.so\" target=\"build\\x64\" />
+    <file src=\"..\\..\\..\\lib\\x64\\*.so\" target=\"runtimes\\${NUGET_NATIVE_PLATFORM_ID_UBUNTU}\\native\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
-	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
-	<file src=\"Emgu.TF.Lite.runtime.ubuntu.targets\" target=\"build\\${EMGUTF_LITE_UBUNTU_NUGET_ID}.targets\" />")
+	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+	#<file src=\"Emgu.TF.Lite.runtime.ubuntu.targets\" target=\"build\\${EMGUTF_LITE_UBUNTU_NUGET_ID}.targets\" />")
   SET(EMGUTF_LITE_UBUNTU_NUGET_DEPENDENCY "${EMGUTF_LITE_UBUNTU_NUGET_DEPENDENCY}
     <dependencies>
 		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
@@ -796,10 +798,10 @@ IF (HAVE_LINUX_X86_64_LITE)
 ENDIF()
 IF (HAVE_LINUX_ARM_LITE)
   SET(EMGUTF_LITE_RASPBIAN_NUGET_FILE_LIST "${EMGUTF_LITE_RASPBIAN_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\..\\lib\\arm\\*.so\" target=\"build\\arm\" />
+    <file src=\"..\\..\\..\\lib\\arm\\*.so\" target=\"runtimes\\${NUGET_NATIVE_PLATFORM_ID_RASPBIAN}\\native\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
-	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
-	<file src=\"Emgu.TF.Lite.runtime.raspbian.targets\" target=\"build\\${EMGUTF_LITE_RASPBIAN_NUGET_ID}.targets\" />")
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />")
+	#<file src=\"Emgu.TF.Lite.runtime.raspbian.targets\" target=\"build\\${EMGUTF_LITE_RASPBIAN_NUGET_ID}.targets\" />")
   SET(EMGUTF_LITE_RASPBIAN_NUGET_DEPENDENCY "${EMGUTF_LITE_RASPBIAN_NUGET_DEPENDENCY}
     <dependencies>
 		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
@@ -1036,7 +1038,7 @@ IF(HAVE_WINDESKTOP)
 	#<file src=\"..\\..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />")
   ENDIF()
   SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "${EMGUTF_WINDOWS_NUGET_FILE_LIST} 
-	<file src=\"..\\..\\..\\lib\\x64\\*.dll\" exclude=\"..\\..\\..\\lib\\x64\\cu*.dll;..\\..\\..\\lib\\x64\\concrt*.dll;..\\..\\..\\lib\\x64\\msvcp*.dll;..\\..\\..\\lib\\x64\\vcruntime*.dll;..\\..\\..\\lib\\x64\\vccorlib*.dll\" target=\"build\\x64\" />")
+	<file src=\"..\\..\\..\\lib\\x64\\*.dll\" exclude=\"..\\..\\..\\lib\\x64\\cu*.dll;..\\..\\..\\lib\\x64\\concrt*.dll;..\\..\\..\\lib\\x64\\msvcp*.dll;..\\..\\..\\lib\\x64\\vcruntime*.dll;..\\..\\..\\lib\\x64\\vccorlib*.dll\" target=\"runtimes\\win-x64\\native\" />")
 ENDIF()
 
 IF (HAVE_WINDESKTOP OR HAVE_WINDESKTOP_LITE)
@@ -1401,8 +1403,8 @@ IF (WIN32)
   #  Add menu link for web sites
   # ----------------------------------------------------------------------------
   LIST(APPEND CPACK_NSIS_MENU_LINKS "${EMGUTF_MAIN_WEB_URL}" "Emgu TF wiki")
-  #LIST(APPEND CPACK_NSIS_MENU_LINKS "http://www.emgu.com/forum" "Emgu TF Discussion Forums")
-  LIST(APPEND CPACK_NSIS_MENU_LINKS "https://github.com/emgucv/emgutf/issues" "Emgu TF Bug Tracking")
+  LIST(APPEND CPACK_NSIS_MENU_LINKS "https://github.com/emgucv/emgutf/discussions" "Discussions")
+  LIST(APPEND CPACK_NSIS_MENU_LINKS "https://github.com/emgucv/emgutf/issues" "Issues Tracking")
   
   # ----------------------------------------------------------------------------
   #  Add menu link for Visual Studio solutions 
