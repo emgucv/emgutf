@@ -137,7 +137,7 @@ namespace Emgu.TF
                 Environment.CurrentDirectory = loadDirectory;
                 if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
                 {
-                    bool setDllDirectorySuccess = Emgu.TF.Util.Toolbox.SetDllDirectory(loadDirectory);
+                    bool setDllDirectorySuccess = Emgu.TF.Util.Toolbox.AddDllDirectory(loadDirectory);
                 }
             }
 
