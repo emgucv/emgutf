@@ -142,8 +142,11 @@ namespace CVInterop.Lite.Net
 
         public async Task Init()
         {
-            await _mobileNet.Init();
+            //IDelegate d1 = TfLiteInvoke.DefaultGpuDelegate;
+            //IDelegate d2 = TfLiteInvoke.DefaultGpuDelegateV2;
             //await _mobileNet.Init(null, null, "CocoSsdMobilenetV3", TfLiteInvoke.DefaultGpuDelegateV2);
+
+            await _mobileNet.Init();
         }
 
         private async void openFileButton_Click(object sender, EventArgs e)

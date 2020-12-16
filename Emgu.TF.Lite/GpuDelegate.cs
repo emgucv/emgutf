@@ -11,16 +11,16 @@ using System.Runtime.InteropServices;
 namespace Emgu.TF.Lite
 {
     /// <summary>
-    /// Gpu Delegate V2 for Android
+    /// GPU delegate for iOS using metal
     /// </summary>
-    public class GpuDelegateV2 : Emgu.TF.Util.UnmanagedObject, IDelegate
+    public class GpuDelegate : Emgu.TF.Util.UnmanagedObject, IDelegate
     {
         /// <summary>
-        /// Gpu Delegate V2 for Android
+        /// GPU delegate for iOS using metal
         /// </summary>
-        public GpuDelegateV2()
+        public GpuDelegate()
         {
-            _ptr = TfLiteInvoke.tfeGpuDelegateV2Create();
+            _ptr = TfLiteInvoke.tfeGpuDelegateCreate();
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Emgu.TF.Lite
         {
             if (IntPtr.Zero != _ptr)
             {
-                TfLiteInvoke.tfeGpuDelegateV2Delete(ref _ptr);
+                TfLiteInvoke.tfeGpuDelegateDelete(ref _ptr);
             }
         }
     }
@@ -46,28 +46,28 @@ namespace Emgu.TF.Lite
     public static partial class TfLiteInvoke
     {
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
-        internal static extern IntPtr tfeGpuDelegateV2Create();
+        internal static extern IntPtr tfeGpuDelegateCreate();
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
-        internal static extern void tfeGpuDelegateV2Delete(ref IntPtr delegatePtr);
+        internal static extern void tfeGpuDelegateDelete(ref IntPtr delegatePtr);
 
-        private static GpuDelegateV2 _gpuDelegateV2;
+        private static GpuDelegate _gpuDelegate;
 
         /// <summary>
-        /// Get the default GPU delegate V2 for Android
+        /// Get the default GPU delegate for iOS using metal
         /// </summary>
-        public static GpuDelegateV2 DefaultGpuDelegateV2
+        public static GpuDelegate DefaultGpuDelegate
         {
             get
             {
-                if (_gpuDelegateV2 == null)
+                if (_gpuDelegate == null)
                 {
-                    GpuDelegateV2 d = new GpuDelegateV2();
+                    GpuDelegate d = new GpuDelegate();
                     if (d.Ptr != IntPtr.Zero)
-                        _gpuDelegateV2 = d;
+                        _gpuDelegate = d;
                 }
 
-                return _gpuDelegateV2;
+                return _gpuDelegate;
             }
 
         }
