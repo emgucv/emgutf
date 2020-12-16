@@ -54,7 +54,7 @@ namespace Emgu.TF.Lite
         private static GpuDelegateV2 _gpuDelegateV2;
 
         /// <summary>
-        /// Get tge default Gpu Delegate V2
+        /// Get the default Gpu Delegate V2
         /// </summary>
         public static GpuDelegateV2 DefaultGpuDelegateV2
         {
@@ -62,7 +62,9 @@ namespace Emgu.TF.Lite
             {
                 if (_gpuDelegateV2 == null)
                 {
-                    _gpuDelegateV2 = new GpuDelegateV2();
+                    GpuDelegateV2 d = new GpuDelegateV2();
+                    if (d.Ptr != IntPtr.Zero)
+                        _gpuDelegateV2 = d;
                 }
 
                 return _gpuDelegateV2;

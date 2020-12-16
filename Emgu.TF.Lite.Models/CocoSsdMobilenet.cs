@@ -86,6 +86,14 @@ namespace Emgu.TF.Lite.Models
         /// </summary>
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
 
+        /// <summary>
+        /// Initialize the CocoSSDMobileNet model
+        /// </summary>
+        /// <param name="modelFiles">Two files, first one is the tflite flatbuffer model files, second is a text file that contains the labels</param>
+        /// <param name="downloadUrl">The url to download the files from the internet.</param>
+        /// <param name="localModelFolder">The local folder to store the models.</param>
+        /// <param name="optDelegate">An optional hardware delegate</param>
+        /// <returns>Async task</returns>
         public virtual
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             IEnumerator
@@ -95,9 +103,9 @@ namespace Emgu.TF.Lite.Models
             Init(
                 String[] modelFiles, 
                 String downloadUrl,
-                String localModelFolder)
+                String localModelFolder,
+                IDelegate optDelegate = null)
         {
-
             _downloadManager.Clear();
             String url = downloadUrl;
             String[] fileNames = modelFiles;
@@ -123,7 +131,7 @@ namespace Emgu.TF.Lite.Models
             }
         }
 
-        private void ImportGraph()
+        private void ImportGraph(IDelegate optDelegate = null)
         {
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
@@ -176,7 +184,10 @@ namespace Emgu.TF.Lite.Models
                     _interpreter.SetNumThreads(4);
                 }
                 //_interpreter.Build(_model);
-
+                if (optDelegate != null)
+                {
+                    _interpreter.ModifyGraphWithDelegate(optDelegate);
+                }
                 Status allocateTensorStatus = _interpreter.AllocateTensors();
                 if (allocateTensorStatus == Status.Error)
                     throw new Exception("Failed to allocate tensor");

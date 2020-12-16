@@ -38,17 +38,18 @@ namespace Emgu.TF.Lite.Models
             Init(
                 String[] modelFiles = null, 
                 String downloadUrl = null,
-                String localModelFolder = "CocoSsdMobilenetV1")
+                String localModelFolder = "CocoSsdMobilenetV1",
+                IDelegate optDelegate = null)
         {
             downloadUrl = ( downloadUrl == null ? "https://github.com/emgucv/models/raw/master/coco_ssd_mobilenet_v1_1.0_quant_2018_06_29/" : downloadUrl );
             modelFiles = (modelFiles == null ? new string[] { "detect.tflite", "labelmap.txt" } : modelFiles);
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-            var e = base.Init(modelFiles, downloadUrl, localModelFolder);
+            var e = base.Init(modelFiles, downloadUrl, localModelFolder, optDelegate);
             while(e.MoveNext())
                 yield return e.Current;
 #else
-            await base.Init(modelFiles, downloadUrl, localModelFolder);
+            await base.Init(modelFiles, downloadUrl, localModelFolder, optDelegate);
 #endif
 
         }
