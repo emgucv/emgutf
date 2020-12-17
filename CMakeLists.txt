@@ -722,7 +722,8 @@ ENDIF()
 
 
 IF (HAVE_WINDESKTOP OR HAVE_WINDESKTOP_LITE)
-	SET(EMGU_WINDOWS_MSVCRT_X64_NUGET_FILE_LIST "${EMGU_WINDOWS_MSVCRT_X86_NUGET_FILE_LIST} 
+    SET(EMGU_WINDOWS_MSVCRT_X64_NUGET_TITLE "MSVC x64 runtime for windows")
+	SET(EMGU_WINDOWS_MSVCRT_X64_NUGET_FILE_LIST "${EMGU_WINDOWS_MSVCRT_X64_NUGET_FILE_LIST} 
 	<file src=\"..\\..\\..\\lib\\x64\\concrt*.dll\" target=\"runtimes\\win-x64\\native\" /> 
 	<file src=\"..\\..\\..\\lib\\x64\\msvcp*.dll\" target=\"runtimes\\win-x64\\native\" /> 
 	<file src=\"..\\..\\..\\lib\\x64\\vcruntime*.dll\" target=\"runtimes\\win-x64\\native\" />     
