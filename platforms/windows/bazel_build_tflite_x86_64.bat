@@ -65,9 +65,9 @@ SET OUTPUT_BASE_DIR=%~dp0output_base
 IF NOT EXIST %OUTPUT_USER_ROOT_DIR% mkdir %OUTPUT_USER_ROOT_DIR%
 IF NOT EXIST %OUTPUT_BASE_DIR% mkdir %OUTPUT_BASE_DIR%
 
-IF NOT "%3%"=="clean" GOTO END_OF_CLEAN
-rm -rf %USERPROFILE%\_bazel_%USERNAME%
-:END_OF_CLEAN
+REM IF NOT "%3%"=="clean" GOTO END_OF_CLEAN
+REM rm -rf %USERPROFILE%\_bazel_%USERNAME%
+REM :END_OF_CLEAN
 
 SET PROGRAMFILES_DIR_X86=%programfiles(x86)%
 if NOT EXIST "%PROGRAMFILES_DIR_X86%" SET PROGRAMFILES_DIR_X86=%programfiles%
@@ -113,7 +113,6 @@ SET MSYS_PATH=C:\msys64
 SET MSYS_BIN=%MSYS_PATH%\usr\bin
 IF EXIST "%MSYS_BIN%\bazel.exe" SET BAZEL_COMMAND=%MSYS_BIN%\bazel.exe
 
-
 call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build  --copt="-O2" --cxxopt="-O2" %BAZEL_XNN_FLAGS% %DOCKER_FLAGS% -c opt //tensorflow/tfliteextern:libtfliteextern.so --verbose_failures
       
 cd ..
@@ -123,12 +122,12 @@ cp -f tensorflow/bazel-bin/tensorflow/tfliteextern/libtfliteextern.so lib/x64/tf
 
 :START_OF_MSVC_DEPENDENCY
 IF "%BAZEL_VC%"=="" GOTO END_OF_MSVC_DEPENDENCY
-IF "%DEVENV%"=="%VS2017%" GOTO VS2017_DEPEDENCY
-IF "%DEVENV%"=="%VS2019%" GOTO VS2019_DEPEDENCY
-IF "%DEVENV%"=="%BUILDTOOLS%" GOTO VS2019_DEPEDENCY
+IF "%DEVENV%"=="%VS2017%" GOTO VS2017_DEPENDENCY
+IF "%DEVENV%"=="%VS2019%" GOTO VS2019_DEPENDENCY
+IF "%DEVENV%"=="%BUILDTOOLS%" GOTO VS2019_DEPENDENCY
 GOTO END_OF_MSVC_DEPENDENCY
 
-:VS2017_DEPEDENCY
+:VS2017_DEPENDENCY
 for /d %%i in ( "%BAZEL_VC%\Redist\MSVC\*" ) do SET VS2017_REDIST=%%i\x64\Microsoft.VC141.CRT
 copy /Y "%VS2017_REDIST%\*140.dll" lib\x64\
 copy /Y "%VS2017_REDIST%\*140_1.dll" lib\x64\
@@ -136,11 +135,11 @@ copy /Y "%VS2017_REDIST%\*140_2.dll" lib\x64\
 REM　rm lib\x64\vccorlib140.dll
 GOTO END_OF_MSVC_DEPENDENCY
 
-:VS2019_DEPEDENCY
+:VS2019_DEPENDENCY
 for /d %%i in ( "%BAZEL_VC%\Redist\MSVC\14*" ) do SET VS2019_REDIST=%%i\x64\Microsoft.VC142.CRT
-copy /Y "%VS2019_REDIST%\*140.dll" lib\x64\
-copy /Y "%VS2019_REDIST%\*140_1.dll" lib\x64\
-copy /Y "%VS2019_REDIST%\*140_2.dll" lib\x64\
+copy /Y "%VS2019_REDIST%\*.dll" lib\x64\
+REM copy /Y "%VS2019_REDIST%\*140_1.dll" lib\x64\
+REM copy /Y "%VS2019_REDIST%\*140_2.dll" lib\x64\
 REM rm lib\x64\vccorlib140.dll
 
 :END_OF_MSVC_DEPENDENCY

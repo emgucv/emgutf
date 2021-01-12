@@ -59,6 +59,22 @@ IF EXIST "C:\python38" SET PYTHON_BASE_PATH=C:\python38
 SET PYTHON_BIN_PATH=%PYTHON_BASE_PATH%\python.exe
 SET PYTHON_LIB_PATH=%PYTHON_BASE_PATH%\lib\site-packages
 
+IF NOT "%3%"=="docker" GOTO ENV_NOT_DOCKER
+
+:ENV_DOCKER
+SET DOCKER_FLAGS=--define=EXECUTOR=remote --experimental_docker_verbose --experimental_enable_docker_sandbox
+SET OUTPUT_USER_ROOT_DIR=c:\bazel_output_user_root
+SET OUTPUT_BASE_DIR=c:\bazel_output_base
+GOTO END_OF_DOCKER
+
+:ENV_NOT_DOCKER
+SET OUTPUT_USER_ROOT_DIR=%~dp0output_user_root
+SET OUTPUT_BASE_DIR=%~dp0output_base
+
+:END_OF_DOCKER
+IF NOT EXIST %OUTPUT_USER_ROOT_DIR% mkdir %OUTPUT_USER_ROOT_DIR%
+IF NOT EXIST %OUTPUT_BASE_DIR% mkdir %OUTPUT_BASE_DIR%
+
 REM BUILD TENSORFLOW
 @echo on
 REM cp -r tfextern tensorflow/tensorflow
@@ -68,8 +84,6 @@ cd tensorflow\tensorflow\tools\ci_build\windows
 SET MSYS64_PATH=c:\msys64
 SET MSYS64_BIN=%MSYS64_PATH%\usr\bin
 
-IF NOT EXIST %~dp0tmp mkdir %~dp0tmp
-SET TMPDIR=%~dp0tmp
 
 IF "%2%" == "gpu" GOTO BUILD_GPU
 :BUILD_CPU
@@ -107,7 +121,13 @@ IF NOT EXIST lib\x64 mkdir lib\x64
 
 REM one more try to make sure it builds, in-case bazel doesn't like msys64 bash.
 cd tensorflow
-call bazel build //tensorflow/tfextern:libtfextern.so --verbose_failures --local_ram_resources="HOST_RAM*.4" --local_cpu_resources="HOST_CPUS*.5"
+
+SET BAZEL_COMMAND=bazel.exe
+SET MSYS_PATH=C:\msys64
+SET MSYS_BIN=%MSYS_PATH%\usr\bin
+IF EXIST "%MSYS_BIN%\bazel.exe" SET BAZEL_COMMAND=%MSYS_BIN%\bazel.exe
+
+call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build //tensorflow/tfextern:libtfextern.so --verbose_failures %DOCKER_FLAGS% --local_ram_resources="HOST_RAM*.4" --local_cpu_resources="HOST_CPUS*.5"
 cd ..
 
 cp -f tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so lib/x64/tfextern.dll
@@ -130,8 +150,8 @@ GOTO END_OF_MSVC_DEPENDENCY
 :VS2019_DEPENDENCY
 for /d %%i in ( "%BAZEL_VC%\Redist\MSVC\14*" ) do SET VS2019_REDIST=%%i\x64\Microsoft.VC142.CRT
 copy /Y "%VS2019_REDIST%\*.dll" lib\x64\
-copy /Y "%VS2019_REDIST%\*140_1.dll" lib\x64\
-copy /Y "%VS2019_REDIST%\*140_2.dll" lib\x64\
+REM copy /Y "%VS2019_REDIST%\*140_1.dll" lib\x64\
+REM copy /Y "%VS2019_REDIST%\*140_2.dll" lib\x64\
 REM rm lib\x64\vccorlib140.dll
 
 :END_OF_MSVC_DEPENDENCY
@@ -152,15 +172,14 @@ copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cusparse*.dll" lib\x64\
 cp -rf tensorflow\bazel-bin\external\protobuf_archive .
 cp -rf tensorflow\bazel-tensorflow\external\protobuf_archive .
 
-IF "%3%"=="dev" GOTO END_OF_CLEAN
-
-:CLEAN
-cd tensorflow
-bazel clean
-bazel shutdown
-rm -rf c:\tmp\_bazel_canming
-rm -rf c:\tmp\install\*
-:END_OF_CLEAN
+REM IF "%4%"=="dev" GOTO END_OF_CLEAN
+REM :CLEAN
+REM cd tensorflow
+REM bazel clean
+REM bazel shutdown
+REM rm -rf c:\tmp\_bazel_canming
+REM rm -rf c:\tmp\install\*
+REM :END_OF_CLEAN
 
 popd
 
