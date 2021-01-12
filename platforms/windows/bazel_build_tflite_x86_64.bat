@@ -53,15 +53,17 @@ IF NOT "%3%"=="docker" GOTO ENV_NOT_DOCKER
 
 :ENV_DOCKER
 SET DOCKER_FLAGS=--define=EXECUTOR=remote --experimental_docker_verbose --experimental_enable_docker_sandbox
-IF NOT EXIST c:\tmp mkdir c:\tmp
-SET TMPDIR=c:\tmp
+SET OUTPUT_USER_ROOT_DIR=c:\bazel_output_user_root
+SET OUTPUT_BASE_DIR=c:\bazel_output_base
 GOTO END_OF_DOCKER
 
 :ENV_NOT_DOCKER
-IF NOT EXIST %~dp0tmp mkdir %~dp0tmp
-SET TMPDIR=%~dp0tmp
+SET OUTPUT_USER_ROOT_DIR=%~dp0output_user_root
+SET OUTPUT_BASE_DIR=%~dp0output_base
 
 :END_OF_DOCKER
+IF NOT EXIST %OUTPUT_USER_ROOT_DIR% mkdir %OUTPUT_USER_ROOT_DIR%
+IF NOT EXIST %OUTPUT_BASE_DIR% mkdir %OUTPUT_BASE_DIR%
 
 IF NOT "%3%"=="clean" GOTO END_OF_CLEAN
 rm -rf %USERPROFILE%\_bazel_%USERNAME%
@@ -112,7 +114,7 @@ SET MSYS_BIN=%MSYS_PATH%\usr\bin
 IF EXIST "%MSYS_BIN%\bazel.exe" SET BAZEL_COMMAND=%MSYS_BIN%\bazel.exe
 
 
-call %BAZEL_COMMAND% --output_user_root=%TMPDIR% build  --copt="-O2" --cxxopt="-O2" %BAZEL_XNN_FLAGS% %DOCKER_FLAGS% -c opt //tensorflow/tfliteextern:libtfliteextern.so --verbose_failures
+call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build  --copt="-O2" --cxxopt="-O2" %BAZEL_XNN_FLAGS% %DOCKER_FLAGS% -c opt //tensorflow/tfliteextern:libtfliteextern.so --verbose_failures
       
 cd ..
 
