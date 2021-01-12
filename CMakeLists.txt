@@ -428,6 +428,8 @@ SET(CPACK_PACKAGE_FILE_NAME "lib${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}${
 MESSAGE(STATUS "CPACK_PACKAGE_FILE_NAME is ${CPACK_PACKAGE_FILE_NAME}")
 FILE(WRITE "emgutf.version.txt" "${CPACK_PACKAGE_VERSION}${LICENSE_LABEL}")
 
+SET(CPACK_PACKAGE_DEPENDENCY_VERSION "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}.*")
+
 SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/${LICENSE_FILE_NAME}")
 
 IF (WIN32 OR APPLE)
@@ -515,7 +517,7 @@ IF(HAVE_WINDESKTOP)
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"Emgu.TF.runtime.windows.targets\" target=\"build\\${EMGUTF_WINDOWS_NUGET_ID}.targets\" />")
   SET(EMGUTF_WINDOWS_NUGET_DEPENDENCY "${EMGUTF_WINDOWS_NUGET_DEPENDENCY}
-		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />") 
+		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />") 
 ENDIF()
 
 
@@ -533,7 +535,7 @@ IF(HAVE_ANDROID)
   SET(EMGUTF_ANDROID_NUGET_DEPENDENCY "${EMGUTF_ANDROID_NUGET_DEPENDENCY}
     <dependencies>
 	    <group targetFramework=\"MonoAndroid1.0\">
-		    <dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+		    <dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
 		    <dependency id=\"Xamarin.Android.Support.v7.AppCompat\" version=\"28.0.0.3\" />
 		</group>
     </dependencies>") 
@@ -552,7 +554,7 @@ IF(HAVE_OSX)
 	#<file src=\"Emgu.TF.runtime.macos.targets\" target=\"build\\${EMGUTF_MACOS_NUGET_ID}.targets\" />")
   SET(EMGUTF_MACOS_NUGET_DEPENDENCY "${EMGUTF_MACOS_NUGET_DEPENDENCY}
     <dependencies>
-		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
     </dependencies>") 
 ENDIF()
 
@@ -570,7 +572,7 @@ IF(HAVE_LINUX_X86_64)
 	#<file src=\"Emgu.TF.runtime.ubuntu.targets\" target=\"build\\${EMGUTF_UBUNTU_NUGET_ID}.targets\" />")
   SET(EMGUTF_UBUNTU_NUGET_DEPENDENCY "${EMGUTF_UBUNTU_NUGET_DEPENDENCY}
     <dependencies>
-		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
     </dependencies>")   
 ENDIF()
 
@@ -587,7 +589,7 @@ IF(HAVE_LINUX_ARM)
 	#<file src=\"Emgu.TF.runtime.raspbian.targets\" target=\"build\\${EMGUTF_RASPBIAN_NUGET_ID}.targets\" />")
   SET(EMGUTF_RASPBIAN_NUGET_DEPENDENCY "${EMGUTF_RASPBIAN_NUGET_DEPENDENCY}
     <dependencies>
-		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
     </dependencies>")
 ENDIF()
 
@@ -680,7 +682,7 @@ IF( HAVE_OSX_LITE )
     <file src=\"..\\..\\..\\lib\\macos\\Emgu.TF.Lite.Models.xml\" target=\"lib\\Xamarin.Mac20\" />")
   SET(EMGUTF_LITE_MODEL_NUGET_DEPENDENCY "${EMGUTF_LITE_MODEL_NUGET_DEPENDENCY}
     <group targetFramework=\"Xamarin.Mac2.0\">
-        <dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+        <dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
     </group>")	
 ENDIF()	
   IF (HAVE_IOS_LITE)
@@ -689,7 +691,7 @@ ENDIF()
 	<file src=\"..\\..\\..\\lib\\ios\\Emgu.TF.Lite.Models.xml\" target=\"lib\\xamarinios10\" />")
   SET(EMGUTF_LITE_MODEL_NUGET_DEPENDENCY "${EMGUTF_LITE_MODEL_NUGET_DEPENDENCY}
     <group targetFramework=\"Xamarin.iOS1.0\">
-        <dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+        <dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
     </group>")	
   ENDIF()
   IF (HAVE_ANDROID_LITE)
@@ -698,7 +700,7 @@ ENDIF()
 	<file src=\"..\\..\\..\\lib\\android\\Emgu.TF.Lite.Models.xml\" target=\"lib\\MonoAndroid10\" />")
   SET(EMGUTF_LITE_MODEL_NUGET_DEPENDENCY "${EMGUTF_LITE_MODEL_NUGET_DEPENDENCY}
     <group targetFramework=\"MonoAndroid1.0\">
-        <dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+        <dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
 		<dependency id=\"Xamarin.Android.Support.v7.AppCompat\" version=\"28.0.0.3\" />
     </group>")	  
   ENDIF()
@@ -710,7 +712,7 @@ ENDIF()
 
   SET(EMGUTF_LITE_MODEL_NUGET_DEPENDENCY "${EMGUTF_LITE_MODEL_NUGET_DEPENDENCY}
     <group targetFramework=\".NETStandard2.0\">
-        <dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+        <dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
         <dependency id=\"System.Drawing.Common\" version=\"5.0.0\" exclude=\"Build,Analyzers\"/>
     </group>")
   SET(EMGUTF_LITE_MODEL_NUGET_DEPENDENCY "
@@ -750,7 +752,7 @@ IF( HAVE_WINDESKTOP_LITE )
   SET(EMGUTF_LITE_WINDOWS_NUGET_DEPENDENCY "
     <dependencies>
 	    ${EMGUTF_LITE_WINDOWS_NUGET_DEPENDENCY}
-		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
     </dependencies>")
 ENDIF()
 
@@ -762,7 +764,7 @@ IF( HAVE_OSX_LITE )
 	#<file src=\"Emgu.TF.Lite.runtime.macos.targets\" target=\"build\\${EMGUTF_LITE_MACOS_NUGET_ID}.targets\" />")
   SET(EMGUTF_LITE_MACOS_NUGET_DEPENDENCY "${EMGUTF_LITE_MACOS_NUGET_DEPENDENCY}
     <dependencies>
-		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
     </dependencies>")	
 ENDIF()
 IF (HAVE_IOS_LITE)
@@ -781,7 +783,7 @@ IF(HAVE_ANDROID_LITE)
   SET(EMGUTF_LITE_ANDROID_NUGET_DEPENDENCY "${EMGUTF_LITE_ANDROID_NUGET_DEPENDENCY}
     <dependencies>
 	    <group targetFramework=\"MonoAndroid1.0\">
-		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
 		<dependency id=\"Xamarin.Android.Support.v7.AppCompat\" version=\"28.0.0.3\" />
 		</group>
     </dependencies>")
@@ -794,7 +796,7 @@ IF (HAVE_LINUX_X86_64_LITE)
 	#<file src=\"Emgu.TF.Lite.runtime.ubuntu.targets\" target=\"build\\${EMGUTF_LITE_UBUNTU_NUGET_ID}.targets\" />")
   SET(EMGUTF_LITE_UBUNTU_NUGET_DEPENDENCY "${EMGUTF_LITE_UBUNTU_NUGET_DEPENDENCY}
     <dependencies>
-		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
     </dependencies>")	
 ENDIF()
 IF (HAVE_LINUX_ARM_LITE)
@@ -805,7 +807,7 @@ IF (HAVE_LINUX_ARM_LITE)
 	#<file src=\"Emgu.TF.Lite.runtime.raspbian.targets\" target=\"build\\${EMGUTF_LITE_RASPBIAN_NUGET_ID}.targets\" />")
   SET(EMGUTF_LITE_RASPBIAN_NUGET_DEPENDENCY "${EMGUTF_LITE_RASPBIAN_NUGET_DEPENDENCY}
     <dependencies>
-		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
     </dependencies>")	
 ENDIF()
 
@@ -1055,7 +1057,7 @@ SET(EMGUTF_MODEL_NUGET_FILE_LIST "
 	
 SET(EMGUTF_MODEL_NUGET_DEPENDENCY "${EMGUTF_MODEL_NUGET_DEPENDENCY}
     <group targetFramework=\".NETStandard2.0\">
-		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
 		<dependency id=\"System.Drawing.Common\" version=\"5.0.0\" exclude=\"Build,Analyzers\" />
 	</group>")
 
@@ -1065,7 +1067,7 @@ IF( HAVE_OSX )
     <file src=\"..\\..\\..\\lib\\macos\\Emgu.TF.Models.xml\" target=\"lib\\xamarinmac20\" />")
   SET(EMGUTF_MODEL_NUGET_DEPENDENCY "${EMGUTF_MODEL_NUGET_DEPENDENCY}
     <group targetFramework=\"Xamarin.Mac2.0\">
-		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
 	</group>")
 ENDIF()
 
@@ -1075,7 +1077,7 @@ IF(HAVE_ANDROID)
     <file src=\"..\\..\\..\\lib\\android\\Emgu.TF.Models.xml\" target=\"lib\\MonoAndroid10\" />")
   SET(EMGUTF_MODEL_NUGET_DEPENDENCY "${EMGUTF_MODEL_NUGET_DEPENDENCY}
     <group targetFramework=\"MonoAndroid1.0\">
-		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
 		<dependency id=\"Xamarin.Android.Support.v7.AppCompat\" version=\"28.0.0.3\" />
 	</group>")
 ENDIF()
@@ -1100,7 +1102,7 @@ string(REGEX REPLACE ".+Version=\"([0-9]+.[0-9]+.[0-9]+)\".*" "\\1" PROTOBUF_VER
 SET(EMGUTF_PROTOBUF_NUGET_DEPENDENCY "${EMGUTF_PROTOBUF_NUGET_DEPENDENCY}
     <dependencies>
 		<group targetFramework=\".NETStandard2.0\">
-			<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"[${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}]\" />
+			<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
 			<dependency id=\"Google.Protobuf\" version=\"[${PROTOBUF_VERSION}]\" />
 		</group>
     </dependencies>") 
