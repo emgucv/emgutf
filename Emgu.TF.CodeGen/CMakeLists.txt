@@ -1,5 +1,5 @@
 # --------------------------------------------------------
-#  Copyright (C) 2004-2020 by EMGU Corporation. All rights reserved.
+#  Copyright (C) 2004-2021 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
 IF((HAVE_WINDESKTOP_X64 OR HAVE_LINUX) AND DOTNET_FOUND)
