@@ -21,14 +21,14 @@ namespace Emgu.TF.XamarinForms
             multiboxDetectionButton.Text = "Coco SSD Mobilenet";
             
             Button mobilenetButton = new Button();
-            mobilenetButton.Text = "Object recognition";
+            mobilenetButton.Text = "Inception Object recognition";
             /*
             Button smartReplyButton = new Button();
             smartReplyButton.Text = "Smart Reply";
             */
 
             Button inceptionButton = new Button();
-            inceptionButton.Text = "Flower recognition";
+            inceptionButton.Text = "Inception Flower recognition";
 
             Button modelCheckerButton = new Button();
             modelCheckerButton.Text = "TF Lite model checker";
