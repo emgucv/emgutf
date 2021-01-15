@@ -18,20 +18,23 @@ namespace XamarinForms.Droid
 	[Activity (Label = "Emgu TF Lite", Icon = "@drawable/icon", Theme="@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
 	public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
 	{
-		protected override void OnCreate (Bundle bundle)
+		protected override void OnCreate (Bundle savedInstanceState)
 		{
 			TabLayoutResource = Resource.Layout.Tabbar;
 			ToolbarResource = Resource.Layout.Toolbar; 
 
-			base.OnCreate (bundle);
-            Xamarin.Essentials.Platform.Init(this, bundle); // add this line to your code, it may also be called: bundle
+			base.OnCreate (savedInstanceState);
+            Xamarin.Essentials.Platform.Init(this, savedInstanceState); // add this line to your code, it may also be called: bundle
 
-			global::Xamarin.Forms.Forms.Init (this, bundle);
-		    CrossCurrentActivity.Current.Init(this, bundle);
+			global::Xamarin.Forms.Forms.Init (this, savedInstanceState);
+		    CrossCurrentActivity.Current.Init(this, savedInstanceState);
 
 		    CheckAppPermissions();
+
+            Emgu.TF.Lite.TfLiteInvokeAndroid.CheckLibraryLoaded();
+
             LoadApplication (new Emgu.TF.XamarinForms.App ());
-		}
+        }
 
 	    private void CheckAppPermissions()
 	    {
