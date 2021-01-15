@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleName</key>
-	<string>XamarinForms.OSX</string>
+	<string>Emgu.TF.MacOS</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.emgu.xamarinforms-osx</string>
+	<string>com.emgu.tf.mac.demo</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSMinimumSystemVersion</key>
-	<string>10.12</string>
+	<string>10.13</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -21,12 +21,16 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>${AuthorCopyright}</string>
+	<string>(c) Emgu Corporation</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSMainStoryboardFile</key>
 	<string>Main</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs access to the camera to take photos.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This app needs access to the photo gallery.</string>
 </dict>
 </plist>
