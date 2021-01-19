@@ -64,7 +64,7 @@ namespace CVInterop.Lite.Net
 
             int height = inputTensor.Dims[1];
             int width = inputTensor.Dims[2];
-            using (Mat inputTensorMat = new Mat(new Size(width, height), DepthType.Cv8U, 3, inputTensor.DataPointer, 3*width))
+            using (Mat inputTensorMat = new Mat(new Size(width, height), DepthType.Cv8U, 3, inputTensor.DataPointer, 3 * width))
             {
                 CvInvoke.Resize(m, inputTensorMat, inputTensorMat.Size);
             }
@@ -86,25 +86,25 @@ namespace CVInterop.Lite.Net
             foreach (var r in results)
             {
 
-                    float x1 = r.Rectangle[0] * m.Height;
-                    float y1 = r.Rectangle[1] * m.Width;
-                    float x2 = r.Rectangle[2] * m.Height;
-                    float y2 = r.Rectangle[3] * m.Width;
-                    RectangleF rectf = new RectangleF(x1, y1, x2 - x1, y2 - y1);
-                    Rectangle rect = Rectangle.Round(rectf);
+                float x1 = r.Rectangle[0] * m.Height;
+                float y1 = r.Rectangle[1] * m.Width;
+                float x2 = r.Rectangle[2] * m.Height;
+                float y2 = r.Rectangle[3] * m.Width;
+                RectangleF rectf = new RectangleF(x1, y1, x2 - x1, y2 - y1);
+                Rectangle rect = Rectangle.Round(rectf);
 
-                    rect.Intersect(new Rectangle(Point.Empty, m.Size)); //only keep the region that is inside the image
-                    if (rect.IsEmpty)
-                        continue;
+                rect.Intersect(new Rectangle(Point.Empty, m.Size)); //only keep the region that is inside the image
+                if (rect.IsEmpty)
+                    continue;
 
-                    //draw the rectangle around the region
-                    CvInvoke.Rectangle(m, rect, new Emgu.CV.Structure.MCvScalar(0, 0, 255), 2);
+                //draw the rectangle around the region
+                CvInvoke.Rectangle(m, rect, new Emgu.CV.Structure.MCvScalar(0, 0, 255), 2);
 
-                    //draw the label
-                    CvInvoke.PutText(m, r.Label, Point.Round(rect.Location), Emgu.CV.CvEnum.FontFace.HersheyComplex, 1.0, new Emgu.CV.Structure.MCvScalar(0, 255, 0), 1);
+                //draw the label
+                CvInvoke.PutText(m, r.Label, Point.Round(rect.Location), Emgu.CV.CvEnum.FontFace.HersheyComplex, 1.0, new Emgu.CV.Structure.MCvScalar(0, 255, 0), 1);
 
-                    goodResultCount++;
-                
+                goodResultCount++;
+
             }
 
             String resStr = String.Format("{0} objects detected in {1} milliseconds.", goodResultCount, sw.ElapsedMilliseconds);
@@ -185,8 +185,12 @@ namespace CVInterop.Lite.Net
             }
             else
             {
-                _capture.Stop();
-                _capture.Dispose();
+                if (_capture != null)
+                {
+                    _capture.Stop();
+                    _capture.Dispose();
+                }
+
                 _capture = null;
                 cameraButton.Text = _startCameraText;
             }

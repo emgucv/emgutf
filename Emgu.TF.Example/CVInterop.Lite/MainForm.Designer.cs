@@ -83,6 +83,7 @@ namespace CVInterop.Lite.Net
             this.cameraButton.TabIndex = 4;
             this.cameraButton.Text = "Start Camera";
             this.cameraButton.UseVisualStyleBackColor = true;
+            this.cameraButton.Click += new System.EventHandler(this.cameraButton_Click);
             // 
             // messageLabel
             // 
