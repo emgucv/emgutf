@@ -15,52 +15,52 @@ using Android;
 
 namespace XamarinForms.Droid
 {
-	[Activity (Label = "Emgu TF Lite", Icon = "@drawable/icon", Theme="@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-	public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
-	{
-		protected override void OnCreate (Bundle savedInstanceState)
-		{
-			TabLayoutResource = Resource.Layout.Tabbar;
-			ToolbarResource = Resource.Layout.Toolbar; 
+    [Activity(Label = "Emgu TF Lite", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    {
+        protected override void OnCreate(Bundle savedInstanceState)
+        {
+            TabLayoutResource = Resource.Layout.Tabbar;
+            ToolbarResource = Resource.Layout.Toolbar;
 
-			base.OnCreate (savedInstanceState);
+            base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState); // add this line to your code, it may also be called: bundle
 
-			global::Xamarin.Forms.Forms.Init (this, savedInstanceState);
-		    CrossCurrentActivity.Current.Init(this, savedInstanceState);
+            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            CrossCurrentActivity.Current.Init(this, savedInstanceState);
 
-		    CheckAppPermissions();
+            CheckAppPermissions();
 
-            Emgu.TF.Lite.TfLiteInvokeAndroid.CheckLibraryLoaded();
+            Emgu.TF.Lite.TfLiteInvokeAndroid.Init();
 
-            LoadApplication (new Emgu.TF.XamarinForms.App ());
+            LoadApplication(new Emgu.TF.XamarinForms.App());
         }
 
-	    private void CheckAppPermissions()
-	    {
-	        if ((int)Build.VERSION.SdkInt < 23)
-	        {
-	            return;
-	        }
-	        else
-	        {
-	            if (PackageManager.CheckPermission(Manifest.Permission.ReadExternalStorage, PackageName) != Permission.Granted
-	                && PackageManager.CheckPermission(Manifest.Permission.WriteExternalStorage, PackageName) != Permission.Granted
-	                && PackageManager.CheckPermission(Manifest.Permission.Camera, PackageName) != Permission.Granted)
-	            {
-	                var permissions = new string[] { Manifest.Permission.ReadExternalStorage, Manifest.Permission.WriteExternalStorage, Manifest.Permission.Camera };
-	                RequestPermissions(permissions, 1);
-	            }
-	        }
-	    }
+        private void CheckAppPermissions()
+        {
+            if ((int)Build.VERSION.SdkInt < 23)
+            {
+                return;
+            }
+            else
+            {
+                if (PackageManager.CheckPermission(Manifest.Permission.ReadExternalStorage, PackageName) != Permission.Granted
+                    && PackageManager.CheckPermission(Manifest.Permission.WriteExternalStorage, PackageName) != Permission.Granted
+                    && PackageManager.CheckPermission(Manifest.Permission.Camera, PackageName) != Permission.Granted)
+                {
+                    var permissions = new string[] { Manifest.Permission.ReadExternalStorage, Manifest.Permission.WriteExternalStorage, Manifest.Permission.Camera };
+                    RequestPermissions(permissions, 1);
+                }
+            }
+        }
 
-	    public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
-	    {
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
+        {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-			//Plugin.Permissions.PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-		}
+            //Plugin.Permissions.PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }
 

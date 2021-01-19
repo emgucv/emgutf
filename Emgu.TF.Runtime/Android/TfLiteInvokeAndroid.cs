@@ -6,17 +6,17 @@ using System;
 
 namespace Emgu.TF.Lite
 {
-   /// <summary>
-   /// TfLiteInvoke for Android
-   /// </summary>
-   public static class TfLiteInvokeAndroid
-   {
-      /// <summary>
-      /// Return true if the class is loaded.
-      /// </summary>
-      public static bool CheckLibraryLoaded ()
-      {
-         return TfLiteInvoke.CheckLibraryLoaded ();
-      }
-   }
+    /// <summary>
+    /// TfLiteInvoke for Android
+    /// </summary>
+    public static class TfLiteInvokeAndroid
+    {
+        /// <summary>
+        /// Return true if the class is loaded.
+        /// </summary>
+        public static bool Init()
+        {
+            return TfLiteInvoke.Init();
+        }
+    }
 }

@@ -18,10 +18,11 @@ namespace Emgu.TF
 
         static TfLiteInvokeIOS()
         {
-            _libraryLoaded = TfLiteInvoke.CheckLibraryLoaded();
+            _libraryLoaded = TfLiteInvoke.Init();
             if (_libraryLoaded)
                 TfLiteInvoke.RedirectError(TfLiteInvokeIOS.TfliteErrorHandlerThrowException);
         }
+
         [ObjCRuntime.MonoPInvokeCallback(typeof(TfLiteInvoke.TfliteErrorCallback))]
         private static int TfliteErrorHandler(
            int status,
@@ -34,16 +35,14 @@ namespace Emgu.TF
         /// <summary>
         /// Return true if the class is loaded.
         /// </summary>
-        public static bool CheckLibraryLoaded()
+        public static bool Init()
         {
             return _libraryLoaded;
         }
 
-
         /// <summary>
         /// The default error handler for tensorflow lite
         /// </summary>
-
         public static readonly TfLiteInvoke.TfliteErrorCallback TfliteErrorHandlerThrowException = (TfLiteInvoke.TfliteErrorCallback)TfliteErrorHandler;
     }
 }

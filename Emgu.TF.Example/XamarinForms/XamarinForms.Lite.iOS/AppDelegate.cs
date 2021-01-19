@@ -25,7 +25,7 @@ namespace EmguTFLite
 
             global::Xamarin.Forms.Forms.Init();
 
-            TfLiteInvokeIOS.CheckLibraryLoaded();
+            TfLiteInvokeIOS.Init();
 
             LoadApplication(new Emgu.TF.XamarinForms.App());
 
