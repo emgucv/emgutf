@@ -85,7 +85,7 @@ namespace Emgu.TF.Models
         /// <summary>
         /// Initiate the graph by checking if the model file exist locally, if not download the graph from internet.
         /// </summary>
-        /// <param name="modelFiles">An array where the first file is the tensorflow graph and the second file are the object class labels. </param>
+        /// <param name="modelFiles">An array where the first file is the tensorflow graph and the second file is the object class labels. </param>
         /// <param name="downloadUrl">The url where the file can be downloaded</param>
         /// <param name="inputName">The input operation name. Default to "input" if not specified.</param>
         /// <param name="outputName">The output operation name. Default to "output" if not specified.</param>

@@ -16,13 +16,27 @@ using System.Threading.Tasks;
 
 namespace Emgu.TF.Lite.Models
 {
+
+    /// <summary>
+    /// Coco SSD Mobilenet V3
+    /// </summary>
     public class CocoSsdMobilenetV3 : CocoSsdMobilenet
     {
+        /// <summary>
+        /// Create Coco SSD Mobilenet V3
+        /// </summary>
         public CocoSsdMobilenetV3()
             : base()
         {
         }
 
+        /// <summary>
+        /// Initiate the graph by checking if the model file exist locally, if not download the graph from internet.
+        /// </summary>
+        /// <param name="modelFiles">An array where the first file is the tensorflow lite model and the second file is the object class labels. </param>
+        /// <param name="downloadUrl">The url where the file can be downloaded</param>
+        /// <param name="localModelFolder">The local folder to store the model</param>
+        /// <param name="optDelegate">The optional delegate that can be used during model initialization</param>
         public override
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             IEnumerator

@@ -23,6 +23,7 @@ namespace Emgu.Models
         /// Create a downloadable file from the url
         /// </summary>
         /// <param name="url">The url where the file can be downloaded from</param>
+        /// <param name="localSubfolder">The sub-folder to store the model</param>
         public DownloadableFile(String url, String localSubfolder)
         {
             _url = url;
