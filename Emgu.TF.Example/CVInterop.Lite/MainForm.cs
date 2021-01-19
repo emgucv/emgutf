@@ -26,7 +26,7 @@ namespace CVInterop.Lite.Net
         {
             InitializeComponent();
 
-            TfLiteInvoke.CheckLibraryLoaded();
+            TfLiteInvoke.Init();
             messageLabel.Text = String.Empty;
             cameraButton.Text = _startCameraText;
 

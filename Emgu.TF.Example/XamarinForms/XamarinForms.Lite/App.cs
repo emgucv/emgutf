@@ -15,7 +15,7 @@ namespace Emgu.TF.XamarinForms
     {
         public App()
         {
-            Emgu.TF.Lite.TfLiteInvoke.CheckLibraryLoaded();
+            Emgu.TF.Lite.TfLiteInvoke.Init();
 
             Button multiboxDetectionButton = new Button();
             multiboxDetectionButton.Text = "Coco SSD Mobilenet";

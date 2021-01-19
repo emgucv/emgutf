@@ -25,7 +25,7 @@ namespace Inception.Console.Lite.Netstandard
             ConsoleTraceListener consoleTraceListener = new ConsoleTraceListener();
             Trace.Listeners.Add(consoleTraceListener);
 #endif
-            TfLiteInvoke.CheckLibraryLoaded();
+            TfLiteInvoke.Init();
             String fileName = Path.Join(AssemblyDirectory, "tulips.jpg");
             if (args.Length > 0)
                 fileName = args[0];

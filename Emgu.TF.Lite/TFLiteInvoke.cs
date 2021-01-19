@@ -47,7 +47,7 @@ namespace Emgu.TF.Lite
         /// Check to make sure all the unmanaged libraries are loaded
         /// </summary>
         /// <returns>True if library loaded</returns>
-        public static bool CheckLibraryLoaded()
+        public static bool Init()
         {
             return _libraryLoaded;
         }
