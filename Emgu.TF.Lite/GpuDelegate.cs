@@ -45,10 +45,10 @@ namespace Emgu.TF.Lite
 
     public static partial class TfLiteInvoke
     {
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern IntPtr tfeGpuDelegateCreate();
 
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern void tfeGpuDelegateDelete(ref IntPtr delegatePtr);
 
         private static GpuDelegate _gpuDelegate;

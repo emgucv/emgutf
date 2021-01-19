@@ -110,23 +110,23 @@ namespace Emgu.TF.Lite
 
     public static partial class TfLiteInvoke
     {
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern IntPtr tfeFlatBufferModelBuildFromFile(
             [MarshalAs(StringMarshalType)]
             String filename);
 
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern IntPtr tfeFlatBufferModelBuildFromBuffer(IntPtr buffer, int bufferSize);
 
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern void tfeFlatBufferModelRelease(ref IntPtr model);
 
 
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         [return: MarshalAs(BoolMarshalType)]
         internal static extern bool tfeFlatBufferModelInitialized(IntPtr model);
 
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         [return: MarshalAs(BoolMarshalType)]
         internal static extern bool tfeFlatBufferModelCheckModelIdentifier(IntPtr model);
 

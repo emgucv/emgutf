@@ -20,11 +20,11 @@ namespace Emgu.TF
         {
             _libraryLoaded = TfLiteInvoke.Init();
             if (_libraryLoaded)
-                TfLiteInvoke.RedirectError(TfLiteInvokeIOS.TfliteErrorHandlerThrowException);
+                TfLiteInvoke.RedirectError(TfLiteInvokeIOS.TfLiteErrorHandlerThrowException);
         }
 
-        [ObjCRuntime.MonoPInvokeCallback(typeof(TfLiteInvoke.TfliteErrorCallback))]
-        private static int TfliteErrorHandler(
+        [ObjCRuntime.MonoPInvokeCallback(typeof(TfLiteInvoke.TfLiteErrorCallback))]
+        private static int TfLiteErrorHandler(
            int status,
            IntPtr errMsg)
         {
@@ -43,6 +43,6 @@ namespace Emgu.TF
         /// <summary>
         /// The default error handler for tensorflow lite
         /// </summary>
-        public static readonly TfLiteInvoke.TfliteErrorCallback TfliteErrorHandlerThrowException = (TfLiteInvoke.TfliteErrorCallback)TfliteErrorHandler;
+        public static readonly TfLiteInvoke.TfLiteErrorCallback TfLiteErrorHandlerThrowException = (TfLiteInvoke.TfLiteErrorCallback)TfLiteErrorHandler;
     }
 }

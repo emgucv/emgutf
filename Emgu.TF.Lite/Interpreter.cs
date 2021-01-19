@@ -216,56 +216,56 @@ namespace Emgu.TF.Lite
 
     public static partial class TfLiteInvoke
     {
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern IntPtr tfeInterpreterCreate();
 
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern IntPtr tfeInterpreterCreateFromModel(ref IntPtr interpreter, IntPtr model, IntPtr opResolver);
 
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern Status tfeInterpreterAllocateTensors(IntPtr interpreter);
 
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern Status tfeInterpreterInvoke(IntPtr interpreter);
 
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern IntPtr tfeInterpreterGetTensor(IntPtr interpreter, int index);
 
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern int tfeInterpreterTensorSize(IntPtr interpreter);
 
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern int tfeInterpreterNodesSize(IntPtr interpreter);
 
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern int tfeInterpreterGetInputSize(IntPtr interpreter);
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern void tfeInterpreterGetInput(IntPtr interpreter, IntPtr input);
 
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern IntPtr tfeInterpreterGetInputName(IntPtr interpreter, int index);
 
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern int tfeInterpreterGetOutputSize(IntPtr interpreter);
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern int tfeInterpreterGetOutput(IntPtr interpreter, IntPtr output);
 
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern IntPtr tfeInterpreterGetOutputName(IntPtr interpreter, int index);
 
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern void tfeInterpreterRelease(ref IntPtr interpreter);
 
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern void tfeInterpreterUseNNAPI(
             IntPtr interpreter, 
             [MarshalAs(TfLiteInvoke.BoolMarshalType)]
             bool enable);
 
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern void tfeInterpreterSetNumThreads(IntPtr interpreter, int numThreads);
 
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern Status tfeInterpreterModifyGraphWithDelegate(IntPtr interpreter, IntPtr delegatePtr);
     }
 }

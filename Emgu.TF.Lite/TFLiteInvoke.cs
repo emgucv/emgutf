@@ -17,7 +17,7 @@ namespace Emgu.TF.Lite
 #if UNITY_ANDROID || UNITY_IOS || UNITY_EDITOR || UNITY_STANDALONE
         [AOT.MonoPInvokeCallback(typeof(TfliteErrorCallback))]
 #endif
-        private static int TfliteErrorHandler(
+        private static int TfLiteErrorHandler(
            int status,
            IntPtr errMsg)
         {
@@ -31,15 +31,15 @@ namespace Emgu.TF.Lite
         /// <param name="status">The status code</param>
         /// <param name="errMsg">The pointer to the error message</param>
         /// <returns></returns>
-        [UnmanagedFunctionPointer(TFCallingConvention)]
-        public delegate int TfliteErrorCallback(int status, IntPtr errMsg);
+        [UnmanagedFunctionPointer(TfLiteCallingConvention)]
+        public delegate int TfLiteErrorCallback(int status, IntPtr errMsg);
 
         /// <summary>
         /// Redirect tensorflow lite error.
         /// </summary>
         /// <param name="errorHandler">The error handler</param>
-        [DllImport(ExternLibrary, CallingConvention = TFCallingConvention, EntryPoint = "tfeRedirectError")]
-        public static extern void RedirectError(TfliteErrorCallback errorHandler);
+        [DllImport(ExternLibrary, CallingConvention = TfLiteCallingConvention, EntryPoint = "tfeRedirectError")]
+        public static extern void RedirectError(TfLiteErrorCallback errorHandler);
 
         private static readonly bool _libraryLoaded;
 
@@ -53,9 +53,9 @@ namespace Emgu.TF.Lite
         }
 
         /// <summary>
-        /// The Tensorflow native api calling convention
+        /// The Tensorflow lite native api calling convention
         /// </summary>
-        public const CallingConvention TFCallingConvention = CallingConvention.Cdecl;
+        public const CallingConvention TfLiteCallingConvention = CallingConvention.Cdecl;
 
         /// <summary>
         /// The string marshal type
@@ -427,9 +427,9 @@ namespace Emgu.TF.Lite
         /// <summary>
         /// The default error handler for tensorflow lite
         /// </summary>
-        public static readonly TfliteErrorCallback TfliteErrorHandlerThrowException = (TfliteErrorCallback)TfliteErrorHandler;
+        public static readonly TfLiteErrorCallback TfliteErrorHandlerThrowException = (TfLiteErrorCallback)TfLiteErrorHandler;
 
-        [DllImport(ExternLibrary, CallingConvention = TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteCallingConvention)]
         internal static extern void tfeMemcpy(IntPtr dst, IntPtr src, int length);
 
         /// <summary>
@@ -443,7 +443,7 @@ namespace Emgu.TF.Lite
             }
         }
 
-        [DllImport(ExternLibrary, CallingConvention = TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteCallingConvention)]
         internal static extern IntPtr tfeGetLiteVersion();
     }
 }

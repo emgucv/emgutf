@@ -48,10 +48,10 @@ namespace Emgu.TF.Lite
 
     public static partial class TfLiteInvoke
     {
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern IntPtr tfeStatefulNnApiDelegateCreate(ref IntPtr delegatePtr);
 
-        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern void tfeStatefulNnApiDelegateRelease(ref IntPtr delegatePtr);
 
         private static StatefulNnApiDelegate _nnApiDelegate;
