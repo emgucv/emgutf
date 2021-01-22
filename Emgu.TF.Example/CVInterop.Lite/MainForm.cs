@@ -54,7 +54,7 @@ namespace CVInterop.Lite.Net
 
         private Mat _renderMat;
 
-        private Tensor _imageTensor;
+        //private Tensor _imageTensor;
 
         public void Recognize(Mat m)
         {
@@ -85,12 +85,6 @@ namespace CVInterop.Lite.Net
             int goodResultCount = 0;
             foreach (var r in results)
             {
-                /*
-                float x1 = r.Rectangle[0] * m.Height;
-                float y1 = r.Rectangle[1] * m.Width;
-                float x2 = r.Rectangle[2] * m.Height;
-                float y2 = r.Rectangle[3] * m.Width;
-                */
 
                 float x1 = r.Rectangle[0] * m.Width;
                 float y1 = r.Rectangle[1] * m.Height;
