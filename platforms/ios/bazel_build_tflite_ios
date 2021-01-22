@@ -19,8 +19,10 @@ export TF_SET_ANDROID_WORKSPACE=0
 
 BAZEL_OUTPUT_USER_ROOT="$(pwd)/../bazel_output"
 
+cp -f tensorflow/lite/experimental/ios/BUILD.apple tensorflow/lite/experimental/ios/BUILD
+
 ./configure
-bazel --output_user_root=$BAZEL_OUTPUT_USER_ROOT build --verbose_failures --config=ios_fat -c opt //tensorflow/lite/experimental/ios:TensorFlowLiteC_framework
+bazel --output_user_root=$BAZEL_OUTPUT_USER_ROOT build --verbose_failures --incompatible_run_shell_command_string=false --config=ios_fat -c opt //tensorflow/lite/experimental/ios:TensorFlowLiteC_framework
 unzip -o bazel-bin/tensorflow/lite/experimental/ios/TensorFlowLiteC_framework.zip
 cp -r TensorFlowLiteC.framework/TensorFlowLiteC ../lib/ios/libtfliteextern.a
 cd ..
