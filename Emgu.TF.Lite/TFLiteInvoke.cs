@@ -15,7 +15,7 @@ namespace Emgu.TF.Lite
     public static partial class TfLiteInvoke
     {
 #if UNITY_ANDROID || UNITY_IOS || UNITY_EDITOR || UNITY_STANDALONE
-        [AOT.MonoPInvokeCallback(typeof(TfliteErrorCallback))]
+        [AOT.MonoPInvokeCallback(typeof(TfLiteErrorCallback))]
 #endif
         private static int TfLiteErrorHandler(
            int status,

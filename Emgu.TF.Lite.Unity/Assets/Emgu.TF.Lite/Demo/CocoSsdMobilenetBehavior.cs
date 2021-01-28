@@ -119,7 +119,7 @@ public class CocoSsdMobilenetBehavior : MonoBehaviour
     {
         bool tryUseCamera = false;
 
-        bool loaded = Emgu.TF.Lite.TfLiteInvoke.CheckLibraryLoaded();
+        bool loaded = Emgu.TF.Lite.TfLiteInvoke.Init();
 
         _mobilenet = new Emgu.TF.Lite.Models.CocoSsdMobilenetV3();
 

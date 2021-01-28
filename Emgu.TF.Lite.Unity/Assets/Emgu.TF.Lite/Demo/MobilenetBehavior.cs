@@ -31,7 +31,7 @@ public class MobilenetBehavior : MonoBehaviour
     IEnumerator Start()
     {
         bool tryUseCamera = true;
-        bool loaded = Emgu.TF.Lite.TfLiteInvoke.CheckLibraryLoaded();
+        bool loaded = Emgu.TF.Lite.TfLiteInvoke.Init();
 
         _mobilenet = new Emgu.TF.Lite.Models.Mobilenet();
 
