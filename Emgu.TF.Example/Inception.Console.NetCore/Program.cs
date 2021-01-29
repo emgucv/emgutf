@@ -82,18 +82,17 @@ namespace Inception.Console.Netstandard
                 System.Console.WriteLine(String.Format("{0} of {1} bytes downloaded ({2}%)", e.BytesReceived, e.TotalBytesToReceive, e.ProgressPercentage));
         }
 
+
+        
         /// <summary>
         /// Get the directory from the assembly
         /// </summary>
-        /// <remarks>https://stackoverflow.com/questions/52797/how-do-i-get-the-path-of-the-assembly-the-code-is-in</remarks>
         public static string AssemblyDirectory
         {
             get
             {
-                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-                UriBuilder uri = new UriBuilder(codeBase);
-                string path = Uri.UnescapeDataString(uri.Path);
-                return Path.GetDirectoryName(path);
+                FileInfo assemblyFileInfo = new System.IO.FileInfo( Assembly.GetExecutingAssembly().Location );
+                return assemblyFileInfo.DirectoryName;
             }
         }
     }

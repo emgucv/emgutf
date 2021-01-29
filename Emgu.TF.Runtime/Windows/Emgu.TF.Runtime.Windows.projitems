@@ -21,7 +21,7 @@
   </PropertyGroup>
   <ItemGroup Condition="'$(EmguTFWindowsBuildX64)'=='True' AND Exists('$(EmguTFWindowsNativeFileX64)')">
     <Content Include="$(EmguTFWindowsBinaryDir)\x64\*.dll">
-      <Link>x64\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <Link>runtimes\win-x64\native\%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
