@@ -115,25 +115,25 @@ namespace Emgu.TF
     public static partial class TfInvoke
     {
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern IntPtr tfeNewImportGraphDefOptions();
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeDeleteImportGraphDefOptions(ref IntPtr options);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeImportGraphDefOptionsSetPrefix(
             IntPtr opts,
             [MarshalAs(StringMarshalType)]
             String prefix);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeImportGraphDefOptionsSetDefaultDevice(
             IntPtr opts,
             [MarshalAs(StringMarshalType)]
             String device);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeImportGraphDefOptionsAddInputMapping(
             IntPtr opts,
             [MarshalAs(StringMarshalType)]
@@ -142,25 +142,25 @@ namespace Emgu.TF
             IntPtr dstOp,
             int dstOpIdx);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeImportGraphDefOptionsRemapControlDependency(
             IntPtr opts,
             [MarshalAs(StringMarshalType)]
             String srcName,
             IntPtr dst);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeImportGraphDefOptionsAddControlDependency(
             IntPtr opts, IntPtr oper);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeImportGraphDefOptionsAddReturnOutput(
             IntPtr opts,
             [MarshalAs(StringMarshalType)]
             String operName, 
             int index);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern int tfeImportGraphDefOptionsNumReturnOutputs(IntPtr opts);
     }
 }

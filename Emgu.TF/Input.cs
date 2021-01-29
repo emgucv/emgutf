@@ -50,7 +50,7 @@ namespace Emgu.TF
 
     public static partial class TfInvoke
     {
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern DataType tfeOperationInputType(IntPtr oper, int idx);
     }
 }

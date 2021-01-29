@@ -15,7 +15,7 @@ namespace Emgu.TF.XamarinForms
     {
         public App()
         {
-            Emgu.TF.TfInvoke.CheckLibraryLoaded();
+            Emgu.TF.TfInvoke.Init();
             
             List<View> buttons = new List<View>();
 

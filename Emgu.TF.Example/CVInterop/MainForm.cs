@@ -27,7 +27,7 @@ namespace CVInterop
         {
             InitializeComponent();
 
-            TfInvoke.CheckLibraryLoaded();
+            TfInvoke.Init();
             messageLabel.Text = String.Empty;
             cameraButton.Text = _startCameraText;
 

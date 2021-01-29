@@ -25,7 +25,7 @@ namespace XamarinForms.WPF
         {
             InitializeComponent();
             Xamarin.Forms.Forms.Init();
-            Emgu.TF.TfInvoke.CheckLibraryLoaded();
+            Emgu.TF.TfInvoke.Init();
             LoadApplication(new Emgu.TF.XamarinForms.App());
         }
     }

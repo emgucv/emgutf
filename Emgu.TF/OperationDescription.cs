@@ -319,23 +319,23 @@ namespace Emgu.TF
     public static partial class TfInvoke
     {
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern IntPtr tfeFinishOperation(IntPtr desc, IntPtr status);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeAddInput(IntPtr desc, IntPtr oper, int index);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeAddInputList(IntPtr desc, IntPtr inputOps, IntPtr indices, int numInputs);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeSetAttrInt(
             IntPtr desc,
             [MarshalAs(TfInvoke.StringMarshalType)]
             String attrName,
             Int64 value);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeSetAttrIntList(
             IntPtr desc,
             [MarshalAs(TfInvoke.StringMarshalType)]
@@ -343,7 +343,7 @@ namespace Emgu.TF
             IntPtr values,
             int numValues);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeSetAttrBool(
             IntPtr desc,
             [MarshalAs(TfInvoke.StringMarshalType)]
@@ -351,21 +351,21 @@ namespace Emgu.TF
             [MarshalAs(TfInvoke.BoolMarshalType)]
             bool value);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeSetAttrBoolList(
             IntPtr desc,
             [MarshalAs(TfInvoke.StringMarshalType)] String attrName,
             IntPtr values,
             int numValues);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeSetAttrFloat(
             IntPtr desc,
             [MarshalAs(TfInvoke.StringMarshalType)]
             String attrName,
             float value);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeSetAttrFloatList(
             IntPtr desc,
             [MarshalAs(TfInvoke.StringMarshalType)]
@@ -373,7 +373,7 @@ namespace Emgu.TF
             IntPtr values,
             int numValues);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeSetAttrString(
             IntPtr desc,
             [MarshalAs(TfInvoke.StringMarshalType)]
@@ -382,7 +382,7 @@ namespace Emgu.TF
             String value,
             int length);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeSetAttrStringList(
             IntPtr desc,
             [MarshalAs(TfInvoke.StringMarshalType)]
@@ -391,14 +391,14 @@ namespace Emgu.TF
             IntPtr lengths, 
             int numValues);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeSetAttrType(
             IntPtr desc,
             [MarshalAs(TfInvoke.StringMarshalType)]
             String attrName,
             DataType value);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeSetAttrTypeList(
             IntPtr desc,
             [MarshalAs(TfInvoke.StringMarshalType)]
@@ -407,7 +407,7 @@ namespace Emgu.TF
             int numValues);
 
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeSetAttrShape(
             IntPtr desc,
             [MarshalAs(TfInvoke.StringMarshalType)]
@@ -415,7 +415,7 @@ namespace Emgu.TF
             IntPtr dims,
             int numDims);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeSetAttrShapeList(
             IntPtr desc,
             [MarshalAs(TfInvoke.StringMarshalType)]
@@ -424,7 +424,7 @@ namespace Emgu.TF
             IntPtr numDims,
             int numShapes);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeSetAttrTensor(
             IntPtr desc,
             [MarshalAs(TfInvoke.StringMarshalType)]
@@ -432,16 +432,16 @@ namespace Emgu.TF
             IntPtr value,
             IntPtr status);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeSetDevice(
             IntPtr desc,
             [MarshalAs(TfInvoke.StringMarshalType)]
             String device);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeAddControlInput(IntPtr desc, IntPtr input);
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeColocateWith(IntPtr desc, IntPtr op);
     }
 }

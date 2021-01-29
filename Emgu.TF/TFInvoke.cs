@@ -20,7 +20,7 @@ namespace Emgu.TF
         /// Check to make sure all the unmanaged libraries are loaded
         /// </summary>
         /// <returns>True if library loaded</returns>
-        public static bool CheckLibraryLoaded()
+        public static bool Init()
         {
             return _libraryLoaded;
         }
@@ -28,7 +28,7 @@ namespace Emgu.TF
         /// <summary>
         /// The Tensorflow native api calling convention
         /// </summary>
-        public const CallingConvention TFCallingConvention = CallingConvention.Cdecl;
+        public const CallingConvention TfCallingConvention = CallingConvention.Cdecl;
 
         /// <summary>
         /// The string marshal type
@@ -137,7 +137,7 @@ namespace Emgu.TF
                 Environment.CurrentDirectory = loadDirectory;
                 if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
                 {
-                    bool setDllDirectorySuccess = Emgu.TF.Util.Toolbox.AddDllDirectory(loadDirectory);
+                    bool setDllDirectorySuccess = Emgu.TF.Util.Toolbox.SetDllDirectory(loadDirectory);
                 }
             }
 
@@ -298,7 +298,7 @@ namespace Emgu.TF
             }
         }
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         private static extern IntPtr tfeGetVersion();
 
         /// <summary>
@@ -306,7 +306,7 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="dt">The data type</param>
         /// <returns>The size of the data type in bytes</returns>
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention, EntryPoint = "tfeDataTypeSize")]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention, EntryPoint = "tfeDataTypeSize")]
         public static extern int DataTypeSize(DataType dt);
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace Emgu.TF
         {
             return new Buffer(tfeGetAllOpList(), true);
         }
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         private static extern IntPtr tfeGetAllOpList();
 
         /*
@@ -331,7 +331,7 @@ namespace Emgu.TF
         internal static extern int tfeStringDecode(IntPtr src, int srcLen, ref IntPtr dst, ref IntPtr dstLen, IntPtr status);
         */
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeMemcpy(IntPtr dst, IntPtr src, int length);
 
         /// <summary>
@@ -341,7 +341,7 @@ namespace Emgu.TF
         {
             get { return tfeIsGoogleCudaEnabled(); }
         }
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         [return: MarshalAs(TfInvoke.BoolMarshalType)]
         private static extern bool tfeIsGoogleCudaEnabled();
 
@@ -354,7 +354,7 @@ namespace Emgu.TF
         {
             return tfeOpIsRegistered(operationName);
         }
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         [return: MarshalAs(TfInvoke.BoolMarshalType)]
         private static extern bool tfeOpIsRegistered(
             [MarshalAs(TfInvoke.StringMarshalType)]
@@ -369,7 +369,7 @@ namespace Emgu.TF
         {
             return tfeOpHasKernel(operationName);
         }
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         [return: MarshalAs(TfInvoke.BoolMarshalType)]
         private static extern bool tfeOpHasKernel(
             [MarshalAs(TfInvoke.StringMarshalType)]
@@ -401,7 +401,7 @@ namespace Emgu.TF
             }
         }
 
-        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         private static extern void tfeListAllPhysicalDevices(IntPtr nameBuffer, IntPtr status);
     }
 }
