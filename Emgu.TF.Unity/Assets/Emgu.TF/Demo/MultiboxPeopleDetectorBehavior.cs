@@ -37,7 +37,7 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        bool loaded = TfInvoke.CheckLibraryLoaded();
+        bool loaded = TfInvoke.Init();
         //DisplayText.text = String.Format("Tensorflow library loaded: {0}", loaded);
 
         _liveCameraView = false;

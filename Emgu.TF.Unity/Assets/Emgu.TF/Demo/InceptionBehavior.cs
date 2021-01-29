@@ -45,7 +45,7 @@ public class InceptionBehavior : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        bool loaded = TfInvoke.CheckLibraryLoaded();
+        bool loaded = TfInvoke.Init();
         _inceptionGraph = new Inception();
         _liveCameraView = false;
         /*
