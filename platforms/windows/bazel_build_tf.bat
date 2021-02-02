@@ -131,7 +131,7 @@ SET MSYS_PATH=C:\msys64
 SET MSYS_BIN=%MSYS_PATH%\usr\bin
 IF EXIST "%MSYS_BIN%\bazel.exe" SET BAZEL_COMMAND=%MSYS_BIN%\bazel.exe
 
-call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build //tensorflow/tfextern:libtfextern.so --verbose_failures %DOCKER_FLAGS% --local_ram_resources="HOST_RAM*.4" --local_cpu_resources="HOST_CPUS*.5"
+call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build //tensorflow/tfextern:libtfextern.so --verbose_failures %DOCKER_FLAGS% --local_ram_resources="HOST_RAM*.2" --local_cpu_resources="HOST_CPUS*.2" --jobs=2
 cd ..
 
 cp -f tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so lib/x64/tfextern.dll
