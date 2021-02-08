@@ -531,7 +531,8 @@ IF(HAVE_ANDROID)
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Runtime.Android.dll\" target=\"lib\\MonoAndroid10\" />
 	<file src=\"..\\..\\..\\lib\\Emgu.TF.Runtime.Android.xml\" target=\"lib\\MonoAndroid10\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
-	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
+	<file src=\"readme.txt\" target=\"\" />")
   SET(EMGUTF_ANDROID_NUGET_DEPENDENCY "${EMGUTF_ANDROID_NUGET_DEPENDENCY}
     <dependencies>
 	    <group targetFramework=\"MonoAndroid1.0\">
@@ -772,14 +773,16 @@ IF (HAVE_IOS_LITE)
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Runtime.iOS.dll\" target=\"lib\\Xamarin.iOS10\" />
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Runtime.iOS.xml\" target=\"lib\\Xamarin.iOS10\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
-	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
+	<file src=\"readme.txt\" target=\"\" />")
 ENDIF()
 IF(HAVE_ANDROID_LITE)
   SET(EMGUTF_LITE_ANDROID_NUGET_FILE_LIST "${EMGUTF_LITE_ANDROID_NUGET_FILE_LIST}
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Runtime.Android.dll\" target=\"lib\\MonoAndroid10\" />
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Runtime.Android.xml\" target=\"lib\\MonoAndroid10\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
-	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
+	<file src=\"readme.txt\" target=\"\" />")
   SET(EMGUTF_LITE_ANDROID_NUGET_DEPENDENCY "${EMGUTF_LITE_ANDROID_NUGET_DEPENDENCY}
     <dependencies>
 	    <group targetFramework=\"MonoAndroid1.0\">
