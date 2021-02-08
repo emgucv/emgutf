@@ -31,7 +31,7 @@ namespace XamarinForms.Droid
 
             CheckAppPermissions();
 
-            Emgu.TF.TfInvokeAndroid.CheckLibraryLoaded();
+            Emgu.TF.TfInvokeAndroid.Init();
 
             LoadApplication (new Emgu.TF.XamarinForms.App ());
 

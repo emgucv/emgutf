@@ -324,6 +324,18 @@ namespace Emgu.TF.Models
 #endif
         }
 
+        /// <summary>
+        /// Read the image file into a Tensorflow tensor
+        /// </summary>
+        /// <typeparam name="T">The tensor data type, e.g. float</typeparam>
+        /// <param name="fileName">The name of the image file</param>
+        /// <param name="inputHeight">The height of the input tensor. If zero or negative, will use the image height from the file</param>
+        /// <param name="inputWidth">The width of the input tensor. If zero or negative, will use the image width from the file</param>
+        /// <param name="inputMean">The input mean, will be subtracted from the image pixel value</param>
+        /// <param name="scale">The optional scale, after input means is substracted, the pixel value will multiply with the scale to produce the tensor value</param>
+        /// <param name="flipUpSideDown">If true, the image will be flipped upside down</param>
+        /// <param name="swapBR">If true, the blue and red channels will be swapped</param>
+        /// <returns>The tensorflow tensor.</returns>
         public static Tensor ReadTensorFromImageFile<T>(
             String fileName, 
             int inputHeight = -1, 
