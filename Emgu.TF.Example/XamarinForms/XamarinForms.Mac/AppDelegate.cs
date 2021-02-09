@@ -42,7 +42,7 @@ namespace XamarinForms.OSX
 			// Insert code here to initialize your application
 			Xamarin.Forms.Forms.Init();
 
-            Emgu.TF.TfInvoke.CheckLibraryLoaded();
+            Emgu.TF.TfInvoke.Init();
 
 			var app = new Emgu.TF.XamarinForms.App();
 			LoadApplication(app);
