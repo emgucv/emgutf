@@ -11,6 +11,7 @@
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
     <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
