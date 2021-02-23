@@ -48,9 +48,19 @@ namespace Emgu.Models
         /// </summary>
         /// <param name="url">The url of the file to be downloaded</param>
         /// <param name="localSubfolder">The local subfolder name to download the model to.</param>
-        public void AddFile(String url, String localSubfolder)
+        /// <param name="sha256Hash">The sha256 hash value for the file</param>
+        public void AddFile(String url, String localSubfolder, String sha256Hash = null)
         {
-            _files.Add(new DownloadableFile(url, localSubfolder));
+            _files.Add(new DownloadableFile(url, localSubfolder, sha256Hash));
+        }
+
+        /// <summary>
+        /// Add a file to download
+        /// </summary>
+        /// <param name="downloadableFile">The file to be downloaded</param>
+        public void AddFile(DownloadableFile downloadableFile)
+        {
+            _files.Add(downloadableFile);
         }
 
         /// <summary>
@@ -156,7 +166,7 @@ namespace Emgu.Models
 
             //uncomment the following line to force re-download every time.
             //File.Delete(downloadableFile.LocalFile);
-            if (!File.Exists(downloadableFile.LocalFile) || new FileInfo(downloadableFile.LocalFile).Length == 0)
+            if (!downloadableFile.IsLocalFileValid)
             {
                 try
                 {
@@ -177,9 +187,11 @@ namespace Emgu.Models
                 }
                 catch (Exception e)
                 {
-                    if (File.Exists(downloadableFile.LocalFile))
+                    if (!downloadableFile.IsLocalFileValid)
+                    {
                         //The downloaded file may be corrupted, should delete it
                         File.Delete(downloadableFile.LocalFile);
+                    }
 
                     if (retry > 0)
                     {

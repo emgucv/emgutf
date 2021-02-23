@@ -103,45 +103,56 @@ namespace Emgu.TF.Models
         /// <summary>
         /// Initiate the graph by checking if the model file exist locally, if not download the graph from internet.
         /// </summary>
-        /// <param name="modelFiles">An array where the first file is the tensorflow graph and the second file are the object class labels. </param>
-        /// <param name="downloadUrl">The url where the file can be downloaded</param>
-        /// <param name="inputName">The input operation name. Default to "input" if not specified.</param>
-        /// <param name="outputName">The output operation name. Default to "output" if not specified.</param>
-        /// <param name="localModelFolder">The local folder to store the model</param>
+        /// <param name="modelFile">The tensorflow graph.</param>
+        /// <param name="labelFile">the object class labels.</param>
         public
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-            System.Collections.IEnumerator
+            IEnumerator
 #else
             async Task
 #endif
             Init(
-                String[] modelFiles = null, 
-                String downloadUrl = null,
+                DownloadableFile modelFile = null,
+                DownloadableFile labelFile = null,
                 String inputName = null,
-                String outputName = null,
-                String localModelFolder = "Resnet")
+                String outputName = null
+            )
         {
             if (_session == null)
             {
                 _inputName = inputName == null ? "serving_default_input_1" : inputName;
                 _outputName = outputName == null ? "StatefulPartitionedCall" : outputName;
-                
+
                 _downloadManager.Clear();
-                String url = downloadUrl == null
-                    ? "https://github.com/emgucv/models/raw/master/resnet/"
-                    : downloadUrl;
-                String[] fileNames = modelFiles == null
-                    ? new string[] { "resnet_50_classification_1.zip", "ImageNetLabels.txt" }
-                    : modelFiles;
-                for (int i = 0; i < fileNames.Length; i++)
-                    _downloadManager.AddFile(url + fileNames[i], localModelFolder);
+
+                String defaultLocalSubfolder = "Resnet";
+                if (modelFile == null)
+                {
+                    modelFile = new DownloadableFile(
+                        "https://github.com/emgucv/models/raw/master/resnet/resnet_50_classification_1.zip",
+                        defaultLocalSubfolder,
+                        "861BA3BA5F18D8985A5611E5B668A0A020998762DD5A932BD4D0BCBBC1823A83"
+                    );
+                }
+
+                if (labelFile == null)
+                {
+                    labelFile = new DownloadableFile(
+                        "https://github.com/emgucv/models/raw/master/resnet/ImageNetLabels.txt",
+                        defaultLocalSubfolder,
+                        "536FEACC519DE3D418DE26B2EFFB4D75694A8C4C0063E36499A46FA8061E2DA9"
+                    );
+                }
+
+                _downloadManager.AddFile(modelFile);
+                _downloadManager.AddFile(labelFile);
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
                 yield return _downloadManager.Download();
 #else
                 await _downloadManager.Download();
-
-                System.IO.FileInfo localZipFile = new System.IO.FileInfo( _downloadManager.Files[0].LocalFile );
+#endif
+                System.IO.FileInfo localZipFile = new System.IO.FileInfo(_downloadManager.Files[0].LocalFile);
 
                 _savedModelDir = System.IO.Path.Combine(localZipFile.DirectoryName, "SavedModel");
                 if (!System.IO.Directory.Exists(_savedModelDir))
@@ -154,8 +165,56 @@ namespace Emgu.TF.Models
                 }
 
                 CreateSession();
-#endif
             }
+        }
+
+        /// <summary>
+        /// Initiate the graph by checking if the model file exist locally, if not download the graph from internet.
+        /// </summary>
+        /// <param name="modelFiles">An array where the first file is the tensorflow graph and the second file are the object class labels. </param>
+        /// <param name="downloadUrl">The url where the file can be downloaded</param>
+        /// <param name="inputName">The input operation name. Default to "input" if not specified.</param>
+        /// <param name="outputName">The output operation name. Default to "output" if not specified.</param>
+        /// <param name="localModelFolder">The local folder to store the model</param>
+        public
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+            System.Collections.IEnumerator
+#else
+            async Task
+#endif
+            Init(
+                String[] modelFiles,
+                String downloadUrl,
+                String inputName = null,
+                String outputName = null,
+                String localModelFolder = "Resnet")
+        {
+
+            DownloadableFile[] downloadableFiles;
+            if (modelFiles == null)
+            {
+                downloadableFiles = new DownloadableFile[2];
+            }
+            else
+            {
+                String url = downloadUrl == null
+                    ? "https://github.com/emgucv/models/raw/master/resnet/"
+                    : downloadUrl;
+                String[] fileNames = modelFiles == null
+                    ? new string[] { "resnet_50_classification_1.zip", "ImageNetLabels.txt" }
+                    : modelFiles;
+                downloadableFiles = new DownloadableFile[fileNames.Length];
+                for (int i = 0; i < fileNames.Length; i++)
+                    downloadableFiles[i] = new DownloadableFile(url + fileNames[i], localModelFolder);
+            }
+
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+                foreach (var e in Init(downloadableFiles[0], downloadableFiles[1], inputName, outputName))
+                    yield return e;
+#else
+            await Init(downloadableFiles[0], downloadableFiles[1], inputName, outputName);
+#endif
+
         }
 
         private void CreateSession()
@@ -176,7 +235,7 @@ namespace Emgu.TF.Models
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             UnityEngine.Debug.Log("Model imported");
 #endif
-            
+
             _labels = File.ReadAllLines(_downloadManager.Files[1].LocalFile);
         }
 
@@ -218,7 +277,7 @@ namespace Emgu.TF.Models
             RecognitionResult[] results = new RecognitionResult[Math.Min(_labels.Length, probabilities.Length)];
             for (int i = 0; i < results.Length; i++)
             {
-                results[i] = new RecognitionResult(_labels[ (i+1) % _labels.Length ], probabilities[i]);
+                results[i] = new RecognitionResult(_labels[(i + 1) % _labels.Length], probabilities[i]);
             }
             Array.Sort<RecognitionResult>(results, new Comparison<RecognitionResult>((a, b) => -a.Probability.CompareTo(b.Probability)));
             return results;

@@ -92,25 +92,87 @@ namespace Emgu.TF.Models
 #else
             async Task
 #endif
-            Init(String[] modelFiles = null, String downloadUrl = null, String localModelFolder = "Multibox")
+            Init(
+                String[] modelFiles, 
+                String downloadUrl, 
+                String localModelFolder = "Multibox")
         {
-            _downloadManager.Clear();
-            String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/mobile_multibox_v1a/" : downloadUrl;
-            String[] fileNames = modelFiles == null ? new string[] { "multibox_model.pb", "multibox_location_priors.txt" } : modelFiles;
-            for (int i = 0; i < fileNames.Length; i++)
-                _downloadManager.AddFile(url + fileNames[i], localModelFolder);
+            DownloadableFile[] downloadableFiles;
+            if (modelFiles == null)
+            {
+                downloadableFiles = new DownloadableFile[2];
+            }
+            else
+            {
+                String url = downloadUrl ?? "https://github.com/emgucv/models/raw/master/mobile_multibox_v1a/";
+                String[] fileNames = modelFiles ?? new string[] { "multibox_model.pb", "multibox_location_priors.txt" };
+                downloadableFiles = new DownloadableFile[fileNames.Length];
+                for (int i = 0; i < fileNames.Length; i++)
+                    downloadableFiles[i] = new DownloadableFile(url + fileNames[i], localModelFolder);
+            }
+
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+            foreach (var e in Init(downloadableFiles[0], downloadableFiles[1]))
+                yield return e;
+#else
+            await Init(downloadableFiles[0], downloadableFiles[1]);
+#endif
+
+        }
+
+        /// <summary>
+        /// Initiate the graph by checking if the model file exist locally, if not download the graph from internet.
+        /// </summary>
+        /// <param name="modelFiles">An array where the first file is the tensorflow graph and the second file is the object class labels. </param>
+        /// <param name="downloadUrl">The url where the file can be downloaded</param>
+        /// <param name="localModelFolder">The local folder to store the model</param>
+        public
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+            IEnumerator
+#else
+            async Task
+#endif
+            Init(
+                DownloadableFile modelFile = null,
+                DownloadableFile labelFile = null)
+        {
+            if (_graph == null)
+            {
+                String defaultLocalSubfolder = "Multibox";
+                if (modelFile == null)
+                {
+                    modelFile = new DownloadableFile(
+                        "https://github.com/emgucv/models/raw/master/mobile_multibox_v1a/multibox_model.pb",
+                        defaultLocalSubfolder,
+                        "D1466DF5497E722E4A49E3839F667F07C579DD4C049258018E5F8EE9E01943A7"
+                    );
+                }
+
+                if (labelFile == null)
+                {
+                    labelFile = new DownloadableFile(
+                        "https://github.com/emgucv/models/raw/master/mobile_multibox_v1a/multibox_location_priors.txt",
+                        defaultLocalSubfolder,
+                        "8742979FBAAAAB73CDDE4FAB55126AD78C6D9F84F310D8D51566BDF3F48F1E65"
+                    );
+                }
+
+                _downloadManager.Clear();
+                _downloadManager.AddFile(modelFile);
+                _downloadManager.AddFile(labelFile);
+    
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             yield return _downloadManager.Download();
 #else
-            await _downloadManager.Download();
+                await _downloadManager.Download();
 #endif
-            ImportGraph();
+                ImportGraph();
+            }
         }
 
         private void onDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            if (OnDownloadProgressChanged != null)
-                OnDownloadProgressChanged(sender, e);
+            OnDownloadProgressChanged?.Invoke(sender, e);
         }
 
         /// <summary>
@@ -126,8 +188,7 @@ namespace Emgu.TF.Models
 
         private void ImportGraph()
         {
-            if (_graph != null)
-                _graph.Dispose();
+            _graph?.Dispose();
             _graph = new Graph();
             String localFileName = _downloadManager.Files[0].LocalFile;
 
@@ -140,8 +201,7 @@ namespace Emgu.TF.Models
             using (ImportGraphDefOptions options = new ImportGraphDefOptions())
                 _graph.ImportGraphDef(modelBuffer, options, _status);
 
-            if (_session != null)
-                _session.Dispose();
+            _session?.Dispose();
 
             _session = new Session(_graph, _sessionOptions);
 

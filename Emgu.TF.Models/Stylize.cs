@@ -36,7 +36,11 @@ namespace Emgu.TF.Models
 
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
 
-        public async Task Init(String[] modelFiles = null, String downloadUrl = null, String localModelFolder = "stylize")
+        /*
+        public async Task Init(
+            String[] modelFiles = null, 
+            String downloadUrl = null, 
+            String localModelFolder = "stylize")
         {
             _downloadManager.Clear();
             String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/stylize_v1/" : downloadUrl;
@@ -45,6 +49,43 @@ namespace Emgu.TF.Models
                 _downloadManager.AddFile(url + fileNames[i], localModelFolder);
             await _downloadManager.Download();
             ImportGraph();
+        }*/
+
+        /// <summary>
+        /// Initiate the graph by checking if the model file exist locally, if not download the graph from internet.
+        /// </summary>
+        /// <param name="modelFile">The tensorflow graph.</param>
+        public
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+            IEnumerator
+#else
+            async Task
+#endif
+            Init(
+                DownloadableFile modelFile = null)
+        {
+            if (_graph == null)
+            {
+                String defaultLocalSubfolder = "Stylize";
+                if (modelFile == null)
+                {
+                    modelFile = new DownloadableFile(
+                        "https://github.com/emgucv/models/raw/master/stylize_v1/stylize_quantized.pb",
+                        defaultLocalSubfolder,
+                        "6753E2BFE7AA1D9FCFE01D8235E848C8201E54C6590423893C8124971E7C7DB0"
+                    );
+                }
+
+                _downloadManager.Clear();
+                _downloadManager.AddFile(modelFile);
+
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+                yield return _downloadManager.Download();
+#else
+                await _downloadManager.Download();
+#endif
+                ImportGraph();
+            }
         }
 
         private void onDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
@@ -69,12 +110,10 @@ namespace Emgu.TF.Models
 
         private void ImportGraph()
         {
-            if (_graph != null)
-                _graph.Dispose();
+            _graph?.Dispose();
             _graph = new Graph();
 
-            if (_session != null)
-                _session.Dispose();
+            _session?.Dispose();
             _session = new Session(_graph, _sessionOptions);
 
             String localFileName = _downloadManager.Files[0].LocalFile;

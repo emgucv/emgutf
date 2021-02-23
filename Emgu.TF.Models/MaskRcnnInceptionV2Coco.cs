@@ -82,6 +82,56 @@ namespace Emgu.TF.Models
         /// <summary>
         /// Initiate the graph by checking if the model file exist locally, if not download the graph from internet.
         /// </summary>
+        /// <param name="modelFile">The tensorflow graph.</param>
+        /// <param name="labelFile">the object class labels.</param>
+        public
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+            IEnumerator
+#else
+            async Task
+#endif
+            Init(DownloadableFile modelFile = null,
+                DownloadableFile labelFile = null
+            )
+        {
+            if (_graph == null)
+            {
+                _downloadManager.Clear();
+
+                String defaultLocalSubfolder = "MaskRcnn";
+                if (modelFile == null)
+                {
+                    modelFile = new DownloadableFile(
+                        "https://github.com/emgucv/models/raw/master/mask_rcnn_inception_v2_coco_2018_01_28/frozen_inference_graph.pb",
+                        defaultLocalSubfolder,
+                        "AC9B51CDE227B24D20030042E6C1E29AF75668F509E51AA84ED686787CCCC309"
+                    );
+                }
+
+                if (labelFile == null)
+                {
+                    labelFile = new DownloadableFile(
+                        "https://github.com/emgucv/models/raw/master/mask_rcnn_inception_v2_coco_2018_01_28/coco-labels-paper.txt",
+                        defaultLocalSubfolder,
+                        "8925173E1B0AABFAEFDA27DE2BB908233BB8FB6E7582323D72988E4BE15A5F0B"
+                    );
+                }
+
+                _downloadManager.AddFile(modelFile);
+                _downloadManager.AddFile(labelFile);
+
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+                yield return _downloadManager.Download();
+#else
+                await _downloadManager.Download();
+#endif
+                ImportGraph();
+            }
+        }
+
+        /// <summary>
+        /// Initiate the graph by checking if the model file exist locally, if not download the graph from internet.
+        /// </summary>
         /// <param name="modelFiles">An array where the first file is the tensorflow graph and the second file is the object class labels. </param>
         /// <param name="downloadUrl">The url where the file can be downloaded</param>
         /// <param name="localModelFolder">The local folder to store the model</param>
@@ -91,28 +141,35 @@ namespace Emgu.TF.Models
 #else
             async Task
 #endif
-            Init(String[] modelFiles = null, String downloadUrl = null, String localModelFolder = "MaskRcnn")
+            Init(
+                String[] modelFiles, 
+                String downloadUrl, 
+                String localModelFolder = "MaskRcnn")
         {
-            if (_graph == null)
+
+            DownloadableFile[] downloadableFiles;
+            if (modelFiles == null)
             {
-                _downloadManager.Clear();
-                String url = downloadUrl == null
-                    ? "https://github.com/emgucv/models/raw/master/mask_rcnn_inception_v2_coco_2018_01_28/"
-                    : downloadUrl;
-                String[] fileNames = modelFiles == null
-                    ? new string[] {"frozen_inference_graph.pb", "coco-labels-paper.txt"}
-                    : modelFiles;
+                downloadableFiles = new DownloadableFile[2];
+            }
+            else
+            {
+                String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/mask_rcnn_inception_v2_coco_2018_01_28/" : downloadUrl;
+                String[] fileNames = modelFiles == null ? new string[] { "frozen_inference_graph.pb", "coco-labels-paper.txt" } : modelFiles;
+                downloadableFiles = new DownloadableFile[fileNames.Length];
                 for (int i = 0; i < fileNames.Length; i++)
-                    _downloadManager.AddFile(url + fileNames[i], localModelFolder);
+                    downloadableFiles[i] = new DownloadableFile(url + fileNames[i], localModelFolder);
+            }
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-                yield return _downloadManager.Download();
+            foreach (var e in Init(downloadableFiles[0], downloadableFiles[1]))
+                yield return e;
 #else
-                await _downloadManager.Download();
-                ImportGraph();
+            await Init(downloadableFiles[0], downloadableFiles[1]);
 #endif
-            }
+
         }
+    
 
         /// <summary>
         /// Return true if the model has been imported

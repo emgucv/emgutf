@@ -85,6 +85,64 @@ namespace Emgu.TF.Models
         /// <summary>
         /// Initiate the graph by checking if the model file exist locally, if not download the graph from internet.
         /// </summary>
+        /// <param name="modelFile">The tensorflow graph.</param>
+        /// <param name="labelFile">the object class labels.</param>
+        /// <param name="inputName">The input operation name. Default to "input" if not specified.</param>
+        /// <param name="outputName">The output operation name. Default to "output" if not specified.</param>
+        public
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+            IEnumerator
+#else
+            async Task
+#endif
+            Init(DownloadableFile modelFile = null,
+                DownloadableFile labelFile = null,
+                String inputName = null,
+                String outputName = null
+            )
+        {
+            if (_graph == null)
+            {
+                _inputName = inputName == null ? "input" : inputName;
+                _outputName = outputName == null ? "output" : outputName;
+
+                _downloadManager.Clear();
+
+                String defaultLocalSubfolder = "Inception";
+                if (modelFile == null)
+                {
+                    modelFile = new DownloadableFile(
+                        "https://github.com/emgucv/models/raw/master/inception/tensorflow_inception_graph.pb",
+                        defaultLocalSubfolder,
+                        "A39B08B826C9D5A5532FF424C03A3A11A202967544E389ACA4B06C2BD8AEF63F"
+                    );
+                }
+
+                if (labelFile == null)
+                {
+                    labelFile = new DownloadableFile(
+                        "https://github.com/emgucv/models/raw/master/inception/imagenet_comp_graph_label_strings.txt",
+                        defaultLocalSubfolder,
+                        "DA2A31ECFE9F212AE8DD07379B11A74CB2D7A110EBA12C5FC8C862A65B8E6606"
+                    );
+                }
+
+                _downloadManager.AddFile(modelFile);
+                _downloadManager.AddFile(labelFile);
+
+#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+                yield return _downloadManager.Download();
+#else
+                await _downloadManager.Download();
+#endif
+                ImportGraph();
+            }
+        }
+
+
+        /// <summary>
+        /// Initiate the graph by checking if the model file exist locally, if not download the graph from internet.
+        /// </summary>
         /// <param name="modelFiles">An array where the first file is the tensorflow graph and the second file is the object class labels. </param>
         /// <param name="downloadUrl">The url where the file can be downloaded</param>
         /// <param name="inputName">The input operation name. Default to "input" if not specified.</param>
@@ -96,28 +154,34 @@ namespace Emgu.TF.Models
 #else
             async Task
 #endif
-            Init(String[] modelFiles = null, 
-                String downloadUrl = null, 
-                String inputName = null, 
-                String outputName = null,
+            Init(String[] modelFiles, 
+                String downloadUrl, 
+                String inputName, 
+                String outputName,
                 String localModelFolder = "Inception" 
                 )
         {
-            _inputName = inputName == null ? "input" : inputName;
-            _outputName = outputName == null ? "output" : outputName;
-
-            _downloadManager.Clear();
-            String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/inception/" : downloadUrl;
-            String[] fileNames = modelFiles == null ? new string[] { "tensorflow_inception_graph.pb", "imagenet_comp_graph_label_strings.txt" } : modelFiles;
-            for (int i = 0; i < fileNames.Length; i++)
-                _downloadManager.AddFile(url + fileNames[i], localModelFolder);
-
+            DownloadableFile[] downloadableFiles;
+            if (modelFiles == null)
+            {
+                downloadableFiles = new DownloadableFile[2];
+            }
+            else
+            {
+                String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/inception/" : downloadUrl;
+                String[] fileNames = modelFiles == null ? new string[] { "tensorflow_inception_graph.pb", "imagenet_comp_graph_label_strings.txt" } : modelFiles;
+                downloadableFiles = new DownloadableFile[fileNames.Length];
+                for (int i = 0; i < fileNames.Length; i++)
+                    downloadableFiles[i] = new DownloadableFile(url + fileNames[i], localModelFolder);
+            }
+            
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-            yield return _downloadManager.Download();
+            foreach (var e in Init(downloadableFiles[0], downloadableFiles[1], inputName, outputName))
+                yield return e;
 #else
-            await _downloadManager.Download();
+            await Init(downloadableFiles[0], downloadableFiles[1], inputName, outputName);
 #endif
-            ImportGraph();
+
         }
 
         /// <summary>

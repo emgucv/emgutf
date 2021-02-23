@@ -78,13 +78,25 @@ namespace Emgu.TF.XamarinForms
 
                     if (_model == Model.Flower)
                     {
+                        String localModelFolder = "InceptionFlower";
+                        DownloadableFile modelFile = new DownloadableFile(
+                            "https://github.com/emgucv/models/raw/master/inception_flower_retrain/optimized_graph.pb",
+                            localModelFolder,
+                            "DE83CAD3F87B5070E24EFEADB8B84F72C940B73974DC69B46D96CDFB913385C4"
+                        );
+                        
+                        DownloadableFile labelFile = new DownloadableFile(
+                            "https://github.com/emgucv/models/raw/master/inception_flower_retrain/output_labels.txt",
+                            localModelFolder,
+                            "298454B11DBEE503F0303367F3714D449855071DF9ECAC16AB0A01A0A7377DB6"
+                        );
+                        
                         //use a retrained model to recognize followers
                         await _inceptionGraph.Init(
-                            new string[] { "optimized_graph.pb", "output_labels.txt" },
-                            "https://github.com/emgucv/models/raw/master/inception_flower_retrain/",
+                            modelFile, 
+                            labelFile,
                             "Placeholder",
-                            "final_result",
-                            "InceptionFlower");
+                            "final_result");
                     }
                     else
                     {
