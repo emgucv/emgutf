@@ -97,7 +97,7 @@ namespace Emgu.Models
             {
                 String localFileName = df.LocalFile;
 
-                //Uncomment the following to force redownload every time
+                //Uncomment the following to force re-download every time
                 //File.Delete(localFileName);
                 if (!System.IO.File.Exists(localFileName) || !(new FileInfo(localFileName).Length > 0))
                 {
@@ -114,12 +114,14 @@ namespace Emgu.Models
                             UnityEngine.Debug.LogError(webclient.error);
                         }
 
-                        if (!System.IO.File.Exists(localFileName) || !(new FileInfo(localFileName).Length > 0))
+                        if (df.IsLocalFileValid)
                         {
-                            UnityEngine.Debug.LogError(String.Format("File {0} is empty, failed to download file.", localFileName));
+                            UnityEngine.Debug.Log("File successfully downloaded and saved to " + localFileName);
                         }
-
-                        UnityEngine.Debug.Log("File successfully downloaded and saved to " + localFileName);
+                        else
+                        {
+                            UnityEngine.Debug.LogError(String.Format("Failed to download file {0}.", localFileName));
+                        }
                         CurrentWebClient = null;
 
                     }
@@ -214,11 +216,7 @@ namespace Emgu.Models
                     }
                     else
                     {
-#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-                        UnityEngine.Debug.Log(e.StackTrace);
-#else
                         Trace.WriteLine(e);
-#endif
                         throw;
                     }
                 }
