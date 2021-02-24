@@ -125,7 +125,12 @@ namespace Emgu.TF.Models
 #else
                 await _downloadManager.Download();
 #endif
-                ImportGraph();
+                if (_downloadManager.AllFilesDownloaded)
+                    ImportGraph();
+                else
+                {
+                    System.Diagnostics.Trace.WriteLine("Failed to download files");
+                }
             }
         }
 

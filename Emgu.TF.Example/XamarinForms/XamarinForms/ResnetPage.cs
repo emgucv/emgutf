@@ -56,7 +56,6 @@ namespace Emgu.TF.XamarinForms
                 _resnet = new Resnet(null, so);
                 _resnet.OnDownloadProgressChanged += onProgressChanged;
 
-                
                 //The resnet model
                 await _resnet.Init();
                 
@@ -96,6 +95,14 @@ namespace Emgu.TF.XamarinForms
 
                     SetMessage("Please wait while we download / initialize the model ...");
                     await Init(this.onDownloadProgressChanged);
+
+                    if (_resnet == null || (!_resnet.Imported))
+                    {
+                        _resnet = null;
+                        SetMessage("Failed to import resnet.");
+                        return;
+                    }
+
                     SetMessage("Model Loaded.");
 
                     String[] images;

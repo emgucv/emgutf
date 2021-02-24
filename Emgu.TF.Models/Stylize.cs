@@ -36,6 +36,17 @@ namespace Emgu.TF.Models
 
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
 
+        /// <summary>
+        /// Return true if the graph has been imported
+        /// </summary>
+        public bool Imported
+        {
+            get
+            {
+                return _graph != null;
+            }
+        }
+
         /*
         public async Task Init(
             String[] modelFiles = null, 
@@ -84,7 +95,12 @@ namespace Emgu.TF.Models
 #else
                 await _downloadManager.Download();
 #endif
-                ImportGraph();
+                if (_downloadManager.AllFilesDownloaded)
+                    ImportGraph();
+                else
+                {
+                    System.Diagnostics.Trace.WriteLine("Failed to download files");
+                }
             }
         }
 

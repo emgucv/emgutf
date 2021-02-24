@@ -50,7 +50,6 @@ namespace Emgu.TF.XamarinForms
             Title = "Multibox People Detection";
             this.TopButton.Text = "Detect People";
 
-
             this.TopButton.Clicked += async (sender, e) =>
             {
                 try
@@ -59,9 +58,16 @@ namespace Emgu.TF.XamarinForms
                     SetMessage("Please wait...");
                     SetImage();
 
-                    SetMessage("Please wait while we download the model from internet.");
+                    SetMessage("Please wait while we download and initialize the model.");
                     await InitMultibox(this.onDownloadProgressChanged);
-                    
+
+                    if (_multiboxGraph == null || (!_multiboxGraph.Imported))
+                    {
+                        _multiboxGraph = null;
+                        SetMessage("Failed to import multibox graph.");
+                        return;
+                    }
+
                     String[] images = await LoadImages(new string[] { "surfers.jpg" });
                     if (images == null)
                         return;

@@ -139,6 +139,15 @@ namespace Emgu.TF.XamarinForms
 
                 SetMessage("Please wait while we download and initialize the model ...");
                 await Init(this.onDownloadProgressChanged);
+
+                if (_inceptionGraph == null || (!_inceptionGraph.Imported) )
+                {
+                    _inceptionGraph = null;
+                    SetMessage("Failed to import inception graph.");
+                    return;
+                }
+
+
                 SetMessage("Model Loaded.");
                 String[] images;
                 if (_model == Model.Flower)
@@ -239,8 +248,8 @@ namespace Emgu.TF.XamarinForms
                     var bmp = Emgu.Models.NativeImageIO.ImageFileToBitmap(images[0]);
                     SetImage(bmp);
 #else
-                        var jpeg = Emgu.Models.NativeImageIO.ImageFileToJpeg(images[0]);
-                        SetImage(jpeg.Raw, jpeg.Width, jpeg.Height);
+                    var jpeg = Emgu.Models.NativeImageIO.ImageFileToJpeg(images[0]);
+                    SetImage(jpeg.Raw, jpeg.Width, jpeg.Height);
 #endif
                     this.TopButton.IsEnabled = true;
                 }

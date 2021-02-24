@@ -93,8 +93,8 @@ namespace Emgu.TF.Models
             async Task
 #endif
             Init(
-                String[] modelFiles, 
-                String downloadUrl, 
+                String[] modelFiles,
+                String downloadUrl,
                 String localModelFolder = "Multibox")
         {
             DownloadableFile[] downloadableFiles;
@@ -159,13 +159,16 @@ namespace Emgu.TF.Models
                 _downloadManager.Clear();
                 _downloadManager.AddFile(modelFile);
                 _downloadManager.AddFile(labelFile);
-    
+
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-            yield return _downloadManager.Download();
+                yield return _downloadManager.Download();
 #else
                 await _downloadManager.Download();
 #endif
-                ImportGraph();
+                if (_downloadManager.AllFilesDownloaded)
+                    ImportGraph();
+                else
+                    System.Diagnostics.Trace.WriteLine("Failed to download files");
             }
         }
 
@@ -232,7 +235,7 @@ namespace Emgu.TF.Models
                 results[i].Scores = scores[i];
                 results[i].DecodedLocations = locations[indices[i]];
             }
-            
+
             return results;
 
         }

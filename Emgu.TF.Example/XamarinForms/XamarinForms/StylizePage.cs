@@ -73,6 +73,13 @@ namespace Emgu.TF.XamarinForms
                     SetMessage("Please wait while we download the model from internet.");
                     await Init(this.onDownloadProgressChanged);
 
+                    if (_stylizeGraph == null || (!_stylizeGraph.Imported))
+                    {
+                        _stylizeGraph = null;
+                        SetMessage("Failed to import graph.");
+                        return;
+                    }
+
                     String[] images = await LoadImages(new string[] { "surfers.jpg" });
                     if (images == null)
                     {

@@ -38,6 +38,17 @@ namespace Emgu.TF.Models
         }
 
         /// <summary>
+        /// Return true if the graph has been imported
+        /// </summary>
+        public bool Imported
+        {
+            get
+            {
+                return Graph != null;
+            }
+        }
+
+        /// <summary>
         /// Get the MetaGraphDefBuffer
         /// </summary>
         public Buffer MetaGraphDefBuffer
@@ -153,19 +164,25 @@ namespace Emgu.TF.Models
 #else
                 await _downloadManager.Download();
 #endif
-                System.IO.FileInfo localZipFile = new System.IO.FileInfo(_downloadManager.Files[0].LocalFile);
-
-                _savedModelDir = System.IO.Path.Combine(localZipFile.DirectoryName, "SavedModel");
-                if (!System.IO.Directory.Exists(_savedModelDir))
+                if (_downloadManager.AllFilesDownloaded)
                 {
-                    System.IO.Directory.CreateDirectory(_savedModelDir);
+                    System.IO.FileInfo localZipFile = new System.IO.FileInfo(_downloadManager.Files[0].LocalFile);
 
-                    System.IO.Compression.ZipFile.ExtractToDirectory(
-                        localZipFile.FullName,
-                        _savedModelDir);
-                }
+                    _savedModelDir = System.IO.Path.Combine(localZipFile.DirectoryName, "SavedModel");
+                    if (!System.IO.Directory.Exists(_savedModelDir))
+                    {
+                        System.IO.Directory.CreateDirectory(_savedModelDir);
 
-                CreateSession();
+                        System.IO.Compression.ZipFile.ExtractToDirectory(
+                            localZipFile.FullName,
+                            _savedModelDir);
+                    }
+
+                    CreateSession();
+                } else
+                {
+                    System.Diagnostics.Trace.WriteLine("Failed to download files");
+                }    
             }
         }
 

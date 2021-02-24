@@ -95,12 +95,11 @@ namespace Emgu.Models
         {
             foreach (DownloadableFile df in _files)
             {
-                String localFileName = df.LocalFile;
-
                 //Uncomment the following to force re-download every time
                 //File.Delete(localFileName);
-                if (!System.IO.File.Exists(localFileName) || !(new FileInfo(localFileName).Length > 0))
+                if (!df.IsLocalFileValid)
                 {
+                    String localFileName = df.LocalFile;
                     using (UnityEngine.Networking.UnityWebRequest webclient = new UnityEngine.Networking.UnityWebRequest(df.Url))
                     {
                         CurrentWebClient = webclient;
