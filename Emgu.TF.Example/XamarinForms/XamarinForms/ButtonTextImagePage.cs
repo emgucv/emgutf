@@ -83,11 +83,11 @@ namespace Emgu.TF.XamarinForms
         /// <returns>null if user canceled. Otherwise the list of images.</returns>
         public virtual async Task<String[]> LoadImages(String[] imageNames, String[] labels = null)
         {
-            //if (Device.RuntimePlatform == Device.macOS)
-            //{
-            //    //use default images
-            //    return imageNames;
-            //}
+            if (Device.RuntimePlatform == Device.macOS)
+            {
+                //use default images
+                return imageNames;
+            }
 
             String[] mats = new String[imageNames.Length];
             for (int i = 0; i < mats.Length; i++)

@@ -66,11 +66,16 @@ namespace Emgu.TF.XamarinForms
                         _multiboxGraph = null;
                         SetMessage("Failed to import multibox graph.");
                         return;
+                    } else
+                    {
+                        SetMessage("Multibox graph imported.");
                     }
 
                     String[] images = await LoadImages(new string[] { "surfers.jpg" });
                     if (images == null)
                         return;
+
+                    SetMessage("Image selected.");
 
                     Stopwatch watch = Stopwatch.StartNew();
 
@@ -81,20 +86,21 @@ namespace Emgu.TF.XamarinForms
                     watch.Stop();
                     Emgu.Models.Annotation[] annotations = MultiboxGraph.FilterResults(detectResult, 0.1f);
 
+                    SetMessage(String.Format("Detected in {0} milliseconds.", watch.ElapsedMilliseconds));
 #if __ANDROID__
                     var bmp = Emgu.Models.NativeImageIO.ImageFileToBitmap(images[0], annotations);
                     SetImage(bmp);
 #else
                     var jpeg = Emgu.Models.NativeImageIO.ImageFileToJpeg(images[0], annotations);
                     SetImage(jpeg.Raw, jpeg.Width, jpeg.Height);
-#if __MACOS__
-                    var displayImage = this.DisplayImage;
-                    displayImage.WidthRequest = jpeg.Width;
-                    displayImage.HeightRequest = jpeg.Height;
-#endif
+//#if __MACOS__
+//                    var displayImage = this.DisplayImage;
+//                    displayImage.WidthRequest = jpeg.Width;
+//                    displayImage.HeightRequest = jpeg.Height;
+//#endif
 #endif
 
-                    SetMessage(String.Format("Detected in {0} milliseconds.", watch.ElapsedMilliseconds));
+                    
                 }
                 catch (Exception excpt)
                 {
