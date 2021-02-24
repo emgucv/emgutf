@@ -174,10 +174,9 @@ namespace Emgu.TF.Models
                 for (int i = 0; i < fileNames.Length; i++)
                     downloadableFiles[i] = new DownloadableFile(url + fileNames[i], localModelFolder);
             }
-            
+
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-            foreach (var e in Init(downloadableFiles[0], downloadableFiles[1], inputName, outputName))
-                yield return e;
+            return Init(downloadableFiles[0], downloadableFiles[1], inputName, outputName);
 #else
             await Init(downloadableFiles[0], downloadableFiles[1], inputName, outputName);
 #endif

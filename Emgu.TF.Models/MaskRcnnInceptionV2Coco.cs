@@ -162,8 +162,7 @@ namespace Emgu.TF.Models
             }
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-            foreach (var e in Init(downloadableFiles[0], downloadableFiles[1]))
-                yield return e;
+            return Init(downloadableFiles[0], downloadableFiles[1]);
 #else
             await Init(downloadableFiles[0], downloadableFiles[1]);
 #endif

@@ -146,7 +146,7 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
             MultiboxGraph.Result[] results = _multiboxGraph.Detect(imageTensor);
 
             drawableTexture = new Texture2D(texture.width, texture.height, TextureFormat.ARGB32, false);
-            drawableTexture.SetPixels(texture.GetPixels());
+            drawableTexture.SetPixels32(texture.GetPixels32());
             MultiboxGraph.DrawResults(drawableTexture, results, 0.1f, true);
 
             RenderTexture(drawableTexture);

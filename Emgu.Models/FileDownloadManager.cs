@@ -94,7 +94,8 @@ namespace Emgu.Models
 
                         webclient.downloadHandler = new UnityEngine.Networking.DownloadHandlerFile(localFileName);
                         yield return webclient.SendWebRequest();
-                        if (webclient.isNetworkError || webclient.isHttpError)
+                        if (webclient.result == UnityEngine.Networking.UnityWebRequest.Result.ConnectionError 
+                            || webclient.result == UnityEngine.Networking.UnityWebRequest.Result.ProtocolError)
                         {
                             UnityEngine.Debug.LogError(webclient.error);
                         }

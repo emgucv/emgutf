@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -209,8 +210,7 @@ namespace Emgu.TF.Models
             }
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-                foreach (var e in Init(downloadableFiles[0], downloadableFiles[1], inputName, outputName))
-                    yield return e;
+                return Init(downloadableFiles[0], downloadableFiles[1], inputName, outputName);
 #else
             await Init(downloadableFiles[0], downloadableFiles[1], inputName, outputName);
 #endif
