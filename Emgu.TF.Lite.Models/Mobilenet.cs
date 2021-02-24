@@ -87,9 +87,8 @@ namespace Emgu.TF.Lite.Models
         /// <summary>
         /// Initialize the graph by downloading the model from the internet
         /// </summary>
-        /// <param name="modelFiles">The model file names as an array. First one is the ".tflite" file and the second one should be the label names.</param>
-        /// <param name="downloadUrl">The url where the files can be downloaded from.</param>
-        /// <param name="localModelFolder">The subfolder where the file will be stored.</param>
+        /// <param name="modelFile">The tflite flatbuffer model files</param>
+        /// <param name="labelFile">Text file that contains the labels</param>
         public
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             IEnumerator
@@ -97,23 +96,45 @@ namespace Emgu.TF.Lite.Models
             async Task
 #endif
             Init(
-                String[] modelFiles = null, 
-                String downloadUrl = null,
-                String localModelFolder = "Mobilenet")
+                DownloadableFile modelFile = null,
+                DownloadableFile labelFile = null)
         {
 
             _downloadManager.Clear();
-            String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/mobilenet_v1_1.0_224_float_2017_11_08/" : downloadUrl;
-            String[] fileNames = modelFiles == null ? new string[] { "mobilenet_v1_1.0_224.tflite", "labels.txt" } : modelFiles;
-            for (int i = 0; i < fileNames.Length; i++)
-                _downloadManager.AddFile(url + fileNames[i], localModelFolder);
+
+            String defaultLocalSubfolder = "Mobilenet";
+            if (modelFile == null)
+            {
+                modelFile = new DownloadableFile(
+                    "https://github.com/emgucv/models/raw/master/mobilenet_v1_1.0_224_float_2017_11_08/mobilenet_v1_1.0_224.tflite",
+                    defaultLocalSubfolder,
+                    "FDACE547B17907FA22821F4898F2AF49DCE7787FE688AD7C5D8D0220F3781C65"
+                );
+            }
+
+            if (labelFile == null)
+            {
+                labelFile = new DownloadableFile(
+                    "https://github.com/emgucv/models/raw/master/mobilenet_v1_1.0_224_float_2017_11_08/labels.txt",
+                    defaultLocalSubfolder,
+                    "536FEACC519DE3D418DE26B2EFFB4D75694A8C4C0063E36499A46FA8061E2DA9"
+                );
+            }
+
+            _downloadManager.AddFile(modelFile);
+            _downloadManager.AddFile(labelFile);
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             yield return _downloadManager.Download();
 #else
             await _downloadManager.Download();
 #endif
-            ImportGraph();
+            if (_downloadManager.AllFilesDownloaded)
+                ImportGraph();
+            else
+            {
+                System.Diagnostics.Trace.WriteLine("Failed to download all files");
+            }
         }
 
         /// <summary>

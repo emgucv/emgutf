@@ -70,7 +70,11 @@ namespace Emgu.TF.XamarinForms
         {
             SetMessage("Please wait while the Inception Model is being downloaded...");
             await _inception.Init();
-
+            if (!_inception.Imported)
+            {
+                SetMessage("Failed to initialize mobilenet.");
+                return;
+            }
             SetImage();
             String[] imageFiles = await LoadImages(new string[] { "tulips.jpg" });
 

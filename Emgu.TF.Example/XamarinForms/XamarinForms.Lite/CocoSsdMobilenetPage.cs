@@ -37,7 +37,6 @@ namespace Emgu.TF.XamarinForms
     public class CocoSsdMobilenetPage : ButtonTextImagePage
     {
         private CocoSsdMobilenetV3 _mobilenet;
-
         public CocoSsdMobilenetPage()
            : base()
         {
@@ -144,6 +143,11 @@ namespace Emgu.TF.XamarinForms
 #endif
             {
                 await _mobilenet.Init();
+                if (!_mobilenet.Imported)
+                {
+                    SetMessage("Failed to initialize mobilenet.");
+                    return;
+                }
             }
 #if !DEBUG
                 catch (Exception e)

@@ -89,9 +89,8 @@ namespace Emgu.TF.Lite.Models
         /// <summary>
         /// Initialize the CocoSSDMobileNet model
         /// </summary>
-        /// <param name="modelFiles">Two files, first one is the tflite flatbuffer model files, second is a text file that contains the labels</param>
-        /// <param name="downloadUrl">The url to download the files from the internet.</param>
-        /// <param name="localModelFolder">The local folder to store the models.</param>
+        /// <param name="modelFile">The tflite flatbuffer model files</param>
+        /// <param name="labelFile">Text file that contains the labels</param>
         /// <param name="optDelegate">An optional hardware delegate</param>
         /// <returns>Async task</returns>
         public virtual
@@ -101,23 +100,29 @@ namespace Emgu.TF.Lite.Models
             async Task
 #endif
             Init(
-                String[] modelFiles, 
-                String downloadUrl,
-                String localModelFolder,
+                DownloadableFile modelFile = null, 
+                DownloadableFile labelFile = null,
                 IDelegate optDelegate = null)
         {
-            _downloadManager.Clear();
-            String url = downloadUrl;
-            String[] fileNames = modelFiles;
-            for (int i = 0; i < fileNames.Length; i++)
-                _downloadManager.AddFile(url + fileNames[i], localModelFolder);
+            if (!Imported)
+            {
+                _downloadManager.Clear();
+
+                _downloadManager.AddFile(modelFile);
+                _downloadManager.AddFile(labelFile);
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             yield return _downloadManager.Download();
 #else
-            await _downloadManager.Download();
+                await _downloadManager.Download();
 #endif
-            ImportGraph();
+                if (_downloadManager.AllFilesDownloaded)
+                    ImportGraph(optDelegate);
+                else
+                {
+                    System.Diagnostics.Trace.WriteLine("Failed to download all files");
+                }
+            }
         }
 
         /// <summary>

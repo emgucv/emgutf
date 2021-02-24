@@ -88,9 +88,8 @@ namespace Emgu.TF.Lite.Models
         /// <summary>
         /// Initialize the graph by downloading the model from the Internet
         /// </summary>
-        /// <param name="modelFiles">The model file names as an array. First one is the ".tflite" file and the second one should be the label names.</param>
-        /// <param name="downloadUrl">The url where the files can be downloaded from.</param>
-        /// <param name="localModelFolder">The subfolder where the file will be stored.</param>
+        /// <param name="modelFile">The tflite flatbuffer model files</param>
+        /// <param name="labelFile">Text file that contains the labels</param>
         public
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             IEnumerator
@@ -98,23 +97,46 @@ namespace Emgu.TF.Lite.Models
             async Task
 #endif
             Init(
-                String[] modelFiles = null, 
-                String downloadUrl = null, 
-                String localModelFolder = "Inception")
+                DownloadableFile modelFile = null,
+                DownloadableFile labelFile = null)
         {
 
             _downloadManager.Clear();
-            String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/inception_flower_retrain/" : downloadUrl;
-            String[] fileNames = modelFiles == null ? new string[] { "optimized_graph.tflite", "output_labels.txt" } : modelFiles;
-            for (int i = 0; i < fileNames.Length; i++)
-                _downloadManager.AddFile(url + fileNames[i], localModelFolder);
+            
+            String defaultLocalSubfolder = "Inception";
+            if (modelFile == null)
+            {
+                modelFile = new DownloadableFile(
+                    "https://github.com/emgucv/models/raw/master/inception_flower_retrain/optimized_graph.tflite",
+                    defaultLocalSubfolder,
+                    "9E4F5BF63CC7975EB17ECA1398C3046AC39451F462976750258CE7072BB0ECCD"
+                );
+            }
+
+            if (labelFile == null)
+            {
+                labelFile = new DownloadableFile(
+                    "https://github.com/emgucv/models/raw/master/inception_flower_retrain/output_labels.txt",
+                    defaultLocalSubfolder,
+                    "298454B11DBEE503F0303367F3714D449855071DF9ECAC16AB0A01A0A7377DB6"
+                );
+            }
+
+            _downloadManager.AddFile(modelFile);
+            _downloadManager.AddFile(labelFile);
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             yield return _downloadManager.Download();
 #else
             await _downloadManager.Download();
-            ImportGraph();
 #endif
+
+            if (_downloadManager.AllFilesDownloaded)
+                ImportGraph();
+            else
+            {
+                System.Diagnostics.Trace.WriteLine("Failed to download all files");
+            }
         }
 
         /// <summary>

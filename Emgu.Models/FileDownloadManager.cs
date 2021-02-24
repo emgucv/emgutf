@@ -63,6 +63,20 @@ namespace Emgu.Models
             _files.Add(downloadableFile);
         }
 
+        public bool AllFilesDownloaded
+        {
+            get
+            {
+                bool allDownloaded = true;
+                foreach (DownloadableFile file in _files)
+                {
+                    allDownloaded &= file.IsLocalFileValid;
+                }
+
+                return allDownloaded;
+            }
+        }
+
         /// <summary>
         /// Get the files that will be downloaded by this download manager.
         /// </summary>

@@ -32,9 +32,8 @@ namespace Emgu.TF.Lite.Models
         /// <summary>
         /// Initiate the graph by checking if the model file exist locally, if not download the graph from internet.
         /// </summary>
-        /// <param name="modelFiles">An array where the first file is the tensorflow lite model and the second file is the object class labels. </param>
-        /// <param name="downloadUrl">The url where the file can be downloaded</param>
-        /// <param name="localModelFolder">The local folder to store the model</param>
+        /// <param name="modelFile">The tflite flatbuffer model files</param>
+        /// <param name="labelFile">Text file that contains the labels</param>
         /// <param name="optDelegate">The optional delegate that can be used during model initialization</param>
         public override 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
@@ -43,20 +42,34 @@ namespace Emgu.TF.Lite.Models
             async Task
 #endif
             Init(
-                String[] modelFiles = null, 
-                String downloadUrl = null,
-                String localModelFolder = "CocoSsdMobilenetV1",
+                DownloadableFile modelFile = null,
+                DownloadableFile labelFile = null,
                 IDelegate optDelegate = null)
         {
-            downloadUrl = ( downloadUrl == null ? "https://github.com/emgucv/models/raw/master/coco_ssd_mobilenet_v1_1.0_quant_2018_06_29/" : downloadUrl );
-            modelFiles = (modelFiles == null ? new string[] { "detect.tflite", "labelmap.txt" } : modelFiles);
+            String defaultLocalSubfolder = "CocoSsdMobilenetV1";
+            if (modelFile == null)
+            {
+                modelFile = new DownloadableFile(
+                    "https://github.com/emgucv/models/raw/master/coco_ssd_mobilenet_v1_1.0_quant_2018_06_29/detect.tflite",
+                    defaultLocalSubfolder,
+                    "E4B118E5E4531945DE2E659742C7C590F7536F8D0ED26D135ABCFE83B4779D13"
+                );
+            }
+
+            if (labelFile == null)
+            {
+                labelFile = new DownloadableFile(
+                    "https://github.com/emgucv/models/raw/master/coco_ssd_mobilenet_v1_1.0_quant_2018_06_29/labelmap.txt",
+                    defaultLocalSubfolder,
+                    "C7E79C855F73CBBA9F33D649D60E1676EB0A974021A41696D1AC0D4B7F7E0211"
+                );
+            }
+            
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-            var e = base.Init(modelFiles, downloadUrl, localModelFolder, optDelegate);
-            while(e.MoveNext())
-                yield return e.Current;
+            return base.Init(modelFile, labelFile, optDelegate);
 #else
-            await base.Init(modelFiles, downloadUrl, localModelFolder, optDelegate);
+            await base.Init(modelFile, labelFile, optDelegate);
 #endif
 
         }
