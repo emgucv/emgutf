@@ -5,8 +5,8 @@ mkdir emgutf.bundle
 mkdir emgutf.bundle/Contents
 mkdir emgutf.bundle/Contents/MacOS
 mkdir emgutf.bundle/Contents/Resources
-cp ../../lib/osx/libtfextern.dylib emgutf.bundle/Contents/MacOS/
-cp ../../lib/osx/libtensorflow_framework.dylib emgutf.bundle/Contents/MacOS/
+cp ../../lib/macos/libtfextern.dylib emgutf.bundle/Contents/MacOS/
+cp ../../lib/macos/libtensorflow_framework.dylib emgutf.bundle/Contents/MacOS/
 cp Info.plist emgutf.bundle/Contents/
 iconutil -c icns icons.iconset/
 cp icons.icns emgutf.bundle/Contents/Resources/
