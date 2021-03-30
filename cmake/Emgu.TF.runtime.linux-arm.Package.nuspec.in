@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>${EMGUTF_RASPBIAN_NUGET_ID}</id>
-	<title>${EMGUTF_RASPBIAN_NUGET_TITLE}</title>
+    <id>${EMGUTF_RASPBERRY_NUGET_ID}</id>
+	<title>${EMGUTF_RASPBERRY_NUGET_TITLE}</title>
     <version>${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}</version>
     <authors>${CPACK_PACKAGE_VENDOR}</authors>
     <owners>${CPACK_PACKAGE_VENDOR}</owners>
@@ -15,11 +15,11 @@
     <description>This package contains the native runtime of Emgu TF for Raspberry Pi OS</description>
     <releaseNotes>This is the ${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX} release of Emgu TF for Raspberry Pi OS. For online documentation please visit
 http://www.emgu.com/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}/document/</releaseNotes>
-	${EMGUTF_RASPBIAN_NUGET_DEPENDENCY}
+	${EMGUTF_RASPBERRY_NUGET_DEPENDENCY}
     <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved.</copyright>
     <tags>tensorflow emgu emgutf ai </tags>
   </metadata>
   <files>
-  ${EMGUTF_RASPBIAN_NUGET_FILE_LIST}
+  ${EMGUTF_RASPBERRY_NUGET_FILE_LIST}
   </files>
 </package>
