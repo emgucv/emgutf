@@ -32,7 +32,7 @@ IF(HAVE_LINUX_X86_64)
 ENDIF()
   
 IF(HAVE_LINUX_ARM)
-  add_subdirectory(Emgu.TF.runtime.raspbian)
+  add_subdirectory(Emgu.TF.runtime.linux-arm)
 ENDIF()
 
 #MESSAGE(STATUS "-------HAVE_OSX_LITE: ${HAVE_OSX_LITE}")
@@ -66,5 +66,5 @@ IF (HAVE_LINUX_X86_64_LITE)
 ENDIF()
 
 IF (HAVE_LINUX_ARM_LITE)
-  add_subdirectory(Emgu.TF.Lite.runtime.raspbian)
+  add_subdirectory(Emgu.TF.Lite.runtime.linux-arm)
 ENDIF()
