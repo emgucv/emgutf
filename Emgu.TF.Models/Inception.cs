@@ -246,6 +246,14 @@ namespace Emgu.TF.Models
         }
 
         /// <summary>
+        /// Get the Tensorflow session
+        /// </summary>
+        public Session Session
+        {
+            get { return _session; }
+        }
+
+        /// <summary>
         /// Pass the image tensor to the graph and return the probability that the object in image belongs to each of the object class.
         /// </summary>
         /// <param name="image">The image to be classified</param>
