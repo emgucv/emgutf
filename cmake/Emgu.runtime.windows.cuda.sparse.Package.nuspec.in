@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>${EMGU_TF_CUFFT_ID}</id>
-	<title>Native windows x64 fft component for CUDA</title>
-    <version>${EMGU_TF_CUFFT_VERSION}</version>
+    <id>${EMGU_TF_CUSPARSE_ID}</id>
+	<title>Native windows x64 sparse component for CUDA</title>
+    <version>${EMGU_TF_CUSPARSE_VERSION}</version>
     <authors>${CPACK_PACKAGE_VENDOR}</authors>
     <owners>${CPACK_PACKAGE_VENDOR}</owners>
     <license type="file">CUDA_EULA.txt</license>
     <projectUrl>${EMGUTF_MAIN_WEB_URL}</projectUrl>
 	<icon>icon.png</icon>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-	<summary>This package provides the native CUDA CUFFT dependencies</summary>
-    <description>This package provides the native CUDA CUFFT dependencies</description>
-    <releaseNotes>This is the ${EMGU_TF_CUFFT_VERSION} release of CUDA CUFFT. </releaseNotes>
-	${EMGU_TF_CUFFT_DEPENDENCY}
+	<summary>This package provides the native CUDA Sparse dependencies</summary>
+    <description>This package provides the native CUDA Sparse dependencies</description>
+    <releaseNotes>This is the ${EMGU_TF_CUFFT_VERSION} release of CUDA Sparse. </releaseNotes>
+	${EMGU_TF_CUSPARSE_DEPENDENCY}
     <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved</copyright>
     <tags>emgu tensorflow cuda</tags>
   </metadata>
   <files>
-    <file src="..\..\..\lib\x64\cufft*.dll" target="runtimes\win-x64\native" />
+    <file src="..\..\..\lib\x64\cusparse*.dll" target="runtimes\win-x64\native" />
 	<file src="..\..\..\miscellaneous\nuget_icon.png" target="icon.png" />
 	<file src="CUDA_EULA.TXT" target="CUDA_EULA.txt" />
   </files>
