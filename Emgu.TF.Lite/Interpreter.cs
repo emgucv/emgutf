@@ -173,6 +173,7 @@ namespace Emgu.TF.Lite
             }
         }
 
+        /*
         /// <summary>
         /// Enable or disable the NN API (Android Neural Network API)
         /// </summary>
@@ -180,7 +181,7 @@ namespace Emgu.TF.Lite
         public void UseNNAPI(bool enable)
         {
             TfLiteInvoke.tfeInterpreterUseNNAPI(_ptr, enable);
-        }
+        }*/
 
         /// <summary>
         /// Set the number of threads available to the interpreter.
@@ -256,11 +257,13 @@ namespace Emgu.TF.Lite
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern void tfeInterpreterRelease(ref IntPtr interpreter);
 
+        /*
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern void tfeInterpreterUseNNAPI(
             IntPtr interpreter, 
             [MarshalAs(TfLiteInvoke.BoolMarshalType)]
             bool enable);
+        */
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern void tfeInterpreterSetNumThreads(IntPtr interpreter, int numThreads);

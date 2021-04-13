@@ -184,8 +184,8 @@ namespace Emgu.TF.Lite.Models
                 if (isAndroid)
                 {
                     //_interpreter.ModifyGraphWithDelegate(TfLiteInvoke.DefaultGpuDelegateV2);
-                    //_interpreter.ModifyGraphWithDelegate(TfLiteInvoke.DefaultNnApiDelegate);
-                    _interpreter.UseNNAPI(false);
+                    _interpreter.ModifyGraphWithDelegate(TfLiteInvoke.DefaultNnApiDelegate);
+                    //_interpreter.UseNNAPI(false);
                     _interpreter.SetNumThreads(4);
                 }
                 //_interpreter.Build(_model);

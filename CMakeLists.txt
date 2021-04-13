@@ -707,7 +707,7 @@ ENDIF()
   SET(EMGUTF_LITE_MODEL_NUGET_DEPENDENCY "${EMGUTF_LITE_MODEL_NUGET_DEPENDENCY}
     <group targetFramework=\".NETStandard2.0\">
         <dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
-        <dependency id=\"System.Drawing.Common\" version=\"5.0.0\" exclude=\"Build,Analyzers\"/>
+        <dependency id=\"System.Drawing.Common\" version=\"5.0.2\" exclude=\"Build,Analyzers\"/>
     </group>")
   SET(EMGUTF_LITE_MODEL_NUGET_DEPENDENCY "
     <dependencies>
