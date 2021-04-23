@@ -294,7 +294,7 @@ namespace Emgu.TF.XamarinForms
                    imageSource.File = fileName;
                    this.DisplayImage.Source = imageSource;
 #if __MACOS__
-                   NSImage image = new NSImage(fileName);
+                   //NSImage image = new NSImage(fileName);
                    this.DisplayImage.WidthRequest = image.Size.Width;
                    this.DisplayImage.HeightRequest = image.Size.Height;
                    NSImageView.Hidden = true;
