@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Runtime.InteropServices;
-
+using Emgu.TF.Lite;
 using UnityEngine;
 
 namespace Emgu.Models
@@ -103,61 +103,18 @@ namespace Emgu.Models
             Color32[] colors = resized.GetPixels32();
             Texture2D.Destroy(resized);
 
-            float[] floatValues = new float[colors.Length * 3];
-            int idx = 0;
-            if (flipUpsideDown)
-            {
-                //handle flip upside down
-                for (int i = 0; i < height; i++)
-                    for (int j = 0; j < width; j++)
-                    {
-                        Color32 val = colors[(height - i - 1) * width + j];
-                        if (swapBR)
-                        {
-                            floatValues[idx++] = (val.b - inputMean) * scale;
-                            floatValues[idx++] = (val.g - inputMean) * scale;
-                            floatValues[idx++] = (val.r - inputMean) * scale;
-                        }
-                        else
-                        {
-                            floatValues[idx++] = (val.r - inputMean) * scale;
-                            floatValues[idx++] = (val.g - inputMean) * scale;
-                            floatValues[idx++] = (val.b - inputMean) * scale;
-                        }
-                    }
-            }
-            else
-            {
-                for (int i = 0; i < colors.Length; ++i)
-                {
-                    Color32 val = colors[i];
-                    if (swapBR)
-                    {
-                        floatValues[idx++] = (val.b - inputMean) * scale;
-                        floatValues[idx++] = (val.g - inputMean) * scale;
-                        floatValues[idx++] = (val.r - inputMean) * scale;
-                    }
-                    else
-                    {
-                        floatValues[idx++] = (val.r - inputMean) * scale;
-                        floatValues[idx++] = (val.g - inputMean) * scale;
-                        floatValues[idx++] = (val.b - inputMean) * scale;
-                    }
-                }
-            }
 
             if (typeof(T) == typeof(float))
             {
-                Marshal.Copy(floatValues, 0, dest, floatValues.Length);
+                GCHandle handle = GCHandle.Alloc(colors, GCHandleType.Pinned);
+                TfLiteInvoke.Pixel32ToPixelFloat(handle.AddrOfPinnedObject(), width, height, inputMean, scale, flipUpsideDown, swapBR, dest);
+                handle.Free();
             }
             else if (typeof(T) == typeof(byte))
             {
-                byte[] bValues = new byte[floatValues.Length];
-                for (int i = 0; i < bValues.Length; ++i)
-                {
-                    bValues[i] = (byte)floatValues[i];
-                }
-                Marshal.Copy(bValues, 0, dest, bValues.Length);
+                GCHandle handle = GCHandle.Alloc(colors, GCHandleType.Pinned);
+                TfLiteInvoke.Pixel32ToPixelByte(handle.AddrOfPinnedObject(), width, height, inputMean, scale, flipUpsideDown, swapBR, dest);
+                handle.Free();
             }
             else
             {
@@ -166,8 +123,13 @@ namespace Emgu.Models
         }
 
 #region TextureDrawLine function from http://wiki.unity3d.com/index.php?title=TextureDrawLine
-        public static void DrawLine(Texture2D tex, int x0, int y0, int x1, int y1, Color col)
+        public static void DrawLine(Color32[] pixels, int width, int height, int x0, int y0, int x1, int y1, Color col)
         {
+            int maxIdx = pixels.Length -1;
+            Color32 drawingColor = col;
+            //int width = tex.width;
+            //int height = tex.height;
+
             int dy = (int)(y1 - y0);
             int dx = (int)(x1 - x0);
             int stepx, stepy;
@@ -181,7 +143,8 @@ namespace Emgu.Models
 
             float fraction = 0;
 
-            tex.SetPixel(x0, y0, col);
+            pixels[Math.Max(Math.Min(x0 + y0 * width, maxIdx), 0)] = drawingColor;
+            //tex.SetPixel(x0, y0, col);
             if (dx > dy)
             {
                 fraction = dy - (dx >> 1);
@@ -194,7 +157,8 @@ namespace Emgu.Models
                     }
                     x0 += stepx;
                     fraction += dy;
-                    tex.SetPixel(x0, y0, col);
+                    
+                    pixels[Math.Max( Math.Min(x0 + y0 * width, maxIdx), 0)] = drawingColor;
                 }
             }
             else
@@ -209,18 +173,24 @@ namespace Emgu.Models
                     }
                     y0 += stepy;
                     fraction += dx;
-                    tex.SetPixel(x0, y0, col);
+                    //tex.SetPixel(x0, y0, col);
+                    pixels[Math.Max(Math.Min(x0 + y0 * width, maxIdx), 0)] = drawingColor;
                 }
             }
+            //tex.SetPixels32(pixels);
         }
 #endregion
 
         public static void DrawRect(Texture2D image, Rect rect, Color color)
         {
-            DrawLine(image, (int)rect.position.x, (int)rect.position.y, (int)(rect.position.x + rect.width), (int)rect.position.y, color);
-            DrawLine(image, (int)rect.position.x, (int)rect.position.y, (int)rect.position.x, (int)(rect.position.y + rect.height), color);
-            DrawLine(image, (int)(rect.position.x + rect.width), (int)(rect.position.y + rect.height), (int)(rect.position.x + rect.width), (int)rect.position.y, color);
-            DrawLine(image, (int)(rect.position.x + rect.width), (int)(rect.position.y + rect.height), (int)rect.position.x, (int)(rect.position.y + rect.height), color);
+            Color32[] pixels = image.GetPixels32();
+            int width = image.width;
+            int height = image.height;
+            DrawLine(pixels, width, height, (int)rect.position.x, (int)rect.position.y, (int)(rect.position.x + rect.width), (int)rect.position.y, color);
+            DrawLine(pixels, width, height, (int)rect.position.x, (int)rect.position.y, (int)rect.position.x, (int)(rect.position.y + rect.height), color);
+            DrawLine(pixels, width, height, (int)(rect.position.x + rect.width), (int)(rect.position.y + rect.height), (int)(rect.position.x + rect.width), (int)rect.position.y, color);
+            DrawLine(pixels, width, height, (int)(rect.position.x + rect.width), (int)(rect.position.y + rect.height), (int)rect.position.x, (int)(rect.position.y + rect.height), color);
+            image.SetPixels32(pixels);
         }
     }
 }

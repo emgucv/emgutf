@@ -8,6 +8,7 @@ using System.Text;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Drawing;
+using Emgu.TF.Lite;
 
 namespace Emgu.Models
 {
@@ -53,13 +54,13 @@ namespace Emgu.Models
                     System.Drawing.Bitmap newBmp = new Bitmap(bmp, inputWidth, inputHeight);
                     bmp.Dispose();
                     bmp = newBmp;
-                    //bmp.Save("tmp.png");
                 }
 
+                /*
                 if (flipUpSideDown)
                 {
                     bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
-                }
+                }*/
 
                 int bmpWidth = bmp.Width;
                 int bmpHeight = bmp.Height;
@@ -68,92 +69,48 @@ namespace Emgu.Models
                     new Rectangle(0, 0, bmpWidth, bmpHeight),
                     System.Drawing.Imaging.ImageLockMode.ReadOnly,
                     System.Drawing.Imaging.PixelFormat.Format24bppRgb, bd);
-                int stride = bd.Stride;
 
-                byte[] byteValues = new byte[bmpHeight * stride];
-                Marshal.Copy(bd.Scan0, byteValues, 0, byteValues.Length);
-                bmp.UnlockBits(bd);
 
-                if (typeof(T) == typeof(float))
+                try
                 {
-                    int imageSize = bmpWidth * bmpHeight;
-                    float[] floatValues = new float[imageSize * 3];
-                    if (swapBR)
+                    if (typeof(T) == typeof(float))
                     {
-                        int idx = 0;
-                        int rowOffset = 0;
-                        for (int i = 0; i < bmpHeight; ++i)
-                        {
-                            int rowPtr = rowOffset;
-                            for (int j = 0; j < bmpWidth; ++j)
-                            {
-                                float b = ((float)byteValues[rowPtr++] - inputMean) * scale;
-                                float g = ((float)byteValues[rowPtr++] - inputMean) * scale;
-                                float r = ((float)byteValues[rowPtr++] - inputMean) * scale;
-                                floatValues[idx++] = r;
-                                floatValues[idx++] = g;
-                                floatValues[idx++] = b;
-                            }
-                            rowOffset += stride;
-                        }
+                        TfLiteInvoke.Pixel24ToPixelFloat(
+                            bd.Scan0,
+                            bmpWidth,
+                            bmpHeight,
+                            inputMean,
+                            scale,
+                            flipUpSideDown,
+                            swapBR,
+                            dest
+                        );
+                    }
+                    else if (typeof(T) == typeof(byte))
+                    {
+                        TfLiteInvoke.Pixel24ToPixelByte(
+                            bd.Scan0,
+                            bmpWidth,
+                            bmpHeight,
+                            inputMean,
+                            scale,
+                            flipUpSideDown,
+                            swapBR,
+                            dest
+                        );
+ 
                     }
                     else
                     {
-                        int idx = 0;
-                        int rowOffset = 0;
-                        for (int i = 0; i < bmpHeight; ++i)
-                        {
-                            int rowPtr = rowOffset;
-                            for (int j = 0; j < bmpWidth; ++j)
-                            {
-                                floatValues[idx++] = ((float)byteValues[rowPtr++] - inputMean) * scale;
-                                floatValues[idx++] = ((float)byteValues[rowPtr++] - inputMean) * scale;
-                                floatValues[idx++] = ((float)byteValues[rowPtr++] - inputMean) * scale;
-                            }
-                            rowOffset += stride;
-                        }
+                        throw new NotImplementedException(String.Format("Destination data type {0} is not supported.",
+                            typeof(T).ToString()));
                     }
-                    Marshal.Copy(floatValues, 0, dest, floatValues.Length);
                 }
-                else if (typeof(T) == typeof(byte))
+                finally
                 {
-                    int imageSize = bmp.Width * bmp.Height;
-                    if (swapBR)
-                    {
-                        int idx = 0;
-                        for (int i = 0; i < bmpHeight; ++i)
-                        {
-                            int offset = i * stride;
-                            for (int j = 0; j < bmpWidth; ++j)
-                            {
-                                byte b = (byte)(((float)byteValues[offset++] - inputMean) * scale);
-                                byte g = (byte)(((float)byteValues[offset++] - inputMean) * scale);
-                                byte r = (byte)(((float)byteValues[offset++] - inputMean) * scale);
-                                byteValues[idx++] = r;
-                                byteValues[idx++] = g;
-                                byteValues[idx++] = b;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        int idx = 0;
-                        for (int i = 0; i < bmpHeight; ++i)
-                        {
-                            int offset = i * stride;
-                            for (int j = 0; j < bmpWidth * 3; ++j)
-                            {
-                                byteValues[idx++] = (byte)(((float)byteValues[offset++] - inputMean) * scale);
-                            }
-                        }
-                    }
-                    Marshal.Copy(byteValues, 0, dest, imageSize * 3);
-
+                    bmp.UnlockBits(bd);
                 }
-                else
-                {
-                    throw new NotImplementedException(String.Format("Destination data type {0} is not supported.", typeof(T).ToString()));
-                }
+                
             }
             /*
             else //Unix
