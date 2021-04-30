@@ -8,7 +8,7 @@ using System.Text;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Drawing;
-using Emgu.TF.Lite;
+
 
 namespace Emgu.Models
 {
