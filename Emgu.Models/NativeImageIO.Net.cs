@@ -75,7 +75,7 @@ namespace Emgu.Models
                 {
                     if (typeof(T) == typeof(float))
                     {
-                        TfLiteInvoke.Pixel24ToPixelFloat(
+                        Emgu.TF.Util.Toolbox.Pixel24ToPixelFloat(
                             bd.Scan0,
                             bmpWidth,
                             bmpHeight,
@@ -88,7 +88,7 @@ namespace Emgu.Models
                     }
                     else if (typeof(T) == typeof(byte))
                     {
-                        TfLiteInvoke.Pixel24ToPixelByte(
+                        Emgu.TF.Util.Toolbox.Pixel24ToPixelByte(
                             bd.Scan0,
                             bmpWidth,
                             bmpHeight,

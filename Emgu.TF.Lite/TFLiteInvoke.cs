@@ -18,8 +18,8 @@ namespace Emgu.TF.Lite
         [AOT.MonoPInvokeCallback(typeof(TfLiteErrorCallback))]
 #endif
         private static int TfLiteErrorHandler(
-           int status,
-           IntPtr errMsg)
+            int status,
+            IntPtr errMsg)
         {
             String msg = Marshal.PtrToStringAnsi(errMsg);
             throw new Exception(msg);
@@ -81,6 +81,7 @@ namespace Emgu.TF.Lite
                     return sfo;
                 }
             }
+
             return String.Empty;
         }
 
@@ -108,22 +109,28 @@ namespace Emgu.TF.Lite
             {
                 List<String> subfolderOptions = new List<string>();
 
-                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows)
-                    || System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux)
-				)
+                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices
+                        .OSPlatform.Windows)
+                    || System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices
+                        .OSPlatform.Linux)
+                )
                 {
                     if (RuntimeInformation.ProcessArchitecture == Architecture.X86)
                     {
-                        if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+                        if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime
+                            .InteropServices.OSPlatform.Windows))
                         {
-                            throw new Exception("Emgu TF Lite is only compatible with 64bit mode in Windows (not compatible with 32bit x86 mode)");
+                            throw new Exception(
+                                "Emgu TF Lite is only compatible with 64bit mode in Windows (not compatible with 32bit x86 mode)");
                             //subfolderOptions.Add(Path.Combine("runtimes", "win-x86", "native"));
                         }
+
                         subfolderOptions.Add("x86");
                     }
                     else if (RuntimeInformation.ProcessArchitecture == Architecture.X64)
                     {
-                        if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+                        if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime
+                            .InteropServices.OSPlatform.Windows))
                             subfolderOptions.Add(Path.Combine("runtimes", "win-x64", "native"));
                         subfolderOptions.Add("x64");
                     }
@@ -141,9 +148,11 @@ namespace Emgu.TF.Lite
                     //    throw new Exception("Emgu TF Lite is only compatible with 64bit mode in Windows (not compatible with 32bit x86 mode)");
                     //}
                 }
+
                 String subfolder = String.Empty;
 
-                System.Reflection.Assembly asm = typeof(TfLiteInvoke).Assembly; //System.Reflection.Assembly.GetExecutingAssembly();
+                System.Reflection.Assembly
+                    asm = typeof(TfLiteInvoke).Assembly; //System.Reflection.Assembly.GetExecutingAssembly();
                 if ((String.IsNullOrEmpty(asm.Location) || !File.Exists(asm.Location)))
                 {
                     if (String.IsNullOrEmpty(AppDomain.CurrentDomain.BaseDirectory))
@@ -157,7 +166,8 @@ namespace Emgu.TF.Lite
                         DirectoryInfo baseDirectoryInfo = new DirectoryInfo(baseDirectory);
                         String debuggerVisualizerPath = String.Empty;
                         if (baseDirectoryInfo.Parent != null)
-                            debuggerVisualizerPath = Path.Combine(baseDirectoryInfo.Parent.FullName, "Packages", "Debugger", "Visualizers");
+                            debuggerVisualizerPath = Path.Combine(baseDirectoryInfo.Parent.FullName, "Packages",
+                                "Debugger", "Visualizers");
 
                         if (!debuggerVisualizerPath.Equals(String.Empty) && Directory.Exists(debuggerVisualizerPath))
                             loadDirectory = debuggerVisualizerPath;
@@ -165,6 +175,7 @@ namespace Emgu.TF.Lite
                         {
                             loadDirectory = baseDirectoryInfo.FullName;
                         }
+
                         subfolder = FindValidSubfolders(loadDirectory, subfolderOptions);
                     }
                 }
@@ -206,7 +217,8 @@ namespace Emgu.TF.Lite
                         {
                             FileInfo file = new FileInfo(asm.Location);
                             DirectoryInfo directory = file.Directory;
-                            if ((directory != null) && (!String.IsNullOrEmpty(subfolder)) && Directory.Exists(Path.Combine(directory.FullName, subfolder)))
+                            if ((directory != null) && (!String.IsNullOrEmpty(subfolder)) &&
+                                Directory.Exists(Path.Combine(directory.FullName, subfolder)))
                             {
                                 loadDirectory = Path.Combine(directory.FullName, subfolder);
                             }
@@ -228,16 +240,19 @@ namespace Emgu.TF.Lite
                     setDllDirectorySuccess = Emgu.TF.Util.Toolbox.SetDllDirectory(loadDirectory);
                     if (!setDllDirectorySuccess)
                     {
-                        System.Diagnostics.Debug.WriteLine(String.Format("Failed to set dll directory: {0}", loadDirectory));
+                        System.Diagnostics.Debug.WriteLine(String.Format("Failed to set dll directory: {0}",
+                            loadDirectory));
                     }
-                } else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 {
 
                 }
                 else if (Emgu.TF.Util.Toolbox.FindAssembly("Xamarin.iOS.dll") != null)
                 {
                     //do nothing
-                    System.Diagnostics.Debug.WriteLine("iOS required static linking, setting load directory is not supported");
+                    System.Diagnostics.Debug.WriteLine(
+                        "iOS required static linking, setting load directory is not supported");
                 }
                 else
                 {
@@ -254,18 +269,18 @@ namespace Emgu.TF.Lite
                         String.Format(
                             "Loading TF Lite binary for default locations. Current directory: {0}; Additional load folder: {1}",
                             Environment.CurrentDirectory,
-                            loadDirectory));                    
+                            loadDirectory));
                 }
-                
+
             }
             else
             {
                 System.Diagnostics.Debug.WriteLine(
                     String.Format(
-                        "Loading TF Lite binary for default locations. Current directory: {0}", 
+                        "Loading TF Lite binary for default locations. Current directory: {0}",
                         Environment.CurrentDirectory));
             }
-            
+
             System.Diagnostics.Trace.WriteLine(String.Format("Loading tensorflow lite binary from {0}", loadDirectory));
             bool success = true;
 
@@ -311,22 +326,26 @@ namespace Emgu.TF.Lite
                 if (fileExist)
                 {
                     //Try to load using the full path
-                    System.Diagnostics.Trace.WriteLine(String.Format("Found full path {0} for {1}. Trying to load it.", fullPath, mName));
-                    loaded = !IntPtr.Zero.Equals(Toolbox.LoadLibrary(fullPath));
+                    System.Diagnostics.Trace.WriteLine(String.Format("Found full path {0} for {1}. Trying to load it.",
+                        fullPath, mName));
+                    loaded = !IntPtr.Zero.Equals(Emgu.TF.Util.Toolbox.LoadLibrary(fullPath));
                     if (loaded)
                         System.Diagnostics.Trace.WriteLine(String.Format("{0} loaded.", mName));
                     else
-                        System.Diagnostics.Trace.WriteLine(String.Format("Failed to load {0} from {1}.", mName, fullPath));
+                        System.Diagnostics.Trace.WriteLine(String.Format("Failed to load {0} from {1}.", mName,
+                            fullPath));
                 }
+
                 if (!loaded)
                 {
                     //Try to load without the full path
                     System.Diagnostics.Trace.WriteLine(String.Format("Trying to load {0} using default path.", mName));
-                    loaded = !IntPtr.Zero.Equals(Toolbox.LoadLibrary(mName));
+                    loaded = !IntPtr.Zero.Equals(Emgu.TF.Util.Toolbox.LoadLibrary(mName));
                     if (loaded)
                         System.Diagnostics.Trace.WriteLine(String.Format("{0} loaded using default path", mName));
                     else
-                        System.Diagnostics.Trace.WriteLine(String.Format("Failed to load {0} using default path", mName));
+                        System.Diagnostics.Trace.WriteLine(
+                            String.Format("Failed to load {0} using default path", mName));
                 }
 
                 if (!loaded)
@@ -353,11 +372,14 @@ namespace Emgu.TF.Lite
         public static String GetModuleFormatString()
         {
             String formatString = "{0}";
-            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform
+                .Windows))
                 formatString = "{0}.dll";
-            else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
+            else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices
+                .OSPlatform.Linux))
                 formatString = "lib{0}.so";
-            else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
+            else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices
+                .OSPlatform.OSX))
                 formatString = "lib{0}.dylib";
             return formatString;
         }
@@ -387,22 +409,27 @@ namespace Emgu.TF.Lite
                         {
                             try
                             {
-                                System.Diagnostics.Trace.WriteLine(string.Format("Trying to load {0} ({1} bit).", module,
+                                System.Diagnostics.Trace.WriteLine(string.Format("Trying to load {0} ({1} bit).",
+                                    module,
                                     IntPtr.Size * 8));
-                                loadLibraryMethodInfo.Invoke(null, new object[] { module });
+                                loadLibraryMethodInfo.Invoke(null, new object[] {module});
                                 //Java.Lang.JavaSystem.LoadLibrary(module);
                                 System.Diagnostics.Trace.WriteLine(string.Format("Loaded {0}.", module));
                             }
                             catch (Exception e)
                             {
                                 libraryLoaded = false;
-                                System.Diagnostics.Trace.WriteLine(String.Format("Failed to load {0}: {1}", module, e.Message));
+                                System.Diagnostics.Trace.WriteLine(String.Format("Failed to load {0}: {1}", module,
+                                    e.Message));
                             }
                         }
+
                         return libraryLoaded;
                     }
                 }
-            } else if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
+            }
+            else if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices
+                .OSPlatform.OSX))
             {
                 //String formatString = GetModuleFormatString();
                 //for (int i = 0; i < modules.Length; ++i)
@@ -427,7 +454,8 @@ namespace Emgu.TF.Lite
 
             if ((!_libraryLoaded) && RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                Trace.WriteLine("Failed to load native binary. Please make sure a proper Emgu.TF.Lite.runtime.{platform} nuget package is added, or make sure the native binary can be found in the folder of executable.");
+                Trace.WriteLine(
+                    "Failed to load native binary. Please make sure a proper Emgu.TF.Lite.runtime.{platform} nuget package is added, or make sure the native binary can be found in the folder of executable.");
             }
 
             try
@@ -451,7 +479,8 @@ namespace Emgu.TF.Lite
         /// <summary>
         /// The default error handler for tensorflow lite
         /// </summary>
-        public static readonly TfLiteErrorCallback TfliteErrorHandlerThrowException = (TfLiteErrorCallback)TfLiteErrorHandler;
+        public static readonly TfLiteErrorCallback TfliteErrorHandlerThrowException =
+            (TfLiteErrorCallback) TfLiteErrorHandler;
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteCallingConvention)]
         internal static extern void tfeMemcpy(IntPtr dst, IntPtr src, int length);
@@ -461,113 +490,12 @@ namespace Emgu.TF.Lite
         /// </summary>
         public static String Version
         {
-            get
-            {
-                return Marshal.PtrToStringAnsi(tfeGetLiteVersion());
-            }
+            get { return Marshal.PtrToStringAnsi(tfeGetLiteVersion()); }
         }
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteCallingConvention)]
         internal static extern IntPtr tfeGetLiteVersion();
 
-        /// <summary>
-        /// A native implementation to convert (32-bit) pixels values to float tensor values 
-        /// </summary>
-        /// <param name="pixels">The raw pixel data of the image. 32-bit per pixel</param>
-        /// <param name="width">The width of the image.</param>
-        /// <param name="height">The height of the image.</param>
-        /// <param name="inputMean">The input mean to be subtracted</param>
-        /// <param name="scale">The scale to be multiplied</param>
-        /// <param name="flipUpsideDown">If true, the pixels will be flipped upside down</param>
-        /// <param name="swapBR">If true, the first and third output channels will be swapped.</param>
-        /// <param name="result">The resulting pointer to the float array. Need to be initialized and big enough to hold all the float data.</param>
-        /// <remarks>For internal use only. Improper call to this function can result in application crashing.</remarks>
-        [DllImport(ExternLibrary, CallingConvention = TfLiteCallingConvention, EntryPoint = "tfePixel32ToPixelFloat")]
-        public static extern void Pixel32ToPixelFloat(
-            IntPtr pixels, 
-            int width, 
-            int height, 
-            float inputMean, 
-            float scale,
-            [MarshalAs(TfLiteInvoke.BoolMarshalType)]
-            bool flipUpsideDown,
-            [MarshalAs(TfLiteInvoke.BoolMarshalType)]
-            bool swapBR, 
-            IntPtr result);
 
-        /// <summary>
-        /// A native implementation to convert (32-bit) pixels values to float tensor values 
-        /// </summary>
-        /// <param name="pixels">The raw pixel data of the image. 32-bit per pixel</param>
-        /// <param name="width">The width of the image.</param>
-        /// <param name="height">The height of the image.</param>
-        /// <param name="inputMean">The input mean to be subtracted</param>
-        /// <param name="scale">The scale to be multiplied</param>
-        /// <param name="flipUpsideDown">If true, the pixels will be flipped upside down</param>
-        /// <param name="swapBR">If true, the first and third output channels will be swapped.</param>
-        /// <param name="result">The resulting pointer to the byte array. Need to be initialized and big enough to hold all the byte data.</param>
-        /// <remarks>For internal use only. Improper call to this function can result in application crashing.</remarks>
-        [DllImport(ExternLibrary, CallingConvention = TfLiteCallingConvention, EntryPoint = "tfePixel32ToPixelByte")]
-        public static extern void Pixel32ToPixelByte(
-            IntPtr pixels,
-            int width,
-            int height,
-            float inputMean,
-            float scale,
-            [MarshalAs(TfLiteInvoke.BoolMarshalType)]
-            bool flipUpsideDown,
-            [MarshalAs(TfLiteInvoke.BoolMarshalType)]
-            bool swapBR,
-            IntPtr result);
-
-        /// <summary>
-        /// A native implementation to convert (24-bit) pixels values to float tensor values 
-        /// </summary>
-        /// <param name="pixels">The raw pixel data of the image. 24-bit per pixel</param>
-        /// <param name="width">The width of the image.</param>
-        /// <param name="height">The height of the image.</param>
-        /// <param name="inputMean">The input mean to be subtracted</param>
-        /// <param name="scale">The scale to be multiplied</param>
-        /// <param name="flipUpsideDown">If true, the pixels will be flipped upside down</param>
-        /// <param name="swapBR">If true, the first and third output channels will be swapped.</param>
-        /// <param name="result">The resulting pointer to the float array. Need to be initialized and big enough to hold all the float data.</param>
-        /// <remarks>For internal use only. Improper call to this function can result in application crashing.</remarks>
-        [DllImport(ExternLibrary, CallingConvention = TfLiteCallingConvention, EntryPoint = "tfePixel24ToPixelFloat")]
-        public static extern void Pixel24ToPixelFloat(
-            IntPtr pixels,
-            int width,
-            int height,
-            float inputMean,
-            float scale,
-            [MarshalAs(TfLiteInvoke.BoolMarshalType)]
-            bool flipUpsideDown,
-            [MarshalAs(TfLiteInvoke.BoolMarshalType)]
-            bool swapBR,
-            IntPtr result);
-
-        /// <summary>
-        /// A native implementation to convert (24-bit) pixels values to float tensor values 
-        /// </summary>
-        /// <param name="pixels">The raw pixel data of the image. 24-bit per pixel</param>
-        /// <param name="width">The width of the image.</param>
-        /// <param name="height">The height of the image.</param>
-        /// <param name="inputMean">The input mean to be subtracted</param>
-        /// <param name="scale">The scale to be multiplied</param>
-        /// <param name="flipUpsideDown">If true, the pixels will be flipped upside down</param>
-        /// <param name="swapBR">If true, the first and third output channels will be swapped.</param>
-        /// <param name="result">The resulting pointer to the byte array. Need to be initialized and big enough to hold all the byte data.</param>
-        /// <remarks>For internal use only. Improper call to this function can result in application crashing.</remarks>
-        [DllImport(ExternLibrary, CallingConvention = TfLiteCallingConvention, EntryPoint = "tfePixel24ToPixelByte")]
-        public static extern void Pixel24ToPixelByte(
-            IntPtr pixels,
-            int width,
-            int height,
-            float inputMean,
-            float scale,
-            [MarshalAs(TfLiteInvoke.BoolMarshalType)]
-            bool flipUpsideDown,
-            [MarshalAs(TfLiteInvoke.BoolMarshalType)]
-            bool swapBR,
-            IntPtr result);
     }
 }

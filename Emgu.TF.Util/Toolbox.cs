@@ -14,7 +14,7 @@ namespace Emgu.TF.Util
     /// <summary>
     /// utilities functions for Emgu
     /// </summary>
-    public static class Toolbox
+    public static partial class Toolbox
     {
         /// <summary>
         /// Maps the specified executable module into the address space of the calling process.
