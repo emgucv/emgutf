@@ -53,7 +53,7 @@ namespace Emgu.Models
                 resized = image;
 
             int[] intValues = new int[(int)(resized.Size.Width * resized.Size.Height)];
-            float[] floatValues = new float[(int)(resized.Size.Width * resized.Size.Height * 3)];
+            //float[] floatValues = new float[(int)(resized.Size.Width * resized.Size.Height * 3)];
             System.Runtime.InteropServices.GCHandle handle = System.Runtime.InteropServices.GCHandle.Alloc(intValues, System.Runtime.InteropServices.GCHandleType.Pinned);
             using (CGImage cgimage = resized.CGImage)
             using (CGColorSpace cspace = CGColorSpace.CreateDeviceRGB())
@@ -69,44 +69,36 @@ namespace Emgu.Models
             {
                 context.DrawImage(new CGRect(new CGPoint(), resized.Size), cgimage);
             }
-            handle.Free();
-            if (swapBR)
-            {
-                for (int i = 0; i < intValues.Length; ++i)
-                {
-                    int val = intValues[i];
-                    floatValues[i * 3 + 0] = ((val & 0xFF) - inputMean) * scale;
-                    floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - inputMean) * scale;
-                    floatValues[i * 3 + 2] = (((val >> 16) & 0xFF) - inputMean) * scale;
-                }
-            }
-            else
-            {
-                for (int i = 0; i < intValues.Length; ++i)
-                {
-                    int val = intValues[i];
-                    floatValues[i * 3 + 0] = (((val >> 16) & 0xFF) - inputMean) * scale;
-                    floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - inputMean) * scale;
-                    floatValues[i * 3 + 2] = ((val & 0xFF) - inputMean) * scale;
-                }
-            }
 
             if (typeof(T) == typeof(float))
             {
-                Marshal.Copy(floatValues, 0, dest, floatValues.Length);
+                Emgu.TF.Util.Toolbox.Pixel32ToPixelFloat(
+                    handle.AddrOfPinnedObject(),
+                    (int)resized.Size.Width,
+                    (int)resized.Size.Height,
+                    inputMean,
+                    scale,
+                    false,
+                    swapBR,
+                    dest);
             }
             else if (typeof(T) == typeof(byte))
             {
-                //copy float to bytes
-                byte[] byteValues = new byte[floatValues.Length];
-                for (int i = 0; i < floatValues.Length; i++)
-                    byteValues[i] = (byte)floatValues[i];
-                Marshal.Copy(byteValues, 0, dest, byteValues.Length);
+                Emgu.TF.Util.Toolbox.Pixel32ToPixelByte(
+                    handle.AddrOfPinnedObject(),
+                    (int)resized.Size.Width,
+                    (int)resized.Size.Height,
+                    inputMean,
+                    scale,
+                    false,
+                    swapBR,
+                    dest);
             }
             else
             {
                 throw new NotImplementedException(String.Format("Destination data type {0} is not supported.", typeof(T).ToString()));
             }
+            handle.Free();
             if (resized != image)
                 resized.Dispose();
         }
