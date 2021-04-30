@@ -40,45 +40,38 @@ namespace Emgu.Models
             bool swapBR = false)
             where T : struct
         {
-            if (flipUpSideDown)
-                throw new NotImplementedException("Flip Up Side Down is Not implemented");
-            NSImage resized;
-            if (inputHeight > 0 || inputWidth > 0)
-            {
-                resized = new NSImage(new CGSize(inputWidth, inputHeight));
-                resized.LockFocus();
-                image.DrawInRect(new CGRect(0, 0, inputWidth, inputHeight), CGRect.Empty, NSCompositingOperation.SourceOver, 1.0f);
-                resized.UnlockFocus();
-            } else
-                resized = image;
+            if (inputHeight <= 0)
+                inputHeight = (int)image.Size.Height;
+            if (inputWidth <= 0)
+                inputWidth = (int)image.Size.Width;
 
-            int[] intValues = new int[(int)(resized.Size.Width * resized.Size.Height)];
-            //float[] floatValues = new float[(int)(resized.Size.Width * resized.Size.Height * 3)];
+            int[] intValues = new int[inputWidth * inputHeight];
+
             System.Runtime.InteropServices.GCHandle handle = System.Runtime.InteropServices.GCHandle.Alloc(intValues, System.Runtime.InteropServices.GCHandleType.Pinned);
-            using (CGImage cgimage = resized.CGImage)
+            using (CGImage cgimage = image.CGImage)
             using (CGColorSpace cspace = CGColorSpace.CreateDeviceRGB())
             using (CGBitmapContext context = new CGBitmapContext(
                 handle.AddrOfPinnedObject(),
-                (nint)resized.Size.Width,
-                (nint)resized.Size.Height,
+                inputWidth,
+                inputHeight,
                 8,
-                (nint)resized.Size.Width * 4,
+                inputWidth * 4,
                 cspace,
                 CGImageAlphaInfo.PremultipliedLast
                 ))
             {
-                context.DrawImage(new CGRect(new CGPoint(), resized.Size), cgimage);
+                context.DrawImage(new CGRect(new CGPoint(), new CGSize(inputWidth, inputHeight)), cgimage);
             }
 
             if (typeof(T) == typeof(float))
             {
                 Emgu.TF.Util.Toolbox.Pixel32ToPixelFloat(
                     handle.AddrOfPinnedObject(),
-                    (int)resized.Size.Width,
-                    (int)resized.Size.Height,
+                    inputWidth,
+                    inputHeight,
                     inputMean,
                     scale,
-                    false,
+                    flipUpSideDown,
                     swapBR,
                     dest);
             }
@@ -86,11 +79,11 @@ namespace Emgu.Models
             {
                 Emgu.TF.Util.Toolbox.Pixel32ToPixelByte(
                     handle.AddrOfPinnedObject(),
-                    (int)resized.Size.Width,
-                    (int)resized.Size.Height,
+                    inputWidth,
+                    inputHeight,
                     inputMean,
                     scale,
-                    false,
+                    flipUpSideDown,
                     swapBR,
                     dest);
             }
@@ -99,8 +92,7 @@ namespace Emgu.Models
                 throw new NotImplementedException(String.Format("Destination data type {0} is not supported.", typeof(T).ToString()));
             }
             handle.Free();
-            if (resized != image)
-                resized.Dispose();
+
         }
 
         public static void DrawAnnotations(NSImage img, Annotation[] annotations)
