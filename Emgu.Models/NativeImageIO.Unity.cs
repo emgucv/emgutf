@@ -18,7 +18,7 @@ namespace Emgu.Models
     /// </summary>
     public partial class NativeImageIO
     {
-                /// <summary>
+        /// <summary>
         /// Read an image file, covert the data and save it to the native pointer
         /// </summary>
         /// <typeparam name="T">The type of the data to covert the image pixel values to. e.g. "float" or "byte"</typeparam>
@@ -36,7 +36,7 @@ namespace Emgu.Models
             int inputHeight = -1,
             int inputWidth = -1,
             float inputMean = 0.0f,
-            float scale = 1.0f, 
+            float scale = 1.0f,
             bool flipUpSideDown = false,
             bool swapBR = false)
             where T : struct
@@ -62,7 +62,7 @@ namespace Emgu.Models
             return texture;
         }
 
-        public static void Resize(Texture source, Texture2D dst) 
+        public static void Resize(Texture source, Texture2D dst)
         {
             int newWidth = dst.width;
             int newHeight = dst.height;
@@ -107,13 +107,13 @@ namespace Emgu.Models
             if (typeof(T) == typeof(float))
             {
                 GCHandle handle = GCHandle.Alloc(colors, GCHandleType.Pinned);
-                TfLiteInvoke.Pixel32ToPixelFloat(handle.AddrOfPinnedObject(), width, height, inputMean, scale, flipUpsideDown, swapBR, dest);
+                Emgu.TF.Util.Toolbox.Pixel32ToPixelFloat(handle.AddrOfPinnedObject(), width, height, inputMean, scale, flipUpsideDown, swapBR, dest);
                 handle.Free();
             }
             else if (typeof(T) == typeof(byte))
             {
                 GCHandle handle = GCHandle.Alloc(colors, GCHandleType.Pinned);
-                TfLiteInvoke.Pixel32ToPixelByte(handle.AddrOfPinnedObject(), width, height, inputMean, scale, flipUpsideDown, swapBR, dest);
+                Emgu.TF.Util.Toolbox.Pixel32ToPixelByte(handle.AddrOfPinnedObject(), width, height, inputMean, scale, flipUpsideDown, swapBR, dest);
                 handle.Free();
             }
             else
@@ -122,10 +122,10 @@ namespace Emgu.Models
             }
         }
 
-#region TextureDrawLine function from http://wiki.unity3d.com/index.php?title=TextureDrawLine
+        #region TextureDrawLine function from http://wiki.unity3d.com/index.php?title=TextureDrawLine
         public static void DrawLine(Color32[] pixels, int width, int height, int x0, int y0, int x1, int y1, Color col)
         {
-            int maxIdx = pixels.Length -1;
+            int maxIdx = pixels.Length - 1;
             Color32 drawingColor = col;
             //int width = tex.width;
             //int height = tex.height;
@@ -157,8 +157,8 @@ namespace Emgu.Models
                     }
                     x0 += stepx;
                     fraction += dy;
-                    
-                    pixels[Math.Max( Math.Min(x0 + y0 * width, maxIdx), 0)] = drawingColor;
+
+                    pixels[Math.Max(Math.Min(x0 + y0 * width, maxIdx), 0)] = drawingColor;
                 }
             }
             else
@@ -179,7 +179,7 @@ namespace Emgu.Models
             }
             //tex.SetPixels32(pixels);
         }
-#endregion
+        #endregion
 
         public static void DrawRect(Texture2D image, Rect rect, Color color)
         {
