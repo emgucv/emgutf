@@ -66,7 +66,7 @@ SET PYTHON_LIB_PATH=%PYTHON_LIB_PATH:\=/%
 IF NOT "%3%"=="docker" GOTO ENV_NOT_DOCKER
 
 :ENV_DOCKER
-SET DOCKER_FLAGS=--define=EXECUTOR=remote --experimental_docker_verbose --experimental_enable_docker_sandbox
+SET DOCKER_FLAGS=--define=EXECUTOR=remote --experimental_docker_verbose --experimental_enable_docker_sandbox --jobs=2
 SET OUTPUT_USER_ROOT_DIR=c:\bazel_output_user_root
 SET OUTPUT_BASE_DIR=c:\bazel_output_base
 GOTO END_OF_DOCKER
@@ -131,7 +131,8 @@ SET MSYS_PATH=C:\msys64
 SET MSYS_BIN=%MSYS_PATH%\usr\bin
 IF EXIST "%MSYS_BIN%\bazel.exe" SET BAZEL_COMMAND=%MSYS_BIN%\bazel.exe
 
-call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build //tensorflow/tfextern:libtfextern.so --verbose_failures %DOCKER_FLAGS% --local_ram_resources="HOST_RAM*.2" --local_cpu_resources="HOST_CPUS*.2" --jobs=2
+REM call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build //tensorflow/tfextern:libtfextern.so --verbose_failures %DOCKER_FLAGS% --local_ram_resources="HOST_RAM*.2" --local_cpu_resources="HOST_CPUS*.2" --jobs=2
+call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build //tensorflow/tfextern:libtfextern.so --verbose_failures %DOCKER_FLAGS% 
 cd ..
 
 cp -f tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so lib/x64/tfextern.dll
