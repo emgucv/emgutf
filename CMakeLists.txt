@@ -962,7 +962,8 @@ IF(HAVE_WINDESKTOP)
     
     SET(EMGU_TF_DNN_ID "Emgu.runtime.windows.cuda.dnn")
 	SET(EMGU_TF_DNN_ADV_ID "Emgu.runtime.windows.cuda.dnn.adv")
-	SET(EMGU_TF_DNN_CNN_ID "Emgu.runtime.windows.cuda.dnn.cnn")
+	SET(EMGU_TF_DNN_CNN_INFER_ID "Emgu.runtime.windows.cuda.dnn.cnn.infer")
+	SET(EMGU_TF_DNN_CNN_TRAIN_ID "Emgu.runtime.windows.cuda.dnn.cnn.train")
 	SET(EMGU_TF_DNN_OPS_ID "Emgu.runtime.windows.cuda.dnn.ops")
     SET(EMGU_TF_CUFFT_ID "Emgu.runtime.windows.cuda.fft")
 	SET(EMGU_TF_CUBLAS_ID "Emgu.runtime.windows.cuda.blas")
@@ -974,71 +975,77 @@ IF(HAVE_WINDESKTOP)
 #	SET(EMGUTF_CUDART_NUGET_DEPENDENCY "${EMGUTF_CUDART_NUGET_DEPENDENCY}
 #        <dependencies>
 #        </dependencies>")
-	SET(EMGU_TF_CUBLAS_DEPENDENCY "${EMGU_TF_CUBLAS_NUGET_DEPENDENCY}
+	SET(EMGU_TF_CUBLAS_DEPENDENCY "${EMGU_TF_CUBLAS_DEPENDENCY}
         <dependencies>
 			<dependency id=\"${EMGU_TF_CUDART_ID}\" version=\"[${EMGU_TF_CUDA_VERSION}]\" />
         </dependencies>")
-	SET(EMGU_TF_CUFFT_DEPENDENCY "${EMGU_TF_CUFFT_NUGET_DEPENDENCY}
+	SET(EMGU_TF_CUFFT_DEPENDENCY "${EMGU_TF_CUFFT_DEPENDENCY}
         <dependencies>
 			<dependency id=\"${EMGU_TF_CUDART_ID}\" version=\"[${EMGU_TF_CUDA_VERSION}]\" />
         </dependencies>")
-	SET(EMGU_TF_CUSPARSE_DEPENDENCY "${EMGU_TF_CUSPARSE_NUGET_DEPENDENCY}
+	SET(EMGU_TF_CUSPARSE_DEPENDENCY "${EMGU_TF_CUSPARSE_DEPENDENCY}
         <dependencies>
 			<dependency id=\"${EMGU_TF_CUDART_ID}\" version=\"[${EMGU_TF_CUDA_VERSION}]\" />
         </dependencies>")
-    SET(EMGU_TF_CUSOLVER_MG_DEPENDENCY "${EMGU_TF_CUSOLVER_MG_NUGET_DEPENDENCY}
+    SET(EMGU_TF_CUSOLVER_MG_DEPENDENCY "${EMGU_TF_CUSOLVER_MG_DEPENDENCY}
         <dependencies>
 			<dependency id=\"${EMGU_TF_CUDART_ID}\" version=\"[${EMGU_TF_CUDA_VERSION}]\" />
         </dependencies>")
-	SET(EMGU_TF_CUSOLVER_DEPENDENCY "${EMGU_TF_CUSOLVER_NUGET_DEPENDENCY}
+	SET(EMGU_TF_CUSOLVER_DEPENDENCY "${EMGU_TF_CUSOLVER_DEPENDENCY}
         <dependencies>
 			<dependency id=\"${EMGU_TF_CUDART_ID}\" version=\"[${EMGU_TF_CUDA_VERSION}]\" />
         </dependencies>")
-	SET(EMGU_TF_DNN_DEPENDENCY "${EMGU_TF_DNN_NUGET_DEPENDENCY}
+	SET(EMGU_TF_DNN_DEPENDENCY "${EMGU_TF_DNN_DEPENDENCY}
         <dependencies>
 			<dependency id=\"${EMGU_TF_CUDART_ID}\" version=\"[${EMGU_TF_CUDA_VERSION}]\" />
         </dependencies>")
-	SET(EMGU_TF_DNN_OPS_DEPENDENCY "${EMGU_TF_DNN_OPS_NUGET_DEPENDENCY}
+	SET(EMGU_TF_DNN_OPS_DEPENDENCY "${EMGU_TF_DNN_OPS_DEPENDENCY}
         <dependencies>
 			<dependency id=\"${EMGU_TF_DNN_ID}\" version=\"[${EMGU_TF_DNN_VERSION}]\" />
         </dependencies>")
-	SET(EMGU_TF_DNN_ADV_DEPENDENCY "${EMGU_TF_DNN_ADV_NUGET_DEPENDENCY}
+	SET(EMGU_TF_DNN_ADV_DEPENDENCY "${EMGU_TF_DNN_ADV_DEPENDENCY}
         <dependencies>
 			<dependency id=\"${EMGU_TF_DNN_ID}\" version=\"[${EMGU_TF_DNN_VERSION}]\" />
         </dependencies>")
-	SET(EMGU_TF_DNN_CNN_DEPENDENCY "${EMGU_TF_DNN_CNN_NUGET_DEPENDENCY}
+	SET(EMGU_TF_DNN_CNN_TRAIN_DEPENDENCY "${EMGU_TF_DNN_CNN_TRAIN_DEPENDENCY}
         <dependencies>
 			<dependency id=\"${EMGU_TF_DNN_ID}\" version=\"[${EMGU_TF_DNN_VERSION}]\" />
-        </dependencies>")	
+        </dependencies>")
+	SET(EMGU_TF_DNN_CNN_INFER_DEPENDENCY "${EMGU_TF_DNN_CNN_INFER_DEPENDENCY}
+        <dependencies>
+			<dependency id=\"${EMGU_TF_DNN_ID}\" version=\"[${EMGU_TF_DNN_VERSION}]\" />
+        </dependencies>")
 	SET(EMGUTF_WINDOWS_NUGET_DEPENDENCY "${EMGUTF_WINDOWS_NUGET_DEPENDENCY}
 			<dependency id=\"${EMGU_TF_CUSOLVER_ID}\" version=\"[${EMGU_TF_CUDA_VERSION}]\" />
 			<dependency id=\"${EMGU_TF_CUSOLVER_MG_ID}\" version=\"[${EMGU_TF_CUDA_VERSION}]\" />
 			<dependency id=\"${EMGU_TF_DNN_ADV_ID}\" version=\"[${EMGU_TF_DNN_VERSION}]\" />
 			<dependency id=\"${EMGU_TF_DNN_OPS_ID}\" version=\"[${EMGU_TF_DNN_VERSION}]\" />
-			<dependency id=\"${EMGU_TF_DNN_CNN_ID}\" version=\"[${EMGU_TF_DNN_VERSION}]\" />
+			<dependency id=\"${EMGU_TF_DNN_CNN_TRAIN_ID}\" version=\"[${EMGU_TF_DNN_VERSION}]\" />
+			<dependency id=\"${EMGU_TF_DNN_CNN_INFER_ID}\" version=\"[${EMGU_TF_DNN_VERSION}]\" />
 			<dependency id=\"${EMGU_TF_CUFFT_ID}\" version=\"[${EMGU_TF_CUDA_VERSION}]\" />
 			<dependency id=\"${EMGU_TF_CUSPARSE_ID}\" version=\"[${EMGU_TF_CUDA_VERSION}]\" />
 			<dependency id=\"${EMGU_TF_CUBLAS_ID}\" version=\"[${EMGU_TF_CUDA_VERSION}]\" />")
 
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_DNN_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_DNN_ID}/Package.nuspec)
-    #CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_DNN_ID}.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_DNN_ID}/${EMGU_TF_DNN_ID}.targets)
+    
 	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_DNN_ADV_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_DNN_ADV_ID}/Package.nuspec)
-    #CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_DNN_ADV_ID}.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_DNN_ADV_ID}/${EMGU_TF_DNN_ADV_ID}.targets)
-	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_DNN_CNN_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_DNN_CNN_ID}/Package.nuspec)
-    #CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_DNN_CNN_ID}.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_DNN_CNN_ID}/${EMGU_TF_DNN_CNN_ID}.targets)
+    
+	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_DNN_CNN_TRAIN_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_DNN_CNN_TRAIN_ID}/Package.nuspec)
+	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_DNN_CNN_INFER_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_DNN_CNN_INFER_ID}/Package.nuspec)
+    
 	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_DNN_OPS_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_DNN_OPS_ID}/Package.nuspec)
-    #CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_DNN_OPS_ID}.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_DNN_OPS_ID}/${EMGU_TF_DNN_OPS_ID}.targets)
+    
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_CUFFT_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_CUFFT_ID}/Package.nuspec)
 	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_CUSPARSE_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_CUSPARSE_ID}/Package.nuspec)
-    #CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_CUFFT_ID}.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_CUFFT_ID}/${EMGU_TF_CUFFT_ID}.targets)
+    
 	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_CUBLAS_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_CUBLAS_ID}/Package.nuspec)
-    #CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_CUBLAS_ID}.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_CUBLAS_ID}/${EMGU_TF_CUBLAS_ID}.targets)
+    
 	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_CUSOLVER_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_CUSOLVER_ID}/Package.nuspec)
-    #CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_CUSOLVER_ID}.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_CUSOLVER_ID}/${EMGU_TF_CUSOLVER_ID}.targets)
+    
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_CUSOLVER_MG_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_CUSOLVER_MG_ID}/Package.nuspec)
-    #CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_CUSOLVER_MG_ID}.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_CUSOLVER_MG_ID}/${EMGU_TF_CUSOLVER_MG_ID}.targets)
+    
 	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_CUDART_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_CUDART_ID}/Package.nuspec)
-	#CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_CUDART_ID}.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_CUDART_ID}/${EMGU_TF_CUDART_ID}.targets)
+	
   ELSE()
     #SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "${EMGUTF_WINDOWS_NUGET_FILE_LIST} 
 	#<file src=\"..\\..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />")
