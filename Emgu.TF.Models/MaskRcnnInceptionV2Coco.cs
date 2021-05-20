@@ -225,11 +225,19 @@ namespace Emgu.TF.Models
             }
         }
 
+        /// <summary>
+        /// Get the labels of the Coco dataset.
+        /// </summary>
         public String[] Labels
         {
             get { return _labels; }
         }
 
+        /// <summary>
+        /// Recognized the objects from the tensor.
+        /// </summary>
+        /// <param name="image">The image tensor</param>
+        /// <returns>The recognition result.</returns>
         public RecognitionResult[] Recognize(Tensor image)
         {
             Output input = _graph["image_tensor"];
