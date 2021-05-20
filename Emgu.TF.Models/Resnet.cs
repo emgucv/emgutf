@@ -117,6 +117,8 @@ namespace Emgu.TF.Models
         /// </summary>
         /// <param name="modelFile">The tensorflow graph.</param>
         /// <param name="labelFile">the object class labels.</param>
+        /// <param name="inputName">The name of the input tensor</param>
+        /// <param name="outputName">The name of the output tensor</param>
         public
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             IEnumerator

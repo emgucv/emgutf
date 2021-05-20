@@ -225,8 +225,8 @@ namespace Emgu.TF.Models
             Tensor[] finalTensor = _session.Run(new Output[] { _graph["ResizeBilinear"] }, new Tensor[] { image },
                 new Output[] { _graph["output_scores/Reshape"], _graph["output_locations/Reshape"] });
 
-            int labelCount = finalTensor[0].Dim[1];
-            Tensor[] topK = GetTopDetections(finalTensor[0], labelCount);
+           
+            Tensor[] topK = GetTopDetections(finalTensor[0]);
 
             float[] encodedScores = topK[0].Flat<float>();
             float[] encodedLocations = finalTensor[1].Flat<float>();
@@ -262,17 +262,22 @@ namespace Emgu.TF.Models
             public float[] DecodedLocations;
         }
 
-        public static Tensor[] GetTopDetections(Tensor scoreTensor, int labelsCount)
+        private static Tensor[] GetTopDetections(Tensor scoreTensor)
         {
-            var graph = new Graph();
-            Operation input = graph.Placeholder(DataType.Float);
-            Tensor countTensor = new Tensor(labelsCount);
-            Operation countOp = graph.Const(countTensor, countTensor.Type, opName: "count");
-            Operation topK = graph.TopKV2(input, countOp, opName: "TopK");
-            Session session = new Session(graph);
-            Tensor[] topKResult = session.Run(new Output[] { input }, new Tensor[] { scoreTensor },
-                new Output[] { new Output(topK, 0), new Output(topK, 1) });
-            return topKResult;
+            int labelsCount = scoreTensor.Dim[1];
+            using (var graph = new Graph())
+            {
+                Operation input = graph.Placeholder(DataType.Float);
+                Tensor countTensor = new Tensor(labelsCount);
+                Operation countOp = graph.Const(countTensor, countTensor.Type, opName: "count");
+                Operation topK = graph.TopKV2(input, countOp, opName: "TopK");
+                using (Session session = new Session(graph))
+                {
+                    Tensor[] topKResult = session.Run(new Output[] {input}, new Tensor[] {scoreTensor},
+                        new Output[] {new Output(topK, 0), new Output(topK, 1)});
+                    return topKResult;
+                }
+            }
         }
 
         /// <summary>
@@ -353,7 +358,7 @@ namespace Emgu.TF.Models
         /// </summary>
         /// <param name="results">Multibox detection result</param>
         /// <param name="scoreThreshold">The score threshold</param>
-        /// <returns>The Annotaion to be drawn.</returns>
+        /// <returns>The Annotation to be drawn.</returns>
         public static Annotation[] FilterResults(MultiboxGraph.Result[] results, float scoreThreshold)
         {
             List<Annotation> goodResults = new List<Annotation>();
