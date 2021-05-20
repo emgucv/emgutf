@@ -59,11 +59,10 @@ namespace Emgu.TF.Util
 #else
             if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
             {
-                LoadLibraryWindows(dllname);
+                return LoadLibraryWindows(dllname);
             }
             else
             {
-
                 IntPtr handler = Dlopen(dllname, 0x00102); // 0x00002 == RTLD_NOW, 0x00100 = RTL_GLOBAL
                 if (handler == IntPtr.Zero)
                 {
@@ -135,9 +134,9 @@ namespace Emgu.TF.Util
                         return asm;
                 }
             }
-            catch
+            catch (Exception exception)
             {
-
+                Trace.WriteLine(String.Format("FindAssembly({0}) failed: {1}", assembleName, exception.Message));
             }
             return null;
         }
