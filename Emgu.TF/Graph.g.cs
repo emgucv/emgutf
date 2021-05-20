@@ -193,7 +193,7 @@ namespace Emgu.TF
         /// <param name="error_msg">error msg</param>
         /// <param name="exit_without_error">exit without error</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation Abort(string error_msg = null, bool exit_without_error = false, String opName = "Abort") 
         {
             OperationDescription desc = NewOperation("Abort", opName);
@@ -209,10 +209,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Abs(Output x, String opName = "Abs") 
         {
             OperationDescription desc = NewOperation("Abs", opName);
@@ -226,10 +226,10 @@ namespace Emgu.TF
         /// <param name="inputs">Input to the operation. </param>
         /// <param name="shape">shape</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sum(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation AccumulateNV2(Output inputs, long[] shape, String opName = "AccumulateNV2") 
         {
             OperationDescription desc = NewOperation("AccumulateNV2", opName);
@@ -245,7 +245,7 @@ namespace Emgu.TF
         /// <param name="local_step">Input to the operation. </param>
         /// <param name="gradient">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation AccumulatorApplyGradient(Output handle, Output local_step, Output gradient, String opName = "AccumulatorApplyGradient") 
         {
             OperationDescription desc = NewOperation("AccumulatorApplyGradient", opName);
@@ -260,10 +260,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] num_accumulated(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation AccumulatorNumAccumulated(Output handle, String opName = "AccumulatorNumAccumulated") 
         {
             OperationDescription desc = NewOperation("AccumulatorNumAccumulated", opName);
@@ -277,7 +277,7 @@ namespace Emgu.TF
         /// <param name="handle">Input to the operation. </param>
         /// <param name="new_global_step">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation AccumulatorSetGlobalStep(Output handle, Output new_global_step, String opName = "AccumulatorSetGlobalStep") 
         {
             OperationDescription desc = NewOperation("AccumulatorSetGlobalStep", opName);
@@ -293,10 +293,10 @@ namespace Emgu.TF
         /// <param name="num_required">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] average(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation AccumulatorTakeGradient(Output handle, Output num_required, DataType dtype, String opName = "AccumulatorTakeGradient") 
         {
             OperationDescription desc = NewOperation("AccumulatorTakeGradient", opName);
@@ -311,10 +311,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Acos(Output x, String opName = "Acos") 
         {
             OperationDescription desc = NewOperation("Acos", opName);
@@ -327,10 +327,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Acosh(Output x, String opName = "Acosh") 
         {
             OperationDescription desc = NewOperation("Acosh", opName);
@@ -344,10 +344,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Add(Output x, Output y, String opName = "Add") 
         {
             OperationDescription desc = NewOperation("Add", opName);
@@ -365,10 +365,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sparse_handles(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation AddManySparseToTensorsMap(Output sparse_indices, Output sparse_values, Output sparse_shape, string container = null, string shared_name = null, String opName = "AddManySparseToTensorsMap") 
         {
             OperationDescription desc = NewOperation("AddManySparseToTensorsMap", opName);
@@ -387,10 +387,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="inputs">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sum(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation AddN(Output inputs, String opName = "AddN") 
         {
             OperationDescription desc = NewOperation("AddN", opName);
@@ -407,10 +407,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sparse_handle(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation AddSparseToTensorsMap(Output sparse_indices, Output sparse_values, Output sparse_shape, string container = null, string shared_name = null, String opName = "AddSparseToTensorsMap") 
         {
             OperationDescription desc = NewOperation("AddSparseToTensorsMap", opName);
@@ -430,10 +430,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation AddV2(Output x, Output y, String opName = "AddV2") 
         {
             OperationDescription desc = NewOperation("AddV2", opName);
@@ -450,10 +450,10 @@ namespace Emgu.TF
         /// <param name="min_value">Input to the operation. </param>
         /// <param name="max_value">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation AdjustContrast(Output images, Output contrast_factor, Output min_value, Output max_value, String opName = "AdjustContrast") 
         {
             OperationDescription desc = NewOperation("AdjustContrast", opName);
@@ -470,10 +470,10 @@ namespace Emgu.TF
         /// <param name="images">Input to the operation. </param>
         /// <param name="contrast_factor">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation AdjustContrastv2(Output images, Output contrast_factor, String opName = "AdjustContrastv2") 
         {
             OperationDescription desc = NewOperation("AdjustContrastv2", opName);
@@ -488,10 +488,10 @@ namespace Emgu.TF
         /// <param name="images">Input to the operation. </param>
         /// <param name="delta">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation AdjustHue(Output images, Output delta, String opName = "AdjustHue") 
         {
             OperationDescription desc = NewOperation("AdjustHue", opName);
@@ -506,10 +506,10 @@ namespace Emgu.TF
         /// <param name="images">Input to the operation. </param>
         /// <param name="scale">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation AdjustSaturation(Output images, Output scale, String opName = "AdjustSaturation") 
         {
             OperationDescription desc = NewOperation("AdjustSaturation", opName);
@@ -525,10 +525,10 @@ namespace Emgu.TF
         /// <param name="reduction_indices">Input to the operation. </param>
         /// <param name="keep_dims">keep dims</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation All(Output input, Output reduction_indices, bool keep_dims = false, String opName = "All") 
         {
             OperationDescription desc = NewOperation("All", opName);
@@ -549,12 +549,12 @@ namespace Emgu.TF
         /// <param name="seed">seed</param>
         /// <param name="seed2">seed2</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sampled_candidates(type: DtInt64).
         /// [1] true_expected_count(type: DtFloat).
         /// [2] sampled_expected_count(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation AllCandidateSampler(Output true_classes, long num_true, long num_sampled, bool unique, long seed = 0, long seed2 = 0, String opName = "AllCandidateSampler") 
         {
             OperationDescription desc = NewOperation("AllCandidateSampler", opName);
@@ -578,10 +578,10 @@ namespace Emgu.TF
         /// <param name="split_dimension">split dimension</param>
         /// <param name="split_count">split count</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation AllToAll(Output input, Output group_assignment, long concat_dimension, long split_dimension, long split_count, String opName = "AllToAll") 
         {
             OperationDescription desc = NewOperation("AllToAll", opName);
@@ -599,10 +599,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="Tout">Tout</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Angle(Output input, DataType? Tout = null, String opName = "Angle") 
         {
             OperationDescription desc = NewOperation("Angle", opName);
@@ -618,10 +618,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation AnonymousIterator(DataType[] output_types, long[][] output_shapes, String opName = "AnonymousIterator") 
         {
             OperationDescription desc = NewOperation("AnonymousIterator", opName);
@@ -636,11 +636,11 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
         /// [1] deleter(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation AnonymousIteratorV2(DataType[] output_types, long[][] output_shapes, String opName = "AnonymousIteratorV2") 
         {
             OperationDescription desc = NewOperation("AnonymousIteratorV2", opName);
@@ -653,11 +653,11 @@ namespace Emgu.TF
         /// AnonymousMemoryCache
         /// </summary>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
         /// [1] deleter(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation AnonymousMemoryCache(String opName = "AnonymousMemoryCache") 
         {
             OperationDescription desc = NewOperation("AnonymousMemoryCache", opName);
@@ -671,11 +671,11 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
         /// [1] deleter(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation AnonymousMultiDeviceIterator(string[] devices, DataType[] output_types, long[][] output_shapes, String opName = "AnonymousMultiDeviceIterator") 
         {
             OperationDescription desc = NewOperation("AnonymousMultiDeviceIterator", opName);
@@ -691,11 +691,11 @@ namespace Emgu.TF
         /// <param name="seed">Input to the operation. </param>
         /// <param name="seed2">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
         /// [1] deleter(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation AnonymousRandomSeedGenerator(Output seed, Output seed2, String opName = "AnonymousRandomSeedGenerator") 
         {
             OperationDescription desc = NewOperation("AnonymousRandomSeedGenerator", opName);
@@ -711,11 +711,11 @@ namespace Emgu.TF
         /// <param name="seed2">Input to the operation. </param>
         /// <param name="reshuffle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
         /// [1] deleter(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation AnonymousSeedGenerator(Output seed, Output seed2, Output reshuffle, String opName = "AnonymousSeedGenerator") 
         {
             OperationDescription desc = NewOperation("AnonymousSeedGenerator", opName);
@@ -732,10 +732,10 @@ namespace Emgu.TF
         /// <param name="reduction_indices">Input to the operation. </param>
         /// <param name="keep_dims">keep dims</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation Any(Output input, Output reduction_indices, bool keep_dims = false, String opName = "Any") 
         {
             OperationDescription desc = NewOperation("Any", opName);
@@ -758,10 +758,10 @@ namespace Emgu.TF
         /// <param name="grad">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ApplyAdadelta(Output var, Output accum, Output accum_update, Output lr, Output rho, Output epsilon, Output grad, bool use_locking = false, String opName = "ApplyAdadelta") 
         {
             OperationDescription desc = NewOperation("ApplyAdadelta", opName);
@@ -787,10 +787,10 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="update_slots">update slots</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ApplyAdagrad(Output var, Output accum, Output lr, Output grad, bool use_locking = false, bool update_slots = true, String opName = "ApplyAdagrad") 
         {
             OperationDescription desc = NewOperation("ApplyAdagrad", opName);
@@ -818,10 +818,10 @@ namespace Emgu.TF
         /// <param name="global_step">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ApplyAdagradDA(Output var, Output gradient_accumulator, Output gradient_squared_accumulator, Output grad, Output lr, Output l1, Output l2, Output global_step, bool use_locking = false, String opName = "ApplyAdagradDA") 
         {
             OperationDescription desc = NewOperation("ApplyAdagradDA", opName);
@@ -849,10 +849,10 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="update_slots">update slots</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ApplyAdagradV2(Output var, Output accum, Output lr, Output epsilon, Output grad, bool use_locking = false, bool update_slots = true, String opName = "ApplyAdagradV2") 
         {
             OperationDescription desc = NewOperation("ApplyAdagradV2", opName);
@@ -884,10 +884,10 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="use_nesterov">use nesterov</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ApplyAdam(Output var, Output m, Output v, Output beta1_power, Output beta2_power, Output lr, Output beta1, Output beta2, Output epsilon, Output grad, bool use_locking = false, bool use_nesterov = false, String opName = "ApplyAdam") 
         {
             OperationDescription desc = NewOperation("ApplyAdam", opName);
@@ -922,10 +922,10 @@ namespace Emgu.TF
         /// <param name="grad">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ApplyAdaMax(Output var, Output m, Output v, Output beta1_power, Output lr, Output beta1, Output beta2, Output epsilon, Output grad, bool use_locking = false, String opName = "ApplyAdaMax") 
         {
             OperationDescription desc = NewOperation("ApplyAdaMax", opName);
@@ -955,10 +955,10 @@ namespace Emgu.TF
         /// <param name="grad">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ApplyAddSign(Output var, Output m, Output lr, Output alpha, Output sign_decay, Output beta, Output grad, bool use_locking = false, String opName = "ApplyAddSign") 
         {
             OperationDescription desc = NewOperation("ApplyAddSign", opName);
@@ -988,10 +988,10 @@ namespace Emgu.TF
         /// <param name="grad">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ApplyCenteredRMSProp(Output var, Output mg, Output ms, Output mom, Output lr, Output rho, Output momentum, Output epsilon, Output grad, bool use_locking = false, String opName = "ApplyCenteredRMSProp") 
         {
             OperationDescription desc = NewOperation("ApplyCenteredRMSProp", opName);
@@ -1023,10 +1023,10 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="multiply_linear_by_lr">multiply linear by lr</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ApplyFtrl(Output var, Output accum, Output linear, Output grad, Output lr, Output l1, Output l2, Output lr_power, bool use_locking = false, bool multiply_linear_by_lr = false, String opName = "ApplyFtrl") 
         {
             OperationDescription desc = NewOperation("ApplyFtrl", opName);
@@ -1060,10 +1060,10 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="multiply_linear_by_lr">multiply linear by lr</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ApplyFtrlV2(Output var, Output accum, Output linear, Output grad, Output lr, Output l1, Output l2, Output l2_shrinkage, Output lr_power, bool use_locking = false, bool multiply_linear_by_lr = false, String opName = "ApplyFtrlV2") 
         {
             OperationDescription desc = NewOperation("ApplyFtrlV2", opName);
@@ -1091,10 +1091,10 @@ namespace Emgu.TF
         /// <param name="delta">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ApplyGradientDescent(Output var, Output alpha, Output delta, bool use_locking = false, String opName = "ApplyGradientDescent") 
         {
             OperationDescription desc = NewOperation("ApplyGradientDescent", opName);
@@ -1117,10 +1117,10 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="use_nesterov">use nesterov</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ApplyMomentum(Output var, Output accum, Output lr, Output grad, Output momentum, bool use_locking = false, bool use_nesterov = false, String opName = "ApplyMomentum") 
         {
             OperationDescription desc = NewOperation("ApplyMomentum", opName);
@@ -1148,10 +1148,10 @@ namespace Emgu.TF
         /// <param name="grad">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ApplyPowerSign(Output var, Output m, Output lr, Output logbase, Output sign_decay, Output beta, Output grad, bool use_locking = false, String opName = "ApplyPowerSign") 
         {
             OperationDescription desc = NewOperation("ApplyPowerSign", opName);
@@ -1178,10 +1178,10 @@ namespace Emgu.TF
         /// <param name="grad">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ApplyProximalAdagrad(Output var, Output accum, Output lr, Output l1, Output l2, Output grad, bool use_locking = false, String opName = "ApplyProximalAdagrad") 
         {
             OperationDescription desc = NewOperation("ApplyProximalAdagrad", opName);
@@ -1206,10 +1206,10 @@ namespace Emgu.TF
         /// <param name="delta">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ApplyProximalGradientDescent(Output var, Output alpha, Output l1, Output l2, Output delta, bool use_locking = false, String opName = "ApplyProximalGradientDescent") 
         {
             OperationDescription desc = NewOperation("ApplyProximalGradientDescent", opName);
@@ -1236,10 +1236,10 @@ namespace Emgu.TF
         /// <param name="grad">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ApplyRMSProp(Output var, Output ms, Output mom, Output lr, Output rho, Output momentum, Output epsilon, Output grad, bool use_locking = false, String opName = "ApplyRMSProp") 
         {
             OperationDescription desc = NewOperation("ApplyRMSProp", opName);
@@ -1263,10 +1263,10 @@ namespace Emgu.TF
         /// <param name="y">Input to the operation. </param>
         /// <param name="tolerance">tolerance</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation ApproximateEqual(Output x, Output y, float tolerance = 1E-05f, String opName = "ApproximateEqual") 
         {
             OperationDescription desc = NewOperation("ApproximateEqual", opName);
@@ -1284,10 +1284,10 @@ namespace Emgu.TF
         /// <param name="dimension">Input to the operation. </param>
         /// <param name="output_type">output type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ArgMax(Output input, Output dimension, DataType? output_type = null, String opName = "ArgMax") 
         {
             OperationDescription desc = NewOperation("ArgMax", opName);
@@ -1305,10 +1305,10 @@ namespace Emgu.TF
         /// <param name="dimension">Input to the operation. </param>
         /// <param name="output_type">output type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ArgMin(Output input, Output dimension, DataType? output_type = null, String opName = "ArgMin") 
         {
             OperationDescription desc = NewOperation("ArgMin", opName);
@@ -1324,10 +1324,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Asin(Output x, String opName = "Asin") 
         {
             OperationDescription desc = NewOperation("Asin", opName);
@@ -1340,10 +1340,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Asinh(Output x, String opName = "Asinh") 
         {
             OperationDescription desc = NewOperation("Asinh", opName);
@@ -1358,7 +1358,7 @@ namespace Emgu.TF
         /// <param name="data">Input to the operation. </param>
         /// <param name="summarize">summarize</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation Assert(Output condition, Output data, long summarize = 3, String opName = "Assert") 
         {
             OperationDescription desc = NewOperation("Assert", opName);
@@ -1377,10 +1377,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation AssertCardinalityDataset(Output input_dataset, Output cardinality, DataType[] output_types, long[][] output_shapes, String opName = "AssertCardinalityDataset") 
         {
             OperationDescription desc = NewOperation("AssertCardinalityDataset", opName);
@@ -1399,10 +1399,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation AssertNextDataset(Output input_dataset, Output transformations, DataType[] output_types, long[][] output_shapes, String opName = "AssertNextDataset") 
         {
             OperationDescription desc = NewOperation("AssertNextDataset", opName);
@@ -1421,10 +1421,10 @@ namespace Emgu.TF
         /// <param name="validate_shape">validate shape</param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_ref(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Assign(Output reference, Output value, bool validate_shape = true, bool use_locking = true, String opName = "Assign") 
         {
             OperationDescription desc = NewOperation("Assign", opName);
@@ -1444,10 +1444,10 @@ namespace Emgu.TF
         /// <param name="value">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_ref(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation AssignAdd(Output reference, Output value, bool use_locking = false, String opName = "AssignAdd") 
         {
             OperationDescription desc = NewOperation("AssignAdd", opName);
@@ -1464,7 +1464,7 @@ namespace Emgu.TF
         /// <param name="resource">Input to the operation. </param>
         /// <param name="value">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation AssignAddVariableOp(Output resource, Output value, String opName = "AssignAddVariableOp") 
         {
             OperationDescription desc = NewOperation("AssignAddVariableOp", opName);
@@ -1480,10 +1480,10 @@ namespace Emgu.TF
         /// <param name="value">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_ref(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation AssignSub(Output reference, Output value, bool use_locking = false, String opName = "AssignSub") 
         {
             OperationDescription desc = NewOperation("AssignSub", opName);
@@ -1500,7 +1500,7 @@ namespace Emgu.TF
         /// <param name="resource">Input to the operation. </param>
         /// <param name="value">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation AssignSubVariableOp(Output resource, Output value, String opName = "AssignSubVariableOp") 
         {
             OperationDescription desc = NewOperation("AssignSubVariableOp", opName);
@@ -1515,7 +1515,7 @@ namespace Emgu.TF
         /// <param name="resource">Input to the operation. </param>
         /// <param name="value">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation AssignVariableOp(Output resource, Output value, String opName = "AssignVariableOp") 
         {
             OperationDescription desc = NewOperation("AssignVariableOp", opName);
@@ -1534,10 +1534,10 @@ namespace Emgu.TF
         /// <param name="width">width</param>
         /// <param name="fill">fill</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation AsString(Output input, long precision = -1, bool scientific = false, bool shortest = false, long width = -1, string fill = null, String opName = "AsString") 
         {
             OperationDescription desc = NewOperation("AsString", opName);
@@ -1560,10 +1560,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Atan(Output x, String opName = "Atan") 
         {
             OperationDescription desc = NewOperation("Atan", opName);
@@ -1577,10 +1577,10 @@ namespace Emgu.TF
         /// <param name="y">Input to the operation. </param>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Atan2(Output y, Output x, String opName = "Atan2") 
         {
             OperationDescription desc = NewOperation("Atan2", opName);
@@ -1594,10 +1594,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Atanh(Output x, String opName = "Atanh") 
         {
             OperationDescription desc = NewOperation("Atanh", opName);
@@ -1613,10 +1613,10 @@ namespace Emgu.TF
         /// <param name="stride">stride</param>
         /// <param name="magnitude_squared">magnitude squared</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] spectrogram(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation AudioSpectrogram(Output input, long window_size, long stride, bool magnitude_squared = false, String opName = "AudioSpectrogram") 
         {
             OperationDescription desc = NewOperation("AudioSpectrogram", opName);
@@ -1636,10 +1636,10 @@ namespace Emgu.TF
         /// <param name="sample_rate">sample rate</param>
         /// <param name="max_outputs">max outputs</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] summary(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation AudioSummary(Output tag, Output tensor, float sample_rate, long max_outputs = 3, String opName = "AudioSummary") 
         {
             OperationDescription desc = NewOperation("AudioSummary", opName);
@@ -1659,10 +1659,10 @@ namespace Emgu.TF
         /// <param name="sample_rate">Input to the operation. </param>
         /// <param name="max_outputs">max outputs</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] summary(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation AudioSummaryV2(Output tag, Output tensor, Output sample_rate, long max_outputs = 3, String opName = "AudioSummaryV2") 
         {
             OperationDescription desc = NewOperation("AudioSummaryV2", opName);
@@ -1685,10 +1685,10 @@ namespace Emgu.TF
         /// <param name="auto_shard_policy">auto shard policy</param>
         /// <param name="num_replicas">num replicas</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation AutoShardDataset(Output input_dataset, Output num_workers, Output index, DataType[] output_types, long[][] output_shapes, long auto_shard_policy = 0, long num_replicas = 0, String opName = "AutoShardDataset") 
         {
             OperationDescription desc = NewOperation("AutoShardDataset", opName);
@@ -1713,10 +1713,10 @@ namespace Emgu.TF
         /// <param name="padding">padding</param>
         /// <param name="data_format">data format</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation AvgPool(Output value, long[] ksize, long[] strides, string padding, string data_format = null, String opName = "AvgPool") 
         {
             OperationDescription desc = NewOperation("AvgPool", opName);
@@ -1738,10 +1738,10 @@ namespace Emgu.TF
         /// <param name="padding">padding</param>
         /// <param name="data_format">data format</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation AvgPool3D(Output input, long[] ksize, long[] strides, string padding, string data_format = null, String opName = "AvgPool3D") 
         {
             OperationDescription desc = NewOperation("AvgPool3D", opName);
@@ -1764,10 +1764,10 @@ namespace Emgu.TF
         /// <param name="padding">padding</param>
         /// <param name="data_format">data format</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation AvgPool3DGrad(Output orig_input_shape, Output grad, long[] ksize, long[] strides, string padding, string data_format = null, String opName = "AvgPool3DGrad") 
         {
             OperationDescription desc = NewOperation("AvgPool3DGrad", opName);
@@ -1791,10 +1791,10 @@ namespace Emgu.TF
         /// <param name="padding">padding</param>
         /// <param name="data_format">data format</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation AvgPoolGrad(Output orig_input_shape, Output grad, long[] ksize, long[] strides, string padding, string data_format = null, String opName = "AvgPoolGrad") 
         {
             OperationDescription desc = NewOperation("AvgPoolGrad", opName);
@@ -1816,10 +1816,10 @@ namespace Emgu.TF
         /// <param name="lower">lower</param>
         /// <param name="adjoint">adjoint</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BandedTriangularSolve(Output matrix, Output rhs, bool lower = true, bool adjoint = false, String opName = "BandedTriangularSolve") 
         {
             OperationDescription desc = NewOperation("BandedTriangularSolve", opName);
@@ -1841,10 +1841,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation Barrier(DataType[] component_types, long[][] shapes = null, long capacity = -1, string container = null, string shared_name = null, String opName = "Barrier") 
         {
             OperationDescription desc = NewOperation("Barrier", opName);
@@ -1865,7 +1865,7 @@ namespace Emgu.TF
         /// <param name="handle">Input to the operation. </param>
         /// <param name="cancel_pending_enqueues">cancel pending enqueues</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation BarrierClose(Output handle, bool cancel_pending_enqueues = false, String opName = "BarrierClose") 
         {
             OperationDescription desc = NewOperation("BarrierClose", opName);
@@ -1880,10 +1880,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] size(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation BarrierIncompleteSize(Output handle, String opName = "BarrierIncompleteSize") 
         {
             OperationDescription desc = NewOperation("BarrierIncompleteSize", opName);
@@ -1899,7 +1899,7 @@ namespace Emgu.TF
         /// <param name="values">Input to the operation. </param>
         /// <param name="component_index">component index</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation BarrierInsertMany(Output handle, Output keys, Output values, long component_index, String opName = "BarrierInsertMany") 
         {
             OperationDescription desc = NewOperation("BarrierInsertMany", opName);
@@ -1915,10 +1915,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] size(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation BarrierReadySize(Output handle, String opName = "BarrierReadySize") 
         {
             OperationDescription desc = NewOperation("BarrierReadySize", opName);
@@ -1936,12 +1936,12 @@ namespace Emgu.TF
         /// <param name="wait_for_incomplete">wait for incomplete</param>
         /// <param name="timeout_ms">timeout ms</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] indices(type: DtInt64).
         /// [1] keys(type: DtString).
         /// [2] values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BarrierTakeMany(Output handle, Output num_elements, DataType[] component_types, bool allow_small_batch = false, bool wait_for_incomplete = false, long timeout_ms = -1, String opName = "BarrierTakeMany") 
         {
             OperationDescription desc = NewOperation("BarrierTakeMany", opName);
@@ -1971,12 +1971,12 @@ namespace Emgu.TF
         /// <param name="shared_name">shared name</param>
         /// <param name="batching_queue">batching queue</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] batched_tensors(type: DtInvalid).
         /// [1] batch_index(type: DtInt64).
         /// [2] id(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation Batch(Output in_tensors, long num_batch_threads, long max_batch_size, long batch_timeout_micros, long grad_timeout_micros, long max_enqueued_batches = 10, long[] allowed_batch_sizes = null, string container = null, string shared_name = null, string batching_queue = null, String opName = "Batch") 
         {
             OperationDescription desc = NewOperation("Batch", opName);
@@ -2002,10 +2002,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BatchCholesky(Output input, String opName = "BatchCholesky") 
         {
             OperationDescription desc = NewOperation("BatchCholesky", opName);
@@ -2019,10 +2019,10 @@ namespace Emgu.TF
         /// <param name="l">Input to the operation. </param>
         /// <param name="grad">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BatchCholeskyGrad(Output l, Output grad, String opName = "BatchCholeskyGrad") 
         {
             OperationDescription desc = NewOperation("BatchCholeskyGrad", opName);
@@ -2039,10 +2039,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation BatchDataset(Output input_dataset, Output batch_size, DataType[] output_types, long[][] output_shapes, String opName = "BatchDataset") 
         {
             OperationDescription desc = NewOperation("BatchDataset", opName);
@@ -2063,10 +2063,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="parallel_copy">parallel copy</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation BatchDatasetV2(Output input_dataset, Output batch_size, Output drop_remainder, DataType[] output_types, long[][] output_shapes, bool parallel_copy = false, String opName = "BatchDatasetV2") 
         {
             OperationDescription desc = NewOperation("BatchDatasetV2", opName);
@@ -2085,10 +2085,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtComplex64).
-        /// </return>
+        /// </returns>
         public Operation BatchFFT(Output input, String opName = "BatchFFT") 
         {
             OperationDescription desc = NewOperation("BatchFFT", opName);
@@ -2101,10 +2101,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtComplex64).
-        /// </return>
+        /// </returns>
         public Operation BatchFFT2D(Output input, String opName = "BatchFFT2D") 
         {
             OperationDescription desc = NewOperation("BatchFFT2D", opName);
@@ -2117,10 +2117,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtComplex64).
-        /// </return>
+        /// </returns>
         public Operation BatchFFT3D(Output input, String opName = "BatchFFT3D") 
         {
             OperationDescription desc = NewOperation("BatchFFT3D", opName);
@@ -2144,10 +2144,10 @@ namespace Emgu.TF
         /// <param name="batching_queue">batching queue</param>
         /// <param name="enable_large_batch_splitting">enable large batch splitting</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out_tensors(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation BatchFunction(Output in_tensors, Output captured_tensors, long num_batch_threads, long max_batch_size, long batch_timeout_micros, DataType[] Tout, long max_enqueued_batches = 10, long[] allowed_batch_sizes = null, string container = null, string shared_name = null, string batching_queue = null, bool enable_large_batch_splitting = false, String opName = "BatchFunction") 
         {
@@ -2177,10 +2177,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtComplex64).
-        /// </return>
+        /// </returns>
         public Operation BatchIFFT(Output input, String opName = "BatchIFFT") 
         {
             OperationDescription desc = NewOperation("BatchIFFT", opName);
@@ -2193,10 +2193,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtComplex64).
-        /// </return>
+        /// </returns>
         public Operation BatchIFFT2D(Output input, String opName = "BatchIFFT2D") 
         {
             OperationDescription desc = NewOperation("BatchIFFT2D", opName);
@@ -2209,10 +2209,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtComplex64).
-        /// </return>
+        /// </returns>
         public Operation BatchIFFT3D(Output input, String opName = "BatchIFFT3D") 
         {
             OperationDescription desc = NewOperation("BatchIFFT3D", opName);
@@ -2228,10 +2228,10 @@ namespace Emgu.TF
         /// <param name="adj_x">adj x</param>
         /// <param name="adj_y">adj y</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BatchMatMul(Output x, Output y, bool adj_x = false, bool adj_y = false, String opName = "BatchMatMul") 
         {
             OperationDescription desc = NewOperation("BatchMatMul", opName);
@@ -2252,10 +2252,10 @@ namespace Emgu.TF
         /// <param name="adj_x">adj x</param>
         /// <param name="adj_y">adj y</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BatchMatMulV2(Output x, Output y, bool adj_x = false, bool adj_y = false, String opName = "BatchMatMulV2") 
         {
             OperationDescription desc = NewOperation("BatchMatMulV2", opName);
@@ -2275,10 +2275,10 @@ namespace Emgu.TF
         /// <param name="num_lower">Input to the operation. </param>
         /// <param name="num_upper">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] band(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BatchMatrixBandPart(Output input, Output num_lower, Output num_upper, String opName = "BatchMatrixBandPart") 
         {
             OperationDescription desc = NewOperation("BatchMatrixBandPart", opName);
@@ -2293,10 +2293,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BatchMatrixDeterminant(Output input, String opName = "BatchMatrixDeterminant") 
         {
             OperationDescription desc = NewOperation("BatchMatrixDeterminant", opName);
@@ -2309,10 +2309,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="diagonal">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BatchMatrixDiag(Output diagonal, String opName = "BatchMatrixDiag") 
         {
             OperationDescription desc = NewOperation("BatchMatrixDiag", opName);
@@ -2325,10 +2325,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] diagonal(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BatchMatrixDiagPart(Output input, String opName = "BatchMatrixDiagPart") 
         {
             OperationDescription desc = NewOperation("BatchMatrixDiagPart", opName);
@@ -2342,10 +2342,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="adjoint">adjoint</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BatchMatrixInverse(Output input, bool adjoint = false, String opName = "BatchMatrixInverse") 
         {
             OperationDescription desc = NewOperation("BatchMatrixInverse", opName);
@@ -2361,10 +2361,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="diagonal">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BatchMatrixSetDiag(Output input, Output diagonal, String opName = "BatchMatrixSetDiag") 
         {
             OperationDescription desc = NewOperation("BatchMatrixSetDiag", opName);
@@ -2380,10 +2380,10 @@ namespace Emgu.TF
         /// <param name="rhs">Input to the operation. </param>
         /// <param name="adjoint">adjoint</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BatchMatrixSolve(Output matrix, Output rhs, bool adjoint = false, String opName = "BatchMatrixSolve") 
         {
             OperationDescription desc = NewOperation("BatchMatrixSolve", opName);
@@ -2402,10 +2402,10 @@ namespace Emgu.TF
         /// <param name="l2_regularizer">Input to the operation. </param>
         /// <param name="fast">fast</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BatchMatrixSolveLs(Output matrix, Output rhs, Output l2_regularizer, bool fast = true, String opName = "BatchMatrixSolveLs") 
         {
             OperationDescription desc = NewOperation("BatchMatrixSolveLs", opName);
@@ -2425,10 +2425,10 @@ namespace Emgu.TF
         /// <param name="lower">lower</param>
         /// <param name="adjoint">adjoint</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BatchMatrixTriangularSolve(Output matrix, Output rhs, bool lower = true, bool adjoint = false, String opName = "BatchMatrixTriangularSolve") 
         {
             OperationDescription desc = NewOperation("BatchMatrixTriangularSolve", opName);
@@ -2452,10 +2452,10 @@ namespace Emgu.TF
         /// <param name="variance_epsilon">variance epsilon</param>
         /// <param name="scale_after_normalization">scale after normalization</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] result(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BatchNormWithGlobalNormalization(Output t, Output m, Output v, Output beta, Output gamma, float variance_epsilon, bool scale_after_normalization, String opName = "BatchNormWithGlobalNormalization") 
         {
             OperationDescription desc = NewOperation("BatchNormWithGlobalNormalization", opName);
@@ -2480,14 +2480,14 @@ namespace Emgu.TF
         /// <param name="variance_epsilon">variance epsilon</param>
         /// <param name="scale_after_normalization">scale after normalization</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] dx(type: DtInvalid).
         /// [1] dm(type: DtInvalid).
         /// [2] dv(type: DtInvalid).
         /// [3] db(type: DtInvalid).
         /// [4] dg(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BatchNormWithGlobalNormalizationGrad(Output t, Output m, Output v, Output gamma, Output backprop, float variance_epsilon, bool scale_after_normalization, String opName = "BatchNormWithGlobalNormalizationGrad") 
         {
             OperationDescription desc = NewOperation("BatchNormWithGlobalNormalizationGrad", opName);
@@ -2506,10 +2506,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BatchSelfAdjointEig(Output input, String opName = "BatchSelfAdjointEig") 
         {
             OperationDescription desc = NewOperation("BatchSelfAdjointEig", opName);
@@ -2523,11 +2523,11 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="compute_v">compute v</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] e(type: DtInvalid).
         /// [1] v(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BatchSelfAdjointEigV2(Output input, bool compute_v = true, String opName = "BatchSelfAdjointEigV2") 
         {
             OperationDescription desc = NewOperation("BatchSelfAdjointEigV2", opName);
@@ -2544,12 +2544,12 @@ namespace Emgu.TF
         /// <param name="compute_uv">compute uv</param>
         /// <param name="full_matrices">full matrices</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] s(type: DtInvalid).
         /// [1] u(type: DtInvalid).
         /// [2] v(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BatchSvd(Output input, bool compute_uv = true, bool full_matrices = false, String opName = "BatchSvd") 
         {
             OperationDescription desc = NewOperation("BatchSvd", opName);
@@ -2568,10 +2568,10 @@ namespace Emgu.TF
         /// <param name="crops">Input to the operation. </param>
         /// <param name="block_size">block size</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BatchToSpace(Output input, Output crops, long block_size, String opName = "BatchToSpace") 
         {
             OperationDescription desc = NewOperation("BatchToSpace", opName);
@@ -2588,10 +2588,10 @@ namespace Emgu.TF
         /// <param name="block_shape">Input to the operation. </param>
         /// <param name="crops">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BatchToSpaceND(Output input, Output block_shape, Output crops, String opName = "BatchToSpaceND") 
         {
             OperationDescription desc = NewOperation("BatchToSpaceND", opName);
@@ -2606,10 +2606,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BesselI0(Output x, String opName = "BesselI0") 
         {
             OperationDescription desc = NewOperation("BesselI0", opName);
@@ -2622,10 +2622,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BesselI0e(Output x, String opName = "BesselI0e") 
         {
             OperationDescription desc = NewOperation("BesselI0e", opName);
@@ -2638,10 +2638,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BesselI1(Output x, String opName = "BesselI1") 
         {
             OperationDescription desc = NewOperation("BesselI1", opName);
@@ -2654,10 +2654,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BesselI1e(Output x, String opName = "BesselI1e") 
         {
             OperationDescription desc = NewOperation("BesselI1e", opName);
@@ -2670,10 +2670,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BesselJ0(Output x, String opName = "BesselJ0") 
         {
             OperationDescription desc = NewOperation("BesselJ0", opName);
@@ -2686,10 +2686,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BesselJ1(Output x, String opName = "BesselJ1") 
         {
             OperationDescription desc = NewOperation("BesselJ1", opName);
@@ -2702,10 +2702,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BesselK0(Output x, String opName = "BesselK0") 
         {
             OperationDescription desc = NewOperation("BesselK0", opName);
@@ -2718,10 +2718,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BesselK0e(Output x, String opName = "BesselK0e") 
         {
             OperationDescription desc = NewOperation("BesselK0e", opName);
@@ -2734,10 +2734,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BesselK1(Output x, String opName = "BesselK1") 
         {
             OperationDescription desc = NewOperation("BesselK1", opName);
@@ -2750,10 +2750,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BesselK1e(Output x, String opName = "BesselK1e") 
         {
             OperationDescription desc = NewOperation("BesselK1e", opName);
@@ -2766,10 +2766,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BesselY0(Output x, String opName = "BesselY0") 
         {
             OperationDescription desc = NewOperation("BesselY0", opName);
@@ -2782,10 +2782,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BesselY1(Output x, String opName = "BesselY1") 
         {
             OperationDescription desc = NewOperation("BesselY1", opName);
@@ -2800,10 +2800,10 @@ namespace Emgu.TF
         /// <param name="b">Input to the operation. </param>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Betainc(Output a, Output b, Output x, String opName = "Betainc") 
         {
             OperationDescription desc = NewOperation("Betainc", opName);
@@ -2820,10 +2820,10 @@ namespace Emgu.TF
         /// <param name="bias">Input to the operation. </param>
         /// <param name="data_format">data format</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BiasAdd(Output value, Output bias, string data_format = null, String opName = "BiasAdd") 
         {
             OperationDescription desc = NewOperation("BiasAdd", opName);
@@ -2840,10 +2840,10 @@ namespace Emgu.TF
         /// <param name="out_backprop">Input to the operation. </param>
         /// <param name="data_format">data format</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BiasAddGrad(Output out_backprop, string data_format = null, String opName = "BiasAddGrad") 
         {
             OperationDescription desc = NewOperation("BiasAddGrad", opName);
@@ -2859,10 +2859,10 @@ namespace Emgu.TF
         /// <param name="value">Input to the operation. </param>
         /// <param name="bias">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BiasAddV1(Output value, Output bias, String opName = "BiasAddV1") 
         {
             OperationDescription desc = NewOperation("BiasAddV1", opName);
@@ -2878,10 +2878,10 @@ namespace Emgu.TF
         /// <param name="size">Input to the operation. </param>
         /// <param name="weights">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] bins(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Bincount(Output arr, Output size, Output weights, String opName = "Bincount") 
         {
             OperationDescription desc = NewOperation("Bincount", opName);
@@ -2897,10 +2897,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="type">type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Bitcast(Output input, DataType type, String opName = "Bitcast") 
         {
             OperationDescription desc = NewOperation("Bitcast", opName);
@@ -2915,10 +2915,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BitwiseAnd(Output x, Output y, String opName = "BitwiseAnd") 
         {
             OperationDescription desc = NewOperation("BitwiseAnd", opName);
@@ -2933,10 +2933,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BitwiseOr(Output x, Output y, String opName = "BitwiseOr") 
         {
             OperationDescription desc = NewOperation("BitwiseOr", opName);
@@ -2951,10 +2951,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BitwiseXor(Output x, Output y, String opName = "BitwiseXor") 
         {
             OperationDescription desc = NewOperation("BitwiseXor", opName);
@@ -2979,7 +2979,7 @@ namespace Emgu.TF
         /// <param name="cell_clip">cell clip</param>
         /// <param name="use_peephole">use peephole</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] i(type: DtInvalid).
         /// [1] cs(type: DtInvalid).
@@ -2988,7 +2988,7 @@ namespace Emgu.TF
         /// [4] ci(type: DtInvalid).
         /// [5] co(type: DtInvalid).
         /// [6] h(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BlockLSTM(Output seq_len_max, Output x, Output cs_prev, Output h_prev, Output w, Output wci, Output wcf, Output wco, Output b, float forget_bias = 1f, float cell_clip = 3f, bool use_peephole = false, String opName = "BlockLSTM") 
         {
             OperationDescription desc = NewOperation("BlockLSTM", opName);
@@ -3033,7 +3033,7 @@ namespace Emgu.TF
         /// <param name="h_grad">Input to the operation. </param>
         /// <param name="use_peephole">use peephole</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] x_grad(type: DtInvalid).
         /// [1] cs_prev_grad(type: DtInvalid).
@@ -3043,7 +3043,7 @@ namespace Emgu.TF
         /// [5] wcf_grad(type: DtInvalid).
         /// [6] wco_grad(type: DtInvalid).
         /// [7] b_grad(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BlockLSTMGrad(Output seq_len_max, Output x, Output cs_prev, Output h_prev, Output w, Output wci, Output wcf, Output wco, Output b, Output i, Output cs, Output f, Output o, Output ci, Output co, Output h, Output cs_grad, Output h_grad, bool use_peephole, String opName = "BlockLSTMGrad") 
         {
             OperationDescription desc = NewOperation("BlockLSTMGrad", opName);
@@ -3092,7 +3092,7 @@ namespace Emgu.TF
         /// <param name="h_grad">Input to the operation. </param>
         /// <param name="use_peephole">use peephole</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] x_grad(type: DtInvalid).
         /// [1] cs_prev_grad(type: DtInvalid).
@@ -3102,7 +3102,7 @@ namespace Emgu.TF
         /// [5] wcf_grad(type: DtInvalid).
         /// [6] wco_grad(type: DtInvalid).
         /// [7] b_grad(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BlockLSTMGradV2(Output seq_len_max, Output x, Output cs_prev, Output h_prev, Output w, Output wci, Output wcf, Output wco, Output b, Output i, Output cs, Output f, Output o, Output ci, Output co, Output h, Output cs_grad, Output h_grad, bool use_peephole, String opName = "BlockLSTMGradV2") 
         {
             OperationDescription desc = NewOperation("BlockLSTMGradV2", opName);
@@ -3143,7 +3143,7 @@ namespace Emgu.TF
         /// <param name="cell_clip">cell clip</param>
         /// <param name="use_peephole">use peephole</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] i(type: DtInvalid).
         /// [1] cs(type: DtInvalid).
@@ -3152,7 +3152,7 @@ namespace Emgu.TF
         /// [4] ci(type: DtInvalid).
         /// [5] co(type: DtInvalid).
         /// [6] h(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BlockLSTMV2(Output seq_len_max, Output x, Output cs_prev, Output h_prev, Output w, Output wci, Output wcf, Output wco, Output b, float cell_clip = 0f, bool use_peephole = false, String opName = "BlockLSTMV2") 
         {
             OperationDescription desc = NewOperation("BlockLSTMV2", opName);
@@ -3182,10 +3182,10 @@ namespace Emgu.TF
         /// <param name="max_splits">max splits</param>
         /// <param name="num_buckets">num buckets</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] stats_summary(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation BoostedTreesAggregateStats(Output node_ids, Output gradients, Output hessians, Output feature, long max_splits, long num_buckets, String opName = "BoostedTreesAggregateStats") 
         {
             OperationDescription desc = NewOperation("BoostedTreesAggregateStats", opName);
@@ -3204,10 +3204,10 @@ namespace Emgu.TF
         /// <param name="float_values">Input to the operation. </param>
         /// <param name="bucket_boundaries">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] buckets(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation BoostedTreesBucketize(Output float_values, Output bucket_boundaries, String opName = "BoostedTreesBucketize") 
         {
             OperationDescription desc = NewOperation("BoostedTreesBucketize", opName);
@@ -3228,7 +3228,7 @@ namespace Emgu.TF
         /// <param name="logits_dimension">logits dimension</param>
         /// <param name="split_type">split type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] node_ids(type: DtInt32).
         /// [1] gains(type: DtFloat).
@@ -3237,7 +3237,7 @@ namespace Emgu.TF
         /// [4] left_node_contribs(type: DtFloat).
         /// [5] right_node_contribs(type: DtFloat).
         /// [6] split_with_default_directions(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation BoostedTreesCalculateBestFeatureSplit(Output node_id_range, Output stats_summary, Output l1, Output l2, Output tree_complexity, Output min_node_weight, long logits_dimension, string split_type = null, String opName = "BoostedTreesCalculateBestFeatureSplit") 
         {
             OperationDescription desc = NewOperation("BoostedTreesCalculateBestFeatureSplit", opName);
@@ -3266,7 +3266,7 @@ namespace Emgu.TF
         /// <param name="min_node_weight">Input to the operation. </param>
         /// <param name="logits_dimension">logits dimension</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] node_ids(type: DtInt32).
         /// [1] gains(type: DtFloat).
@@ -3276,7 +3276,7 @@ namespace Emgu.TF
         /// [5] left_node_contribs(type: DtFloat).
         /// [6] right_node_contribs(type: DtFloat).
         /// [7] split_with_default_directions(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation BoostedTreesCalculateBestFeatureSplitV2(Output node_id_range, Output stats_summaries_list, Output split_types, Output candidate_feature_ids, Output l1, Output l2, Output tree_complexity, Output min_node_weight, long logits_dimension, String opName = "BoostedTreesCalculateBestFeatureSplitV2") 
         {
             OperationDescription desc = NewOperation("BoostedTreesCalculateBestFeatureSplitV2", opName);
@@ -3303,14 +3303,14 @@ namespace Emgu.TF
         /// <param name="min_node_weight">Input to the operation. </param>
         /// <param name="max_splits">max splits</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] node_ids_list(type: DtInt32).
         /// [1] gains_list(type: DtFloat).
         /// [2] thresholds_list(type: DtInt32).
         /// [3] left_node_contribs_list(type: DtFloat).
         /// [4] right_node_contribs_list(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation BoostedTreesCalculateBestGainsPerFeature(Output node_id_range, Output stats_summary_list, Output l1, Output l2, Output tree_complexity, Output min_node_weight, long max_splits, String opName = "BoostedTreesCalculateBestGainsPerFeature") 
         {
             OperationDescription desc = NewOperation("BoostedTreesCalculateBestGainsPerFeature", opName);
@@ -3333,10 +3333,10 @@ namespace Emgu.TF
         /// <param name="l1">Input to the operation. </param>
         /// <param name="l2">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] continue_centering(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation BoostedTreesCenterBias(Output tree_ensemble_handle, Output mean_gradients, Output mean_hessians, Output l1, Output l2, String opName = "BoostedTreesCenterBias") 
         {
             OperationDescription desc = NewOperation("BoostedTreesCenterBias", opName);
@@ -3355,7 +3355,7 @@ namespace Emgu.TF
         /// <param name="stamp_token">Input to the operation. </param>
         /// <param name="tree_ensemble_serialized">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation BoostedTreesCreateEnsemble(Output tree_ensemble_handle, Output stamp_token, Output tree_ensemble_serialized, String opName = "BoostedTreesCreateEnsemble") 
         {
             OperationDescription desc = NewOperation("BoostedTreesCreateEnsemble", opName);
@@ -3373,7 +3373,7 @@ namespace Emgu.TF
         /// <param name="num_streams">Input to the operation. </param>
         /// <param name="max_elements">max elements</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation BoostedTreesCreateQuantileStreamResource(Output quantile_stream_resource_handle, Output epsilon, Output num_streams, long max_elements = 1099511627776, String opName = "BoostedTreesCreateQuantileStreamResource") 
         {
             OperationDescription desc = NewOperation("BoostedTreesCreateQuantileStreamResource", opName);
@@ -3392,7 +3392,7 @@ namespace Emgu.TF
         /// <param name="stamp_token">Input to the operation. </param>
         /// <param name="tree_ensemble_serialized">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation BoostedTreesDeserializeEnsemble(Output tree_ensemble_handle, Output stamp_token, Output tree_ensemble_serialized, String opName = "BoostedTreesDeserializeEnsemble") 
         {
             OperationDescription desc = NewOperation("BoostedTreesDeserializeEnsemble", opName);
@@ -3408,10 +3408,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] resource(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation BoostedTreesEnsembleResourceHandleOp(string container = null, string shared_name = null, String opName = "BoostedTreesEnsembleResourceHandleOp") 
         {
             OperationDescription desc = NewOperation("BoostedTreesEnsembleResourceHandleOp", opName);
@@ -3429,10 +3429,10 @@ namespace Emgu.TF
         /// <param name="bucketized_features">Input to the operation. </param>
         /// <param name="logits_dimension">logits dimension</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] examples_debug_outputs_serialized(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation BoostedTreesExampleDebugOutputs(Output tree_ensemble_handle, Output bucketized_features, long logits_dimension, String opName = "BoostedTreesExampleDebugOutputs") 
         {
             OperationDescription desc = NewOperation("BoostedTreesExampleDebugOutputs", opName);
@@ -3448,10 +3448,10 @@ namespace Emgu.TF
         /// <param name="quantile_stream_resource_handle">Input to the operation. </param>
         /// <param name="num_features">num features</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] summaries(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation BoostedTreesFlushQuantileSummaries(Output quantile_stream_resource_handle, long num_features, String opName = "BoostedTreesFlushQuantileSummaries") 
         {
             OperationDescription desc = NewOperation("BoostedTreesFlushQuantileSummaries", opName);
@@ -3465,14 +3465,14 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="tree_ensemble_handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] stamp_token(type: DtInt64).
         /// [1] num_trees(type: DtInt32).
         /// [2] num_finalized_trees(type: DtInt32).
         /// [3] num_attempted_layers(type: DtInt32).
         /// [4] last_layer_nodes_range(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation BoostedTreesGetEnsembleStates(Output tree_ensemble_handle, String opName = "BoostedTreesGetEnsembleStates") 
         {
             OperationDescription desc = NewOperation("BoostedTreesGetEnsembleStates", opName);
@@ -3487,10 +3487,10 @@ namespace Emgu.TF
         /// <param name="example_weights">Input to the operation. </param>
         /// <param name="epsilon">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] summaries(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation BoostedTreesMakeQuantileSummaries(Output float_values, Output example_weights, Output epsilon, String opName = "BoostedTreesMakeQuantileSummaries") 
         {
             OperationDescription desc = NewOperation("BoostedTreesMakeQuantileSummaries", opName);
@@ -3510,10 +3510,10 @@ namespace Emgu.TF
         /// <param name="max_splits">max splits</param>
         /// <param name="num_buckets">num buckets</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] stats_summary(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation BoostedTreesMakeStatsSummary(Output node_ids, Output gradients, Output hessians, Output bucketized_features_list, long max_splits, long num_buckets, String opName = "BoostedTreesMakeStatsSummary") 
         {
             OperationDescription desc = NewOperation("BoostedTreesMakeStatsSummary", opName);
@@ -3533,10 +3533,10 @@ namespace Emgu.TF
         /// <param name="bucketized_features">Input to the operation. </param>
         /// <param name="logits_dimension">logits dimension</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] logits(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation BoostedTreesPredict(Output tree_ensemble_handle, Output bucketized_features, long logits_dimension, String opName = "BoostedTreesPredict") 
         {
             OperationDescription desc = NewOperation("BoostedTreesPredict", opName);
@@ -3552,7 +3552,7 @@ namespace Emgu.TF
         /// <param name="quantile_stream_resource_handle">Input to the operation. </param>
         /// <param name="summaries">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation BoostedTreesQuantileStreamResourceAddSummaries(Output quantile_stream_resource_handle, Output summaries, String opName = "BoostedTreesQuantileStreamResourceAddSummaries") 
         {
             OperationDescription desc = NewOperation("BoostedTreesQuantileStreamResourceAddSummaries", opName);
@@ -3567,7 +3567,7 @@ namespace Emgu.TF
         /// <param name="quantile_stream_resource_handle">Input to the operation. </param>
         /// <param name="bucket_boundaries">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation BoostedTreesQuantileStreamResourceDeserialize(Output quantile_stream_resource_handle, Output bucket_boundaries, String opName = "BoostedTreesQuantileStreamResourceDeserialize") 
         {
             OperationDescription desc = NewOperation("BoostedTreesQuantileStreamResourceDeserialize", opName);
@@ -3583,7 +3583,7 @@ namespace Emgu.TF
         /// <param name="num_buckets">Input to the operation. </param>
         /// <param name="generate_quantiles">generate quantiles</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation BoostedTreesQuantileStreamResourceFlush(Output quantile_stream_resource_handle, Output num_buckets, bool generate_quantiles = false, String opName = "BoostedTreesQuantileStreamResourceFlush") 
         {
             OperationDescription desc = NewOperation("BoostedTreesQuantileStreamResourceFlush", opName);
@@ -3600,10 +3600,10 @@ namespace Emgu.TF
         /// <param name="quantile_stream_resource_handle">Input to the operation. </param>
         /// <param name="num_features">num features</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] bucket_boundaries(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation BoostedTreesQuantileStreamResourceGetBucketBoundaries(Output quantile_stream_resource_handle, long num_features, String opName = "BoostedTreesQuantileStreamResourceGetBucketBoundaries") 
         {
             OperationDescription desc = NewOperation("BoostedTreesQuantileStreamResourceGetBucketBoundaries", opName);
@@ -3618,10 +3618,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] resource(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation BoostedTreesQuantileStreamResourceHandleOp(string container = null, string shared_name = null, String opName = "BoostedTreesQuantileStreamResourceHandleOp") 
         {
             OperationDescription desc = NewOperation("BoostedTreesQuantileStreamResourceHandleOp", opName);
@@ -3637,11 +3637,11 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="tree_ensemble_handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] stamp_token(type: DtInt64).
         /// [1] tree_ensemble_serialized(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation BoostedTreesSerializeEnsemble(Output tree_ensemble_handle, String opName = "BoostedTreesSerializeEnsemble") 
         {
             OperationDescription desc = NewOperation("BoostedTreesSerializeEnsemble", opName);
@@ -3661,12 +3661,12 @@ namespace Emgu.TF
         /// <param name="max_splits">max splits</param>
         /// <param name="num_buckets">num buckets</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] stats_summary_indices(type: DtInt32).
         /// [1] stats_summary_values(type: DtFloat).
         /// [2] stats_summary_shape(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation BoostedTreesSparseAggregateStats(Output node_ids, Output gradients, Output hessians, Output feature_indices, Output feature_values, Output feature_shape, long max_splits, long num_buckets, String opName = "BoostedTreesSparseAggregateStats") 
         {
             OperationDescription desc = NewOperation("BoostedTreesSparseAggregateStats", opName);
@@ -3695,7 +3695,7 @@ namespace Emgu.TF
         /// <param name="logits_dimension">logits dimension</param>
         /// <param name="split_type">split type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] node_ids(type: DtInt32).
         /// [1] gains(type: DtFloat).
@@ -3704,7 +3704,7 @@ namespace Emgu.TF
         /// [4] left_node_contribs(type: DtFloat).
         /// [5] right_node_contribs(type: DtFloat).
         /// [6] split_with_default_directions(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation BoostedTreesSparseCalculateBestFeatureSplit(Output node_id_range, Output stats_summary_indices, Output stats_summary_values, Output stats_summary_shape, Output l1, Output l2, Output tree_complexity, Output min_node_weight, long logits_dimension, string split_type = null, String opName = "BoostedTreesSparseCalculateBestFeatureSplit") 
         {
             OperationDescription desc = NewOperation("BoostedTreesSparseCalculateBestFeatureSplit", opName);
@@ -3731,12 +3731,12 @@ namespace Emgu.TF
         /// <param name="bucketized_features">Input to the operation. </param>
         /// <param name="logits_dimension">logits dimension</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] partial_logits(type: DtFloat).
         /// [1] tree_ids(type: DtInt32).
         /// [2] node_ids(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation BoostedTreesTrainingPredict(Output tree_ensemble_handle, Output cached_tree_ids, Output cached_node_ids, Output bucketized_features, long logits_dimension, String opName = "BoostedTreesTrainingPredict") 
         {
             OperationDescription desc = NewOperation("BoostedTreesTrainingPredict", opName);
@@ -3762,7 +3762,7 @@ namespace Emgu.TF
         /// <param name="learning_rate">Input to the operation. </param>
         /// <param name="pruning_mode">pruning mode</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation BoostedTreesUpdateEnsemble(Output tree_ensemble_handle, Output feature_ids, Output node_ids, Output gains, Output thresholds, Output left_node_contribs, Output right_node_contribs, Output max_depth, Output learning_rate, long pruning_mode, String opName = "BoostedTreesUpdateEnsemble") 
         {
             OperationDescription desc = NewOperation("BoostedTreesUpdateEnsemble", opName);
@@ -3796,7 +3796,7 @@ namespace Emgu.TF
         /// <param name="pruning_mode">Input to the operation. </param>
         /// <param name="logits_dimension">logits dimension</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation BoostedTreesUpdateEnsembleV2(Output tree_ensemble_handle, Output feature_ids, Output dimension_ids, Output node_ids, Output gains, Output thresholds, Output left_node_contribs, Output right_node_contribs, Output split_types, Output max_depth, Output learning_rate, Output pruning_mode, long logits_dimension = 1, String opName = "BoostedTreesUpdateEnsembleV2") 
         {
             OperationDescription desc = NewOperation("BoostedTreesUpdateEnsembleV2", opName);
@@ -3823,10 +3823,10 @@ namespace Emgu.TF
         /// <param name="s0">Input to the operation. </param>
         /// <param name="s1">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] r0(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BroadcastArgs(Output s0, Output s1, String opName = "BroadcastArgs") 
         {
             OperationDescription desc = NewOperation("BroadcastArgs", opName);
@@ -3841,11 +3841,11 @@ namespace Emgu.TF
         /// <param name="s0">Input to the operation. </param>
         /// <param name="s1">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] r0(type: DtInvalid).
         /// [1] r1(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BroadcastGradientArgs(Output s0, Output s1, String opName = "BroadcastGradientArgs") 
         {
             OperationDescription desc = NewOperation("BroadcastGradientArgs", opName);
@@ -3860,10 +3860,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="shape">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation BroadcastTo(Output input, Output shape, String opName = "BroadcastTo") 
         {
             OperationDescription desc = NewOperation("BroadcastTo", opName);
@@ -3878,10 +3878,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="boundaries">boundaries</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation Bucketize(Output input, float[] boundaries, String opName = "Bucketize") 
         {
             OperationDescription desc = NewOperation("Bucketize", opName);
@@ -3898,10 +3898,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation BytesProducedStatsDataset(Output input_dataset, Output tag, DataType[] output_types, long[][] output_shapes, String opName = "BytesProducedStatsDataset") 
         {
             OperationDescription desc = NewOperation("BytesProducedStatsDataset", opName);
@@ -3920,10 +3920,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation CacheDataset(Output input_dataset, Output filename, DataType[] output_types, long[][] output_shapes, String opName = "CacheDataset") 
         {
             OperationDescription desc = NewOperation("CacheDataset", opName);
@@ -3943,10 +3943,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation CacheDatasetV2(Output input_dataset, Output filename, Output cache, DataType[] output_types, long[][] output_shapes, String opName = "CacheDatasetV2") 
         {
             OperationDescription desc = NewOperation("CacheDatasetV2", opName);
@@ -3966,10 +3966,10 @@ namespace Emgu.TF
         /// <param name="Tout">Tout</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: branches: list(func)
         public Operation Case(Output branch_index, Output input, DataType[] Tout, long[][] output_shapes = null, String opName = "Case") 
         {
@@ -3988,10 +3988,10 @@ namespace Emgu.TF
         /// <param name="DstT">DstT</param>
         /// <param name="Truncate">Truncate</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Cast(Output x, DataType DstT, bool Truncate = false, String opName = "Cast") 
         {
             OperationDescription desc = NewOperation("Cast", opName);
@@ -4007,10 +4007,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Ceil(Output x, String opName = "Ceil") 
         {
             OperationDescription desc = NewOperation("Ceil", opName);
@@ -4024,10 +4024,10 @@ namespace Emgu.TF
         /// <param name="tensor">Input to the operation. </param>
         /// <param name="message">message</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CheckNumerics(Output tensor, string message, String opName = "CheckNumerics") 
         {
             OperationDescription desc = NewOperation("CheckNumerics", opName);
@@ -4042,10 +4042,10 @@ namespace Emgu.TF
         /// <param name="tensor">Input to the operation. </param>
         /// <param name="message">message</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CheckNumericsV2(Output tensor, string message, String opName = "CheckNumericsV2") 
         {
             OperationDescription desc = NewOperation("CheckNumericsV2", opName);
@@ -4059,10 +4059,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Cholesky(Output input, String opName = "Cholesky") 
         {
             OperationDescription desc = NewOperation("Cholesky", opName);
@@ -4076,10 +4076,10 @@ namespace Emgu.TF
         /// <param name="l">Input to the operation. </param>
         /// <param name="grad">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CholeskyGrad(Output l, Output grad, String opName = "CholeskyGrad") 
         {
             OperationDescription desc = NewOperation("CholeskyGrad", opName);
@@ -4100,10 +4100,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: branches: list(func)
         public Operation ChooseFastestBranchDataset(Output input_dataset, Output ratio_numerator, Output ratio_denominator, Output other_arguments, long num_elements_per_branch, long[] other_arguments_lengths, DataType[] output_types, long[][] output_shapes, String opName = "ChooseFastestBranchDataset") 
         {
@@ -4127,10 +4127,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ChooseFastestDataset(Output input_datasets, long num_experiments, DataType[] output_types, long[][] output_shapes, String opName = "ChooseFastestDataset") 
         {
             OperationDescription desc = NewOperation("ChooseFastestDataset", opName);
@@ -4148,10 +4148,10 @@ namespace Emgu.TF
         /// <param name="clip_value_min">Input to the operation. </param>
         /// <param name="clip_value_max">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ClipByValue(Output t, Output clip_value_min, Output clip_value_max, String opName = "ClipByValue") 
         {
             OperationDescription desc = NewOperation("ClipByValue", opName);
@@ -4166,7 +4166,7 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="writer">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation CloseSummaryWriter(Output writer, String opName = "CloseSummaryWriter") 
         {
             OperationDescription desc = NewOperation("CloseSummaryWriter", opName);
@@ -4185,10 +4185,10 @@ namespace Emgu.TF
         /// <param name="communication_hint">communication hint</param>
         /// <param name="timeout_seconds">timeout seconds</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] data(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CollectiveBcastRecv(DataType T, long group_size, long group_key, long instance_key, long[] shape, string communication_hint = null, float timeout_seconds = 0f, String opName = "CollectiveBcastRecv") 
         {
             OperationDescription desc = NewOperation("CollectiveBcastRecv", opName);
@@ -4215,10 +4215,10 @@ namespace Emgu.TF
         /// <param name="communication_hint">communication hint</param>
         /// <param name="timeout_seconds">timeout seconds</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] data(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CollectiveBcastRecvV2(Output group_size, Output group_key, Output instance_key, Output shape, DataType T, string communication_hint = null, float timeout_seconds = 0f, String opName = "CollectiveBcastRecvV2") 
         {
             OperationDescription desc = NewOperation("CollectiveBcastRecvV2", opName);
@@ -4245,10 +4245,10 @@ namespace Emgu.TF
         /// <param name="communication_hint">communication hint</param>
         /// <param name="timeout_seconds">timeout seconds</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] data(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CollectiveBcastSend(Output input, long group_size, long group_key, long instance_key, long[] shape, string communication_hint = null, float timeout_seconds = 0f, String opName = "CollectiveBcastSend") 
         {
             OperationDescription desc = NewOperation("CollectiveBcastSend", opName);
@@ -4274,10 +4274,10 @@ namespace Emgu.TF
         /// <param name="communication_hint">communication hint</param>
         /// <param name="timeout_seconds">timeout seconds</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] data(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CollectiveBcastSendV2(Output input, Output group_size, Output group_key, Output instance_key, string communication_hint = null, float timeout_seconds = 0f, String opName = "CollectiveBcastSendV2") 
         {
             OperationDescription desc = NewOperation("CollectiveBcastSendV2", opName);
@@ -4303,10 +4303,10 @@ namespace Emgu.TF
         /// <param name="communication_hint">communication hint</param>
         /// <param name="timeout_seconds">timeout seconds</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] data(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CollectiveGather(Output input, long group_size, long group_key, long instance_key, long[] shape, string communication_hint = null, float timeout_seconds = 0f, String opName = "CollectiveGather") 
         {
             OperationDescription desc = NewOperation("CollectiveGather", opName);
@@ -4333,10 +4333,10 @@ namespace Emgu.TF
         /// <param name="communication_hint">communication hint</param>
         /// <param name="timeout_seconds">timeout seconds</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] data(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CollectiveGatherV2(Output input, Output group_size, Output group_key, Output instance_key, Output ordering_token, string communication_hint = null, float timeout_seconds = 0f, String opName = "CollectiveGatherV2") 
         {
             OperationDescription desc = NewOperation("CollectiveGatherV2", opName);
@@ -4358,10 +4358,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="source_target_pairs">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CollectivePermute(Output input, Output source_target_pairs, String opName = "CollectivePermute") 
         {
             OperationDescription desc = NewOperation("CollectivePermute", opName);
@@ -4384,10 +4384,10 @@ namespace Emgu.TF
         /// <param name="communication_hint">communication hint</param>
         /// <param name="timeout_seconds">timeout seconds</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] data(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CollectiveReduce(Output input, long group_size, long group_key, long instance_key, string merge_op, string final_op, long[] subdiv_offsets, long[] wait_for = null, string communication_hint = null, float timeout_seconds = 0f, String opName = "CollectiveReduce") 
         {
             OperationDescription desc = NewOperation("CollectiveReduce", opName);
@@ -4419,10 +4419,10 @@ namespace Emgu.TF
         /// <param name="communication_hint">communication hint</param>
         /// <param name="timeout_seconds">timeout seconds</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] data(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CollectiveReduceV2(Output input, Output group_size, Output group_key, Output instance_key, Output ordering_token, string merge_op, string final_op, string communication_hint = null, float timeout_seconds = 0f, String opName = "CollectiveReduceV2") 
         {
             OperationDescription desc = NewOperation("CollectiveReduceV2", opName);
@@ -4452,13 +4452,13 @@ namespace Emgu.TF
         /// <param name="pad_per_class">pad per class</param>
         /// <param name="clip_boxes">clip boxes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] nmsed_boxes(type: DtFloat).
         /// [1] nmsed_scores(type: DtFloat).
         /// [2] nmsed_classes(type: DtFloat).
         /// [3] valid_detections(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation CombinedNonMaxSuppression(Output boxes, Output scores, Output max_output_size_per_class, Output max_total_size, Output iou_threshold, Output score_threshold, bool pad_per_class = false, bool clip_boxes = true, String opName = "CombinedNonMaxSuppression") 
         {
             OperationDescription desc = NewOperation("CombinedNonMaxSuppression", opName);
@@ -4481,10 +4481,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="threshold">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtUint8).
-        /// </return>
+        /// </returns>
         public Operation CompareAndBitpack(Output input, Output threshold, String opName = "CompareAndBitpack") 
         {
             OperationDescription desc = NewOperation("CompareAndBitpack", opName);
@@ -4500,10 +4500,10 @@ namespace Emgu.TF
         /// <param name="imag">Input to the operation. </param>
         /// <param name="Tout">Tout</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Complex(Output real, Output imag, DataType? Tout = null, String opName = "Complex") 
         {
             OperationDescription desc = NewOperation("Complex", opName);
@@ -4520,10 +4520,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="Tout">Tout</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ComplexAbs(Output x, DataType? Tout = null, String opName = "ComplexAbs") 
         {
             OperationDescription desc = NewOperation("ComplexAbs", opName);
@@ -4538,10 +4538,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="components">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] compressed(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation CompressElement(Output components, String opName = "CompressElement") 
         {
             OperationDescription desc = NewOperation("CompressElement", opName);
@@ -4558,12 +4558,12 @@ namespace Emgu.TF
         /// <param name="seed">seed</param>
         /// <param name="seed2">seed2</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] indices(type: DtInt32).
         /// [1] ids(type: DtInt64).
         /// [2] weights(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation ComputeAccidentalHits(Output true_classes, Output sampled_candidates, long num_true, long seed = 0, long seed2 = 0, String opName = "ComputeAccidentalHits") 
         {
             OperationDescription desc = NewOperation("ComputeAccidentalHits", opName);
@@ -4582,10 +4582,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input_dataset">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] batch_size(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation ComputeBatchSize(Output input_dataset, String opName = "ComputeBatchSize") 
         {
             OperationDescription desc = NewOperation("ComputeBatchSize", opName);
@@ -4599,10 +4599,10 @@ namespace Emgu.TF
         /// <param name="concat_dim">Input to the operation. </param>
         /// <param name="values">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Concat(Output concat_dim, Output values, String opName = "Concat") 
         {
             OperationDescription desc = NewOperation("Concat", opName);
@@ -4619,10 +4619,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ConcatenateDataset(Output input_dataset, Output another_dataset, DataType[] output_types, long[][] output_shapes, String opName = "ConcatenateDataset") 
         {
             OperationDescription desc = NewOperation("ConcatenateDataset", opName);
@@ -4639,10 +4639,10 @@ namespace Emgu.TF
         /// <param name="concat_dim">Input to the operation. </param>
         /// <param name="shape">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] offset(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation ConcatOffset(Output concat_dim, Output shape, String opName = "ConcatOffset") 
         {
             OperationDescription desc = NewOperation("ConcatOffset", opName);
@@ -4657,10 +4657,10 @@ namespace Emgu.TF
         /// <param name="values">Input to the operation. </param>
         /// <param name="axis">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ConcatV2(Output values, Output axis, String opName = "ConcatV2") 
         {
             OperationDescription desc = NewOperation("ConcatV2", opName);
@@ -4678,10 +4678,10 @@ namespace Emgu.TF
         /// <param name="shared_name">shared name</param>
         /// <param name="reduction_type">reduction type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation ConditionalAccumulator(DataType dtype, long[] shape, string container = null, string shared_name = null, string reduction_type = null, String opName = "ConditionalAccumulator") 
         {
             OperationDescription desc = NewOperation("ConditionalAccumulator", opName);
@@ -4705,10 +4705,10 @@ namespace Emgu.TF
         /// <param name="enable_whole_mesh_compilations">enable whole mesh compilations</param>
         /// <param name="compilation_failure_closes_chips">compilation failure closes chips</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] topology(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation ConfigureDistributedTPU(string embedding_config = null, string tpu_embedding_config = null, bool is_global_init = false, bool enable_whole_mesh_compilations = false, bool compilation_failure_closes_chips = true, String opName = "ConfigureDistributedTPU") 
         {
             OperationDescription desc = NewOperation("ConfigureDistributedTPU", opName);
@@ -4730,7 +4730,7 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ConfigureTPUEmbedding(string config, String opName = "ConfigureTPUEmbedding") 
         {
             OperationDescription desc = NewOperation("ConfigureTPUEmbedding", opName);
@@ -4743,10 +4743,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Conj(Output input, String opName = "Conj") 
         {
             OperationDescription desc = NewOperation("Conj", opName);
@@ -4760,10 +4760,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="perm">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ConjugateTranspose(Output x, Output perm, String opName = "ConjugateTranspose") 
         {
             OperationDescription desc = NewOperation("ConjugateTranspose", opName);
@@ -4778,10 +4778,10 @@ namespace Emgu.TF
         /// <param name="value">value</param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Const(Tensor value, DataType dtype, String opName = "Const") 
         {
             OperationDescription desc = NewOperation("Const", opName);
@@ -4795,7 +4795,7 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="mutex_lock">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ConsumeMutexLock(Output mutex_lock, String opName = "ConsumeMutexLock") 
         {
             OperationDescription desc = NewOperation("ConsumeMutexLock", opName);
@@ -4807,7 +4807,7 @@ namespace Emgu.TF
         /// ControlTrigger
         /// </summary>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ControlTrigger(String opName = "ControlTrigger") 
         {
             OperationDescription desc = NewOperation("ControlTrigger", opName);
@@ -4826,10 +4826,10 @@ namespace Emgu.TF
         /// <param name="data_format">data format</param>
         /// <param name="dilations">dilations</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Conv2D(Output input, Output filter, long[] strides, string padding, bool use_cudnn_on_gpu = true, long[] explicit_paddings = null, string data_format = null, long[] dilations = null, String opName = "Conv2D") 
         {
             OperationDescription desc = NewOperation("Conv2D", opName);
@@ -4859,10 +4859,10 @@ namespace Emgu.TF
         /// <param name="data_format">data format</param>
         /// <param name="dilations">dilations</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Conv2DBackpropFilter(Output input, Output filter_sizes, Output out_backprop, long[] strides, string padding, bool use_cudnn_on_gpu = true, long[] explicit_paddings = null, string data_format = null, long[] dilations = null, String opName = "Conv2DBackpropFilter") 
         {
             OperationDescription desc = NewOperation("Conv2DBackpropFilter", opName);
@@ -4893,10 +4893,10 @@ namespace Emgu.TF
         /// <param name="data_format">data format</param>
         /// <param name="dilations">dilations</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Conv2DBackpropInput(Output input_sizes, Output filter, Output out_backprop, long[] strides, string padding, bool use_cudnn_on_gpu = true, long[] explicit_paddings = null, string data_format = null, long[] dilations = null, String opName = "Conv2DBackpropInput") 
         {
             OperationDescription desc = NewOperation("Conv2DBackpropInput", opName);
@@ -4924,10 +4924,10 @@ namespace Emgu.TF
         /// <param name="data_format">data format</param>
         /// <param name="dilations">dilations</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Conv3D(Output input, Output filter, long[] strides, string padding, string data_format = null, long[] dilations = null, String opName = "Conv3D") 
         {
             OperationDescription desc = NewOperation("Conv3D", opName);
@@ -4951,10 +4951,10 @@ namespace Emgu.TF
         /// <param name="padding">padding</param>
         /// <param name="dilations">dilations</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Conv3DBackpropFilter(Output input, Output filter, Output out_backprop, long[] strides, string padding, long[] dilations = null, String opName = "Conv3DBackpropFilter") 
         {
             OperationDescription desc = NewOperation("Conv3DBackpropFilter", opName);
@@ -4978,10 +4978,10 @@ namespace Emgu.TF
         /// <param name="data_format">data format</param>
         /// <param name="dilations">dilations</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Conv3DBackpropFilterV2(Output input, Output filter_sizes, Output out_backprop, long[] strides, string padding, string data_format = null, long[] dilations = null, String opName = "Conv3DBackpropFilterV2") 
         {
             OperationDescription desc = NewOperation("Conv3DBackpropFilterV2", opName);
@@ -5006,10 +5006,10 @@ namespace Emgu.TF
         /// <param name="padding">padding</param>
         /// <param name="dilations">dilations</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Conv3DBackpropInput(Output input, Output filter, Output out_backprop, long[] strides, string padding, long[] dilations = null, String opName = "Conv3DBackpropInput") 
         {
             OperationDescription desc = NewOperation("Conv3DBackpropInput", opName);
@@ -5033,10 +5033,10 @@ namespace Emgu.TF
         /// <param name="data_format">data format</param>
         /// <param name="dilations">dilations</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Conv3DBackpropInputV2(Output input_sizes, Output filter, Output out_backprop, long[] strides, string padding, string data_format = null, long[] dilations = null, String opName = "Conv3DBackpropInputV2") 
         {
             OperationDescription desc = NewOperation("Conv3DBackpropInputV2", opName);
@@ -5058,10 +5058,10 @@ namespace Emgu.TF
         /// <param name="tensor_name">tensor name</param>
         /// <param name="debug_ops_spec">debug ops spec</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Copy(Output input, string tensor_name = null, string[] debug_ops_spec = null, String opName = "Copy") 
         {
             OperationDescription desc = NewOperation("Copy", opName);
@@ -5079,10 +5079,10 @@ namespace Emgu.TF
         /// <param name="tensor_name">tensor name</param>
         /// <param name="debug_ops_spec">debug ops spec</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CopyHost(Output input, string tensor_name = null, string[] debug_ops_spec = null, String opName = "CopyHost") 
         {
             OperationDescription desc = NewOperation("CopyHost", opName);
@@ -5098,10 +5098,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Cos(Output x, String opName = "Cos") 
         {
             OperationDescription desc = NewOperation("Cos", opName);
@@ -5114,10 +5114,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Cosh(Output x, String opName = "Cosh") 
         {
             OperationDescription desc = NewOperation("Cosh", opName);
@@ -5131,10 +5131,10 @@ namespace Emgu.TF
         /// <param name="reference">Input to the operation. </param>
         /// <param name="limit">limit</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CountUpTo(Output reference, long limit, String opName = "CountUpTo") 
         {
             OperationDescription desc = NewOperation("CountUpTo", opName);
@@ -5152,7 +5152,7 @@ namespace Emgu.TF
         /// <param name="run_name">Input to the operation. </param>
         /// <param name="user_name">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation CreateSummaryDbWriter(Output writer, Output db_uri, Output experiment_name, Output run_name, Output user_name, String opName = "CreateSummaryDbWriter") 
         {
             OperationDescription desc = NewOperation("CreateSummaryDbWriter", opName);
@@ -5173,7 +5173,7 @@ namespace Emgu.TF
         /// <param name="flush_millis">Input to the operation. </param>
         /// <param name="filename_suffix">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation CreateSummaryFileWriter(Output writer, Output logdir, Output max_queue, Output flush_millis, Output filename_suffix, String opName = "CreateSummaryFileWriter") 
         {
             OperationDescription desc = NewOperation("CreateSummaryFileWriter", opName);
@@ -5195,10 +5195,10 @@ namespace Emgu.TF
         /// <param name="method">method</param>
         /// <param name="extrapolation_value">extrapolation value</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] crops(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation CropAndResize(Output image, Output boxes, Output box_ind, Output crop_size, string method = null, float extrapolation_value = 0f, String opName = "CropAndResize") 
         {
             OperationDescription desc = NewOperation("CropAndResize", opName);
@@ -5222,10 +5222,10 @@ namespace Emgu.TF
         /// <param name="box_ind">Input to the operation. </param>
         /// <param name="method">method</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation CropAndResizeGradBoxes(Output grads, Output image, Output boxes, Output box_ind, string method = null, String opName = "CropAndResizeGradBoxes") 
         {
             OperationDescription desc = NewOperation("CropAndResizeGradBoxes", opName);
@@ -5248,10 +5248,10 @@ namespace Emgu.TF
         /// <param name="T">T</param>
         /// <param name="method">method</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CropAndResizeGradImage(Output grads, Output boxes, Output box_ind, Output image_size, DataType T, string method = null, String opName = "CropAndResizeGradImage") 
         {
             OperationDescription desc = NewOperation("CropAndResizeGradImage", opName);
@@ -5271,10 +5271,10 @@ namespace Emgu.TF
         /// <param name="a">Input to the operation. </param>
         /// <param name="b">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] product(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Cross(Output a, Output b, String opName = "Cross") 
         {
             OperationDescription desc = NewOperation("Cross", opName);
@@ -5289,10 +5289,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="group_assignment">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CrossReplicaSum(Output input, Output group_assignment, String opName = "CrossReplicaSum") 
         {
             OperationDescription desc = NewOperation("CrossReplicaSum", opName);
@@ -5308,12 +5308,12 @@ namespace Emgu.TF
         /// <param name="index">Input to the operation. </param>
         /// <param name="type">type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] row_ptrs(type: DtInt32).
         /// [1] col_inds(type: DtInt32).
         /// [2] values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CSRSparseMatrixComponents(Output csr_sparse_matrix, Output index, DataType type, String opName = "CSRSparseMatrixComponents") 
         {
             OperationDescription desc = NewOperation("CSRSparseMatrixComponents", opName);
@@ -5329,10 +5329,10 @@ namespace Emgu.TF
         /// <param name="sparse_input">Input to the operation. </param>
         /// <param name="type">type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] dense_output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CSRSparseMatrixToDense(Output sparse_input, DataType type, String opName = "CSRSparseMatrixToDense") 
         {
             OperationDescription desc = NewOperation("CSRSparseMatrixToDense", opName);
@@ -5347,12 +5347,12 @@ namespace Emgu.TF
         /// <param name="sparse_matrix">Input to the operation. </param>
         /// <param name="type">type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] indices(type: DtInt64).
         /// [1] values(type: DtInvalid).
         /// [2] dense_shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation CSRSparseMatrixToSparseTensor(Output sparse_matrix, DataType type, String opName = "CSRSparseMatrixToSparseTensor") 
         {
             OperationDescription desc = NewOperation("CSRSparseMatrixToSparseTensor", opName);
@@ -5375,10 +5375,10 @@ namespace Emgu.TF
         /// <param name="record_defaults">Input to the operation. </param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation CSVDataset(Output filenames, Output compression_type, Output buffer_size, Output header, Output field_delim, Output use_quote_delim, Output na_value, Output select_cols, Output record_defaults, long[][] output_shapes, String opName = "CSVDataset") 
         {
             OperationDescription desc = NewOperation("CSVDataset", opName);
@@ -5410,10 +5410,10 @@ namespace Emgu.TF
         /// <param name="exclude_cols">Input to the operation. </param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation CSVDatasetV2(Output filenames, Output compression_type, Output buffer_size, Output header, Output field_delim, Output use_quote_delim, Output na_value, Output select_cols, Output record_defaults, Output exclude_cols, long[][] output_shapes, String opName = "CSVDatasetV2") 
         {
             OperationDescription desc = NewOperation("CSVDatasetV2", opName);
@@ -5440,13 +5440,13 @@ namespace Emgu.TF
         /// <param name="top_paths">top paths</param>
         /// <param name="merge_repeated">merge repeated</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] decoded_indices(type: DtInt64).
         /// [1] decoded_values(type: DtInt64).
         /// [2] decoded_shape(type: DtInt64).
         /// [3] log_probability(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CTCBeamSearchDecoder(Output inputs, Output sequence_length, long beam_width, long top_paths, bool merge_repeated = true, String opName = "CTCBeamSearchDecoder") 
         {
             OperationDescription desc = NewOperation("CTCBeamSearchDecoder", opName);
@@ -5466,13 +5466,13 @@ namespace Emgu.TF
         /// <param name="sequence_length">Input to the operation. </param>
         /// <param name="merge_repeated">merge repeated</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] decoded_indices(type: DtInt64).
         /// [1] decoded_values(type: DtInt64).
         /// [2] decoded_shape(type: DtInt64).
         /// [3] log_probability(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CTCGreedyDecoder(Output inputs, Output sequence_length, bool merge_repeated = false, String opName = "CTCGreedyDecoder") 
         {
             OperationDescription desc = NewOperation("CTCGreedyDecoder", opName);
@@ -5494,11 +5494,11 @@ namespace Emgu.TF
         /// <param name="ctc_merge_repeated">ctc merge repeated</param>
         /// <param name="ignore_longer_outputs_than_inputs">ignore longer outputs than inputs</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] loss(type: DtInvalid).
         /// [1] gradient(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CTCLoss(Output inputs, Output labels_indices, Output labels_values, Output sequence_length, bool preprocess_collapse_repeated = false, bool ctc_merge_repeated = true, bool ignore_longer_outputs_than_inputs = false, String opName = "CTCLoss") 
         {
             OperationDescription desc = NewOperation("CTCLoss", opName);
@@ -5526,11 +5526,11 @@ namespace Emgu.TF
         /// <param name="ctc_merge_repeated">ctc merge repeated</param>
         /// <param name="ignore_longer_outputs_than_inputs">ignore longer outputs than inputs</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] loss(type: DtFloat).
         /// [1] gradient(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation CTCLossV2(Output inputs, Output labels_indices, Output labels_values, Output sequence_length, bool preprocess_collapse_repeated = false, bool ctc_merge_repeated = true, bool ignore_longer_outputs_than_inputs = false, String opName = "CTCLossV2") 
         {
             OperationDescription desc = NewOperation("CTCLossV2", opName);
@@ -5562,13 +5562,13 @@ namespace Emgu.TF
         /// <param name="seed2">seed2</param>
         /// <param name="is_training">is training</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] output_h(type: DtInvalid).
         /// [2] output_c(type: DtInvalid).
         /// [3] reserve_space(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CudnnRNN(Output input, Output input_h, Output input_c, Output parameters, string rnn_mode = null, string input_mode = null, string direction = null, float dropout = 0f, long seed = 0, long seed2 = 0, bool is_training = true, String opName = "CudnnRNN") 
         {
             OperationDescription desc = NewOperation("CudnnRNN", opName);
@@ -5614,13 +5614,13 @@ namespace Emgu.TF
         /// <param name="seed">seed</param>
         /// <param name="seed2">seed2</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] input_backprop(type: DtInvalid).
         /// [1] input_h_backprop(type: DtInvalid).
         /// [2] input_c_backprop(type: DtInvalid).
         /// [3] params_backprop(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CudnnRNNBackprop(Output input, Output input_h, Output input_c, Output parameters, Output output, Output output_h, Output output_c, Output output_backprop, Output output_h_backprop, Output output_c_backprop, Output reserve_space, string rnn_mode = null, string input_mode = null, string direction = null, float dropout = 0f, long seed = 0, long seed2 = 0, String opName = "CudnnRNNBackprop") 
         {
             OperationDescription desc = NewOperation("CudnnRNNBackprop", opName);
@@ -5672,13 +5672,13 @@ namespace Emgu.TF
         /// <param name="seed">seed</param>
         /// <param name="seed2">seed2</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] input_backprop(type: DtInvalid).
         /// [1] input_h_backprop(type: DtInvalid).
         /// [2] input_c_backprop(type: DtInvalid).
         /// [3] params_backprop(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CudnnRNNBackpropV2(Output input, Output input_h, Output input_c, Output parameters, Output output, Output output_h, Output output_c, Output output_backprop, Output output_h_backprop, Output output_c_backprop, Output reserve_space, Output host_reserved, string rnn_mode = null, string input_mode = null, string direction = null, float dropout = 0f, long seed = 0, long seed2 = 0, String opName = "CudnnRNNBackpropV2") 
         {
             OperationDescription desc = NewOperation("CudnnRNNBackpropV2", opName);
@@ -5734,13 +5734,13 @@ namespace Emgu.TF
         /// <param name="num_proj">num proj</param>
         /// <param name="time_major">time major</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] input_backprop(type: DtInvalid).
         /// [1] input_h_backprop(type: DtInvalid).
         /// [2] input_c_backprop(type: DtInvalid).
         /// [3] params_backprop(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CudnnRNNBackpropV3(Output input, Output input_h, Output input_c, Output parameters, Output sequence_lengths, Output output, Output output_h, Output output_c, Output output_backprop, Output output_h_backprop, Output output_c_backprop, Output reserve_space, Output host_reserved, string rnn_mode = null, string input_mode = null, string direction = null, float dropout = 0f, long seed = 0, long seed2 = 0, long num_proj = 0, bool time_major = true, String opName = "CudnnRNNBackpropV3") 
         {
             OperationDescription desc = NewOperation("CudnnRNNBackpropV3", opName);
@@ -5791,10 +5791,10 @@ namespace Emgu.TF
         /// <param name="seed">seed</param>
         /// <param name="seed2">seed2</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] params(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CudnnRNNCanonicalToParams(Output num_layers, Output num_units, Output input_size, Output weights, Output biases, string rnn_mode = null, string input_mode = null, string direction = null, float dropout = 0f, long seed = 0, long seed2 = 0, String opName = "CudnnRNNCanonicalToParams") 
         {
             OperationDescription desc = NewOperation("CudnnRNNCanonicalToParams", opName);
@@ -5834,10 +5834,10 @@ namespace Emgu.TF
         /// <param name="seed2">seed2</param>
         /// <param name="num_proj">num proj</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] params(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CudnnRNNCanonicalToParamsV2(Output num_layers, Output num_units, Output input_size, Output weights, Output biases, string rnn_mode = null, string input_mode = null, string direction = null, float dropout = 0f, long seed = 0, long seed2 = 0, long num_proj = 0, String opName = "CudnnRNNCanonicalToParamsV2") 
         {
             OperationDescription desc = NewOperation("CudnnRNNCanonicalToParamsV2", opName);
@@ -5879,10 +5879,10 @@ namespace Emgu.TF
         /// <param name="seed2">seed2</param>
         /// <param name="num_proj">num proj</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] params_size(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CudnnRNNParamsSize(Output num_layers, Output num_units, Output input_size, DataType T, DataType S, string rnn_mode = null, string input_mode = null, string direction = null, float dropout = 0f, long seed = 0, long seed2 = 0, long num_proj = 0, String opName = "CudnnRNNParamsSize") 
         {
             OperationDescription desc = NewOperation("CudnnRNNParamsSize", opName);
@@ -5923,11 +5923,11 @@ namespace Emgu.TF
         /// <param name="seed">seed</param>
         /// <param name="seed2">seed2</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] weights(type: DtInvalid).
         /// [1] biases(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CudnnRNNParamsToCanonical(Output num_layers, Output num_units, Output input_size, Output parameters, long num_params, string rnn_mode = null, string input_mode = null, string direction = null, float dropout = 0f, long seed = 0, long seed2 = 0, String opName = "CudnnRNNParamsToCanonical") 
         {
             OperationDescription desc = NewOperation("CudnnRNNParamsToCanonical", opName);
@@ -5968,11 +5968,11 @@ namespace Emgu.TF
         /// <param name="seed2">seed2</param>
         /// <param name="num_proj">num proj</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] weights(type: DtInvalid).
         /// [1] biases(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CudnnRNNParamsToCanonicalV2(Output num_layers, Output num_units, Output input_size, Output parameters, long num_params_weights, long num_params_biases, string rnn_mode = null, string input_mode = null, string direction = null, float dropout = 0f, long seed = 0, long seed2 = 0, long num_proj = 0, String opName = "CudnnRNNParamsToCanonicalV2") 
         {
             OperationDescription desc = NewOperation("CudnnRNNParamsToCanonicalV2", opName);
@@ -6014,14 +6014,14 @@ namespace Emgu.TF
         /// <param name="seed2">seed2</param>
         /// <param name="is_training">is training</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] output_h(type: DtInvalid).
         /// [2] output_c(type: DtInvalid).
         /// [3] reserve_space(type: DtInvalid).
         /// [4] host_reserved(type: DtInt8).
-        /// </return>
+        /// </returns>
         public Operation CudnnRNNV2(Output input, Output input_h, Output input_c, Output parameters, string rnn_mode = null, string input_mode = null, string direction = null, float dropout = 0f, long seed = 0, long seed2 = 0, bool is_training = true, String opName = "CudnnRNNV2") 
         {
             OperationDescription desc = NewOperation("CudnnRNNV2", opName);
@@ -6064,14 +6064,14 @@ namespace Emgu.TF
         /// <param name="is_training">is training</param>
         /// <param name="time_major">time major</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] output_h(type: DtInvalid).
         /// [2] output_c(type: DtInvalid).
         /// [3] reserve_space(type: DtInvalid).
         /// [4] host_reserved(type: DtInt8).
-        /// </return>
+        /// </returns>
         public Operation CudnnRNNV3(Output input, Output input_h, Output input_c, Output parameters, Output sequence_lengths, string rnn_mode = null, string input_mode = null, string direction = null, float dropout = 0f, long seed = 0, long seed2 = 0, long num_proj = 0, bool is_training = true, bool time_major = true, String opName = "CudnnRNNV3") 
         {
             OperationDescription desc = NewOperation("CudnnRNNV3", opName);
@@ -6109,10 +6109,10 @@ namespace Emgu.TF
         /// <param name="exclusive">exclusive</param>
         /// <param name="reverse">reverse</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Cumprod(Output x, Output axis, bool exclusive = false, bool reverse = false, String opName = "Cumprod") 
         {
             OperationDescription desc = NewOperation("Cumprod", opName);
@@ -6133,10 +6133,10 @@ namespace Emgu.TF
         /// <param name="exclusive">exclusive</param>
         /// <param name="reverse">reverse</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Cumsum(Output x, Output axis, bool exclusive = false, bool reverse = false, String opName = "Cumsum") 
         {
             OperationDescription desc = NewOperation("Cumsum", opName);
@@ -6157,10 +6157,10 @@ namespace Emgu.TF
         /// <param name="exclusive">exclusive</param>
         /// <param name="reverse">reverse</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation CumulativeLogsumexp(Output x, Output axis, bool exclusive = false, bool reverse = false, String opName = "CumulativeLogsumexp") 
         {
             OperationDescription desc = NewOperation("CumulativeLogsumexp", opName);
@@ -6180,10 +6180,10 @@ namespace Emgu.TF
         /// <param name="src_format">src format</param>
         /// <param name="dst_format">dst format</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DataFormatDimMap(Output x, string src_format = null, string dst_format = null, String opName = "DataFormatDimMap") 
         {
             OperationDescription desc = NewOperation("DataFormatDimMap", opName);
@@ -6202,10 +6202,10 @@ namespace Emgu.TF
         /// <param name="src_format">src format</param>
         /// <param name="dst_format">dst format</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DataFormatVecPermute(Output x, string src_format = null, string dst_format = null, String opName = "DataFormatVecPermute") 
         {
             OperationDescription desc = NewOperation("DataFormatVecPermute", opName);
@@ -6232,10 +6232,10 @@ namespace Emgu.TF
         /// <param name="task_refresh_interval_hint_ms">task refresh interval hint ms</param>
         /// <param name="data_transfer_protocol">data transfer protocol</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation DataServiceDataset(Output dataset_id, Output processing_mode, Output address, Output protocol, Output job_name, Output max_outstanding_requests, Output iteration_counter, DataType[] output_types, long[][] output_shapes, long task_refresh_interval_hint_ms = -1, string data_transfer_protocol = null, String opName = "DataServiceDataset") 
         {
             OperationDescription desc = NewOperation("DataServiceDataset", opName);
@@ -6272,10 +6272,10 @@ namespace Emgu.TF
         /// <param name="task_refresh_interval_hint_ms">task refresh interval hint ms</param>
         /// <param name="data_transfer_protocol">data transfer protocol</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation DataServiceDatasetV2(Output dataset_id, Output processing_mode, Output address, Output protocol, Output job_name, Output consumer_index, Output num_consumers, Output max_outstanding_requests, Output iteration_counter, DataType[] output_types, long[][] output_shapes, long task_refresh_interval_hint_ms = -1, string data_transfer_protocol = null, String opName = "DataServiceDatasetV2") 
         {
             OperationDescription desc = NewOperation("DataServiceDatasetV2", opName);
@@ -6302,10 +6302,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input_dataset">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] cardinality(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation DatasetCardinality(Output input_dataset, String opName = "DatasetCardinality") 
         {
             OperationDescription desc = NewOperation("DatasetCardinality", opName);
@@ -6318,10 +6318,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="graph_def">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation DatasetFromGraph(Output graph_def, String opName = "DatasetFromGraph") 
         {
             OperationDescription desc = NewOperation("DatasetFromGraph", opName);
@@ -6337,10 +6337,10 @@ namespace Emgu.TF
         /// <param name="allow_stateful">allow stateful</param>
         /// <param name="strip_device_assignment">strip device assignment</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] graph(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation DatasetToGraph(Output input_dataset, string[] stateful_whitelist = null, bool allow_stateful = false, bool strip_device_assignment = false, String opName = "DatasetToGraph") 
         {
             OperationDescription desc = NewOperation("DatasetToGraph", opName);
@@ -6360,10 +6360,10 @@ namespace Emgu.TF
         /// <param name="external_state_policy">external state policy</param>
         /// <param name="strip_device_assignment">strip device assignment</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] graph(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation DatasetToGraphV2(Output input_dataset, long external_state_policy = 0, bool strip_device_assignment = false, String opName = "DatasetToGraphV2") 
         {
             OperationDescription desc = NewOperation("DatasetToGraphV2", opName);
@@ -6382,10 +6382,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] components(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DatasetToSingleElement(Output dataset, DataType[] output_types, long[][] output_shapes, String opName = "DatasetToSingleElement") 
         {
             OperationDescription desc = NewOperation("DatasetToSingleElement", opName);
@@ -6402,7 +6402,7 @@ namespace Emgu.TF
         /// <param name="filename">Input to the operation. </param>
         /// <param name="compression_type">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation DatasetToTFRecord(Output input_dataset, Output filename, Output compression_type, String opName = "DatasetToTFRecord") 
         {
             OperationDescription desc = NewOperation("DatasetToTFRecord", opName);
@@ -6417,10 +6417,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Dawsn(Output x, String opName = "Dawsn") 
         {
             OperationDescription desc = NewOperation("Dawsn", opName);
@@ -6433,10 +6433,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DebugGradientIdentity(Output input, String opName = "DebugGradientIdentity") 
         {
             OperationDescription desc = NewOperation("DebugGradientIdentity", opName);
@@ -6449,10 +6449,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DebugGradientRefIdentity(Output input, String opName = "DebugGradientRefIdentity") 
         {
             OperationDescription desc = NewOperation("DebugGradientRefIdentity", opName);
@@ -6469,10 +6469,10 @@ namespace Emgu.TF
         /// <param name="debug_urls">debug urls</param>
         /// <param name="gated_grpc">gated grpc</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DebugIdentity(Output input, string device_name = null, string tensor_name = null, string[] debug_urls = null, bool gated_grpc = false, String opName = "DebugIdentity") 
         {
             OperationDescription desc = NewOperation("DebugIdentity", opName);
@@ -6499,10 +6499,10 @@ namespace Emgu.TF
         /// <param name="circular_buffer_size">circular buffer size</param>
         /// <param name="tfdbg_run_id">tfdbg run id</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DebugIdentityV2(Output input, string tfdbg_context_id = null, string op_name = null, long output_slot = -1, long tensor_debug_mode = -1, string[] debug_urls = null, long circular_buffer_size = 1000, string tfdbg_run_id = null, String opName = "DebugIdentityV2") 
         {
             OperationDescription desc = NewOperation("DebugIdentityV2", opName);
@@ -6532,10 +6532,10 @@ namespace Emgu.TF
         /// <param name="debug_urls">debug urls</param>
         /// <param name="gated_grpc">gated grpc</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation DebugNanCount(Output input, string device_name = null, string tensor_name = null, string[] debug_urls = null, bool gated_grpc = false, String opName = "DebugNanCount") 
         {
             OperationDescription desc = NewOperation("DebugNanCount", opName);
@@ -6562,10 +6562,10 @@ namespace Emgu.TF
         /// <param name="mute_if_healthy">mute if healthy</param>
         /// <param name="gated_grpc">gated grpc</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtDouble).
-        /// </return>
+        /// </returns>
         public Operation DebugNumericSummary(Output input, string device_name = null, string tensor_name = null, string[] debug_urls = null, float lower_bound = Single.NegativeInfinity, float upper_bound = Single.PositiveInfinity, bool mute_if_healthy = false, bool gated_grpc = false, String opName = "DebugNumericSummary") 
         {
             OperationDescription desc = NewOperation("DebugNumericSummary", opName);
@@ -6594,10 +6594,10 @@ namespace Emgu.TF
         /// <param name="tensor_debug_mode">tensor debug mode</param>
         /// <param name="tensor_id">tensor id</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DebugNumericSummaryV2(Output input, DataType? output_dtype = null, long tensor_debug_mode = -1, long tensor_id = -1, String opName = "DebugNumericSummaryV2") 
         {
             OperationDescription desc = NewOperation("DebugNumericSummaryV2", opName);
@@ -6623,10 +6623,10 @@ namespace Emgu.TF
         /// <param name="acceptable_fraction">acceptable fraction</param>
         /// <param name="dct_method">dct method</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] image(type: DtUint8).
-        /// </return>
+        /// </returns>
         public Operation DecodeAndCropJpeg(Output contents, Output crop_window, long channels = 0, long ratio = 1, bool fancy_upscaling = true, bool try_recover_truncated = false, float acceptable_fraction = 1f, string dct_method = null, String opName = "DecodeAndCropJpeg") 
         {
             OperationDescription desc = NewOperation("DecodeAndCropJpeg", opName);
@@ -6652,10 +6652,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation DecodeBase64(Output input, String opName = "DecodeBase64") 
         {
             OperationDescription desc = NewOperation("DecodeBase64", opName);
@@ -6669,10 +6669,10 @@ namespace Emgu.TF
         /// <param name="contents">Input to the operation. </param>
         /// <param name="channels">channels</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] image(type: DtUint8).
-        /// </return>
+        /// </returns>
         public Operation DecodeBmp(Output contents, long channels = 0, String opName = "DecodeBmp") 
         {
             OperationDescription desc = NewOperation("DecodeBmp", opName);
@@ -6688,10 +6688,10 @@ namespace Emgu.TF
         /// <param name="bytes">Input to the operation. </param>
         /// <param name="compression_type">compression type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation DecodeCompressed(Output bytes, string compression_type = null, String opName = "DecodeCompressed") 
         {
             OperationDescription desc = NewOperation("DecodeCompressed", opName);
@@ -6711,10 +6711,10 @@ namespace Emgu.TF
         /// <param name="na_value">na value</param>
         /// <param name="select_cols">select cols</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DecodeCSV(Output records, Output record_defaults, string field_delim = null, bool use_quote_delim = true, string na_value = null, long[] select_cols = null, String opName = "DecodeCSV") 
         {
             OperationDescription desc = NewOperation("DecodeCSV", opName);
@@ -6735,10 +6735,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="contents">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] image(type: DtUint8).
-        /// </return>
+        /// </returns>
         public Operation DecodeGif(Output contents, String opName = "DecodeGif") 
         {
             OperationDescription desc = NewOperation("DecodeGif", opName);
@@ -6754,10 +6754,10 @@ namespace Emgu.TF
         /// <param name="dtype">dtype</param>
         /// <param name="expand_animations">expand animations</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] image(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DecodeImage(Output contents, long channels = 0, DataType? dtype = null, bool expand_animations = true, String opName = "DecodeImage") 
         {
             OperationDescription desc = NewOperation("DecodeImage", opName);
@@ -6782,10 +6782,10 @@ namespace Emgu.TF
         /// <param name="acceptable_fraction">acceptable fraction</param>
         /// <param name="dct_method">dct method</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] image(type: DtUint8).
-        /// </return>
+        /// </returns>
         public Operation DecodeJpeg(Output contents, long channels = 0, long ratio = 1, bool fancy_upscaling = true, bool try_recover_truncated = false, float acceptable_fraction = 1f, string dct_method = null, String opName = "DecodeJpeg") 
         {
             OperationDescription desc = NewOperation("DecodeJpeg", opName);
@@ -6810,10 +6810,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="json_examples">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] binary_examples(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation DecodeJSONExample(Output json_examples, String opName = "DecodeJSONExample") 
         {
             OperationDescription desc = NewOperation("DecodeJSONExample", opName);
@@ -6829,10 +6829,10 @@ namespace Emgu.TF
         /// <param name="out_type">out type</param>
         /// <param name="little_endian">little endian</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DecodePaddedRaw(Output input_bytes, Output fixed_length, DataType out_type, bool little_endian = true, String opName = "DecodePaddedRaw") 
         {
             OperationDescription desc = NewOperation("DecodePaddedRaw", opName);
@@ -6851,10 +6851,10 @@ namespace Emgu.TF
         /// <param name="channels">channels</param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] image(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DecodePng(Output contents, long channels = 0, DataType? dtype = null, String opName = "DecodePng") 
         {
             OperationDescription desc = NewOperation("DecodePng", opName);
@@ -6877,11 +6877,11 @@ namespace Emgu.TF
         /// <param name="message_format">message format</param>
         /// <param name="sanitize">sanitize</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sizes(type: DtInt32).
         /// [1] values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DecodeProtoV2(Output bytes, string message_type, string[] field_names, DataType[] output_types, string descriptor_source = null, string message_format = null, bool sanitize = false, String opName = "DecodeProtoV2") 
         {
             OperationDescription desc = NewOperation("DecodeProtoV2", opName);
@@ -6905,10 +6905,10 @@ namespace Emgu.TF
         /// <param name="out_type">out type</param>
         /// <param name="little_endian">little endian</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DecodeRaw(Output bytes, DataType out_type, bool little_endian = true, String opName = "DecodeRaw") 
         {
             OperationDescription desc = NewOperation("DecodeRaw", opName);
@@ -6926,11 +6926,11 @@ namespace Emgu.TF
         /// <param name="desired_channels">desired channels</param>
         /// <param name="desired_samples">desired samples</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] audio(type: DtFloat).
         /// [1] sample_rate(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation DecodeWav(Output contents, long desired_channels = -1, long desired_samples = -1, String opName = "DecodeWav") 
         {
             OperationDescription desc = NewOperation("DecodeWav", opName);
@@ -6947,10 +6947,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DeepCopy(Output x, String opName = "DeepCopy") 
         {
             OperationDescription desc = NewOperation("DeepCopy", opName);
@@ -6964,7 +6964,7 @@ namespace Emgu.TF
         /// <param name="handle">Input to the operation. </param>
         /// <param name="deleter">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation DeleteIterator(Output handle, Output deleter, String opName = "DeleteIterator") 
         {
             OperationDescription desc = NewOperation("DeleteIterator", opName);
@@ -6979,7 +6979,7 @@ namespace Emgu.TF
         /// <param name="handle">Input to the operation. </param>
         /// <param name="deleter">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation DeleteMemoryCache(Output handle, Output deleter, String opName = "DeleteMemoryCache") 
         {
             OperationDescription desc = NewOperation("DeleteMemoryCache", opName);
@@ -6995,7 +6995,7 @@ namespace Emgu.TF
         /// <param name="iterators">Input to the operation. </param>
         /// <param name="deleter">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation DeleteMultiDeviceIterator(Output multi_device_iterator, Output iterators, Output deleter, String opName = "DeleteMultiDeviceIterator") 
         {
             OperationDescription desc = NewOperation("DeleteMultiDeviceIterator", opName);
@@ -7011,7 +7011,7 @@ namespace Emgu.TF
         /// <param name="handle">Input to the operation. </param>
         /// <param name="deleter">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation DeleteRandomSeedGenerator(Output handle, Output deleter, String opName = "DeleteRandomSeedGenerator") 
         {
             OperationDescription desc = NewOperation("DeleteRandomSeedGenerator", opName);
@@ -7026,7 +7026,7 @@ namespace Emgu.TF
         /// <param name="handle">Input to the operation. </param>
         /// <param name="deleter">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation DeleteSeedGenerator(Output handle, Output deleter, String opName = "DeleteSeedGenerator") 
         {
             OperationDescription desc = NewOperation("DeleteSeedGenerator", opName);
@@ -7040,7 +7040,7 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation DeleteSessionTensor(Output handle, String opName = "DeleteSessionTensor") 
         {
             OperationDescription desc = NewOperation("DeleteSessionTensor", opName);
@@ -7056,10 +7056,10 @@ namespace Emgu.TF
         /// <param name="weights">Input to the operation. </param>
         /// <param name="binary_output">binary output</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DenseBincount(Output input, Output size, Output weights, bool binary_output = false, String opName = "DenseBincount") 
         {
             OperationDescription desc = NewOperation("DenseBincount", opName);
@@ -7080,12 +7080,12 @@ namespace Emgu.TF
         /// <param name="minlength">minlength</param>
         /// <param name="maxlength">maxlength</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_indices(type: DtInt64).
         /// [1] output_values(type: DtInvalid).
         /// [2] output_dense_shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation DenseCountSparseOutput(Output values, Output weights, bool binary_output, long minlength = -1, long maxlength = -1, String opName = "DenseCountSparseOutput") 
         {
             OperationDescription desc = NewOperation("DenseCountSparseOutput", opName);
@@ -7105,10 +7105,10 @@ namespace Emgu.TF
         /// <param name="dense_input">Input to the operation. </param>
         /// <param name="indices">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sparse_output(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation DenseToCSRSparseMatrix(Output dense_input, Output indices, String opName = "DenseToCSRSparseMatrix") 
         {
             OperationDescription desc = NewOperation("DenseToCSRSparseMatrix", opName);
@@ -7125,12 +7125,12 @@ namespace Emgu.TF
         /// <param name="set_operation">set operation</param>
         /// <param name="validate_indices">validate indices</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] result_indices(type: DtInt64).
         /// [1] result_values(type: DtInvalid).
         /// [2] result_shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation DenseToDenseSetOperation(Output set1, Output set2, string set_operation, bool validate_indices = true, String opName = "DenseToDenseSetOperation") 
         {
             OperationDescription desc = NewOperation("DenseToDenseSetOperation", opName);
@@ -7151,10 +7151,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation DenseToSparseBatchDataset(Output input_dataset, Output batch_size, Output row_shape, DataType[] output_types, long[][] output_shapes, String opName = "DenseToSparseBatchDataset") 
         {
             OperationDescription desc = NewOperation("DenseToSparseBatchDataset", opName);
@@ -7176,12 +7176,12 @@ namespace Emgu.TF
         /// <param name="set_operation">set operation</param>
         /// <param name="validate_indices">validate indices</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] result_indices(type: DtInt64).
         /// [1] result_values(type: DtInvalid).
         /// [2] result_shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation DenseToSparseSetOperation(Output set1, Output set2_indices, Output set2_values, Output set2_shape, string set_operation, bool validate_indices = true, String opName = "DenseToSparseSetOperation") 
         {
             OperationDescription desc = NewOperation("DenseToSparseSetOperation", opName);
@@ -7202,10 +7202,10 @@ namespace Emgu.TF
         /// <param name="block_size">block size</param>
         /// <param name="data_format">data format</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DepthToSpace(Output input, long block_size, string data_format = null, String opName = "DepthToSpace") 
         {
             OperationDescription desc = NewOperation("DepthToSpace", opName);
@@ -7227,10 +7227,10 @@ namespace Emgu.TF
         /// <param name="data_format">data format</param>
         /// <param name="dilations">dilations</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DepthwiseConv2dNative(Output input, Output filter, long[] strides, string padding, long[] explicit_paddings = null, string data_format = null, long[] dilations = null, String opName = "DepthwiseConv2dNative") 
         {
             OperationDescription desc = NewOperation("DepthwiseConv2dNative", opName);
@@ -7257,10 +7257,10 @@ namespace Emgu.TF
         /// <param name="data_format">data format</param>
         /// <param name="dilations">dilations</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DepthwiseConv2dNativeBackpropFilter(Output input, Output filter_sizes, Output out_backprop, long[] strides, string padding, long[] explicit_paddings = null, string data_format = null, long[] dilations = null, String opName = "DepthwiseConv2dNativeBackpropFilter") 
         {
             OperationDescription desc = NewOperation("DepthwiseConv2dNativeBackpropFilter", opName);
@@ -7288,10 +7288,10 @@ namespace Emgu.TF
         /// <param name="data_format">data format</param>
         /// <param name="dilations">dilations</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DepthwiseConv2dNativeBackpropInput(Output input_sizes, Output filter, Output out_backprop, long[] strides, string padding, long[] explicit_paddings = null, string data_format = null, long[] dilations = null, String opName = "DepthwiseConv2dNativeBackpropInput") 
         {
             OperationDescription desc = NewOperation("DepthwiseConv2dNativeBackpropInput", opName);
@@ -7318,10 +7318,10 @@ namespace Emgu.TF
         /// <param name="axis">axis</param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Dequantize(Output input, Output min_range, Output max_range, string mode = null, bool narrow_range = false, long axis = -1, DataType? dtype = null, String opName = "Dequantize") 
         {
             OperationDescription desc = NewOperation("Dequantize", opName);
@@ -7345,7 +7345,7 @@ namespace Emgu.TF
         /// <param name="resource_handle">Input to the operation. </param>
         /// <param name="serialized">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation DeserializeIterator(Output resource_handle, Output serialized, String opName = "DeserializeIterator") 
         {
             OperationDescription desc = NewOperation("DeserializeIterator", opName);
@@ -7360,12 +7360,12 @@ namespace Emgu.TF
         /// <param name="serialized_sparse">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sparse_indices(type: DtInt64).
         /// [1] sparse_values(type: DtInvalid).
         /// [2] sparse_shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation DeserializeManySparse(Output serialized_sparse, DataType dtype, String opName = "DeserializeManySparse") 
         {
             OperationDescription desc = NewOperation("DeserializeManySparse", opName);
@@ -7380,12 +7380,12 @@ namespace Emgu.TF
         /// <param name="serialized_sparse">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sparse_indices(type: DtInt64).
         /// [1] sparse_values(type: DtInvalid).
         /// [2] sparse_shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation DeserializeSparse(Output serialized_sparse, DataType dtype, String opName = "DeserializeSparse") 
         {
             OperationDescription desc = NewOperation("DeserializeSparse", opName);
@@ -7400,7 +7400,7 @@ namespace Emgu.TF
         /// <param name="resource">Input to the operation. </param>
         /// <param name="ignore_lookup_error">ignore lookup error</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation DestroyResourceOp(Output resource, bool ignore_lookup_error = true, String opName = "DestroyResourceOp") 
         {
             OperationDescription desc = NewOperation("DestroyResourceOp", opName);
@@ -7416,10 +7416,10 @@ namespace Emgu.TF
         /// <param name="reference">Input to the operation. </param>
         /// <param name="var_name">var name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] value(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DestroyTemporaryVariable(Output reference, string var_name, String opName = "DestroyTemporaryVariable") 
         {
             OperationDescription desc = NewOperation("DestroyTemporaryVariable", opName);
@@ -7433,10 +7433,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="device_names">device names</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] index(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation DeviceIndex(string[] device_names, String opName = "DeviceIndex") 
         {
             OperationDescription desc = NewOperation("DeviceIndex", opName);
@@ -7449,10 +7449,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="diagonal">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Diag(Output diagonal, String opName = "Diag") 
         {
             OperationDescription desc = NewOperation("Diag", opName);
@@ -7465,10 +7465,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] diagonal(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DiagPart(Output input, String opName = "DiagPart") 
         {
             OperationDescription desc = NewOperation("DiagPart", opName);
@@ -7481,10 +7481,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Digamma(Output x, String opName = "Digamma") 
         {
             OperationDescription desc = NewOperation("Digamma", opName);
@@ -7501,10 +7501,10 @@ namespace Emgu.TF
         /// <param name="rates">rates</param>
         /// <param name="padding">padding</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Dilation2D(Output input, Output filter, long[] strides, long[] rates, string padding, String opName = "Dilation2D") 
         {
             OperationDescription desc = NewOperation("Dilation2D", opName);
@@ -7526,10 +7526,10 @@ namespace Emgu.TF
         /// <param name="rates">rates</param>
         /// <param name="padding">padding</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] filter_backprop(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Dilation2DBackpropFilter(Output input, Output filter, Output out_backprop, long[] strides, long[] rates, string padding, String opName = "Dilation2DBackpropFilter") 
         {
             OperationDescription desc = NewOperation("Dilation2DBackpropFilter", opName);
@@ -7552,10 +7552,10 @@ namespace Emgu.TF
         /// <param name="rates">rates</param>
         /// <param name="padding">padding</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] in_backprop(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Dilation2DBackpropInput(Output input, Output filter, Output out_backprop, long[] strides, long[] rates, string padding, String opName = "Dilation2DBackpropInput") 
         {
             OperationDescription desc = NewOperation("Dilation2DBackpropInput", opName);
@@ -7576,10 +7576,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation DirectedInterleaveDataset(Output selector_input_dataset, Output data_input_datasets, DataType[] output_types, long[][] output_shapes, String opName = "DirectedInterleaveDataset") 
         {
             OperationDescription desc = NewOperation("DirectedInterleaveDataset", opName);
@@ -7596,10 +7596,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Div(Output x, Output y, String opName = "Div") 
         {
             OperationDescription desc = NewOperation("Div", opName);
@@ -7614,10 +7614,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DivNoNan(Output x, Output y, String opName = "DivNoNan") 
         {
             OperationDescription desc = NewOperation("DivNoNan", opName);
@@ -7632,10 +7632,10 @@ namespace Emgu.TF
         /// <param name="images">Input to the operation. </param>
         /// <param name="boxes">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DrawBoundingBoxes(Output images, Output boxes, String opName = "DrawBoundingBoxes") 
         {
             OperationDescription desc = NewOperation("DrawBoundingBoxes", opName);
@@ -7651,10 +7651,10 @@ namespace Emgu.TF
         /// <param name="boxes">Input to the operation. </param>
         /// <param name="colors">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DrawBoundingBoxesV2(Output images, Output boxes, Output colors, String opName = "DrawBoundingBoxesV2") 
         {
             OperationDescription desc = NewOperation("DrawBoundingBoxesV2", opName);
@@ -7668,10 +7668,10 @@ namespace Emgu.TF
         /// DummyIterationCounter
         /// </summary>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation DummyIterationCounter(String opName = "DummyIterationCounter") 
         {
             OperationDescription desc = NewOperation("DummyIterationCounter", opName);
@@ -7682,10 +7682,10 @@ namespace Emgu.TF
         /// DummyMemoryCache
         /// </summary>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation DummyMemoryCache(String opName = "DummyMemoryCache") 
         {
             OperationDescription desc = NewOperation("DummyMemoryCache", opName);
@@ -7696,10 +7696,10 @@ namespace Emgu.TF
         /// DummySeedGenerator
         /// </summary>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation DummySeedGenerator(String opName = "DummySeedGenerator") 
         {
             OperationDescription desc = NewOperation("DummySeedGenerator", opName);
@@ -7713,10 +7713,10 @@ namespace Emgu.TF
         /// <param name="partitions">Input to the operation. </param>
         /// <param name="num_partitions">num partitions</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] outputs(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DynamicPartition(Output data, Output partitions, long num_partitions, String opName = "DynamicPartition") 
         {
             OperationDescription desc = NewOperation("DynamicPartition", opName);
@@ -7732,10 +7732,10 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="data">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] merged(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation DynamicStitch(Output indices, Output data, String opName = "DynamicStitch") 
         {
             OperationDescription desc = NewOperation("DynamicStitch", opName);
@@ -7752,10 +7752,10 @@ namespace Emgu.TF
         /// <param name="Tout">Tout</param>
         /// <param name="is_async">is async</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation EagerPyFunc(Output input, string token, DataType[] Tout, bool is_async = false, String opName = "EagerPyFunc") 
         {
             OperationDescription desc = NewOperation("EagerPyFunc", opName);
@@ -7778,10 +7778,10 @@ namespace Emgu.TF
         /// <param name="truth_shape">Input to the operation. </param>
         /// <param name="normalize">normalize</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation EditDistance(Output hypothesis_indices, Output hypothesis_values, Output hypothesis_shape, Output truth_indices, Output truth_values, Output truth_shape, bool normalize = true, String opName = "EditDistance") 
         {
             OperationDescription desc = NewOperation("EditDistance", opName);
@@ -7803,11 +7803,11 @@ namespace Emgu.TF
         /// <param name="Tout">Tout</param>
         /// <param name="compute_v">compute v</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] e(type: DtInvalid).
         /// [1] v(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Eig(Output input, DataType Tout, bool compute_v = true, String opName = "Eig") 
         {
             OperationDescription desc = NewOperation("Eig", opName);
@@ -7824,10 +7824,10 @@ namespace Emgu.TF
         /// <param name="inputs">Input to the operation. </param>
         /// <param name="equation">equation</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Einsum(Output inputs, string equation, String opName = "Einsum") 
         {
             OperationDescription desc = NewOperation("Einsum", opName);
@@ -7841,10 +7841,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="features">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] activations(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Elu(Output features, String opName = "Elu") 
         {
             OperationDescription desc = NewOperation("Elu", opName);
@@ -7858,10 +7858,10 @@ namespace Emgu.TF
         /// <param name="gradients">Input to the operation. </param>
         /// <param name="outputs">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] backprops(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation EluGrad(Output gradients, Output outputs, String opName = "EluGrad") 
         {
             OperationDescription desc = NewOperation("EluGrad", opName);
@@ -7877,10 +7877,10 @@ namespace Emgu.TF
         /// <param name="dtype">dtype</param>
         /// <param name="init">init</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Empty(Output shape, DataType dtype, bool init = false, String opName = "Empty") 
         {
             OperationDescription desc = NewOperation("Empty", opName);
@@ -7898,10 +7898,10 @@ namespace Emgu.TF
         /// <param name="max_num_elements">Input to the operation. </param>
         /// <param name="element_dtype">element dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation EmptyTensorList(Output element_shape, Output max_num_elements, DataType element_dtype, String opName = "EmptyTensorList") 
         {
             OperationDescription desc = NewOperation("EmptyTensorList", opName);
@@ -7915,10 +7915,10 @@ namespace Emgu.TF
         /// EmptyTensorMap
         /// </summary>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation EmptyTensorMap(String opName = "EmptyTensorMap") 
         {
             OperationDescription desc = NewOperation("EmptyTensorMap", opName);
@@ -7931,10 +7931,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="pad">pad</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation EncodeBase64(Output input, bool pad = false, String opName = "EncodeBase64") 
         {
             OperationDescription desc = NewOperation("EncodeBase64", opName);
@@ -7958,10 +7958,10 @@ namespace Emgu.TF
         /// <param name="y_density">y density</param>
         /// <param name="xmp_metadata">xmp metadata</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] contents(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation EncodeJpeg(Output image, string format = null, long quality = 95, bool progressive = false, bool optimize_size = false, bool chroma_downsampling = true, string density_unit = null, long x_density = 300, long y_density = 300, string xmp_metadata = null, String opName = "EncodeJpeg") 
         {
             OperationDescription desc = NewOperation("EncodeJpeg", opName);
@@ -7993,10 +7993,10 @@ namespace Emgu.TF
         /// <param name="images">Input to the operation. </param>
         /// <param name="quality">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] contents(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation EncodeJpegVariableQuality(Output images, Output quality, String opName = "EncodeJpegVariableQuality") 
         {
             OperationDescription desc = NewOperation("EncodeJpegVariableQuality", opName);
@@ -8011,10 +8011,10 @@ namespace Emgu.TF
         /// <param name="image">Input to the operation. </param>
         /// <param name="compression">compression</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] contents(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation EncodePng(Output image, long compression = -1, String opName = "EncodePng") 
         {
             OperationDescription desc = NewOperation("EncodePng", opName);
@@ -8033,10 +8033,10 @@ namespace Emgu.TF
         /// <param name="message_type">message type</param>
         /// <param name="descriptor_source">descriptor source</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] bytes(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation EncodeProto(Output sizes, Output values, string[] field_names, string message_type, string descriptor_source = null, String opName = "EncodeProto") 
         {
             OperationDescription desc = NewOperation("EncodeProto", opName);
@@ -8055,10 +8055,10 @@ namespace Emgu.TF
         /// <param name="audio">Input to the operation. </param>
         /// <param name="sample_rate">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] contents(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation EncodeWav(Output audio, Output sample_rate, String opName = "EncodeWav") 
         {
             OperationDescription desc = NewOperation("EncodeWav", opName);
@@ -8074,7 +8074,7 @@ namespace Emgu.TF
         /// <param name="mode_override">Input to the operation. </param>
         /// <param name="device_ordinal">device ordinal</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation EnqueueTPUEmbeddingIntegerBatch(Output batch, Output mode_override, long device_ordinal = -1, String opName = "EnqueueTPUEmbeddingIntegerBatch") 
         {
             OperationDescription desc = NewOperation("EnqueueTPUEmbeddingIntegerBatch", opName);
@@ -8098,7 +8098,7 @@ namespace Emgu.TF
         /// <param name="max_sequence_lengths">max sequence lengths</param>
         /// <param name="num_features">num features</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation EnqueueTPUEmbeddingRaggedTensorBatch(Output sample_splits, Output embedding_indices, Output aggregation_weights, Output mode_override, long[] table_ids, long device_ordinal = -1, string[] combiners = null, long[] max_sequence_lengths = null, long[] num_features = null, String opName = "EnqueueTPUEmbeddingRaggedTensorBatch") 
         {
             OperationDescription desc = NewOperation("EnqueueTPUEmbeddingRaggedTensorBatch", opName);
@@ -8125,7 +8125,7 @@ namespace Emgu.TF
         /// <param name="device_ordinal">device ordinal</param>
         /// <param name="combiners">combiners</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation EnqueueTPUEmbeddingSparseBatch(Output sample_indices, Output embedding_indices, Output aggregation_weights, Output mode_override, long device_ordinal = -1, string[] combiners = null, String opName = "EnqueueTPUEmbeddingSparseBatch") 
         {
             OperationDescription desc = NewOperation("EnqueueTPUEmbeddingSparseBatch", opName);
@@ -8152,7 +8152,7 @@ namespace Emgu.TF
         /// <param name="max_sequence_lengths">max sequence lengths</param>
         /// <param name="num_features">num features</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation EnqueueTPUEmbeddingSparseTensorBatch(Output sample_indices, Output embedding_indices, Output aggregation_weights, Output mode_override, long[] table_ids, long device_ordinal = -1, string[] combiners = null, long[] max_sequence_lengths = null, long[] num_features = null, String opName = "EnqueueTPUEmbeddingSparseTensorBatch") 
         {
             OperationDescription desc = NewOperation("EnqueueTPUEmbeddingSparseTensorBatch", opName);
@@ -8175,10 +8175,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="shape">shape</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation EnsureShape(Output input, long[] shape, String opName = "EnsureShape") 
         {
             OperationDescription desc = NewOperation("EnsureShape", opName);
@@ -8195,10 +8195,10 @@ namespace Emgu.TF
         /// <param name="is_constant">is constant</param>
         /// <param name="parallel_iterations">parallel iterations</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Enter(Output data, string frame_name, bool is_constant = false, long parallel_iterations = 10, String opName = "Enter") 
         {
             OperationDescription desc = NewOperation("Enter", opName);
@@ -8218,10 +8218,10 @@ namespace Emgu.TF
         /// <param name="y">Input to the operation. </param>
         /// <param name="incompatible_shape_error">incompatible shape error</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation Equal(Output x, Output y, bool incompatible_shape_error = true, String opName = "Equal") 
         {
             OperationDescription desc = NewOperation("Equal", opName);
@@ -8237,10 +8237,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Erf(Output x, String opName = "Erf") 
         {
             OperationDescription desc = NewOperation("Erf", opName);
@@ -8253,10 +8253,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Erfc(Output x, String opName = "Erfc") 
         {
             OperationDescription desc = NewOperation("Erfc", opName);
@@ -8269,10 +8269,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Erfinv(Output x, String opName = "Erfinv") 
         {
             OperationDescription desc = NewOperation("Erfinv", opName);
@@ -8287,10 +8287,10 @@ namespace Emgu.TF
         /// <param name="reduction_indices">Input to the operation. </param>
         /// <param name="keep_dims">keep dims</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation EuclideanNorm(Output input, Output reduction_indices, bool keep_dims = false, String opName = "EuclideanNorm") 
         {
             OperationDescription desc = NewOperation("EuclideanNorm", opName);
@@ -8306,10 +8306,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="data">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Exit(Output data, String opName = "Exit") 
         {
             OperationDescription desc = NewOperation("Exit", opName);
@@ -8322,10 +8322,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Exp(Output x, String opName = "Exp") 
         {
             OperationDescription desc = NewOperation("Exp", opName);
@@ -8339,10 +8339,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="dim">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ExpandDims(Output input, Output dim, String opName = "ExpandDims") 
         {
             OperationDescription desc = NewOperation("ExpandDims", opName);
@@ -8359,10 +8359,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalAssertNextDataset(Output input_dataset, Output transformations, DataType[] output_types, long[][] output_shapes, String opName = "ExperimentalAssertNextDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalAssertNextDataset", opName);
@@ -8383,10 +8383,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="auto_shard_policy">auto shard policy</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalAutoShardDataset(Output input_dataset, Output num_workers, Output index, DataType[] output_types, long[][] output_shapes, long auto_shard_policy = 0, String opName = "ExperimentalAutoShardDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalAutoShardDataset", opName);
@@ -8408,10 +8408,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalBytesProducedStatsDataset(Output input_dataset, Output tag, DataType[] output_types, long[][] output_shapes, String opName = "ExperimentalBytesProducedStatsDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalBytesProducedStatsDataset", opName);
@@ -8430,10 +8430,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalChooseFastestDataset(Output input_datasets, long num_experiments, DataType[] output_types, long[][] output_shapes, String opName = "ExperimentalChooseFastestDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalChooseFastestDataset", opName);
@@ -8458,10 +8458,10 @@ namespace Emgu.TF
         /// <param name="record_defaults">Input to the operation. </param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalCSVDataset(Output filenames, Output compression_type, Output buffer_size, Output header, Output field_delim, Output use_quote_delim, Output na_value, Output select_cols, Output record_defaults, long[][] output_shapes, String opName = "ExperimentalCSVDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalCSVDataset", opName);
@@ -8483,10 +8483,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input_dataset">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] cardinality(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalDatasetCardinality(Output input_dataset, String opName = "ExperimentalDatasetCardinality") 
         {
             OperationDescription desc = NewOperation("ExperimentalDatasetCardinality", opName);
@@ -8501,7 +8501,7 @@ namespace Emgu.TF
         /// <param name="filename">Input to the operation. </param>
         /// <param name="compression_type">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ExperimentalDatasetToTFRecord(Output input_dataset, Output filename, Output compression_type, String opName = "ExperimentalDatasetToTFRecord") 
         {
             OperationDescription desc = NewOperation("ExperimentalDatasetToTFRecord", opName);
@@ -8520,10 +8520,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalDenseToSparseBatchDataset(Output input_dataset, Output batch_size, Output row_shape, DataType[] output_types, long[][] output_shapes, String opName = "ExperimentalDenseToSparseBatchDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalDenseToSparseBatchDataset", opName);
@@ -8543,10 +8543,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalDirectedInterleaveDataset(Output selector_input_dataset, Output data_input_datasets, DataType[] output_types, long[][] output_shapes, String opName = "ExperimentalDirectedInterleaveDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalDirectedInterleaveDataset", opName);
@@ -8568,10 +8568,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: key_func: func; init_func: func; reduce_func: func; finalize_func: func
         public Operation ExperimentalGroupByReducerDataset(Output input_dataset, Output key_func_other_arguments, Output init_func_other_arguments, Output reduce_func_other_arguments, Output finalize_func_other_arguments, DataType[] output_types, long[][] output_shapes, String opName = "ExperimentalGroupByReducerDataset") 
         {
@@ -8596,10 +8596,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: key_func: func; reduce_func: func; window_size_func: func
         public Operation ExperimentalGroupByWindowDataset(Output input_dataset, Output key_func_other_arguments, Output reduce_func_other_arguments, Output window_size_func_other_arguments, DataType[] output_types, long[][] output_shapes, String opName = "ExperimentalGroupByWindowDataset") 
         {
@@ -8621,10 +8621,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="log_warning">log warning</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalIgnoreErrorsDataset(Output input_dataset, DataType[] output_types, long[][] output_shapes, bool log_warning = false, String opName = "ExperimentalIgnoreErrorsDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalIgnoreErrorsDataset", opName);
@@ -8641,10 +8641,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="resource">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] device(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalIteratorGetDevice(Output resource, String opName = "ExperimentalIteratorGetDevice") 
         {
             OperationDescription desc = NewOperation("ExperimentalIteratorGetDevice", opName);
@@ -8660,10 +8660,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalLatencyStatsDataset(Output input_dataset, Output tag, DataType[] output_types, long[][] output_shapes, String opName = "ExperimentalLatencyStatsDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalLatencyStatsDataset", opName);
@@ -8681,10 +8681,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalLMDBDataset(Output filenames, DataType[] output_types, long[][] output_shapes, String opName = "ExperimentalLMDBDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalLMDBDataset", opName);
@@ -8706,10 +8706,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="preserve_cardinality">preserve cardinality</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation ExperimentalMapAndBatchDataset(Output input_dataset, Output other_arguments, Output batch_size, Output num_parallel_calls, Output drop_remainder, DataType[] output_types, long[][] output_shapes, bool preserve_cardinality = false, String opName = "ExperimentalMapAndBatchDataset") 
         {
@@ -8736,10 +8736,10 @@ namespace Emgu.TF
         /// <param name="use_inter_op_parallelism">use inter op parallelism</param>
         /// <param name="preserve_cardinality">preserve cardinality</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation ExperimentalMapDataset(Output input_dataset, Output other_arguments, DataType[] output_types, long[][] output_shapes, bool use_inter_op_parallelism = true, bool preserve_cardinality = false, String opName = "ExperimentalMapDataset") 
         {
@@ -8760,10 +8760,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="patterns">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalMatchingFilesDataset(Output patterns, String opName = "ExperimentalMatchingFilesDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalMatchingFilesDataset", opName);
@@ -8779,10 +8779,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalMaxIntraOpParallelismDataset(Output input_dataset, Output max_intra_op_parallelism, DataType[] output_types, long[][] output_shapes, String opName = "ExperimentalMaxIntraOpParallelismDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalMaxIntraOpParallelismDataset", opName);
@@ -8800,10 +8800,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalNonSerializableDataset(Output input_dataset, DataType[] output_types, long[][] output_shapes, String opName = "ExperimentalNonSerializableDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalNonSerializableDataset", opName);
@@ -8826,10 +8826,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation ExperimentalParallelInterleaveDataset(Output input_dataset, Output other_arguments, Output cycle_length, Output block_length, Output sloppy, Output buffer_output_elements, Output prefetch_input_elements, DataType[] output_types, long[][] output_shapes, String opName = "ExperimentalParallelInterleaveDataset") 
         {
@@ -8860,10 +8860,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="sloppy">sloppy</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalParseExampleDataset(Output input_dataset, Output num_parallel_calls, Output dense_defaults, string[] sparse_keys, string[] dense_keys, DataType[] sparse_types, long[][] dense_shapes, DataType[] output_types, long[][] output_shapes, bool sloppy = false, String opName = "ExperimentalParseExampleDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalParseExampleDataset", opName);
@@ -8889,10 +8889,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalPrivateThreadPoolDataset(Output input_dataset, Output num_threads, DataType[] output_types, long[][] output_shapes, String opName = "ExperimentalPrivateThreadPoolDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalPrivateThreadPoolDataset", opName);
@@ -8911,10 +8911,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalRandomDataset(Output seed, Output seed2, DataType[] output_types, long[][] output_shapes, String opName = "ExperimentalRandomDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalRandomDataset", opName);
@@ -8934,10 +8934,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="use_fallback">use fallback</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalRebatchDataset(Output input_dataset, Output num_replicas, DataType[] output_types, long[][] output_shapes, bool use_fallback = true, String opName = "ExperimentalRebatchDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalRebatchDataset", opName);
@@ -8960,10 +8960,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="preserve_cardinality">preserve cardinality</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation ExperimentalScanDataset(Output input_dataset, Output initial_state, Output other_arguments, DataType[] output_types, long[][] output_shapes, bool preserve_cardinality = false, String opName = "ExperimentalScanDataset") 
         {
@@ -8988,10 +8988,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalSetStatsAggregatorDataset(Output input_dataset, Output stats_aggregator, Output tag, Output counter_prefix, DataType[] output_types, long[][] output_shapes, String opName = "ExperimentalSetStatsAggregatorDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalSetStatsAggregatorDataset", opName);
@@ -9012,10 +9012,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalSleepDataset(Output input_dataset, Output sleep_microseconds, DataType[] output_types, long[][] output_shapes, String opName = "ExperimentalSleepDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalSleepDataset", opName);
@@ -9036,10 +9036,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalSlidingWindowDataset(Output input_dataset, Output window_size, Output window_shift, Output window_stride, DataType[] output_types, long[][] output_shapes, String opName = "ExperimentalSlidingWindowDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalSlidingWindowDataset", opName);
@@ -9061,10 +9061,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalSqlDataset(Output driver_name, Output data_source_name, Output query, DataType[] output_types, long[][] output_shapes, String opName = "ExperimentalSqlDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalSqlDataset", opName);
@@ -9082,10 +9082,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalStatsAggregatorHandle(string container = null, string shared_name = null, String opName = "ExperimentalStatsAggregatorHandle") 
         {
             OperationDescription desc = NewOperation("ExperimentalStatsAggregatorHandle", opName);
@@ -9101,10 +9101,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="iterator">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] summary(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalStatsAggregatorSummary(Output iterator, String opName = "ExperimentalStatsAggregatorSummary") 
         {
             OperationDescription desc = NewOperation("ExperimentalStatsAggregatorSummary", opName);
@@ -9120,10 +9120,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: predicate: func
         public Operation ExperimentalTakeWhileDataset(Output input_dataset, Output other_arguments, DataType[] output_types, long[][] output_shapes, String opName = "ExperimentalTakeWhileDataset") 
         {
@@ -9143,10 +9143,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalThreadPoolDataset(Output input_dataset, Output thread_pool, DataType[] output_types, long[][] output_shapes, String opName = "ExperimentalThreadPoolDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalThreadPoolDataset", opName);
@@ -9166,10 +9166,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalThreadPoolHandle(long num_threads, string display_name, long max_intra_op_parallelism = 1, string container = null, string shared_name = null, String opName = "ExperimentalThreadPoolHandle") 
         {
             OperationDescription desc = NewOperation("ExperimentalThreadPoolHandle", opName);
@@ -9191,10 +9191,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalUnbatchDataset(Output input_dataset, DataType[] output_types, long[][] output_shapes, String opName = "ExperimentalUnbatchDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalUnbatchDataset", opName);
@@ -9211,10 +9211,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ExperimentalUniqueDataset(Output input_dataset, DataType[] output_types, long[][] output_shapes, String opName = "ExperimentalUniqueDataset") 
         {
             OperationDescription desc = NewOperation("ExperimentalUniqueDataset", opName);
@@ -9229,10 +9229,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Expint(Output x, String opName = "Expint") 
         {
             OperationDescription desc = NewOperation("Expint", opName);
@@ -9245,10 +9245,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Expm1(Output x, String opName = "Expm1") 
         {
             OperationDescription desc = NewOperation("Expm1", opName);
@@ -9267,10 +9267,10 @@ namespace Emgu.TF
         /// <param name="uniform_noise">uniform noise</param>
         /// <param name="noise">noise</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] glimpse(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation ExtractGlimpse(Output input, Output size, Output offsets, bool centered = true, bool normalized = true, bool uniform_noise = true, string noise = null, String opName = "ExtractGlimpse") 
         {
             OperationDescription desc = NewOperation("ExtractGlimpse", opName);
@@ -9299,10 +9299,10 @@ namespace Emgu.TF
         /// <param name="uniform_noise">uniform noise</param>
         /// <param name="noise">noise</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] glimpse(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation ExtractGlimpseV2(Output input, Output size, Output offsets, bool centered = true, bool normalized = true, bool uniform_noise = true, string noise = null, String opName = "ExtractGlimpseV2") 
         {
             OperationDescription desc = NewOperation("ExtractGlimpseV2", opName);
@@ -9329,10 +9329,10 @@ namespace Emgu.TF
         /// <param name="rates">rates</param>
         /// <param name="padding">padding</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] patches(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ExtractImagePatches(Output images, long[] ksizes, long[] strides, long[] rates, string padding, String opName = "ExtractImagePatches") 
         {
             OperationDescription desc = NewOperation("ExtractImagePatches", opName);
@@ -9350,10 +9350,10 @@ namespace Emgu.TF
         /// <param name="contents">Input to the operation. </param>
         /// <param name="output_type">output type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] image_shape(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ExtractJpegShape(Output contents, DataType? output_type = null, String opName = "ExtractJpegShape") 
         {
             OperationDescription desc = NewOperation("ExtractJpegShape", opName);
@@ -9371,10 +9371,10 @@ namespace Emgu.TF
         /// <param name="strides">strides</param>
         /// <param name="padding">padding</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] patches(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ExtractVolumePatches(Output input, long[] ksizes, long[] strides, string padding, String opName = "ExtractVolumePatches") 
         {
             OperationDescription desc = NewOperation("ExtractVolumePatches", opName);
@@ -9389,10 +9389,10 @@ namespace Emgu.TF
         /// Fact
         /// </summary>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] fact(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation Fact(String opName = "Fact") 
         {
             OperationDescription desc = NewOperation("Fact", opName);
@@ -9405,10 +9405,10 @@ namespace Emgu.TF
         /// <param name="dtype">dtype</param>
         /// <param name="shape">shape</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation FakeParam(DataType dtype, long[] shape, String opName = "FakeParam") 
         {
             OperationDescription desc = NewOperation("FakeParam", opName);
@@ -9426,10 +9426,10 @@ namespace Emgu.TF
         /// <param name="num_bits">num bits</param>
         /// <param name="narrow_range">narrow range</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] outputs(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation FakeQuantWithMinMaxArgs(Output inputs, float min = -6f, float max = 6f, long num_bits = 8, bool narrow_range = false, String opName = "FakeQuantWithMinMaxArgs") 
         {
             OperationDescription desc = NewOperation("FakeQuantWithMinMaxArgs", opName);
@@ -9455,10 +9455,10 @@ namespace Emgu.TF
         /// <param name="num_bits">num bits</param>
         /// <param name="narrow_range">narrow range</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] backprops(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation FakeQuantWithMinMaxArgsGradient(Output gradients, Output inputs, float min = -6f, float max = 6f, long num_bits = 8, bool narrow_range = false, String opName = "FakeQuantWithMinMaxArgsGradient") 
         {
             OperationDescription desc = NewOperation("FakeQuantWithMinMaxArgsGradient", opName);
@@ -9484,10 +9484,10 @@ namespace Emgu.TF
         /// <param name="num_bits">num bits</param>
         /// <param name="narrow_range">narrow range</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] outputs(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation FakeQuantWithMinMaxVars(Output inputs, Output min, Output max, long num_bits = 8, bool narrow_range = false, String opName = "FakeQuantWithMinMaxVars") 
         {
             OperationDescription desc = NewOperation("FakeQuantWithMinMaxVars", opName);
@@ -9511,12 +9511,12 @@ namespace Emgu.TF
         /// <param name="num_bits">num bits</param>
         /// <param name="narrow_range">narrow range</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] backprops_wrt_input(type: DtFloat).
         /// [1] backprop_wrt_min(type: DtFloat).
         /// [2] backprop_wrt_max(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation FakeQuantWithMinMaxVarsGradient(Output gradients, Output inputs, Output min, Output max, long num_bits = 8, bool narrow_range = false, String opName = "FakeQuantWithMinMaxVarsGradient") 
         {
             OperationDescription desc = NewOperation("FakeQuantWithMinMaxVarsGradient", opName);
@@ -9540,10 +9540,10 @@ namespace Emgu.TF
         /// <param name="num_bits">num bits</param>
         /// <param name="narrow_range">narrow range</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] outputs(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation FakeQuantWithMinMaxVarsPerChannel(Output inputs, Output min, Output max, long num_bits = 8, bool narrow_range = false, String opName = "FakeQuantWithMinMaxVarsPerChannel") 
         {
             OperationDescription desc = NewOperation("FakeQuantWithMinMaxVarsPerChannel", opName);
@@ -9567,12 +9567,12 @@ namespace Emgu.TF
         /// <param name="num_bits">num bits</param>
         /// <param name="narrow_range">narrow range</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] backprops_wrt_input(type: DtFloat).
         /// [1] backprop_wrt_min(type: DtFloat).
         /// [2] backprop_wrt_max(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation FakeQuantWithMinMaxVarsPerChannelGradient(Output gradients, Output inputs, Output min, Output max, long num_bits = 8, bool narrow_range = false, String opName = "FakeQuantWithMinMaxVarsPerChannelGradient") 
         {
             OperationDescription desc = NewOperation("FakeQuantWithMinMaxVarsPerChannelGradient", opName);
@@ -9592,10 +9592,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="resource">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation FakeQueue(Output resource, String opName = "FakeQueue") 
         {
             OperationDescription desc = NewOperation("FakeQueue", opName);
@@ -9608,10 +9608,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation FFT(Output input, String opName = "FFT") 
         {
             OperationDescription desc = NewOperation("FFT", opName);
@@ -9624,10 +9624,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation FFT2D(Output input, String opName = "FFT2D") 
         {
             OperationDescription desc = NewOperation("FFT2D", opName);
@@ -9640,10 +9640,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation FFT3D(Output input, String opName = "FFT3D") 
         {
             OperationDescription desc = NewOperation("FFT3D", opName);
@@ -9660,10 +9660,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation FIFOQueue(DataType[] component_types, long[][] shapes = null, long capacity = -1, string container = null, string shared_name = null, String opName = "FIFOQueue") 
         {
             OperationDescription desc = NewOperation("FIFOQueue", opName);
@@ -9687,10 +9687,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation FIFOQueueV2(DataType[] component_types, long[][] shapes = null, long capacity = -1, string container = null, string shared_name = null, String opName = "FIFOQueueV2") 
         {
             OperationDescription desc = NewOperation("FIFOQueueV2", opName);
@@ -9711,10 +9711,10 @@ namespace Emgu.TF
         /// <param name="dims">Input to the operation. </param>
         /// <param name="value">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Fill(Output dims, Output value, String opName = "Fill") 
         {
             OperationDescription desc = NewOperation("Fill", opName);
@@ -9730,10 +9730,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation FilterByLastComponentDataset(Output input_dataset, DataType[] output_types, long[][] output_shapes, String opName = "FilterByLastComponentDataset") 
         {
             OperationDescription desc = NewOperation("FilterByLastComponentDataset", opName);
@@ -9751,10 +9751,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: predicate: func
         public Operation FilterDataset(Output input_dataset, Output other_arguments, DataType[] output_types, long[][] output_shapes, String opName = "FilterDataset") 
         {
@@ -9774,10 +9774,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="has_captured_ref">has captured ref</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation FinalizeDataset(Output input_dataset, DataType[] output_types, long[][] output_shapes, bool has_captured_ref = false, String opName = "FinalizeDataset") 
         {
             OperationDescription desc = NewOperation("FinalizeDataset", opName);
@@ -9795,10 +9795,10 @@ namespace Emgu.TF
         /// <param name="data">Input to the operation. </param>
         /// <param name="method">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] fingerprint(type: DtUint8).
-        /// </return>
+        /// </returns>
         public Operation Fingerprint(Output data, Output method, String opName = "Fingerprint") 
         {
             OperationDescription desc = NewOperation("Fingerprint", opName);
@@ -9816,10 +9816,10 @@ namespace Emgu.TF
         /// <param name="footer_bytes">Input to the operation. </param>
         /// <param name="buffer_size">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation FixedLengthRecordDataset(Output filenames, Output header_bytes, Output record_bytes, Output footer_bytes, Output buffer_size, String opName = "FixedLengthRecordDataset") 
         {
             OperationDescription desc = NewOperation("FixedLengthRecordDataset", opName);
@@ -9841,10 +9841,10 @@ namespace Emgu.TF
         /// <param name="buffer_size">Input to the operation. </param>
         /// <param name="compression_type">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation FixedLengthRecordDatasetV2(Output filenames, Output header_bytes, Output record_bytes, Output footer_bytes, Output buffer_size, Output compression_type, String opName = "FixedLengthRecordDatasetV2") 
         {
             OperationDescription desc = NewOperation("FixedLengthRecordDatasetV2", opName);
@@ -9867,10 +9867,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] reader_handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation FixedLengthRecordReader(long record_bytes, long header_bytes = 0, long footer_bytes = 0, long hop_bytes = 0, string container = null, string shared_name = null, String opName = "FixedLengthRecordReader") 
         {
             OperationDescription desc = NewOperation("FixedLengthRecordReader", opName);
@@ -9899,10 +9899,10 @@ namespace Emgu.TF
         /// <param name="shared_name">shared name</param>
         /// <param name="encoding">encoding</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] reader_handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation FixedLengthRecordReaderV2(long record_bytes, long header_bytes = 0, long footer_bytes = 0, long hop_bytes = 0, string container = null, string shared_name = null, string encoding = null, String opName = "FixedLengthRecordReaderV2") 
         {
             OperationDescription desc = NewOperation("FixedLengthRecordReaderV2", opName);
@@ -9939,12 +9939,12 @@ namespace Emgu.TF
         /// <param name="seed">seed</param>
         /// <param name="seed2">seed2</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sampled_candidates(type: DtInt64).
         /// [1] true_expected_count(type: DtFloat).
         /// [2] sampled_expected_count(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation FixedUnigramCandidateSampler(Output true_classes, long num_true, long num_sampled, bool unique, long range_max, string vocab_file = null, float distortion = 1f, long num_reserved_ids = 0, long num_shards = 1, long shard = 0, float[] unigrams = null, long seed = 0, long seed2 = 0, String opName = "FixedUnigramCandidateSampler") 
         {
             OperationDescription desc = NewOperation("FixedUnigramCandidateSampler", opName);
@@ -9979,10 +9979,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation FlatMapDataset(Output input_dataset, Output other_arguments, DataType[] output_types, long[][] output_shapes, String opName = "FlatMapDataset") 
         {
@@ -9999,10 +9999,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Floor(Output x, String opName = "Floor") 
         {
             OperationDescription desc = NewOperation("Floor", opName);
@@ -10016,10 +10016,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation FloorDiv(Output x, Output y, String opName = "FloorDiv") 
         {
             OperationDescription desc = NewOperation("FloorDiv", opName);
@@ -10034,10 +10034,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation FloorMod(Output x, Output y, String opName = "FloorMod") 
         {
             OperationDescription desc = NewOperation("FloorMod", opName);
@@ -10051,7 +10051,7 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="writer">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation FlushSummaryWriter(Output writer, String opName = "FlushSummaryWriter") 
         {
             OperationDescription desc = NewOperation("FlushSummaryWriter", opName);
@@ -10067,10 +10067,10 @@ namespace Emgu.TF
         /// <param name="delta">Input to the operation. </param>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: body: func
         public Operation For(Output start, Output limit, Output delta, Output input, String opName = "For") 
         {
@@ -10093,12 +10093,12 @@ namespace Emgu.TF
         /// <param name="seed">seed</param>
         /// <param name="seed2">seed2</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] row_pooling_sequence(type: DtInt64).
         /// [2] col_pooling_sequence(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation FractionalAvgPool(Output value, float[] pooling_ratio, bool pseudo_random = false, bool overlapping = false, bool deterministic = false, long seed = 0, long seed2 = 0, String opName = "FractionalAvgPool") 
         {
             OperationDescription desc = NewOperation("FractionalAvgPool", opName);
@@ -10126,10 +10126,10 @@ namespace Emgu.TF
         /// <param name="col_pooling_sequence">Input to the operation. </param>
         /// <param name="overlapping">overlapping</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation FractionalAvgPoolGrad(Output orig_input_tensor_shape, Output out_backprop, Output row_pooling_sequence, Output col_pooling_sequence, bool overlapping = false, String opName = "FractionalAvgPoolGrad") 
         {
             OperationDescription desc = NewOperation("FractionalAvgPoolGrad", opName);
@@ -10153,12 +10153,12 @@ namespace Emgu.TF
         /// <param name="seed">seed</param>
         /// <param name="seed2">seed2</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] row_pooling_sequence(type: DtInt64).
         /// [2] col_pooling_sequence(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation FractionalMaxPool(Output value, float[] pooling_ratio, bool pseudo_random = false, bool overlapping = false, bool deterministic = false, long seed = 0, long seed2 = 0, String opName = "FractionalMaxPool") 
         {
             OperationDescription desc = NewOperation("FractionalMaxPool", opName);
@@ -10187,10 +10187,10 @@ namespace Emgu.TF
         /// <param name="col_pooling_sequence">Input to the operation. </param>
         /// <param name="overlapping">overlapping</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation FractionalMaxPoolGrad(Output orig_input, Output orig_output, Output out_backprop, Output row_pooling_sequence, Output col_pooling_sequence, bool overlapping = false, String opName = "FractionalMaxPoolGrad") 
         {
             OperationDescription desc = NewOperation("FractionalMaxPoolGrad", opName);
@@ -10209,10 +10209,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation FresnelCos(Output x, String opName = "FresnelCos") 
         {
             OperationDescription desc = NewOperation("FresnelCos", opName);
@@ -10225,10 +10225,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation FresnelSin(Output x, String opName = "FresnelSin") 
         {
             OperationDescription desc = NewOperation("FresnelSin", opName);
@@ -10249,14 +10249,14 @@ namespace Emgu.TF
         /// <param name="data_format">data format</param>
         /// <param name="is_training">is training</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
         /// [1] batch_mean(type: DtInvalid).
         /// [2] batch_variance(type: DtInvalid).
         /// [3] reserve_space_1(type: DtInvalid).
         /// [4] reserve_space_2(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation FusedBatchNorm(Output x, Output scale, Output offset, Output mean, Output variance, float epsilon = 0.0001f, float exponential_avg_factor = 1f, string data_format = null, bool is_training = true, String opName = "FusedBatchNorm") 
         {
             OperationDescription desc = NewOperation("FusedBatchNorm", opName);
@@ -10288,14 +10288,14 @@ namespace Emgu.TF
         /// <param name="data_format">data format</param>
         /// <param name="is_training">is training</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] x_backprop(type: DtInvalid).
         /// [1] scale_backprop(type: DtInvalid).
         /// [2] offset_backprop(type: DtInvalid).
         /// [3] reserve_space_3(type: DtInvalid).
         /// [4] reserve_space_4(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation FusedBatchNormGrad(Output y_backprop, Output x, Output scale, Output reserve_space_1, Output reserve_space_2, float epsilon = 0.0001f, string data_format = null, bool is_training = true, String opName = "FusedBatchNormGrad") 
         {
             OperationDescription desc = NewOperation("FusedBatchNormGrad", opName);
@@ -10325,14 +10325,14 @@ namespace Emgu.TF
         /// <param name="data_format">data format</param>
         /// <param name="is_training">is training</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] x_backprop(type: DtInvalid).
         /// [1] scale_backprop(type: DtInvalid).
         /// [2] offset_backprop(type: DtInvalid).
         /// [3] reserve_space_3(type: DtInvalid).
         /// [4] reserve_space_4(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation FusedBatchNormGradV2(Output y_backprop, Output x, Output scale, Output reserve_space_1, Output reserve_space_2, float epsilon = 0.0001f, string data_format = null, bool is_training = true, String opName = "FusedBatchNormGradV2") 
         {
             OperationDescription desc = NewOperation("FusedBatchNormGradV2", opName);
@@ -10363,14 +10363,14 @@ namespace Emgu.TF
         /// <param name="data_format">data format</param>
         /// <param name="is_training">is training</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] x_backprop(type: DtInvalid).
         /// [1] scale_backprop(type: DtInvalid).
         /// [2] offset_backprop(type: DtInvalid).
         /// [3] reserve_space_4(type: DtInvalid).
         /// [4] reserve_space_5(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation FusedBatchNormGradV3(Output y_backprop, Output x, Output scale, Output reserve_space_1, Output reserve_space_2, Output reserve_space_3, float epsilon = 0.0001f, string data_format = null, bool is_training = true, String opName = "FusedBatchNormGradV3") 
         {
             OperationDescription desc = NewOperation("FusedBatchNormGradV3", opName);
@@ -10402,14 +10402,14 @@ namespace Emgu.TF
         /// <param name="data_format">data format</param>
         /// <param name="is_training">is training</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
         /// [1] batch_mean(type: DtInvalid).
         /// [2] batch_variance(type: DtInvalid).
         /// [3] reserve_space_1(type: DtInvalid).
         /// [4] reserve_space_2(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation FusedBatchNormV2(Output x, Output scale, Output offset, Output mean, Output variance, float epsilon = 0.0001f, float exponential_avg_factor = 1f, string data_format = null, bool is_training = true, String opName = "FusedBatchNormV2") 
         {
             OperationDescription desc = NewOperation("FusedBatchNormV2", opName);
@@ -10442,7 +10442,7 @@ namespace Emgu.TF
         /// <param name="data_format">data format</param>
         /// <param name="is_training">is training</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
         /// [1] batch_mean(type: DtInvalid).
@@ -10450,7 +10450,7 @@ namespace Emgu.TF
         /// [3] reserve_space_1(type: DtInvalid).
         /// [4] reserve_space_2(type: DtInvalid).
         /// [5] reserve_space_3(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation FusedBatchNormV3(Output x, Output scale, Output offset, Output mean, Output variance, float epsilon = 0.0001f, float exponential_avg_factor = 1f, string data_format = null, bool is_training = true, String opName = "FusedBatchNormV3") 
         {
             OperationDescription desc = NewOperation("FusedBatchNormV3", opName);
@@ -10480,10 +10480,10 @@ namespace Emgu.TF
         /// <param name="strides">strides</param>
         /// <param name="padding">padding</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation FusedPadConv2D(Output input, Output paddings, Output filter, string mode, long[] strides, string padding, String opName = "FusedPadConv2D") 
         {
             OperationDescription desc = NewOperation("FusedPadConv2D", opName);
@@ -10508,10 +10508,10 @@ namespace Emgu.TF
         /// <param name="padding">padding</param>
         /// <param name="resize_align_corners">resize align corners</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation FusedResizeAndPadConv2D(Output input, Output size, Output paddings, Output filter, string mode, long[] strides, string padding, bool resize_align_corners = false, String opName = "FusedResizeAndPadConv2D") 
         {
             OperationDescription desc = NewOperation("FusedResizeAndPadConv2D", opName);
@@ -10534,10 +10534,10 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="validate_indices">validate indices</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Gather(Output parameters, Output indices, bool validate_indices = true, String opName = "Gather") 
         {
             OperationDescription desc = NewOperation("Gather", opName);
@@ -10554,10 +10554,10 @@ namespace Emgu.TF
         /// <param name="parameters">Input to the operation. </param>
         /// <param name="indices">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation GatherNd(Output parameters, Output indices, String opName = "GatherNd") 
         {
             OperationDescription desc = NewOperation("GatherNd", opName);
@@ -10574,10 +10574,10 @@ namespace Emgu.TF
         /// <param name="axis">Input to the operation. </param>
         /// <param name="batch_dims">batch dims</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation GatherV2(Output parameters, Output indices, Output axis, long batch_dims = 0, String opName = "GatherV2") 
         {
             OperationDescription desc = NewOperation("GatherV2", opName);
@@ -10601,11 +10601,11 @@ namespace Emgu.TF
         /// <param name="min_size">Input to the operation. </param>
         /// <param name="post_nms_topn">post nms topn</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] rois(type: DtFloat).
         /// [1] roi_probabilities(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation GenerateBoundingBoxProposals(Output scores, Output bbox_deltas, Output image_info, Output anchors, Output nms_threshold, Output pre_nms_topn, Output min_size, long post_nms_topn = 300, String opName = "GenerateBoundingBoxProposals") 
         {
             OperationDescription desc = NewOperation("GenerateBoundingBoxProposals", opName);
@@ -10630,11 +10630,11 @@ namespace Emgu.TF
         /// <param name="num_new_vocab">num new vocab</param>
         /// <param name="old_vocab_size">old vocab size</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] remapping(type: DtInt64).
         /// [1] num_present(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation GenerateVocabRemapping(Output new_vocab_file, Output old_vocab_file, long new_vocab_offset, long num_new_vocab, long old_vocab_size = -1, String opName = "GenerateVocabRemapping") 
         {
             OperationDescription desc = NewOperation("GenerateVocabRemapping", opName);
@@ -10656,10 +10656,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: init_func: func; next_func: func; finalize_func: func
         public Operation GeneratorDataset(Output init_func_other_args, Output next_func_other_args, Output finalize_func_other_args, DataType[] output_types, long[][] output_shapes, String opName = "GeneratorDataset") 
         {
@@ -10677,10 +10677,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input_dataset">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] serialized_options(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation GetOptions(Output input_dataset, String opName = "GetOptions") 
         {
             OperationDescription desc = NewOperation("GetOptions", opName);
@@ -10693,10 +10693,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="value">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation GetSessionHandle(Output value, String opName = "GetSessionHandle") 
         {
             OperationDescription desc = NewOperation("GetSessionHandle", opName);
@@ -10709,10 +10709,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="value">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation GetSessionHandleV2(Output value, String opName = "GetSessionHandleV2") 
         {
             OperationDescription desc = NewOperation("GetSessionHandleV2", opName);
@@ -10726,10 +10726,10 @@ namespace Emgu.TF
         /// <param name="handle">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] value(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation GetSessionTensor(Output handle, DataType dtype, String opName = "GetSessionTensor") 
         {
             OperationDescription desc = NewOperation("GetSessionTensor", opName);
@@ -10744,10 +10744,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation Greater(Output x, Output y, String opName = "Greater") 
         {
             OperationDescription desc = NewOperation("Greater", opName);
@@ -10762,10 +10762,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation GreaterEqual(Output x, Output y, String opName = "GreaterEqual") 
         {
             OperationDescription desc = NewOperation("GreaterEqual", opName);
@@ -10785,10 +10785,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: key_func: func; init_func: func; reduce_func: func; finalize_func: func
         public Operation GroupByReducerDataset(Output input_dataset, Output key_func_other_arguments, Output init_func_other_arguments, Output reduce_func_other_arguments, Output finalize_func_other_arguments, DataType[] output_types, long[][] output_shapes, String opName = "GroupByReducerDataset") 
         {
@@ -10813,10 +10813,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: key_func: func; reduce_func: func; window_size_func: func
         public Operation GroupByWindowDataset(Output input_dataset, Output key_func_other_arguments, Output reduce_func_other_arguments, Output window_size_func_other_arguments, DataType[] output_types, long[][] output_shapes, String opName = "GroupByWindowDataset") 
         {
@@ -10840,13 +10840,13 @@ namespace Emgu.TF
         /// <param name="b_ru">Input to the operation. </param>
         /// <param name="b_c">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] r(type: DtInvalid).
         /// [1] u(type: DtInvalid).
         /// [2] c(type: DtInvalid).
         /// [3] h(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation GRUBlockCell(Output x, Output h_prev, Output w_ru, Output w_c, Output b_ru, Output b_c, String opName = "GRUBlockCell") 
         {
             OperationDescription desc = NewOperation("GRUBlockCell", opName);
@@ -10873,13 +10873,13 @@ namespace Emgu.TF
         /// <param name="c">Input to the operation. </param>
         /// <param name="d_h">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] d_x(type: DtInvalid).
         /// [1] d_h_prev(type: DtInvalid).
         /// [2] d_c_bar(type: DtInvalid).
         /// [3] d_r_bar_u_bar(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation GRUBlockCellGrad(Output x, Output h_prev, Output w_ru, Output w_c, Output b_ru, Output b_c, Output r, Output u, Output c, Output d_h, String opName = "GRUBlockCellGrad") 
         {
             OperationDescription desc = NewOperation("GRUBlockCellGrad", opName);
@@ -10901,10 +10901,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation GuaranteeConst(Output input, String opName = "GuaranteeConst") 
         {
             OperationDescription desc = NewOperation("GuaranteeConst", opName);
@@ -10921,10 +10921,10 @@ namespace Emgu.TF
         /// <param name="shared_name">shared name</param>
         /// <param name="use_node_name_sharing">use node name sharing</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] table_handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation HashTable(DataType key_dtype, DataType value_dtype, string container = null, string shared_name = null, bool use_node_name_sharing = false, String opName = "HashTable") 
         {
             OperationDescription desc = NewOperation("HashTable", opName);
@@ -10948,10 +10948,10 @@ namespace Emgu.TF
         /// <param name="shared_name">shared name</param>
         /// <param name="use_node_name_sharing">use node name sharing</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] table_handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation HashTableV2(DataType key_dtype, DataType value_dtype, string container = null, string shared_name = null, bool use_node_name_sharing = false, String opName = "HashTableV2") 
         {
             OperationDescription desc = NewOperation("HashTableV2", opName);
@@ -10974,10 +10974,10 @@ namespace Emgu.TF
         /// <param name="nbins">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation HistogramFixedWidth(Output values, Output value_range, Output nbins, DataType? dtype = null, String opName = "HistogramFixedWidth") 
         {
             OperationDescription desc = NewOperation("HistogramFixedWidth", opName);
@@ -10995,10 +10995,10 @@ namespace Emgu.TF
         /// <param name="tag">Input to the operation. </param>
         /// <param name="values">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] summary(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation HistogramSummary(Output tag, Output values, String opName = "HistogramSummary") 
         {
             OperationDescription desc = NewOperation("HistogramSummary", opName);
@@ -11013,10 +11013,10 @@ namespace Emgu.TF
         /// <param name="value">value</param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation HostConst(Tensor value, DataType dtype, String opName = "HostConst") 
         {
             OperationDescription desc = NewOperation("HostConst", opName);
@@ -11030,10 +11030,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="images">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation HSVToRGB(Output images, String opName = "HSVToRGB") 
         {
             OperationDescription desc = NewOperation("HSVToRGB", opName);
@@ -11046,10 +11046,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Identity(Output input, String opName = "Identity") 
         {
             OperationDescription desc = NewOperation("Identity", opName);
@@ -11062,10 +11062,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation IdentityN(Output input, String opName = "IdentityN") 
         {
             OperationDescription desc = NewOperation("IdentityN", opName);
@@ -11079,10 +11079,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] reader_handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation IdentityReader(string container = null, string shared_name = null, String opName = "IdentityReader") 
         {
             OperationDescription desc = NewOperation("IdentityReader", opName);
@@ -11099,10 +11099,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] reader_handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation IdentityReaderV2(string container = null, string shared_name = null, String opName = "IdentityReaderV2") 
         {
             OperationDescription desc = NewOperation("IdentityReaderV2", opName);
@@ -11121,10 +11121,10 @@ namespace Emgu.TF
         /// <param name="Tout">Tout</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: then_branch: func; else_branch: func
         public Operation If(Output cond, Output input, DataType[] Tout, long[][] output_shapes = null, String opName = "If") 
         {
@@ -11141,10 +11141,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation IFFT(Output input, String opName = "IFFT") 
         {
             OperationDescription desc = NewOperation("IFFT", opName);
@@ -11157,10 +11157,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation IFFT2D(Output input, String opName = "IFFT2D") 
         {
             OperationDescription desc = NewOperation("IFFT2D", opName);
@@ -11173,10 +11173,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation IFFT3D(Output input, String opName = "IFFT3D") 
         {
             OperationDescription desc = NewOperation("IFFT3D", opName);
@@ -11190,10 +11190,10 @@ namespace Emgu.TF
         /// <param name="a">Input to the operation. </param>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Igamma(Output a, Output x, String opName = "Igamma") 
         {
             OperationDescription desc = NewOperation("Igamma", opName);
@@ -11208,10 +11208,10 @@ namespace Emgu.TF
         /// <param name="a">Input to the operation. </param>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Igammac(Output a, Output x, String opName = "Igammac") 
         {
             OperationDescription desc = NewOperation("Igammac", opName);
@@ -11226,10 +11226,10 @@ namespace Emgu.TF
         /// <param name="a">Input to the operation. </param>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation IgammaGradA(Output a, Output x, String opName = "IgammaGradA") 
         {
             OperationDescription desc = NewOperation("IgammaGradA", opName);
@@ -11246,10 +11246,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="log_warning">log warning</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation IgnoreErrorsDataset(Output input_dataset, DataType[] output_types, long[][] output_shapes, bool log_warning = false, String opName = "IgnoreErrorsDataset") 
         {
             OperationDescription desc = NewOperation("IgnoreErrorsDataset", opName);
@@ -11267,10 +11267,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="Tout">Tout</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Imag(Output input, DataType? Tout = null, String opName = "Imag") 
         {
             OperationDescription desc = NewOperation("Imag", opName);
@@ -11289,10 +11289,10 @@ namespace Emgu.TF
         /// <param name="interpolation">interpolation</param>
         /// <param name="fill_mode">fill mode</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] transformed_images(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ImageProjectiveTransformV2(Output images, Output transforms, Output output_shape, string interpolation, string fill_mode = null, String opName = "ImageProjectiveTransformV2") 
         {
             OperationDescription desc = NewOperation("ImageProjectiveTransformV2", opName);
@@ -11315,10 +11315,10 @@ namespace Emgu.TF
         /// <param name="interpolation">interpolation</param>
         /// <param name="fill_mode">fill mode</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] transformed_images(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ImageProjectiveTransformV3(Output images, Output transforms, Output output_shape, Output fill_value, string interpolation, string fill_mode = null, String opName = "ImageProjectiveTransformV3") 
         {
             OperationDescription desc = NewOperation("ImageProjectiveTransformV3", opName);
@@ -11340,10 +11340,10 @@ namespace Emgu.TF
         /// <param name="max_images">max images</param>
         /// <param name="bad_color">bad color</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] summary(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation ImageSummary(Output tag, Output tensor, long max_images = 3, Tensor bad_color = null, String opName = "ImageSummary") 
         {
             OperationDescription desc = NewOperation("ImageSummary", opName);
@@ -11363,10 +11363,10 @@ namespace Emgu.TF
         /// <param name="shape">shape</param>
         /// <param name="memory_region_name">memory region name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] tensor(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ImmutableConst(DataType dtype, long[] shape, string memory_region_name, String opName = "ImmutableConst") 
         {
             OperationDescription desc = NewOperation("ImmutableConst", opName);
@@ -11382,7 +11382,7 @@ namespace Emgu.TF
         /// <param name="writer">Input to the operation. </param>
         /// <param name="tfEvent">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ImportEvent(Output writer, Output tfEvent, String opName = "ImportEvent") 
         {
             OperationDescription desc = NewOperation("ImportEvent", opName);
@@ -11397,10 +11397,10 @@ namespace Emgu.TF
         /// <param name="dtype">dtype</param>
         /// <param name="shape">shape</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation InfeedDequeue(DataType dtype, long[] shape, String opName = "InfeedDequeue") 
         {
             OperationDescription desc = NewOperation("InfeedDequeue", opName);
@@ -11415,10 +11415,10 @@ namespace Emgu.TF
         /// <param name="dtypes">dtypes</param>
         /// <param name="shapes">shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] outputs(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation InfeedDequeueTuple(DataType[] dtypes, long[][] shapes, String opName = "InfeedDequeueTuple") 
         {
             OperationDescription desc = NewOperation("InfeedDequeueTuple", opName);
@@ -11435,7 +11435,7 @@ namespace Emgu.TF
         /// <param name="layout">layout</param>
         /// <param name="device_ordinal">device ordinal</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation InfeedEnqueue(Output input, long[] shape = null, long[] layout = null, long device_ordinal = -1, String opName = "InfeedEnqueue") 
         {
             OperationDescription desc = NewOperation("InfeedEnqueue", opName);
@@ -11454,7 +11454,7 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="device_ordinal">device ordinal</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation InfeedEnqueuePrelinearizedBuffer(Output input, long device_ordinal = -1, String opName = "InfeedEnqueuePrelinearizedBuffer") 
         {
             OperationDescription desc = NewOperation("InfeedEnqueuePrelinearizedBuffer", opName);
@@ -11472,7 +11472,7 @@ namespace Emgu.TF
         /// <param name="layouts">layouts</param>
         /// <param name="device_ordinal">device ordinal</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation InfeedEnqueueTuple(Output inputs, long[][] shapes, long[] layouts = null, long device_ordinal = -1, String opName = "InfeedEnqueueTuple") 
         {
             OperationDescription desc = NewOperation("InfeedEnqueueTuple", opName);
@@ -11491,7 +11491,7 @@ namespace Emgu.TF
         /// <param name="keys">Input to the operation. </param>
         /// <param name="values">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation InitializeTable(Output table_handle, Output keys, Output values, String opName = "InitializeTable") 
         {
             OperationDescription desc = NewOperation("InitializeTable", opName);
@@ -11507,7 +11507,7 @@ namespace Emgu.TF
         /// <param name="table_handle">Input to the operation. </param>
         /// <param name="dataset">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation InitializeTableFromDataset(Output table_handle, Output dataset, String opName = "InitializeTableFromDataset") 
         {
             OperationDescription desc = NewOperation("InitializeTableFromDataset", opName);
@@ -11527,7 +11527,7 @@ namespace Emgu.TF
         /// <param name="delimiter">delimiter</param>
         /// <param name="offset">offset</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation InitializeTableFromTextFile(Output table_handle, Output filename, long key_index, long value_index, long vocab_size = -1, string delimiter = null, long offset = 0, String opName = "InitializeTableFromTextFile") 
         {
             OperationDescription desc = NewOperation("InitializeTableFromTextFile", opName);
@@ -11555,7 +11555,7 @@ namespace Emgu.TF
         /// <param name="delimiter">delimiter</param>
         /// <param name="offset">offset</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation InitializeTableFromTextFileV2(Output table_handle, Output filename, long key_index, long value_index, long vocab_size = -1, string delimiter = null, long offset = 0, String opName = "InitializeTableFromTextFileV2") 
         {
             OperationDescription desc = NewOperation("InitializeTableFromTextFileV2", opName);
@@ -11579,7 +11579,7 @@ namespace Emgu.TF
         /// <param name="keys">Input to the operation. </param>
         /// <param name="values">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation InitializeTableV2(Output table_handle, Output keys, Output values, String opName = "InitializeTableV2") 
         {
             OperationDescription desc = NewOperation("InitializeTableV2", opName);
@@ -11596,10 +11596,10 @@ namespace Emgu.TF
         /// <param name="i">Input to the operation. </param>
         /// <param name="v">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation InplaceAdd(Output x, Output i, Output v, String opName = "InplaceAdd") 
         {
             OperationDescription desc = NewOperation("InplaceAdd", opName);
@@ -11616,10 +11616,10 @@ namespace Emgu.TF
         /// <param name="i">Input to the operation. </param>
         /// <param name="v">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation InplaceSub(Output x, Output i, Output v, String opName = "InplaceSub") 
         {
             OperationDescription desc = NewOperation("InplaceSub", opName);
@@ -11636,10 +11636,10 @@ namespace Emgu.TF
         /// <param name="i">Input to the operation. </param>
         /// <param name="v">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation InplaceUpdate(Output x, Output i, Output v, String opName = "InplaceUpdate") 
         {
             OperationDescription desc = NewOperation("InplaceUpdate", opName);
@@ -11659,10 +11659,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation InterleaveDataset(Output input_dataset, Output other_arguments, Output cycle_length, Output block_length, DataType[] output_types, long[][] output_shapes, String opName = "InterleaveDataset") 
         {
@@ -11683,10 +11683,10 @@ namespace Emgu.TF
         /// <param name="targets">Input to the operation. </param>
         /// <param name="k">k</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] precision(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation InTopK(Output predictions, Output targets, long k, String opName = "InTopK") 
         {
             OperationDescription desc = NewOperation("InTopK", opName);
@@ -11703,10 +11703,10 @@ namespace Emgu.TF
         /// <param name="targets">Input to the operation. </param>
         /// <param name="k">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] precision(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation InTopKV2(Output predictions, Output targets, Output k, String opName = "InTopKV2") 
         {
             OperationDescription desc = NewOperation("InTopKV2", opName);
@@ -11721,10 +11721,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Inv(Output x, String opName = "Inv") 
         {
             OperationDescription desc = NewOperation("Inv", opName);
@@ -11737,10 +11737,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Invert(Output x, String opName = "Invert") 
         {
             OperationDescription desc = NewOperation("Invert", opName);
@@ -11753,10 +11753,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation InvertPermutation(Output x, String opName = "InvertPermutation") 
         {
             OperationDescription desc = NewOperation("InvertPermutation", opName);
@@ -11770,10 +11770,10 @@ namespace Emgu.TF
         /// <param name="y">Input to the operation. </param>
         /// <param name="dy">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation InvGrad(Output y, Output dy, String opName = "InvGrad") 
         {
             OperationDescription desc = NewOperation("InvGrad", opName);
@@ -11789,10 +11789,10 @@ namespace Emgu.TF
         /// <param name="fft_length">Input to the operation. </param>
         /// <param name="Treal">Treal</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation IRFFT(Output input, Output fft_length, DataType? Treal = null, String opName = "IRFFT") 
         {
             OperationDescription desc = NewOperation("IRFFT", opName);
@@ -11810,10 +11810,10 @@ namespace Emgu.TF
         /// <param name="fft_length">Input to the operation. </param>
         /// <param name="Treal">Treal</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation IRFFT2D(Output input, Output fft_length, DataType? Treal = null, String opName = "IRFFT2D") 
         {
             OperationDescription desc = NewOperation("IRFFT2D", opName);
@@ -11831,10 +11831,10 @@ namespace Emgu.TF
         /// <param name="fft_length">Input to the operation. </param>
         /// <param name="Treal">Treal</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation IRFFT3D(Output input, Output fft_length, DataType? Treal = null, String opName = "IRFFT3D") 
         {
             OperationDescription desc = NewOperation("IRFFT3D", opName);
@@ -11850,10 +11850,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="tree_ensemble_handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] is_initialized(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation IsBoostedTreesEnsembleInitialized(Output tree_ensemble_handle, String opName = "IsBoostedTreesEnsembleInitialized") 
         {
             OperationDescription desc = NewOperation("IsBoostedTreesEnsembleInitialized", opName);
@@ -11866,10 +11866,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="quantile_stream_resource_handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] is_initialized(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation IsBoostedTreesQuantileStreamResourceInitialized(Output quantile_stream_resource_handle, String opName = "IsBoostedTreesQuantileStreamResourceInitialized") 
         {
             OperationDescription desc = NewOperation("IsBoostedTreesQuantileStreamResourceInitialized", opName);
@@ -11882,10 +11882,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation IsFinite(Output x, String opName = "IsFinite") 
         {
             OperationDescription desc = NewOperation("IsFinite", opName);
@@ -11898,10 +11898,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation IsInf(Output x, String opName = "IsInf") 
         {
             OperationDescription desc = NewOperation("IsInf", opName);
@@ -11914,10 +11914,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation IsNan(Output x, String opName = "IsNan") 
         {
             OperationDescription desc = NewOperation("IsNan", opName);
@@ -11931,11 +11931,11 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="output_dtype">output dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] segments(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation IsotonicRegression(Output input, DataType? output_dtype = null, String opName = "IsotonicRegression") 
         {
             OperationDescription desc = NewOperation("IsotonicRegression", opName);
@@ -11950,10 +11950,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="reference">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] is_initialized(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation IsVariableInitialized(Output reference, String opName = "IsVariableInitialized") 
         {
             OperationDescription desc = NewOperation("IsVariableInitialized", opName);
@@ -11969,10 +11969,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation Iterator(string shared_name, string container, DataType[] output_types, long[][] output_shapes, String opName = "Iterator") 
         {
             OperationDescription desc = NewOperation("Iterator", opName);
@@ -11990,10 +11990,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] resource_handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation IteratorFromStringHandle(Output string_handle, DataType[] output_types = null, long[][] output_shapes = null, String opName = "IteratorFromStringHandle") 
         {
             OperationDescription desc = NewOperation("IteratorFromStringHandle", opName);
@@ -12010,10 +12010,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] resource_handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation IteratorFromStringHandleV2(Output string_handle, DataType[] output_types = null, long[][] output_shapes = null, String opName = "IteratorFromStringHandleV2") 
         {
             OperationDescription desc = NewOperation("IteratorFromStringHandleV2", opName);
@@ -12028,10 +12028,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="resource">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] device(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation IteratorGetDevice(Output resource, String opName = "IteratorGetDevice") 
         {
             OperationDescription desc = NewOperation("IteratorGetDevice", opName);
@@ -12046,10 +12046,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] components(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation IteratorGetNext(Output iterator, DataType[] output_types, long[][] output_shapes, String opName = "IteratorGetNext") 
         {
             OperationDescription desc = NewOperation("IteratorGetNext", opName);
@@ -12066,10 +12066,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] optional(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation IteratorGetNextAsOptional(Output iterator, DataType[] output_types, long[][] output_shapes, String opName = "IteratorGetNextAsOptional") 
         {
             OperationDescription desc = NewOperation("IteratorGetNextAsOptional", opName);
@@ -12086,10 +12086,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] components(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation IteratorGetNextSync(Output iterator, DataType[] output_types, long[][] output_shapes, String opName = "IteratorGetNextSync") 
         {
             OperationDescription desc = NewOperation("IteratorGetNextSync", opName);
@@ -12104,10 +12104,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="resource_handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] string_handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation IteratorToStringHandle(Output resource_handle, String opName = "IteratorToStringHandle") 
         {
             OperationDescription desc = NewOperation("IteratorToStringHandle", opName);
@@ -12123,10 +12123,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation IteratorV2(string shared_name, string container, DataType[] output_types, long[][] output_shapes, String opName = "IteratorV2") 
         {
             OperationDescription desc = NewOperation("IteratorV2", opName);
@@ -12143,10 +12143,10 @@ namespace Emgu.TF
         /// <param name="distances">Input to the operation. </param>
         /// <param name="seed">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] index(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation KMC2ChainInitialization(Output distances, Output seed, String opName = "KMC2ChainInitialization") 
         {
             OperationDescription desc = NewOperation("KMC2ChainInitialization", opName);
@@ -12163,10 +12163,10 @@ namespace Emgu.TF
         /// <param name="seed">Input to the operation. </param>
         /// <param name="num_retries_per_sample">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] samples(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation KmeansPlusPlusInitialization(Output points, Output num_to_sample, Output seed, Output num_retries_per_sample, String opName = "KmeansPlusPlusInitialization") 
         {
             OperationDescription desc = NewOperation("KmeansPlusPlusInitialization", opName);
@@ -12183,10 +12183,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="k">k</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation KthOrderStatistic(Output input, long k, String opName = "KthOrderStatistic") 
         {
             OperationDescription desc = NewOperation("KthOrderStatistic", opName);
@@ -12200,10 +12200,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="t">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation L2Loss(Output t, String opName = "L2Loss") 
         {
             OperationDescription desc = NewOperation("L2Loss", opName);
@@ -12219,10 +12219,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation LatencyStatsDataset(Output input_dataset, Output tag, DataType[] output_types, long[][] output_shapes, String opName = "LatencyStatsDataset") 
         {
             OperationDescription desc = NewOperation("LatencyStatsDataset", opName);
@@ -12239,10 +12239,10 @@ namespace Emgu.TF
         /// <param name="features">Input to the operation. </param>
         /// <param name="alpha">alpha</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] activations(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation LeakyRelu(Output features, float alpha = 0.2f, String opName = "LeakyRelu") 
         {
             OperationDescription desc = NewOperation("LeakyRelu", opName);
@@ -12259,10 +12259,10 @@ namespace Emgu.TF
         /// <param name="features">Input to the operation. </param>
         /// <param name="alpha">alpha</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] backprops(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation LeakyReluGrad(Output gradients, Output features, float alpha = 0.2f, String opName = "LeakyReluGrad") 
         {
             OperationDescription desc = NewOperation("LeakyReluGrad", opName);
@@ -12284,12 +12284,12 @@ namespace Emgu.TF
         /// <param name="seed">seed</param>
         /// <param name="seed2">seed2</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sampled_candidates(type: DtInt64).
         /// [1] true_expected_count(type: DtFloat).
         /// [2] sampled_expected_count(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation LearnedUnigramCandidateSampler(Output true_classes, long num_true, long num_sampled, bool unique, long range_max, long seed = 0, long seed2 = 0, String opName = "LearnedUnigramCandidateSampler") 
         {
             OperationDescription desc = NewOperation("LearnedUnigramCandidateSampler", opName);
@@ -12311,10 +12311,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation LeftShift(Output x, Output y, String opName = "LeftShift") 
         {
             OperationDescription desc = NewOperation("LeftShift", opName);
@@ -12336,10 +12336,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="deterministic">deterministic</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation LegacyParallelInterleaveDatasetV2(Output input_dataset, Output other_arguments, Output cycle_length, Output block_length, Output buffer_output_elements, Output prefetch_input_elements, DataType[] output_types, long[][] output_shapes, string deterministic = null, String opName = "LegacyParallelInterleaveDatasetV2") 
         {
@@ -12363,10 +12363,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation Less(Output x, Output y, String opName = "Less") 
         {
             OperationDescription desc = NewOperation("Less", opName);
@@ -12381,10 +12381,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation LessEqual(Output x, Output y, String opName = "LessEqual") 
         {
             OperationDescription desc = NewOperation("LessEqual", opName);
@@ -12398,10 +12398,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Lgamma(Output x, String opName = "Lgamma") 
         {
             OperationDescription desc = NewOperation("Lgamma", opName);
@@ -12416,10 +12416,10 @@ namespace Emgu.TF
         /// <param name="stop">Input to the operation. </param>
         /// <param name="num">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation LinSpace(Output start, Output stop, Output num, String opName = "LinSpace") 
         {
             OperationDescription desc = NewOperation("LinSpace", opName);
@@ -12436,11 +12436,11 @@ namespace Emgu.TF
         /// <param name="y">Input to the operation. </param>
         /// <param name="out_idx">out idx</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
         /// [1] idx(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ListDiff(Output x, Output y, DataType? out_idx = null, String opName = "ListDiff") 
         {
             OperationDescription desc = NewOperation("ListDiff", opName);
@@ -12458,10 +12458,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation LMDBDataset(Output filenames, DataType[] output_types, long[][] output_shapes, String opName = "LMDBDataset") 
         {
             OperationDescription desc = NewOperation("LMDBDataset", opName);
@@ -12477,10 +12477,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] reader_handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation LMDBReader(string container = null, string shared_name = null, String opName = "LMDBReader") 
         {
             OperationDescription desc = NewOperation("LMDBReader", opName);
@@ -12503,10 +12503,10 @@ namespace Emgu.TF
         /// <param name="num_cols">num cols</param>
         /// <param name="max_rows_in_memory">max rows in memory</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_matrix(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation LoadAndRemapMatrix(Output ckpt_path, Output old_tensor_name, Output row_remapping, Output col_remapping, Output initializing_values, long num_rows, long num_cols, long max_rows_in_memory = -1, String opName = "LoadAndRemapMatrix") 
         {
             OperationDescription desc = NewOperation("LoadAndRemapMatrix", opName);
@@ -12531,10 +12531,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="compression">compression</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: reader_func: func
         public Operation LoadDataset(Output path, Output reader_func_other_args, DataType[] output_types, long[][] output_shapes, string compression = null, String opName = "LoadDataset") 
         {
@@ -12560,7 +12560,7 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LoadTPUEmbeddingAdadeltaParameters(Output parameters, Output accumulators, Output updates, long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "LoadTPUEmbeddingAdadeltaParameters") 
         {
             OperationDescription desc = NewOperation("LoadTPUEmbeddingAdadeltaParameters", opName);
@@ -12591,7 +12591,7 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LoadTPUEmbeddingAdadeltaParametersGradAccumDebug(Output parameters, Output accumulators, Output updates, Output gradient_accumulators, long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "LoadTPUEmbeddingAdadeltaParametersGradAccumDebug") 
         {
             OperationDescription desc = NewOperation("LoadTPUEmbeddingAdadeltaParametersGradAccumDebug", opName);
@@ -12621,7 +12621,7 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LoadTPUEmbeddingAdagradParameters(Output parameters, Output accumulators, long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "LoadTPUEmbeddingAdagradParameters") 
         {
             OperationDescription desc = NewOperation("LoadTPUEmbeddingAdagradParameters", opName);
@@ -12650,7 +12650,7 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LoadTPUEmbeddingAdagradParametersGradAccumDebug(Output parameters, Output accumulators, Output gradient_accumulators, long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "LoadTPUEmbeddingAdagradParametersGradAccumDebug") 
         {
             OperationDescription desc = NewOperation("LoadTPUEmbeddingAdagradParametersGradAccumDebug", opName);
@@ -12680,7 +12680,7 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LoadTPUEmbeddingADAMParameters(Output parameters, Output momenta, Output velocities, long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "LoadTPUEmbeddingADAMParameters") 
         {
             OperationDescription desc = NewOperation("LoadTPUEmbeddingADAMParameters", opName);
@@ -12711,7 +12711,7 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LoadTPUEmbeddingADAMParametersGradAccumDebug(Output parameters, Output momenta, Output velocities, Output gradient_accumulators, long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "LoadTPUEmbeddingADAMParametersGradAccumDebug") 
         {
             OperationDescription desc = NewOperation("LoadTPUEmbeddingADAMParametersGradAccumDebug", opName);
@@ -12743,7 +12743,7 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LoadTPUEmbeddingCenteredRMSPropParameters(Output parameters, Output ms, Output mom, Output mg, long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "LoadTPUEmbeddingCenteredRMSPropParameters") 
         {
             OperationDescription desc = NewOperation("LoadTPUEmbeddingCenteredRMSPropParameters", opName);
@@ -12773,7 +12773,7 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LoadTPUEmbeddingFrequencyEstimatorParameters(Output parameters, Output last_hit_step, long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "LoadTPUEmbeddingFrequencyEstimatorParameters") 
         {
             OperationDescription desc = NewOperation("LoadTPUEmbeddingFrequencyEstimatorParameters", opName);
@@ -12802,7 +12802,7 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LoadTPUEmbeddingFrequencyEstimatorParametersGradAccumDebug(Output parameters, Output last_hit_step, Output gradient_accumulators, long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "LoadTPUEmbeddingFrequencyEstimatorParametersGradAccumDebug") 
         {
             OperationDescription desc = NewOperation("LoadTPUEmbeddingFrequencyEstimatorParametersGradAccumDebug", opName);
@@ -12832,7 +12832,7 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LoadTPUEmbeddingFTRLParameters(Output parameters, Output accumulators, Output linears, long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "LoadTPUEmbeddingFTRLParameters") 
         {
             OperationDescription desc = NewOperation("LoadTPUEmbeddingFTRLParameters", opName);
@@ -12863,7 +12863,7 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LoadTPUEmbeddingFTRLParametersGradAccumDebug(Output parameters, Output accumulators, Output linears, Output gradient_accumulators, long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "LoadTPUEmbeddingFTRLParametersGradAccumDebug") 
         {
             OperationDescription desc = NewOperation("LoadTPUEmbeddingFTRLParametersGradAccumDebug", opName);
@@ -12895,7 +12895,7 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LoadTPUEmbeddingMDLAdagradLightParameters(Output parameters, Output accumulators, Output weights, Output benefits, long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "LoadTPUEmbeddingMDLAdagradLightParameters") 
         {
             OperationDescription desc = NewOperation("LoadTPUEmbeddingMDLAdagradLightParameters", opName);
@@ -12925,7 +12925,7 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LoadTPUEmbeddingMomentumParameters(Output parameters, Output momenta, long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "LoadTPUEmbeddingMomentumParameters") 
         {
             OperationDescription desc = NewOperation("LoadTPUEmbeddingMomentumParameters", opName);
@@ -12954,7 +12954,7 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LoadTPUEmbeddingMomentumParametersGradAccumDebug(Output parameters, Output momenta, Output gradient_accumulators, long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "LoadTPUEmbeddingMomentumParametersGradAccumDebug") 
         {
             OperationDescription desc = NewOperation("LoadTPUEmbeddingMomentumParametersGradAccumDebug", opName);
@@ -12983,7 +12983,7 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LoadTPUEmbeddingProximalAdagradParameters(Output parameters, Output accumulators, long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "LoadTPUEmbeddingProximalAdagradParameters") 
         {
             OperationDescription desc = NewOperation("LoadTPUEmbeddingProximalAdagradParameters", opName);
@@ -13012,7 +13012,7 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LoadTPUEmbeddingProximalAdagradParametersGradAccumDebug(Output parameters, Output accumulators, Output gradient_accumulators, long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "LoadTPUEmbeddingProximalAdagradParametersGradAccumDebug") 
         {
             OperationDescription desc = NewOperation("LoadTPUEmbeddingProximalAdagradParametersGradAccumDebug", opName);
@@ -13042,7 +13042,7 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LoadTPUEmbeddingProximalYogiParameters(Output parameters, Output v, Output m, long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "LoadTPUEmbeddingProximalYogiParameters") 
         {
             OperationDescription desc = NewOperation("LoadTPUEmbeddingProximalYogiParameters", opName);
@@ -13073,7 +13073,7 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LoadTPUEmbeddingProximalYogiParametersGradAccumDebug(Output parameters, Output v, Output m, Output gradient_accumulators, long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "LoadTPUEmbeddingProximalYogiParametersGradAccumDebug") 
         {
             OperationDescription desc = NewOperation("LoadTPUEmbeddingProximalYogiParametersGradAccumDebug", opName);
@@ -13104,7 +13104,7 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LoadTPUEmbeddingRMSPropParameters(Output parameters, Output ms, Output mom, long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "LoadTPUEmbeddingRMSPropParameters") 
         {
             OperationDescription desc = NewOperation("LoadTPUEmbeddingRMSPropParameters", opName);
@@ -13135,7 +13135,7 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LoadTPUEmbeddingRMSPropParametersGradAccumDebug(Output parameters, Output ms, Output mom, Output gradient_accumulators, long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "LoadTPUEmbeddingRMSPropParametersGradAccumDebug") 
         {
             OperationDescription desc = NewOperation("LoadTPUEmbeddingRMSPropParametersGradAccumDebug", opName);
@@ -13164,7 +13164,7 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LoadTPUEmbeddingStochasticGradientDescentParameters(Output parameters, long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "LoadTPUEmbeddingStochasticGradientDescentParameters") 
         {
             OperationDescription desc = NewOperation("LoadTPUEmbeddingStochasticGradientDescentParameters", opName);
@@ -13191,7 +13191,7 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LoadTPUEmbeddingStochasticGradientDescentParametersGradAccumDebug(Output parameters, Output gradient_accumulators, long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "LoadTPUEmbeddingStochasticGradientDescentParametersGradAccumDebug") 
         {
             OperationDescription desc = NewOperation("LoadTPUEmbeddingStochasticGradientDescentParametersGradAccumDebug", opName);
@@ -13213,10 +13213,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Log(Output x, String opName = "Log") 
         {
             OperationDescription desc = NewOperation("Log", opName);
@@ -13229,10 +13229,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Log1p(Output x, String opName = "Log1p") 
         {
             OperationDescription desc = NewOperation("Log1p", opName);
@@ -13246,10 +13246,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation LogicalAnd(Output x, Output y, String opName = "LogicalAnd") 
         {
             OperationDescription desc = NewOperation("LogicalAnd", opName);
@@ -13263,10 +13263,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation LogicalNot(Output x, String opName = "LogicalNot") 
         {
             OperationDescription desc = NewOperation("LogicalNot", opName);
@@ -13280,10 +13280,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation LogicalOr(Output x, Output y, String opName = "LogicalOr") 
         {
             OperationDescription desc = NewOperation("LogicalOr", opName);
@@ -13297,11 +13297,11 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sign(type: DtInvalid).
         /// [1] log_abs_determinant(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation LogMatrixDeterminant(Output input, String opName = "LogMatrixDeterminant") 
         {
             OperationDescription desc = NewOperation("LogMatrixDeterminant", opName);
@@ -13314,10 +13314,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="logits">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] logsoftmax(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation LogSoftmax(Output logits, String opName = "LogSoftmax") 
         {
             OperationDescription desc = NewOperation("LogSoftmax", opName);
@@ -13336,12 +13336,12 @@ namespace Emgu.TF
         /// <param name="seed">seed</param>
         /// <param name="seed2">seed2</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sampled_candidates(type: DtInt64).
         /// [1] true_expected_count(type: DtFloat).
         /// [2] sampled_expected_count(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation LogUniformCandidateSampler(Output true_classes, long num_true, long num_sampled, bool unique, long range_max, long seed = 0, long seed2 = 0, String opName = "LogUniformCandidateSampler") 
         {
             OperationDescription desc = NewOperation("LogUniformCandidateSampler", opName);
@@ -13364,11 +13364,11 @@ namespace Emgu.TF
         /// <param name="Tkeys">Tkeys</param>
         /// <param name="Tvalues">Tvalues</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] keys(type: DtInvalid).
         /// [1] values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation LookupTableExport(Output table_handle, DataType Tkeys, DataType Tvalues, String opName = "LookupTableExport") 
         {
             OperationDescription desc = NewOperation("LookupTableExport", opName);
@@ -13385,11 +13385,11 @@ namespace Emgu.TF
         /// <param name="Tkeys">Tkeys</param>
         /// <param name="Tvalues">Tvalues</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] keys(type: DtInvalid).
         /// [1] values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation LookupTableExportV2(Output table_handle, DataType Tkeys, DataType Tvalues, String opName = "LookupTableExportV2") 
         {
             OperationDescription desc = NewOperation("LookupTableExportV2", opName);
@@ -13406,10 +13406,10 @@ namespace Emgu.TF
         /// <param name="keys">Input to the operation. </param>
         /// <param name="default_value">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation LookupTableFind(Output table_handle, Output keys, Output default_value, String opName = "LookupTableFind") 
         {
             OperationDescription desc = NewOperation("LookupTableFind", opName);
@@ -13426,10 +13426,10 @@ namespace Emgu.TF
         /// <param name="keys">Input to the operation. </param>
         /// <param name="default_value">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation LookupTableFindV2(Output table_handle, Output keys, Output default_value, String opName = "LookupTableFindV2") 
         {
             OperationDescription desc = NewOperation("LookupTableFindV2", opName);
@@ -13446,7 +13446,7 @@ namespace Emgu.TF
         /// <param name="keys">Input to the operation. </param>
         /// <param name="values">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LookupTableImport(Output table_handle, Output keys, Output values, String opName = "LookupTableImport") 
         {
             OperationDescription desc = NewOperation("LookupTableImport", opName);
@@ -13463,7 +13463,7 @@ namespace Emgu.TF
         /// <param name="keys">Input to the operation. </param>
         /// <param name="values">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LookupTableImportV2(Output table_handle, Output keys, Output values, String opName = "LookupTableImportV2") 
         {
             OperationDescription desc = NewOperation("LookupTableImportV2", opName);
@@ -13480,7 +13480,7 @@ namespace Emgu.TF
         /// <param name="keys">Input to the operation. </param>
         /// <param name="values">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LookupTableInsert(Output table_handle, Output keys, Output values, String opName = "LookupTableInsert") 
         {
             OperationDescription desc = NewOperation("LookupTableInsert", opName);
@@ -13497,7 +13497,7 @@ namespace Emgu.TF
         /// <param name="keys">Input to the operation. </param>
         /// <param name="values">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LookupTableInsertV2(Output table_handle, Output keys, Output values, String opName = "LookupTableInsertV2") 
         {
             OperationDescription desc = NewOperation("LookupTableInsertV2", opName);
@@ -13513,7 +13513,7 @@ namespace Emgu.TF
         /// <param name="table_handle">Input to the operation. </param>
         /// <param name="keys">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation LookupTableRemoveV2(Output table_handle, Output keys, String opName = "LookupTableRemoveV2") 
         {
             OperationDescription desc = NewOperation("LookupTableRemoveV2", opName);
@@ -13527,10 +13527,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="table_handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] size(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation LookupTableSize(Output table_handle, String opName = "LookupTableSize") 
         {
             OperationDescription desc = NewOperation("LookupTableSize", opName);
@@ -13543,10 +13543,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="table_handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] size(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation LookupTableSizeV2(Output table_handle, String opName = "LookupTableSizeV2") 
         {
             OperationDescription desc = NewOperation("LookupTableSizeV2", opName);
@@ -13559,10 +13559,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation LoopCond(Output input, String opName = "LoopCond") 
         {
             OperationDescription desc = NewOperation("LoopCond", opName);
@@ -13577,10 +13577,10 @@ namespace Emgu.TF
         /// <param name="values">Input to the operation. </param>
         /// <param name="out_type">out type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation LowerBound(Output sorted_inputs, Output values, DataType? out_type = null, String opName = "LowerBound") 
         {
             OperationDescription desc = NewOperation("LowerBound", opName);
@@ -13600,10 +13600,10 @@ namespace Emgu.TF
         /// <param name="alpha">alpha</param>
         /// <param name="beta">beta</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation LRN(Output input, long depth_radius = 5, float bias = 1f, float alpha = 1f, float beta = 0.5f, String opName = "LRN") 
         {
             OperationDescription desc = NewOperation("LRN", opName);
@@ -13630,10 +13630,10 @@ namespace Emgu.TF
         /// <param name="alpha">alpha</param>
         /// <param name="beta">beta</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation LRNGrad(Output input_grads, Output input_image, Output output_image, long depth_radius = 5, float bias = 1f, float alpha = 1f, float beta = 0.5f, String opName = "LRNGrad") 
         {
             OperationDescription desc = NewOperation("LRNGrad", opName);
@@ -13666,7 +13666,7 @@ namespace Emgu.TF
         /// <param name="cell_clip">cell clip</param>
         /// <param name="use_peephole">use peephole</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] i(type: DtInvalid).
         /// [1] cs(type: DtInvalid).
@@ -13675,7 +13675,7 @@ namespace Emgu.TF
         /// [4] ci(type: DtInvalid).
         /// [5] co(type: DtInvalid).
         /// [6] h(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation LSTMBlockCell(Output x, Output cs_prev, Output h_prev, Output w, Output wci, Output wcf, Output wco, Output b, float forget_bias = 1f, float cell_clip = 3f, bool use_peephole = false, String opName = "LSTMBlockCell") 
         {
             OperationDescription desc = NewOperation("LSTMBlockCell", opName);
@@ -13717,14 +13717,14 @@ namespace Emgu.TF
         /// <param name="h_grad">Input to the operation. </param>
         /// <param name="use_peephole">use peephole</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] cs_prev_grad(type: DtInvalid).
         /// [1] dicfo(type: DtInvalid).
         /// [2] wci_grad(type: DtInvalid).
         /// [3] wcf_grad(type: DtInvalid).
         /// [4] wco_grad(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation LSTMBlockCellGrad(Output x, Output cs_prev, Output h_prev, Output w, Output wci, Output wcf, Output wco, Output b, Output i, Output cs, Output f, Output o, Output ci, Output co, Output cs_grad, Output h_grad, bool use_peephole, String opName = "LSTMBlockCellGrad") 
         {
             OperationDescription desc = NewOperation("LSTMBlockCellGrad", opName);
@@ -13754,11 +13754,11 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="output_idx_type">output idx type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] lu(type: DtInvalid).
         /// [1] p(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Lu(Output input, DataType? output_idx_type = null, String opName = "Lu") 
         {
             OperationDescription desc = NewOperation("Lu", opName);
@@ -13774,7 +13774,7 @@ namespace Emgu.TF
         /// <param name="dataset">Input to the operation. </param>
         /// <param name="iterator">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation MakeIterator(Output dataset, Output iterator, String opName = "MakeIterator") 
         {
             OperationDescription desc = NewOperation("MakeIterator", opName);
@@ -13788,10 +13788,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation MakeUnique(Output input, String opName = "MakeUnique") 
         {
             OperationDescription desc = NewOperation("MakeUnique", opName);
@@ -13811,10 +13811,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="preserve_cardinality">preserve cardinality</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation MapAndBatchDataset(Output input_dataset, Output other_arguments, Output batch_size, Output num_parallel_calls, Output drop_remainder, DataType[] output_types, long[][] output_shapes, bool preserve_cardinality = false, String opName = "MapAndBatchDataset") 
         {
@@ -13840,7 +13840,7 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation MapClear(DataType[] dtypes, long capacity = 0, long memory_limit = 0, string container = null, string shared_name = null, String opName = "MapClear") 
         {
             OperationDescription desc = NewOperation("MapClear", opName);
@@ -13866,10 +13866,10 @@ namespace Emgu.TF
         /// <param name="use_inter_op_parallelism">use inter op parallelism</param>
         /// <param name="preserve_cardinality">preserve cardinality</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation MapDataset(Output input_dataset, Output other_arguments, DataType[] output_types, long[][] output_shapes, bool use_inter_op_parallelism = true, bool preserve_cardinality = false, String opName = "MapDataset") 
         {
@@ -13894,10 +13894,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="max_intra_op_parallelism">max intra op parallelism</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation MapDefun(Output arguments, Output captured_inputs, DataType[] output_types, long[][] output_shapes, long max_intra_op_parallelism = 1, String opName = "MapDefun") 
         {
@@ -13920,10 +13920,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] size(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation MapIncompleteSize(DataType[] dtypes, long capacity = 0, long memory_limit = 0, string container = null, string shared_name = null, String opName = "MapIncompleteSize") 
         {
             OperationDescription desc = NewOperation("MapIncompleteSize", opName);
@@ -13950,10 +13950,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MapPeek(Output key, Output indices, DataType[] dtypes, long capacity = 0, long memory_limit = 0, string container = null, string shared_name = null, String opName = "MapPeek") 
         {
             OperationDescription desc = NewOperation("MapPeek", opName);
@@ -13980,10 +13980,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] size(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation MapSize(DataType[] dtypes, long capacity = 0, long memory_limit = 0, string container = null, string shared_name = null, String opName = "MapSize") 
         {
             OperationDescription desc = NewOperation("MapSize", opName);
@@ -14011,7 +14011,7 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation MapStage(Output key, Output indices, Output values, DataType[] dtypes, long capacity = 0, long memory_limit = 0, string container = null, string shared_name = null, String opName = "MapStage") 
         {
             OperationDescription desc = NewOperation("MapStage", opName);
@@ -14041,10 +14041,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MapUnstage(Output key, Output indices, DataType[] dtypes, long capacity = 0, long memory_limit = 0, string container = null, string shared_name = null, String opName = "MapUnstage") 
         {
             OperationDescription desc = NewOperation("MapUnstage", opName);
@@ -14072,11 +14072,11 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] key(type: DtInt64).
         /// [1] values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MapUnstageNoKey(Output indices, DataType[] dtypes, long capacity = 0, long memory_limit = 0, string container = null, string shared_name = null, String opName = "MapUnstageNoKey") 
         {
             OperationDescription desc = NewOperation("MapUnstageNoKey", opName);
@@ -14098,10 +14098,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="pattern">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] filenames(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation MatchingFiles(Output pattern, String opName = "MatchingFiles") 
         {
             OperationDescription desc = NewOperation("MatchingFiles", opName);
@@ -14114,10 +14114,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="patterns">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation MatchingFilesDataset(Output patterns, String opName = "MatchingFilesDataset") 
         {
             OperationDescription desc = NewOperation("MatchingFilesDataset", opName);
@@ -14133,10 +14133,10 @@ namespace Emgu.TF
         /// <param name="transpose_a">transpose a</param>
         /// <param name="transpose_b">transpose b</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] product(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MatMul(Output a, Output b, bool transpose_a = false, bool transpose_b = false, String opName = "MatMul") 
         {
             OperationDescription desc = NewOperation("MatMul", opName);
@@ -14156,10 +14156,10 @@ namespace Emgu.TF
         /// <param name="num_lower">Input to the operation. </param>
         /// <param name="num_upper">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] band(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MatrixBandPart(Output input, Output num_lower, Output num_upper, String opName = "MatrixBandPart") 
         {
             OperationDescription desc = NewOperation("MatrixBandPart", opName);
@@ -14174,10 +14174,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MatrixDeterminant(Output input, String opName = "MatrixDeterminant") 
         {
             OperationDescription desc = NewOperation("MatrixDeterminant", opName);
@@ -14190,10 +14190,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="diagonal">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MatrixDiag(Output diagonal, String opName = "MatrixDiag") 
         {
             OperationDescription desc = NewOperation("MatrixDiag", opName);
@@ -14206,10 +14206,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] diagonal(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MatrixDiagPart(Output input, String opName = "MatrixDiagPart") 
         {
             OperationDescription desc = NewOperation("MatrixDiagPart", opName);
@@ -14224,10 +14224,10 @@ namespace Emgu.TF
         /// <param name="k">Input to the operation. </param>
         /// <param name="padding_value">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] diagonal(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MatrixDiagPartV2(Output input, Output k, Output padding_value, String opName = "MatrixDiagPartV2") 
         {
             OperationDescription desc = NewOperation("MatrixDiagPartV2", opName);
@@ -14245,10 +14245,10 @@ namespace Emgu.TF
         /// <param name="padding_value">Input to the operation. </param>
         /// <param name="align">align</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] diagonal(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MatrixDiagPartV3(Output input, Output k, Output padding_value, string align = null, String opName = "MatrixDiagPartV3") 
         {
             OperationDescription desc = NewOperation("MatrixDiagPartV3", opName);
@@ -14269,10 +14269,10 @@ namespace Emgu.TF
         /// <param name="num_cols">Input to the operation. </param>
         /// <param name="padding_value">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MatrixDiagV2(Output diagonal, Output k, Output num_rows, Output num_cols, Output padding_value, String opName = "MatrixDiagV2") 
         {
             OperationDescription desc = NewOperation("MatrixDiagV2", opName);
@@ -14294,10 +14294,10 @@ namespace Emgu.TF
         /// <param name="padding_value">Input to the operation. </param>
         /// <param name="align">align</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MatrixDiagV3(Output diagonal, Output k, Output num_rows, Output num_cols, Output padding_value, string align = null, String opName = "MatrixDiagV3") 
         {
             OperationDescription desc = NewOperation("MatrixDiagV3", opName);
@@ -14316,10 +14316,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MatrixExponential(Output input, String opName = "MatrixExponential") 
         {
             OperationDescription desc = NewOperation("MatrixExponential", opName);
@@ -14333,10 +14333,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="adjoint">adjoint</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MatrixInverse(Output input, bool adjoint = false, String opName = "MatrixInverse") 
         {
             OperationDescription desc = NewOperation("MatrixInverse", opName);
@@ -14351,10 +14351,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MatrixLogarithm(Output input, String opName = "MatrixLogarithm") 
         {
             OperationDescription desc = NewOperation("MatrixLogarithm", opName);
@@ -14368,10 +14368,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="diagonal">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MatrixSetDiag(Output input, Output diagonal, String opName = "MatrixSetDiag") 
         {
             OperationDescription desc = NewOperation("MatrixSetDiag", opName);
@@ -14387,10 +14387,10 @@ namespace Emgu.TF
         /// <param name="diagonal">Input to the operation. </param>
         /// <param name="k">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MatrixSetDiagV2(Output input, Output diagonal, Output k, String opName = "MatrixSetDiagV2") 
         {
             OperationDescription desc = NewOperation("MatrixSetDiagV2", opName);
@@ -14408,10 +14408,10 @@ namespace Emgu.TF
         /// <param name="k">Input to the operation. </param>
         /// <param name="align">align</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MatrixSetDiagV3(Output input, Output diagonal, Output k, string align = null, String opName = "MatrixSetDiagV3") 
         {
             OperationDescription desc = NewOperation("MatrixSetDiagV3", opName);
@@ -14430,10 +14430,10 @@ namespace Emgu.TF
         /// <param name="rhs">Input to the operation. </param>
         /// <param name="adjoint">adjoint</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MatrixSolve(Output matrix, Output rhs, bool adjoint = false, String opName = "MatrixSolve") 
         {
             OperationDescription desc = NewOperation("MatrixSolve", opName);
@@ -14452,10 +14452,10 @@ namespace Emgu.TF
         /// <param name="l2_regularizer">Input to the operation. </param>
         /// <param name="fast">fast</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MatrixSolveLs(Output matrix, Output rhs, Output l2_regularizer, bool fast = true, String opName = "MatrixSolveLs") 
         {
             OperationDescription desc = NewOperation("MatrixSolveLs", opName);
@@ -14472,10 +14472,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MatrixSquareRoot(Output input, String opName = "MatrixSquareRoot") 
         {
             OperationDescription desc = NewOperation("MatrixSquareRoot", opName);
@@ -14491,10 +14491,10 @@ namespace Emgu.TF
         /// <param name="lower">lower</param>
         /// <param name="adjoint">adjoint</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MatrixTriangularSolve(Output matrix, Output rhs, bool lower = true, bool adjoint = false, String opName = "MatrixTriangularSolve") 
         {
             OperationDescription desc = NewOperation("MatrixTriangularSolve", opName);
@@ -14514,10 +14514,10 @@ namespace Emgu.TF
         /// <param name="reduction_indices">Input to the operation. </param>
         /// <param name="keep_dims">keep dims</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Max(Output input, Output reduction_indices, bool keep_dims = false, String opName = "Max") 
         {
             OperationDescription desc = NewOperation("Max", opName);
@@ -14534,10 +14534,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Maximum(Output x, Output y, String opName = "Maximum") 
         {
             OperationDescription desc = NewOperation("Maximum", opName);
@@ -14554,10 +14554,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation MaxIntraOpParallelismDataset(Output input_dataset, Output max_intra_op_parallelism, DataType[] output_types, long[][] output_shapes, String opName = "MaxIntraOpParallelismDataset") 
         {
             OperationDescription desc = NewOperation("MaxIntraOpParallelismDataset", opName);
@@ -14578,10 +14578,10 @@ namespace Emgu.TF
         /// <param name="explicit_paddings">explicit paddings</param>
         /// <param name="data_format">data format</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MaxPool(Output input, long[] ksize, long[] strides, string padding, long[] explicit_paddings = null, string data_format = null, String opName = "MaxPool") 
         {
             OperationDescription desc = NewOperation("MaxPool", opName);
@@ -14604,10 +14604,10 @@ namespace Emgu.TF
         /// <param name="padding">padding</param>
         /// <param name="data_format">data format</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MaxPool3D(Output input, long[] ksize, long[] strides, string padding, string data_format = null, String opName = "MaxPool3D") 
         {
             OperationDescription desc = NewOperation("MaxPool3D", opName);
@@ -14631,10 +14631,10 @@ namespace Emgu.TF
         /// <param name="padding">padding</param>
         /// <param name="data_format">data format</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MaxPool3DGrad(Output orig_input, Output orig_output, Output grad, long[] ksize, long[] strides, string padding, string data_format = null, String opName = "MaxPool3DGrad") 
         {
             OperationDescription desc = NewOperation("MaxPool3DGrad", opName);
@@ -14660,10 +14660,10 @@ namespace Emgu.TF
         /// <param name="padding">padding</param>
         /// <param name="data_format">data format</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MaxPool3DGradGrad(Output orig_input, Output orig_output, Output grad, long[] ksize, long[] strides, string padding, string data_format = null, String opName = "MaxPool3DGradGrad") 
         {
             OperationDescription desc = NewOperation("MaxPool3DGradGrad", opName);
@@ -14690,10 +14690,10 @@ namespace Emgu.TF
         /// <param name="explicit_paddings">explicit paddings</param>
         /// <param name="data_format">data format</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MaxPoolGrad(Output orig_input, Output orig_output, Output grad, long[] ksize, long[] strides, string padding, long[] explicit_paddings = null, string data_format = null, String opName = "MaxPoolGrad") 
         {
             OperationDescription desc = NewOperation("MaxPoolGrad", opName);
@@ -14720,10 +14720,10 @@ namespace Emgu.TF
         /// <param name="padding">padding</param>
         /// <param name="data_format">data format</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MaxPoolGradGrad(Output orig_input, Output orig_output, Output grad, long[] ksize, long[] strides, string padding, string data_format = null, String opName = "MaxPoolGradGrad") 
         {
             OperationDescription desc = NewOperation("MaxPoolGradGrad", opName);
@@ -14749,10 +14749,10 @@ namespace Emgu.TF
         /// <param name="padding">padding</param>
         /// <param name="data_format">data format</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MaxPoolGradGradV2(Output orig_input, Output orig_output, Output grad, Output ksize, Output strides, string padding, string data_format = null, String opName = "MaxPoolGradGradV2") 
         {
             OperationDescription desc = NewOperation("MaxPoolGradGradV2", opName);
@@ -14778,10 +14778,10 @@ namespace Emgu.TF
         /// <param name="padding">padding</param>
         /// <param name="include_batch_in_index">include batch in index</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MaxPoolGradGradWithArgmax(Output input, Output grad, Output argmax, long[] ksize, long[] strides, string padding, bool include_batch_in_index = false, String opName = "MaxPoolGradGradWithArgmax") 
         {
             OperationDescription desc = NewOperation("MaxPoolGradGradWithArgmax", opName);
@@ -14807,10 +14807,10 @@ namespace Emgu.TF
         /// <param name="padding">padding</param>
         /// <param name="data_format">data format</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MaxPoolGradV2(Output orig_input, Output orig_output, Output grad, Output ksize, Output strides, string padding, string data_format = null, String opName = "MaxPoolGradV2") 
         {
             OperationDescription desc = NewOperation("MaxPoolGradV2", opName);
@@ -14836,10 +14836,10 @@ namespace Emgu.TF
         /// <param name="padding">padding</param>
         /// <param name="include_batch_in_index">include batch in index</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MaxPoolGradWithArgmax(Output input, Output grad, Output argmax, long[] ksize, long[] strides, string padding, bool include_batch_in_index = false, String opName = "MaxPoolGradWithArgmax") 
         {
             OperationDescription desc = NewOperation("MaxPoolGradWithArgmax", opName);
@@ -14863,10 +14863,10 @@ namespace Emgu.TF
         /// <param name="padding">padding</param>
         /// <param name="data_format">data format</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MaxPoolV2(Output input, Output ksize, Output strides, string padding, string data_format = null, String opName = "MaxPoolV2") 
         {
             OperationDescription desc = NewOperation("MaxPoolV2", opName);
@@ -14889,11 +14889,11 @@ namespace Emgu.TF
         /// <param name="Targmax">Targmax</param>
         /// <param name="include_batch_in_index">include batch in index</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] argmax(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MaxPoolWithArgmax(Output input, long[] ksize, long[] strides, string padding, DataType? Targmax = null, bool include_batch_in_index = false, String opName = "MaxPoolWithArgmax") 
         {
             OperationDescription desc = NewOperation("MaxPoolWithArgmax", opName);
@@ -14915,10 +14915,10 @@ namespace Emgu.TF
         /// <param name="reduction_indices">Input to the operation. </param>
         /// <param name="keep_dims">keep dims</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Mean(Output input, Output reduction_indices, bool keep_dims = false, String opName = "Mean") 
         {
             OperationDescription desc = NewOperation("Mean", opName);
@@ -14934,11 +14934,11 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="inputs">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] value_index(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation Merge(Output inputs, String opName = "Merge") 
         {
             OperationDescription desc = NewOperation("Merge", opName);
@@ -14951,10 +14951,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="inputs">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] summary(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation MergeSummary(Output inputs, String opName = "MergeSummary") 
         {
             OperationDescription desc = NewOperation("MergeSummary", opName);
@@ -14969,7 +14969,7 @@ namespace Emgu.TF
         /// <param name="destination_prefix">Input to the operation. </param>
         /// <param name="delete_old_dirs">delete old dirs</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation MergeV2Checkpoints(Output checkpoint_prefixes, Output destination_prefix, bool delete_old_dirs = true, String opName = "MergeV2Checkpoints") 
         {
             OperationDescription desc = NewOperation("MergeV2Checkpoints", opName);
@@ -14990,10 +14990,10 @@ namespace Emgu.TF
         /// <param name="filterbank_channel_count">filterbank channel count</param>
         /// <param name="dct_coefficient_count">dct coefficient count</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation Mfcc(Output spectrogram, Output sample_rate, float upper_frequency_limit = 4000f, float lower_frequency_limit = 20f, long filterbank_channel_count = 40, long dct_coefficient_count = 13, String opName = "Mfcc") 
         {
             OperationDescription desc = NewOperation("Mfcc", opName);
@@ -15017,10 +15017,10 @@ namespace Emgu.TF
         /// <param name="reduction_indices">Input to the operation. </param>
         /// <param name="keep_dims">keep dims</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Min(Output input, Output reduction_indices, bool keep_dims = false, String opName = "Min") 
         {
             OperationDescription desc = NewOperation("Min", opName);
@@ -15037,10 +15037,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Minimum(Output x, Output y, String opName = "Minimum") 
         {
             OperationDescription desc = NewOperation("Minimum", opName);
@@ -15056,10 +15056,10 @@ namespace Emgu.TF
         /// <param name="paddings">Input to the operation. </param>
         /// <param name="mode">mode</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MirrorPad(Output input, Output paddings, string mode, String opName = "MirrorPad") 
         {
             OperationDescription desc = NewOperation("MirrorPad", opName);
@@ -15076,10 +15076,10 @@ namespace Emgu.TF
         /// <param name="paddings">Input to the operation. </param>
         /// <param name="mode">mode</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MirrorPadGrad(Output input, Output paddings, string mode, String opName = "MirrorPadGrad") 
         {
             OperationDescription desc = NewOperation("MirrorPadGrad", opName);
@@ -15096,10 +15096,10 @@ namespace Emgu.TF
         /// <param name="mlir_module">mlir module</param>
         /// <param name="Toutputs">Toutputs</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] outputs(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MlirPassthroughOp(Output inputs, string mlir_module, DataType[] Toutputs, String opName = "MlirPassthroughOp") 
         {
             OperationDescription desc = NewOperation("MlirPassthroughOp", opName);
@@ -15115,10 +15115,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Mod(Output x, Output y, String opName = "Mod") 
         {
             OperationDescription desc = NewOperation("Mod", opName);
@@ -15137,10 +15137,10 @@ namespace Emgu.TF
         /// <param name="cpu_budget">cpu budget</param>
         /// <param name="ram_budget">ram budget</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ModelDataset(Output input_dataset, DataType[] output_types, long[][] output_shapes, long algorithm = 0, long cpu_budget = 0, long ram_budget = 0, String opName = "ModelDataset") 
         {
             OperationDescription desc = NewOperation("ModelDataset", opName);
@@ -15162,10 +15162,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Mul(Output x, Output y, String opName = "Mul") 
         {
             OperationDescription desc = NewOperation("Mul", opName);
@@ -15180,10 +15180,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MulNoNan(Output x, Output y, String opName = "MulNoNan") 
         {
             OperationDescription desc = NewOperation("MulNoNan", opName);
@@ -15201,10 +15201,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation MultiDeviceIterator(string[] devices, string shared_name, string container, DataType[] output_types, long[][] output_shapes, String opName = "MultiDeviceIterator") 
         {
             OperationDescription desc = NewOperation("MultiDeviceIterator", opName);
@@ -15223,10 +15223,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] multi_device_iterator(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation MultiDeviceIteratorFromStringHandle(Output string_handle, DataType[] output_types = null, long[][] output_shapes = null, String opName = "MultiDeviceIteratorFromStringHandle") 
         {
             OperationDescription desc = NewOperation("MultiDeviceIteratorFromStringHandle", opName);
@@ -15245,10 +15245,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] components(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation MultiDeviceIteratorGetNextFromShard(Output multi_device_iterator, Output shard_num, Output incarnation_id, DataType[] output_types, long[][] output_shapes, String opName = "MultiDeviceIteratorGetNextFromShard") 
         {
             OperationDescription desc = NewOperation("MultiDeviceIteratorGetNextFromShard", opName);
@@ -15267,10 +15267,10 @@ namespace Emgu.TF
         /// <param name="multi_device_iterator">Input to the operation. </param>
         /// <param name="max_buffer_size">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] incarnation_id(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation MultiDeviceIteratorInit(Output dataset, Output multi_device_iterator, Output max_buffer_size, String opName = "MultiDeviceIteratorInit") 
         {
             OperationDescription desc = NewOperation("MultiDeviceIteratorInit", opName);
@@ -15285,10 +15285,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="multi_device_iterator">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] string_handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation MultiDeviceIteratorToStringHandle(Output multi_device_iterator, String opName = "MultiDeviceIteratorToStringHandle") 
         {
             OperationDescription desc = NewOperation("MultiDeviceIteratorToStringHandle", opName);
@@ -15305,10 +15305,10 @@ namespace Emgu.TF
         /// <param name="seed2">seed2</param>
         /// <param name="output_dtype">output dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Multinomial(Output logits, Output num_samples, long seed = 0, long seed2 = 0, DataType? output_dtype = null, String opName = "Multinomial") 
         {
             OperationDescription desc = NewOperation("Multinomial", opName);
@@ -15335,10 +15335,10 @@ namespace Emgu.TF
         /// <param name="initial_num_buckets">initial num buckets</param>
         /// <param name="max_load_factor">max load factor</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] table_handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation MutableDenseHashTable(Output empty_key, DataType value_dtype, string container = null, string shared_name = null, bool use_node_name_sharing = false, long[] value_shape = null, long initial_num_buckets = 131072, float max_load_factor = 0.8f, String opName = "MutableDenseHashTable") 
         {
             OperationDescription desc = NewOperation("MutableDenseHashTable", opName);
@@ -15372,10 +15372,10 @@ namespace Emgu.TF
         /// <param name="initial_num_buckets">initial num buckets</param>
         /// <param name="max_load_factor">max load factor</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] table_handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation MutableDenseHashTableV2(Output empty_key, Output deleted_key, DataType value_dtype, string container = null, string shared_name = null, bool use_node_name_sharing = false, long[] value_shape = null, long initial_num_buckets = 131072, float max_load_factor = 0.8f, String opName = "MutableDenseHashTableV2") 
         {
             OperationDescription desc = NewOperation("MutableDenseHashTableV2", opName);
@@ -15406,10 +15406,10 @@ namespace Emgu.TF
         /// <param name="shared_name">shared name</param>
         /// <param name="use_node_name_sharing">use node name sharing</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] table_handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation MutableHashTable(DataType key_dtype, DataType value_dtype, string container = null, string shared_name = null, bool use_node_name_sharing = false, String opName = "MutableHashTable") 
         {
             OperationDescription desc = NewOperation("MutableHashTable", opName);
@@ -15434,10 +15434,10 @@ namespace Emgu.TF
         /// <param name="use_node_name_sharing">use node name sharing</param>
         /// <param name="value_shape">value shape</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] table_handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation MutableHashTableOfTensors(DataType key_dtype, DataType value_dtype, string container = null, string shared_name = null, bool use_node_name_sharing = false, long[] value_shape = null, String opName = "MutableHashTableOfTensors") 
         {
             OperationDescription desc = NewOperation("MutableHashTableOfTensors", opName);
@@ -15464,10 +15464,10 @@ namespace Emgu.TF
         /// <param name="use_node_name_sharing">use node name sharing</param>
         /// <param name="value_shape">value shape</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] table_handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation MutableHashTableOfTensorsV2(DataType key_dtype, DataType value_dtype, string container = null, string shared_name = null, bool use_node_name_sharing = false, long[] value_shape = null, String opName = "MutableHashTableOfTensorsV2") 
         {
             OperationDescription desc = NewOperation("MutableHashTableOfTensorsV2", opName);
@@ -15493,10 +15493,10 @@ namespace Emgu.TF
         /// <param name="shared_name">shared name</param>
         /// <param name="use_node_name_sharing">use node name sharing</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] table_handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation MutableHashTableV2(DataType key_dtype, DataType value_dtype, string container = null, string shared_name = null, bool use_node_name_sharing = false, String opName = "MutableHashTableV2") 
         {
             OperationDescription desc = NewOperation("MutableHashTableV2", opName);
@@ -15516,10 +15516,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="mutex">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] mutex_lock(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation MutexLock(Output mutex, String opName = "MutexLock") 
         {
             OperationDescription desc = NewOperation("MutexLock", opName);
@@ -15533,10 +15533,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] resource(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation MutexV2(string container = null, string shared_name = null, String opName = "MutexV2") 
         {
             OperationDescription desc = NewOperation("MutexV2", opName);
@@ -15555,10 +15555,10 @@ namespace Emgu.TF
         /// <param name="num_devices">num devices</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] data(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation NcclAllReduce(Output input, string reduction, long num_devices, string shared_name, String opName = "NcclAllReduce") 
         {
             OperationDescription desc = NewOperation("NcclAllReduce", opName);
@@ -15575,10 +15575,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="shape">shape</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation NcclBroadcast(Output input, long[] shape, String opName = "NcclBroadcast") 
         {
             OperationDescription desc = NewOperation("NcclBroadcast", opName);
@@ -15593,10 +15593,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="reduction">reduction</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] data(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation NcclReduce(Output input, string reduction, String opName = "NcclReduce") 
         {
             OperationDescription desc = NewOperation("NcclReduce", opName);
@@ -15610,10 +15610,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Ndtri(Output x, String opName = "Ndtri") 
         {
             OperationDescription desc = NewOperation("Ndtri", opName);
@@ -15628,11 +15628,11 @@ namespace Emgu.TF
         /// <param name="centers">Input to the operation. </param>
         /// <param name="k">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] nearest_center_indices(type: DtInt64).
         /// [1] nearest_center_distances(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation NearestNeighbors(Output points, Output centers, Output k, String opName = "NearestNeighbors") 
         {
             OperationDescription desc = NewOperation("NearestNeighbors", opName);
@@ -15647,10 +15647,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Neg(Output x, String opName = "Neg") 
         {
             OperationDescription desc = NewOperation("Neg", opName);
@@ -15669,7 +15669,7 @@ namespace Emgu.TF
         /// <param name="vocab_count">vocab count</param>
         /// <param name="num_negative_samples">num negative samples</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation NegTrain(Output w_in, Output w_out, Output examples, Output labels, Output lr, long[] vocab_count, long num_negative_samples, String opName = "NegTrain") 
         {
             OperationDescription desc = NewOperation("NegTrain", opName);
@@ -15689,10 +15689,10 @@ namespace Emgu.TF
         /// <param name="x1">Input to the operation. </param>
         /// <param name="x2">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation NextAfter(Output x1, Output x2, String opName = "NextAfter") 
         {
             OperationDescription desc = NewOperation("NextAfter", opName);
@@ -15706,10 +15706,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="data">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation NextIteration(Output data, String opName = "NextIteration") 
         {
             OperationDescription desc = NewOperation("NextIteration", opName);
@@ -15723,10 +15723,10 @@ namespace Emgu.TF
         /// <param name="shape">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation NonDeterministicInts(Output shape, DataType? dtype = null, String opName = "NonDeterministicInts") 
         {
             OperationDescription desc = NewOperation("NonDeterministicInts", opName);
@@ -15744,10 +15744,10 @@ namespace Emgu.TF
         /// <param name="max_output_size">Input to the operation. </param>
         /// <param name="iou_threshold">iou threshold</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] selected_indices(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation NonMaxSuppression(Output boxes, Output scores, Output max_output_size, float iou_threshold = 0.5f, String opName = "NonMaxSuppression") 
         {
             OperationDescription desc = NewOperation("NonMaxSuppression", opName);
@@ -15767,10 +15767,10 @@ namespace Emgu.TF
         /// <param name="max_output_size">Input to the operation. </param>
         /// <param name="iou_threshold">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] selected_indices(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation NonMaxSuppressionV2(Output boxes, Output scores, Output max_output_size, Output iou_threshold, String opName = "NonMaxSuppressionV2") 
         {
             OperationDescription desc = NewOperation("NonMaxSuppressionV2", opName);
@@ -15790,10 +15790,10 @@ namespace Emgu.TF
         /// <param name="iou_threshold">Input to the operation. </param>
         /// <param name="score_threshold">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] selected_indices(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation NonMaxSuppressionV3(Output boxes, Output scores, Output max_output_size, Output iou_threshold, Output score_threshold, String opName = "NonMaxSuppressionV3") 
         {
             OperationDescription desc = NewOperation("NonMaxSuppressionV3", opName);
@@ -15815,11 +15815,11 @@ namespace Emgu.TF
         /// <param name="score_threshold">Input to the operation. </param>
         /// <param name="pad_to_max_output_size">pad to max output size</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] selected_indices(type: DtInt32).
         /// [1] valid_outputs(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation NonMaxSuppressionV4(Output boxes, Output scores, Output max_output_size, Output iou_threshold, Output score_threshold, bool pad_to_max_output_size = false, String opName = "NonMaxSuppressionV4") 
         {
             OperationDescription desc = NewOperation("NonMaxSuppressionV4", opName);
@@ -15844,12 +15844,12 @@ namespace Emgu.TF
         /// <param name="soft_nms_sigma">Input to the operation. </param>
         /// <param name="pad_to_max_output_size">pad to max output size</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] selected_indices(type: DtInt32).
         /// [1] selected_scores(type: DtInvalid).
         /// [2] valid_outputs(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation NonMaxSuppressionV5(Output boxes, Output scores, Output max_output_size, Output iou_threshold, Output score_threshold, Output soft_nms_sigma, bool pad_to_max_output_size = false, String opName = "NonMaxSuppressionV5") 
         {
             OperationDescription desc = NewOperation("NonMaxSuppressionV5", opName);
@@ -15873,10 +15873,10 @@ namespace Emgu.TF
         /// <param name="overlap_threshold">Input to the operation. </param>
         /// <param name="score_threshold">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] selected_indices(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation NonMaxSuppressionWithOverlaps(Output overlaps, Output scores, Output max_output_size, Output overlap_threshold, Output score_threshold, String opName = "NonMaxSuppressionWithOverlaps") 
         {
             OperationDescription desc = NewOperation("NonMaxSuppressionWithOverlaps", opName);
@@ -15895,10 +15895,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation NonSerializableDataset(Output input_dataset, DataType[] output_types, long[][] output_shapes, String opName = "NonSerializableDataset") 
         {
             OperationDescription desc = NewOperation("NonSerializableDataset", opName);
@@ -15912,7 +15912,7 @@ namespace Emgu.TF
         /// NoOp
         /// </summary>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation NoOp(String opName = "NoOp") 
         {
             OperationDescription desc = NewOperation("NoOp", opName);
@@ -15926,10 +15926,10 @@ namespace Emgu.TF
         /// <param name="y">Input to the operation. </param>
         /// <param name="incompatible_shape_error">incompatible shape error</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation NotEqual(Output x, Output y, bool incompatible_shape_error = true, String opName = "NotEqual") 
         {
             OperationDescription desc = NewOperation("NotEqual", opName);
@@ -15947,10 +15947,10 @@ namespace Emgu.TF
         /// <param name="n">Input to the operation. </param>
         /// <param name="reverse">reverse</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation NthElement(Output input, Output n, bool reverse = false, String opName = "NthElement") 
         {
             OperationDescription desc = NewOperation("NthElement", opName);
@@ -15970,10 +15970,10 @@ namespace Emgu.TF
         /// <param name="off_value">Input to the operation. </param>
         /// <param name="axis">axis</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation OneHot(Output indices, Output depth, Output on_value, Output off_value, long axis = -1, String opName = "OneHot") 
         {
             OperationDescription desc = NewOperation("OneHot", opName);
@@ -15994,10 +15994,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: dataset_factory: func
         public Operation OneShotIterator(DataType[] output_types, long[][] output_shapes, string container = null, string shared_name = null, String opName = "OneShotIterator") 
         {
@@ -16016,10 +16016,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation OnesLike(Output x, String opName = "OnesLike") 
         {
             OperationDescription desc = NewOperation("OnesLike", opName);
@@ -16036,10 +16036,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="optimization_configs">optimization configs</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation OptimizeDataset(Output input_dataset, Output optimizations, DataType[] output_types, long[][] output_shapes, string[] optimization_configs = null, String opName = "OptimizeDataset") 
         {
             OperationDescription desc = NewOperation("OptimizeDataset", opName);
@@ -16062,10 +16062,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="optimization_configs">optimization configs</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation OptimizeDatasetV2(Output input_dataset, Output optimizations_enabled, Output optimizations_disabled, Output optimizations_default, DataType[] output_types, long[][] output_shapes, string[] optimization_configs = null, String opName = "OptimizeDatasetV2") 
         {
             OperationDescription desc = NewOperation("OptimizeDatasetV2", opName);
@@ -16084,10 +16084,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="components">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] optional(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation OptionalFromValue(Output components, String opName = "OptionalFromValue") 
         {
             OperationDescription desc = NewOperation("OptionalFromValue", opName);
@@ -16102,10 +16102,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] components(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation OptionalGetValue(Output optional, DataType[] output_types, long[][] output_shapes, String opName = "OptionalGetValue") 
         {
             OperationDescription desc = NewOperation("OptionalGetValue", opName);
@@ -16120,10 +16120,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="optional">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] has_value(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation OptionalHasValue(Output optional, String opName = "OptionalHasValue") 
         {
             OperationDescription desc = NewOperation("OptionalHasValue", opName);
@@ -16135,10 +16135,10 @@ namespace Emgu.TF
         /// OptionalNone
         /// </summary>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] optional(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation OptionalNone(String opName = "OptionalNone") 
         {
             OperationDescription desc = NewOperation("OptionalNone", opName);
@@ -16153,10 +16153,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation OptionsDataset(Output input_dataset, string serialized_options, DataType[] output_types, long[][] output_shapes, String opName = "OptionsDataset") 
         {
             OperationDescription desc = NewOperation("OptionsDataset", opName);
@@ -16176,7 +16176,7 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation OrderedMapClear(DataType[] dtypes, long capacity = 0, long memory_limit = 0, string container = null, string shared_name = null, String opName = "OrderedMapClear") 
         {
             OperationDescription desc = NewOperation("OrderedMapClear", opName);
@@ -16201,10 +16201,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] size(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation OrderedMapIncompleteSize(DataType[] dtypes, long capacity = 0, long memory_limit = 0, string container = null, string shared_name = null, String opName = "OrderedMapIncompleteSize") 
         {
             OperationDescription desc = NewOperation("OrderedMapIncompleteSize", opName);
@@ -16231,10 +16231,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation OrderedMapPeek(Output key, Output indices, DataType[] dtypes, long capacity = 0, long memory_limit = 0, string container = null, string shared_name = null, String opName = "OrderedMapPeek") 
         {
             OperationDescription desc = NewOperation("OrderedMapPeek", opName);
@@ -16261,10 +16261,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] size(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation OrderedMapSize(DataType[] dtypes, long capacity = 0, long memory_limit = 0, string container = null, string shared_name = null, String opName = "OrderedMapSize") 
         {
             OperationDescription desc = NewOperation("OrderedMapSize", opName);
@@ -16292,7 +16292,7 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation OrderedMapStage(Output key, Output indices, Output values, DataType[] dtypes, long capacity = 0, long memory_limit = 0, string container = null, string shared_name = null, String opName = "OrderedMapStage") 
         {
             OperationDescription desc = NewOperation("OrderedMapStage", opName);
@@ -16322,10 +16322,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation OrderedMapUnstage(Output key, Output indices, DataType[] dtypes, long capacity = 0, long memory_limit = 0, string container = null, string shared_name = null, String opName = "OrderedMapUnstage") 
         {
             OperationDescription desc = NewOperation("OrderedMapUnstage", opName);
@@ -16353,11 +16353,11 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] key(type: DtInt64).
         /// [1] values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation OrderedMapUnstageNoKey(Output indices, DataType[] dtypes, long capacity = 0, long memory_limit = 0, string container = null, string shared_name = null, String opName = "OrderedMapUnstageNoKey") 
         {
             OperationDescription desc = NewOperation("OrderedMapUnstageNoKey", opName);
@@ -16381,10 +16381,10 @@ namespace Emgu.TF
         /// <param name="shape">shape</param>
         /// <param name="device_ordinal">device ordinal</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation OutfeedDequeue(DataType dtype, long[] shape, long device_ordinal = -1, String opName = "OutfeedDequeue") 
         {
             OperationDescription desc = NewOperation("OutfeedDequeue", opName);
@@ -16402,10 +16402,10 @@ namespace Emgu.TF
         /// <param name="shapes">shapes</param>
         /// <param name="device_ordinal">device ordinal</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] outputs(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation OutfeedDequeueTuple(DataType[] dtypes, long[][] shapes, long device_ordinal = -1, String opName = "OutfeedDequeueTuple") 
         {
             OperationDescription desc = NewOperation("OutfeedDequeueTuple", opName);
@@ -16423,10 +16423,10 @@ namespace Emgu.TF
         /// <param name="dtypes">dtypes</param>
         /// <param name="shapes">shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] outputs(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation OutfeedDequeueTupleV2(Output device_ordinal, DataType[] dtypes, long[][] shapes, String opName = "OutfeedDequeueTupleV2") 
         {
             OperationDescription desc = NewOperation("OutfeedDequeueTupleV2", opName);
@@ -16443,10 +16443,10 @@ namespace Emgu.TF
         /// <param name="dtype">dtype</param>
         /// <param name="shape">shape</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation OutfeedDequeueV2(Output device_ordinal, DataType dtype, long[] shape, String opName = "OutfeedDequeueV2") 
         {
             OperationDescription desc = NewOperation("OutfeedDequeueV2", opName);
@@ -16461,7 +16461,7 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation OutfeedEnqueue(Output input, String opName = "OutfeedEnqueue") 
         {
             OperationDescription desc = NewOperation("OutfeedEnqueue", opName);
@@ -16474,7 +16474,7 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="inputs">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation OutfeedEnqueueTuple(Output inputs, String opName = "OutfeedEnqueueTuple") 
         {
             OperationDescription desc = NewOperation("OutfeedEnqueueTuple", opName);
@@ -16488,10 +16488,10 @@ namespace Emgu.TF
         /// <param name="values">Input to the operation. </param>
         /// <param name="axis">axis</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Pack(Output values, long axis = 0, String opName = "Pack") 
         {
             OperationDescription desc = NewOperation("Pack", opName);
@@ -16507,10 +16507,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="paddings">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Pad(Output input, Output paddings, String opName = "Pad") 
         {
             OperationDescription desc = NewOperation("Pad", opName);
@@ -16528,10 +16528,10 @@ namespace Emgu.TF
         /// <param name="padding_values">Input to the operation. </param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation PaddedBatchDataset(Output input_dataset, Output batch_size, Output padded_shapes, Output padding_values, long[][] output_shapes, String opName = "PaddedBatchDataset") 
         {
             OperationDescription desc = NewOperation("PaddedBatchDataset", opName);
@@ -16554,10 +16554,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="parallel_copy">parallel copy</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation PaddedBatchDatasetV2(Output input_dataset, Output batch_size, Output padded_shapes, Output padding_values, Output drop_remainder, long[][] output_shapes, bool parallel_copy = false, String opName = "PaddedBatchDatasetV2") 
         {
             OperationDescription desc = NewOperation("PaddedBatchDatasetV2", opName);
@@ -16581,10 +16581,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation PaddingFIFOQueue(DataType[] component_types, long[][] shapes = null, long capacity = -1, string container = null, string shared_name = null, String opName = "PaddingFIFOQueue") 
         {
             OperationDescription desc = NewOperation("PaddingFIFOQueue", opName);
@@ -16608,10 +16608,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation PaddingFIFOQueueV2(DataType[] component_types, long[][] shapes = null, long capacity = -1, string container = null, string shared_name = null, String opName = "PaddingFIFOQueueV2") 
         {
             OperationDescription desc = NewOperation("PaddingFIFOQueueV2", opName);
@@ -16633,10 +16633,10 @@ namespace Emgu.TF
         /// <param name="paddings">Input to the operation. </param>
         /// <param name="constant_values">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation PadV2(Output input, Output paddings, Output constant_values, String opName = "PadV2") 
         {
             OperationDescription desc = NewOperation("PadV2", opName);
@@ -16657,10 +16657,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="deterministic">deterministic</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ParallelBatchDataset(Output input_dataset, Output batch_size, Output num_parallel_calls, Output drop_remainder, DataType[] output_types, long[][] output_shapes, string deterministic = null, String opName = "ParallelBatchDataset") 
         {
             OperationDescription desc = NewOperation("ParallelBatchDataset", opName);
@@ -16681,10 +16681,10 @@ namespace Emgu.TF
         /// <param name="values">Input to the operation. </param>
         /// <param name="shape">shape</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ParallelConcat(Output values, long[] shape, String opName = "ParallelConcat") 
         {
             OperationDescription desc = NewOperation("ParallelConcat", opName);
@@ -16699,10 +16699,10 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="data">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] merged(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ParallelDynamicStitch(Output indices, Output data, String opName = "ParallelDynamicStitch") 
         {
             OperationDescription desc = NewOperation("ParallelDynamicStitch", opName);
@@ -16724,10 +16724,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation ParallelInterleaveDataset(Output input_dataset, Output other_arguments, Output cycle_length, Output block_length, Output sloppy, Output buffer_output_elements, Output prefetch_input_elements, DataType[] output_types, long[][] output_shapes, String opName = "ParallelInterleaveDataset") 
         {
@@ -16756,10 +16756,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="sloppy">sloppy</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation ParallelInterleaveDatasetV2(Output input_dataset, Output other_arguments, Output cycle_length, Output block_length, Output num_parallel_calls, DataType[] output_types, long[][] output_shapes, bool sloppy = false, String opName = "ParallelInterleaveDatasetV2") 
         {
@@ -16788,10 +16788,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="deterministic">deterministic</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation ParallelInterleaveDatasetV3(Output input_dataset, Output other_arguments, Output cycle_length, Output block_length, Output num_parallel_calls, DataType[] output_types, long[][] output_shapes, string deterministic = null, String opName = "ParallelInterleaveDatasetV3") 
         {
@@ -16822,10 +16822,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="deterministic">deterministic</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation ParallelInterleaveDatasetV4(Output input_dataset, Output other_arguments, Output cycle_length, Output block_length, Output buffer_output_elements, Output prefetch_input_elements, Output num_parallel_calls, DataType[] output_types, long[][] output_shapes, string deterministic = null, String opName = "ParallelInterleaveDatasetV4") 
         {
@@ -16856,10 +16856,10 @@ namespace Emgu.TF
         /// <param name="sloppy">sloppy</param>
         /// <param name="preserve_cardinality">preserve cardinality</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation ParallelMapDataset(Output input_dataset, Output other_arguments, Output num_parallel_calls, DataType[] output_types, long[][] output_shapes, bool use_inter_op_parallelism = true, bool sloppy = false, bool preserve_cardinality = false, String opName = "ParallelMapDataset") 
         {
@@ -16890,10 +16890,10 @@ namespace Emgu.TF
         /// <param name="deterministic">deterministic</param>
         /// <param name="preserve_cardinality">preserve cardinality</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation ParallelMapDatasetV2(Output input_dataset, Output other_arguments, Output num_parallel_calls, DataType[] output_types, long[][] output_shapes, bool use_inter_op_parallelism = true, string deterministic = null, bool preserve_cardinality = false, String opName = "ParallelMapDatasetV2") 
         {
@@ -16923,10 +16923,10 @@ namespace Emgu.TF
         /// <param name="seed">seed</param>
         /// <param name="seed2">seed2</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ParameterizedTruncatedNormal(Output shape, Output means, Output stdevs, Output minvals, Output maxvals, long seed = 0, long seed2 = 0, String opName = "ParameterizedTruncatedNormal") 
         {
             OperationDescription desc = NewOperation("ParameterizedTruncatedNormal", opName);
@@ -16953,13 +16953,13 @@ namespace Emgu.TF
         /// <param name="sparse_types">sparse types</param>
         /// <param name="dense_shapes">dense shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sparse_indices(type: DtInt64).
         /// [1] sparse_values(type: DtInvalid).
         /// [2] sparse_shapes(type: DtInt64).
         /// [3] dense_values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ParseExample(Output serialized, Output names, Output sparse_keys, Output dense_keys, Output dense_defaults, DataType[] sparse_types, long[][] dense_shapes, String opName = "ParseExample") 
         {
             OperationDescription desc = NewOperation("ParseExample", opName);
@@ -16990,10 +16990,10 @@ namespace Emgu.TF
         /// <param name="ragged_value_types">ragged value types</param>
         /// <param name="ragged_split_types">ragged split types</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ParseExampleDataset(Output input_dataset, Output num_parallel_calls, Output dense_defaults, string[] sparse_keys, string[] dense_keys, DataType[] sparse_types, long[][] dense_shapes, DataType[] output_types, long[][] output_shapes, bool sloppy = false, string[] ragged_keys = null, DataType[] ragged_value_types = null, DataType[] ragged_split_types = null, String opName = "ParseExampleDataset") 
         {
             OperationDescription desc = NewOperation("ParseExampleDataset", opName);
@@ -17031,10 +17031,10 @@ namespace Emgu.TF
         /// <param name="ragged_value_types">ragged value types</param>
         /// <param name="ragged_split_types">ragged split types</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ParseExampleDatasetV2(Output input_dataset, Output num_parallel_calls, Output dense_defaults, string[] sparse_keys, string[] dense_keys, DataType[] sparse_types, long[][] dense_shapes, DataType[] output_types, long[][] output_shapes, string deterministic = null, string[] ragged_keys = null, DataType[] ragged_value_types = null, DataType[] ragged_split_types = null, String opName = "ParseExampleDatasetV2") 
         {
             OperationDescription desc = NewOperation("ParseExampleDatasetV2", opName);
@@ -17070,7 +17070,7 @@ namespace Emgu.TF
         /// <param name="ragged_split_types">ragged split types</param>
         /// <param name="dense_shapes">dense shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sparse_indices(type: DtInt64).
         /// [1] sparse_values(type: DtInvalid).
@@ -17078,7 +17078,7 @@ namespace Emgu.TF
         /// [3] dense_values(type: DtInvalid).
         /// [4] ragged_values(type: DtInvalid).
         /// [5] ragged_row_splits(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ParseExampleV2(Output serialized, Output names, Output sparse_keys, Output dense_keys, Output ragged_keys, Output dense_defaults, long num_sparse, DataType[] sparse_types, DataType[] ragged_value_types, DataType[] ragged_split_types, long[][] dense_shapes, String opName = "ParseExampleV2") 
         {
             OperationDescription desc = NewOperation("ParseExampleV2", opName);
@@ -17117,7 +17117,7 @@ namespace Emgu.TF
         /// <param name="feature_list_sparse_types">feature list sparse types</param>
         /// <param name="feature_list_dense_shapes">feature list dense shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] context_sparse_indices(type: DtInt64).
         /// [1] context_sparse_values(type: DtInvalid).
@@ -17128,7 +17128,7 @@ namespace Emgu.TF
         /// [6] feature_list_sparse_shapes(type: DtInt64).
         /// [7] feature_list_dense_values(type: DtInvalid).
         /// [8] feature_list_dense_lengths(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation ParseSequenceExample(Output serialized, Output debug_name, Output context_dense_defaults, string[] feature_list_dense_missing_assumed_empty, string[] context_sparse_keys, string[] context_dense_keys, string[] feature_list_sparse_keys, string[] feature_list_dense_keys, long Ncontext_sparse = 0, long Ncontext_dense = 0, long Nfeature_list_sparse = 0, long Nfeature_list_dense = 0, DataType[] context_sparse_types = null, DataType[] feature_list_dense_types = null, long[][] context_dense_shapes = null, DataType[] feature_list_sparse_types = null, long[][] feature_list_dense_shapes = null, String opName = "ParseSequenceExample") 
         {
             OperationDescription desc = NewOperation("ParseSequenceExample", opName);
@@ -17182,7 +17182,7 @@ namespace Emgu.TF
         /// <param name="feature_list_ragged_split_types">feature list ragged split types</param>
         /// <param name="feature_list_dense_shapes">feature list dense shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] context_sparse_indices(type: DtInt64).
         /// [1] context_sparse_values(type: DtInvalid).
@@ -17198,7 +17198,7 @@ namespace Emgu.TF
         /// [11] feature_list_ragged_values(type: DtInvalid).
         /// [12] feature_list_ragged_outer_splits(type: DtInvalid).
         /// [13] feature_list_ragged_inner_splits(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ParseSequenceExampleV2(Output serialized, Output debug_name, Output context_sparse_keys, Output context_dense_keys, Output context_ragged_keys, Output feature_list_sparse_keys, Output feature_list_dense_keys, Output feature_list_ragged_keys, Output feature_list_dense_missing_assumed_empty, Output context_dense_defaults, long Ncontext_sparse = 0, DataType[] context_sparse_types = null, DataType[] context_ragged_value_types = null, DataType[] context_ragged_split_types = null, long[][] context_dense_shapes = null, long Nfeature_list_sparse = 0, long Nfeature_list_dense = 0, DataType[] feature_list_dense_types = null, DataType[] feature_list_sparse_types = null, DataType[] feature_list_ragged_value_types = null, DataType[] feature_list_ragged_split_types = null, long[][] feature_list_dense_shapes = null, String opName = "ParseSequenceExampleV2") 
         {
             OperationDescription desc = NewOperation("ParseSequenceExampleV2", opName);
@@ -17241,13 +17241,13 @@ namespace Emgu.TF
         /// <param name="sparse_types">sparse types</param>
         /// <param name="dense_shapes">dense shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sparse_indices(type: DtInt64).
         /// [1] sparse_values(type: DtInvalid).
         /// [2] sparse_shapes(type: DtInt64).
         /// [3] dense_values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ParseSingleExample(Output serialized, Output dense_defaults, long num_sparse, string[] sparse_keys, string[] dense_keys, DataType[] sparse_types, long[][] dense_shapes, String opName = "ParseSingleExample") 
         {
             OperationDescription desc = NewOperation("ParseSingleExample", opName);
@@ -17278,7 +17278,7 @@ namespace Emgu.TF
         /// <param name="feature_list_sparse_types">feature list sparse types</param>
         /// <param name="feature_list_dense_shapes">feature list dense shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] context_sparse_indices(type: DtInt64).
         /// [1] context_sparse_values(type: DtInvalid).
@@ -17288,7 +17288,7 @@ namespace Emgu.TF
         /// [5] feature_list_sparse_values(type: DtInvalid).
         /// [6] feature_list_sparse_shapes(type: DtInt64).
         /// [7] feature_list_dense_values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ParseSingleSequenceExample(Output serialized, Output feature_list_dense_missing_assumed_empty, Output context_sparse_keys, Output context_dense_keys, Output feature_list_sparse_keys, Output feature_list_dense_keys, Output context_dense_defaults, Output debug_name, DataType[] context_sparse_types = null, DataType[] feature_list_dense_types = null, long[][] context_dense_shapes = null, DataType[] feature_list_sparse_types = null, long[][] feature_list_dense_shapes = null, String opName = "ParseSingleSequenceExample") 
         {
             OperationDescription desc = NewOperation("ParseSingleSequenceExample", opName);
@@ -17314,10 +17314,10 @@ namespace Emgu.TF
         /// <param name="serialized">Input to the operation. </param>
         /// <param name="out_type">out type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ParseTensor(Output serialized, DataType out_type, String opName = "ParseTensor") 
         {
             OperationDescription desc = NewOperation("ParseTensor", opName);
@@ -17335,10 +17335,10 @@ namespace Emgu.TF
         /// <param name="config_proto">config proto</param>
         /// <param name="executor_type">executor type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation PartitionedCall(Output args, DataType[] Tout, string config = null, string config_proto = null, string executor_type = null, String opName = "PartitionedCall") 
         {
@@ -17360,10 +17360,10 @@ namespace Emgu.TF
         /// <param name="dtype">dtype</param>
         /// <param name="shape">shape</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Placeholder(DataType dtype, long[] shape = null, String opName = "Placeholder") 
         {
             OperationDescription desc = NewOperation("Placeholder", opName);
@@ -17379,10 +17379,10 @@ namespace Emgu.TF
         /// <param name="dtype">dtype</param>
         /// <param name="shape">shape</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation PlaceholderV2(DataType dtype, long[] shape, String opName = "PlaceholderV2") 
         {
             OperationDescription desc = NewOperation("PlaceholderV2", opName);
@@ -17397,10 +17397,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="shape">shape</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation PlaceholderWithDefault(Output input, long[] shape, String opName = "PlaceholderWithDefault") 
         {
             OperationDescription desc = NewOperation("PlaceholderWithDefault", opName);
@@ -17415,10 +17415,10 @@ namespace Emgu.TF
         /// <param name="a">Input to the operation. </param>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Polygamma(Output a, Output x, String opName = "Polygamma") 
         {
             OperationDescription desc = NewOperation("Polygamma", opName);
@@ -17432,10 +17432,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtUint8).
-        /// </return>
+        /// </returns>
         public Operation PopulationCount(Output x, String opName = "PopulationCount") 
         {
             OperationDescription desc = NewOperation("PopulationCount", opName);
@@ -17449,10 +17449,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Pow(Output x, Output y, String opName = "Pow") 
         {
             OperationDescription desc = NewOperation("Pow", opName);
@@ -17472,10 +17472,10 @@ namespace Emgu.TF
         /// <param name="legacy_autotune">legacy autotune</param>
         /// <param name="buffer_size_min">buffer size min</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation PrefetchDataset(Output input_dataset, Output buffer_size, DataType[] output_types, long[][] output_shapes, long slack_period = 0, bool legacy_autotune = true, long buffer_size_min = 0, String opName = "PrefetchDataset") 
         {
             OperationDescription desc = NewOperation("PrefetchDataset", opName);
@@ -17499,10 +17499,10 @@ namespace Emgu.TF
         /// <param name="shape">shape</param>
         /// <param name="layout">layout</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation Prelinearize(Output input, long[] shape = null, long[] layout = null, String opName = "Prelinearize") 
         {
             OperationDescription desc = NewOperation("Prelinearize", opName);
@@ -17520,10 +17520,10 @@ namespace Emgu.TF
         /// <param name="shapes">shapes</param>
         /// <param name="layouts">layouts</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation PrelinearizeTuple(Output inputs, long[][] shapes, long[] layouts = null, String opName = "PrelinearizeTuple") 
         {
             OperationDescription desc = NewOperation("PrelinearizeTuple", opName);
@@ -17539,10 +17539,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="message">message</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation PreventGradient(Output input, string message = null, String opName = "PreventGradient") 
         {
             OperationDescription desc = NewOperation("PreventGradient", opName);
@@ -17561,10 +17561,10 @@ namespace Emgu.TF
         /// <param name="first_n">first n</param>
         /// <param name="summarize">summarize</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Print(Output input, Output data, string message = null, long first_n = -1, long summarize = 3, String opName = "Print") 
         {
             OperationDescription desc = NewOperation("Print", opName);
@@ -17586,7 +17586,7 @@ namespace Emgu.TF
         /// <param name="output_stream">output stream</param>
         /// <param name="end">end</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation PrintV2(Output input, string output_stream = null, string end = null, String opName = "PrintV2") 
         {
             OperationDescription desc = NewOperation("PrintV2", opName);
@@ -17607,10 +17607,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation PriorityQueue(long[][] shapes, DataType[] component_types = null, long capacity = -1, string container = null, string shared_name = null, String opName = "PriorityQueue") 
         {
             OperationDescription desc = NewOperation("PriorityQueue", opName);
@@ -17634,10 +17634,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation PriorityQueueV2(long[][] shapes, DataType[] component_types = null, long capacity = -1, string container = null, string shared_name = null, String opName = "PriorityQueueV2") 
         {
             OperationDescription desc = NewOperation("PriorityQueueV2", opName);
@@ -17660,10 +17660,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation PrivateThreadPoolDataset(Output input_dataset, Output num_threads, DataType[] output_types, long[][] output_shapes, String opName = "PrivateThreadPoolDataset") 
         {
             OperationDescription desc = NewOperation("PrivateThreadPoolDataset", opName);
@@ -17681,10 +17681,10 @@ namespace Emgu.TF
         /// <param name="reduction_indices">Input to the operation. </param>
         /// <param name="keep_dims">keep dims</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Prod(Output input, Output reduction_indices, bool keep_dims = false, String opName = "Prod") 
         {
             OperationDescription desc = NewOperation("Prod", opName);
@@ -17702,10 +17702,10 @@ namespace Emgu.TF
         /// <param name="token">token</param>
         /// <param name="Tout">Tout</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation PyFunc(Output input, string token, DataType[] Tout, String opName = "PyFunc") 
         {
             OperationDescription desc = NewOperation("PyFunc", opName);
@@ -17722,10 +17722,10 @@ namespace Emgu.TF
         /// <param name="token">token</param>
         /// <param name="Tout">Tout</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation PyFuncStateless(Output input, string token, DataType[] Tout, String opName = "PyFuncStateless") 
         {
             OperationDescription desc = NewOperation("PyFuncStateless", opName);
@@ -17741,11 +17741,11 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="full_matrices">full matrices</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] q(type: DtInvalid).
         /// [1] r(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Qr(Output input, bool full_matrices = false, String opName = "Qr") 
         {
             OperationDescription desc = NewOperation("Qr", opName);
@@ -17765,10 +17765,10 @@ namespace Emgu.TF
         /// <param name="input_min">input min</param>
         /// <param name="input_max">input max</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation QuantizeAndDequantize(Output input, bool signed_input = true, long num_bits = 8, bool range_given = false, float input_min = 0f, float input_max = 0f, String opName = "QuantizeAndDequantize") 
         {
             OperationDescription desc = NewOperation("QuantizeAndDequantize", opName);
@@ -17799,10 +17799,10 @@ namespace Emgu.TF
         /// <param name="narrow_range">narrow range</param>
         /// <param name="axis">axis</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation QuantizeAndDequantizeV2(Output input, Output input_min, Output input_max, bool signed_input = true, long num_bits = 8, bool range_given = false, string round_mode = null, bool narrow_range = false, long axis = -1, String opName = "QuantizeAndDequantizeV2") 
         {
             OperationDescription desc = NewOperation("QuantizeAndDequantizeV2", opName);
@@ -17836,10 +17836,10 @@ namespace Emgu.TF
         /// <param name="narrow_range">narrow range</param>
         /// <param name="axis">axis</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation QuantizeAndDequantizeV3(Output input, Output input_min, Output input_max, Output num_bits, bool signed_input = true, bool range_given = true, bool narrow_range = false, long axis = -1, String opName = "QuantizeAndDequantizeV3") 
         {
             OperationDescription desc = NewOperation("QuantizeAndDequantizeV3", opName);
@@ -17871,10 +17871,10 @@ namespace Emgu.TF
         /// <param name="narrow_range">narrow range</param>
         /// <param name="axis">axis</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation QuantizeAndDequantizeV4(Output input, Output input_min, Output input_max, bool signed_input = true, long num_bits = 8, bool range_given = false, string round_mode = null, bool narrow_range = false, long axis = -1, String opName = "QuantizeAndDequantizeV4") 
         {
             OperationDescription desc = NewOperation("QuantizeAndDequantizeV4", opName);
@@ -17905,12 +17905,12 @@ namespace Emgu.TF
         /// <param name="input_max">Input to the operation. </param>
         /// <param name="axis">axis</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] input_backprop(type: DtInvalid).
         /// [1] input_min_backprop(type: DtInvalid).
         /// [2] input_max_backprop(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation QuantizeAndDequantizeV4Grad(Output gradients, Output input, Output input_min, Output input_max, long axis = -1, String opName = "QuantizeAndDequantizeV4Grad") 
         {
             OperationDescription desc = NewOperation("QuantizeAndDequantizeV4Grad", opName);
@@ -17934,12 +17934,12 @@ namespace Emgu.TF
         /// <param name="max_y">Input to the operation. </param>
         /// <param name="Toutput">Toutput</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
         /// [1] min_z(type: DtFloat).
         /// [2] max_z(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedAdd(Output x, Output y, Output min_x, Output max_x, Output min_y, Output max_y, DataType? Toutput = null, String opName = "QuantizedAdd") 
         {
             OperationDescription desc = NewOperation("QuantizedAdd", opName);
@@ -17964,12 +17964,12 @@ namespace Emgu.TF
         /// <param name="strides">strides</param>
         /// <param name="padding">padding</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] min_output(type: DtFloat).
         /// [2] max_output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedAvgPool(Output input, Output min_input, Output max_input, long[] ksize, long[] strides, string padding, String opName = "QuantizedAvgPool") 
         {
             OperationDescription desc = NewOperation("QuantizedAvgPool", opName);
@@ -18004,12 +18004,12 @@ namespace Emgu.TF
         /// <param name="variance_epsilon">variance epsilon</param>
         /// <param name="scale_after_normalization">scale after normalization</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] result(type: DtInvalid).
         /// [1] result_min(type: DtFloat).
         /// [2] result_max(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedBatchNormWithGlobalNormalization(Output t, Output t_min, Output t_max, Output m, Output m_min, Output m_max, Output v, Output v_min, Output v_max, Output beta, Output beta_min, Output beta_max, Output gamma, Output gamma_min, Output gamma_max, DataType out_type, float variance_epsilon, bool scale_after_normalization, String opName = "QuantizedBatchNormWithGlobalNormalization") 
         {
             OperationDescription desc = NewOperation("QuantizedBatchNormWithGlobalNormalization", opName);
@@ -18045,12 +18045,12 @@ namespace Emgu.TF
         /// <param name="max_bias">Input to the operation. </param>
         /// <param name="out_type">out type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] min_out(type: DtFloat).
         /// [2] max_out(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedBiasAdd(Output input, Output bias, Output min_input, Output max_input, Output min_bias, Output max_bias, DataType out_type, String opName = "QuantizedBiasAdd") 
         {
             OperationDescription desc = NewOperation("QuantizedBiasAdd", opName);
@@ -18072,12 +18072,12 @@ namespace Emgu.TF
         /// <param name="input_mins">Input to the operation. </param>
         /// <param name="input_maxes">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] output_min(type: DtFloat).
         /// [2] output_max(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedConcat(Output concat_dim, Output values, Output input_mins, Output input_maxes, String opName = "QuantizedConcat") 
         {
             OperationDescription desc = NewOperation("QuantizedConcat", opName);
@@ -18096,12 +18096,12 @@ namespace Emgu.TF
         /// <param name="input_mins">Input to the operation. </param>
         /// <param name="input_maxes">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] output_min(type: DtFloat).
         /// [2] output_max(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedConcatV2(Output values, Output axis, Output input_mins, Output input_maxes, String opName = "QuantizedConcatV2") 
         {
             OperationDescription desc = NewOperation("QuantizedConcatV2", opName);
@@ -18126,12 +18126,12 @@ namespace Emgu.TF
         /// <param name="out_type">out type</param>
         /// <param name="dilations">dilations</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] min_output(type: DtFloat).
         /// [2] max_output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedConv2D(Output input, Output filter, Output min_input, Output max_input, Output min_filter, Output max_filter, long[] strides, string padding, DataType? out_type = null, long[] dilations = null, String opName = "QuantizedConv2D") 
         {
             OperationDescription desc = NewOperation("QuantizedConv2D", opName);
@@ -18164,12 +18164,12 @@ namespace Emgu.TF
         /// <param name="dilations">dilations</param>
         /// <param name="padding_list">padding list</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] min_output(type: DtFloat).
         /// [2] max_output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedConv2DAndRelu(Output input, Output filter, Output min_input, Output max_input, Output min_filter, Output max_filter, long[] strides, string padding, DataType? out_type = null, long[] dilations = null, long[] padding_list = null, String opName = "QuantizedConv2DAndRelu") 
         {
             OperationDescription desc = NewOperation("QuantizedConv2DAndRelu", opName);
@@ -18205,12 +18205,12 @@ namespace Emgu.TF
         /// <param name="dilations">dilations</param>
         /// <param name="padding_list">padding list</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] min_output(type: DtFloat).
         /// [2] max_output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedConv2DAndReluAndRequantize(Output input, Output filter, Output min_input, Output max_input, Output min_filter, Output max_filter, Output min_freezed_output, Output max_freezed_output, long[] strides, string padding, DataType? out_type = null, long[] dilations = null, long[] padding_list = null, String opName = "QuantizedConv2DAndReluAndRequantize") 
         {
             OperationDescription desc = NewOperation("QuantizedConv2DAndReluAndRequantize", opName);
@@ -18248,12 +18248,12 @@ namespace Emgu.TF
         /// <param name="dilations">dilations</param>
         /// <param name="padding_list">padding list</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] min_output(type: DtFloat).
         /// [2] max_output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedConv2DAndRequantize(Output input, Output filter, Output min_input, Output max_input, Output min_filter, Output max_filter, Output min_freezed_output, Output max_freezed_output, long[] strides, string padding, DataType? out_type = null, long[] dilations = null, long[] padding_list = null, String opName = "QuantizedConv2DAndRequantize") 
         {
             OperationDescription desc = NewOperation("QuantizedConv2DAndRequantize", opName);
@@ -18288,12 +18288,12 @@ namespace Emgu.TF
         /// <param name="out_type">out type</param>
         /// <param name="dilations">dilations</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] min_output(type: DtFloat).
         /// [2] max_output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedConv2DPerChannel(Output input, Output filter, Output min_input, Output max_input, Output min_filter, Output max_filter, long[] strides, string padding, DataType? out_type = null, long[] dilations = null, String opName = "QuantizedConv2DPerChannel") 
         {
             OperationDescription desc = NewOperation("QuantizedConv2DPerChannel", opName);
@@ -18327,12 +18327,12 @@ namespace Emgu.TF
         /// <param name="dilations">dilations</param>
         /// <param name="padding_list">padding list</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] min_output(type: DtFloat).
         /// [2] max_output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedConv2DWithBias(Output input, Output filter, Output bias, Output min_input, Output max_input, Output min_filter, Output max_filter, long[] strides, string padding, DataType? out_type = null, long[] dilations = null, long[] padding_list = null, String opName = "QuantizedConv2DWithBias") 
         {
             OperationDescription desc = NewOperation("QuantizedConv2DWithBias", opName);
@@ -18368,12 +18368,12 @@ namespace Emgu.TF
         /// <param name="dilations">dilations</param>
         /// <param name="padding_list">padding list</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] min_output(type: DtFloat).
         /// [2] max_output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedConv2DWithBiasAndRelu(Output input, Output filter, Output bias, Output min_input, Output max_input, Output min_filter, Output max_filter, long[] strides, string padding, DataType? out_type = null, long[] dilations = null, long[] padding_list = null, String opName = "QuantizedConv2DWithBiasAndRelu") 
         {
             OperationDescription desc = NewOperation("QuantizedConv2DWithBiasAndRelu", opName);
@@ -18411,12 +18411,12 @@ namespace Emgu.TF
         /// <param name="dilations">dilations</param>
         /// <param name="padding_list">padding list</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] min_output(type: DtFloat).
         /// [2] max_output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedConv2DWithBiasAndReluAndRequantize(Output input, Output filter, Output bias, Output min_input, Output max_input, Output min_filter, Output max_filter, Output min_freezed_output, Output max_freezed_output, long[] strides, string padding, DataType? out_type = null, long[] dilations = null, long[] padding_list = null, String opName = "QuantizedConv2DWithBiasAndReluAndRequantize") 
         {
             OperationDescription desc = NewOperation("QuantizedConv2DWithBiasAndReluAndRequantize", opName);
@@ -18456,12 +18456,12 @@ namespace Emgu.TF
         /// <param name="dilations">dilations</param>
         /// <param name="padding_list">padding list</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] min_output(type: DtFloat).
         /// [2] max_output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedConv2DWithBiasAndRequantize(Output input, Output filter, Output bias, Output min_input, Output max_input, Output min_filter, Output max_filter, Output min_freezed_output, Output max_freezed_output, long[] strides, string padding, DataType? out_type = null, long[] dilations = null, long[] padding_list = null, String opName = "QuantizedConv2DWithBiasAndRequantize") 
         {
             OperationDescription desc = NewOperation("QuantizedConv2DWithBiasAndRequantize", opName);
@@ -18504,12 +18504,12 @@ namespace Emgu.TF
         /// <param name="dilations">dilations</param>
         /// <param name="padding_list">padding list</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] min_output(type: DtFloat).
         /// [2] max_output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedConv2DWithBiasSignedSumAndReluAndRequantize(Output input, Output filter, Output bias, Output min_input, Output max_input, Output min_filter, Output max_filter, Output min_freezed_output, Output max_freezed_output, Output summand, Output min_summand, Output max_summand, long[] strides, string padding, DataType? out_type = null, long[] dilations = null, long[] padding_list = null, String opName = "QuantizedConv2DWithBiasSignedSumAndReluAndRequantize") 
         {
             OperationDescription desc = NewOperation("QuantizedConv2DWithBiasSignedSumAndReluAndRequantize", opName);
@@ -18551,12 +18551,12 @@ namespace Emgu.TF
         /// <param name="dilations">dilations</param>
         /// <param name="padding_list">padding list</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] min_output(type: DtFloat).
         /// [2] max_output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedConv2DWithBiasSumAndRelu(Output input, Output filter, Output bias, Output min_input, Output max_input, Output min_filter, Output max_filter, Output summand, long[] strides, string padding, DataType? out_type = null, long[] dilations = null, long[] padding_list = null, String opName = "QuantizedConv2DWithBiasSumAndRelu") 
         {
             OperationDescription desc = NewOperation("QuantizedConv2DWithBiasSumAndRelu", opName);
@@ -18598,12 +18598,12 @@ namespace Emgu.TF
         /// <param name="dilations">dilations</param>
         /// <param name="padding_list">padding list</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] min_output(type: DtFloat).
         /// [2] max_output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedConv2DWithBiasSumAndReluAndRequantize(Output input, Output filter, Output bias, Output min_input, Output max_input, Output min_filter, Output max_filter, Output min_freezed_output, Output max_freezed_output, Output summand, Output min_summand, Output max_summand, long[] strides, string padding, DataType? out_type = null, long[] dilations = null, long[] padding_list = null, String opName = "QuantizedConv2DWithBiasSumAndReluAndRequantize") 
         {
             OperationDescription desc = NewOperation("QuantizedConv2DWithBiasSumAndReluAndRequantize", opName);
@@ -18642,12 +18642,12 @@ namespace Emgu.TF
         /// <param name="out_type">out type</param>
         /// <param name="dilations">dilations</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] min_output(type: DtFloat).
         /// [2] max_output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedDepthwiseConv2D(Output input, Output filter, Output min_input, Output max_input, Output min_filter, Output max_filter, long[] strides, string padding, DataType? out_type = null, long[] dilations = null, String opName = "QuantizedDepthwiseConv2D") 
         {
             OperationDescription desc = NewOperation("QuantizedDepthwiseConv2D", opName);
@@ -18680,12 +18680,12 @@ namespace Emgu.TF
         /// <param name="out_type">out type</param>
         /// <param name="dilations">dilations</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] min_output(type: DtFloat).
         /// [2] max_output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedDepthwiseConv2DWithBias(Output input, Output filter, Output bias, Output min_input, Output max_input, Output min_filter, Output max_filter, long[] strides, string padding, DataType? out_type = null, long[] dilations = null, String opName = "QuantizedDepthwiseConv2DWithBias") 
         {
             OperationDescription desc = NewOperation("QuantizedDepthwiseConv2DWithBias", opName);
@@ -18720,12 +18720,12 @@ namespace Emgu.TF
         /// <param name="dilations">dilations</param>
         /// <param name="padding_list">padding list</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] min_output(type: DtFloat).
         /// [2] max_output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedDepthwiseConv2DWithBiasAndRelu(Output input, Output filter, Output bias, Output min_input, Output max_input, Output min_filter, Output max_filter, long[] strides, string padding, DataType? out_type = null, long[] dilations = null, long[] padding_list = null, String opName = "QuantizedDepthwiseConv2DWithBiasAndRelu") 
         {
             OperationDescription desc = NewOperation("QuantizedDepthwiseConv2DWithBiasAndRelu", opName);
@@ -18763,12 +18763,12 @@ namespace Emgu.TF
         /// <param name="dilations">dilations</param>
         /// <param name="padding_list">padding list</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] min_output(type: DtFloat).
         /// [2] max_output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedDepthwiseConv2DWithBiasAndReluAndRequantize(Output input, Output filter, Output bias, Output min_input, Output max_input, Output min_filter, Output max_filter, Output min_freezed_output, Output max_freezed_output, long[] strides, string padding, DataType? out_type = null, long[] dilations = null, long[] padding_list = null, String opName = "QuantizedDepthwiseConv2DWithBiasAndReluAndRequantize") 
         {
             OperationDescription desc = NewOperation("QuantizedDepthwiseConv2DWithBiasAndReluAndRequantize", opName);
@@ -18802,12 +18802,12 @@ namespace Emgu.TF
         /// <param name="variance_epsilon">variance epsilon</param>
         /// <param name="min_separation">min separation</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
         /// [1] y_min(type: DtFloat).
         /// [2] y_max(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedInstanceNorm(Output x, Output x_min, Output x_max, bool output_range_given = false, float given_y_min = 0f, float given_y_max = 0f, float variance_epsilon = 1E-05f, float min_separation = 0.001f, String opName = "QuantizedInstanceNorm") 
         {
             OperationDescription desc = NewOperation("QuantizedInstanceNorm", opName);
@@ -18841,12 +18841,12 @@ namespace Emgu.TF
         /// <param name="transpose_b">transpose b</param>
         /// <param name="Tactivation">Tactivation</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
         /// [1] min_out(type: DtFloat).
         /// [2] max_out(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedMatMul(Output a, Output b, Output min_a, Output max_a, Output min_b, Output max_b, DataType? Toutput = null, bool transpose_a = false, bool transpose_b = false, DataType? Tactivation = null, String opName = "QuantizedMatMul") 
         {
             OperationDescription desc = NewOperation("QuantizedMatMul", opName);
@@ -18882,12 +18882,12 @@ namespace Emgu.TF
         /// <param name="transpose_b">transpose b</param>
         /// <param name="input_quant_mode">input quant mode</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
         /// [1] min_out(type: DtFloat).
         /// [2] max_out(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedMatMulWithBias(Output a, Output b, Output bias, Output min_a, Output max_a, Output min_b, Output max_b, DataType? Toutput = null, bool transpose_a = false, bool transpose_b = false, string input_quant_mode = null, String opName = "QuantizedMatMulWithBias") 
         {
             OperationDescription desc = NewOperation("QuantizedMatMulWithBias", opName);
@@ -18926,10 +18926,10 @@ namespace Emgu.TF
         /// <param name="transpose_b">transpose b</param>
         /// <param name="input_quant_mode">input quant mode</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation QuantizedMatMulWithBiasAndDequantize(Output a, Output b, Output bias, Output min_a, Output max_a, Output min_b, Output max_b, Output min_freezed_output, Output max_freezed_output, DataType Toutput, bool transpose_a = false, bool transpose_b = false, string input_quant_mode = null, String opName = "QuantizedMatMulWithBiasAndDequantize") 
         {
             OperationDescription desc = NewOperation("QuantizedMatMulWithBiasAndDequantize", opName);
@@ -18967,12 +18967,12 @@ namespace Emgu.TF
         /// <param name="transpose_b">transpose b</param>
         /// <param name="input_quant_mode">input quant mode</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
         /// [1] min_out(type: DtFloat).
         /// [2] max_out(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedMatMulWithBiasAndRelu(Output a, Output b, Output bias, Output min_a, Output max_a, Output min_b, Output max_b, DataType? Toutput = null, bool transpose_a = false, bool transpose_b = false, string input_quant_mode = null, String opName = "QuantizedMatMulWithBiasAndRelu") 
         {
             OperationDescription desc = NewOperation("QuantizedMatMulWithBiasAndRelu", opName);
@@ -19011,12 +19011,12 @@ namespace Emgu.TF
         /// <param name="transpose_b">transpose b</param>
         /// <param name="input_quant_mode">input quant mode</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
         /// [1] min_out(type: DtFloat).
         /// [2] max_out(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedMatMulWithBiasAndReluAndRequantize(Output a, Output b, Output bias, Output min_a, Output max_a, Output min_b, Output max_b, Output min_freezed_output, Output max_freezed_output, DataType? Toutput = null, bool transpose_a = false, bool transpose_b = false, string input_quant_mode = null, String opName = "QuantizedMatMulWithBiasAndReluAndRequantize") 
         {
             OperationDescription desc = NewOperation("QuantizedMatMulWithBiasAndReluAndRequantize", opName);
@@ -19057,12 +19057,12 @@ namespace Emgu.TF
         /// <param name="transpose_b">transpose b</param>
         /// <param name="input_quant_mode">input quant mode</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
         /// [1] min_out(type: DtFloat).
         /// [2] max_out(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedMatMulWithBiasAndRequantize(Output a, Output b, Output bias, Output min_a, Output max_a, Output min_b, Output max_b, Output min_freezed_output, Output max_freezed_output, DataType? Toutput = null, bool transpose_a = false, bool transpose_b = false, string input_quant_mode = null, String opName = "QuantizedMatMulWithBiasAndRequantize") 
         {
             OperationDescription desc = NewOperation("QuantizedMatMulWithBiasAndRequantize", opName);
@@ -19096,12 +19096,12 @@ namespace Emgu.TF
         /// <param name="strides">strides</param>
         /// <param name="padding">padding</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] min_output(type: DtFloat).
         /// [2] max_output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedMaxPool(Output input, Output min_input, Output max_input, long[] ksize, long[] strides, string padding, String opName = "QuantizedMaxPool") 
         {
             OperationDescription desc = NewOperation("QuantizedMaxPool", opName);
@@ -19125,12 +19125,12 @@ namespace Emgu.TF
         /// <param name="max_y">Input to the operation. </param>
         /// <param name="Toutput">Toutput</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
         /// [1] min_z(type: DtFloat).
         /// [2] max_z(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedMul(Output x, Output y, Output min_x, Output max_x, Output min_y, Output max_y, DataType? Toutput = null, String opName = "QuantizedMul") 
         {
             OperationDescription desc = NewOperation("QuantizedMul", opName);
@@ -19153,12 +19153,12 @@ namespace Emgu.TF
         /// <param name="input_max">Input to the operation. </param>
         /// <param name="out_type">out type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] output_min(type: DtFloat).
         /// [2] output_max(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizeDownAndShrinkRange(Output input, Output input_min, Output input_max, DataType out_type, String opName = "QuantizeDownAndShrinkRange") 
         {
             OperationDescription desc = NewOperation("QuantizeDownAndShrinkRange", opName);
@@ -19177,12 +19177,12 @@ namespace Emgu.TF
         /// <param name="max_features">Input to the operation. </param>
         /// <param name="out_type">out type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] activations(type: DtInvalid).
         /// [1] min_activations(type: DtFloat).
         /// [2] max_activations(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedRelu(Output features, Output min_features, Output max_features, DataType? out_type = null, String opName = "QuantizedRelu") 
         {
             OperationDescription desc = NewOperation("QuantizedRelu", opName);
@@ -19202,12 +19202,12 @@ namespace Emgu.TF
         /// <param name="max_features">Input to the operation. </param>
         /// <param name="out_type">out type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] activations(type: DtInvalid).
         /// [1] min_activations(type: DtFloat).
         /// [2] max_activations(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedRelu6(Output features, Output min_features, Output max_features, DataType? out_type = null, String opName = "QuantizedRelu6") 
         {
             OperationDescription desc = NewOperation("QuantizedRelu6", opName);
@@ -19228,12 +19228,12 @@ namespace Emgu.TF
         /// <param name="max_features">Input to the operation. </param>
         /// <param name="out_type">out type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] activations(type: DtInvalid).
         /// [1] min_activations(type: DtFloat).
         /// [2] max_activations(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedReluX(Output features, Output max_value, Output min_features, Output max_features, DataType? out_type = null, String opName = "QuantizedReluX") 
         {
             OperationDescription desc = NewOperation("QuantizedReluX", opName);
@@ -19254,12 +19254,12 @@ namespace Emgu.TF
         /// <param name="input_min">Input to the operation. </param>
         /// <param name="input_max">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] output_min(type: DtFloat).
         /// [2] output_max(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedReshape(Output tensor, Output shape, Output input_min, Output input_max, String opName = "QuantizedReshape") 
         {
             OperationDescription desc = NewOperation("QuantizedReshape", opName);
@@ -19280,12 +19280,12 @@ namespace Emgu.TF
         /// <param name="align_corners">align corners</param>
         /// <param name="half_pixel_centers">half pixel centers</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] resized_images(type: DtInvalid).
         /// [1] out_min(type: DtFloat).
         /// [2] out_max(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizedResizeBilinear(Output images, Output size, Output min, Output max, bool align_corners = false, bool half_pixel_centers = false, String opName = "QuantizedResizeBilinear") 
         {
             OperationDescription desc = NewOperation("QuantizedResizeBilinear", opName);
@@ -19313,12 +19313,12 @@ namespace Emgu.TF
         /// <param name="axis">axis</param>
         /// <param name="ensure_minimum_range">ensure minimum range</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] output_min(type: DtFloat).
         /// [2] output_max(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation QuantizeV2(Output input, Output min_range, Output max_range, DataType T, string mode = null, string round_mode = null, bool narrow_range = false, long axis = -1, float ensure_minimum_range = 0.01f, String opName = "QuantizeV2") 
         {
             OperationDescription desc = NewOperation("QuantizeV2", opName);
@@ -19345,7 +19345,7 @@ namespace Emgu.TF
         /// <param name="handle">Input to the operation. </param>
         /// <param name="cancel_pending_enqueues">cancel pending enqueues</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation QueueClose(Output handle, bool cancel_pending_enqueues = false, String opName = "QueueClose") 
         {
             OperationDescription desc = NewOperation("QueueClose", opName);
@@ -19361,7 +19361,7 @@ namespace Emgu.TF
         /// <param name="handle">Input to the operation. </param>
         /// <param name="cancel_pending_enqueues">cancel pending enqueues</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation QueueCloseV2(Output handle, bool cancel_pending_enqueues = false, String opName = "QueueCloseV2") 
         {
             OperationDescription desc = NewOperation("QueueCloseV2", opName);
@@ -19378,10 +19378,10 @@ namespace Emgu.TF
         /// <param name="component_types">component types</param>
         /// <param name="timeout_ms">timeout ms</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] components(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation QueueDequeue(Output handle, DataType[] component_types, long timeout_ms = -1, String opName = "QueueDequeue") 
         {
             OperationDescription desc = NewOperation("QueueDequeue", opName);
@@ -19400,10 +19400,10 @@ namespace Emgu.TF
         /// <param name="component_types">component types</param>
         /// <param name="timeout_ms">timeout ms</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] components(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation QueueDequeueMany(Output handle, Output n, DataType[] component_types, long timeout_ms = -1, String opName = "QueueDequeueMany") 
         {
             OperationDescription desc = NewOperation("QueueDequeueMany", opName);
@@ -19423,10 +19423,10 @@ namespace Emgu.TF
         /// <param name="component_types">component types</param>
         /// <param name="timeout_ms">timeout ms</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] components(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation QueueDequeueManyV2(Output handle, Output n, DataType[] component_types, long timeout_ms = -1, String opName = "QueueDequeueManyV2") 
         {
             OperationDescription desc = NewOperation("QueueDequeueManyV2", opName);
@@ -19446,10 +19446,10 @@ namespace Emgu.TF
         /// <param name="component_types">component types</param>
         /// <param name="timeout_ms">timeout ms</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] components(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation QueueDequeueUpTo(Output handle, Output n, DataType[] component_types, long timeout_ms = -1, String opName = "QueueDequeueUpTo") 
         {
             OperationDescription desc = NewOperation("QueueDequeueUpTo", opName);
@@ -19469,10 +19469,10 @@ namespace Emgu.TF
         /// <param name="component_types">component types</param>
         /// <param name="timeout_ms">timeout ms</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] components(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation QueueDequeueUpToV2(Output handle, Output n, DataType[] component_types, long timeout_ms = -1, String opName = "QueueDequeueUpToV2") 
         {
             OperationDescription desc = NewOperation("QueueDequeueUpToV2", opName);
@@ -19491,10 +19491,10 @@ namespace Emgu.TF
         /// <param name="component_types">component types</param>
         /// <param name="timeout_ms">timeout ms</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] components(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation QueueDequeueV2(Output handle, DataType[] component_types, long timeout_ms = -1, String opName = "QueueDequeueV2") 
         {
             OperationDescription desc = NewOperation("QueueDequeueV2", opName);
@@ -19512,7 +19512,7 @@ namespace Emgu.TF
         /// <param name="components">Input to the operation. </param>
         /// <param name="timeout_ms">timeout ms</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation QueueEnqueue(Output handle, Output components, long timeout_ms = -1, String opName = "QueueEnqueue") 
         {
             OperationDescription desc = NewOperation("QueueEnqueue", opName);
@@ -19530,7 +19530,7 @@ namespace Emgu.TF
         /// <param name="components">Input to the operation. </param>
         /// <param name="timeout_ms">timeout ms</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation QueueEnqueueMany(Output handle, Output components, long timeout_ms = -1, String opName = "QueueEnqueueMany") 
         {
             OperationDescription desc = NewOperation("QueueEnqueueMany", opName);
@@ -19548,7 +19548,7 @@ namespace Emgu.TF
         /// <param name="components">Input to the operation. </param>
         /// <param name="timeout_ms">timeout ms</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation QueueEnqueueManyV2(Output handle, Output components, long timeout_ms = -1, String opName = "QueueEnqueueManyV2") 
         {
             OperationDescription desc = NewOperation("QueueEnqueueManyV2", opName);
@@ -19566,7 +19566,7 @@ namespace Emgu.TF
         /// <param name="components">Input to the operation. </param>
         /// <param name="timeout_ms">timeout ms</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation QueueEnqueueV2(Output handle, Output components, long timeout_ms = -1, String opName = "QueueEnqueueV2") 
         {
             OperationDescription desc = NewOperation("QueueEnqueueV2", opName);
@@ -19582,10 +19582,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] is_closed(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation QueueIsClosed(Output handle, String opName = "QueueIsClosed") 
         {
             OperationDescription desc = NewOperation("QueueIsClosed", opName);
@@ -19598,10 +19598,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] is_closed(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation QueueIsClosedV2(Output handle, String opName = "QueueIsClosedV2") 
         {
             OperationDescription desc = NewOperation("QueueIsClosedV2", opName);
@@ -19614,10 +19614,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] size(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation QueueSize(Output handle, String opName = "QueueSize") 
         {
             OperationDescription desc = NewOperation("QueueSize", opName);
@@ -19630,10 +19630,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] size(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation QueueSizeV2(Output handle, String opName = "QueueSizeV2") 
         {
             OperationDescription desc = NewOperation("QueueSizeV2", opName);
@@ -19650,10 +19650,10 @@ namespace Emgu.TF
         /// <param name="weights">Input to the operation. </param>
         /// <param name="binary_output">binary output</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RaggedBincount(Output splits, Output values, Output size, Output weights, bool binary_output = false, String opName = "RaggedBincount") 
         {
             OperationDescription desc = NewOperation("RaggedBincount", opName);
@@ -19676,12 +19676,12 @@ namespace Emgu.TF
         /// <param name="minlength">minlength</param>
         /// <param name="maxlength">maxlength</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_indices(type: DtInt64).
         /// [1] output_values(type: DtInvalid).
         /// [2] output_dense_shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation RaggedCountSparseOutput(Output splits, Output values, Output weights, bool binary_output, long minlength = -1, long maxlength = -1, String opName = "RaggedCountSparseOutput") 
         {
             OperationDescription desc = NewOperation("RaggedCountSparseOutput", opName);
@@ -19712,11 +19712,11 @@ namespace Emgu.TF
         /// <param name="out_values_type">out values type</param>
         /// <param name="out_row_splits_type">out row splits type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_values(type: DtInvalid).
         /// [1] output_row_splits(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RaggedCross(Output ragged_values, Output ragged_row_splits, Output sparse_indices, Output sparse_values, Output sparse_shape, Output dense_inputs, string input_order, bool hashed_output, long num_buckets, long hash_key, DataType out_values_type, DataType out_row_splits_type, String opName = "RaggedCross") 
         {
             OperationDescription desc = NewOperation("RaggedCross", opName);
@@ -19743,11 +19743,11 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="OUTPUT_RAGGED_RANK">OUTPUT RAGGED RANK</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_nested_splits(type: DtInvalid).
         /// [1] output_dense_values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RaggedGather(Output params_nested_splits, Output params_dense_values, Output indices, long OUTPUT_RAGGED_RANK, String opName = "RaggedGather") 
         {
             OperationDescription desc = NewOperation("RaggedGather", opName);
@@ -19766,11 +19766,11 @@ namespace Emgu.TF
         /// <param name="deltas">Input to the operation. </param>
         /// <param name="Tsplits">Tsplits</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] rt_nested_splits(type: DtInvalid).
         /// [1] rt_dense_values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RaggedRange(Output starts, Output limits, Output deltas, DataType? Tsplits = null, String opName = "RaggedRange") 
         {
             OperationDescription desc = NewOperation("RaggedRange", opName);
@@ -19791,11 +19791,11 @@ namespace Emgu.TF
         /// <param name="Tvalues">Tvalues</param>
         /// <param name="Tsplits">Tsplits</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_nested_splits(type: DtInvalid).
         /// [1] output_dense_values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RaggedTensorFromVariant(Output encoded_ragged, long input_ragged_rank, long output_ragged_rank, DataType Tvalues, DataType? Tsplits = null, String opName = "RaggedTensorFromVariant") 
         {
             OperationDescription desc = NewOperation("RaggedTensorFromVariant", opName);
@@ -19814,12 +19814,12 @@ namespace Emgu.TF
         /// <param name="rt_nested_splits">Input to the operation. </param>
         /// <param name="rt_dense_values">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sparse_indices(type: DtInt64).
         /// [1] sparse_values(type: DtInvalid).
         /// [2] sparse_dense_shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation RaggedTensorToSparse(Output rt_nested_splits, Output rt_dense_values, String opName = "RaggedTensorToSparse") 
         {
             OperationDescription desc = NewOperation("RaggedTensorToSparse", opName);
@@ -19837,10 +19837,10 @@ namespace Emgu.TF
         /// <param name="row_partition_tensors">Input to the operation. </param>
         /// <param name="row_partition_types">row partition types</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] result(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RaggedTensorToTensor(Output shape, Output values, Output default_value, Output row_partition_tensors, string[] row_partition_types, String opName = "RaggedTensorToTensor") 
         {
             OperationDescription desc = NewOperation("RaggedTensorToTensor", opName);
@@ -19859,10 +19859,10 @@ namespace Emgu.TF
         /// <param name="rt_dense_values">Input to the operation. </param>
         /// <param name="batched_input">batched input</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] encoded_ragged(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation RaggedTensorToVariant(Output rt_nested_splits, Output rt_dense_values, bool batched_input, String opName = "RaggedTensorToVariant") 
         {
             OperationDescription desc = NewOperation("RaggedTensorToVariant", opName);
@@ -19880,10 +19880,10 @@ namespace Emgu.TF
         /// <param name="dense_values_shape">Input to the operation. </param>
         /// <param name="Tvalues">Tvalues</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] dense_values_grad(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RaggedTensorToVariantGradient(Output encoded_ragged_grad, Output row_splits, Output dense_values_shape, DataType Tvalues, String opName = "RaggedTensorToVariantGradient") 
         {
             OperationDescription desc = NewOperation("RaggedTensorToVariantGradient", opName);
@@ -19902,10 +19902,10 @@ namespace Emgu.TF
         /// <param name="seed">seed</param>
         /// <param name="seed2">seed2</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RandomCrop(Output image, Output size, long seed = 0, long seed2 = 0, String opName = "RandomCrop") 
         {
             OperationDescription desc = NewOperation("RandomCrop", opName);
@@ -19926,10 +19926,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation RandomDataset(Output seed, Output seed2, DataType[] output_types, long[][] output_shapes, String opName = "RandomDataset") 
         {
             OperationDescription desc = NewOperation("RandomDataset", opName);
@@ -19948,10 +19948,10 @@ namespace Emgu.TF
         /// <param name="seed">seed</param>
         /// <param name="seed2">seed2</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RandomGamma(Output shape, Output alpha, long seed = 0, long seed2 = 0, String opName = "RandomGamma") 
         {
             OperationDescription desc = NewOperation("RandomGamma", opName);
@@ -19970,10 +19970,10 @@ namespace Emgu.TF
         /// <param name="alpha">Input to the operation. </param>
         /// <param name="sample">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RandomGammaGrad(Output alpha, Output sample, String opName = "RandomGammaGrad") 
         {
             OperationDescription desc = NewOperation("RandomGammaGrad", opName);
@@ -19990,10 +19990,10 @@ namespace Emgu.TF
         /// <param name="seed">seed</param>
         /// <param name="seed2">seed2</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RandomPoisson(Output shape, Output rate, long seed = 0, long seed2 = 0, String opName = "RandomPoisson") 
         {
             OperationDescription desc = NewOperation("RandomPoisson", opName);
@@ -20015,10 +20015,10 @@ namespace Emgu.TF
         /// <param name="seed2">seed2</param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RandomPoissonV2(Output shape, Output rate, long seed = 0, long seed2 = 0, DataType? dtype = null, String opName = "RandomPoissonV2") 
         {
             OperationDescription desc = NewOperation("RandomPoissonV2", opName);
@@ -20040,10 +20040,10 @@ namespace Emgu.TF
         /// <param name="seed">seed</param>
         /// <param name="seed2">seed2</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RandomShuffle(Output value, long seed = 0, long seed2 = 0, String opName = "RandomShuffle") 
         {
             OperationDescription desc = NewOperation("RandomShuffle", opName);
@@ -20067,10 +20067,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation RandomShuffleQueue(DataType[] component_types, long[][] shapes = null, long capacity = -1, long min_after_dequeue = 0, long seed = 0, long seed2 = 0, string container = null, string shared_name = null, String opName = "RandomShuffleQueue") 
         {
             OperationDescription desc = NewOperation("RandomShuffleQueue", opName);
@@ -20103,10 +20103,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation RandomShuffleQueueV2(DataType[] component_types, long[][] shapes = null, long capacity = -1, long min_after_dequeue = 0, long seed = 0, long seed2 = 0, string container = null, string shared_name = null, String opName = "RandomShuffleQueueV2") 
         {
             OperationDescription desc = NewOperation("RandomShuffleQueueV2", opName);
@@ -20135,10 +20135,10 @@ namespace Emgu.TF
         /// <param name="seed">seed</param>
         /// <param name="seed2">seed2</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RandomStandardNormal(Output shape, DataType dtype, long seed = 0, long seed2 = 0, String opName = "RandomStandardNormal") 
         {
             OperationDescription desc = NewOperation("RandomStandardNormal", opName);
@@ -20159,10 +20159,10 @@ namespace Emgu.TF
         /// <param name="seed">seed</param>
         /// <param name="seed2">seed2</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RandomUniform(Output shape, DataType dtype, long seed = 0, long seed2 = 0, String opName = "RandomUniform") 
         {
             OperationDescription desc = NewOperation("RandomUniform", opName);
@@ -20184,10 +20184,10 @@ namespace Emgu.TF
         /// <param name="seed">seed</param>
         /// <param name="seed2">seed2</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RandomUniformInt(Output shape, Output minval, Output maxval, long seed = 0, long seed2 = 0, String opName = "RandomUniformInt") 
         {
             OperationDescription desc = NewOperation("RandomUniformInt", opName);
@@ -20208,10 +20208,10 @@ namespace Emgu.TF
         /// <param name="limit">Input to the operation. </param>
         /// <param name="delta">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Range(Output start, Output limit, Output delta, String opName = "Range") 
         {
             OperationDescription desc = NewOperation("Range", opName);
@@ -20230,10 +20230,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation RangeDataset(Output start, Output stop, Output step, DataType[] output_types, long[][] output_shapes, String opName = "RangeDataset") 
         {
             OperationDescription desc = NewOperation("RangeDataset", opName);
@@ -20250,10 +20250,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation Rank(Output input, String opName = "Rank") 
         {
             OperationDescription desc = NewOperation("Rank", opName);
@@ -20266,10 +20266,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="reader_handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] records_produced(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation ReaderNumRecordsProduced(Output reader_handle, String opName = "ReaderNumRecordsProduced") 
         {
             OperationDescription desc = NewOperation("ReaderNumRecordsProduced", opName);
@@ -20282,10 +20282,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="reader_handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] records_produced(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation ReaderNumRecordsProducedV2(Output reader_handle, String opName = "ReaderNumRecordsProducedV2") 
         {
             OperationDescription desc = NewOperation("ReaderNumRecordsProducedV2", opName);
@@ -20298,10 +20298,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="reader_handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] units_completed(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation ReaderNumWorkUnitsCompleted(Output reader_handle, String opName = "ReaderNumWorkUnitsCompleted") 
         {
             OperationDescription desc = NewOperation("ReaderNumWorkUnitsCompleted", opName);
@@ -20314,10 +20314,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="reader_handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] units_completed(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation ReaderNumWorkUnitsCompletedV2(Output reader_handle, String opName = "ReaderNumWorkUnitsCompletedV2") 
         {
             OperationDescription desc = NewOperation("ReaderNumWorkUnitsCompletedV2", opName);
@@ -20331,11 +20331,11 @@ namespace Emgu.TF
         /// <param name="reader_handle">Input to the operation. </param>
         /// <param name="queue_handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] key(type: DtString).
         /// [1] value(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation ReaderRead(Output reader_handle, Output queue_handle, String opName = "ReaderRead") 
         {
             OperationDescription desc = NewOperation("ReaderRead", opName);
@@ -20351,11 +20351,11 @@ namespace Emgu.TF
         /// <param name="queue_handle">Input to the operation. </param>
         /// <param name="num_records">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] keys(type: DtString).
         /// [1] values(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation ReaderReadUpTo(Output reader_handle, Output queue_handle, Output num_records, String opName = "ReaderReadUpTo") 
         {
             OperationDescription desc = NewOperation("ReaderReadUpTo", opName);
@@ -20372,11 +20372,11 @@ namespace Emgu.TF
         /// <param name="queue_handle">Input to the operation. </param>
         /// <param name="num_records">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] keys(type: DtString).
         /// [1] values(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation ReaderReadUpToV2(Output reader_handle, Output queue_handle, Output num_records, String opName = "ReaderReadUpToV2") 
         {
             OperationDescription desc = NewOperation("ReaderReadUpToV2", opName);
@@ -20392,11 +20392,11 @@ namespace Emgu.TF
         /// <param name="reader_handle">Input to the operation. </param>
         /// <param name="queue_handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] key(type: DtString).
         /// [1] value(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation ReaderReadV2(Output reader_handle, Output queue_handle, String opName = "ReaderReadV2") 
         {
             OperationDescription desc = NewOperation("ReaderReadV2", opName);
@@ -20410,7 +20410,7 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="reader_handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ReaderReset(Output reader_handle, String opName = "ReaderReset") 
         {
             OperationDescription desc = NewOperation("ReaderReset", opName);
@@ -20423,7 +20423,7 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="reader_handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ReaderResetV2(Output reader_handle, String opName = "ReaderResetV2") 
         {
             OperationDescription desc = NewOperation("ReaderResetV2", opName);
@@ -20437,7 +20437,7 @@ namespace Emgu.TF
         /// <param name="reader_handle">Input to the operation. </param>
         /// <param name="state">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ReaderRestoreState(Output reader_handle, Output state, String opName = "ReaderRestoreState") 
         {
             OperationDescription desc = NewOperation("ReaderRestoreState", opName);
@@ -20452,7 +20452,7 @@ namespace Emgu.TF
         /// <param name="reader_handle">Input to the operation. </param>
         /// <param name="state">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ReaderRestoreStateV2(Output reader_handle, Output state, String opName = "ReaderRestoreStateV2") 
         {
             OperationDescription desc = NewOperation("ReaderRestoreStateV2", opName);
@@ -20466,10 +20466,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="reader_handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] state(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation ReaderSerializeState(Output reader_handle, String opName = "ReaderSerializeState") 
         {
             OperationDescription desc = NewOperation("ReaderSerializeState", opName);
@@ -20482,10 +20482,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="reader_handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] state(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation ReaderSerializeStateV2(Output reader_handle, String opName = "ReaderSerializeStateV2") 
         {
             OperationDescription desc = NewOperation("ReaderSerializeStateV2", opName);
@@ -20498,10 +20498,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="filename">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] contents(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation ReadFile(Output filename, String opName = "ReadFile") 
         {
             OperationDescription desc = NewOperation("ReadFile", opName);
@@ -20515,10 +20515,10 @@ namespace Emgu.TF
         /// <param name="resource">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] value(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ReadVariableOp(Output resource, DataType dtype, String opName = "ReadVariableOp") 
         {
             OperationDescription desc = NewOperation("ReadVariableOp", opName);
@@ -20533,10 +20533,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="Tout">Tout</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Real(Output input, DataType? Tout = null, String opName = "Real") 
         {
             OperationDescription desc = NewOperation("Real", opName);
@@ -20552,10 +20552,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RealDiv(Output x, Output y, String opName = "RealDiv") 
         {
             OperationDescription desc = NewOperation("RealDiv", opName);
@@ -20573,10 +20573,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="use_fallback">use fallback</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation RebatchDataset(Output input_dataset, Output num_replicas, DataType[] output_types, long[][] output_shapes, bool use_fallback = true, String opName = "RebatchDataset") 
         {
             OperationDescription desc = NewOperation("RebatchDataset", opName);
@@ -20598,10 +20598,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation RebatchDatasetV2(Output input_dataset, Output batch_sizes, Output drop_remainder, DataType[] output_types, long[][] output_shapes, String opName = "RebatchDatasetV2") 
         {
             OperationDescription desc = NewOperation("RebatchDatasetV2", opName);
@@ -20618,10 +20618,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Reciprocal(Output x, String opName = "Reciprocal") 
         {
             OperationDescription desc = NewOperation("Reciprocal", opName);
@@ -20635,10 +20635,10 @@ namespace Emgu.TF
         /// <param name="y">Input to the operation. </param>
         /// <param name="dy">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ReciprocalGrad(Output y, Output dy, String opName = "ReciprocalGrad") 
         {
             OperationDescription desc = NewOperation("ReciprocalGrad", opName);
@@ -20658,10 +20658,10 @@ namespace Emgu.TF
         /// <param name="batch_size">batch size</param>
         /// <param name="compression_type">compression type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] records(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation RecordInput(string file_pattern, long file_random_seed = 301, float file_shuffle_shift_ratio = 0f, long file_buffer_size = 10000, long file_parallelism = 16, long batch_size = 32, string compression_type = null, String opName = "RecordInput") 
         {
             OperationDescription desc = NewOperation("RecordInput", opName);
@@ -20691,10 +20691,10 @@ namespace Emgu.TF
         /// <param name="recv_device">recv device</param>
         /// <param name="client_terminated">client terminated</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] tensor(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Recv(DataType tensor_type, string tensor_name, string send_device, long send_device_incarnation, string recv_device, bool client_terminated = false, String opName = "Recv") 
         {
             OperationDescription desc = NewOperation("Recv", opName);
@@ -20714,10 +20714,10 @@ namespace Emgu.TF
         /// <param name="num_outputs">num outputs</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] outputs(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RecvTPUEmbeddingActivations(long num_outputs, string config, String opName = "RecvTPUEmbeddingActivations") 
         {
             OperationDescription desc = NewOperation("RecvTPUEmbeddingActivations", opName);
@@ -20736,10 +20736,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="use_inter_op_parallelism">use inter op parallelism</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] components(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation ReduceDataset(Output input_dataset, Output initial_state, Output other_arguments, DataType[] output_types, long[][] output_shapes, bool use_inter_op_parallelism = true, String opName = "ReduceDataset") 
         {
@@ -20762,10 +20762,10 @@ namespace Emgu.TF
         /// <param name="keep_dims">keep dims</param>
         /// <param name="separator">separator</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation ReduceJoin(Output inputs, Output reduction_indices, bool keep_dims = false, string separator = null, String opName = "ReduceJoin") 
         {
             OperationDescription desc = NewOperation("ReduceJoin", opName);
@@ -20786,10 +20786,10 @@ namespace Emgu.TF
         /// <param name="is_constant">is constant</param>
         /// <param name="parallel_iterations">parallel iterations</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RefEnter(Output data, string frame_name, bool is_constant = false, long parallel_iterations = 10, String opName = "RefEnter") 
         {
             OperationDescription desc = NewOperation("RefEnter", opName);
@@ -20807,10 +20807,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="data">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RefExit(Output data, String opName = "RefExit") 
         {
             OperationDescription desc = NewOperation("RefExit", opName);
@@ -20823,10 +20823,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RefIdentity(Output input, String opName = "RefIdentity") 
         {
             OperationDescription desc = NewOperation("RefIdentity", opName);
@@ -20839,11 +20839,11 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="inputs">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] value_index(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation RefMerge(Output inputs, String opName = "RefMerge") 
         {
             OperationDescription desc = NewOperation("RefMerge", opName);
@@ -20856,10 +20856,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="data">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RefNextIteration(Output data, String opName = "RefNextIteration") 
         {
             OperationDescription desc = NewOperation("RefNextIteration", opName);
@@ -20873,10 +20873,10 @@ namespace Emgu.TF
         /// <param name="index">Input to the operation. </param>
         /// <param name="inputs">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RefSelect(Output index, Output inputs, String opName = "RefSelect") 
         {
             OperationDescription desc = NewOperation("RefSelect", opName);
@@ -20891,11 +20891,11 @@ namespace Emgu.TF
         /// <param name="data">Input to the operation. </param>
         /// <param name="pred">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_false(type: DtInvalid).
         /// [1] output_true(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RefSwitch(Output data, Output pred, String opName = "RefSwitch") 
         {
             OperationDescription desc = NewOperation("RefSwitch", opName);
@@ -20910,10 +20910,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="pattern">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation RegexFullMatch(Output input, Output pattern, String opName = "RegexFullMatch") 
         {
             OperationDescription desc = NewOperation("RegexFullMatch", opName);
@@ -20930,10 +20930,10 @@ namespace Emgu.TF
         /// <param name="rewrite">Input to the operation. </param>
         /// <param name="replace_global">replace global</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation RegexReplace(Output input, Output pattern, Output rewrite, bool replace_global = true, String opName = "RegexReplace") 
         {
             OperationDescription desc = NewOperation("RegexReplace", opName);
@@ -20953,10 +20953,10 @@ namespace Emgu.TF
         /// <param name="protocol">Input to the operation. </param>
         /// <param name="external_state_policy">external state policy</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] dataset_id(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation RegisterDataset(Output dataset, Output address, Output protocol, long external_state_policy, String opName = "RegisterDataset") 
         {
             OperationDescription desc = NewOperation("RegisterDataset", opName);
@@ -20972,10 +20972,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="features">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] activations(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Relu(Output features, String opName = "Relu") 
         {
             OperationDescription desc = NewOperation("Relu", opName);
@@ -20988,10 +20988,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="features">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] activations(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Relu6(Output features, String opName = "Relu6") 
         {
             OperationDescription desc = NewOperation("Relu6", opName);
@@ -21005,10 +21005,10 @@ namespace Emgu.TF
         /// <param name="gradients">Input to the operation. </param>
         /// <param name="features">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] backprops(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Relu6Grad(Output gradients, Output features, String opName = "Relu6Grad") 
         {
             OperationDescription desc = NewOperation("Relu6Grad", opName);
@@ -21023,10 +21023,10 @@ namespace Emgu.TF
         /// <param name="gradients">Input to the operation. </param>
         /// <param name="features">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] backprops(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ReluGrad(Output gradients, Output features, String opName = "ReluGrad") 
         {
             OperationDescription desc = NewOperation("ReluGrad", opName);
@@ -21042,10 +21042,10 @@ namespace Emgu.TF
         /// <param name="args">Input to the operation. </param>
         /// <param name="Tout">Tout</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation RemoteCall(Output target, Output args, DataType[] Tout, String opName = "RemoteCall") 
         {
@@ -21064,10 +21064,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation RepeatDataset(Output input_dataset, Output count, DataType[] output_types, long[][] output_shapes, String opName = "RepeatDataset") 
         {
             OperationDescription desc = NewOperation("RepeatDataset", opName);
@@ -21085,11 +21085,11 @@ namespace Emgu.TF
         /// <param name="input_min">Input to the operation. </param>
         /// <param name="input_max">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_min(type: DtFloat).
         /// [1] output_max(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RequantizationRange(Output input, Output input_min, Output input_max, String opName = "RequantizationRange") 
         {
             OperationDescription desc = NewOperation("RequantizationRange", opName);
@@ -21107,11 +21107,11 @@ namespace Emgu.TF
         /// <param name="input_max">Input to the operation. </param>
         /// <param name="clip_value_max">clip value max</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_min(type: DtFloat).
         /// [1] output_max(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RequantizationRangePerChannel(Output input, Output input_min, Output input_max, float clip_value_max, String opName = "RequantizationRangePerChannel") 
         {
             OperationDescription desc = NewOperation("RequantizationRangePerChannel", opName);
@@ -21132,12 +21132,12 @@ namespace Emgu.TF
         /// <param name="requested_output_max">Input to the operation. </param>
         /// <param name="out_type">out type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] output_min(type: DtFloat).
         /// [2] output_max(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation Requantize(Output input, Output input_min, Output input_max, Output requested_output_min, Output requested_output_max, DataType out_type, String opName = "Requantize") 
         {
             OperationDescription desc = NewOperation("Requantize", opName);
@@ -21160,12 +21160,12 @@ namespace Emgu.TF
         /// <param name="requested_output_max">Input to the operation. </param>
         /// <param name="out_type">out type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
         /// [1] output_min(type: DtFloat).
         /// [2] output_max(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RequantizePerChannel(Output input, Output input_min, Output input_max, Output requested_output_min, Output requested_output_max, DataType? out_type = null, String opName = "RequantizePerChannel") 
         {
             OperationDescription desc = NewOperation("RequantizePerChannel", opName);
@@ -21185,10 +21185,10 @@ namespace Emgu.TF
         /// <param name="tensor">Input to the operation. </param>
         /// <param name="shape">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Reshape(Output tensor, Output shape, String opName = "Reshape") 
         {
             OperationDescription desc = NewOperation("Reshape", opName);
@@ -21204,10 +21204,10 @@ namespace Emgu.TF
         /// <param name="size">Input to the operation. </param>
         /// <param name="align_corners">align corners</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] resized_images(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation ResizeArea(Output images, Output size, bool align_corners = false, String opName = "ResizeArea") 
         {
             OperationDescription desc = NewOperation("ResizeArea", opName);
@@ -21226,10 +21226,10 @@ namespace Emgu.TF
         /// <param name="align_corners">align corners</param>
         /// <param name="half_pixel_centers">half pixel centers</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] resized_images(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation ResizeBicubic(Output images, Output size, bool align_corners = false, bool half_pixel_centers = false, String opName = "ResizeBicubic") 
         {
             OperationDescription desc = NewOperation("ResizeBicubic", opName);
@@ -21250,10 +21250,10 @@ namespace Emgu.TF
         /// <param name="align_corners">align corners</param>
         /// <param name="half_pixel_centers">half pixel centers</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ResizeBicubicGrad(Output grads, Output original_image, bool align_corners = false, bool half_pixel_centers = false, String opName = "ResizeBicubicGrad") 
         {
             OperationDescription desc = NewOperation("ResizeBicubicGrad", opName);
@@ -21274,10 +21274,10 @@ namespace Emgu.TF
         /// <param name="align_corners">align corners</param>
         /// <param name="half_pixel_centers">half pixel centers</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] resized_images(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation ResizeBilinear(Output images, Output size, bool align_corners = false, bool half_pixel_centers = false, String opName = "ResizeBilinear") 
         {
             OperationDescription desc = NewOperation("ResizeBilinear", opName);
@@ -21298,10 +21298,10 @@ namespace Emgu.TF
         /// <param name="align_corners">align corners</param>
         /// <param name="half_pixel_centers">half pixel centers</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ResizeBilinearGrad(Output grads, Output original_image, bool align_corners = false, bool half_pixel_centers = false, String opName = "ResizeBilinearGrad") 
         {
             OperationDescription desc = NewOperation("ResizeBilinearGrad", opName);
@@ -21322,10 +21322,10 @@ namespace Emgu.TF
         /// <param name="align_corners">align corners</param>
         /// <param name="half_pixel_centers">half pixel centers</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] resized_images(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ResizeNearestNeighbor(Output images, Output size, bool align_corners = false, bool half_pixel_centers = false, String opName = "ResizeNearestNeighbor") 
         {
             OperationDescription desc = NewOperation("ResizeNearestNeighbor", opName);
@@ -21346,10 +21346,10 @@ namespace Emgu.TF
         /// <param name="align_corners">align corners</param>
         /// <param name="half_pixel_centers">half pixel centers</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ResizeNearestNeighborGrad(Output grads, Output size, bool align_corners = false, bool half_pixel_centers = false, String opName = "ResizeNearestNeighborGrad") 
         {
             OperationDescription desc = NewOperation("ResizeNearestNeighborGrad", opName);
@@ -21369,7 +21369,7 @@ namespace Emgu.TF
         /// <param name="local_step">Input to the operation. </param>
         /// <param name="gradient">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceAccumulatorApplyGradient(Output handle, Output local_step, Output gradient, String opName = "ResourceAccumulatorApplyGradient") 
         {
             OperationDescription desc = NewOperation("ResourceAccumulatorApplyGradient", opName);
@@ -21384,10 +21384,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] num_accumulated(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation ResourceAccumulatorNumAccumulated(Output handle, String opName = "ResourceAccumulatorNumAccumulated") 
         {
             OperationDescription desc = NewOperation("ResourceAccumulatorNumAccumulated", opName);
@@ -21401,7 +21401,7 @@ namespace Emgu.TF
         /// <param name="handle">Input to the operation. </param>
         /// <param name="new_global_step">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceAccumulatorSetGlobalStep(Output handle, Output new_global_step, String opName = "ResourceAccumulatorSetGlobalStep") 
         {
             OperationDescription desc = NewOperation("ResourceAccumulatorSetGlobalStep", opName);
@@ -21417,10 +21417,10 @@ namespace Emgu.TF
         /// <param name="num_required">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] average(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ResourceAccumulatorTakeGradient(Output handle, Output num_required, DataType dtype, String opName = "ResourceAccumulatorTakeGradient") 
         {
             OperationDescription desc = NewOperation("ResourceAccumulatorTakeGradient", opName);
@@ -21442,7 +21442,7 @@ namespace Emgu.TF
         /// <param name="grad">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceApplyAdadelta(Output var, Output accum, Output accum_update, Output lr, Output rho, Output epsilon, Output grad, bool use_locking = false, String opName = "ResourceApplyAdadelta") 
         {
             OperationDescription desc = NewOperation("ResourceApplyAdadelta", opName);
@@ -21468,7 +21468,7 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="update_slots">update slots</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceApplyAdagrad(Output var, Output accum, Output lr, Output grad, bool use_locking = false, bool update_slots = true, String opName = "ResourceApplyAdagrad") 
         {
             OperationDescription desc = NewOperation("ResourceApplyAdagrad", opName);
@@ -21496,7 +21496,7 @@ namespace Emgu.TF
         /// <param name="global_step">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceApplyAdagradDA(Output var, Output gradient_accumulator, Output gradient_squared_accumulator, Output grad, Output lr, Output l1, Output l2, Output global_step, bool use_locking = false, String opName = "ResourceApplyAdagradDA") 
         {
             OperationDescription desc = NewOperation("ResourceApplyAdagradDA", opName);
@@ -21524,7 +21524,7 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="update_slots">update slots</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceApplyAdagradV2(Output var, Output accum, Output lr, Output epsilon, Output grad, bool use_locking = false, bool update_slots = true, String opName = "ResourceApplyAdagradV2") 
         {
             OperationDescription desc = NewOperation("ResourceApplyAdagradV2", opName);
@@ -21556,7 +21556,7 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="use_nesterov">use nesterov</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceApplyAdam(Output var, Output m, Output v, Output beta1_power, Output beta2_power, Output lr, Output beta1, Output beta2, Output epsilon, Output grad, bool use_locking = false, bool use_nesterov = false, String opName = "ResourceApplyAdam") 
         {
             OperationDescription desc = NewOperation("ResourceApplyAdam", opName);
@@ -21591,7 +21591,7 @@ namespace Emgu.TF
         /// <param name="grad">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceApplyAdaMax(Output var, Output m, Output v, Output beta1_power, Output lr, Output beta1, Output beta2, Output epsilon, Output grad, bool use_locking = false, String opName = "ResourceApplyAdaMax") 
         {
             OperationDescription desc = NewOperation("ResourceApplyAdaMax", opName);
@@ -21625,7 +21625,7 @@ namespace Emgu.TF
         /// <param name="grad">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceApplyAdamWithAmsgrad(Output var, Output m, Output v, Output vhat, Output beta1_power, Output beta2_power, Output lr, Output beta1, Output beta2, Output epsilon, Output grad, bool use_locking = false, String opName = "ResourceApplyAdamWithAmsgrad") 
         {
             OperationDescription desc = NewOperation("ResourceApplyAdamWithAmsgrad", opName);
@@ -21657,7 +21657,7 @@ namespace Emgu.TF
         /// <param name="grad">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceApplyAddSign(Output var, Output m, Output lr, Output alpha, Output sign_decay, Output beta, Output grad, bool use_locking = false, String opName = "ResourceApplyAddSign") 
         {
             OperationDescription desc = NewOperation("ResourceApplyAddSign", opName);
@@ -21687,7 +21687,7 @@ namespace Emgu.TF
         /// <param name="grad">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceApplyCenteredRMSProp(Output var, Output mg, Output ms, Output mom, Output lr, Output rho, Output momentum, Output epsilon, Output grad, bool use_locking = false, String opName = "ResourceApplyCenteredRMSProp") 
         {
             OperationDescription desc = NewOperation("ResourceApplyCenteredRMSProp", opName);
@@ -21719,7 +21719,7 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="multiply_linear_by_lr">multiply linear by lr</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceApplyFtrl(Output var, Output accum, Output linear, Output grad, Output lr, Output l1, Output l2, Output lr_power, bool use_locking = false, bool multiply_linear_by_lr = false, String opName = "ResourceApplyFtrl") 
         {
             OperationDescription desc = NewOperation("ResourceApplyFtrl", opName);
@@ -21753,7 +21753,7 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="multiply_linear_by_lr">multiply linear by lr</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceApplyFtrlV2(Output var, Output accum, Output linear, Output grad, Output lr, Output l1, Output l2, Output l2_shrinkage, Output lr_power, bool use_locking = false, bool multiply_linear_by_lr = false, String opName = "ResourceApplyFtrlV2") 
         {
             OperationDescription desc = NewOperation("ResourceApplyFtrlV2", opName);
@@ -21781,7 +21781,7 @@ namespace Emgu.TF
         /// <param name="delta">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceApplyGradientDescent(Output var, Output alpha, Output delta, bool use_locking = false, String opName = "ResourceApplyGradientDescent") 
         {
             OperationDescription desc = NewOperation("ResourceApplyGradientDescent", opName);
@@ -21804,7 +21804,7 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="use_nesterov">use nesterov</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceApplyKerasMomentum(Output var, Output accum, Output lr, Output grad, Output momentum, bool use_locking = false, bool use_nesterov = false, String opName = "ResourceApplyKerasMomentum") 
         {
             OperationDescription desc = NewOperation("ResourceApplyKerasMomentum", opName);
@@ -21831,7 +21831,7 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="use_nesterov">use nesterov</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceApplyMomentum(Output var, Output accum, Output lr, Output grad, Output momentum, bool use_locking = false, bool use_nesterov = false, String opName = "ResourceApplyMomentum") 
         {
             OperationDescription desc = NewOperation("ResourceApplyMomentum", opName);
@@ -21859,7 +21859,7 @@ namespace Emgu.TF
         /// <param name="grad">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceApplyPowerSign(Output var, Output m, Output lr, Output logbase, Output sign_decay, Output beta, Output grad, bool use_locking = false, String opName = "ResourceApplyPowerSign") 
         {
             OperationDescription desc = NewOperation("ResourceApplyPowerSign", opName);
@@ -21886,7 +21886,7 @@ namespace Emgu.TF
         /// <param name="grad">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceApplyProximalAdagrad(Output var, Output accum, Output lr, Output l1, Output l2, Output grad, bool use_locking = false, String opName = "ResourceApplyProximalAdagrad") 
         {
             OperationDescription desc = NewOperation("ResourceApplyProximalAdagrad", opName);
@@ -21911,7 +21911,7 @@ namespace Emgu.TF
         /// <param name="delta">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceApplyProximalGradientDescent(Output var, Output alpha, Output l1, Output l2, Output delta, bool use_locking = false, String opName = "ResourceApplyProximalGradientDescent") 
         {
             OperationDescription desc = NewOperation("ResourceApplyProximalGradientDescent", opName);
@@ -21938,7 +21938,7 @@ namespace Emgu.TF
         /// <param name="grad">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceApplyRMSProp(Output var, Output ms, Output mom, Output lr, Output rho, Output momentum, Output epsilon, Output grad, bool use_locking = false, String opName = "ResourceApplyRMSProp") 
         {
             OperationDescription desc = NewOperation("ResourceApplyRMSProp", opName);
@@ -21964,10 +21964,10 @@ namespace Emgu.TF
         /// <param name="shared_name">shared name</param>
         /// <param name="reduction_type">reduction type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation ResourceConditionalAccumulator(DataType dtype, long[] shape, string container = null, string shared_name = null, string reduction_type = null, String opName = "ResourceConditionalAccumulator") 
         {
             OperationDescription desc = NewOperation("ResourceConditionalAccumulator", opName);
@@ -21989,10 +21989,10 @@ namespace Emgu.TF
         /// <param name="limit">limit</param>
         /// <param name="T">T</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ResourceCountUpTo(Output resource, long limit, DataType T, String opName = "ResourceCountUpTo") 
         {
             OperationDescription desc = NewOperation("ResourceCountUpTo", opName);
@@ -22011,10 +22011,10 @@ namespace Emgu.TF
         /// <param name="batch_dims">batch dims</param>
         /// <param name="validate_indices">validate indices</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ResourceGather(Output resource, Output indices, DataType dtype, long batch_dims = 0, bool validate_indices = true, String opName = "ResourceGather") 
         {
             OperationDescription desc = NewOperation("ResourceGather", opName);
@@ -22035,10 +22035,10 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ResourceGatherNd(Output resource, Output indices, DataType dtype, String opName = "ResourceGatherNd") 
         {
             OperationDescription desc = NewOperation("ResourceGatherNd", opName);
@@ -22055,7 +22055,7 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="updates">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceScatterAdd(Output resource, Output indices, Output updates, String opName = "ResourceScatterAdd") 
         {
             OperationDescription desc = NewOperation("ResourceScatterAdd", opName);
@@ -22072,7 +22072,7 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="updates">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceScatterDiv(Output resource, Output indices, Output updates, String opName = "ResourceScatterDiv") 
         {
             OperationDescription desc = NewOperation("ResourceScatterDiv", opName);
@@ -22089,7 +22089,7 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="updates">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceScatterMax(Output resource, Output indices, Output updates, String opName = "ResourceScatterMax") 
         {
             OperationDescription desc = NewOperation("ResourceScatterMax", opName);
@@ -22106,7 +22106,7 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="updates">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceScatterMin(Output resource, Output indices, Output updates, String opName = "ResourceScatterMin") 
         {
             OperationDescription desc = NewOperation("ResourceScatterMin", opName);
@@ -22123,7 +22123,7 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="updates">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceScatterMul(Output resource, Output indices, Output updates, String opName = "ResourceScatterMul") 
         {
             OperationDescription desc = NewOperation("ResourceScatterMul", opName);
@@ -22141,7 +22141,7 @@ namespace Emgu.TF
         /// <param name="updates">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceScatterNdAdd(Output reference, Output indices, Output updates, bool use_locking = true, String opName = "ResourceScatterNdAdd") 
         {
             OperationDescription desc = NewOperation("ResourceScatterNdAdd", opName);
@@ -22161,7 +22161,7 @@ namespace Emgu.TF
         /// <param name="updates">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceScatterNdMax(Output reference, Output indices, Output updates, bool use_locking = true, String opName = "ResourceScatterNdMax") 
         {
             OperationDescription desc = NewOperation("ResourceScatterNdMax", opName);
@@ -22181,7 +22181,7 @@ namespace Emgu.TF
         /// <param name="updates">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceScatterNdMin(Output reference, Output indices, Output updates, bool use_locking = true, String opName = "ResourceScatterNdMin") 
         {
             OperationDescription desc = NewOperation("ResourceScatterNdMin", opName);
@@ -22201,7 +22201,7 @@ namespace Emgu.TF
         /// <param name="updates">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceScatterNdSub(Output reference, Output indices, Output updates, bool use_locking = true, String opName = "ResourceScatterNdSub") 
         {
             OperationDescription desc = NewOperation("ResourceScatterNdSub", opName);
@@ -22221,7 +22221,7 @@ namespace Emgu.TF
         /// <param name="updates">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceScatterNdUpdate(Output reference, Output indices, Output updates, bool use_locking = true, String opName = "ResourceScatterNdUpdate") 
         {
             OperationDescription desc = NewOperation("ResourceScatterNdUpdate", opName);
@@ -22240,7 +22240,7 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="updates">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceScatterSub(Output resource, Output indices, Output updates, String opName = "ResourceScatterSub") 
         {
             OperationDescription desc = NewOperation("ResourceScatterSub", opName);
@@ -22257,7 +22257,7 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="updates">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceScatterUpdate(Output resource, Output indices, Output updates, String opName = "ResourceScatterUpdate") 
         {
             OperationDescription desc = NewOperation("ResourceScatterUpdate", opName);
@@ -22280,7 +22280,7 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceSparseApplyAdadelta(Output var, Output accum, Output accum_update, Output lr, Output rho, Output epsilon, Output grad, Output indices, bool use_locking = false, String opName = "ResourceSparseApplyAdadelta") 
         {
             OperationDescription desc = NewOperation("ResourceSparseApplyAdadelta", opName);
@@ -22308,7 +22308,7 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="update_slots">update slots</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceSparseApplyAdagrad(Output var, Output accum, Output lr, Output grad, Output indices, bool use_locking = false, bool update_slots = true, String opName = "ResourceSparseApplyAdagrad") 
         {
             OperationDescription desc = NewOperation("ResourceSparseApplyAdagrad", opName);
@@ -22338,7 +22338,7 @@ namespace Emgu.TF
         /// <param name="global_step">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceSparseApplyAdagradDA(Output var, Output gradient_accumulator, Output gradient_squared_accumulator, Output grad, Output indices, Output lr, Output l1, Output l2, Output global_step, bool use_locking = false, String opName = "ResourceSparseApplyAdagradDA") 
         {
             OperationDescription desc = NewOperation("ResourceSparseApplyAdagradDA", opName);
@@ -22368,7 +22368,7 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="update_slots">update slots</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceSparseApplyAdagradV2(Output var, Output accum, Output lr, Output epsilon, Output grad, Output indices, bool use_locking = false, bool update_slots = true, String opName = "ResourceSparseApplyAdagradV2") 
         {
             OperationDescription desc = NewOperation("ResourceSparseApplyAdagradV2", opName);
@@ -22400,7 +22400,7 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceSparseApplyCenteredRMSProp(Output var, Output mg, Output ms, Output mom, Output lr, Output rho, Output momentum, Output epsilon, Output grad, Output indices, bool use_locking = false, String opName = "ResourceSparseApplyCenteredRMSProp") 
         {
             OperationDescription desc = NewOperation("ResourceSparseApplyCenteredRMSProp", opName);
@@ -22434,7 +22434,7 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="multiply_linear_by_lr">multiply linear by lr</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceSparseApplyFtrl(Output var, Output accum, Output linear, Output grad, Output indices, Output lr, Output l1, Output l2, Output lr_power, bool use_locking = false, bool multiply_linear_by_lr = false, String opName = "ResourceSparseApplyFtrl") 
         {
             OperationDescription desc = NewOperation("ResourceSparseApplyFtrl", opName);
@@ -22470,7 +22470,7 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="multiply_linear_by_lr">multiply linear by lr</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceSparseApplyFtrlV2(Output var, Output accum, Output linear, Output grad, Output indices, Output lr, Output l1, Output l2, Output l2_shrinkage, Output lr_power, bool use_locking = false, bool multiply_linear_by_lr = false, String opName = "ResourceSparseApplyFtrlV2") 
         {
             OperationDescription desc = NewOperation("ResourceSparseApplyFtrlV2", opName);
@@ -22503,7 +22503,7 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="use_nesterov">use nesterov</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceSparseApplyKerasMomentum(Output var, Output accum, Output lr, Output grad, Output indices, Output momentum, bool use_locking = false, bool use_nesterov = false, String opName = "ResourceSparseApplyKerasMomentum") 
         {
             OperationDescription desc = NewOperation("ResourceSparseApplyKerasMomentum", opName);
@@ -22532,7 +22532,7 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="use_nesterov">use nesterov</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceSparseApplyMomentum(Output var, Output accum, Output lr, Output grad, Output indices, Output momentum, bool use_locking = false, bool use_nesterov = false, String opName = "ResourceSparseApplyMomentum") 
         {
             OperationDescription desc = NewOperation("ResourceSparseApplyMomentum", opName);
@@ -22561,7 +22561,7 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceSparseApplyProximalAdagrad(Output var, Output accum, Output lr, Output l1, Output l2, Output grad, Output indices, bool use_locking = false, String opName = "ResourceSparseApplyProximalAdagrad") 
         {
             OperationDescription desc = NewOperation("ResourceSparseApplyProximalAdagrad", opName);
@@ -22588,7 +22588,7 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceSparseApplyProximalGradientDescent(Output var, Output alpha, Output l1, Output l2, Output grad, Output indices, bool use_locking = false, String opName = "ResourceSparseApplyProximalGradientDescent") 
         {
             OperationDescription desc = NewOperation("ResourceSparseApplyProximalGradientDescent", opName);
@@ -22617,7 +22617,7 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceSparseApplyRMSProp(Output var, Output ms, Output mom, Output lr, Output rho, Output momentum, Output epsilon, Output grad, Output indices, bool use_locking = false, String opName = "ResourceSparseApplyRMSProp") 
         {
             OperationDescription desc = NewOperation("ResourceSparseApplyRMSProp", opName);
@@ -22649,7 +22649,7 @@ namespace Emgu.TF
         /// <param name="new_axis_mask">new axis mask</param>
         /// <param name="shrink_axis_mask">shrink axis mask</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ResourceStridedSliceAssign(Output reference, Output begin, Output end, Output strides, Output value, long begin_mask = 0, long end_mask = 0, long ellipsis_mask = 0, long new_axis_mask = 0, long shrink_axis_mask = 0, String opName = "ResourceStridedSliceAssign") 
         {
             OperationDescription desc = NewOperation("ResourceStridedSliceAssign", opName);
@@ -22679,10 +22679,10 @@ namespace Emgu.TF
         /// <param name="dt">dt</param>
         /// <param name="preferred_shard">preferred shard</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] tensor(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Restore(Output file_pattern, Output tensor_name, DataType dt, long preferred_shard = -1, String opName = "Restore") 
         {
             OperationDescription desc = NewOperation("Restore", opName);
@@ -22703,10 +22703,10 @@ namespace Emgu.TF
         /// <param name="dt">dt</param>
         /// <param name="preferred_shard">preferred shard</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] tensor(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RestoreSlice(Output file_pattern, Output tensor_name, Output shape_and_slice, DataType dt, long preferred_shard = -1, String opName = "RestoreSlice") 
         {
             OperationDescription desc = NewOperation("RestoreSlice", opName);
@@ -22727,10 +22727,10 @@ namespace Emgu.TF
         /// <param name="shape_and_slices">Input to the operation. </param>
         /// <param name="dtypes">dtypes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] tensors(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RestoreV2(Output prefix, Output tensor_names, Output shape_and_slices, DataType[] dtypes, String opName = "RestoreV2") 
         {
             OperationDescription desc = NewOperation("RestoreV2", opName);
@@ -22750,12 +22750,12 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] parameters(type: DtFloat).
         /// [1] accumulators(type: DtFloat).
         /// [2] updates(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RetrieveTPUEmbeddingAdadeltaParameters(long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "RetrieveTPUEmbeddingAdadeltaParameters") 
         {
             OperationDescription desc = NewOperation("RetrieveTPUEmbeddingAdadeltaParameters", opName);
@@ -22779,13 +22779,13 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] parameters(type: DtFloat).
         /// [1] accumulators(type: DtFloat).
         /// [2] updates(type: DtFloat).
         /// [3] gradient_accumulators(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RetrieveTPUEmbeddingAdadeltaParametersGradAccumDebug(long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "RetrieveTPUEmbeddingAdadeltaParametersGradAccumDebug") 
         {
             OperationDescription desc = NewOperation("RetrieveTPUEmbeddingAdadeltaParametersGradAccumDebug", opName);
@@ -22809,11 +22809,11 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] parameters(type: DtFloat).
         /// [1] accumulators(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RetrieveTPUEmbeddingAdagradParameters(long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "RetrieveTPUEmbeddingAdagradParameters") 
         {
             OperationDescription desc = NewOperation("RetrieveTPUEmbeddingAdagradParameters", opName);
@@ -22837,12 +22837,12 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] parameters(type: DtFloat).
         /// [1] accumulators(type: DtFloat).
         /// [2] gradient_accumulators(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RetrieveTPUEmbeddingAdagradParametersGradAccumDebug(long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "RetrieveTPUEmbeddingAdagradParametersGradAccumDebug") 
         {
             OperationDescription desc = NewOperation("RetrieveTPUEmbeddingAdagradParametersGradAccumDebug", opName);
@@ -22866,12 +22866,12 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] parameters(type: DtFloat).
         /// [1] momenta(type: DtFloat).
         /// [2] velocities(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RetrieveTPUEmbeddingADAMParameters(long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "RetrieveTPUEmbeddingADAMParameters") 
         {
             OperationDescription desc = NewOperation("RetrieveTPUEmbeddingADAMParameters", opName);
@@ -22895,13 +22895,13 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] parameters(type: DtFloat).
         /// [1] momenta(type: DtFloat).
         /// [2] velocities(type: DtFloat).
         /// [3] gradient_accumulators(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RetrieveTPUEmbeddingADAMParametersGradAccumDebug(long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "RetrieveTPUEmbeddingADAMParametersGradAccumDebug") 
         {
             OperationDescription desc = NewOperation("RetrieveTPUEmbeddingADAMParametersGradAccumDebug", opName);
@@ -22925,13 +22925,13 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] parameters(type: DtFloat).
         /// [1] ms(type: DtFloat).
         /// [2] mom(type: DtFloat).
         /// [3] mg(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RetrieveTPUEmbeddingCenteredRMSPropParameters(long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "RetrieveTPUEmbeddingCenteredRMSPropParameters") 
         {
             OperationDescription desc = NewOperation("RetrieveTPUEmbeddingCenteredRMSPropParameters", opName);
@@ -22955,11 +22955,11 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] parameters(type: DtFloat).
         /// [1] last_hit_step(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RetrieveTPUEmbeddingFrequencyEstimatorParameters(long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "RetrieveTPUEmbeddingFrequencyEstimatorParameters") 
         {
             OperationDescription desc = NewOperation("RetrieveTPUEmbeddingFrequencyEstimatorParameters", opName);
@@ -22983,12 +22983,12 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] parameters(type: DtFloat).
         /// [1] last_hit_step(type: DtFloat).
         /// [2] gradient_accumulators(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RetrieveTPUEmbeddingFrequencyEstimatorParametersGradAccumDebug(long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "RetrieveTPUEmbeddingFrequencyEstimatorParametersGradAccumDebug") 
         {
             OperationDescription desc = NewOperation("RetrieveTPUEmbeddingFrequencyEstimatorParametersGradAccumDebug", opName);
@@ -23012,12 +23012,12 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] parameters(type: DtFloat).
         /// [1] accumulators(type: DtFloat).
         /// [2] linears(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RetrieveTPUEmbeddingFTRLParameters(long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "RetrieveTPUEmbeddingFTRLParameters") 
         {
             OperationDescription desc = NewOperation("RetrieveTPUEmbeddingFTRLParameters", opName);
@@ -23041,13 +23041,13 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] parameters(type: DtFloat).
         /// [1] accumulators(type: DtFloat).
         /// [2] linears(type: DtFloat).
         /// [3] gradient_accumulators(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RetrieveTPUEmbeddingFTRLParametersGradAccumDebug(long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "RetrieveTPUEmbeddingFTRLParametersGradAccumDebug") 
         {
             OperationDescription desc = NewOperation("RetrieveTPUEmbeddingFTRLParametersGradAccumDebug", opName);
@@ -23071,13 +23071,13 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] parameters(type: DtFloat).
         /// [1] accumulators(type: DtFloat).
         /// [2] weights(type: DtFloat).
         /// [3] benefits(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RetrieveTPUEmbeddingMDLAdagradLightParameters(long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "RetrieveTPUEmbeddingMDLAdagradLightParameters") 
         {
             OperationDescription desc = NewOperation("RetrieveTPUEmbeddingMDLAdagradLightParameters", opName);
@@ -23101,11 +23101,11 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] parameters(type: DtFloat).
         /// [1] momenta(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RetrieveTPUEmbeddingMomentumParameters(long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "RetrieveTPUEmbeddingMomentumParameters") 
         {
             OperationDescription desc = NewOperation("RetrieveTPUEmbeddingMomentumParameters", opName);
@@ -23129,12 +23129,12 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] parameters(type: DtFloat).
         /// [1] momenta(type: DtFloat).
         /// [2] gradient_accumulators(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RetrieveTPUEmbeddingMomentumParametersGradAccumDebug(long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "RetrieveTPUEmbeddingMomentumParametersGradAccumDebug") 
         {
             OperationDescription desc = NewOperation("RetrieveTPUEmbeddingMomentumParametersGradAccumDebug", opName);
@@ -23158,11 +23158,11 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] parameters(type: DtFloat).
         /// [1] accumulators(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RetrieveTPUEmbeddingProximalAdagradParameters(long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "RetrieveTPUEmbeddingProximalAdagradParameters") 
         {
             OperationDescription desc = NewOperation("RetrieveTPUEmbeddingProximalAdagradParameters", opName);
@@ -23186,12 +23186,12 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] parameters(type: DtFloat).
         /// [1] accumulators(type: DtFloat).
         /// [2] gradient_accumulators(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RetrieveTPUEmbeddingProximalAdagradParametersGradAccumDebug(long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "RetrieveTPUEmbeddingProximalAdagradParametersGradAccumDebug") 
         {
             OperationDescription desc = NewOperation("RetrieveTPUEmbeddingProximalAdagradParametersGradAccumDebug", opName);
@@ -23215,12 +23215,12 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] parameters(type: DtFloat).
         /// [1] v(type: DtFloat).
         /// [2] m(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RetrieveTPUEmbeddingProximalYogiParameters(long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "RetrieveTPUEmbeddingProximalYogiParameters") 
         {
             OperationDescription desc = NewOperation("RetrieveTPUEmbeddingProximalYogiParameters", opName);
@@ -23244,13 +23244,13 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] parameters(type: DtFloat).
         /// [1] v(type: DtFloat).
         /// [2] m(type: DtFloat).
         /// [3] gradient_accumulators(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RetrieveTPUEmbeddingProximalYogiParametersGradAccumDebug(long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "RetrieveTPUEmbeddingProximalYogiParametersGradAccumDebug") 
         {
             OperationDescription desc = NewOperation("RetrieveTPUEmbeddingProximalYogiParametersGradAccumDebug", opName);
@@ -23274,12 +23274,12 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] parameters(type: DtFloat).
         /// [1] ms(type: DtFloat).
         /// [2] mom(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RetrieveTPUEmbeddingRMSPropParameters(long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "RetrieveTPUEmbeddingRMSPropParameters") 
         {
             OperationDescription desc = NewOperation("RetrieveTPUEmbeddingRMSPropParameters", opName);
@@ -23303,13 +23303,13 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] parameters(type: DtFloat).
         /// [1] ms(type: DtFloat).
         /// [2] mom(type: DtFloat).
         /// [3] gradient_accumulators(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RetrieveTPUEmbeddingRMSPropParametersGradAccumDebug(long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "RetrieveTPUEmbeddingRMSPropParametersGradAccumDebug") 
         {
             OperationDescription desc = NewOperation("RetrieveTPUEmbeddingRMSPropParametersGradAccumDebug", opName);
@@ -23333,10 +23333,10 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] parameters(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RetrieveTPUEmbeddingStochasticGradientDescentParameters(long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "RetrieveTPUEmbeddingStochasticGradientDescentParameters") 
         {
             OperationDescription desc = NewOperation("RetrieveTPUEmbeddingStochasticGradientDescentParameters", opName);
@@ -23360,11 +23360,11 @@ namespace Emgu.TF
         /// <param name="table_name">table name</param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] parameters(type: DtFloat).
         /// [1] gradient_accumulators(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RetrieveTPUEmbeddingStochasticGradientDescentParametersGradAccumDebug(long num_shards, long shard_id, long table_id = -1, string table_name = null, string config = null, String opName = "RetrieveTPUEmbeddingStochasticGradientDescentParametersGradAccumDebug") 
         {
             OperationDescription desc = NewOperation("RetrieveTPUEmbeddingStochasticGradientDescentParametersGradAccumDebug", opName);
@@ -23385,10 +23385,10 @@ namespace Emgu.TF
         /// <param name="tensor">Input to the operation. </param>
         /// <param name="dims">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Reverse(Output tensor, Output dims, String opName = "Reverse") 
         {
             OperationDescription desc = NewOperation("Reverse", opName);
@@ -23405,10 +23405,10 @@ namespace Emgu.TF
         /// <param name="seq_dim">seq dim</param>
         /// <param name="batch_dim">batch dim</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ReverseSequence(Output input, Output seq_lengths, long seq_dim, long batch_dim = 0, String opName = "ReverseSequence") 
         {
             OperationDescription desc = NewOperation("ReverseSequence", opName);
@@ -23426,10 +23426,10 @@ namespace Emgu.TF
         /// <param name="tensor">Input to the operation. </param>
         /// <param name="axis">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ReverseV2(Output tensor, Output axis, String opName = "ReverseV2") 
         {
             OperationDescription desc = NewOperation("ReverseV2", opName);
@@ -23445,10 +23445,10 @@ namespace Emgu.TF
         /// <param name="fft_length">Input to the operation. </param>
         /// <param name="Tcomplex">Tcomplex</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RFFT(Output input, Output fft_length, DataType? Tcomplex = null, String opName = "RFFT") 
         {
             OperationDescription desc = NewOperation("RFFT", opName);
@@ -23466,10 +23466,10 @@ namespace Emgu.TF
         /// <param name="fft_length">Input to the operation. </param>
         /// <param name="Tcomplex">Tcomplex</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RFFT2D(Output input, Output fft_length, DataType? Tcomplex = null, String opName = "RFFT2D") 
         {
             OperationDescription desc = NewOperation("RFFT2D", opName);
@@ -23487,10 +23487,10 @@ namespace Emgu.TF
         /// <param name="fft_length">Input to the operation. </param>
         /// <param name="Tcomplex">Tcomplex</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RFFT3D(Output input, Output fft_length, DataType? Tcomplex = null, String opName = "RFFT3D") 
         {
             OperationDescription desc = NewOperation("RFFT3D", opName);
@@ -23506,10 +23506,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="images">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RGBToHSV(Output images, String opName = "RGBToHSV") 
         {
             OperationDescription desc = NewOperation("RGBToHSV", opName);
@@ -23523,10 +23523,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RightShift(Output x, Output y, String opName = "RightShift") 
         {
             OperationDescription desc = NewOperation("RightShift", opName);
@@ -23540,10 +23540,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Rint(Output x, String opName = "Rint") 
         {
             OperationDescription desc = NewOperation("Rint", opName);
@@ -23556,10 +23556,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscAbs(Output x, String opName = "RiscAbs") 
         {
             OperationDescription desc = NewOperation("RiscAbs", opName);
@@ -23573,10 +23573,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscAdd(Output x, Output y, String opName = "RiscAdd") 
         {
             OperationDescription desc = NewOperation("RiscAdd", opName);
@@ -23592,10 +23592,10 @@ namespace Emgu.TF
         /// <param name="y">Input to the operation. </param>
         /// <param name="op_type">op type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscBinaryArithmetic(Output x, Output y, string op_type, String opName = "RiscBinaryArithmetic") 
         {
             OperationDescription desc = NewOperation("RiscBinaryArithmetic", opName);
@@ -23612,10 +23612,10 @@ namespace Emgu.TF
         /// <param name="y">Input to the operation. </param>
         /// <param name="op_type">op type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation RiscBinaryComparison(Output x, Output y, string op_type, String opName = "RiscBinaryComparison") 
         {
             OperationDescription desc = NewOperation("RiscBinaryComparison", opName);
@@ -23631,10 +23631,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="DstT">DstT</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscBitcast(Output x, DataType DstT, String opName = "RiscBitcast") 
         {
             OperationDescription desc = NewOperation("RiscBitcast", opName);
@@ -23649,10 +23649,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="shape">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscBroadcast(Output input, Output shape, String opName = "RiscBroadcast") 
         {
             OperationDescription desc = NewOperation("RiscBroadcast", opName);
@@ -23667,10 +23667,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="DstT">DstT</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscCast(Output x, DataType DstT, String opName = "RiscCast") 
         {
             OperationDescription desc = NewOperation("RiscCast", opName);
@@ -23684,10 +23684,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscCeil(Output x, String opName = "RiscCeil") 
         {
             OperationDescription desc = NewOperation("RiscCeil", opName);
@@ -23700,10 +23700,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscCholesky(Output input, String opName = "RiscCholesky") 
         {
             OperationDescription desc = NewOperation("RiscCholesky", opName);
@@ -23717,10 +23717,10 @@ namespace Emgu.TF
         /// <param name="values">Input to the operation. </param>
         /// <param name="axis">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscConcat(Output values, Output axis, String opName = "RiscConcat") 
         {
             OperationDescription desc = NewOperation("RiscConcat", opName);
@@ -23737,10 +23737,10 @@ namespace Emgu.TF
         /// <param name="input_false">Input to the operation. </param>
         /// <param name="DstT">DstT</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: func_true: func; func_false: func
         public Operation RiscCondition(Output pred, Output input_true, Output input_false, DataType DstT, String opName = "RiscCondition") 
         {
@@ -23761,10 +23761,10 @@ namespace Emgu.TF
         /// <param name="data_format">data format</param>
         /// <param name="dilations">dilations</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscConv(Output input, Output filter, long[] strides, string data_format = null, long[] dilations = null, String opName = "RiscConv") 
         {
             OperationDescription desc = NewOperation("RiscConv", opName);
@@ -23782,10 +23782,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscCos(Output x, String opName = "RiscCos") 
         {
             OperationDescription desc = NewOperation("RiscCos", opName);
@@ -23799,10 +23799,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscDiv(Output x, Output y, String opName = "RiscDiv") 
         {
             OperationDescription desc = NewOperation("RiscDiv", opName);
@@ -23819,10 +23819,10 @@ namespace Emgu.TF
         /// <param name="transpose_a">transpose a</param>
         /// <param name="transpose_b">transpose b</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] product(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscDot(Output a, Output b, bool transpose_a = false, bool transpose_b = false, String opName = "RiscDot") 
         {
             OperationDescription desc = NewOperation("RiscDot", opName);
@@ -23840,10 +23840,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscExp(Output x, String opName = "RiscExp") 
         {
             OperationDescription desc = NewOperation("RiscExp", opName);
@@ -23856,10 +23856,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscFft(Output input, String opName = "RiscFft") 
         {
             OperationDescription desc = NewOperation("RiscFft", opName);
@@ -23872,10 +23872,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscFloor(Output x, String opName = "RiscFloor") 
         {
             OperationDescription desc = NewOperation("RiscFloor", opName);
@@ -23891,10 +23891,10 @@ namespace Emgu.TF
         /// <param name="axis">Input to the operation. </param>
         /// <param name="batch_dims">batch dims</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscGather(Output parameters, Output indices, Output axis, long batch_dims = 0, String opName = "RiscGather") 
         {
             OperationDescription desc = NewOperation("RiscGather", opName);
@@ -23912,10 +23912,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="Tout">Tout</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscImag(Output input, DataType? Tout = null, String opName = "RiscImag") 
         {
             OperationDescription desc = NewOperation("RiscImag", opName);
@@ -23930,10 +23930,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation RiscIsFinite(Output x, String opName = "RiscIsFinite") 
         {
             OperationDescription desc = NewOperation("RiscIsFinite", opName);
@@ -23946,10 +23946,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscLog(Output x, String opName = "RiscLog") 
         {
             OperationDescription desc = NewOperation("RiscLog", opName);
@@ -23963,10 +23963,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation RiscLogicalAnd(Output x, Output y, String opName = "RiscLogicalAnd") 
         {
             OperationDescription desc = NewOperation("RiscLogicalAnd", opName);
@@ -23980,10 +23980,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation RiscLogicalNot(Output x, String opName = "RiscLogicalNot") 
         {
             OperationDescription desc = NewOperation("RiscLogicalNot", opName);
@@ -23997,10 +23997,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation RiscLogicalOr(Output x, Output y, String opName = "RiscLogicalOr") 
         {
             OperationDescription desc = NewOperation("RiscLogicalOr", opName);
@@ -24015,10 +24015,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] max(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscMax(Output x, Output y, String opName = "RiscMax") 
         {
             OperationDescription desc = NewOperation("RiscMax", opName);
@@ -24033,10 +24033,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscMin(Output x, Output y, String opName = "RiscMin") 
         {
             OperationDescription desc = NewOperation("RiscMin", opName);
@@ -24051,10 +24051,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscMul(Output x, Output y, String opName = "RiscMul") 
         {
             OperationDescription desc = NewOperation("RiscMul", opName);
@@ -24068,10 +24068,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscNeg(Output x, String opName = "RiscNeg") 
         {
             OperationDescription desc = NewOperation("RiscNeg", opName);
@@ -24086,10 +24086,10 @@ namespace Emgu.TF
         /// <param name="paddings">Input to the operation. </param>
         /// <param name="constant_values">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscPad(Output input, Output paddings, Output constant_values, String opName = "RiscPad") 
         {
             OperationDescription desc = NewOperation("RiscPad", opName);
@@ -24108,10 +24108,10 @@ namespace Emgu.TF
         /// <param name="pooling_type">pooling type</param>
         /// <param name="data_format">data format</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscPool(Output value, long[] ksize, long[] strides, string pooling_type, string data_format = null, String opName = "RiscPool") 
         {
             OperationDescription desc = NewOperation("RiscPool", opName);
@@ -24130,10 +24130,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscPow(Output x, Output y, String opName = "RiscPow") 
         {
             OperationDescription desc = NewOperation("RiscPow", opName);
@@ -24148,10 +24148,10 @@ namespace Emgu.TF
         /// <param name="shape">Input to the operation. </param>
         /// <param name="seed">seed</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation RiscRandomUniform(Output shape, long seed = 0, String opName = "RiscRandomUniform") 
         {
             OperationDescription desc = NewOperation("RiscRandomUniform", opName);
@@ -24167,10 +24167,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="Tout">Tout</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscReal(Output input, DataType? Tout = null, String opName = "RiscReal") 
         {
             OperationDescription desc = NewOperation("RiscReal", opName);
@@ -24187,10 +24187,10 @@ namespace Emgu.TF
         /// <param name="axis">Input to the operation. </param>
         /// <param name="reduce_type">reduce type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscReduce(Output tensor, Output axis, string reduce_type, String opName = "RiscReduce") 
         {
             OperationDescription desc = NewOperation("RiscReduce", opName);
@@ -24206,10 +24206,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscRem(Output x, Output y, String opName = "RiscRem") 
         {
             OperationDescription desc = NewOperation("RiscRem", opName);
@@ -24224,10 +24224,10 @@ namespace Emgu.TF
         /// <param name="tensor">Input to the operation. </param>
         /// <param name="shape">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscReshape(Output tensor, Output shape, String opName = "RiscReshape") 
         {
             OperationDescription desc = NewOperation("RiscReshape", opName);
@@ -24242,10 +24242,10 @@ namespace Emgu.TF
         /// <param name="tensor">Input to the operation. </param>
         /// <param name="axis">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscReverse(Output tensor, Output axis, String opName = "RiscReverse") 
         {
             OperationDescription desc = NewOperation("RiscReverse", opName);
@@ -24261,10 +24261,10 @@ namespace Emgu.TF
         /// <param name="updates">Input to the operation. </param>
         /// <param name="shape">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscScatter(Output indices, Output updates, Output shape, String opName = "RiscScatter") 
         {
             OperationDescription desc = NewOperation("RiscScatter", opName);
@@ -24280,10 +24280,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="out_type">out type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscShape(Output input, DataType? out_type = null, String opName = "RiscShape") 
         {
             OperationDescription desc = NewOperation("RiscShape", opName);
@@ -24298,10 +24298,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscSign(Output x, String opName = "RiscSign") 
         {
             OperationDescription desc = NewOperation("RiscSign", opName);
@@ -24316,10 +24316,10 @@ namespace Emgu.TF
         /// <param name="begin">Input to the operation. </param>
         /// <param name="size">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscSlice(Output input, Output begin, Output size, String opName = "RiscSlice") 
         {
             OperationDescription desc = NewOperation("RiscSlice", opName);
@@ -24336,10 +24336,10 @@ namespace Emgu.TF
         /// <param name="axis">Input to the operation. </param>
         /// <param name="direction">direction</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscSort(Output input, Output axis, string direction, String opName = "RiscSort") 
         {
             OperationDescription desc = NewOperation("RiscSort", opName);
@@ -24355,10 +24355,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="squeeze_dims">squeeze dims</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscSqueeze(Output input, long[] squeeze_dims = null, String opName = "RiscSqueeze") 
         {
             OperationDescription desc = NewOperation("RiscSqueeze", opName);
@@ -24373,10 +24373,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscSub(Output x, Output y, String opName = "RiscSub") 
         {
             OperationDescription desc = NewOperation("RiscSub", opName);
@@ -24391,10 +24391,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="perm">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscTranspose(Output x, Output perm, String opName = "RiscTranspose") 
         {
             OperationDescription desc = NewOperation("RiscTranspose", opName);
@@ -24411,10 +24411,10 @@ namespace Emgu.TF
         /// <param name="lower">lower</param>
         /// <param name="adjoint">adjoint</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscTriangularSolve(Output matrix, Output rhs, bool lower = true, bool adjoint = false, String opName = "RiscTriangularSolve") 
         {
             OperationDescription desc = NewOperation("RiscTriangularSolve", opName);
@@ -24433,10 +24433,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="op_type">op type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RiscUnary(Output x, string op_type, String opName = "RiscUnary") 
         {
             OperationDescription desc = NewOperation("RiscUnary", opName);
@@ -24452,10 +24452,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="parallel_iterations">parallel iterations</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: cond: func; body: func
         public Operation RiscWhile(Output input, long[][] output_shapes = null, long parallel_iterations = 10, String opName = "RiscWhile") 
         {
@@ -24474,10 +24474,10 @@ namespace Emgu.TF
         /// <param name="alg">Input to the operation. </param>
         /// <param name="delta">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] value(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation RngReadAndSkip(Output resource, Output alg, Output delta, String opName = "RngReadAndSkip") 
         {
             OperationDescription desc = NewOperation("RngReadAndSkip", opName);
@@ -24494,7 +24494,7 @@ namespace Emgu.TF
         /// <param name="algorithm">Input to the operation. </param>
         /// <param name="delta">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation RngSkip(Output resource, Output algorithm, Output delta, String opName = "RngSkip") 
         {
             OperationDescription desc = NewOperation("RngSkip", opName);
@@ -24511,10 +24511,10 @@ namespace Emgu.TF
         /// <param name="shift">Input to the operation. </param>
         /// <param name="axis">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Roll(Output input, Output shift, Output axis, String opName = "Roll") 
         {
             OperationDescription desc = NewOperation("Roll", opName);
@@ -24529,10 +24529,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Round(Output x, String opName = "Round") 
         {
             OperationDescription desc = NewOperation("Round", opName);
@@ -24545,10 +24545,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Rsqrt(Output x, String opName = "Rsqrt") 
         {
             OperationDescription desc = NewOperation("Rsqrt", opName);
@@ -24562,10 +24562,10 @@ namespace Emgu.TF
         /// <param name="y">Input to the operation. </param>
         /// <param name="dy">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation RsqrtGrad(Output y, Output dy, String opName = "RsqrtGrad") 
         {
             OperationDescription desc = NewOperation("RsqrtGrad", opName);
@@ -24587,12 +24587,12 @@ namespace Emgu.TF
         /// <param name="max_attempts">max attempts</param>
         /// <param name="use_image_if_no_bounding_boxes">use image if no bounding boxes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] begin(type: DtInvalid).
         /// [1] size(type: DtInvalid).
         /// [2] bboxes(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation SampleDistortedBoundingBox(Output image_size, Output bounding_boxes, long seed = 0, long seed2 = 0, float min_object_covered = 0.1f, float[] aspect_ratio_range = null, float[] area_range = null, long max_attempts = 100, bool use_image_if_no_bounding_boxes = false, String opName = "SampleDistortedBoundingBox") 
         {
             OperationDescription desc = NewOperation("SampleDistortedBoundingBox", opName);
@@ -24626,12 +24626,12 @@ namespace Emgu.TF
         /// <param name="max_attempts">max attempts</param>
         /// <param name="use_image_if_no_bounding_boxes">use image if no bounding boxes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] begin(type: DtInvalid).
         /// [1] size(type: DtInvalid).
         /// [2] bboxes(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation SampleDistortedBoundingBoxV2(Output image_size, Output bounding_boxes, Output min_object_covered, long seed = 0, long seed2 = 0, float[] aspect_ratio_range = null, float[] area_range = null, long max_attempts = 100, bool use_image_if_no_bounding_boxes = false, String opName = "SampleDistortedBoundingBoxV2") 
         {
             OperationDescription desc = NewOperation("SampleDistortedBoundingBoxV2", opName);
@@ -24661,10 +24661,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation SamplingDataset(Output input_dataset, Output rate, Output seed, Output seed2, DataType[] output_types, long[][] output_shapes, String opName = "SamplingDataset") 
         {
             OperationDescription desc = NewOperation("SamplingDataset", opName);
@@ -24684,7 +24684,7 @@ namespace Emgu.TF
         /// <param name="tensor_names">Input to the operation. </param>
         /// <param name="data">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation Save(Output filename, Output tensor_names, Output data, String opName = "Save") 
         {
             OperationDescription desc = NewOperation("Save", opName);
@@ -24703,7 +24703,7 @@ namespace Emgu.TF
         /// <param name="compression">compression</param>
         /// <param name="use_shard_func">use shard func</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         // The following attributes are not known: shard_func: func
         public Operation SaveDataset(Output input_dataset, Output path, Output shard_func_other_args, string compression = null, bool use_shard_func = true, String opName = "SaveDataset") 
         {
@@ -24726,7 +24726,7 @@ namespace Emgu.TF
         /// <param name="shapes_and_slices">Input to the operation. </param>
         /// <param name="data">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation SaveSlices(Output filename, Output tensor_names, Output shapes_and_slices, Output data, String opName = "SaveSlices") 
         {
             OperationDescription desc = NewOperation("SaveSlices", opName);
@@ -24745,7 +24745,7 @@ namespace Emgu.TF
         /// <param name="shape_and_slices">Input to the operation. </param>
         /// <param name="tensors">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation SaveV2(Output prefix, Output tensor_names, Output shape_and_slices, Output tensors, String opName = "SaveV2") 
         {
             OperationDescription desc = NewOperation("SaveV2", opName);
@@ -24762,10 +24762,10 @@ namespace Emgu.TF
         /// <param name="tags">Input to the operation. </param>
         /// <param name="values">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] summary(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation ScalarSummary(Output tags, Output values, String opName = "ScalarSummary") 
         {
             OperationDescription desc = NewOperation("ScalarSummary", opName);
@@ -24784,10 +24784,10 @@ namespace Emgu.TF
         /// <param name="kernel_type">kernel type</param>
         /// <param name="antialias">antialias</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] resized_images(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation ScaleAndTranslate(Output images, Output size, Output scale, Output translation, string kernel_type = null, bool antialias = true, String opName = "ScaleAndTranslate") 
         {
             OperationDescription desc = NewOperation("ScaleAndTranslate", opName);
@@ -24812,10 +24812,10 @@ namespace Emgu.TF
         /// <param name="kernel_type">kernel type</param>
         /// <param name="antialias">antialias</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ScaleAndTranslateGrad(Output grads, Output original_image, Output scale, Output translation, string kernel_type = null, bool antialias = true, String opName = "ScaleAndTranslateGrad") 
         {
             OperationDescription desc = NewOperation("ScaleAndTranslateGrad", opName);
@@ -24841,10 +24841,10 @@ namespace Emgu.TF
         /// <param name="preserve_cardinality">preserve cardinality</param>
         /// <param name="use_default_device">use default device</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation ScanDataset(Output input_dataset, Output initial_state, Output other_arguments, DataType[] output_types, long[][] output_shapes, bool preserve_cardinality = false, bool use_default_device = true, String opName = "ScanDataset") 
         {
@@ -24869,10 +24869,10 @@ namespace Emgu.TF
         /// <param name="updates">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_ref(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ScatterAdd(Output reference, Output indices, Output updates, bool use_locking = false, String opName = "ScatterAdd") 
         {
             OperationDescription desc = NewOperation("ScatterAdd", opName);
@@ -24892,10 +24892,10 @@ namespace Emgu.TF
         /// <param name="updates">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_ref(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ScatterDiv(Output reference, Output indices, Output updates, bool use_locking = false, String opName = "ScatterDiv") 
         {
             OperationDescription desc = NewOperation("ScatterDiv", opName);
@@ -24915,10 +24915,10 @@ namespace Emgu.TF
         /// <param name="updates">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_ref(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ScatterMax(Output reference, Output indices, Output updates, bool use_locking = false, String opName = "ScatterMax") 
         {
             OperationDescription desc = NewOperation("ScatterMax", opName);
@@ -24938,10 +24938,10 @@ namespace Emgu.TF
         /// <param name="updates">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_ref(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ScatterMin(Output reference, Output indices, Output updates, bool use_locking = false, String opName = "ScatterMin") 
         {
             OperationDescription desc = NewOperation("ScatterMin", opName);
@@ -24961,10 +24961,10 @@ namespace Emgu.TF
         /// <param name="updates">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_ref(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ScatterMul(Output reference, Output indices, Output updates, bool use_locking = false, String opName = "ScatterMul") 
         {
             OperationDescription desc = NewOperation("ScatterMul", opName);
@@ -24983,10 +24983,10 @@ namespace Emgu.TF
         /// <param name="updates">Input to the operation. </param>
         /// <param name="shape">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ScatterNd(Output indices, Output updates, Output shape, String opName = "ScatterNd") 
         {
             OperationDescription desc = NewOperation("ScatterNd", opName);
@@ -25004,10 +25004,10 @@ namespace Emgu.TF
         /// <param name="updates">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_ref(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ScatterNdAdd(Output reference, Output indices, Output updates, bool use_locking = false, String opName = "ScatterNdAdd") 
         {
             OperationDescription desc = NewOperation("ScatterNdAdd", opName);
@@ -25027,10 +25027,10 @@ namespace Emgu.TF
         /// <param name="updates">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_ref(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ScatterNdMax(Output reference, Output indices, Output updates, bool use_locking = false, String opName = "ScatterNdMax") 
         {
             OperationDescription desc = NewOperation("ScatterNdMax", opName);
@@ -25050,10 +25050,10 @@ namespace Emgu.TF
         /// <param name="updates">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_ref(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ScatterNdMin(Output reference, Output indices, Output updates, bool use_locking = false, String opName = "ScatterNdMin") 
         {
             OperationDescription desc = NewOperation("ScatterNdMin", opName);
@@ -25072,10 +25072,10 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="updates">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ScatterNdNonAliasingAdd(Output input, Output indices, Output updates, String opName = "ScatterNdNonAliasingAdd") 
         {
             OperationDescription desc = NewOperation("ScatterNdNonAliasingAdd", opName);
@@ -25093,10 +25093,10 @@ namespace Emgu.TF
         /// <param name="updates">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_ref(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ScatterNdSub(Output reference, Output indices, Output updates, bool use_locking = false, String opName = "ScatterNdSub") 
         {
             OperationDescription desc = NewOperation("ScatterNdSub", opName);
@@ -25116,10 +25116,10 @@ namespace Emgu.TF
         /// <param name="updates">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_ref(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ScatterNdUpdate(Output reference, Output indices, Output updates, bool use_locking = true, String opName = "ScatterNdUpdate") 
         {
             OperationDescription desc = NewOperation("ScatterNdUpdate", opName);
@@ -25139,10 +25139,10 @@ namespace Emgu.TF
         /// <param name="updates">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_ref(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ScatterSub(Output reference, Output indices, Output updates, bool use_locking = false, String opName = "ScatterSub") 
         {
             OperationDescription desc = NewOperation("ScatterSub", opName);
@@ -25162,10 +25162,10 @@ namespace Emgu.TF
         /// <param name="updates">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_ref(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ScatterUpdate(Output reference, Output indices, Output updates, bool use_locking = true, String opName = "ScatterUpdate") 
         {
             OperationDescription desc = NewOperation("ScatterUpdate", opName);
@@ -25182,10 +25182,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation SdcaFprint(Output input, String opName = "SdcaFprint") 
         {
             OperationDescription desc = NewOperation("SdcaFprint", opName);
@@ -25213,12 +25213,12 @@ namespace Emgu.TF
         /// <param name="num_inner_iterations">num inner iterations</param>
         /// <param name="adaptative">adaptative</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out_example_state_data(type: DtFloat).
         /// [1] out_delta_sparse_weights(type: DtFloat).
         /// [2] out_delta_dense_weights(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation SdcaOptimizer(Output sparse_example_indices, Output sparse_feature_indices, Output sparse_feature_values, Output dense_features, Output example_weights, Output example_labels, Output sparse_indices, Output sparse_weights, Output dense_weights, Output example_state_data, string loss_type, float l1, float l2, long num_loss_partitions, long num_inner_iterations, bool adaptative = false, String opName = "SdcaOptimizer") 
         {
             OperationDescription desc = NewOperation("SdcaOptimizer", opName);
@@ -25262,12 +25262,12 @@ namespace Emgu.TF
         /// <param name="num_inner_iterations">num inner iterations</param>
         /// <param name="adaptive">adaptive</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out_example_state_data(type: DtFloat).
         /// [1] out_delta_sparse_weights(type: DtFloat).
         /// [2] out_delta_dense_weights(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation SdcaOptimizerV2(Output sparse_example_indices, Output sparse_feature_indices, Output sparse_feature_values, Output dense_features, Output example_weights, Output example_labels, Output sparse_indices, Output sparse_weights, Output dense_weights, Output example_state_data, string loss_type, float l1, float l2, long num_loss_partitions, long num_inner_iterations, bool adaptive = false, String opName = "SdcaOptimizerV2") 
         {
             OperationDescription desc = NewOperation("SdcaOptimizerV2", opName);
@@ -25298,7 +25298,7 @@ namespace Emgu.TF
         /// <param name="l1">l1</param>
         /// <param name="l2">l2</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation SdcaShrinkL1(Output weights, float l1, float l2, String opName = "SdcaShrinkL1") 
         {
             OperationDescription desc = NewOperation("SdcaShrinkL1", opName);
@@ -25314,10 +25314,10 @@ namespace Emgu.TF
         /// <param name="data">Input to the operation. </param>
         /// <param name="segment_ids">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SegmentMax(Output data, Output segment_ids, String opName = "SegmentMax") 
         {
             OperationDescription desc = NewOperation("SegmentMax", opName);
@@ -25332,10 +25332,10 @@ namespace Emgu.TF
         /// <param name="data">Input to the operation. </param>
         /// <param name="segment_ids">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SegmentMean(Output data, Output segment_ids, String opName = "SegmentMean") 
         {
             OperationDescription desc = NewOperation("SegmentMean", opName);
@@ -25350,10 +25350,10 @@ namespace Emgu.TF
         /// <param name="data">Input to the operation. </param>
         /// <param name="segment_ids">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SegmentMin(Output data, Output segment_ids, String opName = "SegmentMin") 
         {
             OperationDescription desc = NewOperation("SegmentMin", opName);
@@ -25368,10 +25368,10 @@ namespace Emgu.TF
         /// <param name="data">Input to the operation. </param>
         /// <param name="segment_ids">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SegmentProd(Output data, Output segment_ids, String opName = "SegmentProd") 
         {
             OperationDescription desc = NewOperation("SegmentProd", opName);
@@ -25386,10 +25386,10 @@ namespace Emgu.TF
         /// <param name="data">Input to the operation. </param>
         /// <param name="segment_ids">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SegmentSum(Output data, Output segment_ids, String opName = "SegmentSum") 
         {
             OperationDescription desc = NewOperation("SegmentSum", opName);
@@ -25405,10 +25405,10 @@ namespace Emgu.TF
         /// <param name="t">Input to the operation. </param>
         /// <param name="e">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Select(Output condition, Output t, Output e, String opName = "Select") 
         {
             OperationDescription desc = NewOperation("Select", opName);
@@ -25425,10 +25425,10 @@ namespace Emgu.TF
         /// <param name="t">Input to the operation. </param>
         /// <param name="e">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SelectV2(Output condition, Output t, Output e, String opName = "SelectV2") 
         {
             OperationDescription desc = NewOperation("SelectV2", opName);
@@ -25443,10 +25443,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SelfAdjointEig(Output input, String opName = "SelfAdjointEig") 
         {
             OperationDescription desc = NewOperation("SelfAdjointEig", opName);
@@ -25460,11 +25460,11 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="compute_v">compute v</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] e(type: DtInvalid).
         /// [1] v(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SelfAdjointEigV2(Output input, bool compute_v = true, String opName = "SelfAdjointEigV2") 
         {
             OperationDescription desc = NewOperation("SelfAdjointEigV2", opName);
@@ -25479,10 +25479,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="features">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] activations(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Selu(Output features, String opName = "Selu") 
         {
             OperationDescription desc = NewOperation("Selu", opName);
@@ -25496,10 +25496,10 @@ namespace Emgu.TF
         /// <param name="gradients">Input to the operation. </param>
         /// <param name="outputs">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] backprops(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SeluGrad(Output gradients, Output outputs, String opName = "SeluGrad") 
         {
             OperationDescription desc = NewOperation("SeluGrad", opName);
@@ -25518,7 +25518,7 @@ namespace Emgu.TF
         /// <param name="recv_device">recv device</param>
         /// <param name="client_terminated">client terminated</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation Send(Output tensor, string tensor_name, string send_device, long send_device_incarnation, string recv_device, bool client_terminated = false, String opName = "Send") 
         {
             OperationDescription desc = NewOperation("Send", opName);
@@ -25539,7 +25539,7 @@ namespace Emgu.TF
         /// <param name="learning_rates">Input to the operation. </param>
         /// <param name="config">config</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation SendTPUEmbeddingGradients(Output inputs, Output learning_rates, string config, String opName = "SendTPUEmbeddingGradients") 
         {
             OperationDescription desc = NewOperation("SendTPUEmbeddingGradients", opName);
@@ -25555,10 +25555,10 @@ namespace Emgu.TF
         /// <param name="resource_handle">Input to the operation. </param>
         /// <param name="external_state_policy">external state policy</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] serialized(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation SerializeIterator(Output resource_handle, long external_state_policy = 0, String opName = "SerializeIterator") 
         {
             OperationDescription desc = NewOperation("SerializeIterator", opName);
@@ -25576,10 +25576,10 @@ namespace Emgu.TF
         /// <param name="sparse_shape">Input to the operation. </param>
         /// <param name="out_type">out type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] serialized_sparse(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SerializeManySparse(Output sparse_indices, Output sparse_values, Output sparse_shape, DataType? out_type = null, String opName = "SerializeManySparse") 
         {
             OperationDescription desc = NewOperation("SerializeManySparse", opName);
@@ -25599,10 +25599,10 @@ namespace Emgu.TF
         /// <param name="sparse_shape">Input to the operation. </param>
         /// <param name="out_type">out type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] serialized_sparse(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SerializeSparse(Output sparse_indices, Output sparse_values, Output sparse_shape, DataType? out_type = null, String opName = "SerializeSparse") 
         {
             OperationDescription desc = NewOperation("SerializeSparse", opName);
@@ -25619,10 +25619,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="tensor">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] serialized(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation SerializeTensor(Output tensor, String opName = "SerializeTensor") 
         {
             OperationDescription desc = NewOperation("SerializeTensor", opName);
@@ -25638,10 +25638,10 @@ namespace Emgu.TF
         /// <param name="set_shape">Input to the operation. </param>
         /// <param name="validate_indices">validate indices</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] size(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation SetSize(Output set_indices, Output set_values, Output set_shape, bool validate_indices = true, String opName = "SetSize") 
         {
             OperationDescription desc = NewOperation("SetSize", opName);
@@ -25663,10 +25663,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation SetStatsAggregatorDataset(Output input_dataset, Output stats_aggregator, Output tag, Output counter_prefix, DataType[] output_types, long[][] output_shapes, String opName = "SetStatsAggregatorDataset") 
         {
             OperationDescription desc = NewOperation("SetStatsAggregatorDataset", opName);
@@ -25685,10 +25685,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="out_type">out type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Shape(Output input, DataType? out_type = null, String opName = "Shape") 
         {
             OperationDescription desc = NewOperation("Shape", opName);
@@ -25704,10 +25704,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="out_type">out type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ShapeN(Output input, DataType? out_type = null, String opName = "ShapeN") 
         {
             OperationDescription desc = NewOperation("ShapeN", opName);
@@ -25727,10 +25727,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="require_non_empty">require non empty</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ShardDataset(Output input_dataset, Output num_shards, Output index, DataType[] output_types, long[][] output_shapes, bool require_non_empty = false, String opName = "ShardDataset") 
         {
             OperationDescription desc = NewOperation("ShardDataset", opName);
@@ -25751,10 +25751,10 @@ namespace Emgu.TF
         /// <param name="shard">Input to the operation. </param>
         /// <param name="num_shards">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] filename(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation ShardedFilename(Output basename, Output shard, Output num_shards, String opName = "ShardedFilename") 
         {
             OperationDescription desc = NewOperation("ShardedFilename", opName);
@@ -25770,10 +25770,10 @@ namespace Emgu.TF
         /// <param name="basename">Input to the operation. </param>
         /// <param name="num_shards">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] filename(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation ShardedFilespec(Output basename, Output num_shards, String opName = "ShardedFilespec") 
         {
             OperationDescription desc = NewOperation("ShardedFilespec", opName);
@@ -25794,10 +25794,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="reshuffle_each_iteration">reshuffle each iteration</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ShuffleAndRepeatDataset(Output input_dataset, Output buffer_size, Output seed, Output seed2, Output count, DataType[] output_types, long[][] output_shapes, bool reshuffle_each_iteration = true, String opName = "ShuffleAndRepeatDataset") 
         {
             OperationDescription desc = NewOperation("ShuffleAndRepeatDataset", opName);
@@ -25826,10 +25826,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="reshuffle_each_iteration">reshuffle each iteration</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ShuffleAndRepeatDatasetV2(Output input_dataset, Output buffer_size, Output seed, Output seed2, Output count, Output seed_generator, DataType[] output_types, long[][] output_shapes, bool reshuffle_each_iteration = true, String opName = "ShuffleAndRepeatDatasetV2") 
         {
             OperationDescription desc = NewOperation("ShuffleAndRepeatDatasetV2", opName);
@@ -25857,10 +25857,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="reshuffle_each_iteration">reshuffle each iteration</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ShuffleDataset(Output input_dataset, Output buffer_size, Output seed, Output seed2, DataType[] output_types, long[][] output_shapes, bool reshuffle_each_iteration = true, String opName = "ShuffleDataset") 
         {
             OperationDescription desc = NewOperation("ShuffleDataset", opName);
@@ -25884,10 +25884,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ShuffleDatasetV2(Output input_dataset, Output buffer_size, Output seed_generator, DataType[] output_types, long[][] output_shapes, String opName = "ShuffleDatasetV2") 
         {
             OperationDescription desc = NewOperation("ShuffleDatasetV2", opName);
@@ -25911,10 +25911,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="reshuffle_each_iteration">reshuffle each iteration</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ShuffleDatasetV3(Output input_dataset, Output buffer_size, Output seed, Output seed2, Output seed_generator, DataType[] output_types, long[][] output_shapes, bool reshuffle_each_iteration = true, String opName = "ShuffleDatasetV3") 
         {
             OperationDescription desc = NewOperation("ShuffleDatasetV3", opName);
@@ -25934,7 +25934,7 @@ namespace Emgu.TF
         /// ShutdownDistributedTPU
         /// </summary>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation ShutdownDistributedTPU(String opName = "ShutdownDistributedTPU") 
         {
             OperationDescription desc = NewOperation("ShutdownDistributedTPU", opName);
@@ -25946,10 +25946,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Sigmoid(Output x, String opName = "Sigmoid") 
         {
             OperationDescription desc = NewOperation("Sigmoid", opName);
@@ -25963,10 +25963,10 @@ namespace Emgu.TF
         /// <param name="y">Input to the operation. </param>
         /// <param name="dy">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SigmoidGrad(Output y, Output dy, String opName = "SigmoidGrad") 
         {
             OperationDescription desc = NewOperation("SigmoidGrad", opName);
@@ -25980,10 +25980,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Sign(Output x, String opName = "Sign") 
         {
             OperationDescription desc = NewOperation("Sign", opName);
@@ -25996,10 +25996,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Sin(Output x, String opName = "Sin") 
         {
             OperationDescription desc = NewOperation("Sin", opName);
@@ -26012,10 +26012,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Sinh(Output x, String opName = "Sinh") 
         {
             OperationDescription desc = NewOperation("Sinh", opName);
@@ -26029,10 +26029,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="out_type">out type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Size(Output input, DataType? out_type = null, String opName = "Size") 
         {
             OperationDescription desc = NewOperation("Size", opName);
@@ -26050,10 +26050,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation SkipDataset(Output input_dataset, Output count, DataType[] output_types, long[][] output_shapes, String opName = "SkipDataset") 
         {
             OperationDescription desc = NewOperation("SkipDataset", opName);
@@ -26073,7 +26073,7 @@ namespace Emgu.TF
         /// <param name="min_count">min count</param>
         /// <param name="subsample">subsample</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] vocab_word(type: DtString).
         /// [1] vocab_freq(type: DtInt32).
@@ -26082,7 +26082,7 @@ namespace Emgu.TF
         /// [4] total_words_processed(type: DtInt64).
         /// [5] examples(type: DtInt32).
         /// [6] labels(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation Skipgram(string filename, long batch_size, long window_size = 5, long min_count = 5, float subsample = 0.001f, String opName = "Skipgram") 
         {
             OperationDescription desc = NewOperation("Skipgram", opName);
@@ -26105,10 +26105,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation SleepDataset(Output input_dataset, Output sleep_microseconds, DataType[] output_types, long[][] output_shapes, String opName = "SleepDataset") 
         {
             OperationDescription desc = NewOperation("SleepDataset", opName);
@@ -26126,10 +26126,10 @@ namespace Emgu.TF
         /// <param name="begin">Input to the operation. </param>
         /// <param name="size">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Slice(Output input, Output begin, Output size, String opName = "Slice") 
         {
             OperationDescription desc = NewOperation("Slice", opName);
@@ -26149,10 +26149,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation SlidingWindowDataset(Output input_dataset, Output window_size, Output window_shift, Output window_stride, DataType[] output_types, long[][] output_shapes, String opName = "SlidingWindowDataset") 
         {
             OperationDescription desc = NewOperation("SlidingWindowDataset", opName);
@@ -26170,10 +26170,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Snapshot(Output input, String opName = "Snapshot") 
         {
             OperationDescription desc = NewOperation("Snapshot", opName);
@@ -26203,10 +26203,10 @@ namespace Emgu.TF
         /// <param name="mode">mode</param>
         /// <param name="snapshot_name">snapshot name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation SnapshotDataset(Output input_dataset, Output path, DataType[] output_types, long[][] output_shapes, string compression = null, string reader_path_prefix = null, string writer_path_prefix = null, long shard_size_bytes = 10737418240, long pending_snapshot_expiry_seconds = 86400, long num_reader_threads = 1, long reader_buffer_size = 1, long num_writer_threads = 1, long writer_buffer_size = 1, bool shuffle_on_read = false, long seed = 0, long seed2 = 0, string mode = null, string snapshot_name = null, String opName = "SnapshotDataset") 
         {
             OperationDescription desc = NewOperation("SnapshotDataset", opName);
@@ -26260,10 +26260,10 @@ namespace Emgu.TF
         /// <param name="hash_valid">hash valid</param>
         /// <param name="hash">hash</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: reader_func: func; shard_func: func
         public Operation SnapshotDatasetV2(Output input_dataset, Output path, Output reader_func_other_args, Output shard_func_other_args, DataType[] output_types, long[][] output_shapes, string compression = null, string reader_prefix = null, string writer_prefix = null, bool hash_valid = false, long hash = 0, String opName = "SnapshotDatasetV2") 
         {
@@ -26295,10 +26295,10 @@ namespace Emgu.TF
         /// <param name="skip">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] samples(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SobolSample(Output dim, Output num_results, Output skip, DataType? dtype = null, String opName = "SobolSample") 
         {
             OperationDescription desc = NewOperation("SobolSample", opName);
@@ -26315,10 +26315,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="logits">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] softmax(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Softmax(Output logits, String opName = "Softmax") 
         {
             OperationDescription desc = NewOperation("Softmax", opName);
@@ -26332,11 +26332,11 @@ namespace Emgu.TF
         /// <param name="features">Input to the operation. </param>
         /// <param name="labels">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] loss(type: DtInvalid).
         /// [1] backprop(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SoftmaxCrossEntropyWithLogits(Output features, Output labels, String opName = "SoftmaxCrossEntropyWithLogits") 
         {
             OperationDescription desc = NewOperation("SoftmaxCrossEntropyWithLogits", opName);
@@ -26350,10 +26350,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="features">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] activations(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Softplus(Output features, String opName = "Softplus") 
         {
             OperationDescription desc = NewOperation("Softplus", opName);
@@ -26367,10 +26367,10 @@ namespace Emgu.TF
         /// <param name="gradients">Input to the operation. </param>
         /// <param name="features">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] backprops(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SoftplusGrad(Output gradients, Output features, String opName = "SoftplusGrad") 
         {
             OperationDescription desc = NewOperation("SoftplusGrad", opName);
@@ -26384,10 +26384,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="features">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] activations(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Softsign(Output features, String opName = "Softsign") 
         {
             OperationDescription desc = NewOperation("Softsign", opName);
@@ -26401,10 +26401,10 @@ namespace Emgu.TF
         /// <param name="gradients">Input to the operation. </param>
         /// <param name="features">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] backprops(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SoftsignGrad(Output gradients, Output features, String opName = "SoftsignGrad") 
         {
             OperationDescription desc = NewOperation("SoftsignGrad", opName);
@@ -26420,10 +26420,10 @@ namespace Emgu.TF
         /// <param name="paddings">Input to the operation. </param>
         /// <param name="block_size">block size</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SpaceToBatch(Output input, Output paddings, long block_size, String opName = "SpaceToBatch") 
         {
             OperationDescription desc = NewOperation("SpaceToBatch", opName);
@@ -26440,10 +26440,10 @@ namespace Emgu.TF
         /// <param name="block_shape">Input to the operation. </param>
         /// <param name="paddings">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SpaceToBatchND(Output input, Output block_shape, Output paddings, String opName = "SpaceToBatchND") 
         {
             OperationDescription desc = NewOperation("SpaceToBatchND", opName);
@@ -26460,10 +26460,10 @@ namespace Emgu.TF
         /// <param name="block_size">block size</param>
         /// <param name="data_format">data format</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SpaceToDepth(Output input, long block_size, string data_format = null, String opName = "SpaceToDepth") 
         {
             OperationDescription desc = NewOperation("SpaceToDepth", opName);
@@ -26484,7 +26484,7 @@ namespace Emgu.TF
         /// <param name="gradient_shape">Input to the operation. </param>
         /// <param name="has_known_shape">has known shape</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation SparseAccumulatorApplyGradient(Output handle, Output local_step, Output gradient_indices, Output gradient_values, Output gradient_shape, bool has_known_shape, String opName = "SparseAccumulatorApplyGradient") 
         {
             OperationDescription desc = NewOperation("SparseAccumulatorApplyGradient", opName);
@@ -26504,12 +26504,12 @@ namespace Emgu.TF
         /// <param name="num_required">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] indices(type: DtInt64).
         /// [1] values(type: DtInvalid).
         /// [2] shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation SparseAccumulatorTakeGradient(Output handle, Output num_required, DataType dtype, String opName = "SparseAccumulatorTakeGradient") 
         {
             OperationDescription desc = NewOperation("SparseAccumulatorTakeGradient", opName);
@@ -26530,12 +26530,12 @@ namespace Emgu.TF
         /// <param name="b_shape">Input to the operation. </param>
         /// <param name="thresh">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sum_indices(type: DtInt64).
         /// [1] sum_values(type: DtInvalid).
         /// [2] sum_shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation SparseAdd(Output a_indices, Output a_values, Output a_shape, Output b_indices, Output b_values, Output b_shape, Output thresh, String opName = "SparseAdd") 
         {
             OperationDescription desc = NewOperation("SparseAdd", opName);
@@ -26557,11 +26557,11 @@ namespace Emgu.TF
         /// <param name="b_indices">Input to the operation. </param>
         /// <param name="sum_indices">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] a_val_grad(type: DtInvalid).
         /// [1] b_val_grad(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseAddGrad(Output backprop_val_grad, Output a_indices, Output b_indices, Output sum_indices, String opName = "SparseAddGrad") 
         {
             OperationDescription desc = NewOperation("SparseAddGrad", opName);
@@ -26585,10 +26585,10 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseApplyAdadelta(Output var, Output accum, Output accum_update, Output lr, Output rho, Output epsilon, Output grad, Output indices, bool use_locking = false, String opName = "SparseApplyAdadelta") 
         {
             OperationDescription desc = NewOperation("SparseApplyAdadelta", opName);
@@ -26616,10 +26616,10 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="update_slots">update slots</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseApplyAdagrad(Output var, Output accum, Output lr, Output grad, Output indices, bool use_locking = false, bool update_slots = true, String opName = "SparseApplyAdagrad") 
         {
             OperationDescription desc = NewOperation("SparseApplyAdagrad", opName);
@@ -26649,10 +26649,10 @@ namespace Emgu.TF
         /// <param name="global_step">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseApplyAdagradDA(Output var, Output gradient_accumulator, Output gradient_squared_accumulator, Output grad, Output indices, Output lr, Output l1, Output l2, Output global_step, bool use_locking = false, String opName = "SparseApplyAdagradDA") 
         {
             OperationDescription desc = NewOperation("SparseApplyAdagradDA", opName);
@@ -26682,10 +26682,10 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="update_slots">update slots</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseApplyAdagradV2(Output var, Output accum, Output lr, Output epsilon, Output grad, Output indices, bool use_locking = false, bool update_slots = true, String opName = "SparseApplyAdagradV2") 
         {
             OperationDescription desc = NewOperation("SparseApplyAdagradV2", opName);
@@ -26717,10 +26717,10 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseApplyCenteredRMSProp(Output var, Output mg, Output ms, Output mom, Output lr, Output rho, Output momentum, Output epsilon, Output grad, Output indices, bool use_locking = false, String opName = "SparseApplyCenteredRMSProp") 
         {
             OperationDescription desc = NewOperation("SparseApplyCenteredRMSProp", opName);
@@ -26754,10 +26754,10 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="multiply_linear_by_lr">multiply linear by lr</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseApplyFtrl(Output var, Output accum, Output linear, Output grad, Output indices, Output lr, Output l1, Output l2, Output lr_power, bool use_locking = false, bool multiply_linear_by_lr = false, String opName = "SparseApplyFtrl") 
         {
             OperationDescription desc = NewOperation("SparseApplyFtrl", opName);
@@ -26793,10 +26793,10 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="multiply_linear_by_lr">multiply linear by lr</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseApplyFtrlV2(Output var, Output accum, Output linear, Output grad, Output indices, Output lr, Output l1, Output l2, Output l2_shrinkage, Output lr_power, bool use_locking = false, bool multiply_linear_by_lr = false, String opName = "SparseApplyFtrlV2") 
         {
             OperationDescription desc = NewOperation("SparseApplyFtrlV2", opName);
@@ -26829,10 +26829,10 @@ namespace Emgu.TF
         /// <param name="use_locking">use locking</param>
         /// <param name="use_nesterov">use nesterov</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseApplyMomentum(Output var, Output accum, Output lr, Output grad, Output indices, Output momentum, bool use_locking = false, bool use_nesterov = false, String opName = "SparseApplyMomentum") 
         {
             OperationDescription desc = NewOperation("SparseApplyMomentum", opName);
@@ -26861,10 +26861,10 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseApplyProximalAdagrad(Output var, Output accum, Output lr, Output l1, Output l2, Output grad, Output indices, bool use_locking = false, String opName = "SparseApplyProximalAdagrad") 
         {
             OperationDescription desc = NewOperation("SparseApplyProximalAdagrad", opName);
@@ -26891,10 +26891,10 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseApplyProximalGradientDescent(Output var, Output alpha, Output l1, Output l2, Output grad, Output indices, bool use_locking = false, String opName = "SparseApplyProximalGradientDescent") 
         {
             OperationDescription desc = NewOperation("SparseApplyProximalGradientDescent", opName);
@@ -26923,10 +26923,10 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="use_locking">use locking</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] out(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseApplyRMSProp(Output var, Output ms, Output mom, Output lr, Output rho, Output momentum, Output epsilon, Output grad, Output indices, bool use_locking = false, String opName = "SparseApplyRMSProp") 
         {
             OperationDescription desc = NewOperation("SparseApplyRMSProp", opName);
@@ -26954,10 +26954,10 @@ namespace Emgu.TF
         /// <param name="weights">Input to the operation. </param>
         /// <param name="binary_output">binary output</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseBincount(Output indices, Output values, Output dense_shape, Output size, Output weights, bool binary_output = false, String opName = "SparseBincount") 
         {
             OperationDescription desc = NewOperation("SparseBincount", opName);
@@ -26979,12 +26979,12 @@ namespace Emgu.TF
         /// <param name="shapes">Input to the operation. </param>
         /// <param name="concat_dim">concat dim</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_indices(type: DtInt64).
         /// [1] output_values(type: DtInvalid).
         /// [2] output_shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation SparseConcat(Output indices, Output values, Output shapes, long concat_dim, String opName = "SparseConcat") 
         {
             OperationDescription desc = NewOperation("SparseConcat", opName);
@@ -27004,10 +27004,10 @@ namespace Emgu.TF
         /// <param name="shared_name">shared name</param>
         /// <param name="reduction_type">reduction type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation SparseConditionalAccumulator(DataType dtype, long[] shape, string container = null, string shared_name = null, string reduction_type = null, String opName = "SparseConditionalAccumulator") 
         {
             OperationDescription desc = NewOperation("SparseConditionalAccumulator", opName);
@@ -27033,12 +27033,12 @@ namespace Emgu.TF
         /// <param name="minlength">minlength</param>
         /// <param name="maxlength">maxlength</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_indices(type: DtInt64).
         /// [1] output_values(type: DtInvalid).
         /// [2] output_dense_shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation SparseCountSparseOutput(Output indices, Output values, Output dense_shape, Output weights, bool binary_output, long minlength = -1, long maxlength = -1, String opName = "SparseCountSparseOutput") 
         {
             OperationDescription desc = NewOperation("SparseCountSparseOutput", opName);
@@ -27067,12 +27067,12 @@ namespace Emgu.TF
         /// <param name="out_type">out type</param>
         /// <param name="internal_type">internal type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_indices(type: DtInt64).
         /// [1] output_values(type: DtInvalid).
         /// [2] output_shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation SparseCross(Output indices, Output values, Output shapes, Output dense_inputs, bool hashed_output, long num_buckets, long hash_key, DataType out_type, DataType internal_type, String opName = "SparseCross") 
         {
             OperationDescription desc = NewOperation("SparseCross", opName);
@@ -27099,12 +27099,12 @@ namespace Emgu.TF
         /// <param name="strong_hash">Input to the operation. </param>
         /// <param name="salt">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_indices(type: DtInt64).
         /// [1] output_values(type: DtInt64).
         /// [2] output_shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation SparseCrossHashed(Output indices, Output values, Output shapes, Output dense_inputs, Output num_buckets, Output strong_hash, Output salt, String opName = "SparseCrossHashed") 
         {
             OperationDescription desc = NewOperation("SparseCrossHashed", opName);
@@ -27127,12 +27127,12 @@ namespace Emgu.TF
         /// <param name="dense_inputs">Input to the operation. </param>
         /// <param name="sep">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_indices(type: DtInt64).
         /// [1] output_values(type: DtString).
         /// [2] output_shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation SparseCrossV2(Output indices, Output values, Output shapes, Output dense_inputs, Output sep, String opName = "SparseCrossV2") 
         {
             OperationDescription desc = NewOperation("SparseCrossV2", opName);
@@ -27152,10 +27152,10 @@ namespace Emgu.TF
         /// <param name="sp_shape">Input to the operation. </param>
         /// <param name="dense">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseDenseCwiseAdd(Output sp_indices, Output sp_values, Output sp_shape, Output dense, String opName = "SparseDenseCwiseAdd") 
         {
             OperationDescription desc = NewOperation("SparseDenseCwiseAdd", opName);
@@ -27174,10 +27174,10 @@ namespace Emgu.TF
         /// <param name="sp_shape">Input to the operation. </param>
         /// <param name="dense">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseDenseCwiseDiv(Output sp_indices, Output sp_values, Output sp_shape, Output dense, String opName = "SparseDenseCwiseDiv") 
         {
             OperationDescription desc = NewOperation("SparseDenseCwiseDiv", opName);
@@ -27196,10 +27196,10 @@ namespace Emgu.TF
         /// <param name="sp_shape">Input to the operation. </param>
         /// <param name="dense">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseDenseCwiseMul(Output sp_indices, Output sp_values, Output sp_shape, Output dense, String opName = "SparseDenseCwiseMul") 
         {
             OperationDescription desc = NewOperation("SparseDenseCwiseMul", opName);
@@ -27218,13 +27218,13 @@ namespace Emgu.TF
         /// <param name="dense_shape">Input to the operation. </param>
         /// <param name="default_value">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_indices(type: DtInt64).
         /// [1] output_values(type: DtInvalid).
         /// [2] empty_row_indicator(type: DtBool).
         /// [3] reverse_index_map(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation SparseFillEmptyRows(Output indices, Output values, Output dense_shape, Output default_value, String opName = "SparseFillEmptyRows") 
         {
             OperationDescription desc = NewOperation("SparseFillEmptyRows", opName);
@@ -27241,11 +27241,11 @@ namespace Emgu.TF
         /// <param name="reverse_index_map">Input to the operation. </param>
         /// <param name="grad_values">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] d_values(type: DtInvalid).
         /// [1] d_default_value(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseFillEmptyRowsGrad(Output reverse_index_map, Output grad_values, String opName = "SparseFillEmptyRowsGrad") 
         {
             OperationDescription desc = NewOperation("SparseFillEmptyRowsGrad", opName);
@@ -27264,10 +27264,10 @@ namespace Emgu.TF
         /// <param name="a_is_sparse">a is sparse</param>
         /// <param name="b_is_sparse">b is sparse</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] product(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation SparseMatMul(Output a, Output b, bool transpose_a = false, bool transpose_b = false, bool a_is_sparse = false, bool b_is_sparse = false, String opName = "SparseMatMul") 
         {
             OperationDescription desc = NewOperation("SparseMatMul", opName);
@@ -27292,10 +27292,10 @@ namespace Emgu.TF
         /// <param name="alpha">Input to the operation. </param>
         /// <param name="beta">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] c(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation SparseMatrixAdd(Output a, Output b, Output alpha, Output beta, String opName = "SparseMatrixAdd") 
         {
             OperationDescription desc = NewOperation("SparseMatrixAdd", opName);
@@ -27318,10 +27318,10 @@ namespace Emgu.TF
         /// <param name="transpose_output">transpose output</param>
         /// <param name="conjugate_output">conjugate output</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseMatrixMatMul(Output a, Output b, bool transpose_a = false, bool transpose_b = false, bool adjoint_a = false, bool adjoint_b = false, bool transpose_output = false, bool conjugate_output = false, String opName = "SparseMatrixMatMul") 
         {
             OperationDescription desc = NewOperation("SparseMatrixMatMul", opName);
@@ -27348,10 +27348,10 @@ namespace Emgu.TF
         /// <param name="a">Input to the operation. </param>
         /// <param name="b">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation SparseMatrixMul(Output a, Output b, String opName = "SparseMatrixMul") 
         {
             OperationDescription desc = NewOperation("SparseMatrixMul", opName);
@@ -27365,10 +27365,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="sparse_matrix">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] nnz(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation SparseMatrixNNZ(Output sparse_matrix, String opName = "SparseMatrixNNZ") 
         {
             OperationDescription desc = NewOperation("SparseMatrixNNZ", opName);
@@ -27381,10 +27381,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation SparseMatrixOrderingAMD(Output input, String opName = "SparseMatrixOrderingAMD") 
         {
             OperationDescription desc = NewOperation("SparseMatrixOrderingAMD", opName);
@@ -27398,10 +27398,10 @@ namespace Emgu.TF
         /// <param name="logits">Input to the operation. </param>
         /// <param name="type">type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] softmax(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation SparseMatrixSoftmax(Output logits, DataType type, String opName = "SparseMatrixSoftmax") 
         {
             OperationDescription desc = NewOperation("SparseMatrixSoftmax", opName);
@@ -27417,10 +27417,10 @@ namespace Emgu.TF
         /// <param name="grad_softmax">Input to the operation. </param>
         /// <param name="type">type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] gradient(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation SparseMatrixSoftmaxGrad(Output softmax, Output grad_softmax, DataType type, String opName = "SparseMatrixSoftmaxGrad") 
         {
             OperationDescription desc = NewOperation("SparseMatrixSoftmaxGrad", opName);
@@ -27437,10 +27437,10 @@ namespace Emgu.TF
         /// <param name="permutation">Input to the operation. </param>
         /// <param name="type">type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation SparseMatrixSparseCholesky(Output input, Output permutation, DataType type, String opName = "SparseMatrixSparseCholesky") 
         {
             OperationDescription desc = NewOperation("SparseMatrixSparseCholesky", opName);
@@ -27461,10 +27461,10 @@ namespace Emgu.TF
         /// <param name="adjoint_a">adjoint a</param>
         /// <param name="adjoint_b">adjoint b</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] c(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation SparseMatrixSparseMatMul(Output a, Output b, DataType type, bool transpose_a = false, bool transpose_b = false, bool adjoint_a = false, bool adjoint_b = false, String opName = "SparseMatrixSparseMatMul") 
         {
             OperationDescription desc = NewOperation("SparseMatrixSparseMatMul", opName);
@@ -27489,10 +27489,10 @@ namespace Emgu.TF
         /// <param name="type">type</param>
         /// <param name="conjugate">conjugate</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation SparseMatrixTranspose(Output input, DataType type, bool conjugate = false, String opName = "SparseMatrixTranspose") 
         {
             OperationDescription desc = NewOperation("SparseMatrixTranspose", opName);
@@ -27509,10 +27509,10 @@ namespace Emgu.TF
         /// <param name="dense_shape">Input to the operation. </param>
         /// <param name="type">type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sparse_matrix(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation SparseMatrixZeros(Output dense_shape, DataType type, String opName = "SparseMatrixZeros") 
         {
             OperationDescription desc = NewOperation("SparseMatrixZeros", opName);
@@ -27530,10 +27530,10 @@ namespace Emgu.TF
         /// <param name="reduction_axes">Input to the operation. </param>
         /// <param name="keep_dims">keep dims</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseReduceMax(Output input_indices, Output input_values, Output input_shape, Output reduction_axes, bool keep_dims = false, String opName = "SparseReduceMax") 
         {
             OperationDescription desc = NewOperation("SparseReduceMax", opName);
@@ -27555,12 +27555,12 @@ namespace Emgu.TF
         /// <param name="reduction_axes">Input to the operation. </param>
         /// <param name="keep_dims">keep dims</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_indices(type: DtInt64).
         /// [1] output_values(type: DtInvalid).
         /// [2] output_shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation SparseReduceMaxSparse(Output input_indices, Output input_values, Output input_shape, Output reduction_axes, bool keep_dims = false, String opName = "SparseReduceMaxSparse") 
         {
             OperationDescription desc = NewOperation("SparseReduceMaxSparse", opName);
@@ -27582,10 +27582,10 @@ namespace Emgu.TF
         /// <param name="reduction_axes">Input to the operation. </param>
         /// <param name="keep_dims">keep dims</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseReduceSum(Output input_indices, Output input_values, Output input_shape, Output reduction_axes, bool keep_dims = false, String opName = "SparseReduceSum") 
         {
             OperationDescription desc = NewOperation("SparseReduceSum", opName);
@@ -27607,12 +27607,12 @@ namespace Emgu.TF
         /// <param name="reduction_axes">Input to the operation. </param>
         /// <param name="keep_dims">keep dims</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_indices(type: DtInt64).
         /// [1] output_values(type: DtInvalid).
         /// [2] output_shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation SparseReduceSumSparse(Output input_indices, Output input_values, Output input_shape, Output reduction_axes, bool keep_dims = false, String opName = "SparseReduceSumSparse") 
         {
             OperationDescription desc = NewOperation("SparseReduceSumSparse", opName);
@@ -27632,11 +27632,11 @@ namespace Emgu.TF
         /// <param name="input_values">Input to the operation. </param>
         /// <param name="input_shape">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_indices(type: DtInt64).
         /// [1] output_values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseReorder(Output input_indices, Output input_values, Output input_shape, String opName = "SparseReorder") 
         {
             OperationDescription desc = NewOperation("SparseReorder", opName);
@@ -27653,11 +27653,11 @@ namespace Emgu.TF
         /// <param name="input_shape">Input to the operation. </param>
         /// <param name="new_shape">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_indices(type: DtInt64).
         /// [1] output_shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation SparseReshape(Output input_indices, Output input_shape, Output new_shape, String opName = "SparseReshape") 
         {
             OperationDescription desc = NewOperation("SparseReshape", opName);
@@ -27674,10 +27674,10 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="segment_ids">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseSegmentMean(Output data, Output indices, Output segment_ids, String opName = "SparseSegmentMean") 
         {
             OperationDescription desc = NewOperation("SparseSegmentMean", opName);
@@ -27695,10 +27695,10 @@ namespace Emgu.TF
         /// <param name="segment_ids">Input to the operation. </param>
         /// <param name="output_dim0">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseSegmentMeanGrad(Output grad, Output indices, Output segment_ids, Output output_dim0, String opName = "SparseSegmentMeanGrad") 
         {
             OperationDescription desc = NewOperation("SparseSegmentMeanGrad", opName);
@@ -27717,10 +27717,10 @@ namespace Emgu.TF
         /// <param name="segment_ids">Input to the operation. </param>
         /// <param name="num_segments">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseSegmentMeanWithNumSegments(Output data, Output indices, Output segment_ids, Output num_segments, String opName = "SparseSegmentMeanWithNumSegments") 
         {
             OperationDescription desc = NewOperation("SparseSegmentMeanWithNumSegments", opName);
@@ -27738,10 +27738,10 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="segment_ids">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseSegmentSqrtN(Output data, Output indices, Output segment_ids, String opName = "SparseSegmentSqrtN") 
         {
             OperationDescription desc = NewOperation("SparseSegmentSqrtN", opName);
@@ -27759,10 +27759,10 @@ namespace Emgu.TF
         /// <param name="segment_ids">Input to the operation. </param>
         /// <param name="output_dim0">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseSegmentSqrtNGrad(Output grad, Output indices, Output segment_ids, Output output_dim0, String opName = "SparseSegmentSqrtNGrad") 
         {
             OperationDescription desc = NewOperation("SparseSegmentSqrtNGrad", opName);
@@ -27781,10 +27781,10 @@ namespace Emgu.TF
         /// <param name="segment_ids">Input to the operation. </param>
         /// <param name="num_segments">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseSegmentSqrtNWithNumSegments(Output data, Output indices, Output segment_ids, Output num_segments, String opName = "SparseSegmentSqrtNWithNumSegments") 
         {
             OperationDescription desc = NewOperation("SparseSegmentSqrtNWithNumSegments", opName);
@@ -27802,10 +27802,10 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="segment_ids">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseSegmentSum(Output data, Output indices, Output segment_ids, String opName = "SparseSegmentSum") 
         {
             OperationDescription desc = NewOperation("SparseSegmentSum", opName);
@@ -27823,10 +27823,10 @@ namespace Emgu.TF
         /// <param name="segment_ids">Input to the operation. </param>
         /// <param name="num_segments">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseSegmentSumWithNumSegments(Output data, Output indices, Output segment_ids, Output num_segments, String opName = "SparseSegmentSumWithNumSegments") 
         {
             OperationDescription desc = NewOperation("SparseSegmentSumWithNumSegments", opName);
@@ -27846,12 +27846,12 @@ namespace Emgu.TF
         /// <param name="start">Input to the operation. </param>
         /// <param name="size">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_indices(type: DtInt64).
         /// [1] output_values(type: DtInvalid).
         /// [2] output_shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation SparseSlice(Output indices, Output values, Output shape, Output start, Output size, String opName = "SparseSlice") 
         {
             OperationDescription desc = NewOperation("SparseSlice", opName);
@@ -27871,10 +27871,10 @@ namespace Emgu.TF
         /// <param name="input_start">Input to the operation. </param>
         /// <param name="output_indices">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] val_grad(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseSliceGrad(Output backprop_val_grad, Output input_indices, Output input_start, Output output_indices, String opName = "SparseSliceGrad") 
         {
             OperationDescription desc = NewOperation("SparseSliceGrad", opName);
@@ -27892,10 +27892,10 @@ namespace Emgu.TF
         /// <param name="sp_values">Input to the operation. </param>
         /// <param name="sp_shape">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseSoftmax(Output sp_indices, Output sp_values, Output sp_shape, String opName = "SparseSoftmax") 
         {
             OperationDescription desc = NewOperation("SparseSoftmax", opName);
@@ -27911,11 +27911,11 @@ namespace Emgu.TF
         /// <param name="features">Input to the operation. </param>
         /// <param name="labels">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] loss(type: DtInvalid).
         /// [1] backprop(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseSoftmaxCrossEntropyWithLogits(Output features, Output labels, String opName = "SparseSoftmaxCrossEntropyWithLogits") 
         {
             OperationDescription desc = NewOperation("SparseSoftmaxCrossEntropyWithLogits", opName);
@@ -27934,11 +27934,11 @@ namespace Emgu.TF
         /// <param name="b_values">Input to the operation. </param>
         /// <param name="b_shape">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_indices(type: DtInt64).
         /// [1] output_values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseSparseMaximum(Output a_indices, Output a_values, Output a_shape, Output b_indices, Output b_values, Output b_shape, String opName = "SparseSparseMaximum") 
         {
             OperationDescription desc = NewOperation("SparseSparseMaximum", opName);
@@ -27961,11 +27961,11 @@ namespace Emgu.TF
         /// <param name="b_values">Input to the operation. </param>
         /// <param name="b_shape">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_indices(type: DtInt64).
         /// [1] output_values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseSparseMinimum(Output a_indices, Output a_values, Output a_shape, Output b_indices, Output b_values, Output b_shape, String opName = "SparseSparseMinimum") 
         {
             OperationDescription desc = NewOperation("SparseSparseMinimum", opName);
@@ -27987,12 +27987,12 @@ namespace Emgu.TF
         /// <param name="shape">Input to the operation. </param>
         /// <param name="num_split">num split</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_indices(type: DtInt64).
         /// [1] output_values(type: DtInvalid).
         /// [2] output_shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation SparseSplit(Output split_dim, Output indices, Output values, Output shape, long num_split, String opName = "SparseSplit") 
         {
             OperationDescription desc = NewOperation("SparseSplit", opName);
@@ -28012,10 +28012,10 @@ namespace Emgu.TF
         /// <param name="a_shape">Input to the operation. </param>
         /// <param name="b">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseTensorDenseAdd(Output a_indices, Output a_values, Output a_shape, Output b, String opName = "SparseTensorDenseAdd") 
         {
             OperationDescription desc = NewOperation("SparseTensorDenseAdd", opName);
@@ -28036,10 +28036,10 @@ namespace Emgu.TF
         /// <param name="adjoint_a">adjoint a</param>
         /// <param name="adjoint_b">adjoint b</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] product(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseTensorDenseMatMul(Output a_indices, Output a_values, Output a_shape, Output b, bool adjoint_a = false, bool adjoint_b = false, String opName = "SparseTensorDenseMatMul") 
         {
             OperationDescription desc = NewOperation("SparseTensorDenseMatMul", opName);
@@ -28061,10 +28061,10 @@ namespace Emgu.TF
         /// <param name="values">Input to the operation. </param>
         /// <param name="dense_shape">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation SparseTensorSliceDataset(Output indices, Output values, Output dense_shape, String opName = "SparseTensorSliceDataset") 
         {
             OperationDescription desc = NewOperation("SparseTensorSliceDataset", opName);
@@ -28081,10 +28081,10 @@ namespace Emgu.TF
         /// <param name="values">Input to the operation. </param>
         /// <param name="dense_shape">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sparse_matrix(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation SparseTensorToCSRSparseMatrix(Output indices, Output values, Output dense_shape, String opName = "SparseTensorToCSRSparseMatrix") 
         {
             OperationDescription desc = NewOperation("SparseTensorToCSRSparseMatrix", opName);
@@ -28103,10 +28103,10 @@ namespace Emgu.TF
         /// <param name="default_value">Input to the operation. </param>
         /// <param name="validate_indices">validate indices</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] dense(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SparseToDense(Output sparse_indices, Output output_shape, Output sparse_values, Output default_value, bool validate_indices = true, String opName = "SparseToDense") 
         {
             OperationDescription desc = NewOperation("SparseToDense", opName);
@@ -28131,12 +28131,12 @@ namespace Emgu.TF
         /// <param name="set_operation">set operation</param>
         /// <param name="validate_indices">validate indices</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] result_indices(type: DtInt64).
         /// [1] result_values(type: DtInvalid).
         /// [2] result_shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation SparseToSparseSetOperation(Output set1_indices, Output set1_values, Output set1_shape, Output set2_indices, Output set2_values, Output set2_shape, string set_operation, bool validate_indices = true, String opName = "SparseToSparseSetOperation") 
         {
             OperationDescription desc = NewOperation("SparseToSparseSetOperation", opName);
@@ -28157,10 +28157,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Spence(Output x, String opName = "Spence") 
         {
             OperationDescription desc = NewOperation("Spence", opName);
@@ -28175,10 +28175,10 @@ namespace Emgu.TF
         /// <param name="value">Input to the operation. </param>
         /// <param name="num_split">num split</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Split(Output split_dim, Output value, long num_split, String opName = "Split") 
         {
             OperationDescription desc = NewOperation("Split", opName);
@@ -28196,10 +28196,10 @@ namespace Emgu.TF
         /// <param name="split_dim">Input to the operation. </param>
         /// <param name="num_split">num split</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SplitV(Output value, Output size_splits, Output split_dim, long num_split, String opName = "SplitV") 
         {
             OperationDescription desc = NewOperation("SplitV", opName);
@@ -28219,10 +28219,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation SqlDataset(Output driver_name, Output data_source_name, Output query, DataType[] output_types, long[][] output_shapes, String opName = "SqlDataset") 
         {
             OperationDescription desc = NewOperation("SqlDataset", opName);
@@ -28239,10 +28239,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Sqrt(Output x, String opName = "Sqrt") 
         {
             OperationDescription desc = NewOperation("Sqrt", opName);
@@ -28256,10 +28256,10 @@ namespace Emgu.TF
         /// <param name="y">Input to the operation. </param>
         /// <param name="dy">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SqrtGrad(Output y, Output dy, String opName = "SqrtGrad") 
         {
             OperationDescription desc = NewOperation("SqrtGrad", opName);
@@ -28273,10 +28273,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Square(Output x, String opName = "Square") 
         {
             OperationDescription desc = NewOperation("Square", opName);
@@ -28290,10 +28290,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation SquaredDifference(Output x, Output y, String opName = "SquaredDifference") 
         {
             OperationDescription desc = NewOperation("SquaredDifference", opName);
@@ -28308,10 +28308,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="squeeze_dims">squeeze dims</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Squeeze(Output input, long[] squeeze_dims = null, String opName = "Squeeze") 
         {
             OperationDescription desc = NewOperation("Squeeze", opName);
@@ -28326,10 +28326,10 @@ namespace Emgu.TF
         /// <param name="elem_type">elem type</param>
         /// <param name="stack_name">stack name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation Stack(DataType elem_type, string stack_name = null, String opName = "Stack") 
         {
             OperationDescription desc = NewOperation("Stack", opName);
@@ -28344,7 +28344,7 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation StackClose(Output handle, String opName = "StackClose") 
         {
             OperationDescription desc = NewOperation("StackClose", opName);
@@ -28357,7 +28357,7 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation StackCloseV2(Output handle, String opName = "StackCloseV2") 
         {
             OperationDescription desc = NewOperation("StackCloseV2", opName);
@@ -28371,10 +28371,10 @@ namespace Emgu.TF
         /// <param name="handle">Input to the operation. </param>
         /// <param name="elem_type">elem type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] elem(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StackPop(Output handle, DataType elem_type, String opName = "StackPop") 
         {
             OperationDescription desc = NewOperation("StackPop", opName);
@@ -28389,10 +28389,10 @@ namespace Emgu.TF
         /// <param name="handle">Input to the operation. </param>
         /// <param name="elem_type">elem type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] elem(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StackPopV2(Output handle, DataType elem_type, String opName = "StackPopV2") 
         {
             OperationDescription desc = NewOperation("StackPopV2", opName);
@@ -28408,10 +28408,10 @@ namespace Emgu.TF
         /// <param name="elem">Input to the operation. </param>
         /// <param name="swap_memory">swap memory</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StackPush(Output handle, Output elem, bool swap_memory = false, String opName = "StackPush") 
         {
             OperationDescription desc = NewOperation("StackPush", opName);
@@ -28429,10 +28429,10 @@ namespace Emgu.TF
         /// <param name="elem">Input to the operation. </param>
         /// <param name="swap_memory">swap memory</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StackPushV2(Output handle, Output elem, bool swap_memory = false, String opName = "StackPushV2") 
         {
             OperationDescription desc = NewOperation("StackPushV2", opName);
@@ -28450,10 +28450,10 @@ namespace Emgu.TF
         /// <param name="elem_type">elem type</param>
         /// <param name="stack_name">stack name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation StackV2(Output max_size, DataType elem_type, string stack_name = null, String opName = "StackV2") 
         {
             OperationDescription desc = NewOperation("StackV2", opName);
@@ -28473,7 +28473,7 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation Stage(Output values, long capacity = 0, long memory_limit = 0, string container = null, string shared_name = null, String opName = "Stage") 
         {
             OperationDescription desc = NewOperation("Stage", opName);
@@ -28498,7 +28498,7 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation StageClear(DataType[] dtypes, long capacity = 0, long memory_limit = 0, string container = null, string shared_name = null, String opName = "StageClear") 
         {
             OperationDescription desc = NewOperation("StageClear", opName);
@@ -28524,10 +28524,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StagePeek(Output index, DataType[] dtypes, long capacity = 0, long memory_limit = 0, string container = null, string shared_name = null, String opName = "StagePeek") 
         {
             OperationDescription desc = NewOperation("StagePeek", opName);
@@ -28553,10 +28553,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] size(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation StageSize(DataType[] dtypes, long capacity = 0, long memory_limit = 0, string container = null, string shared_name = null, String opName = "StageSize") 
         {
             OperationDescription desc = NewOperation("StageSize", opName);
@@ -28581,10 +28581,10 @@ namespace Emgu.TF
         /// <param name="config_proto">config proto</param>
         /// <param name="executor_type">executor type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation StatefulPartitionedCall(Output args, DataType[] Tout, string config = null, string config_proto = null, string executor_type = null, String opName = "StatefulPartitionedCall") 
         {
@@ -28610,10 +28610,10 @@ namespace Emgu.TF
         /// <param name="probs">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StatefulRandomBinomial(Output resource, Output algorithm, Output shape, Output counts, Output probs, DataType? dtype = null, String opName = "StatefulRandomBinomial") 
         {
             OperationDescription desc = NewOperation("StatefulRandomBinomial", opName);
@@ -28634,10 +28634,10 @@ namespace Emgu.TF
         /// <param name="shape">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StatefulStandardNormal(Output resource, Output shape, DataType? dtype = null, String opName = "StatefulStandardNormal") 
         {
             OperationDescription desc = NewOperation("StatefulStandardNormal", opName);
@@ -28656,10 +28656,10 @@ namespace Emgu.TF
         /// <param name="shape">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StatefulStandardNormalV2(Output resource, Output algorithm, Output shape, DataType? dtype = null, String opName = "StatefulStandardNormalV2") 
         {
             OperationDescription desc = NewOperation("StatefulStandardNormalV2", opName);
@@ -28679,10 +28679,10 @@ namespace Emgu.TF
         /// <param name="shape">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StatefulTruncatedNormal(Output resource, Output algorithm, Output shape, DataType? dtype = null, String opName = "StatefulTruncatedNormal") 
         {
             OperationDescription desc = NewOperation("StatefulTruncatedNormal", opName);
@@ -28702,10 +28702,10 @@ namespace Emgu.TF
         /// <param name="shape">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StatefulUniform(Output resource, Output algorithm, Output shape, DataType? dtype = null, String opName = "StatefulUniform") 
         {
             OperationDescription desc = NewOperation("StatefulUniform", opName);
@@ -28725,10 +28725,10 @@ namespace Emgu.TF
         /// <param name="shape">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StatefulUniformFullInt(Output resource, Output algorithm, Output shape, DataType? dtype = null, String opName = "StatefulUniformFullInt") 
         {
             OperationDescription desc = NewOperation("StatefulUniformFullInt", opName);
@@ -28749,10 +28749,10 @@ namespace Emgu.TF
         /// <param name="minval">Input to the operation. </param>
         /// <param name="maxval">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StatefulUniformInt(Output resource, Output algorithm, Output shape, Output minval, Output maxval, String opName = "StatefulUniformInt") 
         {
             OperationDescription desc = NewOperation("StatefulUniformInt", opName);
@@ -28772,10 +28772,10 @@ namespace Emgu.TF
         /// <param name="Tout">Tout</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: branches: list(func)
         public Operation StatelessCase(Output branch_index, Output input, DataType[] Tout, long[][] output_shapes = null, String opName = "StatelessCase") 
         {
@@ -28795,10 +28795,10 @@ namespace Emgu.TF
         /// <param name="Tout">Tout</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: then_branch: func; else_branch: func
         public Operation StatelessIf(Output cond, Output input, DataType[] Tout, long[][] output_shapes = null, String opName = "StatelessIf") 
         {
@@ -28818,10 +28818,10 @@ namespace Emgu.TF
         /// <param name="seed">Input to the operation. </param>
         /// <param name="output_dtype">output dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StatelessMultinomial(Output logits, Output num_samples, Output seed, DataType? output_dtype = null, String opName = "StatelessMultinomial") 
         {
             OperationDescription desc = NewOperation("StatelessMultinomial", opName);
@@ -28843,10 +28843,10 @@ namespace Emgu.TF
         /// <param name="minvals">Input to the operation. </param>
         /// <param name="maxvals">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StatelessParameterizedTruncatedNormal(Output shape, Output seed, Output means, Output stddevs, Output minvals, Output maxvals, String opName = "StatelessParameterizedTruncatedNormal") 
         {
             OperationDescription desc = NewOperation("StatelessParameterizedTruncatedNormal", opName);
@@ -28868,10 +28868,10 @@ namespace Emgu.TF
         /// <param name="probs">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StatelessRandomBinomial(Output shape, Output seed, Output counts, Output probs, DataType? dtype = null, String opName = "StatelessRandomBinomial") 
         {
             OperationDescription desc = NewOperation("StatelessRandomBinomial", opName);
@@ -28891,10 +28891,10 @@ namespace Emgu.TF
         /// <param name="seed">Input to the operation. </param>
         /// <param name="alpha">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StatelessRandomGammaV2(Output shape, Output seed, Output alpha, String opName = "StatelessRandomGammaV2") 
         {
             OperationDescription desc = NewOperation("StatelessRandomGammaV2", opName);
@@ -28908,10 +28908,10 @@ namespace Emgu.TF
         /// StatelessRandomGetAlg
         /// </summary>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] alg(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation StatelessRandomGetAlg(String opName = "StatelessRandomGetAlg") 
         {
             OperationDescription desc = NewOperation("StatelessRandomGetAlg", opName);
@@ -28923,11 +28923,11 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="seed">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] key(type: DtUint64).
         /// [1] counter(type: DtUint64).
-        /// </return>
+        /// </returns>
         public Operation StatelessRandomGetKeyCounter(Output seed, String opName = "StatelessRandomGetKeyCounter") 
         {
             OperationDescription desc = NewOperation("StatelessRandomGetKeyCounter", opName);
@@ -28940,12 +28940,12 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="seed">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] key(type: DtUint64).
         /// [1] counter(type: DtUint64).
         /// [2] alg(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation StatelessRandomGetKeyCounterAlg(Output seed, String opName = "StatelessRandomGetKeyCounterAlg") 
         {
             OperationDescription desc = NewOperation("StatelessRandomGetKeyCounterAlg", opName);
@@ -28960,10 +28960,10 @@ namespace Emgu.TF
         /// <param name="seed">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StatelessRandomNormal(Output shape, Output seed, DataType? dtype = null, String opName = "StatelessRandomNormal") 
         {
             OperationDescription desc = NewOperation("StatelessRandomNormal", opName);
@@ -28983,10 +28983,10 @@ namespace Emgu.TF
         /// <param name="alg">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StatelessRandomNormalV2(Output shape, Output key, Output counter, Output alg, DataType? dtype = null, String opName = "StatelessRandomNormalV2") 
         {
             OperationDescription desc = NewOperation("StatelessRandomNormalV2", opName);
@@ -29007,10 +29007,10 @@ namespace Emgu.TF
         /// <param name="lam">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StatelessRandomPoisson(Output shape, Output seed, Output lam, DataType dtype, String opName = "StatelessRandomPoisson") 
         {
             OperationDescription desc = NewOperation("StatelessRandomPoisson", opName);
@@ -29028,10 +29028,10 @@ namespace Emgu.TF
         /// <param name="seed">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StatelessRandomUniform(Output shape, Output seed, DataType? dtype = null, String opName = "StatelessRandomUniform") 
         {
             OperationDescription desc = NewOperation("StatelessRandomUniform", opName);
@@ -29049,10 +29049,10 @@ namespace Emgu.TF
         /// <param name="seed">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StatelessRandomUniformFullInt(Output shape, Output seed, DataType? dtype = null, String opName = "StatelessRandomUniformFullInt") 
         {
             OperationDescription desc = NewOperation("StatelessRandomUniformFullInt", opName);
@@ -29072,10 +29072,10 @@ namespace Emgu.TF
         /// <param name="alg">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StatelessRandomUniformFullIntV2(Output shape, Output key, Output counter, Output alg, DataType? dtype = null, String opName = "StatelessRandomUniformFullIntV2") 
         {
             OperationDescription desc = NewOperation("StatelessRandomUniformFullIntV2", opName);
@@ -29096,10 +29096,10 @@ namespace Emgu.TF
         /// <param name="minval">Input to the operation. </param>
         /// <param name="maxval">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StatelessRandomUniformInt(Output shape, Output seed, Output minval, Output maxval, String opName = "StatelessRandomUniformInt") 
         {
             OperationDescription desc = NewOperation("StatelessRandomUniformInt", opName);
@@ -29120,10 +29120,10 @@ namespace Emgu.TF
         /// <param name="minval">Input to the operation. </param>
         /// <param name="maxval">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StatelessRandomUniformIntV2(Output shape, Output key, Output counter, Output alg, Output minval, Output maxval, String opName = "StatelessRandomUniformIntV2") 
         {
             OperationDescription desc = NewOperation("StatelessRandomUniformIntV2", opName);
@@ -29145,10 +29145,10 @@ namespace Emgu.TF
         /// <param name="alg">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StatelessRandomUniformV2(Output shape, Output key, Output counter, Output alg, DataType? dtype = null, String opName = "StatelessRandomUniformV2") 
         {
             OperationDescription desc = NewOperation("StatelessRandomUniformV2", opName);
@@ -29173,12 +29173,12 @@ namespace Emgu.TF
         /// <param name="max_attempts">max attempts</param>
         /// <param name="use_image_if_no_bounding_boxes">use image if no bounding boxes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] begin(type: DtInvalid).
         /// [1] size(type: DtInvalid).
         /// [2] bboxes(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation StatelessSampleDistortedBoundingBox(Output image_size, Output bounding_boxes, Output min_object_covered, Output seed, float[] aspect_ratio_range = null, float[] area_range = null, long max_attempts = 100, bool use_image_if_no_bounding_boxes = false, String opName = "StatelessSampleDistortedBoundingBox") 
         {
             OperationDescription desc = NewOperation("StatelessSampleDistortedBoundingBox", opName);
@@ -29202,10 +29202,10 @@ namespace Emgu.TF
         /// <param name="seed">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StatelessTruncatedNormal(Output shape, Output seed, DataType? dtype = null, String opName = "StatelessTruncatedNormal") 
         {
             OperationDescription desc = NewOperation("StatelessTruncatedNormal", opName);
@@ -29225,10 +29225,10 @@ namespace Emgu.TF
         /// <param name="alg">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StatelessTruncatedNormalV2(Output shape, Output key, Output counter, Output alg, DataType? dtype = null, String opName = "StatelessTruncatedNormalV2") 
         {
             OperationDescription desc = NewOperation("StatelessTruncatedNormalV2", opName);
@@ -29248,10 +29248,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="parallel_iterations">parallel iterations</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: cond: func; body: func
         public Operation StatelessWhile(Output input, long[][] output_shapes = null, long parallel_iterations = 10, String opName = "StatelessWhile") 
         {
@@ -29269,10 +29269,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="pattern">pattern</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation StaticRegexFullMatch(Output input, string pattern, String opName = "StaticRegexFullMatch") 
         {
             OperationDescription desc = NewOperation("StaticRegexFullMatch", opName);
@@ -29289,10 +29289,10 @@ namespace Emgu.TF
         /// <param name="rewrite">rewrite</param>
         /// <param name="replace_global">replace global</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation StaticRegexReplace(Output input, string pattern, string rewrite, bool replace_global = true, String opName = "StaticRegexReplace") 
         {
             OperationDescription desc = NewOperation("StaticRegexReplace", opName);
@@ -29310,10 +29310,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation StatsAggregatorHandle(string container = null, string shared_name = null, String opName = "StatsAggregatorHandle") 
         {
             OperationDescription desc = NewOperation("StatsAggregatorHandle", opName);
@@ -29330,10 +29330,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation StatsAggregatorHandleV2(string container = null, string shared_name = null, String opName = "StatsAggregatorHandleV2") 
         {
             OperationDescription desc = NewOperation("StatsAggregatorHandleV2", opName);
@@ -29350,7 +29350,7 @@ namespace Emgu.TF
         /// <param name="stats_aggregator">Input to the operation. </param>
         /// <param name="summary">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation StatsAggregatorSetSummaryWriter(Output stats_aggregator, Output summary, String opName = "StatsAggregatorSetSummaryWriter") 
         {
             OperationDescription desc = NewOperation("StatsAggregatorSetSummaryWriter", opName);
@@ -29364,10 +29364,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="iterator">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] summary(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation StatsAggregatorSummary(Output iterator, String opName = "StatsAggregatorSummary") 
         {
             OperationDescription desc = NewOperation("StatsAggregatorSummary", opName);
@@ -29380,10 +29380,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StopGradient(Output input, String opName = "StopGradient") 
         {
             OperationDescription desc = NewOperation("StopGradient", opName);
@@ -29404,10 +29404,10 @@ namespace Emgu.TF
         /// <param name="new_axis_mask">new axis mask</param>
         /// <param name="shrink_axis_mask">shrink axis mask</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StridedSlice(Output input, Output begin, Output end, Output strides, long begin_mask = 0, long end_mask = 0, long ellipsis_mask = 0, long new_axis_mask = 0, long shrink_axis_mask = 0, String opName = "StridedSlice") 
         {
             OperationDescription desc = NewOperation("StridedSlice", opName);
@@ -29442,10 +29442,10 @@ namespace Emgu.TF
         /// <param name="new_axis_mask">new axis mask</param>
         /// <param name="shrink_axis_mask">shrink axis mask</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_ref(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StridedSliceAssign(Output reference, Output begin, Output end, Output strides, Output value, long begin_mask = 0, long end_mask = 0, long ellipsis_mask = 0, long new_axis_mask = 0, long shrink_axis_mask = 0, String opName = "StridedSliceAssign") 
         {
             OperationDescription desc = NewOperation("StridedSliceAssign", opName);
@@ -29481,10 +29481,10 @@ namespace Emgu.TF
         /// <param name="new_axis_mask">new axis mask</param>
         /// <param name="shrink_axis_mask">shrink axis mask</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StridedSliceGrad(Output shape, Output begin, Output end, Output strides, Output dy, long begin_mask = 0, long end_mask = 0, long ellipsis_mask = 0, long new_axis_mask = 0, long shrink_axis_mask = 0, String opName = "StridedSliceGrad") 
         {
             OperationDescription desc = NewOperation("StridedSliceGrad", opName);
@@ -29514,10 +29514,10 @@ namespace Emgu.TF
         /// <param name="placeholder">placeholder</param>
         /// <param name="summarize">summarize</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation StringFormat(Output inputs, string template = null, string placeholder = null, long summarize = 3, String opName = "StringFormat") 
         {
             OperationDescription desc = NewOperation("StringFormat", opName);
@@ -29537,10 +29537,10 @@ namespace Emgu.TF
         /// <param name="inputs">Input to the operation. </param>
         /// <param name="separator">separator</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation StringJoin(Output inputs, string separator = null, String opName = "StringJoin") 
         {
             OperationDescription desc = NewOperation("StringJoin", opName);
@@ -29556,10 +29556,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="unit">unit</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation StringLength(Output input, string unit = null, String opName = "StringLength") 
         {
             OperationDescription desc = NewOperation("StringLength", opName);
@@ -29575,10 +29575,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="encoding">encoding</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation StringLower(Output input, string encoding = null, String opName = "StringLower") 
         {
             OperationDescription desc = NewOperation("StringLower", opName);
@@ -29600,11 +29600,11 @@ namespace Emgu.TF
         /// <param name="pad_width">pad width</param>
         /// <param name="preserve_short_sequences">preserve short sequences</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] ngrams(type: DtString).
         /// [1] ngrams_splits(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StringNGrams(Output data, Output data_splits, string separator, long[] ngram_widths, string left_pad, string right_pad, long pad_width, bool preserve_short_sequences, String opName = "StringNGrams") 
         {
             OperationDescription desc = NewOperation("StringNGrams", opName);
@@ -29626,12 +29626,12 @@ namespace Emgu.TF
         /// <param name="delimiter">Input to the operation. </param>
         /// <param name="skip_empty">skip empty</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] indices(type: DtInt64).
         /// [1] values(type: DtString).
         /// [2] shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation StringSplit(Output input, Output delimiter, bool skip_empty = true, String opName = "StringSplit") 
         {
             OperationDescription desc = NewOperation("StringSplit", opName);
@@ -29649,12 +29649,12 @@ namespace Emgu.TF
         /// <param name="sep">Input to the operation. </param>
         /// <param name="maxsplit">maxsplit</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] indices(type: DtInt64).
         /// [1] values(type: DtString).
         /// [2] shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation StringSplitV2(Output input, Output sep, long maxsplit = -1, String opName = "StringSplitV2") 
         {
             OperationDescription desc = NewOperation("StringSplitV2", opName);
@@ -29670,10 +29670,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation StringStrip(Output input, String opName = "StringStrip") 
         {
             OperationDescription desc = NewOperation("StringStrip", opName);
@@ -29687,10 +29687,10 @@ namespace Emgu.TF
         /// <param name="string_tensor">Input to the operation. </param>
         /// <param name="num_buckets">num buckets</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation StringToHashBucket(Output string_tensor, long num_buckets, String opName = "StringToHashBucket") 
         {
             OperationDescription desc = NewOperation("StringToHashBucket", opName);
@@ -29705,10 +29705,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="num_buckets">num buckets</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation StringToHashBucketFast(Output input, long num_buckets, String opName = "StringToHashBucketFast") 
         {
             OperationDescription desc = NewOperation("StringToHashBucketFast", opName);
@@ -29724,10 +29724,10 @@ namespace Emgu.TF
         /// <param name="num_buckets">num buckets</param>
         /// <param name="key">key</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation StringToHashBucketStrong(Output input, long num_buckets, long[] key, String opName = "StringToHashBucketStrong") 
         {
             OperationDescription desc = NewOperation("StringToHashBucketStrong", opName);
@@ -29743,10 +29743,10 @@ namespace Emgu.TF
         /// <param name="string_tensor">Input to the operation. </param>
         /// <param name="out_type">out type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation StringToNumber(Output string_tensor, DataType? out_type = null, String opName = "StringToNumber") 
         {
             OperationDescription desc = NewOperation("StringToNumber", opName);
@@ -29762,10 +29762,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="encoding">encoding</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation StringUpper(Output input, string encoding = null, String opName = "StringUpper") 
         {
             OperationDescription desc = NewOperation("StringUpper", opName);
@@ -29781,10 +29781,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Sub(Output x, Output y, String opName = "Sub") 
         {
             OperationDescription desc = NewOperation("Sub", opName);
@@ -29801,10 +29801,10 @@ namespace Emgu.TF
         /// <param name="len">Input to the operation. </param>
         /// <param name="unit">unit</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation Substr(Output input, Output pos, Output len, string unit = null, String opName = "Substr") 
         {
             OperationDescription desc = NewOperation("Substr", opName);
@@ -29823,10 +29823,10 @@ namespace Emgu.TF
         /// <param name="reduction_indices">Input to the operation. </param>
         /// <param name="keep_dims">keep dims</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Sum(Output input, Output reduction_indices, bool keep_dims = false, String opName = "Sum") 
         {
             OperationDescription desc = NewOperation("Sum", opName);
@@ -29843,10 +29843,10 @@ namespace Emgu.TF
         /// <param name="shared_name">shared name</param>
         /// <param name="container">container</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] writer(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation SummaryWriter(string shared_name = null, string container = null, String opName = "SummaryWriter") 
         {
             OperationDescription desc = NewOperation("SummaryWriter", opName);
@@ -29864,12 +29864,12 @@ namespace Emgu.TF
         /// <param name="compute_uv">compute uv</param>
         /// <param name="full_matrices">full matrices</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] s(type: DtInvalid).
         /// [1] u(type: DtInvalid).
         /// [2] v(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Svd(Output input, bool compute_uv = true, bool full_matrices = false, String opName = "Svd") 
         {
             OperationDescription desc = NewOperation("Svd", opName);
@@ -29887,11 +29887,11 @@ namespace Emgu.TF
         /// <param name="data">Input to the operation. </param>
         /// <param name="pred">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_false(type: DtInvalid).
         /// [1] output_true(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Switch(Output data, Output pred, String opName = "Switch") 
         {
             OperationDescription desc = NewOperation("Switch", opName);
@@ -29906,10 +29906,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="Tout">Tout</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation SymbolicGradient(Output input, DataType[] Tout, String opName = "SymbolicGradient") 
         {
@@ -29927,10 +29927,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation TakeDataset(Output input_dataset, Output count, DataType[] output_types, long[][] output_shapes, String opName = "TakeDataset") 
         {
             OperationDescription desc = NewOperation("TakeDataset", opName);
@@ -29949,12 +29949,12 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sparse_indices(type: DtInt64).
         /// [1] sparse_values(type: DtInvalid).
         /// [2] sparse_shape(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation TakeManySparseFromTensorsMap(Output sparse_handles, DataType dtype, string container = null, string shared_name = null, String opName = "TakeManySparseFromTensorsMap") 
         {
             OperationDescription desc = NewOperation("TakeManySparseFromTensorsMap", opName);
@@ -29975,10 +29975,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: predicate: func
         public Operation TakeWhileDataset(Output input_dataset, Output other_arguments, DataType[] output_types, long[][] output_shapes, String opName = "TakeWhileDataset") 
         {
@@ -29995,10 +29995,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Tan(Output x, String opName = "Tan") 
         {
             OperationDescription desc = NewOperation("Tan", opName);
@@ -30011,10 +30011,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Tanh(Output x, String opName = "Tanh") 
         {
             OperationDescription desc = NewOperation("Tanh", opName);
@@ -30028,10 +30028,10 @@ namespace Emgu.TF
         /// <param name="y">Input to the operation. </param>
         /// <param name="dy">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TanhGrad(Output y, Output dy, String opName = "TanhGrad") 
         {
             OperationDescription desc = NewOperation("TanhGrad", opName);
@@ -30047,10 +30047,10 @@ namespace Emgu.TF
         /// <param name="dtype">dtype</param>
         /// <param name="var_name">var name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] ref(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TemporaryVariable(long[] shape, DataType dtype, string var_name = null, String opName = "TemporaryVariable") 
         {
             OperationDescription desc = NewOperation("TemporaryVariable", opName);
@@ -30071,10 +30071,10 @@ namespace Emgu.TF
         /// <param name="tensor_array_name">tensor array name</param>
         /// <param name="element_shape">element shape</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation TensorArray(Output size, DataType dtype, bool dynamic_size = false, bool clear_after_read = true, string tensor_array_name = null, long[] element_shape = null, String opName = "TensorArray") 
         {
             OperationDescription desc = NewOperation("TensorArray", opName);
@@ -30096,7 +30096,7 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation TensorArrayClose(Output handle, String opName = "TensorArrayClose") 
         {
             OperationDescription desc = NewOperation("TensorArrayClose", opName);
@@ -30109,7 +30109,7 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation TensorArrayCloseV2(Output handle, String opName = "TensorArrayCloseV2") 
         {
             OperationDescription desc = NewOperation("TensorArrayCloseV2", opName);
@@ -30122,7 +30122,7 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation TensorArrayCloseV3(Output handle, String opName = "TensorArrayCloseV3") 
         {
             OperationDescription desc = NewOperation("TensorArrayCloseV3", opName);
@@ -30138,11 +30138,11 @@ namespace Emgu.TF
         /// <param name="dtype">dtype</param>
         /// <param name="element_shape_except0">element shape except0</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] value(type: DtInvalid).
         /// [1] lengths(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation TensorArrayConcat(Output handle, Output flow_in, DataType dtype, long[] element_shape_except0 = null, String opName = "TensorArrayConcat") 
         {
             OperationDescription desc = NewOperation("TensorArrayConcat", opName);
@@ -30162,11 +30162,11 @@ namespace Emgu.TF
         /// <param name="dtype">dtype</param>
         /// <param name="element_shape_except0">element shape except0</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] value(type: DtInvalid).
         /// [1] lengths(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation TensorArrayConcatV2(Output handle, Output flow_in, DataType dtype, long[] element_shape_except0 = null, String opName = "TensorArrayConcatV2") 
         {
             OperationDescription desc = NewOperation("TensorArrayConcatV2", opName);
@@ -30186,11 +30186,11 @@ namespace Emgu.TF
         /// <param name="dtype">dtype</param>
         /// <param name="element_shape_except0">element shape except0</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] value(type: DtInvalid).
         /// [1] lengths(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation TensorArrayConcatV3(Output handle, Output flow_in, DataType dtype, long[] element_shape_except0 = null, String opName = "TensorArrayConcatV3") 
         {
             OperationDescription desc = NewOperation("TensorArrayConcatV3", opName);
@@ -30211,10 +30211,10 @@ namespace Emgu.TF
         /// <param name="dtype">dtype</param>
         /// <param name="element_shape">element shape</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] value(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TensorArrayGather(Output handle, Output indices, Output flow_in, DataType dtype, long[] element_shape = null, String opName = "TensorArrayGather") 
         {
             OperationDescription desc = NewOperation("TensorArrayGather", opName);
@@ -30236,10 +30236,10 @@ namespace Emgu.TF
         /// <param name="dtype">dtype</param>
         /// <param name="element_shape">element shape</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] value(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TensorArrayGatherV2(Output handle, Output indices, Output flow_in, DataType dtype, long[] element_shape = null, String opName = "TensorArrayGatherV2") 
         {
             OperationDescription desc = NewOperation("TensorArrayGatherV2", opName);
@@ -30261,10 +30261,10 @@ namespace Emgu.TF
         /// <param name="dtype">dtype</param>
         /// <param name="element_shape">element shape</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] value(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TensorArrayGatherV3(Output handle, Output indices, Output flow_in, DataType dtype, long[] element_shape = null, String opName = "TensorArrayGatherV3") 
         {
             OperationDescription desc = NewOperation("TensorArrayGatherV3", opName);
@@ -30284,10 +30284,10 @@ namespace Emgu.TF
         /// <param name="flow_in">Input to the operation. </param>
         /// <param name="source">source</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] grad_handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation TensorArrayGrad(Output handle, Output flow_in, string source, String opName = "TensorArrayGrad") 
         {
             OperationDescription desc = NewOperation("TensorArrayGrad", opName);
@@ -30304,10 +30304,10 @@ namespace Emgu.TF
         /// <param name="flow_in">Input to the operation. </param>
         /// <param name="source">source</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] grad_handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation TensorArrayGradV2(Output handle, Output flow_in, string source, String opName = "TensorArrayGradV2") 
         {
             OperationDescription desc = NewOperation("TensorArrayGradV2", opName);
@@ -30324,11 +30324,11 @@ namespace Emgu.TF
         /// <param name="flow_in">Input to the operation. </param>
         /// <param name="source">source</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] grad_handle(type: DtResource).
         /// [1] flow_out(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation TensorArrayGradV3(Output handle, Output flow_in, string source, String opName = "TensorArrayGradV3") 
         {
             OperationDescription desc = NewOperation("TensorArrayGradV3", opName);
@@ -30346,11 +30346,11 @@ namespace Emgu.TF
         /// <param name="shape_to_prepend">Input to the operation. </param>
         /// <param name="source">source</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] grad_handle(type: DtResource).
         /// [1] flow_out(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation TensorArrayGradWithShape(Output handle, Output flow_in, Output shape_to_prepend, string source, String opName = "TensorArrayGradWithShape") 
         {
             OperationDescription desc = NewOperation("TensorArrayGradWithShape", opName);
@@ -30369,10 +30369,10 @@ namespace Emgu.TF
         /// <param name="dtype">dtype</param>
         /// <param name="element_shape">element shape</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] value(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TensorArrayPack(Output handle, Output flow_in, DataType dtype, long[] element_shape = null, String opName = "TensorArrayPack") 
         {
             OperationDescription desc = NewOperation("TensorArrayPack", opName);
@@ -30392,10 +30392,10 @@ namespace Emgu.TF
         /// <param name="flow_in">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] value(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TensorArrayRead(Output handle, Output index, Output flow_in, DataType dtype, String opName = "TensorArrayRead") 
         {
             OperationDescription desc = NewOperation("TensorArrayRead", opName);
@@ -30414,10 +30414,10 @@ namespace Emgu.TF
         /// <param name="flow_in">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] value(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TensorArrayReadV2(Output handle, Output index, Output flow_in, DataType dtype, String opName = "TensorArrayReadV2") 
         {
             OperationDescription desc = NewOperation("TensorArrayReadV2", opName);
@@ -30436,10 +30436,10 @@ namespace Emgu.TF
         /// <param name="flow_in">Input to the operation. </param>
         /// <param name="dtype">dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] value(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TensorArrayReadV3(Output handle, Output index, Output flow_in, DataType dtype, String opName = "TensorArrayReadV3") 
         {
             OperationDescription desc = NewOperation("TensorArrayReadV3", opName);
@@ -30458,10 +30458,10 @@ namespace Emgu.TF
         /// <param name="value">Input to the operation. </param>
         /// <param name="flow_in">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] flow_out(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation TensorArrayScatter(Output handle, Output indices, Output value, Output flow_in, String opName = "TensorArrayScatter") 
         {
             OperationDescription desc = NewOperation("TensorArrayScatter", opName);
@@ -30480,10 +30480,10 @@ namespace Emgu.TF
         /// <param name="value">Input to the operation. </param>
         /// <param name="flow_in">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] flow_out(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation TensorArrayScatterV2(Output handle, Output indices, Output value, Output flow_in, String opName = "TensorArrayScatterV2") 
         {
             OperationDescription desc = NewOperation("TensorArrayScatterV2", opName);
@@ -30502,10 +30502,10 @@ namespace Emgu.TF
         /// <param name="value">Input to the operation. </param>
         /// <param name="flow_in">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] flow_out(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation TensorArrayScatterV3(Output handle, Output indices, Output value, Output flow_in, String opName = "TensorArrayScatterV3") 
         {
             OperationDescription desc = NewOperation("TensorArrayScatterV3", opName);
@@ -30522,10 +30522,10 @@ namespace Emgu.TF
         /// <param name="handle">Input to the operation. </param>
         /// <param name="flow_in">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] size(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation TensorArraySize(Output handle, Output flow_in, String opName = "TensorArraySize") 
         {
             OperationDescription desc = NewOperation("TensorArraySize", opName);
@@ -30540,10 +30540,10 @@ namespace Emgu.TF
         /// <param name="handle">Input to the operation. </param>
         /// <param name="flow_in">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] size(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation TensorArraySizeV2(Output handle, Output flow_in, String opName = "TensorArraySizeV2") 
         {
             OperationDescription desc = NewOperation("TensorArraySizeV2", opName);
@@ -30558,10 +30558,10 @@ namespace Emgu.TF
         /// <param name="handle">Input to the operation. </param>
         /// <param name="flow_in">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] size(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation TensorArraySizeV3(Output handle, Output flow_in, String opName = "TensorArraySizeV3") 
         {
             OperationDescription desc = NewOperation("TensorArraySizeV3", opName);
@@ -30578,10 +30578,10 @@ namespace Emgu.TF
         /// <param name="lengths">Input to the operation. </param>
         /// <param name="flow_in">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] flow_out(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation TensorArraySplit(Output handle, Output value, Output lengths, Output flow_in, String opName = "TensorArraySplit") 
         {
             OperationDescription desc = NewOperation("TensorArraySplit", opName);
@@ -30600,10 +30600,10 @@ namespace Emgu.TF
         /// <param name="lengths">Input to the operation. </param>
         /// <param name="flow_in">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] flow_out(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation TensorArraySplitV2(Output handle, Output value, Output lengths, Output flow_in, String opName = "TensorArraySplitV2") 
         {
             OperationDescription desc = NewOperation("TensorArraySplitV2", opName);
@@ -30622,10 +30622,10 @@ namespace Emgu.TF
         /// <param name="lengths">Input to the operation. </param>
         /// <param name="flow_in">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] flow_out(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation TensorArraySplitV3(Output handle, Output value, Output lengths, Output flow_in, String opName = "TensorArraySplitV3") 
         {
             OperationDescription desc = NewOperation("TensorArraySplitV3", opName);
@@ -30643,10 +30643,10 @@ namespace Emgu.TF
         /// <param name="value">Input to the operation. </param>
         /// <param name="flow_in">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] flow_out(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation TensorArrayUnpack(Output handle, Output value, Output flow_in, String opName = "TensorArrayUnpack") 
         {
             OperationDescription desc = NewOperation("TensorArrayUnpack", opName);
@@ -30666,10 +30666,10 @@ namespace Emgu.TF
         /// <param name="clear_after_read">clear after read</param>
         /// <param name="tensor_array_name">tensor array name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation TensorArrayV2(Output size, DataType dtype, long[] element_shape = null, bool dynamic_size = false, bool clear_after_read = true, string tensor_array_name = null, String opName = "TensorArrayV2") 
         {
             OperationDescription desc = NewOperation("TensorArrayV2", opName);
@@ -30697,11 +30697,11 @@ namespace Emgu.TF
         /// <param name="identical_element_shapes">identical element shapes</param>
         /// <param name="tensor_array_name">tensor array name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
         /// [1] flow(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation TensorArrayV3(Output size, DataType dtype, long[] element_shape = null, bool dynamic_size = false, bool clear_after_read = true, bool identical_element_shapes = false, string tensor_array_name = null, String opName = "TensorArrayV3") 
         {
             OperationDescription desc = NewOperation("TensorArrayV3", opName);
@@ -30728,10 +30728,10 @@ namespace Emgu.TF
         /// <param name="value">Input to the operation. </param>
         /// <param name="flow_in">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] flow_out(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation TensorArrayWrite(Output handle, Output index, Output value, Output flow_in, String opName = "TensorArrayWrite") 
         {
             OperationDescription desc = NewOperation("TensorArrayWrite", opName);
@@ -30750,10 +30750,10 @@ namespace Emgu.TF
         /// <param name="value">Input to the operation. </param>
         /// <param name="flow_in">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] flow_out(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation TensorArrayWriteV2(Output handle, Output index, Output value, Output flow_in, String opName = "TensorArrayWriteV2") 
         {
             OperationDescription desc = NewOperation("TensorArrayWriteV2", opName);
@@ -30772,10 +30772,10 @@ namespace Emgu.TF
         /// <param name="value">Input to the operation. </param>
         /// <param name="flow_in">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] flow_out(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation TensorArrayWriteV3(Output handle, Output index, Output value, Output flow_in, String opName = "TensorArrayWriteV3") 
         {
             OperationDescription desc = NewOperation("TensorArrayWriteV3", opName);
@@ -30792,10 +30792,10 @@ namespace Emgu.TF
         /// <param name="components">Input to the operation. </param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation TensorDataset(Output components, long[][] output_shapes, String opName = "TensorDataset") 
         {
             OperationDescription desc = NewOperation("TensorDataset", opName);
@@ -30811,11 +30811,11 @@ namespace Emgu.TF
         /// <param name="element_dtype">element dtype</param>
         /// <param name="element_shape">element shape</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] tensor(type: DtInvalid).
         /// [1] lengths(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation TensorListConcat(Output input_handle, DataType element_dtype, long[] element_shape = null, String opName = "TensorListConcat") 
         {
             OperationDescription desc = NewOperation("TensorListConcat", opName);
@@ -30833,10 +30833,10 @@ namespace Emgu.TF
         /// <param name="input_b">Input to the operation. </param>
         /// <param name="element_dtype">element dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation TensorListConcatLists(Output input_a, Output input_b, DataType element_dtype, String opName = "TensorListConcatLists") 
         {
             OperationDescription desc = NewOperation("TensorListConcatLists", opName);
@@ -30854,11 +30854,11 @@ namespace Emgu.TF
         /// <param name="leading_dims">Input to the operation. </param>
         /// <param name="element_dtype">element dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] tensor(type: DtInvalid).
         /// [1] lengths(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation TensorListConcatV2(Output input_handle, Output element_shape, Output leading_dims, DataType element_dtype, String opName = "TensorListConcatV2") 
         {
             OperationDescription desc = NewOperation("TensorListConcatV2", opName);
@@ -30875,10 +30875,10 @@ namespace Emgu.TF
         /// <param name="input_handle">Input to the operation. </param>
         /// <param name="shape_type">shape type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] element_shape(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TensorListElementShape(Output input_handle, DataType shape_type, String opName = "TensorListElementShape") 
         {
             OperationDescription desc = NewOperation("TensorListElementShape", opName);
@@ -30893,10 +30893,10 @@ namespace Emgu.TF
         /// <param name="tensor">Input to the operation. </param>
         /// <param name="element_shape">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation TensorListFromTensor(Output tensor, Output element_shape, String opName = "TensorListFromTensor") 
         {
             OperationDescription desc = NewOperation("TensorListFromTensor", opName);
@@ -30913,10 +30913,10 @@ namespace Emgu.TF
         /// <param name="element_shape">Input to the operation. </param>
         /// <param name="element_dtype">element dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TensorListGather(Output input_handle, Output indices, Output element_shape, DataType element_dtype, String opName = "TensorListGather") 
         {
             OperationDescription desc = NewOperation("TensorListGather", opName);
@@ -30935,10 +30935,10 @@ namespace Emgu.TF
         /// <param name="element_shape">Input to the operation. </param>
         /// <param name="element_dtype">element dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] item(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TensorListGetItem(Output input_handle, Output index, Output element_shape, DataType element_dtype, String opName = "TensorListGetItem") 
         {
             OperationDescription desc = NewOperation("TensorListGetItem", opName);
@@ -30954,10 +30954,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input_handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] length(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation TensorListLength(Output input_handle, String opName = "TensorListLength") 
         {
             OperationDescription desc = NewOperation("TensorListLength", opName);
@@ -30972,11 +30972,11 @@ namespace Emgu.TF
         /// <param name="element_shape">Input to the operation. </param>
         /// <param name="element_dtype">element dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_handle(type: DtVariant).
         /// [1] tensor(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TensorListPopBack(Output input_handle, Output element_shape, DataType element_dtype, String opName = "TensorListPopBack") 
         {
             OperationDescription desc = NewOperation("TensorListPopBack", opName);
@@ -30992,10 +30992,10 @@ namespace Emgu.TF
         /// <param name="input_handle">Input to the operation. </param>
         /// <param name="tensor">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation TensorListPushBack(Output input_handle, Output tensor, String opName = "TensorListPushBack") 
         {
             OperationDescription desc = NewOperation("TensorListPushBack", opName);
@@ -31010,10 +31010,10 @@ namespace Emgu.TF
         /// <param name="input_handles">Input to the operation. </param>
         /// <param name="tensor">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_handles(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation TensorListPushBackBatch(Output input_handles, Output tensor, String opName = "TensorListPushBackBatch") 
         {
             OperationDescription desc = NewOperation("TensorListPushBackBatch", opName);
@@ -31029,10 +31029,10 @@ namespace Emgu.TF
         /// <param name="num_elements">Input to the operation. </param>
         /// <param name="element_dtype">element dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation TensorListReserve(Output element_shape, Output num_elements, DataType element_dtype, String opName = "TensorListReserve") 
         {
             OperationDescription desc = NewOperation("TensorListReserve", opName);
@@ -31048,10 +31048,10 @@ namespace Emgu.TF
         /// <param name="input_handle">Input to the operation. </param>
         /// <param name="size">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation TensorListResize(Output input_handle, Output size, String opName = "TensorListResize") 
         {
             OperationDescription desc = NewOperation("TensorListResize", opName);
@@ -31067,10 +31067,10 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="element_shape">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation TensorListScatter(Output tensor, Output indices, Output element_shape, String opName = "TensorListScatter") 
         {
             OperationDescription desc = NewOperation("TensorListScatter", opName);
@@ -31087,10 +31087,10 @@ namespace Emgu.TF
         /// <param name="tensor">Input to the operation. </param>
         /// <param name="indices">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation TensorListScatterIntoExistingList(Output input_handle, Output tensor, Output indices, String opName = "TensorListScatterIntoExistingList") 
         {
             OperationDescription desc = NewOperation("TensorListScatterIntoExistingList", opName);
@@ -31108,10 +31108,10 @@ namespace Emgu.TF
         /// <param name="element_shape">Input to the operation. </param>
         /// <param name="num_elements">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation TensorListScatterV2(Output tensor, Output indices, Output element_shape, Output num_elements, String opName = "TensorListScatterV2") 
         {
             OperationDescription desc = NewOperation("TensorListScatterV2", opName);
@@ -31129,10 +31129,10 @@ namespace Emgu.TF
         /// <param name="index">Input to the operation. </param>
         /// <param name="item">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation TensorListSetItem(Output input_handle, Output index, Output item, String opName = "TensorListSetItem") 
         {
             OperationDescription desc = NewOperation("TensorListSetItem", opName);
@@ -31149,10 +31149,10 @@ namespace Emgu.TF
         /// <param name="element_shape">Input to the operation. </param>
         /// <param name="lengths">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation TensorListSplit(Output tensor, Output element_shape, Output lengths, String opName = "TensorListSplit") 
         {
             OperationDescription desc = NewOperation("TensorListSplit", opName);
@@ -31170,10 +31170,10 @@ namespace Emgu.TF
         /// <param name="element_dtype">element dtype</param>
         /// <param name="num_elements">num elements</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] tensor(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TensorListStack(Output input_handle, Output element_shape, DataType element_dtype, long num_elements = -1, String opName = "TensorListStack") 
         {
             OperationDescription desc = NewOperation("TensorListStack", opName);
@@ -31192,10 +31192,10 @@ namespace Emgu.TF
         /// <param name="key">Input to the operation. </param>
         /// <param name="value_dtype">value dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation TensorMapErase(Output input_handle, Output key, DataType value_dtype, String opName = "TensorMapErase") 
         {
             OperationDescription desc = NewOperation("TensorMapErase", opName);
@@ -31211,10 +31211,10 @@ namespace Emgu.TF
         /// <param name="input_handle">Input to the operation. </param>
         /// <param name="key">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] has_key(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation TensorMapHasKey(Output input_handle, Output key, String opName = "TensorMapHasKey") 
         {
             OperationDescription desc = NewOperation("TensorMapHasKey", opName);
@@ -31230,10 +31230,10 @@ namespace Emgu.TF
         /// <param name="key">Input to the operation. </param>
         /// <param name="value">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation TensorMapInsert(Output input_handle, Output key, Output value, String opName = "TensorMapInsert") 
         {
             OperationDescription desc = NewOperation("TensorMapInsert", opName);
@@ -31250,10 +31250,10 @@ namespace Emgu.TF
         /// <param name="key">Input to the operation. </param>
         /// <param name="value_dtype">value dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] value(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TensorMapLookup(Output input_handle, Output key, DataType value_dtype, String opName = "TensorMapLookup") 
         {
             OperationDescription desc = NewOperation("TensorMapLookup", opName);
@@ -31268,10 +31268,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input_handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] size(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation TensorMapSize(Output input_handle, String opName = "TensorMapSize") 
         {
             OperationDescription desc = NewOperation("TensorMapSize", opName);
@@ -31285,10 +31285,10 @@ namespace Emgu.TF
         /// <param name="input_handle">Input to the operation. </param>
         /// <param name="key_dtype">key dtype</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] keys(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TensorMapStackKeys(Output input_handle, DataType key_dtype, String opName = "TensorMapStackKeys") 
         {
             OperationDescription desc = NewOperation("TensorMapStackKeys", opName);
@@ -31304,10 +31304,10 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="updates">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TensorScatterAdd(Output tensor, Output indices, Output updates, String opName = "TensorScatterAdd") 
         {
             OperationDescription desc = NewOperation("TensorScatterAdd", opName);
@@ -31324,10 +31324,10 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="updates">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TensorScatterMax(Output tensor, Output indices, Output updates, String opName = "TensorScatterMax") 
         {
             OperationDescription desc = NewOperation("TensorScatterMax", opName);
@@ -31344,10 +31344,10 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="updates">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TensorScatterMin(Output tensor, Output indices, Output updates, String opName = "TensorScatterMin") 
         {
             OperationDescription desc = NewOperation("TensorScatterMin", opName);
@@ -31364,10 +31364,10 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="updates">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TensorScatterSub(Output tensor, Output indices, Output updates, String opName = "TensorScatterSub") 
         {
             OperationDescription desc = NewOperation("TensorScatterSub", opName);
@@ -31384,10 +31384,10 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="updates">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TensorScatterUpdate(Output tensor, Output indices, Output updates, String opName = "TensorScatterUpdate") 
         {
             OperationDescription desc = NewOperation("TensorScatterUpdate", opName);
@@ -31403,10 +31403,10 @@ namespace Emgu.TF
         /// <param name="components">Input to the operation. </param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation TensorSliceDataset(Output components, long[][] output_shapes, String opName = "TensorSliceDataset") 
         {
             OperationDescription desc = NewOperation("TensorSliceDataset", opName);
@@ -31429,10 +31429,10 @@ namespace Emgu.TF
         /// <param name="new_axis_mask">new axis mask</param>
         /// <param name="shrink_axis_mask">shrink axis mask</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TensorStridedSliceUpdate(Output input, Output begin, Output end, Output strides, Output value, long begin_mask = 0, long end_mask = 0, long ellipsis_mask = 0, long new_axis_mask = 0, long shrink_axis_mask = 0, String opName = "TensorStridedSliceUpdate") 
         {
             OperationDescription desc = NewOperation("TensorStridedSliceUpdate", opName);
@@ -31462,10 +31462,10 @@ namespace Emgu.TF
         /// <param name="labels">labels</param>
         /// <param name="display_name">display name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] summary(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation TensorSummary(Output tensor, string description = null, string[] labels = null, string display_name = null, String opName = "TensorSummary") 
         {
             OperationDescription desc = NewOperation("TensorSummary", opName);
@@ -31485,10 +31485,10 @@ namespace Emgu.TF
         /// <param name="tensor">Input to the operation. </param>
         /// <param name="serialized_summary_metadata">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] summary(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation TensorSummaryV2(Output tag, Output tensor, Output serialized_summary_metadata, String opName = "TensorSummaryV2") 
         {
             OperationDescription desc = NewOperation("TensorSummaryV2", opName);
@@ -31505,10 +31505,10 @@ namespace Emgu.TF
         /// <param name="compression_type">Input to the operation. </param>
         /// <param name="buffer_size">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation TextLineDataset(Output filenames, Output compression_type, Output buffer_size, String opName = "TextLineDataset") 
         {
             OperationDescription desc = NewOperation("TextLineDataset", opName);
@@ -31525,10 +31525,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] reader_handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation TextLineReader(long skip_header_lines = 0, string container = null, string shared_name = null, String opName = "TextLineReader") 
         {
             OperationDescription desc = NewOperation("TextLineReader", opName);
@@ -31548,10 +31548,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] reader_handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation TextLineReaderV2(long skip_header_lines = 0, string container = null, string shared_name = null, String opName = "TextLineReaderV2") 
         {
             OperationDescription desc = NewOperation("TextLineReaderV2", opName);
@@ -31571,10 +31571,10 @@ namespace Emgu.TF
         /// <param name="compression_type">Input to the operation. </param>
         /// <param name="buffer_size">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation TFRecordDataset(Output filenames, Output compression_type, Output buffer_size, String opName = "TFRecordDataset") 
         {
             OperationDescription desc = NewOperation("TFRecordDataset", opName);
@@ -31591,10 +31591,10 @@ namespace Emgu.TF
         /// <param name="shared_name">shared name</param>
         /// <param name="compression_type">compression type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] reader_handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation TFRecordReader(string container = null, string shared_name = null, string compression_type = null, String opName = "TFRecordReader") 
         {
             OperationDescription desc = NewOperation("TFRecordReader", opName);
@@ -31614,10 +31614,10 @@ namespace Emgu.TF
         /// <param name="shared_name">shared name</param>
         /// <param name="compression_type">compression type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] reader_handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation TFRecordReaderV2(string container = null, string shared_name = null, string compression_type = null, String opName = "TFRecordReaderV2") 
         {
             OperationDescription desc = NewOperation("TFRecordReaderV2", opName);
@@ -31638,10 +31638,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ThreadPoolDataset(Output input_dataset, Output thread_pool, DataType[] output_types, long[][] output_shapes, String opName = "ThreadPoolDataset") 
         {
             OperationDescription desc = NewOperation("ThreadPoolDataset", opName);
@@ -31661,10 +31661,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation ThreadPoolHandle(long num_threads, string display_name, long max_intra_op_parallelism = 1, string container = null, string shared_name = null, String opName = "ThreadPoolHandle") 
         {
             OperationDescription desc = NewOperation("ThreadPoolHandle", opName);
@@ -31690,12 +31690,12 @@ namespace Emgu.TF
         /// <param name="seed">seed</param>
         /// <param name="seed2">seed2</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sampled_candidates(type: DtInt64).
         /// [1] true_expected_count(type: DtFloat).
         /// [2] sampled_expected_count(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation ThreadUnsafeUnigramCandidateSampler(Output true_classes, long num_true, long num_sampled, bool unique, long range_max, long seed = 0, long seed2 = 0, String opName = "ThreadUnsafeUnigramCandidateSampler") 
         {
             OperationDescription desc = NewOperation("ThreadUnsafeUnigramCandidateSampler", opName);
@@ -31717,10 +31717,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="multiples">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Tile(Output input, Output multiples, String opName = "Tile") 
         {
             OperationDescription desc = NewOperation("Tile", opName);
@@ -31735,10 +31735,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="multiples">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TileGrad(Output input, Output multiples, String opName = "TileGrad") 
         {
             OperationDescription desc = NewOperation("TileGrad", opName);
@@ -31751,10 +31751,10 @@ namespace Emgu.TF
         /// Timestamp
         /// </summary>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] ts(type: DtDouble).
-        /// </return>
+        /// </returns>
         public Operation Timestamp(String opName = "Timestamp") 
         {
             OperationDescription desc = NewOperation("Timestamp", opName);
@@ -31766,10 +31766,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation ToBool(Output input, String opName = "ToBool") 
         {
             OperationDescription desc = NewOperation("ToBool", opName);
@@ -31784,11 +31784,11 @@ namespace Emgu.TF
         /// <param name="k">k</param>
         /// <param name="sorted">sorted</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] values(type: DtInvalid).
         /// [1] indices(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation TopK(Output input, long k, bool sorted = true, String opName = "TopK") 
         {
             OperationDescription desc = NewOperation("TopK", opName);
@@ -31805,11 +31805,11 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="k">k</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] topk(type: DtFloat).
         /// [1] topk_indices(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation TopKUnique(Output input, long k, String opName = "TopKUnique") 
         {
             OperationDescription desc = NewOperation("TopKUnique", opName);
@@ -31825,11 +31825,11 @@ namespace Emgu.TF
         /// <param name="k">Input to the operation. </param>
         /// <param name="sorted">sorted</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] values(type: DtInvalid).
         /// [1] indices(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation TopKV2(Output input, Output k, bool sorted = true, String opName = "TopKV2") 
         {
             OperationDescription desc = NewOperation("TopKV2", opName);
@@ -31846,11 +31846,11 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="k">k</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] topk(type: DtFloat).
         /// [1] topk_indices(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation TopKWithUnique(Output input, long k, String opName = "TopKWithUnique") 
         {
             OperationDescription desc = NewOperation("TopKWithUnique", opName);
@@ -31863,10 +31863,10 @@ namespace Emgu.TF
         /// TPUCompilationResult
         /// </summary>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation TPUCompilationResult(String opName = "TPUCompilationResult") 
         {
             OperationDescription desc = NewOperation("TPUCompilationResult", opName);
@@ -31881,12 +31881,12 @@ namespace Emgu.TF
         /// <param name="num_computations">num computations</param>
         /// <param name="metadata">metadata</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] compilation_status(type: DtString).
         /// [1] program(type: DtString).
         /// [2] may_modify_variables(type: DtBool).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: function: func
         public Operation TPUCompile(Output dynamic_shapes, Output guaranteed_constants, long num_computations, string metadata, String opName = "TPUCompile") 
         {
@@ -31903,7 +31903,7 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="compilation_status">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation TPUCompileSucceededAssert(Output compilation_status, String opName = "TPUCompileSucceededAssert") 
         {
             OperationDescription desc = NewOperation("TPUCompileSucceededAssert", opName);
@@ -31919,10 +31919,10 @@ namespace Emgu.TF
         /// <param name="table_id">table id</param>
         /// <param name="lookup_id">lookup id</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation TPUEmbeddingActivations(Output embedding_variable, Output sliced_activations, long table_id, long lookup_id, String opName = "TPUEmbeddingActivations") 
         {
             OperationDescription desc = NewOperation("TPUEmbeddingActivations", opName);
@@ -31940,10 +31940,10 @@ namespace Emgu.TF
         /// <param name="key">Input to the operation. </param>
         /// <param name="Tresults">Tresults</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] results(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TPUExecute(Output args, Output key, DataType[] Tresults, String opName = "TPUExecute") 
         {
             OperationDescription desc = NewOperation("TPUExecute", opName);
@@ -31962,10 +31962,10 @@ namespace Emgu.TF
         /// <param name="device_var_reads_indices">device var reads indices</param>
         /// <param name="device_var_updates_indices">device var updates indices</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] results(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TPUExecuteAndUpdateVariables(Output args, Output key, DataType[] Tresults, long[] device_var_reads_indices, long[] device_var_updates_indices, String opName = "TPUExecuteAndUpdateVariables") 
         {
             OperationDescription desc = NewOperation("TPUExecuteAndUpdateVariables", opName);
@@ -31981,10 +31981,10 @@ namespace Emgu.TF
         /// TPUOrdinalSelector
         /// </summary>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] device_ordinals(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation TPUOrdinalSelector(String opName = "TPUOrdinalSelector") 
         {
             OperationDescription desc = NewOperation("TPUOrdinalSelector", opName);
@@ -31999,10 +31999,10 @@ namespace Emgu.TF
         /// <param name="Tout">Tout</param>
         /// <param name="autotuner_thresh">autotuner thresh</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: f: func
         public Operation TPUPartitionedCall(Output args, Output device_ordinal, DataType[] Tout, long autotuner_thresh = 0, String opName = "TPUPartitionedCall") 
         {
@@ -32021,10 +32021,10 @@ namespace Emgu.TF
         /// <param name="inputs">Input to the operation. </param>
         /// <param name="partition_dim">partition dim</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TPUPartitionedInput(Output inputs, long partition_dim = 0, String opName = "TPUPartitionedInput") 
         {
             OperationDescription desc = NewOperation("TPUPartitionedInput", opName);
@@ -32041,10 +32041,10 @@ namespace Emgu.TF
         /// <param name="num_splits">num splits</param>
         /// <param name="partition_dim">partition dim</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TPUPartitionedOutput(Output inputs, long num_splits, long partition_dim = 0, String opName = "TPUPartitionedOutput") 
         {
             OperationDescription desc = NewOperation("TPUPartitionedOutput", opName);
@@ -32063,10 +32063,10 @@ namespace Emgu.TF
         /// <param name="index">index</param>
         /// <param name="is_packed">is packed</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TPUReplicatedInput(Output inputs, bool is_mirrored_variable = false, long index = -1, bool is_packed = false, String opName = "TPUReplicatedInput") 
         {
             OperationDescription desc = NewOperation("TPUReplicatedInput", opName);
@@ -32086,10 +32086,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="num_replicas">num replicas</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] outputs(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TPUReplicatedOutput(Output input, long num_replicas, String opName = "TPUReplicatedOutput") 
         {
             OperationDescription desc = NewOperation("TPUReplicatedOutput", opName);
@@ -32113,7 +32113,7 @@ namespace Emgu.TF
         /// <param name="allow_soft_placement">allow soft placement</param>
         /// <param name="use_spmd_for_xla_partitioning">use spmd for xla partitioning</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation TPUReplicateMetadata(long num_replicas, long num_cores_per_replica = 1, string topology = null, bool use_tpu = true, long[] device_assignment = null, long[] computation_shape = null, string[] host_compute_core = null, string[] padding_map = null, string step_marker_location = null, bool allow_soft_placement = false, bool use_spmd_for_xla_partitioning = false, String opName = "TPUReplicateMetadata") 
         {
             OperationDescription desc = NewOperation("TPUReplicateMetadata", opName);
@@ -32144,7 +32144,7 @@ namespace Emgu.TF
         /// <param name="new_format_key">Input to the operation. </param>
         /// <param name="format_state_var">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation TPUReshardVariables(Output vars, Output new_format_key, Output format_state_var, String opName = "TPUReshardVariables") 
         {
             OperationDescription desc = NewOperation("TPUReshardVariables", opName);
@@ -32160,10 +32160,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="perm">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Transpose(Output x, Output perm, String opName = "Transpose") 
         {
             OperationDescription desc = NewOperation("Transpose", opName);
@@ -32180,10 +32180,10 @@ namespace Emgu.TF
         /// <param name="subdiag">Input to the operation. </param>
         /// <param name="rhs">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TridiagonalMatMul(Output superdiag, Output maindiag, Output subdiag, Output rhs, String opName = "TridiagonalMatMul") 
         {
             OperationDescription desc = NewOperation("TridiagonalMatMul", opName);
@@ -32201,10 +32201,10 @@ namespace Emgu.TF
         /// <param name="rhs">Input to the operation. </param>
         /// <param name="partial_pivoting">partial pivoting</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TridiagonalSolve(Output diagonals, Output rhs, bool partial_pivoting = true, String opName = "TridiagonalSolve") 
         {
             OperationDescription desc = NewOperation("TridiagonalSolve", opName);
@@ -32221,10 +32221,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TruncateDiv(Output x, Output y, String opName = "TruncateDiv") 
         {
             OperationDescription desc = NewOperation("TruncateDiv", opName);
@@ -32241,10 +32241,10 @@ namespace Emgu.TF
         /// <param name="seed">seed</param>
         /// <param name="seed2">seed2</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TruncatedNormal(Output shape, DataType dtype, long seed = 0, long seed2 = 0, String opName = "TruncatedNormal") 
         {
             OperationDescription desc = NewOperation("TruncatedNormal", opName);
@@ -32263,10 +32263,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation TruncateMod(Output x, Output y, String opName = "TruncateMod") 
         {
             OperationDescription desc = NewOperation("TruncateMod", opName);
@@ -32285,10 +32285,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] unbatched_tensor(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Unbatch(Output batched_tensor, Output batch_index, Output id, long timeout_micros, string container = null, string shared_name = null, String opName = "Unbatch") 
         {
             OperationDescription desc = NewOperation("Unbatch", opName);
@@ -32310,10 +32310,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation UnbatchDataset(Output input_dataset, DataType[] output_types, long[][] output_shapes, String opName = "UnbatchDataset") 
         {
             OperationDescription desc = NewOperation("UnbatchDataset", opName);
@@ -32333,10 +32333,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] batched_grad(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation UnbatchGrad(Output original_input, Output batch_index, Output grad, Output id, string container = null, string shared_name = null, String opName = "UnbatchGrad") 
         {
             OperationDescription desc = NewOperation("UnbatchGrad", opName);
@@ -32358,10 +32358,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] components(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation UncompressElement(Output compressed, DataType[] output_types, long[][] output_shapes, String opName = "UncompressElement") 
         {
             OperationDescription desc = NewOperation("UncompressElement", opName);
@@ -32381,11 +32381,11 @@ namespace Emgu.TF
         /// <param name="replace_control_characters">replace control characters</param>
         /// <param name="Tsplits">Tsplits</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] row_splits(type: DtInvalid).
         /// [1] char_values(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation UnicodeDecode(Output input, string input_encoding, string errors = null, long replacement_char = 65533, bool replace_control_characters = false, DataType? Tsplits = null, String opName = "UnicodeDecode") 
         {
             OperationDescription desc = NewOperation("UnicodeDecode", opName);
@@ -32412,12 +32412,12 @@ namespace Emgu.TF
         /// <param name="replace_control_characters">replace control characters</param>
         /// <param name="Tsplits">Tsplits</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] row_splits(type: DtInvalid).
         /// [1] char_values(type: DtInt32).
         /// [2] char_to_byte_starts(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation UnicodeDecodeWithOffsets(Output input, string input_encoding, string errors = null, long replacement_char = 65533, bool replace_control_characters = false, DataType? Tsplits = null, String opName = "UnicodeDecodeWithOffsets") 
         {
             OperationDescription desc = NewOperation("UnicodeDecodeWithOffsets", opName);
@@ -32443,10 +32443,10 @@ namespace Emgu.TF
         /// <param name="errors">errors</param>
         /// <param name="replacement_char">replacement char</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation UnicodeEncode(Output input_values, Output input_splits, string output_encoding, string errors = null, long replacement_char = 65533, String opName = "UnicodeEncode") 
         {
             OperationDescription desc = NewOperation("UnicodeEncode", opName);
@@ -32465,10 +32465,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation UnicodeScript(Output input, String opName = "UnicodeScript") 
         {
             OperationDescription desc = NewOperation("UnicodeScript", opName);
@@ -32486,10 +32486,10 @@ namespace Emgu.TF
         /// <param name="replacement_char">replacement char</param>
         /// <param name="replace_control_characters">replace control characters</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation UnicodeTranscode(Output input, string input_encoding, string output_encoding, string errors = null, long replacement_char = 65533, bool replace_control_characters = false, String opName = "UnicodeTranscode") 
         {
             OperationDescription desc = NewOperation("UnicodeTranscode", opName);
@@ -32516,12 +32516,12 @@ namespace Emgu.TF
         /// <param name="seed">seed</param>
         /// <param name="seed2">seed2</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sampled_candidates(type: DtInt64).
         /// [1] true_expected_count(type: DtFloat).
         /// [2] sampled_expected_count(type: DtFloat).
-        /// </return>
+        /// </returns>
         public Operation UniformCandidateSampler(Output true_classes, long num_true, long num_sampled, bool unique, long range_max, long seed = 0, long seed2 = 0, String opName = "UniformCandidateSampler") 
         {
             OperationDescription desc = NewOperation("UniformCandidateSampler", opName);
@@ -32543,11 +32543,11 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="out_idx">out idx</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
         /// [1] idx(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Unique(Output x, DataType? out_idx = null, String opName = "Unique") 
         {
             OperationDescription desc = NewOperation("Unique", opName);
@@ -32564,10 +32564,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation UniqueDataset(Output input_dataset, DataType[] output_types, long[][] output_shapes, String opName = "UniqueDataset") 
         {
             OperationDescription desc = NewOperation("UniqueDataset", opName);
@@ -32584,11 +32584,11 @@ namespace Emgu.TF
         /// <param name="axis">Input to the operation. </param>
         /// <param name="out_idx">out idx</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
         /// [1] idx(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation UniqueV2(Output x, Output axis, DataType? out_idx = null, String opName = "UniqueV2") 
         {
             OperationDescription desc = NewOperation("UniqueV2", opName);
@@ -32605,12 +32605,12 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="out_idx">out idx</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
         /// [1] idx(type: DtInvalid).
         /// [2] count(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation UniqueWithCounts(Output x, DataType? out_idx = null, String opName = "UniqueWithCounts") 
         {
             OperationDescription desc = NewOperation("UniqueWithCounts", opName);
@@ -32627,12 +32627,12 @@ namespace Emgu.TF
         /// <param name="axis">Input to the operation. </param>
         /// <param name="out_idx">out idx</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
         /// [1] idx(type: DtInvalid).
         /// [2] count(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation UniqueWithCountsV2(Output x, Output axis, DataType? out_idx = null, String opName = "UniqueWithCountsV2") 
         {
             OperationDescription desc = NewOperation("UniqueWithCountsV2", opName);
@@ -32650,10 +32650,10 @@ namespace Emgu.TF
         /// <param name="num">num</param>
         /// <param name="axis">axis</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Unpack(Output value, long num, long axis = 0, String opName = "Unpack") 
         {
             OperationDescription desc = NewOperation("Unpack", opName);
@@ -32670,10 +32670,10 @@ namespace Emgu.TF
         /// <param name="indices">Input to the operation. </param>
         /// <param name="dims">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation UnravelIndex(Output indices, Output dims, String opName = "UnravelIndex") 
         {
             OperationDescription desc = NewOperation("UnravelIndex", opName);
@@ -32690,10 +32690,10 @@ namespace Emgu.TF
         /// <param name="num_segments">Input to the operation. </param>
         /// <param name="separator">separator</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation UnsortedSegmentJoin(Output inputs, Output segment_ids, Output num_segments, string separator = null, String opName = "UnsortedSegmentJoin") 
         {
             OperationDescription desc = NewOperation("UnsortedSegmentJoin", opName);
@@ -32712,10 +32712,10 @@ namespace Emgu.TF
         /// <param name="segment_ids">Input to the operation. </param>
         /// <param name="num_segments">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation UnsortedSegmentMax(Output data, Output segment_ids, Output num_segments, String opName = "UnsortedSegmentMax") 
         {
             OperationDescription desc = NewOperation("UnsortedSegmentMax", opName);
@@ -32732,10 +32732,10 @@ namespace Emgu.TF
         /// <param name="segment_ids">Input to the operation. </param>
         /// <param name="num_segments">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation UnsortedSegmentMin(Output data, Output segment_ids, Output num_segments, String opName = "UnsortedSegmentMin") 
         {
             OperationDescription desc = NewOperation("UnsortedSegmentMin", opName);
@@ -32752,10 +32752,10 @@ namespace Emgu.TF
         /// <param name="segment_ids">Input to the operation. </param>
         /// <param name="num_segments">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation UnsortedSegmentProd(Output data, Output segment_ids, Output num_segments, String opName = "UnsortedSegmentProd") 
         {
             OperationDescription desc = NewOperation("UnsortedSegmentProd", opName);
@@ -32772,10 +32772,10 @@ namespace Emgu.TF
         /// <param name="segment_ids">Input to the operation. </param>
         /// <param name="num_segments">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation UnsortedSegmentSum(Output data, Output segment_ids, Output num_segments, String opName = "UnsortedSegmentSum") 
         {
             OperationDescription desc = NewOperation("UnsortedSegmentSum", opName);
@@ -32794,10 +32794,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] values(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Unstage(DataType[] dtypes, long capacity = 0, long memory_limit = 0, string container = null, string shared_name = null, String opName = "Unstage") 
         {
             OperationDescription desc = NewOperation("Unstage", opName);
@@ -32818,10 +32818,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input_handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation UnwrapDatasetVariant(Output input_handle, String opName = "UnwrapDatasetVariant") 
         {
             OperationDescription desc = NewOperation("UnwrapDatasetVariant", opName);
@@ -32836,10 +32836,10 @@ namespace Emgu.TF
         /// <param name="values">Input to the operation. </param>
         /// <param name="out_type">out type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation UpperBound(Output sorted_inputs, Output values, DataType? out_type = null, String opName = "UpperBound") 
         {
             OperationDescription desc = NewOperation("UpperBound", opName);
@@ -32859,10 +32859,10 @@ namespace Emgu.TF
         /// <param name="shared_name">shared name</param>
         /// <param name="allowed_devices">allowed devices</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] resource(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation VarHandleOp(DataType dtype, long[] shape, string container = null, string shared_name = null, string[] allowed_devices = null, String opName = "VarHandleOp") 
         {
             OperationDescription desc = NewOperation("VarHandleOp", opName);
@@ -32884,10 +32884,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] ref(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Variable(long[] shape, DataType dtype, string container = null, string shared_name = null, String opName = "Variable") 
         {
             OperationDescription desc = NewOperation("Variable", opName);
@@ -32906,10 +32906,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="out_type">out type</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation VariableShape(Output input, DataType? out_type = null, String opName = "VariableShape") 
         {
             OperationDescription desc = NewOperation("VariableShape", opName);
@@ -32927,10 +32927,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] ref(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation VariableV2(long[] shape, DataType dtype, string container = null, string shared_name = null, String opName = "VariableV2") 
         {
             OperationDescription desc = NewOperation("VariableV2", opName);
@@ -32948,10 +32948,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="resource">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] is_initialized(type: DtBool).
-        /// </return>
+        /// </returns>
         public Operation VarIsInitializedOp(Output resource, String opName = "VarIsInitializedOp") 
         {
             OperationDescription desc = NewOperation("VarIsInitializedOp", opName);
@@ -32964,10 +32964,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] index(type: DtInt64).
-        /// </return>
+        /// </returns>
         public Operation Where(Output input, String opName = "Where") 
         {
             OperationDescription desc = NewOperation("Where", opName);
@@ -32982,10 +32982,10 @@ namespace Emgu.TF
         /// <param name="output_shapes">output shapes</param>
         /// <param name="parallel_iterations">parallel iterations</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: cond: func; body: func
         public Operation While(Output input, long[][] output_shapes = null, long parallel_iterations = 10, String opName = "While") 
         {
@@ -33003,10 +33003,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] reader_handle(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation WholeFileReader(string container = null, string shared_name = null, String opName = "WholeFileReader") 
         {
             OperationDescription desc = NewOperation("WholeFileReader", opName);
@@ -33023,10 +33023,10 @@ namespace Emgu.TF
         /// <param name="container">container</param>
         /// <param name="shared_name">shared name</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] reader_handle(type: DtResource).
-        /// </return>
+        /// </returns>
         public Operation WholeFileReaderV2(string container = null, string shared_name = null, String opName = "WholeFileReaderV2") 
         {
             OperationDescription desc = NewOperation("WholeFileReaderV2", opName);
@@ -33048,10 +33048,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation WindowDataset(Output input_dataset, Output size, Output shift, Output stride, Output drop_remainder, DataType[] output_types, long[][] output_shapes, String opName = "WindowDataset") 
         {
             OperationDescription desc = NewOperation("WindowDataset", opName);
@@ -33070,10 +33070,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="request">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] response(type: DtString).
-        /// </return>
+        /// </returns>
         public Operation WorkerHeartbeat(Output request, String opName = "WorkerHeartbeat") 
         {
             OperationDescription desc = NewOperation("WorkerHeartbeat", opName);
@@ -33086,10 +33086,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input_handle">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output_handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation WrapDatasetVariant(Output input_handle, String opName = "WrapDatasetVariant") 
         {
             OperationDescription desc = NewOperation("WrapDatasetVariant", opName);
@@ -33107,7 +33107,7 @@ namespace Emgu.TF
         /// <param name="sample_rate">Input to the operation. </param>
         /// <param name="max_outputs">max outputs</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation WriteAudioSummary(Output writer, Output step, Output tag, Output tensor, Output sample_rate, long max_outputs = 3, String opName = "WriteAudioSummary") 
         {
             OperationDescription desc = NewOperation("WriteAudioSummary", opName);
@@ -33127,7 +33127,7 @@ namespace Emgu.TF
         /// <param name="filename">Input to the operation. </param>
         /// <param name="contents">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation WriteFile(Output filename, Output contents, String opName = "WriteFile") 
         {
             OperationDescription desc = NewOperation("WriteFile", opName);
@@ -33143,7 +33143,7 @@ namespace Emgu.TF
         /// <param name="step">Input to the operation. </param>
         /// <param name="tensor">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation WriteGraphSummary(Output writer, Output step, Output tensor, String opName = "WriteGraphSummary") 
         {
             OperationDescription desc = NewOperation("WriteGraphSummary", opName);
@@ -33161,7 +33161,7 @@ namespace Emgu.TF
         /// <param name="tag">Input to the operation. </param>
         /// <param name="values">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation WriteHistogramSummary(Output writer, Output step, Output tag, Output values, String opName = "WriteHistogramSummary") 
         {
             OperationDescription desc = NewOperation("WriteHistogramSummary", opName);
@@ -33182,7 +33182,7 @@ namespace Emgu.TF
         /// <param name="bad_color">Input to the operation. </param>
         /// <param name="max_images">max images</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation WriteImageSummary(Output writer, Output step, Output tag, Output tensor, Output bad_color, long max_images = 3, String opName = "WriteImageSummary") 
         {
             OperationDescription desc = NewOperation("WriteImageSummary", opName);
@@ -33203,7 +33203,7 @@ namespace Emgu.TF
         /// <param name="step">Input to the operation. </param>
         /// <param name="tensor">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation WriteRawProtoSummary(Output writer, Output step, Output tensor, String opName = "WriteRawProtoSummary") 
         {
             OperationDescription desc = NewOperation("WriteRawProtoSummary", opName);
@@ -33221,7 +33221,7 @@ namespace Emgu.TF
         /// <param name="tag">Input to the operation. </param>
         /// <param name="value">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation WriteScalarSummary(Output writer, Output step, Output tag, Output value, String opName = "WriteScalarSummary") 
         {
             OperationDescription desc = NewOperation("WriteScalarSummary", opName);
@@ -33241,7 +33241,7 @@ namespace Emgu.TF
         /// <param name="tag">Input to the operation. </param>
         /// <param name="summary_metadata">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation WriteSummary(Output writer, Output step, Output tensor, Output tag, Output summary_metadata, String opName = "WriteSummary") 
         {
             OperationDescription desc = NewOperation("WriteSummary", opName);
@@ -33259,10 +33259,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Xdivy(Output x, Output y, String opName = "Xdivy") 
         {
             OperationDescription desc = NewOperation("Xdivy", opName);
@@ -33278,11 +33278,11 @@ namespace Emgu.TF
         /// <param name="rhs">Input to the operation: the RHS input tensor</param>
         /// <param name="broadcast_dims">Input to the operation: an XLA-style broadcast dimension specification</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] lhs_output(type: DtInvalid): the broadcasted LHS tensor
         /// [1] rhs_output(type: DtInvalid): the broadcasted RHS tensor
-        /// </return>
+        /// </returns>
         public Operation XlaBroadcastHelper(Output lhs, Output rhs, Output broadcast_dims, String opName = "XlaBroadcastHelper") 
         {
             OperationDescription desc = NewOperation("XlaBroadcastHelper", opName);
@@ -33297,10 +33297,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] outputs(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation XlaClusterOutput(Output input, String opName = "XlaClusterOutput") 
         {
             OperationDescription desc = NewOperation("XlaClusterOutput", opName);
@@ -33321,10 +33321,10 @@ namespace Emgu.TF
         /// <param name="dimension_numbers">a serialized xla::ConvolutionDimensionNumbers proto.</param>
         /// <param name="precision_config">a serialized xla::PrecisionConfig proto.</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation XlaConv(Output lhs, Output rhs, Output window_strides, Output padding, Output lhs_dilation, Output rhs_dilation, Output feature_group_count, string dimension_numbers, string precision_config, String opName = "XlaConv") 
         {
             OperationDescription desc = NewOperation("XlaConv", opName);
@@ -33354,10 +33354,10 @@ namespace Emgu.TF
         /// <param name="precision_config">a serialized xla::PrecisionConfig proto.</param>
         /// <param name="preferred_element_type">The type of the tensor.</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation XlaConvV2(Output lhs, Output rhs, Output window_strides, Output padding, Output lhs_dilation, Output rhs_dilation, Output feature_group_count, string dimension_numbers, string precision_config, DataType preferred_element_type, String opName = "XlaConvV2") 
         {
             OperationDescription desc = NewOperation("XlaConvV2", opName);
@@ -33383,10 +33383,10 @@ namespace Emgu.TF
         /// <param name="mode">String to determine the dequantize mode in {"MIN_COMBINED", "MIN_FIRST", "SCALED"}.</param>
         /// <param name="transpose_output">Boolean to determine if output is transposed. transpose_output is faster when input is large and rank of input is higher than 1.</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtBfloat16): Output tensors whose types is bloat16. If transpose_output is true, output shape is [dn * 4, dn-1, ..., d1, d0]. If transpose_output is false, output shape is [d0,..., dn * 4].
-        /// </return>
+        /// </returns>
         public Operation XlaDequantize(Output input, float min_range, float max_range, string mode, bool transpose_output, String opName = "XlaDequantize") 
         {
             OperationDescription desc = NewOperation("XlaDequantize", opName);
@@ -33406,10 +33406,10 @@ namespace Emgu.TF
         /// <param name="dimension_numbers">a serialized xla::DotDimensionNumbers proto.</param>
         /// <param name="precision_config">a serialized xla::PrecisionConfig proto.</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation XlaDot(Output lhs, Output rhs, string dimension_numbers, string precision_config, String opName = "XlaDot") 
         {
             OperationDescription desc = NewOperation("XlaDot", opName);
@@ -33429,10 +33429,10 @@ namespace Emgu.TF
         /// <param name="precision_config">a serialized xla::PrecisionConfig proto.</param>
         /// <param name="preferred_element_type">The type of the tensor.</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation XlaDotV2(Output lhs, Output rhs, string dimension_numbers, string precision_config, DataType preferred_element_type, String opName = "XlaDotV2") 
         {
             OperationDescription desc = NewOperation("XlaDotV2", opName);
@@ -33451,10 +33451,10 @@ namespace Emgu.TF
         /// <param name="start_indices">Input to the operation: List of N integers containing the slice size for each dimension. Each value must be strictly greater than zero, and start + size must be less than or equal to the size of the dimension to avoid implementation defined behavior.</param>
         /// <param name="size_indices">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation XlaDynamicSlice(Output input, Output start_indices, Output size_indices, String opName = "XlaDynamicSlice") 
         {
             OperationDescription desc = NewOperation("XlaDynamicSlice", opName);
@@ -33471,10 +33471,10 @@ namespace Emgu.TF
         /// <param name="update">Input to the operation: A `Tensor` of type T. Same rank as `input`.</param>
         /// <param name="indices">Input to the operation: A vector of indices into `input`. Must have length equal to the rank of `input`.</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid): A `Tensor` of type T.
-        /// </return>
+        /// </returns>
         public Operation XlaDynamicUpdateSlice(Output input, Output update, Output indices, String opName = "XlaDynamicUpdateSlice") 
         {
             OperationDescription desc = NewOperation("XlaDynamicUpdateSlice", opName);
@@ -33491,10 +33491,10 @@ namespace Emgu.TF
         /// <param name="b">Input to the operation. </param>
         /// <param name="equation">equation</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] product(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation XlaEinsum(Output a, Output b, string equation, String opName = "XlaEinsum") 
         {
             OperationDescription desc = NewOperation("XlaEinsum", opName);
@@ -33513,10 +33513,10 @@ namespace Emgu.TF
         /// <param name="dimension_numbers">A serialized xla::GatherDimensionNumbers proto.</param>
         /// <param name="indices_are_sorted">Boolean indicating if the indices are sorted.</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation XlaGather(Output operand, Output start_indices, Output slice_sizes, string dimension_numbers, bool indices_are_sorted, String opName = "XlaGather") 
         {
             OperationDescription desc = NewOperation("XlaGather", opName);
@@ -33541,10 +33541,10 @@ namespace Emgu.TF
         /// <param name="cost_estimate_ns">cost estimate ns</param>
         /// <param name="tpu_core">tpu core</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] outputs(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: shape_inference_graph: func
         public Operation XlaHostCompute(Output inputs, DataType[] Toutputs, string[] ancestors, long[][] shapes, string key, string send_key = null, string recv_key = null, long cost_estimate_ns = 1000000, long tpu_core = 0, String opName = "XlaHostCompute") 
         {
@@ -33572,10 +33572,10 @@ namespace Emgu.TF
         /// <param name="inputs">Input to the operation: A list of input tensors.</param>
         /// <param name="Tout">Tout</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid): A list of tensors returned by either then_branch(inputs) or else_branch(inputs). The input shapes of the then_branch and else_branch must match.
-        /// </return>
+        /// </returns>
         // The following attributes are not known: then_branch: func; else_branch: func
         public Operation XlaIf(Output cond, Output inputs, DataType[] Tout, String opName = "XlaIf") 
         {
@@ -33592,11 +33592,11 @@ namespace Emgu.TF
         /// <param name="keys">Input to the operation: A `Tensor` of type K.</param>
         /// <param name="values">Input to the operation: A `Tensor` of type V.</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] sorted_keys(type: DtInvalid): A `Tensor` of type K.
         /// [1] sorted_values(type: DtInvalid): A `Tensor` of type V.
-        /// </return>
+        /// </returns>
         public Operation XlaKeyValueSort(Output keys, Output values, String opName = "XlaKeyValueSort") 
         {
             OperationDescription desc = NewOperation("XlaKeyValueSort", opName);
@@ -33613,10 +33613,10 @@ namespace Emgu.TF
         /// <param name="resources">Input to the operation. </param>
         /// <param name="Tresults">Tresults</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] results(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: function: func
         public Operation XlaLaunch(Output constants, Output args, Output resources, DataType[] Tresults, String opName = "XlaLaunch") 
         {
@@ -33637,10 +33637,10 @@ namespace Emgu.TF
         /// <param name="padding_high">Input to the operation: the padding to apply at the end of each input dimension. Must be a compile-time constant 1D tensor of length equal to rank of input.</param>
         /// <param name="padding_interior">Input to the operation: the padding to apply between each input element. Must be a compile-time constant 1D tensor of length equal to rank of input, containing only non-negative values.</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid): A `Tensor` of type T.
-        /// </return>
+        /// </returns>
         public Operation XlaPad(Output input, Output padding_value, Output padding_low, Output padding_high, Output padding_interior, String opName = "XlaPad") 
         {
             OperationDescription desc = NewOperation("XlaPad", opName);
@@ -33659,10 +33659,10 @@ namespace Emgu.TF
         /// <param name="tensor_name">A string key that identifies the channel.</param>
         /// <param name="shape">The shape of the tensor.</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] tensor(type: DtInvalid): The tensor to receive.
-        /// </return>
+        /// </returns>
         public Operation XlaRecv(DataType dtype, string tensor_name, long[] shape, String opName = "XlaRecv") 
         {
             OperationDescription desc = NewOperation("XlaRecv", opName);
@@ -33679,10 +33679,10 @@ namespace Emgu.TF
         /// <param name="shape">shape</param>
         /// <param name="key">key</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation XlaRecvFromHost(DataType Toutput, long[] shape, string key, String opName = "XlaRecvFromHost") 
         {
             OperationDescription desc = NewOperation("XlaRecvFromHost", opName);
@@ -33699,10 +33699,10 @@ namespace Emgu.TF
         /// <param name="init_value">Input to the operation: a scalar representing the initial value for the reduction</param>
         /// <param name="dimensions_to_reduce">dimension numbers over which to reduce</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: reducer: func
         public Operation XlaReduce(Output input, Output init_value, long[] dimensions_to_reduce, String opName = "XlaReduce") 
         {
@@ -33724,10 +33724,10 @@ namespace Emgu.TF
         /// <param name="window_dilations">Input to the operation. </param>
         /// <param name="padding">Input to the operation: the padding to apply at the start and end of each input dimensions</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: computation: func
         public Operation XlaReduceWindow(Output input, Output init_value, Output window_dimensions, Output window_strides, Output base_dilations, Output window_dilations, Output padding, String opName = "XlaReduceWindow") 
         {
@@ -33746,10 +33746,10 @@ namespace Emgu.TF
         /// Replica ID.
         /// </summary>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] id(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation XlaReplicaId(String opName = "XlaReplicaId") 
         {
             OperationDescription desc = NewOperation("XlaReplicaId", opName);
@@ -33765,10 +33765,10 @@ namespace Emgu.TF
         /// <param name="dimension_numbers">A serialized xla::ScatterDimensionNumbers proto.</param>
         /// <param name="indices_are_sorted">Boolean indicating if the indices are sorted.</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: update_computation: func
         public Operation XlaScatter(Output operand, Output scatter_indices, Output updates, string dimension_numbers, bool indices_are_sorted, String opName = "XlaScatter") 
         {
@@ -33791,10 +33791,10 @@ namespace Emgu.TF
         /// <param name="source">Input to the operation: a tensor of values to scatter</param>
         /// <param name="init_value">Input to the operation: a scalar representing the initial value for the output tensor</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: select: func; scatter: func
         public Operation XlaSelectAndScatter(Output operand, Output window_dimensions, Output window_strides, Output padding, Output source, Output init_value, String opName = "XlaSelectAndScatter") 
         {
@@ -33816,11 +33816,11 @@ namespace Emgu.TF
         /// <param name="max_iter">maximum number of sweep update, i.e., the whole lower triangular part or upper triangular part based on parameter lower. Heuristically, it has been argued that approximately logN sweeps are needed in practice (Ref: Golub &amp; van Loan "Matrix Computation").</param>
         /// <param name="epsilon">the tolerance ratio.</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] w(type: DtInvalid): The eigenvalues in ascending order, each repeated according to its multiplicity.
         /// [1] v(type: DtInvalid): The column v[..., :, i] is the normalized eigenvector corresponding to the eigenvalue w[..., i].
-        /// </return>
+        /// </returns>
         public Operation XlaSelfAdjointEig(Output a, bool lower, long max_iter, float epsilon, String opName = "XlaSelfAdjointEig") 
         {
             OperationDescription desc = NewOperation("XlaSelfAdjointEig", opName);
@@ -33837,7 +33837,7 @@ namespace Emgu.TF
         /// <param name="tensor">Input to the operation: The tensor to send.</param>
         /// <param name="tensor_name">A string key that identifies the channel.</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation XlaSend(Output tensor, string tensor_name, String opName = "XlaSend") 
         {
             OperationDescription desc = NewOperation("XlaSend", opName);
@@ -33852,7 +33852,7 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="key">key</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>The operation.</return>
+        /// <returns>The operation.</returns>
         public Operation XlaSendToHost(Output input, string key, String opName = "XlaSendToHost") 
         {
             OperationDescription desc = NewOperation("XlaSendToHost", opName);
@@ -33867,10 +33867,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="bound">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInt32).
-        /// </return>
+        /// </returns>
         public Operation XlaSetBound(Output input, Output bound, String opName = "XlaSetBound") 
         {
             OperationDescription desc = NewOperation("XlaSetBound", opName);
@@ -33886,10 +33886,10 @@ namespace Emgu.TF
         /// <param name="dim_index">Input to the operation. </param>
         /// <param name="size">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation XlaSetDynamicDimensionSize(Output input, Output dim_index, Output size, String opName = "XlaSetDynamicDimensionSize") 
         {
             OperationDescription desc = NewOperation("XlaSetDynamicDimensionSize", opName);
@@ -33905,10 +33905,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="sharding">sharding</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation XlaSharding(Output input, string sharding = null, String opName = "XlaSharding") 
         {
             OperationDescription desc = NewOperation("XlaSharding", opName);
@@ -33923,10 +33923,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation: A `Tensor` of type T.</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid): A `Tensor` of type T.
-        /// </return>
+        /// </returns>
         public Operation XlaSort(Output input, String opName = "XlaSort") 
         {
             OperationDescription desc = NewOperation("XlaSort", opName);
@@ -33940,10 +33940,10 @@ namespace Emgu.TF
         /// <param name="input">Input to the operation. </param>
         /// <param name="manual_sharding">manual sharding</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation XlaSpmdFullToShardShape(Output input, string manual_sharding, String opName = "XlaSpmdFullToShardShape") 
         {
             OperationDescription desc = NewOperation("XlaSpmdFullToShardShape", opName);
@@ -33959,10 +33959,10 @@ namespace Emgu.TF
         /// <param name="manual_sharding">manual sharding</param>
         /// <param name="full_shape">full shape</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation XlaSpmdShardToFullShape(Output input, string manual_sharding, long[] full_shape, String opName = "XlaSpmdShardToFullShape") 
         {
             OperationDescription desc = NewOperation("XlaSpmdShardToFullShape", opName);
@@ -33980,12 +33980,12 @@ namespace Emgu.TF
         /// <param name="epsilon">the tolerance ratio.</param>
         /// <param name="precision_config">a serialized xla::PrecisionConfig proto.</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] s(type: DtInvalid): Singular values. The values are sorted in reverse order of magnitude, so s[..., 0] is the largest value, s[..., 1] is the second largest, etc.
         /// [1] u(type: DtInvalid): Left singular vectors.
         /// [2] v(type: DtInvalid): Right singular vectors.
-        /// </return>
+        /// </returns>
         public Operation XlaSvd(Output a, long max_iter, float epsilon, string precision_config, String opName = "XlaSvd") 
         {
             OperationDescription desc = NewOperation("XlaSvd", opName);
@@ -34003,10 +34003,10 @@ namespace Emgu.TF
         /// <param name="init_value">Input to the operation: scalar initial value(s) for the reduction</param>
         /// <param name="dimensions_to_reduce">dimension numbers over which to reduce</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid).
-        /// </return>
+        /// </returns>
         // The following attributes are not known: reducer: func
         public Operation XlaVariadicReduce(Output input, Output init_value, long[] dimensions_to_reduce, String opName = "XlaVariadicReduce") 
         {
@@ -34024,10 +34024,10 @@ namespace Emgu.TF
         /// <param name="dimension">Input to the operation: The dimension along which to sort. Must be a compile-time constant.</param>
         /// <param name="is_stable">Whether to use stable sort.</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] outputs(type: DtInvalid): A list of `Tensor` of same shape and types as the `input`.
-        /// </return>
+        /// </returns>
         // The following attributes are not known: comparator: func
         public Operation XlaVariadicSort(Output inputs, Output dimension, bool is_stable, String opName = "XlaVariadicSort") 
         {
@@ -34043,10 +34043,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="input">Input to the operation: A list of input tensors whose types are T.</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] output(type: DtInvalid): A list of output tensors whose types are T.
-        /// </return>
+        /// </returns>
         // The following attributes are not known: cond: func; body: func
         public Operation XlaWhile(Output input, String opName = "XlaWhile") 
         {
@@ -34061,10 +34061,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Xlog1py(Output x, Output y, String opName = "Xlog1py") 
         {
             OperationDescription desc = NewOperation("Xlog1py", opName);
@@ -34079,10 +34079,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="y">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Xlogy(Output x, Output y, String opName = "Xlogy") 
         {
             OperationDescription desc = NewOperation("Xlogy", opName);
@@ -34096,10 +34096,10 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="x">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] y(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation ZerosLike(Output x, String opName = "ZerosLike") 
         {
             OperationDescription desc = NewOperation("ZerosLike", opName);
@@ -34113,10 +34113,10 @@ namespace Emgu.TF
         /// <param name="x">Input to the operation. </param>
         /// <param name="q">Input to the operation. </param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] z(type: DtInvalid).
-        /// </return>
+        /// </returns>
         public Operation Zeta(Output x, Output q, String opName = "Zeta") 
         {
             OperationDescription desc = NewOperation("Zeta", opName);
@@ -34132,10 +34132,10 @@ namespace Emgu.TF
         /// <param name="output_types">output types</param>
         /// <param name="output_shapes">output shapes</param>
         /// <param name="opName">The name of the operation</param>
-        /// <return>
+        /// <returns>
         /// The operation, where:
         /// [0] handle(type: DtVariant).
-        /// </return>
+        /// </returns>
         public Operation ZipDataset(Output input_datasets, DataType[] output_types, long[][] output_shapes, String opName = "ZipDataset") 
         {
             OperationDescription desc = NewOperation("ZipDataset", opName);
