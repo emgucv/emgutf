@@ -16,6 +16,37 @@ namespace Emgu.TF.Util
     /// </summary>
     public static partial class Toolbox
     {
+
+        private static IntPtr LoadLibraryWindows(String dllname)
+        {
+            const int loadLibrarySearchDllLoadDir = 0x00000100;
+            const int loadLibrarySearchDefaultDirs = 0x00001000;
+            //const int loadLibrarySearchUserDirs = 0x00000400;
+
+            IntPtr handler;
+            if (System.IO.Path.IsPathRooted(dllname))
+            {
+                handler = LoadLibraryEx(dllname, IntPtr.Zero, loadLibrarySearchDllLoadDir | loadLibrarySearchDefaultDirs);
+            }
+            else
+            {
+                handler = LoadLibraryEx(dllname, IntPtr.Zero, loadLibrarySearchDefaultDirs);
+            }
+            //IntPtr handler = LoadLibraryEx(dllname, IntPtr.Zero, loadLibrarySearchUserDirs);
+            if (handler == IntPtr.Zero)
+            {
+                int error = Marshal.GetLastWin32Error();
+
+                System.ComponentModel.Win32Exception ex = new System.ComponentModel.Win32Exception(error);
+                System.Diagnostics.Trace.WriteLine(String.Format("LoadLibraryEx {0} failed with error code {1}: {2}", dllname, (uint)error, ex.Message));
+                if (error == 5)
+                {
+                    System.Diagnostics.Trace.WriteLine(String.Format("Please check if the current user has execute permission for file: {0} ", dllname));
+                }
+            }
+            return handler;
+        }
+
         /// <summary>
         /// Maps the specified executable module into the address space of the calling process.
         /// </summary>
@@ -24,37 +55,15 @@ namespace Emgu.TF.Util
         public static IntPtr LoadLibrary(String dllname)
         {
 #if UNITY_EDITOR_WIN
-            const int loadLibrarySearchDllLoadDir = 0x00000100;
-            const int loadLibrarySearchDefaultDirs = 0x00001000;
-            return LoadLibraryEx(dllname, IntPtr.Zero, loadLibrarySearchDllLoadDir | loadLibrarySearchDefaultDirs);
+            LoadLibraryWindows(dllname);
 #else
             if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
             {
-                //if (Platform.ClrType == TypeEnum.ClrType.NetFxCore)
-                {
-                    const int loadLibrarySearchDllLoadDir = 0x00000100;
-                    const int loadLibrarySearchDefaultDirs = 0x00001000;
-                    //const int loadLibrarySearchUserDirs = 0x00000400;
-                    IntPtr handler = LoadLibraryEx(dllname, IntPtr.Zero, loadLibrarySearchDllLoadDir | loadLibrarySearchDefaultDirs);
-                    //IntPtr handler = LoadLibraryEx(dllname, IntPtr.Zero, loadLibrarySearchUserDirs);
-                    if (handler == IntPtr.Zero)
-                    {
-                        int error = Marshal.GetLastWin32Error();
-
-                        System.ComponentModel.Win32Exception ex = new System.ComponentModel.Win32Exception(error);
-                        System.Diagnostics.Trace.WriteLine(String.Format("LoadLibraryEx {0} failed with error code {1}: {2}", dllname, (uint)error, ex.Message));
-                        if (error == 5)
-                        {
-                            System.Diagnostics.Trace.WriteLine(String.Format("Please check if the current user has execute permission for file: {0} ", dllname));
-                        }
-                    }
-                    return handler;
-                } //else
-                  //return WinAPILoadLibrary(dllname);
+                LoadLibraryWindows(dllname);
             }
             else
             {
-                
+
                 IntPtr handler = Dlopen(dllname, 0x00102); // 0x00002 == RTLD_NOW, 0x00100 = RTL_GLOBAL
                 if (handler == IntPtr.Zero)
                 {
@@ -97,7 +106,7 @@ namespace Emgu.TF.Util
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool SetDllDirectory(String path);
-        
+
 
         /*
         /// <summary>
