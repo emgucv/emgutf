@@ -17,33 +17,59 @@ namespace Emgu.TF.Util
     public static partial class Toolbox
     {
 
-        private static IntPtr LoadLibraryWindows(String dllname)
+        private static IntPtr LoadLibraryExWindows(String dllname, int flags)
         {
-            const int loadLibrarySearchDllLoadDir = 0x00000100;
-            const int loadLibrarySearchDefaultDirs = 0x00001000;
-            //const int loadLibrarySearchUserDirs = 0x00000400;
+            IntPtr handler = LoadLibraryEx(dllname, IntPtr.Zero, flags);
 
-            IntPtr handler;
-            if (System.IO.Path.IsPathRooted(dllname))
-            {
-                handler = LoadLibraryEx(dllname, IntPtr.Zero, loadLibrarySearchDllLoadDir | loadLibrarySearchDefaultDirs);
-            }
-            else
-            {
-                handler = LoadLibraryEx(dllname, IntPtr.Zero, loadLibrarySearchDefaultDirs);
-            }
-            //IntPtr handler = LoadLibraryEx(dllname, IntPtr.Zero, loadLibrarySearchUserDirs);
             if (handler == IntPtr.Zero)
             {
                 int error = Marshal.GetLastWin32Error();
 
                 System.ComponentModel.Win32Exception ex = new System.ComponentModel.Win32Exception(error);
-                System.Diagnostics.Trace.WriteLine(String.Format("LoadLibraryEx {0} failed with error code {1}: {2}", dllname, (uint)error, ex.Message));
+                System.Diagnostics.Trace.WriteLine(String.Format(
+                    "LoadLibraryEx(\"{0}\", 0, {3}) failed with error code {1}: {2}",
+                    dllname,
+                    (uint)error,
+                    ex.Message,
+                    flags));
                 if (error == 5)
                 {
-                    System.Diagnostics.Trace.WriteLine(String.Format("Please check if the current user has execute permission for file: {0} ", dllname));
+                    System.Diagnostics.Trace.WriteLine(String.Format(
+                        "Please check if the current user has execute permission for file: {0} ", dllname));
                 }
             }
+            else
+            {
+                System.Diagnostics.Trace.WriteLine(String.Format("LoadLibraryEx(\"{0}\", 0, {1}) successfully loaded library.", dllname, flags));
+            }
+
+            return handler;
+        }
+
+        private static IntPtr LoadLibraryWindows(String dllname)
+        {
+            const int loadLibrarySearchDllLoadDir = 0x00000100;
+            const int loadLibrarySearchDefaultDirs = 0x00001000;
+            int flags;
+            if (System.IO.Path.IsPathRooted(dllname))
+            {
+                flags = loadLibrarySearchDllLoadDir | loadLibrarySearchDefaultDirs;
+            }
+            else
+            {
+                flags = loadLibrarySearchDefaultDirs;
+            }
+
+            IntPtr handler = LoadLibraryExWindows(dllname, flags);
+
+            if (handler == IntPtr.Zero)
+            {
+                //Try again with the '0' flags. 
+                //The first attempt above may fail, if the native dll is within a folder in the PATH environment variable.
+                //The call below will also search for folders in PATH environment variable.
+                handler = LoadLibraryExWindows(dllname, 0);
+            }
+
             return handler;
         }
 

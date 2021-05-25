@@ -214,7 +214,7 @@ namespace Emgu.TF
                 {
                     System.Diagnostics.Trace.WriteLine(
                         String.Format(
-                            "Loading TF binary for default locations. Current directory: {0}; Additional load folder: {1}",
+                            "Loading TF binary from default locations. Current directory: {0}; Additional load folder: {1}",
                             Environment.CurrentDirectory,
                             loadDirectory));
                 }
@@ -224,7 +224,7 @@ namespace Emgu.TF
             {
                 System.Diagnostics.Trace.WriteLine(
                     String.Format(
-                        "Loading TF binary for default locations. Current directory: {0}",
+                        "Loading TF binary from default locations. Current directory: {0}",
                         Environment.CurrentDirectory));
             }
 
