@@ -81,7 +81,7 @@ namespace Emgu.TF.Util
         public static IntPtr LoadLibrary(String dllname)
         {
 #if UNITY_EDITOR_WIN
-            LoadLibraryWindows(dllname);
+            return LoadLibraryWindows(dllname);
 #else
             if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
             {
