@@ -17,7 +17,7 @@
     <PackageReference Include="Emgu.CV" Version="4.5.1.4349" />
     <PackageReference Include="Emgu.CV.runtime.windows" Version="4.5.1.4349" />
     <PackageReference Include="Emgu.CV.UI" Version="4.5.1.4349" />
-    <PackageReference Include="Google.Protobuf" Version="3.15.2" />
+    <PackageReference Include="Google.Protobuf" Version="3.17.3" />
   </ItemGroup>
 
   <Import Project="..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Runtime.Windows.projitems" Label="Shared" />
