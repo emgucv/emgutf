@@ -4,7 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+#if VS_TEST
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TestAttribute = Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute;
+using TestFixture = Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute;
+#else
+using NUnit.Framework;
+#endif
 using Emgu.TF;
 using System.IO;
 using System.Diagnostics;
@@ -24,10 +30,10 @@ using Google.Protobuf.Collections;
 
 namespace Emgu.TF.Test
 {
-    [TestClass]
+    [TestFixture]
     public class UnitTest1
     {
-        [TestMethod]
+        [TestAttribute]
         public void TestGetVersion()
         {
             String version = Emgu.TF.TfInvoke.Version;
@@ -41,7 +47,7 @@ namespace Emgu.TF.Test
             Inception inceptionGraph = new Inception(null, new string[] { "optimized_graph.pb", "output_labels.txt" }, "https://github.com/emgucv/models/raw/master/inception_flower_retrain/", "Mul", "final_result");
         }*/
 
-        [TestMethod]
+        [TestAttribute]
         public void TestTString()
         {
             byte[] data = File.ReadAllBytes("grace_hopper.jpg");
@@ -54,7 +60,7 @@ namespace Emgu.TF.Test
             }
         }
 
-        [TestMethod]
+        [TestAttribute]
         public async Task TestInception()
         {
             using (Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>("grace_hopper.jpg", 224, 224, 128.0f, 1.0f))
@@ -129,7 +135,7 @@ namespace Emgu.TF.Test
             }
         }
 
-        [TestMethod]
+        [TestAttribute]
         public async Task TestResnet()
         {
             using (Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>("surfers.jpg", 224, 224, 0, 1.0f/255.0f))
@@ -207,7 +213,7 @@ namespace Emgu.TF.Test
             }
         }
 
-        [TestMethod]
+        [TestAttribute]
         public async Task TestMultiboxPeopleDetect()
         {
             Tensor imageResults = ImageIO.ReadTensorFromImageFile<float>("surfers.jpg", 224, 224, 128.0f, 1.0f / 128.0f);
@@ -222,8 +228,7 @@ namespace Emgu.TF.Test
         }
 
 
-
-        [TestMethod]
+        [TestAttribute]
         public async Task TestStylize()
         {
             StylizeGraph stylizeGraph = new StylizeGraph();
@@ -232,13 +237,13 @@ namespace Emgu.TF.Test
             Tensor stylizedImage = stylizeGraph.Stylize(image, 0);
         }
 
-        [TestMethod]
+        [TestAttribute]
         public void TestTensorCreate()
         {
             Tensor t = new Tensor(DataType.Float, new[] { 1, 3, 224, 224 });
         }
 
-        [TestMethod]
+        [TestAttribute]
         public void TestEncodeJpeg()
         {
             Tensor image = ImageIO.ReadTensorFromImageFile<float>("surfers.jpg", 299, 299, 0, 1.0f / 255.0f, true, false);
@@ -246,7 +251,7 @@ namespace Emgu.TF.Test
             File.WriteAllBytes("surefers_out.jpg", jpegRaw);
         }
 
-        [TestMethod]
+        [TestAttribute]
         public void TestCUDAEnabled()
         {
             bool cuda = TfInvoke.IsGoogleCudaEnabled;
@@ -263,7 +268,7 @@ namespace Emgu.TF.Test
             Add(3, 4, options);
         }
 
-        [TestMethod]
+        [TestAttribute]
         public void TestChooseDevice()
         {
             SessionOptions so = new SessionOptions();
@@ -339,7 +344,7 @@ namespace Emgu.TF.Test
             return results[0].Flat<int>()[0];
         }
 
-        [TestMethod]
+        [TestAttribute]
         public void TestAddition()
         {
             int a = 10;
@@ -347,7 +352,7 @@ namespace Emgu.TF.Test
             int sum = Add(a, b);
         }
 
-        [TestMethod]
+        [TestAttribute]
         public void TestHelloWorld()
         {
             String h = "Hello, tensorflow!";
@@ -362,7 +367,7 @@ namespace Emgu.TF.Test
             Assert.IsTrue(output.Equals(h));
         }
 
-        [TestMethod]
+        [TestAttribute]
         public void TestNativeImageIO()
         {
             int inputHeight = 299;
@@ -384,7 +389,7 @@ namespace Emgu.TF.Test
 
         }
 
-        [TestMethod]
+        [TestAttribute]
         public void TestIsOperationSupported()
         {
             bool castSupported = TfInvoke.OpHasKernel("Cast");
@@ -397,7 +402,7 @@ namespace Emgu.TF.Test
         }
 
         /*
-        [TestMethod]
+        [Test]
         public async void TestMultiSession()
         {
             Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>("grace_hopper.jpg", 224, 224, 128.0f, 1.0f);
@@ -415,7 +420,7 @@ namespace Emgu.TF.Test
             }
         }*/
 
-        [TestMethod]
+        [TestAttribute]
         public void TestServer1()
         {
             Tensorflow.ServerDef def = new ServerDef();
@@ -462,7 +467,5 @@ namespace Emgu.TF.Test
                 server.Stop(s2);
         }*/
     }
-
     
-
 }

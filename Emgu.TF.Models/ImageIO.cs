@@ -479,7 +479,6 @@ namespace Emgu.TF.Models
 
         private static Tensor NativeReadTensorFromImageFile<T>(
             String fileName,
-
             int inputHeight = -1,
             int inputWidth = -1,
             float inputMean = 0.0f,
@@ -488,6 +487,16 @@ namespace Emgu.TF.Models
             bool swapBR = false,
             Status status = null) where T : struct
         {
+            return NativeReadTensorFromImageFiles<T>(
+                new string[] {fileName},
+                inputHeight,
+                inputWidth,
+                inputMean,
+                scale,
+                flipUpSideDown,
+                swapBR,
+                status);
+            /*
             //Use native Image handler to import the file
             Tensor t;
             if (typeof(T) == typeof(float))
@@ -509,6 +518,54 @@ namespace Emgu.TF.Models
                 flipUpSideDown,
                 !swapBR //No swapping BR in tensorflow is the equivalent of swapping BR in Bitmap
             );
+            return t;*/
+        }
+
+        private static Tensor NativeReadTensorFromImageFiles<T>(
+            String[] fileNames,
+            int inputHeight = -1,
+            int inputWidth = -1,
+            float inputMean = 0.0f,
+            float scale = 1.0f,
+            bool flipUpSideDown = false,
+            bool swapBR = false,
+            Status status = null) where T : struct
+        {
+            //Use native Image handler to import the file
+            Tensor t;
+            int step;
+            int channels = 3;
+            if (typeof(T) == typeof(float))
+            {
+                t = new Tensor(DataType.Float, 
+                    new int[] {fileNames.Length, (int) inputHeight, (int) inputWidth, channels});
+                step = inputWidth * inputHeight * channels * Marshal.SizeOf<float>();
+            }
+            else if (typeof(T) == typeof(byte))
+            {
+                t = new Tensor(DataType.Uint8,
+                    new int[] {fileNames.Length, (int) inputHeight, (int) inputWidth, channels});
+                step = inputWidth * inputHeight * channels * Marshal.SizeOf<Byte>();
+            }
+            else
+            {
+                throw new Exception(String.Format("Conversion to tensor of type {0} is not implemented", typeof(T)));
+            }
+
+            for (int i = 0; i < fileNames.Length; i++)
+            {
+                NativeImageIO.ReadImageFileToTensor<T>(
+                    fileNames[0],
+                    new IntPtr(t.DataPointer.ToInt64() + i * step),
+                    inputHeight,
+                    inputWidth,
+                    inputMean,
+                    scale,
+                    flipUpSideDown,
+                    !swapBR //No swapping BR in tensorflow is the equivalent of swapping BR in Bitmap
+                );
+            }
+
             return t;
         }
 #endif

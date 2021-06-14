@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29418.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Shared", "..\..\Emgu.TF\Emgu.TF.Shared.shproj", "{D47D776E-9970-4552-BC8A-24CADCBEA009}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Test", "..\..\Emgu.TF.Test\Emgu.TF.Test.csproj", "{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Util.Shared", "..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.shproj", "{98561642-5EC3-4244-BAF9-6876D9BA5527}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Protobuf.Shared", "..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.shproj", "{88FED2CB-EE86-4B5E-85A0-9F5FDF42111F}"
@@ -31,6 +29,10 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Ubuntu", ".
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Raspbian", "..\..\Emgu.TF.Runtime\Raspbian\Emgu.TF.Runtime.Raspbian.shproj", "{61FEA54E-4DD5-4552-BCFC-860610295873}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Test.Net", "..\..\Emgu.TF.Test\Emgu.TF.Test.Net\Emgu.TF.Test.Net.csproj", "{A377B3A1-1B01-42CE-A7FF-E7D86EBED0BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Test.NetFramework", "..\..\Emgu.TF.Test\Emgu.TF.Test.NetFramework.csproj", "{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems*{01147797-9f30-4ab3-a86c-1c4509c88edb}*SharedItemsImports = 5
@@ -46,6 +48,7 @@ Global
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{8edce0c8-ba71-4396-9428-35d05877258c}*SharedItemsImports = 13
 		..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems*{98561642-5ec3-4244-baf9-6876d9ba5527}*SharedItemsImports = 13
 		..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Runtime.Mac.projitems*{b1e7d925-5d1c-4a1e-9ba0-35163883a110}*SharedItemsImports = 13
+		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Runtime.Windows.projitems*{c6d4a064-1080-4d0c-a0a0-b659de3a6faf}*SharedItemsImports = 4
 		..\..\Emgu.TF\Emgu.TF.Shared.projitems*{d47d776e-9970-4552-bc8a-24cadcbea009}*SharedItemsImports = 13
 		..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Runtime.Mac.projitems*{efea6188-e2ed-4b03-ab0b-6a9a14722485}*SharedItemsImports = 5
 		..\..\Emgu.TF.Runtime\Raspbian\Emgu.TF.Runtime.Raspbian.projitems*{efea6188-e2ed-4b03-ab0b-6a9a14722485}*SharedItemsImports = 5
@@ -63,22 +66,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Debug|ARM.Build.0 = Debug|Any CPU
-		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Debug|x64.ActiveCfg = Debug|x64
-		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Debug|x64.Build.0 = Debug|x64
-		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Debug|x86.Build.0 = Debug|Any CPU
-		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Release|ARM.ActiveCfg = Release|Any CPU
-		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Release|ARM.Build.0 = Release|Any CPU
-		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Release|x64.ActiveCfg = Release|Any CPU
-		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Release|x64.Build.0 = Release|Any CPU
-		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Release|x86.ActiveCfg = Release|Any CPU
-		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Release|x86.Build.0 = Release|Any CPU
 		{01147797-9F30-4AB3-A86C-1C4509C88EDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{01147797-9F30-4AB3-A86C-1C4509C88EDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01147797-9F30-4AB3-A86C-1C4509C88EDB}.Debug|ARM.ActiveCfg = Debug|Any CPU
@@ -143,6 +130,38 @@ Global
 		{EFEA6188-E2ED-4B03-AB0B-6A9A14722485}.Release|x64.Build.0 = Release|Any CPU
 		{EFEA6188-E2ED-4B03-AB0B-6A9A14722485}.Release|x86.ActiveCfg = Release|Any CPU
 		{EFEA6188-E2ED-4B03-AB0B-6A9A14722485}.Release|x86.Build.0 = Release|Any CPU
+		{A377B3A1-1B01-42CE-A7FF-E7D86EBED0BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A377B3A1-1B01-42CE-A7FF-E7D86EBED0BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A377B3A1-1B01-42CE-A7FF-E7D86EBED0BB}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{A377B3A1-1B01-42CE-A7FF-E7D86EBED0BB}.Debug|ARM.Build.0 = Debug|Any CPU
+		{A377B3A1-1B01-42CE-A7FF-E7D86EBED0BB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A377B3A1-1B01-42CE-A7FF-E7D86EBED0BB}.Debug|x64.Build.0 = Debug|Any CPU
+		{A377B3A1-1B01-42CE-A7FF-E7D86EBED0BB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A377B3A1-1B01-42CE-A7FF-E7D86EBED0BB}.Debug|x86.Build.0 = Debug|Any CPU
+		{A377B3A1-1B01-42CE-A7FF-E7D86EBED0BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A377B3A1-1B01-42CE-A7FF-E7D86EBED0BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A377B3A1-1B01-42CE-A7FF-E7D86EBED0BB}.Release|ARM.ActiveCfg = Release|Any CPU
+		{A377B3A1-1B01-42CE-A7FF-E7D86EBED0BB}.Release|ARM.Build.0 = Release|Any CPU
+		{A377B3A1-1B01-42CE-A7FF-E7D86EBED0BB}.Release|x64.ActiveCfg = Release|Any CPU
+		{A377B3A1-1B01-42CE-A7FF-E7D86EBED0BB}.Release|x64.Build.0 = Release|Any CPU
+		{A377B3A1-1B01-42CE-A7FF-E7D86EBED0BB}.Release|x86.ActiveCfg = Release|Any CPU
+		{A377B3A1-1B01-42CE-A7FF-E7D86EBED0BB}.Release|x86.Build.0 = Release|Any CPU
+		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Debug|ARM.Build.0 = Debug|Any CPU
+		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Debug|x64.ActiveCfg = Debug|x64
+		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Debug|x64.Build.0 = Debug|x64
+		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Debug|x86.Build.0 = Debug|Any CPU
+		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Release|ARM.ActiveCfg = Release|Any CPU
+		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Release|ARM.Build.0 = Release|Any CPU
+		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Release|x64.ActiveCfg = Release|x64
+		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Release|x64.Build.0 = Release|x64
+		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Release|x86.ActiveCfg = Release|Any CPU
+		{C6D4A064-1080-4D0C-A0A0-B659DE3A6FAF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
