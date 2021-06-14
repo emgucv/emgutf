@@ -1,5 +1,8 @@
 REM @echo off
+@echo on
+
 pushd %~p0
+
 cd ..\..
 
 REM SET TF_TYPE=FULL
