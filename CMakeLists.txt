@@ -94,6 +94,10 @@ ENDIF()
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ${ENABLE_SOLUTION_FOLDERS})
 
+IF(WIN32)
+  INCLUDE (FindCodeSign)
+ENDIF()
+
 # ----------------------------------------------------------------------------
 #  Check if 32bit or 64-bit
 # ----------------------------------------------------------------------------
@@ -221,6 +225,7 @@ CHECK_BINARY_EXIST("lib/android/x86" "libtfextern.so" HAVE_ANDROID_X86 OFF)
 CHECK_BINARY_EXIST("lib/android/x86" "libtfliteextern.so" HAVE_ANDROID_X86_LITE OFF)
 CHECK_BINARY_EXIST("lib/android/x86_64" "libtfextern.so" HAVE_ANDROID_X86_64 OFF)
 CHECK_BINARY_EXIST("lib/android/x86_64" "libtfliteextern.so" HAVE_ANDROID_X86_64_LITE OFF)
+
 
 SET(HAVE_LINUX OFF)
 IF(HAVE_LINUX_X86_64 OR HAVE_LINUX_ARM)
