@@ -61,6 +61,27 @@ namespace Emgu.TF.Test
         }
 
         [TestAttribute]
+        public async Task TestInceptionBatch()
+        {
+            //using (Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>("grace_hopper.jpg", 224, 224, 128.0f, 1.0f))
+            using (Tensor imageTensor = ImageIO.ReadTensorFromImageFiles<float>(
+                new String[] { "grace_hopper.jpg", "grace_hopper.jpg" }, 
+                224, 
+                224, 
+                128.0f, 
+                1.0f))
+            using (Inception inceptionGraph = new Inception())
+            {
+                await inceptionGraph.Init();
+
+                Inception.RecognitionResult[][] results = inceptionGraph.Recognize(imageTensor);
+
+                Trace.WriteLine(String.Format("Object is {0} with {1}% probability", results[0][0].Label, results[0][0].Probability * 100));
+
+            }
+        }
+
+        [TestAttribute]
         public async Task TestInception()
         {
             using (Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>("grace_hopper.jpg", 224, 224, 128.0f, 1.0f))
@@ -128,9 +149,9 @@ namespace Emgu.TF.Test
                     int l = versionDef.Length;
                 }
 
-                Inception.RecognitionResult[] results = inceptionGraph.Recognize(imageTensor);
+                Inception.RecognitionResult[][] results = inceptionGraph.Recognize(imageTensor);
 
-                Trace.WriteLine(String.Format("Object is {0} with {1}% probability", results[0].Label, results[0].Probability * 100));
+                Trace.WriteLine(String.Format("Object is {0} with {1}% probability", results[0][0].Label, results[0][0].Probability * 100));
 
             }
         }

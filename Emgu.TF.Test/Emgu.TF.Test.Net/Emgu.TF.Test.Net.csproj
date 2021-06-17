@@ -33,4 +33,12 @@
     <ProjectReference Include="..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj" />
   </ItemGroup>
 
+  <Import Project="..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Runtime.Windows.projitems" Label="Shared" />
+
+  <Import Project="..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Runtime.Ubuntu.projitems" Label="Shared" />
+
+  <Import Project="..\..\Emgu.TF.Runtime\Raspbian\Emgu.TF.Runtime.Raspbian.projitems" Label="Shared" />
+
+  <Import Project="..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Runtime.Mac.projitems" Label="Shared" />
+
 </Project>

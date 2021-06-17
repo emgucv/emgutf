@@ -18,6 +18,102 @@ namespace Emgu.Models
     public partial class NativeImageIO
     {
         /// <summary>
+        /// Read image files, covert the data and save it to the native pointer
+        /// </summary>
+        /// <typeparam name="T">The type of the data to covert the image pixel values to. e.g. "float" or "byte"</typeparam>
+        /// <param name="fileNames">The name of the image files</param>
+        /// <param name="dest">The native pointer where the image pixels values will be saved to.</param>
+        /// <param name="inputHeight">The height of the image, must match the height requirement for the tensor</param>
+        /// <param name="inputWidth">The width of the image, must match the width requirement for the tensor</param>
+        /// <param name="inputMean">The mean value, it will be subtracted from the input image pixel values</param>
+        /// <param name="scale">The scale, after mean is subtracted, the scale will be used to multiply the pixel values</param>
+        /// <param name="flipUpSideDown">If true, the image needs to be flipped up side down</param>
+        /// <param name="swapBR">If true, will flip the Blue channel with the Red. e.g. If false, the tensor's color channel order will be RGB. If true, the tensor's color channle order will be BGR </param>
+        public static void ReadImageFilesToTensor<T>(
+            String[] fileNames,
+            IntPtr dest,
+            int inputHeight = -1,
+            int inputWidth = -1,
+            float inputMean = 0.0f,
+            float scale = 1.0f,
+            bool flipUpSideDown = false,
+            bool swapBR = false)
+            where T : struct
+        {
+            IntPtr dataPtr = dest;
+            for (int i = 0; i < fileNames.Length; i++)
+            {
+                String fileName = fileNames[i];
+                if (!File.Exists(fileName))
+                    throw new FileNotFoundException(String.Format("File {0} do not exist.", fileName));
+
+                //Read the file using Bitmap class
+                System.Drawing.Bitmap bmp = new Bitmap(fileName);
+
+                if (inputHeight > 0 || inputWidth > 0)
+                {
+                    //resize bmp
+                    System.Drawing.Bitmap newBmp = new Bitmap(bmp, inputWidth, inputHeight);
+                    bmp.Dispose();
+                    bmp = newBmp;
+                }
+
+                int bmpWidth = bmp.Width;
+                int bmpHeight = bmp.Height;
+                System.Drawing.Imaging.BitmapData bd = new System.Drawing.Imaging.BitmapData();
+                bmp.LockBits(
+                    new Rectangle(0, 0, bmpWidth, bmpHeight),
+                    System.Drawing.Imaging.ImageLockMode.ReadOnly,
+                    System.Drawing.Imaging.PixelFormat.Format24bppRgb, bd);
+
+                try
+                {
+                    if (typeof(T) == typeof(float))
+                    {
+                        Emgu.TF.Util.Toolbox.Pixel24ToPixelFloat(
+                            bd.Scan0,
+                            bmpWidth,
+                            bmpHeight,
+                            inputMean,
+                            scale,
+                            flipUpSideDown,
+                            swapBR,
+                            dataPtr
+                        );
+                        int step = bmpWidth * bmpHeight * 3 * Marshal.SizeOf<float>();
+                        dataPtr = new IntPtr(dataPtr.ToInt64() + step);
+                    }
+                    else if (typeof(T) == typeof(byte))
+                    {
+                        Emgu.TF.Util.Toolbox.Pixel24ToPixelByte(
+                            bd.Scan0,
+                            bmpWidth,
+                            bmpHeight,
+                            inputMean,
+                            scale,
+                            flipUpSideDown,
+                            swapBR,
+                            dataPtr
+                        );
+                        int step = bmpWidth * bmpHeight * 3 * Marshal.SizeOf<byte>();
+                        dataPtr = new IntPtr(dataPtr.ToInt64() + step);
+                    }
+                    else
+                    {
+                        throw new NotImplementedException(String.Format("Destination data type {0} is not supported.",
+                            typeof(T).ToString()));
+                    }
+                }
+                finally
+                {
+                    bmp.UnlockBits(bd);
+                }
+
+            }
+        }
+
+
+        /// <summary>
         /// Read an image file, covert the data and save it to the native pointer
         /// </summary>
         /// <typeparam name="T">The type of the data to covert the image pixel values to. e.g. "float" or "byte"</typeparam>
@@ -40,6 +136,15 @@ namespace Emgu.Models
             bool swapBR = false)
             where T : struct
         {
+            ReadImageFilesToTensor<T>(
+                new string[] {fileName}, 
+                dest, 
+                inputHeight, 
+                inputWidth, 
+                inputMean, 
+                scale,
+                flipUpSideDown, swapBR);
+            /*
             if (!File.Exists(fileName))
                 throw new FileNotFoundException(String.Format("File {0} do not exist.", fileName));
 
@@ -55,12 +160,6 @@ namespace Emgu.Models
                     bmp.Dispose();
                     bmp = newBmp;
                 }
-
-                /*
-                if (flipUpSideDown)
-                {
-                    bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
-                }*/
 
                 int bmpWidth = bmp.Width;
                 int bmpHeight = bmp.Height;
@@ -111,14 +210,6 @@ namespace Emgu.Models
                     bmp.UnlockBits(bd);
                 }
                 
-            }
-            /*
-            else //Unix
-            {
-                //if (flipUpSideDown)
-                //    throw new NotImplementedException("Flip Up Side Down is Not implemented");
-
-                throw new NotImplementedException("Not implemented");
             }*/
         }
 

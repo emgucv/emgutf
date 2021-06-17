@@ -450,6 +450,17 @@ namespace Emgu.TF
         internal static extern int tfeStringDecode(IntPtr src, int srcLen, ref IntPtr dst, ref IntPtr dstLen, IntPtr status);
         */
 
+        /// <summary>
+        /// Native implementation of the memory copy function
+        /// </summary>
+        /// <param name="dst">The destination pointer</param>
+        /// <param name="src">The source pointer</param>
+        /// <param name="length">The number of bytes to copy</param>
+        public static void Memcpy(IntPtr dst, IntPtr src, int length)
+        {
+            tfeMemcpy(dst, src, length);
+        }
+
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeMemcpy(IntPtr dst, IntPtr src, int length);
 

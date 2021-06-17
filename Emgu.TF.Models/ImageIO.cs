@@ -399,75 +399,7 @@ namespace Emgu.TF.Models
                 || extension.Equals(".png")
                 || extension.Equals(".gif")))
             {
-                using(Graph graph = new Graph())
-                {
-                    Operation input = graph.Placeholder(DataType.String);
-
-                    //output dimension [height, width, 3] where 3 is the number of channels
-                    //DecodeJpeg can decode JPEG, PNG and GIF
-                    Operation jpegDecoder = graph.DecodeJpeg(input, 3); 
-
-                    Operation floatCaster = graph.Cast(jpegDecoder, DstT: DataType.Float); //cast to float
-
-                    Tensor zeroConst = new Tensor(0);
-                    Operation zeroConstOp = graph.Const(zeroConst, zeroConst.Type, opName: "zeroConstOp");
-                    Operation dimsExpander = graph.ExpandDims(floatCaster, zeroConstOp); //turn it to dimension [1, height, width, 3]
-
-                    Operation resized;
-                    bool resizeRequired = (inputHeight > 0) && (inputWidth > 0);
-                    if (resizeRequired)
-                    {
-                        Tensor size = new Tensor(new int[] { inputHeight, inputWidth }); // new size;
-                        Operation sizeOp = graph.Const(size, size.Type, opName: "size");
-                        resized = graph.ResizeBilinear(dimsExpander, sizeOp); //resize image
-                    }
-                    else
-                    {
-                        resized = dimsExpander;
-                    }
-
-                    Tensor mean = new Tensor(inputMean);
-                    Operation meanOp = graph.Const(mean, mean.Type, opName: "mean");
-                    Operation subtracted = graph.Sub(resized, meanOp);
-
-                    Tensor scaleTensor = new Tensor(scale);
-                    Operation scaleOp = graph.Const(scaleTensor, scaleTensor.Type, opName: "scale");
-                    Operation scaled = graph.Mul(subtracted, scaleOp);
-
-                    Operation swapedBR;
-                    if (swapBR)
-                    {
-                        Tensor threeConst = new Tensor(new int[]{3});
-                        Operation threeConstOp = graph.Const(threeConst, threeConst.Type, "threeConstOp");
-                        swapedBR = graph.ReverseV2(scaled, threeConstOp, "swapBR");
-                    }
-                    else
-                    {
-                        swapedBR = scaled;
-                    }
-
-                    Operation flipped;
-                    if (flipUpSideDown)
-                    {
-                        Tensor oneConst = new Tensor(new int[]{1});
-                        Operation oneConstOp = graph.Const(oneConst, oneConst.Type, "oneConstOp");
-                        flipped = graph.ReverseV2(swapedBR, oneConstOp, "flipUpSideDownOp");
-                    }
-                    else
-                    {
-                        flipped = swapedBR;
-                    }
-
-                    using (Session session = new Session(graph))
-                    {
-                        Tensor imageTensor = Tensor.FromString(File.ReadAllBytes(fileName));
-                        
-                        Tensor[] imageResults = session.Run(new Output[] { input }, new Tensor[] { imageTensor },
-                            new Output[] { flipped });
-                        return imageResults[0];
-                    }
-
-                }
+                return DecodeImageToTensor32F3C(fileName, inputHeight, inputWidth, inputMean, scale, flipUpSideDown, swapBR);
             }
             else
             {
@@ -475,6 +407,179 @@ namespace Emgu.TF.Models
                     flipUpSideDown, swapBR);
             }
 #endif
+        }
+
+        /// <summary>
+        /// Read the image files into a Tensorflow tensor
+        /// </summary>
+        /// <typeparam name="T">The tensor data type, e.g. float</typeparam>
+        /// <param name="fileNames">The name of the image files</param>
+        /// <param name="inputHeight">The height of the input tensor. If zero or negative, will use the image height from the file</param>
+        /// <param name="inputWidth">The width of the input tensor. If zero or negative, will use the image width from the file</param>
+        /// <param name="inputMean">The input mean, will be subtracted from the image pixel value</param>
+        /// <param name="scale">The optional scale, after input means is substracted, the pixel value will multiply with the scale to produce the tensor value</param>
+        /// <param name="flipUpSideDown">If true, the image will be flipped upside down</param>
+        /// <param name="swapBR">If true, the blue and red channels will be swapped</param>
+        /// <returns>The tensorflow tensor.</returns>
+        public static Tensor ReadTensorFromImageFiles<T>(
+            String[] fileNames,
+            int inputHeight = -1,
+            int inputWidth = -1,
+            float inputMean = 0.0f,
+            float scale = 1.0f,
+            bool flipUpSideDown = false,
+            bool swapBR = false) where T : struct
+        {
+#if __ANDROID__
+            throw new NotImplementedException("Not implemented for this platform");
+#elif __IOS__
+            throw new NotImplementedException("Not implemented for this platform");
+#else
+            Tensor[] tensors = new Tensor[fileNames.Length];
+
+            for (int i = 0; i < tensors.Length; i++)
+            {
+                String fileName = fileNames[i];
+                FileInfo fi = new FileInfo(fileName);
+                String extension = fi.Extension.ToLower();
+
+                //Use tensorflow to decode the following image formats
+                if ((typeof(T) == typeof(float))
+                    &&
+                    (extension.Equals(".jpeg")
+                     || extension.Equals(".jpg")
+                     || extension.Equals(".png")
+                     || extension.Equals(".gif")))
+                {
+                    tensors[i] = DecodeImageToTensor32F3C(fileName, inputHeight, inputWidth, inputMean, scale, flipUpSideDown,
+                        swapBR);
+                }
+                else
+                {
+                    tensors[i] = NativeReadTensorFromImageFile<T>(fileName, inputHeight, inputWidth, inputMean, scale,
+                        flipUpSideDown, swapBR);
+                }
+            }
+
+            if (tensors.Length == 1)
+                return tensors[0];
+            else
+            {   //stack the tensors
+                return StackTensors(tensors);
+            }
+#endif
+        }
+
+        private static int GetSize(int[] dimension)
+        {
+            if (dimension.Length == 0)
+                return 0;
+            int s = 1;
+            for (int i = 0; i < dimension.Length; i++)
+            {
+                s = s * dimension[i];
+            }
+            return s;
+        }
+
+        private static Tensor StackTensors(Tensor[] tensors)
+        {
+            var dimension = tensors[0].Dim;
+            var finalDimension = new int[dimension.Length];
+            finalDimension[0] = tensors.Length;
+            for (int i = 1; i < dimension.Length; i++)
+            {
+                finalDimension[i] = dimension[i];
+            }
+
+            Tensor result = new Tensor(tensors[0].Type, finalDimension);
+            IntPtr dataPtr = result.DataPointer;
+            for (int i = 0; i < tensors.Length; i++)
+            {
+                int s = tensors[i].ByteSize;
+                Emgu.TF.TfInvoke.Memcpy(dataPtr, tensors[i].DataPointer, s);
+                dataPtr = new IntPtr(dataPtr.ToInt64() + s);
+            }
+            return result;
+        }
+
+        private static Tensor DecodeImageToTensor32F3C(
+            String fileName,
+            int inputHeight = -1,
+            int inputWidth = -1,
+            float inputMean = 0.0f,
+            float scale = 1.0f,
+            bool flipUpSideDown = false,
+            bool swapBR = false)
+        {
+            using (Graph graph = new Graph())
+            {
+                Operation input = graph.Placeholder(DataType.String);
+
+                //output dimension [height, width, 3] where 3 is the number of channels
+                //DecodeJpeg can decode JPEG, PNG and GIF
+                Operation jpegDecoder = graph.DecodeJpeg(input, 3);
+
+                Operation floatCaster = graph.Cast(jpegDecoder, DstT: DataType.Float); //cast to float
+
+                Tensor zeroConst = new Tensor(0);
+                Operation zeroConstOp = graph.Const(zeroConst, zeroConst.Type, opName: "zeroConstOp");
+                Operation dimsExpander = graph.ExpandDims(floatCaster, zeroConstOp); //turn it to dimension [1, height, width, 3]
+
+                Operation resized;
+                bool resizeRequired = (inputHeight > 0) && (inputWidth > 0);
+                if (resizeRequired)
+                {
+                    Tensor size = new Tensor(new int[] { inputHeight, inputWidth }); // new size;
+                    Operation sizeOp = graph.Const(size, size.Type, opName: "size");
+                    resized = graph.ResizeBilinear(dimsExpander, sizeOp); //resize image
+                }
+                else
+                {
+                    resized = dimsExpander;
+                }
+
+                Tensor mean = new Tensor(inputMean);
+                Operation meanOp = graph.Const(mean, mean.Type, opName: "mean");
+                Operation subtracted = graph.Sub(resized, meanOp);
+
+                Tensor scaleTensor = new Tensor(scale);
+                Operation scaleOp = graph.Const(scaleTensor, scaleTensor.Type, opName: "scale");
+                Operation scaled = graph.Mul(subtracted, scaleOp);
+
+                Operation swapedBR;
+                if (swapBR)
+                {
+                    Tensor threeConst = new Tensor(new int[] { 3 });
+                    Operation threeConstOp = graph.Const(threeConst, threeConst.Type, "threeConstOp");
+                    swapedBR = graph.ReverseV2(scaled, threeConstOp, "swapBR");
+                }
+                else
+                {
+                    swapedBR = scaled;
+                }
+
+                Operation flipped;
+                if (flipUpSideDown)
+                {
+                    Tensor oneConst = new Tensor(new int[] { 1 });
+                    Operation oneConstOp = graph.Const(oneConst, oneConst.Type, "oneConstOp");
+                    flipped = graph.ReverseV2(swapedBR, oneConstOp, "flipUpSideDownOp");
+                }
+                else
+                {
+                    flipped = swapedBR;
+                }
+
+                using (Session session = new Session(graph))
+                {
+                    Tensor imageTensor = Tensor.FromString(File.ReadAllBytes(fileName));
+
+                    Tensor[] imageResults = session.Run(new Output[] { input }, new Tensor[] { imageTensor },
+                        new Output[] { flipped });
+                    return imageResults[0];
+                }
+            }
         }
 
         private static Tensor NativeReadTensorFromImageFile<T>(
