@@ -157,6 +157,24 @@ namespace Emgu.TF.Test
         }
 
         [TestAttribute]
+        public async Task TestResnetBatch()
+        {
+            using (Tensor imageTensor = ImageIO.ReadTensorFromImageFiles<float>(
+                new string[] {"surfers.jpg", "surfers.jpg"}, 
+                224, 
+                224, 
+                0, 
+                1.0f / 255.0f))
+            using (Resnet resnet = new Resnet())
+            {
+                await resnet.Init();
+
+                Resnet.RecognitionResult[][] results = resnet.Recognize(imageTensor);
+
+            }
+        }
+
+        [TestAttribute]
         public async Task TestResnet()
         {
             using (Tensor imageTensor = ImageIO.ReadTensorFromImageFile<float>("surfers.jpg", 224, 224, 0, 1.0f/255.0f))
@@ -229,7 +247,7 @@ namespace Emgu.TF.Test
                     int l = versionDef.Length;
                 }
 
-                Resnet.RecognitionResult[] results = resnet.Recognize(imageTensor);
+                Resnet.RecognitionResult[][] results = resnet.Recognize(imageTensor);
 
             }
         }
