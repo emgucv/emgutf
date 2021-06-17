@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -417,7 +418,7 @@ namespace Emgu.TF.Models
         /// <param name="inputHeight">The height of the input tensor. If zero or negative, will use the image height from the file</param>
         /// <param name="inputWidth">The width of the input tensor. If zero or negative, will use the image width from the file</param>
         /// <param name="inputMean">The input mean, will be subtracted from the image pixel value</param>
-        /// <param name="scale">The optional scale, after input means is substracted, the pixel value will multiply with the scale to produce the tensor value</param>
+        /// <param name="scale">The optional scale, after input means is subtracted, the pixel value will multiply with the scale to produce the tensor value</param>
         /// <param name="flipUpSideDown">If true, the image will be flipped upside down</param>
         /// <param name="swapBR">If true, the blue and red channels will be swapped</param>
         /// <returns>The tensorflow tensor.</returns>
@@ -582,6 +583,7 @@ namespace Emgu.TF.Models
             }
         }
 
+        
         private static Tensor NativeReadTensorFromImageFile<T>(
             String fileName,
             int inputHeight = -1,
@@ -601,31 +603,20 @@ namespace Emgu.TF.Models
                 flipUpSideDown,
                 swapBR,
                 status);
-            /*
-            //Use native Image handler to import the file
-            Tensor t;
-            if (typeof(T) == typeof(float))
-                t = new Tensor(DataType.Float, new int[] { 1, (int)inputHeight, (int)inputWidth, 3 });
-            else if (typeof(T) == typeof(byte))
-                t = new Tensor(DataType.Uint8, new int[] { 1, (int)inputHeight, (int)inputWidth, 3 });
-            else
-            {
-                throw new Exception(String.Format("Conversion to tensor of type {0} is not implemented", typeof(T)));
-            }
-
-            NativeImageIO.ReadImageFileToTensor<T>(
-                fileName,
-                t.DataPointer,
-                inputHeight,
-                inputWidth,
-                inputMean,
-                scale,
-                flipUpSideDown,
-                !swapBR //No swapping BR in tensorflow is the equivalent of swapping BR in Bitmap
-            );
-            return t;*/
         }
 
+        /// <summary>
+        /// Read image files, covert the data and save it to the native pointer
+        /// </summary>
+        /// <typeparam name="T">The type of the data to covert the image pixel values to. e.g. "float" or "byte"</typeparam>
+        /// <param name="fileNames">The name of the image files</param>
+        /// <param name="inputHeight">The height of the image, must match the height requirement for the tensor</param>
+        /// <param name="inputWidth">The width of the image, must match the width requirement for the tensor</param>
+        /// <param name="inputMean">The mean value, it will be subtracted from the input image pixel values</param>
+        /// <param name="scale">The scale, after mean is subtracted, the scale will be used to multiply the pixel values</param>
+        /// <param name="flipUpSideDown">If true, the image needs to be flipped up side down</param>
+        /// <param name="swapBR">If true, will flip the Blue channel with the Red. e.g. If false, the tensor's color channel order will be RGB. If true, the tensor's color channle order will be BGR </param>
+        /// <returns>The tensor that contains all the image files</returns>
         private static Tensor NativeReadTensorFromImageFiles<T>(
             String[] fileNames,
             int inputHeight = -1,
@@ -636,43 +627,150 @@ namespace Emgu.TF.Models
             bool swapBR = false,
             Status status = null) where T : struct
         {
-            //Use native Image handler to import the file
-            Tensor t;
+            /*
+            return ReadImageFilesToTensor<T>(
+                fileNames,
+                inputHeight,
+                inputWidth,
+                inputMean,
+                scale,
+                flipUpSideDown,
+                swapBR
+            );*/
+            if (fileNames.Length == 0)
+                throw new ArgumentException("Intput file names do not contain any files");
+
+            String fileName = fileNames[0];
+            if (!File.Exists(fileName))
+                throw new FileNotFoundException(String.Format("File {0} do not exist.", fileName));
+
+            IntPtr dataPtr;
             int step;
-            int channels = 3;
-            if (typeof(T) == typeof(float))
+            Tensor t;
+            using (System.Drawing.Bitmap bmp0 = new Bitmap(fileName))
             {
-                t = new Tensor(DataType.Float, 
-                    new int[] {fileNames.Length, (int) inputHeight, (int) inputWidth, channels});
-                step = inputWidth * inputHeight * channels * Marshal.SizeOf<float>();
-            }
-            else if (typeof(T) == typeof(byte))
-            {
-                t = new Tensor(DataType.Uint8,
-                    new int[] {fileNames.Length, (int) inputHeight, (int) inputWidth, channels});
-                step = inputWidth * inputHeight * channels * Marshal.SizeOf<Byte>();
-            }
-            else
-            {
-                throw new Exception(String.Format("Conversion to tensor of type {0} is not implemented", typeof(T)));
+                if (inputHeight <= 0)
+                    inputHeight = bmp0.Height;
+                if (inputWidth <= 0)
+                    inputWidth = bmp0.Width;
+
+
+                if (typeof(T) == typeof(float))
+                    t = new Tensor(DataType.Float,
+                        new int[] { fileNames.Length, (int)inputHeight, (int)inputWidth, 3 });
+                else if (typeof(T) == typeof(byte))
+                    t = new Tensor(DataType.Uint8,
+                        new int[] { fileNames.Length, (int)inputHeight, (int)inputWidth, 3 });
+                else
+                {
+                    throw new Exception(String.Format("Conversion to tensor of type {0} is not implemented",
+                        typeof(T)));
+                }
+
+                dataPtr = t.DataPointer;
+                step = NativeImageIO.ReadBitmapToTensor<T>(bmp0, dataPtr, inputHeight, inputWidth, inputMean, scale,
+                    flipUpSideDown, swapBR);
+                dataPtr = new IntPtr(dataPtr.ToInt64() + step);
             }
 
-            for (int i = 0; i < fileNames.Length; i++)
+            for (int i = 1; i < fileNames.Length; i++)
             {
-                NativeImageIO.ReadImageFileToTensor<T>(
-                    fileNames[0],
-                    new IntPtr(t.DataPointer.ToInt64() + i * step),
-                    inputHeight,
-                    inputWidth,
-                    inputMean,
-                    scale,
-                    flipUpSideDown,
-                    !swapBR //No swapping BR in tensorflow is the equivalent of swapping BR in Bitmap
-                );
+                fileName = fileNames[i];
+                if (!File.Exists(fileName))
+                    throw new FileNotFoundException(String.Format("File {0} do not exist.", fileName));
+
+                //Read the file using Bitmap class
+                using (System.Drawing.Bitmap bmp = new Bitmap(fileName))
+                {
+                    step = NativeImageIO.ReadBitmapToTensor<T>(bmp, dataPtr, inputHeight, inputWidth, inputMean, scale,
+                        flipUpSideDown, swapBR);
+
+                    dataPtr = new IntPtr(dataPtr.ToInt64() + step);
+                }
+
             }
 
             return t;
         }
+
+        /*
+        /// <summary>
+        /// Read image files, covert the data and save it to the native pointer
+        /// </summary>
+        /// <typeparam name="T">The type of the data to covert the image pixel values to. e.g. "float" or "byte"</typeparam>
+        /// <param name="fileNames">The name of the image files</param>
+        /// <param name="inputHeight">The height of the image, must match the height requirement for the tensor</param>
+        /// <param name="inputWidth">The width of the image, must match the width requirement for the tensor</param>
+        /// <param name="inputMean">The mean value, it will be subtracted from the input image pixel values</param>
+        /// <param name="scale">The scale, after mean is subtracted, the scale will be used to multiply the pixel values</param>
+        /// <param name="flipUpSideDown">If true, the image needs to be flipped up side down</param>
+        /// <param name="swapBR">If true, will flip the Blue channel with the Red. e.g. If false, the tensor's color channel order will be RGB. If true, the tensor's color channle order will be BGR </param>
+        /// <returns>The tensor that contains all the image files</returns>
+        private static Tensor ReadImageFilesToTensor<T>(
+            String[] fileNames,
+            int inputHeight = -1,
+            int inputWidth = -1,
+            float inputMean = 0.0f,
+            float scale = 1.0f,
+            bool flipUpSideDown = false,
+            bool swapBR = false)
+            where T : struct
+        {
+            if (fileNames.Length == 0)
+                throw new ArgumentException("Intput file names do not contain any files");
+
+            String fileName = fileNames[0];
+            if (!File.Exists(fileName))
+                throw new FileNotFoundException(String.Format("File {0} do not exist.", fileName));
+
+            IntPtr dataPtr;
+            int step;
+            Tensor t;
+            using (System.Drawing.Bitmap bmp0 = new Bitmap(fileName))
+            {
+                if (inputHeight <= 0)
+                    inputHeight = bmp0.Height;
+                if (inputWidth <= 0)
+                    inputWidth = bmp0.Width;
+
+
+                if (typeof(T) == typeof(float))
+                    t = new Tensor(DataType.Float,
+                        new int[] { fileNames.Length, (int)inputHeight, (int)inputWidth, 3 });
+                else if (typeof(T) == typeof(byte))
+                    t = new Tensor(DataType.Uint8,
+                        new int[] { fileNames.Length, (int)inputHeight, (int)inputWidth, 3 });
+                else
+                {
+                    throw new Exception(String.Format("Conversion to tensor of type {0} is not implemented",
+                        typeof(T)));
+                }
+
+                dataPtr = t.DataPointer;
+                step = NativeImageIO.ReadBitmapToTensor<T>(bmp0, dataPtr, inputHeight, inputWidth, inputMean, scale,
+                    flipUpSideDown, swapBR);
+                dataPtr = new IntPtr(dataPtr.ToInt64() + step);
+            }
+
+            for (int i = 1; i < fileNames.Length; i++)
+            {
+                fileName = fileNames[i];
+                if (!File.Exists(fileName))
+                    throw new FileNotFoundException(String.Format("File {0} do not exist.", fileName));
+
+                //Read the file using Bitmap class
+                using (System.Drawing.Bitmap bmp = new Bitmap(fileName))
+                {
+                    step = NativeImageIO.ReadBitmapToTensor<T>(bmp, dataPtr, inputHeight, inputWidth, inputMean, scale,
+                        flipUpSideDown, swapBR);
+
+                    dataPtr = new IntPtr(dataPtr.ToInt64() + step);
+                }
+
+            }
+
+            return t;
+        }*/
 #endif
     }
 }

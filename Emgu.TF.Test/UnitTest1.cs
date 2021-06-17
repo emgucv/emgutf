@@ -253,6 +253,43 @@ namespace Emgu.TF.Test
         }
 
         [TestAttribute]
+        public async Task TestMaskRCNNBatch()
+        {
+            using (Tensor imageTensor = ImageIO.ReadTensorFromImageFiles<byte>(
+                new string[] { "surfers.jpg", "surfers.jpg" },
+                -1,
+                -1,
+                0,
+                1.0f))
+            using (MaskRcnnInceptionV2Coco model = new MaskRcnnInceptionV2Coco())
+            {
+                await model.Init();
+
+                MaskRcnnInceptionV2Coco.RecognitionResult[][] results = model.Recognize(imageTensor);
+
+            }
+        }
+
+        [TestAttribute]
+        public async Task TestMaskRCNN()
+        {
+            using (Tensor imageTensor = ImageIO.ReadTensorFromImageFile<byte>(
+                "surfers.jpg",
+                -1,
+                -1,
+                0,
+                1.0f))
+            using (MaskRcnnInceptionV2Coco model = new MaskRcnnInceptionV2Coco())
+            {
+                await model.Init();
+
+                MaskRcnnInceptionV2Coco.RecognitionResult[][] results = model.Recognize(imageTensor);
+
+            }
+        }
+
+
+        [TestAttribute]
         public async Task TestMultiboxPeopleDetect()
         {
             Tensor imageResults = ImageIO.ReadTensorFromImageFile<float>("surfers.jpg", 224, 224, 128.0f, 1.0f / 128.0f);

@@ -26,8 +26,9 @@ namespace Emgu.TF.Util
         /// <param name="swapBR">If true, the first and third output channels will be swapped.</param>
         /// <param name="result">The resulting pointer to the float array. Need to be initialized and big enough to hold all the float data.</param>
         /// <remarks>For internal use only. Improper call to this function can result in application crashing.</remarks>
+		/// <returns>The number of bytes written</returns>
         [DllImport(Emgu.TF.Lite.TfLiteInvoke.ExternLibrary, CallingConvention = Emgu.TF.Lite.TfLiteInvoke.TfLiteCallingConvention, EntryPoint = "tfePixel32ToPixelFloat")]
-        public static extern void Pixel32ToPixelFloat(
+        public static extern int Pixel32ToPixelFloat(
             IntPtr pixels,
             int width,
             int height,
@@ -51,8 +52,9 @@ namespace Emgu.TF.Util
         /// <param name="swapBR">If true, the first and third output channels will be swapped.</param>
         /// <param name="result">The resulting pointer to the byte array. Need to be initialized and big enough to hold all the byte data.</param>
         /// <remarks>For internal use only. Improper call to this function can result in application crashing.</remarks>
+		/// <returns>The number of bytes written</returns>
         [DllImport(Emgu.TF.Lite.TfLiteInvoke.ExternLibrary, CallingConvention = Emgu.TF.Lite.TfLiteInvoke.TfLiteCallingConvention, EntryPoint = "tfePixel32ToPixelByte")]
-        public static extern void Pixel32ToPixelByte(
+        public static extern int Pixel32ToPixelByte(
             IntPtr pixels,
             int width,
             int height,
@@ -76,8 +78,9 @@ namespace Emgu.TF.Util
         /// <param name="swapBR">If true, the first and third output channels will be swapped.</param>
         /// <param name="result">The resulting pointer to the float array. Need to be initialized and big enough to hold all the float data.</param>
         /// <remarks>For internal use only. Improper call to this function can result in application crashing.</remarks>
+		/// <returns>The number of bytes written</returns>
         [DllImport(Emgu.TF.Lite.TfLiteInvoke.ExternLibrary, CallingConvention = Emgu.TF.Lite.TfLiteInvoke.TfLiteCallingConvention, EntryPoint = "tfePixel24ToPixelFloat")]
-        public static extern void Pixel24ToPixelFloat(
+        public static extern int Pixel24ToPixelFloat(
             IntPtr pixels,
             int width,
             int height,
@@ -101,8 +104,9 @@ namespace Emgu.TF.Util
         /// <param name="swapBR">If true, the first and third output channels will be swapped.</param>
         /// <param name="result">The resulting pointer to the byte array. Need to be initialized and big enough to hold all the byte data.</param>
         /// <remarks>For internal use only. Improper call to this function can result in application crashing.</remarks>
+		/// <returns>The number of bytes written</returns>
         [DllImport(Emgu.TF.Lite.TfLiteInvoke.ExternLibrary, CallingConvention = Emgu.TF.Lite.TfLiteInvoke.TfLiteCallingConvention, EntryPoint = "tfePixel24ToPixelByte")]
-        public static extern void Pixel24ToPixelByte(
+        public static extern int Pixel24ToPixelByte(
             IntPtr pixels,
             int width,
             int height,

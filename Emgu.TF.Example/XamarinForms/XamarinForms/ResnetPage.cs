@@ -159,7 +159,7 @@ namespace Emgu.TF.XamarinForms
                         Tensor imageTensor =
                             Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(images[0], 224, 224, 0.0f, 1.0f/255.0f, false, false);
                         
-                        Resnet.RecognitionResult result;
+                        Resnet.RecognitionResult[] result;
                         if (_coldSession)
                         {
                             //First run of the recognition graph, here we will compile the graph and initialize the session
@@ -175,7 +175,7 @@ namespace Emgu.TF.XamarinForms
                         sw.Stop();
 
                         String msg = String.Format("Object is {0} with {1}% probability. Recognized in {2} milliseconds.",
-                            result.Label, result.Probability * 100, sw.ElapsedMilliseconds);
+                            result[0].Label, result[0].Probability * 100, sw.ElapsedMilliseconds);
                         SetMessage(msg);
 
 #if __ANDROID__

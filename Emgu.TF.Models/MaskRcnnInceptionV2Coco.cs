@@ -238,37 +238,53 @@ namespace Emgu.TF.Models
         /// </summary>
         /// <param name="image">The image tensor</param>
         /// <returns>The recognition result.</returns>
-        public RecognitionResult[] Recognize(Tensor image)
+        public RecognitionResult[][] Recognize(Tensor image)
         {
             Output input = _graph["image_tensor"];
             Output[] outputs = new Output[] { _graph["detection_boxes"], _graph["detection_scores"], _graph["detection_classes"], _graph["num_detections"], _graph["detection_masks"] };
 
             Tensor[] finalTensor = _session.Run(new Output[] { input }, new Tensor[] { image }, outputs);
-            int numDetections = (int) (finalTensor[3].Data as float[])[0];
+            
             float[,,] detectionBoxes = finalTensor[0].JaggedData as float[,,];
             float[,] detectionScores = finalTensor[1].JaggedData as float[,];
             float[,] detectionClasses = finalTensor[2].JaggedData as float[,];
-            float[,,,] detectionMask = finalTensor[4].JaggedData as float[,,,]; 
-            List<RecognitionResult> results = new List<RecognitionResult>();
-            int numberOfClasses = detectionScores.GetLength(1);
-            for (int i = 0; i < numDetections; i++)
-            {
-                RecognitionResult r = new RecognitionResult();
-                r.Class = (int) detectionClasses[0,i];
-                r.Label = Labels[r.Class - 1];
-                r.Probability = detectionScores[0,i];
-                r.Region = new float[] { detectionBoxes[0, i, 0], detectionBoxes[0, i, 1], detectionBoxes[0, i, 2], detectionBoxes[0, i, 3] };
-                results.Add(r);
+            float[,,,] detectionMask = finalTensor[4].JaggedData as float[,,,];
 
-                float[,] m = new float[detectionMask.GetLength(2), detectionMask.GetLength(3)];
-                for (int j = 0; j < m.GetLength(0); j++)
+            int imageCount = detectionScores.GetLength(0);
+            RecognitionResult[][] allResults = new RecognitionResult[imageCount][];
+            for (int idx = 0; idx < imageCount; idx++)
+            {
+
+                //int numberOfClasses = detectionScores.GetLength(1);
+                List<RecognitionResult> results = new List<RecognitionResult>();
+                int numDetections = (int) (finalTensor[3].Data as float[])[0];
+                for (int i = 0; i < numDetections; i++)
+                {
+                    RecognitionResult r = new RecognitionResult();
+                    r.Class = (int) detectionClasses[0, i];
+                    r.Label = Labels[r.Class - 1];
+                    r.Probability = detectionScores[0, i];
+                    r.Region = new float[]
+                    {
+                        detectionBoxes[0, i, 0], detectionBoxes[0, i, 1], detectionBoxes[0, i, 2],
+                        detectionBoxes[0, i, 3]
+                    };
+                    results.Add(r);
+
+                    float[,] m = new float[detectionMask.GetLength(2), detectionMask.GetLength(3)];
+                    for (int j = 0; j < m.GetLength(0); j++)
                     for (int k = 0; k < m.GetLength(1); k++)
                     {
                         m[j, k] = detectionMask[0, i, j, k];
                     }
-                r.Mask = m;
+
+                    r.Mask = m;
+                }
+
+                allResults[idx] = results.ToArray();
             }
-            return results.ToArray();
+
+            return allResults;
         }
 
         /// <summary>
