@@ -647,14 +647,56 @@ namespace Emgu.TF.Models
             IntPtr dataPtr;
             int step;
             Tensor t;
+
+#if __MACOS__
+            using (NSImage image0 = new NSImage(fileName))
+            {
+                if (inputHeight <= 0)
+                    inputHeight = (int)image0.Size.Height;
+                if (inputWidth <= 0)
+                    inputWidth = (int) image0.Size.Width;
+                if (typeof(T) == typeof(float))
+                    t = new Tensor(DataType.Float,
+                        new int[] { fileNames.Length, (int)inputHeight, (int)inputWidth, 3 });
+                else if (typeof(T) == typeof(byte))
+                    t = new Tensor(DataType.Uint8,
+                        new int[] { fileNames.Length, (int)inputHeight, (int)inputWidth, 3 });
+                else
+                {
+                    throw new Exception(String.Format("Conversion to tensor of type {0} is not implemented",
+                        typeof(T)));
+                }
+
+                dataPtr = t.DataPointer;
+                step = NativeImageIO.ReadImageToTensor<T>(
+                    image0, dataPtr, inputHeight, inputWidth, inputMean, scale,
+                    flipUpSideDown, swapBR);
+                dataPtr = new IntPtr(dataPtr.ToInt64() + step);
+            }
+
+            for (int i = 1; i < fileNames.Length; i++)
+            {
+                fileName = fileNames[i];
+                if (!File.Exists(fileName))
+                    throw new FileNotFoundException(String.Format("File {0} do not exist.", fileName));
+
+                //Read the file using Bitmap class
+                using (NSImage image = new NSImage(fileName))
+                {
+                    step = NativeImageIO.ReadImageToTensor<T>(image, dataPtr, inputHeight, inputWidth, inputMean, scale,
+                        flipUpSideDown, swapBR);
+
+                    dataPtr = new IntPtr(dataPtr.ToInt64() + step);
+                }
+
+            }
+#else
             using (System.Drawing.Bitmap bmp0 = new Bitmap(fileName))
             {
                 if (inputHeight <= 0)
                     inputHeight = bmp0.Height;
                 if (inputWidth <= 0)
                     inputWidth = bmp0.Width;
-
-
                 if (typeof(T) == typeof(float))
                     t = new Tensor(DataType.Float,
                         new int[] { fileNames.Length, (int)inputHeight, (int)inputWidth, 3 });
@@ -689,7 +731,7 @@ namespace Emgu.TF.Models
                 }
 
             }
-
+#endif
             return t;
         }
 
