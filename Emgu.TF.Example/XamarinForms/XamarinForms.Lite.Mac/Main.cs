@@ -1,6 +1,6 @@
 ﻿using AppKit;
 
-namespace XamarinForms.Lite.OSX
+namespace XamarinForms.Lite.Mac
 {
     static class MainClass
     {

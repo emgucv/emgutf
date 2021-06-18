@@ -2,7 +2,7 @@
 using AppKit;
 using Foundation;
 
-namespace XamarinForms.Lite.OSX
+namespace XamarinForms.Lite.Mac
 {
     [Register("AppDelegate")]
     public class AppDelegate : Xamarin.Forms.Platform.MacOS.FormsApplicationDelegate
