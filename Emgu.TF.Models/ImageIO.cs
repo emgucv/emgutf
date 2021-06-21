@@ -616,6 +616,7 @@ namespace Emgu.TF.Models
         /// <param name="scale">The scale, after mean is subtracted, the scale will be used to multiply the pixel values</param>
         /// <param name="flipUpSideDown">If true, the image needs to be flipped up side down</param>
         /// <param name="swapBR">If true, will flip the Blue channel with the Red. e.g. If false, the tensor's color channel order will be RGB. If true, the tensor's color channle order will be BGR </param>
+        /// <param name="status">Tensorflow status</param>
         /// <returns>The tensor that contains all the image files</returns>
         private static Tensor NativeReadTensorFromImageFiles<T>(
             String[] fileNames,
@@ -627,16 +628,6 @@ namespace Emgu.TF.Models
             bool swapBR = false,
             Status status = null) where T : struct
         {
-            /*
-            return ReadImageFilesToTensor<T>(
-                fileNames,
-                inputHeight,
-                inputWidth,
-                inputMean,
-                scale,
-                flipUpSideDown,
-                swapBR
-            );*/
             if (fileNames.Length == 0)
                 throw new ArgumentException("Intput file names do not contain any files");
 
@@ -648,7 +639,66 @@ namespace Emgu.TF.Models
             int step;
             Tensor t;
 
-#if __MACOS__
+#if __ANDROID__
+            using (BitmapFactory.Options options = new BitmapFactory.Options())
+            {
+                options.InPreferredConfig = Android.Graphics.Bitmap.Config.Argb8888; //Prefer ARGB8888 format
+                using (Android.Graphics.Bitmap bmp0 = Android.Graphics.BitmapFactory.DecodeFile(fileName, options))
+                {
+                    if (inputHeight <= 0)
+                        inputHeight = bmp0.Height;
+                    if (inputWidth <= 0)
+                        inputWidth = bmp0.Width;
+                    if (typeof(T) == typeof(float))
+                        t = new Tensor(DataType.Float,
+                            new int[] {fileNames.Length, (int) inputHeight, (int) inputWidth, 3});
+                    else if (typeof(T) == typeof(byte))
+                        t = new Tensor(DataType.Uint8,
+                            new int[] {fileNames.Length, (int) inputHeight, (int) inputWidth, 3});
+                    else
+                    {
+                        throw new Exception(String.Format("Conversion to tensor of type {0} is not implemented",
+                            typeof(T)));
+                    }
+
+                    dataPtr = t.DataPointer;
+                    step = NativeImageIO.ReadBitmapToTensor<T>(
+                        bmp0,
+                        dataPtr,
+                        inputHeight,
+                        inputWidth,
+                        inputMean,
+                        scale,
+                        flipUpSideDown,
+                        swapBR);
+                    dataPtr = new IntPtr(dataPtr.ToInt64() + step);
+                }
+
+                for (int i = 1; i < fileNames.Length; i++)
+                {
+                    fileName = fileNames[i];
+                    if (!File.Exists(fileName))
+                        throw new FileNotFoundException(String.Format("File {0} do not exist.", fileName));
+
+                    //Read the file using Bitmap class
+                    using (Android.Graphics.Bitmap bmp = Android.Graphics.BitmapFactory.DecodeFile(fileName, options))
+                    {
+                        step = NativeImageIO.ReadBitmapToTensor<T>(
+                            bmp, 
+                            dataPtr, 
+                            inputHeight, 
+                            inputWidth, 
+                            inputMean,
+                            scale,
+                            flipUpSideDown, 
+                            swapBR);
+
+                        dataPtr = new IntPtr(dataPtr.ToInt64() + step);
+                    }
+
+                }
+            }
+#elif __MACOS__
             using (NSImage image0 = new NSImage(fileName))
             {
                 if (inputHeight <= 0)
@@ -691,7 +741,7 @@ namespace Emgu.TF.Models
 
             }
 #else
-            using (System.Drawing.Bitmap bmp0 = new Bitmap(fileName))
+            using (System.Drawing.Bitmap bmp0 = new System.Drawing.Bitmap(fileName))
             {
                 if (inputHeight <= 0)
                     inputHeight = bmp0.Height;
@@ -722,7 +772,7 @@ namespace Emgu.TF.Models
                     throw new FileNotFoundException(String.Format("File {0} do not exist.", fileName));
 
                 //Read the file using Bitmap class
-                using (System.Drawing.Bitmap bmp = new Bitmap(fileName))
+                using (System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(fileName))
                 {
                     step = NativeImageIO.ReadBitmapToTensor<T>(bmp, dataPtr, inputHeight, inputWidth, inputMean, scale,
                         flipUpSideDown, swapBR);

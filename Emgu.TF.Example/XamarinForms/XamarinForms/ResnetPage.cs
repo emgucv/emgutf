@@ -136,7 +136,7 @@ namespace Emgu.TF.XamarinForms
                                         Tensor imageTensor = new Tensor(DataType.Float, new int[] { 1, 224, 224, 3 });
                                         Emgu.Models.NativeImageIO.ReadBitmapToTensor<float>(m, imageTensor.DataPointer, 224, 224, 0.0f,
                                             1.0f / 255.0f, false, false);
-                                        result = _resnet.Recognize(imageTensor)[0];
+                                        result = _resnet.Recognize(imageTensor)[0][0];
                                     //});
                                     watch.Stop();
                                     SetImage(m);

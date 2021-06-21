@@ -197,7 +197,7 @@ namespace Emgu.TF.XamarinForms
                                     Emgu.Models.NativeImageIO.ReadBitmapToTensor<float>(m, imageTensor.DataPointer, 224, 224, 128.0f, 1.0f);
                                 }
 
-                                result = _inceptionGraph.Recognize(imageTensor)[0];
+                                result = _inceptionGraph.Recognize(imageTensor)[0][0];
                                 //});
                                 watch.Stop();
                                 SetImage(m);

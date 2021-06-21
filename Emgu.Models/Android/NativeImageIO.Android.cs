@@ -111,7 +111,8 @@ namespace Emgu.Models
         /// <param name="scale">The scale, after mean is subtracted, the scale will be used to multiply the pixel values</param>
         /// <param name="flipUpSideDown">If true, the image needs to be flipped up side down</param>
         /// <param name="swapBR">If true, will flip the Blue channel with the Red. e.g. If false, the tensor's color channel order will be RGB. If true, the tensor's color channel order will be BGR </param>
-        public static void ReadBitmapToTensor<T>(
+        /// <returns>The number of bytes of data copied to the Tensor</returns>
+        public static int ReadBitmapToTensor<T>(
             Bitmap bmp,
             IntPtr dest,
             int inputHeight = -1,
@@ -187,6 +188,7 @@ namespace Emgu.Models
                     if (typeof(T) == typeof(float))
                     {
                         Marshal.Copy(floatValues, 0, dest, floatValues.Length);
+                        return floatValues.Length * Marshal.SizeOf<float>();
                     }
                     else if (typeof(T) == typeof(byte))
                     {
@@ -195,6 +197,7 @@ namespace Emgu.Models
                         for (int i = 0; i < floatValues.Length; i++)
                             byteValues[i] = (byte) floatValues[i];
                         Marshal.Copy(byteValues, 0, dest, byteValues.Length);
+                        return byteValues.Length;
                     }
                     else
                     {
@@ -261,6 +264,14 @@ namespace Emgu.Models
                 return bmp.ToJpeg();
         }
 
+        /// <summary>
+        /// Converting raw pixel values into an Android Bitmap 
+        /// </summary>
+        /// <param name="rawPixel">The pixel data</param>
+        /// <param name="width">The width of the image</param>
+        /// <param name="height">The height of the image</param>
+        /// <param name="channels">The number of channels</param>
+        /// <returns>The Android Bitmap</returns>
         public static Bitmap PixelToBitmap(byte[] rawPixel, int width, int height, int channels)
         {
             if (channels != 4)
