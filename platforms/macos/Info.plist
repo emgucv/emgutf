@@ -7,9 +7,11 @@
   <key>CFBundleIdentifier</key>
   <string>com.emgu.tf</string>
   <key>CFBundleName</key>
-  <string>EmguTF</string>
+  <string>tfextern</string>
   <key>CFBundleIconFile</key>
   <string>icons.icns</string>
+  <key>CFBundleExecutable</key>
+  <string>libtfextern.dylib</string>
   <key>CFBundleShortVersionString</key>
   <string>0.01</string>
   <key>CFBundleInfoDictionaryVersion</key>

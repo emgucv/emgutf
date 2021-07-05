@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
 
-rm -rf emgutf.bundle
-mkdir emgutf.bundle
-mkdir emgutf.bundle/Contents
-mkdir emgutf.bundle/Contents/MacOS
-mkdir emgutf.bundle/Contents/Resources
-cp ../../lib/macos/libtfextern.dylib emgutf.bundle/Contents/MacOS/
-cp ../../lib/macos/libtensorflow_framework.dylib emgutf.bundle/Contents/MacOS/
+rm -rf tfextern.bundle
+mkdir -p tfextern.bundle/Contents/MacOS
+mkdir -p tfextern.bundle/Contents/Resources
+mkdir -p tfextern.bundle/Contents/Frameworks
+
+cp ../../lib/macos/libtfextern.dylib tfextern.bundle/Contents/MacOS/
+install_name_tool -change "@rpath/libtensorflow_framework.dylib" "@loader_path/../Frameworks/libtensorflow_framework.dylib" tfextern.bundle/Contents/MacOS/libtfextern.dylib
+
+cp ../../lib/macos/libtensorflow_framework.dylib emgutf.bundle/Contents/Frameworks/
+
 cp Info.plist emgutf.bundle/Contents/
 iconutil -c icns icons.iconset/
 cp icons.icns emgutf.bundle/Contents/Resources/

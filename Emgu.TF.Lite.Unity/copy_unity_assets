@@ -29,3 +29,9 @@ cp ../Emgu.TF.Util/*.cs Assets/Emgu.TF.Lite/Assets/Scripts/Emgu.TF.Util/
 cp ../Emgu.TF.Lite/*.cs Assets/Emgu.TF.Lite/Assets/Scripts/Emgu.TF.Lite/
 cp ../Emgu.Models/*.cs Assets/Emgu.TF.Lite/Assets/Scripts/Emgu.Models/
 cp ../Emgu.TF.Lite.Models/*.cs Assets/Emgu.TF.Lite/Assets/Scripts/Emgu.TF.Lite.Models/
+
+cd Assets/Emgu.TF.Lite/Plugins
+if test -d "../../../../platforms/macos/tfliteextern.bundle"
+then
+    cp -rf ../../../../platforms/macos/tfliteextern.bundle ./
+fi
