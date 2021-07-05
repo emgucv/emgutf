@@ -7,8 +7,10 @@ mkdir -p tfextern.bundle/Contents/Frameworks
 
 cp ../../lib/macos/libtfextern.dylib tfextern.bundle/Contents/MacOS/
 install_name_tool -change "@rpath/libtensorflow_framework.dylib" "@loader_path/../Frameworks/libtensorflow_framework.dylib" tfextern.bundle/Contents/MacOS/libtfextern.dylib
+chmod u+w tfextern.bundle/Contents/MacOS/libtfextern.dylib
 
 cp ../../lib/macos/libtensorflow_framework.dylib tfextern.bundle/Contents/Frameworks/
+chmod u+w tfextern.bundle/Contents/Frameworks/libtensorflow_framework.dylib
 
 cp Info.plist tfextern.bundle/Contents/
 iconutil -c icns icons.iconset/
