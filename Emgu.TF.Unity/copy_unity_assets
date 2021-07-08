@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash -v
 cd "$(dirname "$0")"
 
 cd Assets
@@ -24,3 +24,9 @@ cp ../Emgu.TF/*.cs Assets/Emgu.TF/Assets/Scripts/Emgu.TF/
 cp ../Emgu.TF.Models/*.cs Assets/Emgu.TF/Assets/Scripts/Emgu.TF.Models/
 cp ../Emgu.Models/*.cs Assets/Emgu.TF/Assets/Scripts/Emgu.Models/
 cp ./Assets/csc.rsp* Assets/Emgu.TF/Assets/
+
+if test -d "../platforms/macos/tfextern.bundle"
+then
+    cp -rf ../platforms/macos/tfextern.bundle Assets/Emgu.TF/Plugins/
+fi
+    

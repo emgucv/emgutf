@@ -7,9 +7,11 @@
   <key>CFBundleIdentifier</key>
   <string>com.emgu.tf.lite</string>
   <key>CFBundleName</key>
-  <string>EmguTFLite</string>
+  <string>tfliteextern</string>
   <key>CFBundleIconFile</key>
   <string>icons.icns</string>
+  <key>CFBundleExecutable</key>
+  <string>libtfliteextern.dylib</string>
   <key>CFBundleShortVersionString</key>
   <string>0.01</string>
   <key>CFBundleInfoDictionaryVersion</key>
