@@ -2,14 +2,14 @@
 #  Copyright (C) 2004-2021 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-IF(HAVE_WINDESKTOP OR HAVE_WINDESKTOP_LITE)
-  #MESSAGE(STATUS "MSBUILD_EXECUTABLE_40: ${MSBUILD_EXECUTABLE_40}")
-  IF(NOT ("${MSBUILD_EXECUTABLE_150}" STREQUAL ""))
-    SET(MSBUILD_EXECUTABLE ${MSBUILD_EXECUTABLE_150})
-  ELSE()
-    MESSAGE(STATUS "Not able to find MSBUILD 150, Documentation build may not produce the right output.")
-  ENDIF()
-ENDIF()
+#IF(HAVE_WINDESKTOP OR HAVE_WINDESKTOP_LITE)
+#  #MESSAGE(STATUS "MSBUILD_EXECUTABLE_40: ${MSBUILD_EXECUTABLE_40}")
+#  IF(NOT ("${MSBUILD_EXECUTABLE_150}" STREQUAL ""))
+#    SET(MSBUILD_EXECUTABLE ${MSBUILD_EXECUTABLE_150})
+#  ELSE()
+#    MESSAGE(STATUS "Not able to find MSBUILD 150, Documentation build may not produce the right output.")
+#  ENDIF()
+#ENDIF()
 
 IF("${MSBUILD_EXECUTABLE}" STREQUAL "")
   MESSAGE(STATUS "MSBUILD_EXECUTABLE NOT FOUND, skipping documentation projects.")
