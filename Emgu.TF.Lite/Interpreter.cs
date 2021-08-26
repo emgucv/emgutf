@@ -65,6 +65,30 @@ namespace Emgu.TF.Lite
         }
 
         /// <summary>
+        /// Resize the input tensor
+        /// </summary>
+        /// <param name="inputIndex">The index of the input tensor</param>
+        /// <param name="dimension">The new dimension for the input tensor</param>
+        /// <returns>Status of success or failure.</returns>
+        public Status ResizeInputTensor(int inputIndex, int[] dimension)
+        {
+            GCHandle handle = GCHandle.Alloc(dimension, GCHandleType.Pinned);
+            try
+            {
+                return TfLiteInvoke.tfeInterpreterResizeInputTensor(
+                    _ptr, 
+                    inputIndex, 
+                    handle.AddrOfPinnedObject(),
+                    dimension.Length);
+            }
+            finally
+            {
+                handle.Free();
+            }
+            
+        }
+
+        /// <summary>
         /// Invoke the interpreter (run the whole graph in dependency order).
         /// </summary>
         /// <returns>Status of success or failure.</returns>
@@ -270,5 +294,8 @@ namespace Emgu.TF.Lite
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern Status tfeInterpreterModifyGraphWithDelegate(IntPtr interpreter, IntPtr delegatePtr);
+
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
+        internal static extern Status tfeInterpreterResizeInputTensor(IntPtr interpreter, int inputIndex, IntPtr inputDims, int inputDimsSize);
     }
 }
