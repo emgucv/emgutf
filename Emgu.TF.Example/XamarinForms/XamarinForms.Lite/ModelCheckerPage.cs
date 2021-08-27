@@ -58,6 +58,8 @@ namespace Emgu.TF.XamarinForms
             try
             {
                 modelResult.Append(String.Format("File Name:{0}{1}", fileName, Environment.NewLine));
+                modelResult.Append(Environment.NewLine);
+
                 //string contents = System.Text.Encoding.UTF8.GetString(fileData.DataArray);
                 using (FlatBufferModel fbm = new FlatBufferModel(fileName))
                 {
@@ -66,6 +68,7 @@ namespace Emgu.TF.XamarinForms
 
                     using (Interpreter interpreter = new Interpreter(fbm))
                     {
+                        
                         Status allocateTensorStatus = interpreter.AllocateTensors();
                         if (allocateTensorStatus == Status.Error)
                             throw new Exception("Failed to allocate tensor");
@@ -78,6 +81,8 @@ namespace Emgu.TF.XamarinForms
                                 inputTensor.Type, IntArrayToString( inputTensor.Dims ), Environment.NewLine));
                         }
 
+                        modelResult.Append(Environment.NewLine);
+
                         int[] output = interpreter.OutputIndices;
                         for (int i = 0; i < output.Length; i++)
                         {
@@ -86,6 +91,17 @@ namespace Emgu.TF.XamarinForms
                             modelResult.Append(String.Format("Output {0} ({1}): {2}{3}{4}", i, outputTensor.Name,
                                 outputTensor.Type, IntArrayToString( outputTensor.Dims ), Environment.NewLine));
                         }
+
+                        modelResult.Append(Environment.NewLine);
+
+                        modelResult.Append(String.Format(
+                            "Tensor size (number of tensors in the model): {0}{1}",
+                            interpreter.TensorSize,
+                            Environment.NewLine));
+                        modelResult.Append(String.Format(
+                            "Node size (number of ops in the model): {0}{1}",
+                            interpreter.NodeSize,
+                            Environment.NewLine));
 
                     }
                 }
