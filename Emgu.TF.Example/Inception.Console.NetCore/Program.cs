@@ -80,7 +80,7 @@ namespace Inception.Console.Netstandard
             var results = _inceptionGraph.Recognize(imageTensor);
             watch.Stop();
 
-            String resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", results[0].Label, results[0].Probability * 100, watch.ElapsedMilliseconds);
+            String resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", results[0][0].Label, results[0][0].Probability * 100, watch.ElapsedMilliseconds);
             System.Console.WriteLine(resStr);
             
         }

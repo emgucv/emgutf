@@ -1,12 +1,15 @@
 REM @echo off
+@echo on
+
 pushd %~p0
+
 cd ..\..
 
 REM SET TF_TYPE=FULL
 REM IF "%1%"=="lite" SET TF_TYPE=LITE
 
-IF EXIST "lib\x64\tfliteextern.dll" SET HAS_TF_LITE="Y"
-IF EXIST "lib\x64\tfextern.dll" SET HAS_TF_FULL="Y"
+IF EXIST "lib\x64\tfliteextern.dll" SET HAS_TF_LITE=Y
+IF EXIST "lib\x64\tfextern.dll" SET HAS_TF_FULL=Y
 
 IF "%2%"=="64" ECHO "BUILDING 64bit solution" 
 IF "%2%"=="ARM" ECHO "BUILDING ARM solution"

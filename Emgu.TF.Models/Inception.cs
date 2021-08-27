@@ -256,9 +256,9 @@ namespace Emgu.TF.Models
         /// <summary>
         /// Pass the image tensor to the graph and return the probability that the object in image belongs to each of the object class.
         /// </summary>
-        /// <param name="image">The image to be classified</param>
+        /// <param name="imageTensor">The tensor that contains the images to be classified</param>
         /// <returns>The object classes, sorted by probability from high to low</returns>
-        public RecognitionResult[] Recognize(Tensor image)
+        public RecognitionResult[][] Recognize(Tensor imageTensor)
         {
             Operation input = _graph[_inputName];
             if (input == null)
@@ -268,11 +268,20 @@ namespace Emgu.TF.Models
             if (output == null)
                 throw new Exception(String.Format("Could not find output operation '{0}' in the graph", _outputName));
 
-            Tensor[] finalTensor = _session.Run(new Output[] { input }, new Tensor[] { image },
+            Tensor[] finalTensor = _session.Run(new Output[] { input }, new Tensor[] { imageTensor },
                 new Output[] { output });
-            float[] probability = finalTensor[0].GetData(false) as float[];
-            //return probability;
-            return SortResults(probability);
+            float[,] probability = finalTensor[0].GetData(true) as float[,];
+            int imageCount = probability.GetLength(0);
+            int probLength = probability.GetLength(1);
+            RecognitionResult[][] results = new RecognitionResult[imageCount][];
+            for (int i = 0; i < imageCount; i++)
+            {
+                float[] p = new float[probLength];
+                for (int j = 0; j < p.Length; j++)
+                    p[j] = probability[i, j];
+                results[i] = SortResults(p);
+            }
+            return results;
         }
 
         /// <summary>

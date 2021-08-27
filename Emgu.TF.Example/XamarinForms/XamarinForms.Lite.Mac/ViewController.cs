@@ -3,7 +3,7 @@
 using AppKit;
 using Foundation;
 
-namespace XamarinForms.Lite.OSX
+namespace XamarinForms.Lite.Mac
 {
     public partial class ViewController : NSViewController
     {

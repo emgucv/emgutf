@@ -197,7 +197,7 @@ namespace Emgu.TF.XamarinForms
                                     Emgu.Models.NativeImageIO.ReadBitmapToTensor<float>(m, imageTensor.DataPointer, 224, 224, 128.0f, 1.0f);
                                 }
 
-                                result = _inceptionGraph.Recognize(imageTensor)[0];
+                                result = _inceptionGraph.Recognize(imageTensor)[0][0];
                                 //});
                                 watch.Stop();
                                 SetImage(m);
@@ -226,7 +226,7 @@ namespace Emgu.TF.XamarinForms
                         imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(images[0], 224, 224, 128.0f, 1.0f);
                     }
 
-                    Inception.RecognitionResult result;
+                    Inception.RecognitionResult[] result;
                     if (_coldSession)
                     {
                         //First run of the recognition graph, here we will compile the graph and initialize the session
@@ -241,7 +241,7 @@ namespace Emgu.TF.XamarinForms
                     result = _inceptionGraph.Recognize(imageTensor)[0];
                     sw.Stop();
 
-                    String msg = String.Format("Object is {0} with {1}% probability. Recognized in {2} milliseconds.", result.Label, result.Probability * 100, sw.ElapsedMilliseconds);
+                    String msg = String.Format("Object is {0} with {1}% probability. Recognized in {2} milliseconds.", result[0].Label, result[0].Probability * 100, sw.ElapsedMilliseconds);
                     SetMessage(msg);
 
 #if __ANDROID__

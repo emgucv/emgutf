@@ -27,7 +27,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugType>portable</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -35,8 +35,7 @@
     <WarningLevel>4</WarningLevel>
     <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
     <AndroidLinkMode>None</AndroidLinkMode>
-    <AndroidSupportedAbis>
-    </AndroidSupportedAbis>
+	<AndroidSupportedAbis>armeabi-v7a;x86</AndroidSupportedAbis>
     <AotAssemblies>false</AotAssemblies>
     <EnableLLVM>false</EnableLLVM>
     <BundleAssemblies>false</BundleAssemblies>
@@ -45,7 +44,7 @@
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>portable</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -56,7 +55,7 @@
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
     <BundleAssemblies>false</BundleAssemblies>
     <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
-    <AndroidSupportedAbis>armeabi-v7a;x86;x86_64</AndroidSupportedAbis>
+    <AndroidSupportedAbis>armeabi-v7a;x86</AndroidSupportedAbis>
     <Debugger>.Net (Xamarin)</Debugger>
     <AotAssemblies>false</AotAssemblies>
     <EnableLLVM>false</EnableLLVM>
@@ -178,10 +177,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Google.Protobuf">
-      <Version>3.15.2</Version>
+      <Version>3.17.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.Platforms">
-      <Version>5.0.1</Version>
+      <Version>5.0.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Win32.Primitives">
       <Version>4.3.0</Version>
@@ -445,7 +444,7 @@
       <Version>1.1.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.MediaRouter">
-      <Version>1.2.2.1</Version>
+      <Version>1.2.4</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Palette">
       <Version>1.0.0.7</Version>

@@ -135,7 +135,7 @@ namespace CVInterop
 
             Emgu.TF.TensorConvert.ReadTensorFromMatBgr(m, _imageTensor);
 
-            MaskRcnnInceptionV2Coco.RecognitionResult[] results;
+            MaskRcnnInceptionV2Coco.RecognitionResult[][] results;
             if (_coldSession)
             {
                 //First run of the recognition graph, here we will compile the graph and initialize the session
@@ -149,7 +149,7 @@ namespace CVInterop
             results = _inceptionGraph.Recognize(_imageTensor);
             sw.Stop();
             int goodResultCount = 0;
-            foreach (var r in results)
+            foreach (var r in results[0])
             {
                 if (r.Probability > 0.5)
                 {

@@ -12,11 +12,7 @@ namespace Emgu.TF
         /// <summary>
         /// The file name of the tfextern library
         /// </summary>
-#if UNITY_EDITOR_OSX
-        public const string ExternLibrary = "Assets/Emgu.TF/Plugins/emgutf.bundle/Contents/MacOS/libtfextern.dylib";
-#elif UNITY_STANDALONE_OSX
-        public const string ExternLibrary = "@executable_path/../Plugins/emgutf.bundle/Contents/MacOS/libtfextern.dylib";
-#elif (__IOS__ || UNITY_IPHONE) && (!UNITY_EDITOR)
+#if (__IOS__ || UNITY_IPHONE) && (!UNITY_EDITOR)
         public const string ExternLibrary = "__Internal";
 #else
         public const string ExternLibrary = "tfextern";

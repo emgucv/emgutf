@@ -267,7 +267,7 @@ namespace Emgu.TF.Lite
                 {
                     System.Diagnostics.Debug.WriteLine(
                         String.Format(
-                            "Loading TF Lite binary for default locations. Current directory: {0}; Additional load folder: {1}",
+                            "Loading TF Lite binary from default locations. Current directory: {0}; Additional load folder: {1}",
                             Environment.CurrentDirectory,
                             loadDirectory));
                 }
@@ -277,7 +277,7 @@ namespace Emgu.TF.Lite
             {
                 System.Diagnostics.Debug.WriteLine(
                     String.Format(
-                        "Loading TF Lite binary for default locations. Current directory: {0}",
+                        "Loading TF Lite binary from default locations. Current directory: {0}",
                         Environment.CurrentDirectory));
             }
 

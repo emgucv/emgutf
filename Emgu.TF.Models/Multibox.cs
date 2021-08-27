@@ -122,8 +122,8 @@ namespace Emgu.TF.Models
         /// <summary>
         /// Initiate the graph by checking if the model file exist locally, if not download the graph from internet.
         /// </summary>
-        /// <param name="modelFiles">An array where the first file is the tensorflow graph and the second file is the object class labels. </param>
-        /// <param name="downloadUrl">The url where the file can be downloaded</param>
+        /// <param name="modelFile">The tensorflow graph.</param>
+        /// <param name="labelFile">the object class labels.</param>
         /// <param name="localModelFolder">The local folder to store the model</param>
         public
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
@@ -133,16 +133,17 @@ namespace Emgu.TF.Models
 #endif
             Init(
                 DownloadableFile modelFile = null,
-                DownloadableFile labelFile = null)
+                DownloadableFile labelFile = null, 
+                String localModelFolder = "Multibox")
         {
             if (_graph == null)
             {
-                String defaultLocalSubfolder = "Multibox";
+                //String defaultLocalSubfolder = "Multibox";
                 if (modelFile == null)
                 {
                     modelFile = new DownloadableFile(
                         "https://github.com/emgucv/models/raw/master/mobile_multibox_v1a/multibox_model.pb",
-                        defaultLocalSubfolder,
+                        localModelFolder,
                         "D1466DF5497E722E4A49E3839F667F07C579DD4C049258018E5F8EE9E01943A7"
                     );
                 }
@@ -151,7 +152,7 @@ namespace Emgu.TF.Models
                 {
                     labelFile = new DownloadableFile(
                         "https://github.com/emgucv/models/raw/master/mobile_multibox_v1a/multibox_location_priors.txt",
-                        defaultLocalSubfolder,
+                        localModelFolder,
                         "8742979FBAAAAB73CDDE4FAB55126AD78C6D9F84F310D8D51566BDF3F48F1E65"
                     );
                 }
@@ -210,17 +211,22 @@ namespace Emgu.TF.Models
             _boxPriors = ReadBoxPriors(_downloadManager.Files[1].LocalFile);
         }
 
-        public Result[] Detect(Tensor imageResults)
+        /// <summary>
+        /// Detect objects from the image.
+        /// </summary>
+        /// <param name="image">The image tensor.</param>
+        /// <returns>The detection result</returns>
+        public Result[] Detect(Tensor image)
         {
             if (_graph == null)
             {
                 throw new NullReferenceException("The multibox graph has not been initialized. Please call the Init function first.");
             }
-            Tensor[] finalTensor = _session.Run(new Output[] { _graph["ResizeBilinear"] }, new Tensor[] { imageResults },
+            Tensor[] finalTensor = _session.Run(new Output[] { _graph["ResizeBilinear"] }, new Tensor[] { image },
                 new Output[] { _graph["output_scores/Reshape"], _graph["output_locations/Reshape"] });
 
-            int labelCount = finalTensor[0].Dim[1];
-            Tensor[] topK = GetTopDetections(finalTensor[0], labelCount);
+           
+            Tensor[] topK = GetTopDetections(finalTensor[0]);
 
             float[] encodedScores = topK[0].Flat<float>();
             float[] encodedLocations = finalTensor[1].Flat<float>();
@@ -256,19 +262,29 @@ namespace Emgu.TF.Models
             public float[] DecodedLocations;
         }
 
-        public static Tensor[] GetTopDetections(Tensor scoreTensor, int labelsCount)
+        private static Tensor[] GetTopDetections(Tensor scoreTensor)
         {
-            var graph = new Graph();
-            Operation input = graph.Placeholder(DataType.Float);
-            Tensor countTensor = new Tensor(labelsCount);
-            Operation countOp = graph.Const(countTensor, countTensor.Type, opName: "count");
-            Operation topK = graph.TopKV2(input, countOp, opName: "TopK");
-            Session session = new Session(graph);
-            Tensor[] topKResult = session.Run(new Output[] { input }, new Tensor[] { scoreTensor },
-                new Output[] { new Output(topK, 0), new Output(topK, 1) });
-            return topKResult;
+            int labelsCount = scoreTensor.Dim[1];
+            using (var graph = new Graph())
+            {
+                Operation input = graph.Placeholder(DataType.Float);
+                Tensor countTensor = new Tensor(labelsCount);
+                Operation countOp = graph.Const(countTensor, countTensor.Type, opName: "count");
+                Operation topK = graph.TopKV2(input, countOp, opName: "TopK");
+                using (Session session = new Session(graph))
+                {
+                    Tensor[] topKResult = session.Run(new Output[] {input}, new Tensor[] {scoreTensor},
+                        new Output[] {new Output(topK, 0), new Output(topK, 1)});
+                    return topKResult;
+                }
+            }
         }
 
+        /// <summary>
+        /// Read the box priors
+        /// </summary>
+        /// <param name="fileName">The name of the box priors file</param>
+        /// <returns>The floating point box priors value</returns>
         public static float[] ReadBoxPriors(String fileName)
         {
             List<float> priors = new List<float>();
@@ -286,6 +302,12 @@ namespace Emgu.TF.Models
             return priors.ToArray();
         }
 
+        /// <summary>
+        /// Decode the location encoding
+        /// </summary>
+        /// <param name="locationEncoding">The location encoding</param>
+        /// <param name="boxPriors">The box priors</param>
+        /// <returns>The list of locations, each location is 4 floating value.</returns>
         public static float[][] DecodeLocationsEncoding(float[] locationEncoding, float[] boxPriors)
         {
             int numLocations = locationEncoding.Length / 4;
@@ -316,6 +338,11 @@ namespace Emgu.TF.Models
             return locations;
         }
 
+        /// <summary>
+        /// Decode the scores
+        /// </summary>
+        /// <param name="scoresEncoding">The scores encoding</param>
+        /// <returns>The scores</returns>
         public static float[] DecodeScoresEncoding(float[] scoresEncoding)
         {
             float[] scores = new float[scoresEncoding.Length];
@@ -326,6 +353,12 @@ namespace Emgu.TF.Models
             return scores;
         }
 
+        /// <summary>
+        /// Convert and filter the multibox results to annotations
+        /// </summary>
+        /// <param name="results">Multibox detection result</param>
+        /// <param name="scoreThreshold">The score threshold</param>
+        /// <returns>The Annotation to be drawn.</returns>
         public static Annotation[] FilterResults(MultiboxGraph.Result[] results, float scoreThreshold)
         {
             List<Annotation> goodResults = new List<Annotation>();

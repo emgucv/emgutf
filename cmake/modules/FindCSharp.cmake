@@ -18,6 +18,7 @@
 
 
 SET (PROGRAM_FILES_X86_ENV_STR "programfiles(x86)")
+SET (PROGRAM_FILES_X64_ENV_STR "programfiles")
 
 FIND_PROGRAM (CSC_EXECUTABLE_20 
 NAMES csc gmcs
@@ -143,8 +144,8 @@ PATHS
 "$ENV{${PROGRAM_FILES_X86_ENV_STR}}/Microsoft Visual Studio/2019/BuildTools/MSBuild/Current/Bin/Roslyn"
 CMAKE_FIND_ROOT_PATH_BOTH
 )
-
 MESSAGE(STATUS "CSC_EXECUTABLE_160: ${CSC_EXECUTABLE_160}")
+
 FIND_PROGRAM (MSBUILD_EXECUTABLE_160 
 NAMES msbuild 
 PATHS
@@ -155,6 +156,27 @@ CMAKE_FIND_ROOT_PATH_BOTH
 )
 MESSAGE(STATUS "MSBUILD_EXECUTABLE_160 : ${MSBUILD_EXECUTABLE_160}")
 
+FIND_PROGRAM (CSC_EXECUTABLE_170 
+NAMES csc 
+PATHS
+#"$ENV{${PROGRAM_FILES_X64_ENV_STR}}/Microsoft Visual Studio/2022/Community/Msbuild/Current/Bin/Roslyn"
+#"$ENV{${PROGRAM_FILES_X64_ENV_STR}}/Microsoft Visual Studio/2022/Enterprise/Msbuild/Current/Bin/Roslyn"
+#"$ENV{${PROGRAM_FILES_X64_ENV_STR}}/Microsoft Visual Studio/2022/BuildTools/Msbuild/Current/Bin/Roslyn"
+"$ENV{${PROGRAM_FILES_X64_ENV_STR}}/Microsoft Visual Studio/2022/Preview/Msbuild/Current/Bin"
+CMAKE_FIND_ROOT_PATH_BOTH
+)
+MESSAGE(STATUS "CSC_EXECUTABLE_170: ${CSC_EXECUTABLE_170}")
+
+FIND_PROGRAM (MSBUILD_EXECUTABLE_170 
+NAMES msbuild 
+PATHS
+#"$ENV{${PROGRAM_FILES_X64_ENV_STR}}/Microsoft Visual Studio/2022/Community/Msbuild/Current/Bin"
+#"$ENV{${PROGRAM_FILES_X64_ENV_STR}}/Microsoft Visual Studio/2022/Enterprise/Msbuild/Current/Bin"
+#"$ENV{${PROGRAM_FILES_X64_ENV_STR}}/Microsoft Visual Studio/2022/BuildTools/Msbuild/Current/Bin"
+"$ENV{${PROGRAM_FILES_X64_ENV_STR}}/Microsoft Visual Studio/2022/Preview/Msbuild/Current/Bin"
+CMAKE_FIND_ROOT_PATH_BOTH
+)
+MESSAGE(STATUS "MSBUILD_EXECUTABLE_170 : ${MSBUILD_EXECUTABLE_170}")
 
 SET(CSC_FOUND FALSE)
 

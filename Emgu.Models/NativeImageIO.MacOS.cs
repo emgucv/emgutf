@@ -1,7 +1,9 @@
 ﻿//----------------------------------------------------------------------------
 //  Copyright (C) 2004-2021 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
+
 #if __MACOS__
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,7 +31,8 @@ namespace Emgu.Models
         /// <param name="scale">The scale, after mean is subtracted, the scale will be used to multiply the pixel values</param>
         /// <param name="flipUpSideDown">If true, the image needs to be flipped up side down</param>
         /// <param name="swapBR">If true, will flip the Blue channel with the Red. e.g. If false, the tensor's color channel order will be RGB. If true, the tensor's color channle order will be BGR </param>
-        public static void ReadImageToTensor<T>(
+        /// <returns>The number of bytes written.</returns>
+        public static int ReadImageToTensor<T>(
             NSImage image,
             IntPtr dest,
             int inputHeight = -1,
@@ -63,9 +66,10 @@ namespace Emgu.Models
                 context.DrawImage(new CGRect(new CGPoint(), new CGSize(inputWidth, inputHeight)), cgimage);
             }
 
+            int bytesWritten = 0;
             if (typeof(T) == typeof(float))
             {
-                Emgu.TF.Util.Toolbox.Pixel32ToPixelFloat(
+                bytesWritten = Emgu.TF.Util.Toolbox.Pixel32ToPixelFloat(
                     handle.AddrOfPinnedObject(),
                     inputWidth,
                     inputHeight,
@@ -74,10 +78,11 @@ namespace Emgu.Models
                     flipUpSideDown,
                     swapBR,
                     dest);
+                
             }
             else if (typeof(T) == typeof(byte))
             {
-                Emgu.TF.Util.Toolbox.Pixel32ToPixelByte(
+                bytesWritten = Emgu.TF.Util.Toolbox.Pixel32ToPixelByte(
                     handle.AddrOfPinnedObject(),
                     inputWidth,
                     inputHeight,
@@ -86,13 +91,14 @@ namespace Emgu.Models
                     flipUpSideDown,
                     swapBR,
                     dest);
+               
             }
             else
             {
                 throw new NotImplementedException(String.Format("Destination data type {0} is not supported.", typeof(T).ToString()));
             }
             handle.Free();
-
+            return bytesWritten;
         }
 
         public static void DrawAnnotations(NSImage img, Annotation[] annotations)

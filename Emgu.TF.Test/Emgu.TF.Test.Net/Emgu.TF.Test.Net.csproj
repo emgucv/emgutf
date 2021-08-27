@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\UnitTest1.cs" Link="UnitTest1.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\tensorflow\tensorflow\examples\label_image\data\grace_hopper.jpg" Link="grace_hopper.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\tensorflow\tensorflow\examples\multibox_detector\data\surfers.jpg" Link="surfers.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
+    <PackageReference Include="NUnit" Version="3.13.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
+    <PackageReference Include="coverlet.collector" Version="3.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Emgu.TF.Models\Emgu.TF.Models.Netstandard\Emgu.TF.Models.Netstandard.csproj" />
+    <ProjectReference Include="..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Netstandard\Emgu.TF.Protobuf.Netstandard.csproj" />
+    <ProjectReference Include="..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Runtime.Windows.projitems" Label="Shared" />
+
+  <Import Project="..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Runtime.Ubuntu.projitems" Label="Shared" />
+
+  <Import Project="..\..\Emgu.TF.Runtime\Raspbian\Emgu.TF.Runtime.Raspbian.projitems" Label="Shared" />
+
+  <Import Project="..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Runtime.Mac.projitems" Label="Shared" />
+
+</Project>

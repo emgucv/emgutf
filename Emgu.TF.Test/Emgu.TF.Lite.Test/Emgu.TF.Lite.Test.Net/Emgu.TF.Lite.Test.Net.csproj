@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\UnitTest1.cs" Link="UnitTest1.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\..\tensorflow\tensorflow\examples\label_image\data\grace_hopper.jpg" Link="grace_hopper.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+    <PackageReference Include="NUnit" Version="3.13.1" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
+    <PackageReference Include="coverlet.collector" Version="3.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Netstandard\Emgu.TF.Lite.Models.Netstandard.csproj" />
+    <ProjectReference Include="..\..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.NetStandard.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems" Label="Shared" />
+
+</Project>

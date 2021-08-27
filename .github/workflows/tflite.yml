@@ -32,7 +32,3 @@ jobs:
       with:
         name: emgutflite-ubuntu-nuget-package
         path: ${{ github.workspace }}/platforms/nuget/*.nupkg 
-    - name: clean up the source folder
-      run: miscellaneous/git-clean
-    - name: Build Emgu TF Lite Android arm64-v8a native binary
-      run: ./platforms/android/build_tflite_android arm64 arm64-v8a

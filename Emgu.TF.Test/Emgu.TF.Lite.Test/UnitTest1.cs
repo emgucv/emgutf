@@ -1,38 +1,34 @@
 ﻿using System;
+#if VS_TEST
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TestAttribute = Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute;
+using TestFixture = Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute;
+#else
+using NUnit.Framework;
+#endif
 using Emgu.TF.Lite;
 using Emgu.TF.Lite.Models;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Emgu.TF.Lite.Test
 {
-    [TestClass]
+    [TestFixture]
     public class UnitTest1
     {
-        [TestMethod]
+        [TestAttribute]
         public void TestGetVersion()
         {
             String version = TfLiteInvoke.Version;
         }
 
-        [TestMethod]
-        public void TestMobilenet()
+        [TestAttribute]
+        public async Task TestMobilenet()
         {
             using (Mobilenet mobilenet = new Mobilenet())
             {
-                bool processCompleted = false;
-                mobilenet.OnDownloadCompleted += (sender, e) =>
-                {
-                    var result = mobilenet.Recognize("grace_hopper.jpg")[0];
-                    
-                    processCompleted = true;
-                };
-
-                mobilenet.Init();
-                while (!processCompleted)
-                {
-                    Thread.Sleep(1000);
-                }
+                await mobilenet.Init();
+                var result = mobilenet.Recognize("grace_hopper.jpg")[0];
             }
         }
     }

@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
-rm -rf emgutflite.bundle
-mkdir emgutflite.bundle
-mkdir emgutflite.bundle/Contents
-mkdir emgutflite.bundle/Contents/MacOS
-mkdir emgutflite.bundle/Contents/Resources
-cp ../../lib/macos/libtfliteextern.dylib emgutflite.bundle/Contents/MacOS/
-cp Info.lite.plist emgutflite.bundle/Contents/Info.plist
+rm -rf tfliteextern.bundle
+mkdir -p tfliteextern.bundle/Contents/MacOS
+mkdir -p tfliteextern.bundle/Contents/Resources
+
+cp ../../lib/macos/libtfliteextern.dylib tfliteextern.bundle/Contents/MacOS/
+chmod u+w tfliteextern.bundle/Contents/MacOS/libtfliteextern.dylib
+
+cp Info.lite.plist tfliteextern.bundle/Contents/Info.plist
 iconutil -c icns icons.iconset/
-cp icons.icns emgutflite.bundle/Contents/Resources/
+cp icons.icns tfliteextern.bundle/Contents/Resources/

@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamarinForms.Lite.WPF", "..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVInterop.Lite.Net", "..\..\Emgu.TF.Example\CVInterop.Lite\CVInterop.Lite.Net.csproj", "{0EEC5380-C708-4CAA-9A1C-FB70ED57A610}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Runtime.Mac", "..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Lite.Runtime.Mac.shproj", "{8519B2B8-E96B-47FD-A466-C6031D34AAAB}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems*{0d7c99ea-3aae-4f45-9ba7-3b4af8313753}*SharedItemsImports = 13
@@ -45,6 +47,7 @@ Global
 		..\..\Emgu.TF.Runtime\Raspbian\Emgu.TF.Lite.Runtime.Raspbian.projitems*{32ebeb2c-7258-4987-9c05-c1952471f8c4}*SharedItemsImports = 13
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite\XamarinForms.Lite.projitems*{49943dc0-cc57-4cee-837d-9984db9df902}*SharedItemsImports = 5
 		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems*{49943dc0-cc57-4cee-837d-9984db9df902}*SharedItemsImports = 5
+		..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Lite.Runtime.Mac.projitems*{8519b2b8-e96b-47fd-a466-c6031d34aaab}*SharedItemsImports = 13
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{8d1cdaf7-e886-4a3c-b9d9-39bfe193e07c}*SharedItemsImports = 5
 		..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems*{8d1cdaf7-e886-4a3c-b9d9-39bfe193e07c}*SharedItemsImports = 5
 		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{8edce0c8-ba71-4396-9428-35d05877258c}*SharedItemsImports = 13

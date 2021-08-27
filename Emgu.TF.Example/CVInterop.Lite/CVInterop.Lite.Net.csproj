@@ -17,11 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Emgu.CV" Version="4.5.1.4349" />
-    <PackageReference Include="Emgu.CV.Bitmap" Version="4.5.1.4349" />
-    <PackageReference Include="Emgu.CV.runtime.windows" Version="4.5.1.4349" />
-    <PackageReference Include="Emgu.CV.UI" Version="4.5.1.4349" />
-    <PackageReference Include="Google.Protobuf" Version="3.15.2" />
+    <PackageReference Include="Emgu.CV" Version="4.5.3.4721" />
+    <PackageReference Include="Emgu.CV.Bitmap" Version="4.5.3.4721" />
+    <PackageReference Include="Emgu.CV.runtime.windows" Version="4.5.3.4721" />
+    <PackageReference Include="Emgu.CV.UI" Version="4.5.3.4721" />
   </ItemGroup>
 
   <Import Project="..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems" Label="Shared" />

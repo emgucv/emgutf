@@ -1,0 +1,24 @@
+name: Ubuntu TF Lite Android Builder
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: [self-hosted, Linux, X64]
+    
+    # one day time out
+    timeout-minutes: 1440
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Check out submodules
+      run: git submodule update --init --recursive
+    - name: clean up the source folder
+      run: miscellaneous/git-clean
+    - name: Build Emgu TF Lite Android arm64-v8a native binary
+      run: ./platforms/android/build_tflite_android arm64 arm64-v8a

@@ -161,7 +161,7 @@ namespace Emgu.TF
                         //The following code should handle finding the asp.NET BIN folder 
                         if (String.IsNullOrEmpty(asm.Location) || !File.Exists(asm.Location))
                         {
-                            Debug.WriteLine(String.Format("asm.Location is invalid: '{0}'", asm.Location));
+                            System.Diagnostics.Trace.WriteLine(String.Format("asm.Location is invalid: '{0}'", asm.Location));
                         }
                         else
                         {
@@ -189,7 +189,7 @@ namespace Emgu.TF
                     setDllDirectorySuccess = Emgu.TF.Util.Toolbox.SetDllDirectory(loadDirectory);
                     if (!setDllDirectorySuccess)
                     {
-                        System.Diagnostics.Debug.WriteLine(String.Format("Failed to set dll directory: {0}", loadDirectory));
+                        System.Diagnostics.Trace.WriteLine(String.Format("Failed to set dll directory: {0}", loadDirectory));
                     }
                 }
                 else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
@@ -199,7 +199,7 @@ namespace Emgu.TF
                 else if (Emgu.TF.Util.Toolbox.FindAssembly("Xamarin.iOS.dll") != null)
                 {
                     //do nothing
-                    System.Diagnostics.Debug.WriteLine("iOS required static linking, setting load directory is not supported");
+                    System.Diagnostics.Trace.WriteLine("iOS required static linking, setting load directory is not supported");
                 }
                 else
                 {
@@ -212,9 +212,9 @@ namespace Emgu.TF
             {
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
-                    System.Diagnostics.Debug.WriteLine(
+                    System.Diagnostics.Trace.WriteLine(
                         String.Format(
-                            "Loading TF binary for default locations. Current directory: {0}; Additional load folder: {1}",
+                            "Loading TF binary from default locations. Current directory: {0}; Additional load folder: {1}",
                             Environment.CurrentDirectory,
                             loadDirectory));
                 }
@@ -222,9 +222,9 @@ namespace Emgu.TF
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine(
+                System.Diagnostics.Trace.WriteLine(
                     String.Format(
-                        "Loading TF binary for default locations. Current directory: {0}",
+                        "Loading TF binary from default locations. Current directory: {0}",
                         Environment.CurrentDirectory));
             }
 
@@ -449,6 +449,17 @@ namespace Emgu.TF
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TFCallingConvention)]
         internal static extern int tfeStringDecode(IntPtr src, int srcLen, ref IntPtr dst, ref IntPtr dstLen, IntPtr status);
         */
+
+        /// <summary>
+        /// Native implementation of the memory copy function
+        /// </summary>
+        /// <param name="dst">The destination pointer</param>
+        /// <param name="src">The source pointer</param>
+        /// <param name="length">The number of bytes to copy</param>
+        public static void Memcpy(IntPtr dst, IntPtr src, int length)
+        {
+            tfeMemcpy(dst, src, length);
+        }
 
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void tfeMemcpy(IntPtr dst, IntPtr src, int length);

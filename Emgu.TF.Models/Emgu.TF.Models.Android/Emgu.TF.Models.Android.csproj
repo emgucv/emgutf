@@ -75,7 +75,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <Target Name="AfterBuild">
+  <Target Name="DeployAndroidBinary" AfterTargets="AfterBuild">
     <Message Text="Copying $(OutputPath)$(AssemblyName).dll, $(OutputPath)$(AssemblyName).xml to ..\..\lib\android" Importance="high" />
     <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="..\..\lib\android" ContinueOnError="true" />
     <Copy SourceFiles="$(OutputPath)$(AssemblyName).xml" DestinationFolder="..\..\lib\android" ContinueOnError="true" />

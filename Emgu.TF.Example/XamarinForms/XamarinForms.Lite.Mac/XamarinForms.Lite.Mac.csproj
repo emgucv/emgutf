@@ -6,8 +6,8 @@
     <ProjectGuid>{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}</ProjectGuid>
     <ProjectTypeGuids>{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
-    <RootNamespace>XamarinForms.Lite.OSX</RootNamespace>
-    <AssemblyName>XamarinForms.Lite.OSX</AssemblyName>
+    <RootNamespace>XamarinForms.Lite.Mac</RootNamespace>
+    <AssemblyName>XamarinForms.Lite.Mac</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
     <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
@@ -36,6 +36,7 @@
     <LinkMode>None</LinkMode>
     <XamMacArch>x86_64</XamMacArch>
     <AOTMode>None</AOTMode>
+    <AssemblyName>XamarinForms.Lite.Mac</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <DebugType>pdbonly</DebugType>
@@ -58,6 +59,7 @@
     <XamMacArch>
     </XamMacArch>
     <AOTMode>None</AOTMode>
+    <AssemblyName>XamarinForms.Lite.Mac</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <UseSGen>false</UseSGen>
