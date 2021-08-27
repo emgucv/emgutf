@@ -6,13 +6,19 @@ IF (TARGET Emgu.TF.Protobuf.Netstandard)
   
   PROJECT(Emgu.TF.Protobuf.nuget)
 
+  get_filename_component(NUGET_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
+
   BUILD_NUGET_PACKAGE(
     ${PROJECT_NAME} 
 	"${CMAKE_CURRENT_SOURCE_DIR}/../../../Emgu.TF.Protobuf/Emgu.TF.Protobuf.Netstandard/Emgu.TF.Protobuf.Netstandard.csproj"  #csproj_file 
 	"${CMAKE_CURRENT_SOURCE_DIR}/Package.nuspec" #nuspec_file 
-	"${CMAKE_CURRENT_SOURCE_DIR}/../" #output_dir 
+	"${NUGET_OUTPUT_DIR}" #output_dir 
 	"${CMAKE_CURRENT_SOURCE_DIR}" #working_dir
 	) 
+
+  IF (EMGU_NUGET_SIGN_FOUND)
+    EMGU_SIGN_NUGET(${PROJECT_NAME} "${NUGET_OUTPUT_DIR}/${EMGUTF_PROTOBUF_NUGET_ID}.${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}.nupkg")
+  ENDIF()
 
   ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Protobuf.Netstandard)
   

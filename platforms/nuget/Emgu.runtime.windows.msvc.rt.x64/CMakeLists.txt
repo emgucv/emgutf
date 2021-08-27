@@ -4,7 +4,7 @@
 
 IF (WIN32 AND (HAVE_WINDESKTOP_X64 OR HAVE_WINDESKTOP_X64_LITE))
 
-PROJECT(Emgu.runtime.windows.msvc.rt.x64.nuget)
+  PROJECT(Emgu.runtime.windows.msvc.rt.x64.nuget)
 
   get_filename_component(NUGET_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
 
@@ -19,8 +19,8 @@ PROJECT(Emgu.runtime.windows.msvc.rt.x64.nuget)
     EMGU_SIGN_NUGET(${PROJECT_NAME} "${NUGET_OUTPUT_DIR}/${EMGU_WINDOWS_MSVCRT_X64_NUGET_ID}.${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}.nupkg")
   ENDIF()
 
-if(ENABLE_SOLUTION_FOLDERS)
-  set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "NUGET")
-endif() 
+  if(ENABLE_SOLUTION_FOLDERS)
+    set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "NUGET")
+  endif() 
 
 ENDIF()
