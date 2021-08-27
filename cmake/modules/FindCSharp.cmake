@@ -140,6 +140,7 @@ NAMES csc
 PATHS
 "$ENV{${PROGRAM_FILES_X86_ENV_STR}}/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/Roslyn"
 "$ENV{${PROGRAM_FILES_X86_ENV_STR}}/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/Bin/Roslyn"
+"$ENV{${PROGRAM_FILES_X86_ENV_STR}}/Microsoft Visual Studio/2019/BuildTools/MSBuild/Current/Bin/Roslyn"
 CMAKE_FIND_ROOT_PATH_BOTH
 )
 
@@ -149,6 +150,7 @@ NAMES msbuild
 PATHS
 "$ENV{${PROGRAM_FILES_X86_ENV_STR}}/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin"
 "$ENV{${PROGRAM_FILES_X86_ENV_STR}}/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/Bin"
+"$ENV{${PROGRAM_FILES_X86_ENV_STR}}/Microsoft Visual Studio/2019/BuildTools/MSBuild/Current/Bin"
 CMAKE_FIND_ROOT_PATH_BOTH
 )
 MESSAGE(STATUS "MSBUILD_EXECUTABLE_160 : ${MSBUILD_EXECUTABLE_160}")
