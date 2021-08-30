@@ -7,7 +7,7 @@ IF ( TARGET Emgu.TF.Lite.Netstandard )
   PROJECT(Emgu.TF.Lite.nuget)
 
   get_filename_component(NUGET_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
-
+  
   BUILD_NUGET_PACKAGE(
     ${PROJECT_NAME} 
 	"${CMAKE_CURRENT_SOURCE_DIR}/../../../Emgu.TF.Lite/Emgu.TF.Lite.Netstandard/Emgu.TF.Lite.Netstandard.csproj" #csproj_file 

@@ -5,18 +5,17 @@
 IF (WIN32 AND (HAVE_WINDESKTOP_X64_CUDA) )
 
 PROJECT(Emgu.runtime.windows.cuda.dnn.adv.nuget)
-#ADD_CUSTOM_TARGET(
-#   ${PROJECT_NAME} ALL
-#   COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../../../miscellaneous/nuget.exe" pack Package.nuspec -OutputDirectory "${CMAKE_CURRENT_SOURCE_DIR}/../"
-#   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-#)
+  get_filename_component(NUGET_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
   BUILD_NUGET_PACKAGE(
     ${PROJECT_NAME} 
 	"${CMAKE_CURRENT_SOURCE_DIR}/../../../Emgu.TF/Emgu.TF.Netstandard/Emgu.TF.Netstandard.csproj"  #csproj_file 
 	"${CMAKE_CURRENT_SOURCE_DIR}/Package.nuspec" #nuspec_file 
-	"${CMAKE_CURRENT_SOURCE_DIR}/../" #output_dir 
+	"${NUGET_OUTPUT_DIR}" #output_dir 
 	"${CMAKE_CURRENT_SOURCE_DIR}" #working_dir
 	) 
+  IF (EMGU_NUGET_SIGN_FOUND)
+    EMGU_SIGN_NUGET(${PROJECT_NAME} "${NUGET_OUTPUT_DIR}/${EMGU_TF_DNN_ADV_ID}.${EMGU_TF_DNN_VERSION}.nupkg")
+  ENDIF()
 ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.runtime.windows.cuda.dnn.nuget)
 
 if(ENABLE_SOLUTION_FOLDERS)
