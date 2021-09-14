@@ -63,10 +63,6 @@ IF ( HAVE_IOS_LITE )
   add_subdirectory(Emgu.TF.Lite.runtime.ios)
 ENDIF()
 
-IF (HAVE_LINUX_X86_64_LITE)
-  add_subdirectory(Emgu.TF.Lite.runtime.ubuntu)
-ENDIF()
+add_subdirectory(Emgu.TF.Lite.runtime.ubuntu)
+add_subdirectory(Emgu.TF.Lite.runtime.linux-arm)
 
-IF (HAVE_LINUX_ARM_LITE)
-  add_subdirectory(Emgu.TF.Lite.runtime.linux-arm)
-ENDIF()

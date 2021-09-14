@@ -2,24 +2,25 @@
 #  Copyright (C) 2004-2021 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-IF(IS_RASPBIAN AND HAVE_LINUX_ARM_LITE)
+IF(HAVE_LINUX_ARM_LITE)
   PROJECT(Emgu.TF.Lite.runtime.linux-arm.nuget)
-  #  IF(WIN32)
-  #    ADD_CUSTOM_TARGET(
-  #      ${PROJECT_NAME} ALL
-  #      COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../../../miscellaneous/nuget.exe" pack Package.nuspec -OutputDirectory "${CMAKE_CURRENT_SOURCE_DIR}/../"
-  #      )
-  #  ELSE()
-  #    ADD_CUSTOM_TARGET(
-  #      ${PROJECT_NAME} ALL
-  #      COMMAND mono "${CMAKE_CURRENT_SOURCE_DIR}/../../../miscellaneous/nuget.exe" pack Package.nuspec -OutputDirectory "${CMAKE_CURRENT_SOURCE_DIR}/../"
-  #      )
-  #  ENDIF()
-  ADD_CUSTOM_TARGET(
-    ${PROJECT_NAME} ALL
-    COMMAND ${DOTNET_EXECUTABLE} pack -c ${DEFAULT_CS_CONFIG} "${CMAKE_CURRENT_SOURCE_DIR}/../../../Emgu.TF.Lite/Emgu.TF.Lite.Netstandard/Emgu.TF.Lite.Netstandard.csproj" -p:NuspecFile="${CMAKE_CURRENT_SOURCE_DIR}/Package.nuspec" -o "${CMAKE_CURRENT_SOURCE_DIR}/../"
-    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-    )
+  get_filename_component(NUGET_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
+  BUILD_NUGET_PACKAGE(
+    ${PROJECT_NAME} 
+	"${CMAKE_CURRENT_SOURCE_DIR}/../../../Emgu.TF.Lite/Emgu.TF.Lite.Netstandard/Emgu.TF.Lite.Netstandard.csproj"  #csproj_file 
+	"${CMAKE_CURRENT_SOURCE_DIR}/Package.nuspec" #nuspec_file 
+	"${NUGET_OUTPUT_DIR}" #output_dir 
+	"${CMAKE_CURRENT_SOURCE_DIR}" #working_dir
+	) 
+  IF (EMGU_NUGET_SIGN_FOUND)
+    EMGU_SIGN_NUGET(${PROJECT_NAME} "${NUGET_OUTPUT_DIR}/${EMGUTF_LITE_RASPBERRY_NUGET_ID}.${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}.nupkg")
+  ENDIF()
+  
+  #ADD_CUSTOM_TARGET(
+  #  ${PROJECT_NAME} ALL
+  #  COMMAND ${DOTNET_EXECUTABLE} pack -c ${DEFAULT_CS_CONFIG} "${CMAKE_CURRENT_SOURCE_DIR}/../../../Emgu.TF.Lite/Emgu.TF.Lite.Netstandard/Emgu.TF.Lite.Netstandard.csproj" -p:NuspecFile="${CMAKE_CURRENT_SOURCE_DIR}/Package.nuspec" -o "${CMAKE_CURRENT_SOURCE_DIR}/../"
+  #  WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+  #  )
   ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.nuget)
   
   if(ENABLE_SOLUTION_FOLDERS)
