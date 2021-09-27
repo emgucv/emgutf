@@ -44,7 +44,7 @@ call %ENV_SETUP_SCRIPT%
 
 :ENV_SETUP_END
 
-
+SET BAZEL_XNN_FLAGS=--define tflite_with_xnnpack=false
 IF NOT "%2%"=="xnn" GOTO END_OF_XNN
 SET BAZEL_XNN_FLAGS=--define tflite_with_xnnpack=true
 :END_OF_XNN
