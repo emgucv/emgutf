@@ -273,8 +273,8 @@ namespace Emgu.TF.Models
             if (output == null)
                 throw new Exception(String.Format("Could not find output operation '{0}' in the graph", _outputName));
 
-            Tensor[] finalTensor = _session.Run(new Output[] { input }, new Tensor[] { imageTensor },
-                new Output[] { output });
+            Tensor[] finalTensor = _session.Run(input.Outputs, new Tensor[] { imageTensor },
+                output.Outputs);
             float[,] probability = finalTensor[0].GetData(true) as float[,];
 
             int imageCount = probability.GetLength(0);

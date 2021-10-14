@@ -191,7 +191,15 @@ namespace Emgu.TF
         /// </param>
         /// <param name="status">The status</param>
         /// <returns>On success, the tensors corresponding to outputs[0,noutputs-1] are placed in the returned Tensors.</returns>
-        public Tensor[] Run(Output[] inputs, Tensor[] inputValues, Output[] outputs, Operation[] targetOperations = null, Buffer runOptions = null, Buffer runMetadata = null, Status status = null)
+        /// <remarks>If you wasn't sure about the input and output names, call "saved_model_cli show --dir {export_path} --all" to list all input and output names.</remarks>
+        public Tensor[] Run(
+            Output[] inputs,
+            Tensor[] inputValues,
+            Output[] outputs,
+            Operation[] targetOperations = null,
+            Buffer runOptions = null,
+            Buffer runMetadata = null,
+            Status status = null)
         {
             IntPtr[] inputOps = Array.ConvertAll(inputs, i => i.Operation.Ptr);
             int[] inputIdx = Array.ConvertAll(inputs, i => i.Index);
