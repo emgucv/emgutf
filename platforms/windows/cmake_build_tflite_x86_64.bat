@@ -1,0 +1,1 @@
+call cmake_build_tflite_x86 64

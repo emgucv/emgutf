@@ -1,1 +1,0 @@
-call build_tf_x86 64
