@@ -11,14 +11,14 @@ using System.Runtime.InteropServices;
 namespace Emgu.TF.Lite
 {
     /// <summary>
-    /// Gpu Delegate V2 for Android
+    /// XNNPackDelegate
     /// </summary>
-    public class GpuDelegateV2 : Emgu.TF.Util.UnmanagedObject, IDelegate
+    public class XNNPackDelegate : Emgu.TF.Util.UnmanagedObject, IDelegate
     {
         /// <summary>
-        /// Gpu Delegate V2 for Android
+        /// XNNPackDelegate
         /// </summary>
-        public GpuDelegateV2()
+        public XNNPackDelegate()
         {
             _ptr = TfLiteInvoke.tfeGpuDelegateV2Create();
         }
@@ -46,28 +46,34 @@ namespace Emgu.TF.Lite
     public static partial class TfLiteInvoke
     {
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
-        internal static extern IntPtr tfeGpuDelegateV2Create();
+        internal static extern IntPtr tfeXNNPackDelegateCreateDefault();
 
-        //[DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
-        //internal static extern void tfeGpuDelegateV2Delete(ref IntPtr delegatePtr);
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
+        internal static extern void tfeXNNPackDelegateCreateDefault(
+            int numThreads,
+            [MarshalAs(TfLiteInvoke.BoolMarshalType)]
+            bool enableInt8WeightsUnpacking);
 
-        private static GpuDelegateV2 _gpuDelegateV2;
+        [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
+        internal static extern void tfeTfLiteDelegateRelease(ref IntPtr delegatePtr);
+
+        private static XNNPackDelegate _xnnPackDelegate;
 
         /// <summary>
         /// Get the default GPU delegate V2 for Android
         /// </summary>
-        public static GpuDelegateV2 DefaultGpuDelegateV2
+        public static XNNPackDelegate DefaultXNNPackDelegate
         {
             get
             {
-                if (_gpuDelegateV2 == null)
+                if (_xnnPackDelegate == null)
                 {
-                    GpuDelegateV2 d = new GpuDelegateV2();
+                    XNNPackDelegate d = new XNNPackDelegate();
                     if (d.Ptr != IntPtr.Zero)
-                        _gpuDelegateV2 = d;
+                        _xnnPackDelegate = d;
                 }
 
-                return _gpuDelegateV2;
+                return _xnnPackDelegate;
             }
 
         }
