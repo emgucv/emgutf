@@ -15,6 +15,7 @@
     <description>Emgu TF Lite is a cross platform .Net wrapper for the Google Tensorflow Lite library. Allows Tensorflow Lite functions to be called from .NET compatible languages such as C#, VB, VC++, IronPython.</description>
     <releaseNotes>This is the ${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX} release of Emgu TF Lite. For online documentation please visit
 http://www.emgu.com/wiki/files/emgutflite/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}/document/</releaseNotes>
+    <readme>docs\README.md</readme>
 	${EMGUTF_LITE_NUGET_DEPENDENCY}
     <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved</copyright>
     <tags>tensorflow lite emgu emgutflite ai </tags>
