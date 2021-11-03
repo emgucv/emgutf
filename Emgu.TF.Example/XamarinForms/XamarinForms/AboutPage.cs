@@ -80,7 +80,12 @@ namespace Emgu.TF.XamarinForms
                     <H3> Default Session Devices: </H3> {4}
                     <H3> Tensorflow  <a href=https://github.com/tensorflow/tensorflow/blob/master/LICENSE > License</a> </H3>
                     <H3><a href=http://www.emgu.com/wiki/index.php/Emgu_TF >Visit our website</a> <br/><br/><H3>
-                    <H3><a href=mailto:support@emgu.com>Email Support</a> <br/><br/><H3>"
+                    <H3><a href=mailto:support@emgu.com>Email Support</a> <br/><br/><H3>
+                    <H3> IsGoogleCudaEnabled: {5} </H3>
+                    <H3> IsBuiltWithROCm: {6} </H3>
+                    <H3> IsBuiltWithNvcc: {7} </H3>
+                    <H3> GpuSupportsHalfMatMulAndConv: {8} </H3>
+                    <H3> IsMklEnabled: {9} </H3>"
                             + @"
                     </body>
                     </html>",
@@ -88,7 +93,13 @@ namespace Emgu.TF.XamarinForms
                             System.Runtime.InteropServices.RuntimeInformation.OSDescription,
                             System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription,
                             System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture,
-                            sb.ToString())
+                            sb.ToString(), 
+                            TfInvoke.IsGoogleCudaEnabled,
+                            TfInvoke.IsBuiltWithROCm,
+                            TfInvoke.IsBuiltWithNvcc,
+                            TfInvoke.GpuSupportsHalfMatMulAndConv,
+                            TfInvoke.IsMklEnabled
+                            )
                         }
             };
         }

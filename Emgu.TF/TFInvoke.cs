@@ -465,7 +465,7 @@ namespace Emgu.TF
         internal static extern void tfeMemcpy(IntPtr dst, IntPtr src, int length);
 
         /// <summary>
-        /// Returns true if CUDA is defined.
+        /// Returns true if CUDA is enabled.
         /// </summary>
         public static bool IsGoogleCudaEnabled
         {
@@ -474,6 +474,50 @@ namespace Emgu.TF
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         [return: MarshalAs(TfInvoke.BoolMarshalType)]
         private static extern bool tfeIsGoogleCudaEnabled();
+
+        /// <summary>
+        /// Returns true if Tensorflow is built with ROCm
+        /// </summary>
+        public static bool IsBuiltWithROCm
+        {
+            get { return tfeIsBuiltWithROCm(); }
+        }
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
+        [return: MarshalAs(TfInvoke.BoolMarshalType)]
+        private static extern bool tfeIsBuiltWithROCm();
+
+        /// <summary>
+        /// Returns true if Tensorflow is built with Nvcc
+        /// </summary>
+        public static bool IsBuiltWithNvcc
+        {
+            get { return tfeIsBuiltWithNvcc(); }
+        }
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
+        [return: MarshalAs(TfInvoke.BoolMarshalType)]
+        private static extern bool tfeIsBuiltWithNvcc();
+
+        /// <summary>
+        /// Returns true if Gpu supports HalfMatMulAndConv
+        /// </summary>
+        public static bool GpuSupportsHalfMatMulAndConv
+        {
+            get { return tfeGpuSupportsHalfMatMulAndConv(); }
+        }
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
+        [return: MarshalAs(TfInvoke.BoolMarshalType)]
+        private static extern bool tfeGpuSupportsHalfMatMulAndConv();
+
+        /// <summary>
+        /// Returns true if MKL is enabled
+        /// </summary>
+        public static bool IsMklEnabled
+        {
+            get { return tfeIsMklEnabled(); }
+        }
+        [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
+        [return: MarshalAs(TfInvoke.BoolMarshalType)]
+        private static extern bool tfeIsMklEnabled();
 
         /// <summary>
         /// Returns true if the operation is registered.
