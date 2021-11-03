@@ -1,10 +1,16 @@
 REM @echo off
+
+REM POSSIBLE OPTIONS: 
+REM %1%: "64", "ARM"
+REM %2%: "gpu", build with CUDA
+REM %3%: "mkl", build with intel mkl
+REM %4%: "docker", build within docker 
+
 pushd %~p0
 cd ..\..
 
 IF "%1%"=="64" ECHO "BUILDING 64bit solution" 
 IF "%1%"=="ARM" ECHO "BUILDING ARM solution"
-IF "%1%"=="32" ECHO "BUILDING 32bit solution"
 
 SET OS_MODE=
 IF "%1%"=="64" SET OS_MODE= Win64
@@ -63,7 +69,7 @@ SET PYTHON_BASE_PATH=%PYTHON_BASE_PATH:\=/%
 SET PYTHON_BIN_PATH=%PYTHON_BIN_PATH:\=/%
 SET PYTHON_LIB_PATH=%PYTHON_LIB_PATH:\=/%
 
-IF NOT "%3%"=="docker" GOTO ENV_NOT_DOCKER
+IF NOT "%4%"=="docker" GOTO ENV_NOT_DOCKER
 
 :ENV_DOCKER
 SET DOCKER_FLAGS=--define=EXECUTOR=remote --experimental_docker_verbose --experimental_enable_docker_sandbox --jobs=2
@@ -88,6 +94,12 @@ cd tensorflow\tensorflow\tools\ci_build\windows
 SET MSYS64_PATH=c:\msys64
 SET MSYS64_BIN=%MSYS64_PATH%\usr\bin
 
+IF "%3%" == "mkl" GOTO BUILD_WITH_MKL
+GOTO END_MKL
+:BUILD_WITH_MKL
+SET TF_BAZEL_EXTRA_CONFIG=--config=mkl
+
+:END_MKL
 
 IF "%2%" == "gpu" GOTO BUILD_GPU
 :BUILD_CPU
@@ -133,7 +145,7 @@ SET MSYS_BIN=%MSYS_PATH%\usr\bin
 IF EXIST "%MSYS_BIN%\bazel.exe" SET BAZEL_COMMAND=%MSYS_BIN%\bazel.exe
 
 REM call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build //tensorflow/tfextern:libtfextern.so --verbose_failures %DOCKER_FLAGS% --local_ram_resources="HOST_RAM*.2" --local_cpu_resources="HOST_CPUS*.2" --jobs=2
-call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build //tensorflow/tfextern:libtfextern.so --verbose_failures %DOCKER_FLAGS% 
+call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build //tensorflow/tfextern:libtfextern.so --verbose_failures %DOCKER_FLAGS% %TF_BAZEL_EXTRA_CONFIG%
 cd ..
 
 cp -f tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so lib/x64/tfextern.dll
@@ -177,6 +189,15 @@ copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cusparse*.dll" lib\x64\
 
 cp -rf tensorflow\bazel-bin\external\protobuf_archive .
 cp -rf tensorflow\bazel-tensorflow\external\protobuf_archive .
+
+IF "%3%" == "mkl" GOTO DEPLOY_DEPENDENCY_MKL
+GOTO END_OF_DEPLOY_DEPENDENCY_MKL
+:DEPLOY_DEPENDENCY_MKL
+SET TF_BAZEL_EXTRA_CONFIG=--config=mkl
+
+:END_OF_DEPLOY_DEPENDENCY_MKL
+SET INTEL_REDIST=%ONEAPI_ROOT%compiler\latest\windows\redist\intel64_win\compiler
+copy /Y "%INTEL_REDIST%\LIBIOMP5MD.DLL" lib\x64\
 
 REM IF "%4%"=="dev" GOTO END_OF_CLEAN
 REM :CLEAN
