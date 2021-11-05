@@ -32,7 +32,7 @@
     </BuildLogFile>
     <HelpFileFormat>Website</HelpFileFormat>
     <CppCommentsFixup>False</CppCommentsFixup>
-    <FrameworkVersion>Cross-platform (.NET Core/.NET Standard)</FrameworkVersion>
+    <FrameworkVersion>.NET Core/.NET Standard/.NET 5.0+</FrameworkVersion>
     <HelpTitle>Emgu TF Library Documentation</HelpTitle>
     <CopyrightText>2021 Emgu Corporation, All Rights Reserved,</CopyrightText>
     <FeedbackEMailAddress>support%40emgu.com</FeedbackEMailAddress>
@@ -44,22 +44,23 @@
     </DocumentationSources>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="(global)" isDocumented="True">Emgu TF is a cross platform .Net wrapper for the Google Tensorflow library. Allows Tensorflow functions to be called from .NET compatible languages such as C#, VB, VC++, IronPython.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Emgu" isDocumented="True">Root namespace for class and functions implemented by Emgu Corporation</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Emgu.TF" isDocumented="True">Wrapper of Tensorflow functions.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Emgu.TF.Util" isDocumented="True">Emgu TF Utilities.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Emgu.TF.Models" isDocumented="True">Emgu TF Models.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Emgu (Group)" isGroup="True" isDocumented="True">Root namespace for class and functions implemented by Emgu Corporation</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Emgu.Models" isDocumented="True">Utility functions for Emgu.TF.Models</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Emgu.TF (Group)" isGroup="True" isDocumented="True">Wrapper of Tensorflow functions.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Tensorflow (Group)" isGroup="True" isDocumented="True">Tensorflow library generated from protobuf</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Tensorflow" isDocumented="True">Tensorflow library generated from protobuf</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Tensorflow.Data (Group)" isGroup="True" isDocumented="True">Tensorflow library generated from protobuf</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Tensorflow.Data" isDocumented="True">Tensorflow library generated from protobuf</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Tensorflow.Data.Experimental" isDocumented="True">Tensorflow library generated from protobuf</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Tensorflow.Data.Model" isDocumented="True">Tensorflow library generated from protobuf</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Tensorflow.Eager" isDocumented="True">Tensorflow library generated from protobuf</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Tensorflow.Error" isDocumented="True">Tensorflow library generated from protobuf</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Tensorflow.Grpc" isDocumented="True">Tensorflow library generated from protobuf</NamespaceSummaryItem></NamespaceSummaries>
+      <NamespaceSummaryItem name="Emgu" isDocumented="True">Root namespace for class and functions implemented by Emgu Corporation</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Emgu.TF" isDocumented="True">Wrapper of Tensorflow functions.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Emgu.TF.Util" isDocumented="True">Emgu TF Utilities.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Emgu.TF.Models" isDocumented="True">Emgu TF Models.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Emgu (Group)" isGroup="True" isDocumented="True">Root namespace for class and functions implemented by Emgu Corporation</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Emgu.Models" isDocumented="True">Utility functions for Emgu.TF.Models</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Emgu.TF (Group)" isGroup="True" isDocumented="True">Wrapper of Tensorflow functions.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Tensorflow (Group)" isGroup="True" isDocumented="True">Tensorflow library generated from protobuf</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Tensorflow" isDocumented="True">Tensorflow library generated from protobuf</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Tensorflow.Data (Group)" isGroup="True" isDocumented="True">Tensorflow library generated from protobuf</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Tensorflow.Data" isDocumented="True">Tensorflow library generated from protobuf</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Tensorflow.Data.Experimental" isDocumented="True">Tensorflow library generated from protobuf</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Tensorflow.Data.Model" isDocumented="True">Tensorflow library generated from protobuf</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Tensorflow.Eager" isDocumented="True">Tensorflow library generated from protobuf</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Tensorflow.Error" isDocumented="True">Tensorflow library generated from protobuf</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Tensorflow.Grpc" isDocumented="True">Tensorflow library generated from protobuf</NamespaceSummaryItem>
+    </NamespaceSummaries>
     <PlugInConfigurations>
     </PlugInConfigurations>
     <MaximumGroupParts>2</MaximumGroupParts>
