@@ -20,7 +20,15 @@ namespace Emgu.TF.Lite
         /// </summary>
         public XNNPackDelegate()
         {
-            _ptr = TfLiteInvoke.tfeGpuDelegateV2Create();
+            _ptr = TfLiteInvoke.tfeXNNPackDelegateCreateDefault();
+        }
+
+        /// <summary>
+        /// XNNPackDelegate
+        /// </summary>
+        public XNNPackDelegate(int numThreads)
+        {
+            _ptr = TfLiteInvoke.tfeXNNPackDelegateCreate(numThreads);
         }
 
         /// <summary>
@@ -49,10 +57,7 @@ namespace Emgu.TF.Lite
         internal static extern IntPtr tfeXNNPackDelegateCreateDefault();
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
-        internal static extern void tfeXNNPackDelegateCreateDefault(
-            int numThreads,
-            [MarshalAs(TfLiteInvoke.BoolMarshalType)]
-            bool enableInt8WeightsUnpacking);
+        internal static extern IntPtr tfeXNNPackDelegateCreate(int numThreads);
 
         [DllImport(ExternLibrary, CallingConvention = TfLiteInvoke.TfLiteCallingConvention)]
         internal static extern void tfeTfLiteDelegateRelease(ref IntPtr delegatePtr);
@@ -60,7 +65,7 @@ namespace Emgu.TF.Lite
         private static XNNPackDelegate _xnnPackDelegate;
 
         /// <summary>
-        /// Get the default GPU delegate V2 for Android
+        /// Get the default XNNPackDelegate
         /// </summary>
         public static XNNPackDelegate DefaultXNNPackDelegate
         {
