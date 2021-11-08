@@ -55,6 +55,10 @@ public class CocoSsdMobilenetBehavior : MonoBehaviour
         {
             Texture2D t2d = texture as Texture2D;
             _drawableTexture.SetPixels32(t2d.GetPixels32());
+        } else if (texture is WebCamTexture)
+        {
+            WebCamTexture wct = texture as WebCamTexture;
+            _drawableTexture.SetPixels32(wct.GetPixels32());
         }
         else
         {
@@ -118,7 +122,7 @@ public class CocoSsdMobilenetBehavior : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        bool tryUseCamera = false;
+        bool tryUseCamera = true;
 
         bool loaded = Emgu.TF.Lite.TfLiteInvoke.Init();
 
