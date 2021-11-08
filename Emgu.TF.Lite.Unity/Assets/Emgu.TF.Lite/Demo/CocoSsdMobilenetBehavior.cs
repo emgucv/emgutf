@@ -61,6 +61,7 @@ public class CocoSsdMobilenetBehavior : MonoBehaviour
             Texture2D tmp = new Texture2D(texture.width, texture.height, GraphicsFormat.R8G8B8A8_SRGB, texture.mipmapCount, TextureCreationFlags.None);
             Graphics.CopyTexture(texture, tmp);
             _drawableTexture.SetPixels32(tmp.GetPixels32());
+            Destroy(tmp);
         }
 
         foreach (Annotation annotation in annotations)
