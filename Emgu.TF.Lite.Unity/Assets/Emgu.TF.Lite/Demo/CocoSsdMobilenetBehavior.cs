@@ -55,12 +55,17 @@ public class CocoSsdMobilenetBehavior : MonoBehaviour
         {
             Texture2D t2d = texture as Texture2D;
             _drawableTexture.SetPixels32(t2d.GetPixels32());
+        } else if (texture is WebCamTexture)
+        {
+            WebCamTexture wct = texture as WebCamTexture;
+            _drawableTexture.SetPixels32(wct.GetPixels32());
         }
         else
         {
             Texture2D tmp = new Texture2D(texture.width, texture.height, GraphicsFormat.R8G8B8A8_SRGB, texture.mipmapCount, TextureCreationFlags.None);
             Graphics.CopyTexture(texture, tmp);
             _drawableTexture.SetPixels32(tmp.GetPixels32());
+            Destroy(tmp);
         }
 
         foreach (Annotation annotation in annotations)
@@ -117,7 +122,7 @@ public class CocoSsdMobilenetBehavior : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        bool tryUseCamera = false;
+        bool tryUseCamera = true;
 
         bool loaded = Emgu.TF.Lite.TfLiteInvoke.Init();
 
