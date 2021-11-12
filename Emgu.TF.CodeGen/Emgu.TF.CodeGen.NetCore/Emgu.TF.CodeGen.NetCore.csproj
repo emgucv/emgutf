@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	<Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
@@ -24,7 +24,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Protobuf" Version="3.17.2" />
+    <PackageReference Include="Google.Protobuf" Version="3.19.1" />
   </ItemGroup>
 
   <ItemGroup>
