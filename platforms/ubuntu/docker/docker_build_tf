@@ -13,10 +13,13 @@ docker run \
   -v /tmp/build_output:/tmp/build_output \
   -v /etc/passwd:/etc/passwd \
   -w /src/workspace/tensorflow \
-  emgu/bazel-android:latest \
+  emgu/bazel-android:dotnet-6.0-bazel-4.2.1 \
   bazel \
   --output_user_root=/tmp/build_output \
-  build //tensorflow/tfextern:libtfextern.so 
+  build \
+  --verbose_failures \
+  --jobs=2 \
+  //tensorflow/tfextern:libtfextern.so 
 
 mkdir -p lib/x64
 cp -f tensorflow/bazel-bin/tensorflow/tfextern/*.so lib/x64
