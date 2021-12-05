@@ -11,13 +11,23 @@
    <PropertyGroup>
     <TFLiteBinaryDir>$(MSBuildThisFileDirectory)..\..\lib</TFLiteBinaryDir>
   </PropertyGroup> 
-          <PropertyGroup>
-        <EmguTFLiteWindowsLinkTarget>WindowsForms</EmguTFLiteWindowsLinkTarget>
+      <PropertyGroup>
+        <EmguTFLiteWindowsLinkTarget>Windows</EmguTFLiteWindowsLinkTarget>
+		<EmguTFLiteWindowsBuildX86 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x86'">True</EmguTFLiteWindowsBuildX86>
+        <EmguTFLiteWindowsNativeFileX86>$(TFLiteBinaryDir)\x86\tfliteextern.dll</EmguTFLiteWindowsNativeFileX86>
+        <EmguTFLiteWindowsErrorMessage Condition="'$(EmguTFLiteWindowsBuildX86)'=='True' AND !Exists('$(EmguTFLiteWindowsNativeFileX86)')">This package do not contain necessary binary for $(EmguTFLiteWindowsLinkTarget). windows_x86 is targeted, but file $(EmguTFLiteWindowsNativeFileX86) is missing. PInvoke may fail on Windows.</EmguTFLiteWindowsErrorMessage>
+        <EmguTFLiteWindowsDeployMessage Condition="'$(EmguTFLiteWindowsBuildX86)'=='True' AND Exists('$(EmguTFLiteWindowsNativeFileX86)')">$(EmguTFLiteWindowsDeployMessage)windows_x86 </EmguTFLiteWindowsDeployMessage>
         <EmguTFLiteWindowsBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguTFLiteWindowsBuildX64>
         <EmguTFLiteWindowsNativeFileX64>$(TFLiteBinaryDir)\x64\tfliteextern.dll</EmguTFLiteWindowsNativeFileX64>
         <EmguTFLiteWindowsErrorMessage Condition="'$(EmguTFLiteWindowsBuildX64)'=='True' AND !Exists('$(EmguTFLiteWindowsNativeFileX64)')">This package do not contain necessary binary for $(EmguTFLiteWindowsLinkTarget). windows_x64 is targeted, but file $(EmguTFLiteWindowsNativeFileX64) is missing. PInvoke may fail on Windows.</EmguTFLiteWindowsErrorMessage>
         <EmguTFLiteWindowsDeployMessage Condition="'$(EmguTFLiteWindowsBuildX64)'=='True' AND Exists('$(EmguTFLiteWindowsNativeFileX64)')">$(EmguTFLiteWindowsDeployMessage)windows_x64 </EmguTFLiteWindowsDeployMessage>
       </PropertyGroup>
+	  <ItemGroup Condition="'$(EmguTFLiteWindowsBuildX86)'=='True' AND Exists('$(EmguTFLiteWindowsNativeFileX86)')">
+        <Content Include="$(TFLiteBinaryDir)\x86\*.dll">
+          <Link>runtimes\win-x86\native\%(RecursiveDir)%(Filename)%(Extension)</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+      </ItemGroup>
       <ItemGroup Condition="'$(EmguTFLiteWindowsBuildX64)'=='True' AND Exists('$(EmguTFLiteWindowsNativeFileX64)')">
         <Content Include="$(TFLiteBinaryDir)\x64\*.dll">
           <Link>runtimes\win-x64\native\%(RecursiveDir)%(Filename)%(Extension)</Link>

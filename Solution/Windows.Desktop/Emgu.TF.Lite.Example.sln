@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.352
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Util.Shared", "..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.shproj", "{98561642-5EC3-4244-BAF9-6876D9BA5527}"
 EndProject
@@ -113,20 +113,20 @@ Global
 		{49943DC0-CC57-4CEE-837D-9984DB9DF902}.Release|Any CPU.Build.0 = Release|Any CPU
 		{49943DC0-CC57-4CEE-837D-9984DB9DF902}.Release|x64.ActiveCfg = Release|x64
 		{49943DC0-CC57-4CEE-837D-9984DB9DF902}.Release|x64.Build.0 = Release|x64
-		{49943DC0-CC57-4CEE-837D-9984DB9DF902}.Release|x86.ActiveCfg = Release|x86
-		{49943DC0-CC57-4CEE-837D-9984DB9DF902}.Release|x86.Build.0 = Release|x86
+		{49943DC0-CC57-4CEE-837D-9984DB9DF902}.Release|x86.ActiveCfg = Release|Any CPU
+		{49943DC0-CC57-4CEE-837D-9984DB9DF902}.Release|x86.Build.0 = Release|Any CPU
 		{0EEC5380-C708-4CAA-9A1C-FB70ED57A610}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0EEC5380-C708-4CAA-9A1C-FB70ED57A610}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0EEC5380-C708-4CAA-9A1C-FB70ED57A610}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{0EEC5380-C708-4CAA-9A1C-FB70ED57A610}.Debug|x64.Build.0 = Debug|Any CPU
-		{0EEC5380-C708-4CAA-9A1C-FB70ED57A610}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{0EEC5380-C708-4CAA-9A1C-FB70ED57A610}.Debug|x86.Build.0 = Debug|Any CPU
+		{0EEC5380-C708-4CAA-9A1C-FB70ED57A610}.Debug|x64.ActiveCfg = Debug|x64
+		{0EEC5380-C708-4CAA-9A1C-FB70ED57A610}.Debug|x64.Build.0 = Debug|x64
+		{0EEC5380-C708-4CAA-9A1C-FB70ED57A610}.Debug|x86.ActiveCfg = Debug|x86
+		{0EEC5380-C708-4CAA-9A1C-FB70ED57A610}.Debug|x86.Build.0 = Debug|x86
 		{0EEC5380-C708-4CAA-9A1C-FB70ED57A610}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EEC5380-C708-4CAA-9A1C-FB70ED57A610}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0EEC5380-C708-4CAA-9A1C-FB70ED57A610}.Release|x64.ActiveCfg = Release|Any CPU
-		{0EEC5380-C708-4CAA-9A1C-FB70ED57A610}.Release|x64.Build.0 = Release|Any CPU
-		{0EEC5380-C708-4CAA-9A1C-FB70ED57A610}.Release|x86.ActiveCfg = Release|Any CPU
-		{0EEC5380-C708-4CAA-9A1C-FB70ED57A610}.Release|x86.Build.0 = Release|Any CPU
+		{0EEC5380-C708-4CAA-9A1C-FB70ED57A610}.Release|x64.ActiveCfg = Release|x64
+		{0EEC5380-C708-4CAA-9A1C-FB70ED57A610}.Release|x64.Build.0 = Release|x64
+		{0EEC5380-C708-4CAA-9A1C-FB70ED57A610}.Release|x86.ActiveCfg = Release|x86
+		{0EEC5380-C708-4CAA-9A1C-FB70ED57A610}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
