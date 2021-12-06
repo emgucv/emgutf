@@ -260,7 +260,7 @@ ENDIF()
 
 #CHECK_BINARY_EXIST("lib/x86" "tfextern.dll" HAVE_WINDESKTOP_X86 OFF)
 CHECK_BINARY_EXIST("lib/x64" "tfextern.dll" HAVE_WINDESKTOP_X64 OFF)
-#CHECK_BINARY_EXIST("lib/x86" "tfliteextern.dll" HAVE_WINDESKTOP_X86_LITE OFF)
+CHECK_BINARY_EXIST("lib/x86" "tfliteextern.dll" HAVE_WINDESKTOP_X86_LITE OFF)
 CHECK_BINARY_EXIST("lib/x64" "tfliteextern.dll" HAVE_WINDESKTOP_X64_LITE OFF)
 CHECK_BINARY_EXIST("lib/x64" "cudart64*.dll" HAVE_WINDESKTOP_X64_CUDA OFF)
 
@@ -284,19 +284,27 @@ IF(HAVE_WINDESKTOP_X64 OR HAVE_WINDESKTOP_X64_CUDA)
   MESSAGE(STATUS "HAVE_WINDESKTOP: ${HAVE_WINDESKTOP}")
 ENDIF()
 
-
-IF (HAVE_WINDESKTOP_X64_LITE)
-  SET(WINDESKTOP_LITE_LABEL "-windesktop_x64")
+SET(HAVE_WINDESKTOP_LITE OFF)
+IF (HAVE_WINDESKTOP_X86_LITE OR HAVE_WINDESKTOP_X64_LITE)
+  SET(HAVE_WINDESKTOP_LITE ON) 
+  MESSAGE(STATUS "HAVE_WINDESKTOP_LITE: ${HAVE_WINDESKTOP_LITE}")
   IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/bazel-bin/external/XNNPACK)
 	SET(HAVE_WINDESKTOP_X64_LITE_XNN ON)
 	SET(WINDESKTOP_LITE_LABEL "${WINDESKTOP_LITE_LABEL}_xnn")
   ENDIF()
 ENDIF()
-SET(HAVE_WINDESKTOP_LITE OFF)
-IF(HAVE_WINDESKTOP_X64_LITE)
-  SET(HAVE_WINDESKTOP_LITE ON) 
-  MESSAGE(STATUS "HAVE_WINDESKTOP_LITE: ${HAVE_WINDESKTOP_LITE}")
+
+IF (HAVE_WINDESKTOP_X86_LITE AND HAVE_WINDESKTOP_X64_LITE)
+  SET(WINDESKTOP_LITE_LABEL "-windesktop_x64")
+  ELSEIF(HAVE_WINDESKTOP_X86_LITE)
+    SET(WINDESKTOP_LITE_LABEL "-windesktop_x86")
+  ELSEIF(HAVE_WINDESKTOP_X64_LITE)	
+    SET(WINDESKTOP_LITE_LABEL "-windesktop_x64")
+  ELSE()   
 ENDIF()
+
+#IF(HAVE_WINDESKTOP_X64_LITE) 
+#ENDIF()
 
 SET(WINDOWS_LABEL "${WINDESKTOP_LABEL}")
 IF ("${WINDOWS_LABEL}" STREQUAL "-UWP-windesktop")
@@ -415,7 +423,7 @@ ENDIF()
 SET(LITE_BUILD_LABEL "")
 IF(HAVE_LITE_BUILD)
   SET(LITE_BUILD_LABEL "${IOS_LITE_LABEL}${ANDROID_LITE_LABEL}${WINDESKTOP_LITE_LABEL}${OSX_LITE_LABEL}")
-  IF("${LITE_BUILD_LABEL}" STREQUAL "-ios-android-windesktop_x64_xnn-macos")
+  IF("${LITE_BUILD_LABEL}" STREQUAL "-ios-android-windesktop_xnn-macos")
     SET(LITE_BUILD_LABEL "-pro")
   ENDIF()
   SET(LITE_BUILD_LABEL "tflite${LITE_BUILD_LABEL}")
@@ -485,6 +493,7 @@ SET(EMGUTF_NUGET_BASE_ID "Emgu.TF")
 SET(EMGUTF_NUGET_ID "${EMGUTF_NUGET_BASE_ID}")
 SET(EMGUTF_MODEL_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.Models")
 SET(EMGUTF_PROTOBUF_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.Protobuf")
+SET(EMGU_WINDOWS_MSVCRT_X86_NUGET_ID "Emgu.runtime.windows.msvc.rt.x86")
 SET(EMGU_WINDOWS_MSVCRT_X64_NUGET_ID "Emgu.runtime.windows.msvc.rt.x64")
 
 SET(EMGUTF_NUGET_TITLE_ARCH "")
@@ -740,14 +749,26 @@ ENDIF()
 
 
 IF (HAVE_WINDESKTOP OR HAVE_WINDESKTOP_LITE)
-    SET(EMGU_WINDOWS_MSVCRT_X64_NUGET_TITLE "MSVC x64 runtime for windows")
-	SET(EMGU_WINDOWS_MSVCRT_X64_NUGET_FILE_LIST "${EMGU_WINDOWS_MSVCRT_X64_NUGET_FILE_LIST} 
+    IF (HAVE_WINDESKTOP OR HAVE_WINDESKTOP_X64_LITE)
+      SET(EMGU_WINDOWS_MSVCRT_X64_NUGET_TITLE "MSVC x64 runtime for windows")
+	  SET(EMGU_WINDOWS_MSVCRT_X64_NUGET_FILE_LIST "${EMGU_WINDOWS_MSVCRT_X64_NUGET_FILE_LIST} 
 	<file src=\"..\\..\\..\\lib\\x64\\concrt*.dll\" target=\"runtimes\\win-x64\\native\" /> 
 	<file src=\"..\\..\\..\\lib\\x64\\msvcp*.dll\" target=\"runtimes\\win-x64\\native\" /> 
 	<file src=\"..\\..\\..\\lib\\x64\\vcruntime*.dll\" target=\"runtimes\\win-x64\\native\" />     
 	<file src=\"..\\..\\..\\lib\\x64\\vccorlib*.dll\" target=\"runtimes\\win-x64\\native\" />     
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
     <file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+    ENDIF()
+	IF (HAVE_WINDESKTOP_X86_LITE)
+      SET(EMGU_WINDOWS_MSVCRT_X86_NUGET_TITLE "MSVC x86 runtime for windows")
+	  SET(EMGU_WINDOWS_MSVCRT_X86_NUGET_FILE_LIST "${EMGU_WINDOWS_MSVCRT_X86_NUGET_FILE_LIST} 
+	<file src=\"..\\..\\..\\lib\\x86\\concrt*.dll\" target=\"runtimes\\win-x86\\native\" /> 
+	<file src=\"..\\..\\..\\lib\\x86\\msvcp*.dll\" target=\"runtimes\\win-x86\\native\" /> 
+	<file src=\"..\\..\\..\\lib\\x86\\vcruntime*.dll\" target=\"runtimes\\win-x86\\native\" />     
+	<file src=\"..\\..\\..\\lib\\x86\\vccorlib*.dll\" target=\"runtimes\\win-x86\\native\" />     
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
+    <file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+    ENDIF()
 	IF(MSVC)
       SET(EMGU_WINDOWS_MSVCRT_VERSION ${CMAKE_CXX_COMPILER_VERSION})
 	  string(REPLACE "." ";" EMGU_WINDOWS_MSVCRT_VERSION_LIST ${EMGU_WINDOWS_MSVCRT_VERSION})
@@ -761,19 +782,35 @@ IF (HAVE_WINDESKTOP OR HAVE_WINDESKTOP_LITE)
 	    SET(EMGU_WINDOWS_MSVCRT_NUGET_VERSION "${EMGU_WINDOWS_MSVCRT_VERSION_MAJOR}.${EMGU_WINDOWS_MSVCRT_VERSION_MINOR}.${EMGU_WINDOWS_MSVCRT_VERSION_PATCH}")
 	  ENDIF()
 	  MESSAGE(STATUS "MSVCRT NUGET VERSION: ${EMGU_WINDOWS_MSVCRT_NUGET_VERSION}")
-	  
 	  SET(EMGUTF_WINDOWS_NUGET_DEPENDENCY "${EMGUTF_WINDOWS_NUGET_DEPENDENCY}
-	  <dependency id=\"${EMGU_WINDOWS_MSVCRT_X64_NUGET_ID}\" version=\"${EMGU_WINDOWS_MSVCRT_VERSION}\" />
+	  <dependency id=\"${EMGU_WINDOWS_MSVCRT_X86_NUGET_ID}\" version=\"${EMGU_WINDOWS_MSVCRT_VERSION}\" />
 	  ")
+	 
+	  IF (HAVE_WINDESKTOP_X86_LITE)
+	  SET(EMGUTF_LITE_WINDOWS_NUGET_DEPENDENCY "${EMGUTF_LITE_WINDOWS_NUGET_DEPENDENCY}
+	  <dependency id=\"${EMGU_WINDOWS_MSVCRT_X86_NUGET_ID}\" version=\"${EMGU_WINDOWS_MSVCRT_VERSION}\" />
+	  ")
+	  ENDIF()
+	  IF (HAVE_WINDESKTOP_X64_LITE)
 	  SET(EMGUTF_LITE_WINDOWS_NUGET_DEPENDENCY "${EMGUTF_LITE_WINDOWS_NUGET_DEPENDENCY}
 	  <dependency id=\"${EMGU_WINDOWS_MSVCRT_X64_NUGET_ID}\" version=\"${EMGU_WINDOWS_MSVCRT_VERSION}\" />
 	  ")
+	  ENDIF()
     ENDIF()
 ENDIF()
 
 IF( HAVE_WINDESKTOP_LITE )
+  IF( HAVE_WINDESKTOP_X64_LITE )
   SET(EMGUTF_LITE_WINDOWS_NUGET_FILE_LIST "${EMGUTF_LITE_WINDOWS_NUGET_FILE_LIST} 
     <file src=\"..\\..\\..\\lib\\x64\\*.dll\" exclude=\"..\\..\\..\\lib\\x64\\concrt*.dll;..\\..\\..\\lib\\x64\\msvcp*.dll;..\\..\\..\\lib\\x64\\vcruntime*.dll;..\\..\\..\\lib\\x64\\vccorlib*.dll\" target=\"runtimes\\win-x64\\native\" />
+	")
+  ENDIF()
+  IF( HAVE_WINDESKTOP_X86_LITE )
+  SET(EMGUTF_LITE_WINDOWS_NUGET_FILE_LIST "${EMGUTF_LITE_WINDOWS_NUGET_FILE_LIST} 
+    <file src=\"..\\..\\..\\lib\\x86\\*.dll\" exclude=\"..\\..\\..\\lib\\x86\\concrt*.dll;..\\..\\..\\lib\\x86\\msvcp*.dll;..\\..\\..\\lib\\x86\\vcruntime*.dll;..\\..\\..\\lib\\x86\\vccorlib*.dll\" target=\"runtimes\\win-x86\\native\" />
+	")
+  ENDIF()  
+  SET(EMGUTF_LITE_WINDOWS_NUGET_FILE_LIST "${EMGUTF_LITE_WINDOWS_NUGET_FILE_LIST} 
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"README.md\" target=\"docs\\\" />")
@@ -1088,9 +1125,13 @@ IF(HAVE_WINDESKTOP)
 	<file src=\"..\\..\\..\\lib\\x64\\*.dll\" exclude=\"..\\..\\..\\lib\\x64\\cu*.dll;..\\..\\..\\lib\\x64\\concrt*.dll;..\\..\\..\\lib\\x64\\msvcp*.dll;..\\..\\..\\lib\\x64\\vcruntime*.dll;..\\..\\..\\lib\\x64\\vccorlib*.dll\" target=\"runtimes\\win-x64\\native\" />")
 ENDIF()
 
-IF (HAVE_WINDESKTOP OR HAVE_WINDESKTOP_LITE)
+IF (HAVE_WINDESKTOP OR HAVE_WINDESKTOP_X64_LITE)
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_WINDOWS_MSVCRT_X64_NUGET_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_WINDOWS_MSVCRT_X64_NUGET_ID}/Package.nuspec)
     #CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_WINDOWS_MSVCRT_X64_NUGET_ID}.targets.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_WINDOWS_MSVCRT_X64_NUGET_ID}/${EMGU_WINDOWS_MSVCRT_X64_NUGET_ID}.targets)
+ENDIF()
+
+IF (HAVE_WINDESKTOP_X86_LITE)
+    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_WINDOWS_MSVCRT_X86_NUGET_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_WINDOWS_MSVCRT_X86_NUGET_ID}/Package.nuspec)    
 ENDIF()
 
 SET(EMGUTF_MODEL_NUGET_FILE_LIST "
