@@ -2,14 +2,10 @@
 #  Copyright (C) 2004-2021 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-IF(HAVE_WINDESKTOP_X64_LITE)
+IF(HAVE_WINDESKTOP_LITE)
 
 PROJECT(Emgu.TF.Lite.runtime.windows.nuget)
-#ADD_CUSTOM_TARGET(
-#   ${PROJECT_NAME} ALL
-#   COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../../../miscellaneous/nuget.exe" pack ${CMAKE_CURRENT_SOURCE_DIR}/Package.nuspec -OutputDirectory "${CMAKE_CURRENT_SOURCE_DIR}/../"
-#   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-#)
+
   get_filename_component(NUGET_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
   BUILD_NUGET_PACKAGE(
     ${PROJECT_NAME} 

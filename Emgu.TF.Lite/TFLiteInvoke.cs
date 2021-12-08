@@ -120,9 +120,9 @@ namespace Emgu.TF.Lite
                         if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime
                             .InteropServices.OSPlatform.Windows))
                         {
-                            throw new Exception(
-                                "Emgu TF Lite is only compatible with 64bit mode in Windows (not compatible with 32bit x86 mode)");
-                            //subfolderOptions.Add(Path.Combine("runtimes", "win-x86", "native"));
+                            //throw new Exception(
+                            //    "Emgu TF Lite is only compatible with 64bit mode in Windows (not compatible with 32bit x86 mode)");
+                            subfolderOptions.Add(Path.Combine("runtimes", "win-x86", "native"));
                         }
 
                         subfolderOptions.Add("x86");
