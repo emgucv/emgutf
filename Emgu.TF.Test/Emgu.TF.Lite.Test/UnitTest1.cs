@@ -10,6 +10,7 @@ using Emgu.TF.Lite;
 using Emgu.TF.Lite.Models;
 using System.Threading;
 using System.Threading.Tasks;
+using Emgu.CV;
 
 namespace Emgu.TF.Lite.Test
 {
@@ -20,6 +21,7 @@ namespace Emgu.TF.Lite.Test
         public void TestGetVersion()
         {
             String version = TfLiteInvoke.Version;
+            String emgucvBuildInfo = Emgu.CV.CvInvoke.BuildInformation;
         }
 
         [TestAttribute]

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.452
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Util.Shared", "..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.shproj", "{98561642-5EC3-4244-BAF9-6876D9BA5527}"
 EndProject
@@ -96,8 +96,8 @@ Global
 		{47C5C217-8CD6-4A69-9AD8-BE574FB5A149}.Debug|iPhone.Build.0 = Debug|Any CPU
 		{47C5C217-8CD6-4A69-9AD8-BE574FB5A149}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
 		{47C5C217-8CD6-4A69-9AD8-BE574FB5A149}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{47C5C217-8CD6-4A69-9AD8-BE574FB5A149}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{47C5C217-8CD6-4A69-9AD8-BE574FB5A149}.Debug|x64.Build.0 = Debug|Any CPU
+		{47C5C217-8CD6-4A69-9AD8-BE574FB5A149}.Debug|x64.ActiveCfg = Debug|x64
+		{47C5C217-8CD6-4A69-9AD8-BE574FB5A149}.Debug|x64.Build.0 = Debug|x64
 		{47C5C217-8CD6-4A69-9AD8-BE574FB5A149}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47C5C217-8CD6-4A69-9AD8-BE574FB5A149}.Release|Any CPU.Build.0 = Release|Any CPU
 		{47C5C217-8CD6-4A69-9AD8-BE574FB5A149}.Release|iPhone.ActiveCfg = Release|Any CPU
@@ -112,8 +112,8 @@ Global
 		{D1F84983-691B-4E10-B202-448229F6564E}.Debug|iPhone.Build.0 = Debug|Any CPU
 		{D1F84983-691B-4E10-B202-448229F6564E}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
 		{D1F84983-691B-4E10-B202-448229F6564E}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{D1F84983-691B-4E10-B202-448229F6564E}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{D1F84983-691B-4E10-B202-448229F6564E}.Debug|x64.Build.0 = Debug|Any CPU
+		{D1F84983-691B-4E10-B202-448229F6564E}.Debug|x64.ActiveCfg = Debug|x64
+		{D1F84983-691B-4E10-B202-448229F6564E}.Debug|x64.Build.0 = Debug|x64
 		{D1F84983-691B-4E10-B202-448229F6564E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1F84983-691B-4E10-B202-448229F6564E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D1F84983-691B-4E10-B202-448229F6564E}.Release|iPhone.ActiveCfg = Release|Any CPU
