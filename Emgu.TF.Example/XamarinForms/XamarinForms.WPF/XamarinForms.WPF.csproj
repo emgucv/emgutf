@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <LangVersion>7.1</LangVersion>
     <UseWPF>true</UseWPF>
 	<Platforms>AnyCPU;x64</Platforms>
@@ -31,7 +31,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
-    <PackageReference Include="Xamarin.Forms.Platform.WPF" Version="5.0.0.2083" />
+    <PackageReference Include="Xamarin.Forms.Platform.WPF" Version="5.0.0.2196" />
     <PackageReference Include="WpfLightToolkit">
       <Version>1.0.3</Version>
     </PackageReference>

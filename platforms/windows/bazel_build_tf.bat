@@ -61,6 +61,7 @@ ECHO Using BAZEL_VC=%BAZEL_VC%
 IF EXIST "%PROGRAMFILES_DIR_X86%\Microsoft Visual Studio\Shared\Python37_64" SET PYTHON_BASE_PATH=%PROGRAMFILES_DIR_X86%\Microsoft Visual Studio\Shared\Python37_64
 IF EXIST "C:\python-virt\python37" SET PYTHON_BASE_PATH=C:\python-virt\python37
 IF EXIST "C:\python38" SET PYTHON_BASE_PATH=C:\python38
+IF EXIST "C:\python310" SET PYTHON_BASE_PATH=C:\python310
 
 SET PYTHON_BIN_PATH=%PYTHON_BASE_PATH%\python.exe
 SET PYTHON_LIB_PATH=%PYTHON_BASE_PATH%\lib\site-packages
@@ -94,11 +95,12 @@ cd tensorflow\tensorflow\tools\ci_build\windows
 SET MSYS64_PATH=c:\msys64
 SET MSYS64_BIN=%MSYS64_PATH%\usr\bin
 
+TF_BAZEL_EXTRA_CONFIG=--jobs=1
+
 IF "%3%" == "mkl" GOTO BUILD_WITH_MKL
 GOTO END_MKL
 :BUILD_WITH_MKL
-SET TF_BAZEL_EXTRA_CONFIG=--config=mkl
-
+SET TF_BAZEL_EXTRA_CONFIG=%TF_BAZEL_EXTRA_CONFIG% --config=mkl
 :END_MKL
 
 IF "%2%" == "gpu" GOTO BUILD_GPU
@@ -192,12 +194,12 @@ cp -rf tensorflow\bazel-tensorflow\external\protobuf_archive .
 
 IF "%3%" == "mkl" GOTO DEPLOY_DEPENDENCY_MKL
 GOTO END_OF_DEPLOY_DEPENDENCY_MKL
-:DEPLOY_DEPENDENCY_MKL
-SET TF_BAZEL_EXTRA_CONFIG=--config=mkl
 
-:END_OF_DEPLOY_DEPENDENCY_MKL
+:DEPLOY_DEPENDENCY_MKL
 SET INTEL_REDIST=%ONEAPI_ROOT%compiler\latest\windows\redist\intel64_win\compiler
 copy /Y "%INTEL_REDIST%\LIBIOMP5MD.DLL" lib\x64\
+:END_OF_DEPLOY_DEPENDENCY_MKL
+
 
 REM IF "%4%"=="dev" GOTO END_OF_CLEAN
 REM :CLEAN

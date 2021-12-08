@@ -20,7 +20,7 @@ docker run \
   -v /tmp/build_output:/tmp/build_output \
   -v /etc/passwd:/etc/passwd \
   -w /src/workspace/tensorflow \
-  emgu/bazel-android:latest \
+  emgu/bazel-android:dotnet-6.0-bazel-4.2.1 \
   bazel \
   --output_user_root=/tmp/build_output \
   build -c opt \
