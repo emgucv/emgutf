@@ -82,5 +82,14 @@ namespace Emgu.TF.Lite
             }
 
         }
+
+        public static bool HasXNNPack
+        {
+            get
+            {
+                XNNPackDelegate d = DefaultXNNPackDelegate;
+                return d != null;
+            }
+        }
     }
 }

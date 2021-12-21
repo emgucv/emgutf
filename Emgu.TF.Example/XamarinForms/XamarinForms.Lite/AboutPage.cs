@@ -20,17 +20,22 @@ namespace Emgu.TF.XamarinForms
             String tensorflowVer = Emgu.TF.Lite.TfLiteInvoke.Version;
 
             if (htmlSource == null)
+            {
+                bool hasXnnPack = Emgu.TF.Lite.TfLiteInvoke.HasXNNPack;
+
                 htmlSource = String.Format(
                     @"<html>
                     <body>
                     <H1> Emgu TF Lite Examples </H1>
                     <H3> Tensorflow Lite version: {0} </H3>
+                    <H3> Has XNNPack: {1} </H3>
                     <H3> Tensorflow Lite <a href=https://github.com/tensorflow/tensorflow/blob/master/LICENSE > license</a> </H3>
                     <H3><a href=http://www.emgu.com/wiki/index.php/Emgu_TF >Visit our website</a> <br/><br/><H3>
                     <H3><a href=mailto:support@emgu.com>Email Support</a> <br/><br/><H3>"
                     + @"
                     </body>
-                    </html>", tensorflowVer);
+                    </html>", tensorflowVer, hasXnnPack);
+            }
 
             Content = 
                     new WebView()
