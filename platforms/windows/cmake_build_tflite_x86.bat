@@ -17,12 +17,12 @@ IF "%1%"=="32" SET BUILD_ARCH=-A Win32
 IF "%1%"=="ARM" SET BUILD_ARCH=-A ARM
 IF "%1%"=="ARM64" SET BUILD_ARCH=-A ARM64
 
-IF NOT "%2%"=="xnn" GOTO END_OF_XNN
+IF NOT "%2%"=="xnn" GOTO WITHOUT_XNN
 :WITH_XNN
-SET CMAKE_XNN_FLAGS= -DTFLITE_ENABLE_XNNPACK:BOOL=ON
+SET CMAKE_XNN_FLAGS= -DTFLITE_ENABLE_XNNPACK:BOOL=ON 
 GOTO END_OF_XNN
 :WITHOUT_XNN
-SET CMAKE_XNN_FLAGS= -DTFLITE_ENABLE_XNNPACK:BOOL=OFF
+SET CMAKE_XNN_FLAGS= -DTFLITE_ENABLE_XNNPACK:BOOL=OFF 
 :END_OF_XNN
 
 SET PROJECT=tfliteextern
@@ -52,6 +52,8 @@ IF EXIST "%PROGRAMFILES_DIR_X86%\Anaconda3\python.exe" SET PYTHON_EXECUTABLE=%PR
 IF EXIST "%PROGRAMFILES_DIR%\Anaconda2\python.exe" SET PYTHON_EXECUTABLE=%PROGRAMFILES_DIR%\Anaconda2\python.exe
 IF EXIST "%PROGRAMFILES_DIR%\Anaconda3\python.exe" SET PYTHON_EXECUTABLE=%PROGRAMFILES_DIR%\Anaconda3\python.exe
 IF EXIST "%PROGRAMFILES_DIR_X86%\Microsoft Visual Studio\Shared\Anaconda3_64\python.exe" SET PYTHON_EXECUTABLE=%PROGRAMFILES_DIR_X86%\Microsoft Visual Studio\Shared\Anaconda3_64\python.exe
+IF EXIST "C:\Python38" SET PYTHON_EXECUTABLE=C:\Python38\python.exe
+IF EXIST "C:\Python310" SET PYTHON_EXECUTABLE=C:\Python310\python.exe
 
 REM Find Visual Studio or Msbuild
 SET VS2005="%VS80COMNTOOLS%..\IDE\devenv.com"
@@ -66,6 +68,9 @@ SET VS2017="%VS2017_DIR%\Common7\IDE\devenv.com"
 
 FOR /F "tokens=* USEBACKQ" %%F IN (`miscellaneous\vswhere.exe -version [16.0^,17.0^) -property installationPath`) DO SET VS2019_DIR=%%F
 SET VS2019="%VS2019_DIR%\Common7\IDE\devenv.com"
+
+FOR /F "tokens=* USEBACKQ" %%F IN (`miscellaneous\vswhere.exe -version [17.0^,18.0^) -property installationPath`) DO SET VS2022_DIR=%%F
+SET VS2022="%VS2022_DIR%\Common7\IDE\devenv.com"
 
 FOR /F "tokens=* USEBACKQ" %%F IN (`miscellaneous\vswhere.exe -products * -property installationPath`) DO SET VS_BUILDTOOLS=%%F
 
@@ -92,6 +97,7 @@ IF EXIST %VS2013% SET DEVENV=%VS2013%
 IF EXIST %VS2015% SET DEVENV=%VS2015%
 IF EXIST %VS2017% SET DEVENV=%VS2017%
 IF EXIST %VS2019% SET DEVENV=%VS2019%
+IF EXIST %VS2022% SET DEVENV=%VS2022%
 REM IF "%2%"=="gpu" GOTO SET_BUILD_TYPE
 REM IF NOT "%3%"=="WindowsStore10" GOTO SET_BUILD_TYPE
 
@@ -110,6 +116,7 @@ IF %DEVENV%==%VS2013% SET BUILD_TYPE=/Build Release /project %PROJECT%
 IF %DEVENV%==%VS2015% SET BUILD_TYPE=/Build Release /project %PROJECT%
 IF %DEVENV%==%VS2017% SET BUILD_TYPE=/Build Release /project %PROJECT%
 IF %DEVENV%==%VS2019% SET BUILD_TYPE=/Build Release /project %PROJECT%
+IF %DEVENV%==%VS2022% SET BUILD_TYPE=/Build Release /project %PROJECT%
 
 :SET_CLEAN_TYPE
 IF %DEVENV%=="%MSBUILD35%" SET CLEAN_TYPE=/property:Configuration=Release /t:clean %MSBUILD_MULTIPROCESS%
@@ -124,6 +131,7 @@ IF %DEVENV%==%VS2013% SET CLEAN_TYPE=/Clean Release
 IF %DEVENV%==%VS2015% SET CLEAN_TYPE=/Clean Release
 IF %DEVENV%==%VS2017% SET CLEAN_TYPE=/Clean Release
 IF %DEVENV%==%VS2019% SET CLEAN_TYPE=/Clean Release
+IF %DEVENV%==%VS2022% SET CLEAN_TYPE=/Clean Release
 
 IF %DEVENV%=="%MSBUILD35%" SET CMAKE_CONF="Visual Studio 12%OS_MODE%"
 IF %DEVENV%=="%MSBUILD40%" SET CMAKE_CONF="Visual Studio 12%OS_MODE%"
@@ -137,6 +145,7 @@ IF %DEVENV%==%VS2013% SET CMAKE_CONF="Visual Studio 12%OS_MODE%"
 IF %DEVENV%==%VS2015% SET CMAKE_CONF="Visual Studio 14%OS_MODE%"
 IF %DEVENV%==%VS2017% SET CMAKE_CONF="Visual Studio 15%OS_MODE%"
 IF %DEVENV%==%VS2019% SET CMAKE_CONF="Visual Studio 16" %BUILD_ARCH%
+IF %DEVENV%==%VS2022% SET CMAKE_CONF="Visual Studio 17" %BUILD_ARCH%
 
 REM call tensorflow\tensorflow\contrib\cmake\make.bat
 
