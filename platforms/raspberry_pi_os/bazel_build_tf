@@ -4,7 +4,7 @@ cd "$(dirname "$0")"
 cd ../..
 cd tensorflow
 
-bazel --host_jvm_args=-Xmx2g build --jobs=1 --config=monolithic --config=noaws --host_linkopt=-latomic //tensorflow/tfextern:libtfextern.so 
+bazel --host_jvm_args=-Xmx2g build --jobs=1 --config=monolithic --config=noaws --host_linkopt=-latomic --verbose_failures //tensorflow/tfextern:libtfextern.so 
 #bazel build --jobs=2 --config=monolithic --config=noaws --host_linkopt=-latomic //tensorflow:libtensorflow_framework.so
 cd ..
 
