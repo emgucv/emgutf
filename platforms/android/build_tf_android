@@ -1,9 +1,18 @@
 #!/bin/bash
 
-if [ \( -n "$1" \) -o \( -n "$2" \) ]; then
-    echo "Building with config android_$1 for $2 architecture"
+if [ \( -n "$1" \) ]; then
+    if [ "$1" = "x86" ]; then
+	arch="x86"
+    elif [ "$1" = "x86_64" ]; then
+	arch="x86_64"
+    elif [ "$1" = "arm" ]; then
+	arch="armeabi-v7a"
+    elif [ "$1" = "arm64" ]; then
+	arch="arm64-b8a"
+    fi
+    echo "Building with config android_$1 for $arch architecture"
 else
-    echo "Please specify the android config and architecture to build. e.g. $0 x86 x86; $0 x86_64 x86_64; $0 arm armeabi-v7a; $0 arm64 arm64-v8a;"
+    echo "Please specify the android config and architecture to build. e.g. $0 x86; $0 x86_64; $0 arm; $0 arm64;"
     exit 1
 fi
 
@@ -20,7 +29,7 @@ set -x
 bazel --output_user_root=$OUTPUT_USER_ROOT \
       build -c opt \
       --config=android_$1 \
-      --action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk-bundle \
+      --action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/21.4.7075529 \
       --action_env ANDROID_NDK_API_LEVEL=28 \
       --action_env ANDROID_SDK_API_LEVEL=23 \
       --action_env ANDROID_SDK_HOME=/usr/lib/android-sdk \
@@ -29,13 +38,14 @@ bazel --output_user_root=$OUTPUT_USER_ROOT \
       --copt='-fpic' \
       --config monolithic \
       --verbose_failures \
+      $extra_param \
       //tensorflow/tfextern:libtfextern.so \
-      $extra_param 
+
 
 #      --action_env ANDROID_BUILD_TOOLS_VERSION=debian \
 
 set +x
 cd ..
 
-mkdir -p lib/android/$2
-cp -rf tensorflow/bazel-bin/tensorflow/tfextern/*.so lib/android/$2
+mkdir -p lib/android/$arch
+cp -rf tensorflow/bazel-bin/tensorflow/tfextern/*.so lib/android/$arch
