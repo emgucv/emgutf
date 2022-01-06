@@ -83,6 +83,9 @@ namespace Emgu.TF.Lite
 
         }
 
+        /// <summary>
+        /// Return true if tflite is build with XNNPack
+        /// </summary>
         public static bool HasXNNPack
         {
             get
