@@ -34,9 +34,9 @@
     <CppCommentsFixup>False</CppCommentsFixup>
     <FrameworkVersion>.NET Core/.NET Standard/.NET 5.0+</FrameworkVersion>
     <HelpTitle>Emgu TF Lite Library Documentation</HelpTitle>
-    <CopyrightText>2021 Emgu Corporation, All Rights Reserved,</CopyrightText>
+    <CopyrightText>$([System.DateTime]::Now.ToString(yyyy)) Emgu Corporation, All Rights Reserved,</CopyrightText>
     <FeedbackEMailAddress>support%40emgu.com</FeedbackEMailAddress>
-    <HeaderText>http://www.emgu.com</HeaderText>
+    <HeaderText>https://www.emgu.com</HeaderText>
     <FooterText>For questions and discussions please visit https://github.com/emgucv/emgutf/issues</FooterText>
     <PresentationStyle>VS2013</PresentationStyle>
     <DocumentationSources>
