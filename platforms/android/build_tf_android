@@ -8,7 +8,7 @@ if [ \( -n "$1" \) ]; then
     elif [ "$1" = "arm" ]; then
 	arch="armeabi-v7a"
     elif [ "$1" = "arm64" ]; then
-	arch="arm64-b8a"
+	arch="arm64-v8a"
     fi
     echo "Building with config android_$1 for $arch architecture"
 else

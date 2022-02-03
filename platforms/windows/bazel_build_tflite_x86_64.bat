@@ -1,3 +1,4 @@
+@echo on
 
 pushd %~p0
 cd ../..
