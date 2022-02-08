@@ -6,9 +6,7 @@ mkdir -p build
 
 cd build 
 
-#cd ../..
-
-cmake ../../..
+cmake ../../../..
 
 make
 

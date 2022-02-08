@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd "$(dirname "$0")"
-cd ../..
+cd ../../..
 cd tensorflow
 
 bazel build --jobs=2 //tensorflow/tfliteextern:libtfliteextern.so  

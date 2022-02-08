@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd "$(dirname "$0")"
-cd ../..
+cd ../../..
 cd tensorflow
 
 bazel --host_jvm_args=-Xmx2g build --jobs=1 --config=monolithic --config=noaws --host_linkopt=-latomic --verbose_failures //tensorflow/tfextern:libtfextern.so 
