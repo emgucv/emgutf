@@ -129,7 +129,7 @@ REM SET TF_CUDA_COMPUTE_CAPABILITIES=7.0
 SET CUDA_TOOLKIT_PATH=C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v%TF_CUDA_VERSION%
 SET CUDNN_INSTALL_PATH=%CUDA_TOOLKIT_PATH%
 echo %CUDA_TOOLKIT_PATH% > ../../CUDA_TOOLKIT_PATH.txt
-call cmd.exe /v /c "set PATH=%MSYS64_BIN%;%CUDA_TOOLKIT_PATH%/extras/CUPTI/lib64;%PATH% & %MSYS64_BIN%\bash.exe libtensorflow_gpu.sh"
+call cmd.exe /v /c "set PATH=%PYTHON_BASE_PATH%;%MSYS64_BIN%;%CUDA_TOOLKIT_PATH%/extras/CUPTI/lib64;%PATH% & %MSYS64_BIN%\bash.exe libtensorflow_gpu.sh"
 
 :END_OF_BUILD
 
@@ -148,7 +148,7 @@ SET MSYS_BIN=%MSYS_PATH%\usr\bin
 IF EXIST "%MSYS_BIN%\bazel.exe" SET BAZEL_COMMAND=%MSYS_BIN%\bazel.exe
 
 REM call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build //tensorflow/tfextern:libtfextern.so --verbose_failures %DOCKER_FLAGS% --local_ram_resources="HOST_RAM*.2" --local_cpu_resources="HOST_CPUS*.2" --jobs=2
-call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build //tensorflow/tfextern:libtfextern.so --verbose_failures %DOCKER_FLAGS% %TF_BAZEL_EXTRA_CONFIG%
+call cmd.exe /v /c "set PATH=%PYTHON_BASE_PATH%;%MSYS64_BIN%;%CUDA_TOOLKIT_PATH%/extras/CUPTI/lib64;%PATH% & %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build //tensorflow/tfextern:libtfextern.so --verbose_failures %DOCKER_FLAGS% %TF_BAZEL_EXTRA_CONFIG%"
 cd ..
 
 cp -f tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so lib/x64/tfextern.dll
