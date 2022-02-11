@@ -23,7 +23,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Runtime.Window
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Runtime.Ubuntu", "..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Lite.Runtime.Ubuntu.shproj", "{A481CD6D-F3FD-40D3-BA64-64B46219D09E}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Runtime.Raspbian", "..\..\Emgu.TF.Runtime\Raspbian\Emgu.TF.Lite.Runtime.Raspbian.shproj", "{32EBEB2C-7258-4987-9C05-C1952471F8C4}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Runtime.Debian", "..\..\Emgu.TF.Runtime\Debian\Emgu.TF.Lite.Runtime.Debian.shproj", "{32EBEB2C-7258-4987-9C05-C1952471F8C4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamarinForms.Lite.WPF", "..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite.WPF\XamarinForms.Lite.WPF.csproj", "{49943DC0-CC57-4CEE-837D-9984DB9DF902}"
 EndProject
@@ -44,7 +44,7 @@ Global
 		..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Lite.Runtime.Ubuntu.projitems*{2622cba3-4b2d-4b2b-8075-1fa9f5f5bf16}*SharedItemsImports = 5
 		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems*{2622cba3-4b2d-4b2b-8075-1fa9f5f5bf16}*SharedItemsImports = 5
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite\XamarinForms.Lite.projitems*{26f4d7af-57b6-4d2d-9a1c-aafa757ddc4a}*SharedItemsImports = 13
-		..\..\Emgu.TF.Runtime\Raspbian\Emgu.TF.Lite.Runtime.Raspbian.projitems*{32ebeb2c-7258-4987-9c05-c1952471f8c4}*SharedItemsImports = 13
+		..\..\Emgu.TF.Runtime\Debian\Emgu.TF.Lite.Runtime.Debian.projitems*{32ebeb2c-7258-4987-9c05-c1952471f8c4}*SharedItemsImports = 13
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite\XamarinForms.Lite.projitems*{49943dc0-cc57-4cee-837d-9984db9df902}*SharedItemsImports = 5
 		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems*{49943dc0-cc57-4cee-837d-9984db9df902}*SharedItemsImports = 5
 		..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Lite.Runtime.Mac.projitems*{8519b2b8-e96b-47fd-a466-c6031d34aaab}*SharedItemsImports = 13

@@ -77,7 +77,8 @@
 
   <Import Project="..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Runtime.Ubuntu.projitems" Label="Shared" /> 
 
-  <Import Project="..\..\Emgu.TF.Runtime\Raspbian\Emgu.TF.Runtime.Raspbian.projitems" Label="Shared" />
+  <Import Project="..\..\Emgu.TF.Runtime\Debian\Emgu.TF.Runtime.Debian.projitems" Label="Shared" /> 
+
 
   <!--
   <Target Name="DeployBinary" AfterTargets="AfterBuild">

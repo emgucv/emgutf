@@ -34,7 +34,11 @@ IF(HAVE_LINUX_X86_64)
 ENDIF()
   
 IF(HAVE_LINUX_ARM)
-  add_subdirectory(Emgu.TF.runtime.linux-arm)
+  add_subdirectory(Emgu.TF.runtime.debian-arm)
+ENDIF()
+
+IF(HAVE_LINUX_ARM64)
+  add_subdirectory(Emgu.TF.runtime.debian-arm64)
 ENDIF()
 
 #MESSAGE(STATUS "-------HAVE_OSX_LITE: ${HAVE_OSX_LITE}")
@@ -68,5 +72,7 @@ IF ( HAVE_IOS_LITE )
 ENDIF()
 
 add_subdirectory(Emgu.TF.Lite.runtime.ubuntu)
-add_subdirectory(Emgu.TF.Lite.runtime.linux-arm)
+
+add_subdirectory(Emgu.TF.Lite.runtime.debian-arm)
+add_subdirectory(Emgu.TF.Lite.runtime.debian-arm64)
 

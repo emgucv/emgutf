@@ -2,10 +2,9 @@
 #  Copyright (C) 2004-2022 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-#IF(IS_RASPBIAN AND HAVE_LINUX_ARM)
-IF(HAVE_LINUX_ARM)
+IF(HAVE_LINUX_ARM64)
   
-  PROJECT(Emgu.TF.runtime.linux-arm.nuget)
+  PROJECT(Emgu.TF.runtime.debian-arm64.nuget)
 
   get_filename_component(NUGET_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
 
@@ -18,14 +17,8 @@ IF(HAVE_LINUX_ARM)
 	) 
 
   IF (EMGU_NUGET_SIGN_FOUND)
-    EMGU_SIGN_NUGET(${PROJECT_NAME} "${NUGET_OUTPUT_DIR}/${EMGUTF_RASPBERRY_NUGET_ID}.${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}.nupkg")
+    EMGU_SIGN_NUGET(${PROJECT_NAME} "${NUGET_OUTPUT_DIR}/${EMGUTF_DEBIAN_ARM64_NUGET_ID}.${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}.nupkg")
   ENDIF()
-
-  #ADD_CUSTOM_TARGET(
-  #  ${PROJECT_NAME} ALL
-  #  COMMAND ${DOTNET_EXECUTABLE} pack -c ${DEFAULT_CS_CONFIG} "${CMAKE_CURRENT_SOURCE_DIR}/../../../Emgu.TF/Emgu.TF.Netstandard/Emgu.TF.Netstandard.csproj" -p:NuspecFile="${CMAKE_CURRENT_SOURCE_DIR}/Package.nuspec" -o "${CMAKE_CURRENT_SOURCE_DIR}/../"
-  #  WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-  #  )
   
   ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.nuget)
   

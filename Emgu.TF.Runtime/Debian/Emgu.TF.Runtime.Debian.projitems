@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>ee4e654c-f7e9-44ef-bcfc-626df8ef5dae</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Emgu.TF</Import_RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <EmguTFDebianBinaryDir>$(MSBuildThisFileDirectory)..\..\lib</EmguTFDebianBinaryDir>
+    <EmguTFDebianDir>$(MSBuildThisFileDirectory)</EmguTFDebianDir>
+  </PropertyGroup>
+  <PropertyGroup>
+    <EmguTFDebianLinkTarget>Debian</EmguTFDebianLinkTarget>
+    
+    <EmguTFDebianBuildArm Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='ARM'">True</EmguTFDebianBuildArm>
+    <EmguTFDebianNativeFileArm>$(EmguTFDebianBinaryDir)\arm\libtfextern.so</EmguTFDebianNativeFileArm>
+    <EmguTFDebianErrorMessage Condition="'$(EmguTFDebianBuildArm)'=='True' AND !Exists('$(EmguTFDebianNativeFileArm)')">This package do not contain necessary binary for $(EmguTFDebianLinkTarget). Debian arm is targeted, but file $(EmguTFDebianNativeFileArm) is missing. PInvoke may fail on Debian arm platforms</EmguTFDebianErrorMessage>
+    <EmguTFDebianDeployMessage Condition="'$(EmguTFDebianBuildArm)'=='True' AND Exists('$(EmguTFDebianNativeFileArm)')">$(EmguTFDebianDeployMessage)Debian_arm </EmguTFDebianDeployMessage>
+
+    <EmguTFDebianBuildArm64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='ARM64'">True</EmguTFDebianBuildArm64>
+    <EmguTFDebianNativeFileArm64>$(EmguTFDebianBinaryDir)\arm64\libtfextern.so</EmguTFDebianNativeFileArm64>
+    <EmguTFDebianErrorMessage Condition="'$(EmguTFDebianBuildArm64)'=='True' AND !Exists('$(EmguTFDebianNativeFileArm64)')">This package do not contain necessary binary for $(EmguTFDebianLinkTarget). Debian arm64 is targeted, but file $(EmguTFDebianNativeFileArm64) is missing. PInvoke may fail on Debian arm64 platforms</EmguTFDebianErrorMessage>
+    <EmguTFDebianDeployMessage Condition="'$(EmguTFDebianBuildArm64)'=='True' AND Exists('$(EmguTFDebianNativeFileArm64)')">$(EmguTFDebianDeployMessage)Debian_arm64 </EmguTFDebianDeployMessage>
+
+  </PropertyGroup>
+  <ItemGroup Condition="'$(EmguTFDebianBuildArm)'=='True' AND Exists('$(EmguTFDebianNativeFileArm)')">
+    <Content Include="$(EmguTFDebianBinaryDir)\arm\*.so">
+      <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup Condition="'$(EmguTFDebianBuildArm64)'=='True' AND Exists('$(EmguTFDebianNativeFileArm64)')">
+    <Content Include="$(EmguTFDebianBinaryDir)\arm64\*.so">
+      <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Target Name="EmguTFDebianPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <Warning Text="'$(EmguTFDebianErrorMessage)'" Condition="'$(EmguTFDebianErrorMessage)'!=''" />
+    <Message Text="Emgu TF Compiling with $(EmguTFDebianDeployMessage)binary" Condition="'$(EmguTFDebianDeployMessage)'!=''" Importance="High" />
+    <Message Text="Native binary is NOT deployed by the Emgu.TF.Runtime.Debian shared project." Condition="'$(EmguTFDebianDeployMessage)'==''" Importance="High" />
+  </Target>
+</Project>

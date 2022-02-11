@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>909c9d0e-442b-4fe8-9bb6-2c5754d294ae</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Emgu.TF.Lite</Import_RootNamespace>
+  </PropertyGroup>
+   <PropertyGroup>
+    <TFLiteBinaryDir>$(MSBuildThisFileDirectory)..\..\lib</TFLiteBinaryDir>
+  </PropertyGroup> 
+          <PropertyGroup>
+        <EmguTFLiteDebianLinkTarget>Debian</EmguTFLiteDebianLinkTarget>
+		
+        <EmguTFLiteDebianBuildArm Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='ARM'">True</EmguTFLiteDebianBuildArm>
+        <EmguTFLiteDebianNativeFileArm>$(TFLiteBinaryDir)\arm\libtfliteextern.so</EmguTFLiteDebianNativeFileArm>
+        <EmguTFLiteDebianErrorMessage Condition="'$(EmguTFLiteDebianBuildArm)'=='True' AND !Exists('$(EmguTFLiteDebianNativeFileArm)')">This package do not contain necessary binary for $(EmguTFLiteDebianLinkTarget). Debian_arm is targeted, but file $(EmguTFLiteDebianNativeFileArm) is missing. PInvoke may fail on Debian arm platform.</EmguTFLiteDebianErrorMessage>
+        <EmguTFLiteDebianDeployMessage Condition="'$(EmguTFLiteDebianBuildArm)'=='True' AND Exists('$(EmguTFLiteDebianNativeFileArm)')">$(EmguTFLiteDebianDeployMessage)Debian_arm </EmguTFLiteDebianDeployMessage>
+		
+		<EmguTFLiteDebianBuildArm64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='ARM64'">True</EmguTFLiteDebianBuildArm64>
+        <EmguTFLiteDebianNativeFileArm64>$(TFLiteBinaryDir)\arm64\libtfliteextern.so</EmguTFLiteDebianNativeFileArm64>
+        <EmguTFLiteDebianErrorMessage Condition="'$(EmguTFLiteDebianBuildArm64)'=='True' AND !Exists('$(EmguTFLiteDebianNativeFileArm64)')">This package do not contain necessary binary for $(EmguTFLiteDebianLinkTarget). Debian_arm64 is targeted, but file $(EmguTFLiteDebianNativeFileArm64) is missing. PInvoke may fail on Debian arm64 platform.</EmguTFLiteDebianErrorMessage>
+        <EmguTFLiteDebianDeployMessage Condition="'$(EmguTFLiteDebianBuildArm64)'=='True' AND Exists('$(EmguTFLiteDebianNativeFileArm64)')">$(EmguTFLiteDebianDeployMessage)Debian_arm64 </EmguTFLiteDebianDeployMessage>
+      </PropertyGroup>
+      <ItemGroup Condition="'$(EmguTFLiteDebianBuildArm)'=='True' AND Exists('$(EmguTFLiteDebianNativeFileArm)')">
+        <Content Include="$(TFLiteBinaryDir)\arm\*.so">
+          <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+      </ItemGroup>
+	  <ItemGroup Condition="'$(EmguTFLiteDebianBuildArm64)'=='True' AND Exists('$(EmguTFLiteDebianNativeFileArm64)')">
+        <Content Include="$(TFLiteBinaryDir)\arm64\*.so">
+          <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+      </ItemGroup>
+	  
+    <Target Name="EmguTFLiteDebianPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <Warning Text="'$(EmguTFLiteDebianErrorMessage)'" Condition="'$(EmguTFLiteDebianErrorMessage)'!=''" />
+    <Message Text="Emgu TF Lite Compiling with $(EmguTFLiteDebianDeployMessage)binary" Condition="'$(EmguTFLiteDebianDeployMessage)'!=''" Importance="High" />
+    <Message Text="No native binary is deployed by the Emgu.TF.Lite.Runtime.Debian shared project." Condition="'$(EmguTFLiteDebianDeployMessage)'==''" Importance="High" />
+  </Target>
+</Project>

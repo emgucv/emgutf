@@ -54,8 +54,8 @@ SET(CSC_TARGET_FRAMEWORK "" CACHE STRING "C# target framework")
 FIND_PACKAGE(CSharp REQUIRED)
 MESSAGE(STATUS "DOTNET_FOUND: ${DOTNET_FOUND}")
 INCLUDE (CheckPlatform)
-IF ( (IS_UBUNTU OR IS_RASPBIAN) AND NOT (DOTNET_FOUND))
-  MESSAGE(FATAL_ERROR "dotnet is required to build Emgu TF, please follow the instructions to install dotnet: https://dotnet.microsoft.com/download/dotnet/5.0")  
+IF ( (IS_UBUNTU OR IS_DEBIAN) AND NOT (DOTNET_FOUND))
+  MESSAGE(FATAL_ERROR "dotnet is required to build Emgu TF, please follow the instructions to install dotnet: https://dotnet.microsoft.com/download/dotnet/6.0")  
 ENDIF()
 #MESSAGE(STATUS "IS_UBUNTU: ${IS_UBUNTU}")
 INCLUDE (CSharpMacros)
@@ -147,8 +147,12 @@ ELSEIF(IS_UBUNTU)
   ELSE()
     SET(EMGUTF_ARCH "ubuntu_x86")
   ENDIF()
-ELSEIF(IS_RASPBIAN)
-  SET(EMGUTF_ARCH "raspbian_arm")
+ELSEIF(IS_DEBIAN)
+  IF(TARGET_ARCH_64)
+    SET(EMGUTF_ARCH "debian_arm64")
+  ELSE()
+    SET(EMGUTF_ARCH "debian_arm")
+  ENDIF()
 ELSE()
   SET(EMGUTF_ARCH ${CMAKE_SYSTEM_NAME})
 ENDIF()
@@ -161,6 +165,8 @@ IF(WIN32)
       SET(UNMANAGED_LIBRARY_OUTPUT_SUBFOLDER "/x64")
   ELSEIF("${EMGUTF_ARCH}" STREQUAL "arm")
 	SET(UNMANAGED_LIBRARY_OUTPUT_SUBFOLDER "/arm")
+  ELSEIF("${EMGUTF_ARCH}" STREQUAL "arm64")
+	SET(UNMANAGED_LIBRARY_OUTPUT_SUBFOLDER "/arm64")
   ELSE()
     SET(UNMANAGED_LIBRARY_OUTPUT_SUBFOLDER "/x86")
   ENDIF()
@@ -210,6 +216,8 @@ CHECK_BINARY_EXIST("lib/x64" "libtfextern.so" HAVE_LINUX_X86_64 OFF)
 CHECK_BINARY_EXIST("lib/x64" "libtfliteextern.so" HAVE_LINUX_X86_64_LITE OFF)
 CHECK_BINARY_EXIST("lib/arm" "libtfextern.so" HAVE_LINUX_ARM OFF)
 CHECK_BINARY_EXIST("lib/arm" "libtfliteextern.so" HAVE_LINUX_ARM_LITE OFF)
+CHECK_BINARY_EXIST("lib/arm64" "libtfextern.so" HAVE_LINUX_ARM64 OFF)
+CHECK_BINARY_EXIST("lib/arm64" "libtfliteextern.so" HAVE_LINUX_ARM64_LITE OFF)
 CHECK_BINARY_EXIST("lib/android/arm64-v8a" "libtfextern.so" HAVE_ANDROID_ARM64_V8A OFF)
 CHECK_BINARY_EXIST("lib/android/arm64-v8a" "libtfliteextern.so" HAVE_ANDROID_ARM64_V8A_LITE OFF)
 CHECK_BINARY_EXIST("lib/android/armeabi-v7a" "libtfextern.so" HAVE_ANDROID_ARMEABI_V7A OFF)
@@ -219,14 +227,19 @@ CHECK_BINARY_EXIST("lib/android/x86" "libtfliteextern.so" HAVE_ANDROID_X86_LITE 
 CHECK_BINARY_EXIST("lib/android/x86_64" "libtfextern.so" HAVE_ANDROID_X86_64 OFF)
 CHECK_BINARY_EXIST("lib/android/x86_64" "libtfliteextern.so" HAVE_ANDROID_X86_64_LITE OFF)
 
-IF ( IS_RASPBIAN )
-  SET(NUGET_NATIVE_PLATFORM_ID_RASPBIAN "linux-${NUGET_NATIVE_PLATFORM_ID_ARCH}")
-  STRING(TOLOWER "${NUGET_NATIVE_PLATFORM_ID_RASPBIAN}" NUGET_NATIVE_PLATFORM_ID_RASPBIAN)
-  MESSAGE(STATUS "NUGET_NATIVE_PLATFORM_ID_RASPBIAN: ${NUGET_NATIVE_PLATFORM_ID_RASPBIAN}") 
+IF (IS_DEBIAN)
+  SET(NUGET_NATIVE_PLATFORM_ID_DEBIAN_ARM "linux-arm")
+  STRING(TOLOWER "${NUGET_NATIVE_PLATFORM_ID_DEBIAN_ARM}" NUGET_NATIVE_PLATFORM_ID_DEBIAN_ARM)
+  SET(NUGET_NATIVE_PLATFORM_ID_DEBIAN_ARM64 "linux-arm64")
+  STRING(TOLOWER "${NUGET_NATIVE_PLATFORM_ID_DEBIAN_ARM64}" NUGET_NATIVE_PLATFORM_ID_DEBIAN_ARM64)
 ELSE()
   IF(HAVE_LINUX_ARM OR HAVE_LINUX_ARM_LITE)
-    SET(NUGET_NATIVE_PLATFORM_ID_RASPBIAN "linux-arm")
-    STRING(TOLOWER "${NUGET_NATIVE_PLATFORM_ID_RASPBIAN}" NUGET_NATIVE_PLATFORM_ID_RASPBIAN)
+    SET(NUGET_NATIVE_PLATFORM_ID_DEBIAN_ARM "linux-arm")
+    STRING(TOLOWER "${NUGET_NATIVE_PLATFORM_ID_DEBIAN_ARM}" NUGET_NATIVE_PLATFORM_ID_DEBIAN_ARM)
+  ENDIF()
+  IF(HAVE_LINUX_ARM64 OR HAVE_LINUX_ARM64_LITE)
+    SET(NUGET_NATIVE_PLATFORM_ID_DEBIAN_ARM64 "linux-arm64")
+    STRING(TOLOWER "${NUGET_NATIVE_PLATFORM_ID_DEBIAN_ARM64}" NUGET_NATIVE_PLATFORM_ID_DEBIAN_ARM64)
   ENDIF()
 ENDIF()
 
@@ -611,17 +624,30 @@ IF(HAVE_LINUX_X86_64)
     </dependencies>")   
 ENDIF()
 
-IF(HAVE_LINUX_ARM)
-  SET(EMGUTF_RASPBERRY_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.runtime.${NUGET_NATIVE_PLATFORM_ID_RASPBIAN}")
-  SET(EMGUTF_RASPBERRY_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Raspberry Pi OS")		
-  SET(EMGUTF_RASPBERRY_NUGET_FILE_LIST " 
-    <file src=\"..\\..\\..\\lib\\arm\\*.so\" target=\"runtimes\\${NUGET_NATIVE_PLATFORM_ID_RASPBIAN}\\native\" />
-	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
-	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
-  SET(EMGUTF_RASPBERRY_NUGET_DEPENDENCY "${EMGUTF_RASPBERRY_NUGET_DEPENDENCY}
+IF (HAVE_LINUX_ARM OR HAVE_LINUX_ARM64)
+  SET(EMGUTF_DEBIAN_NUGET_DEPENDENCY "${EMGUTF_DEBIAN_NUGET_DEPENDENCY}
     <dependencies>
 		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
     </dependencies>")
+  
+  IF(HAVE_LINUX_ARM)
+    SET(EMGUTF_DEBIAN_ARM_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.runtime.debian-arm64")
+    SET(EMGUTF_DEBIAN_ARM_NUGET_TITLE "Native ARM runtime of Emgu TF for Debian (including Raspberry Pi OS)")		
+    SET(EMGUTF_DEBIAN_ARM_NUGET_FILE_LIST " 
+    <file src=\"..\\..\\..\\lib\\arm\\*.so\" target=\"runtimes\\${NUGET_NATIVE_PLATFORM_ID_DEBIAN_ARM}\\native\" />
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
+	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+  ENDIF()
+  
+  IF(HAVE_LINUX_ARM64)
+    SET(EMGUTF_DEBIAN_ARM64_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.runtime.debian-arm64")
+    SET(EMGUTF_DEBIAN_ARM64_NUGET_TITLE "Native ARM64 runtime of Emgu TF for Debian (including Raspberry Pi OS)")		
+    SET(EMGUTF_DEBIAN_ARM64_NUGET_FILE_LIST " 
+    <file src=\"..\\..\\..\\lib\\arm64\\*.so\" target=\"runtimes\\${NUGET_NATIVE_PLATFORM_ID_DEBIAN_ARM64}\\native\" />
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
+	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+  ENDIF()
+	
 ENDIF()
 
 IF(HAVE_LITE_BUILD)
@@ -651,9 +677,7 @@ IF(HAVE_LITE_BUILD)
   #ENDIF()  
   SET(EMGUTF_LITE_UBUNTU_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Ubuntu")	
   
-  SET(EMGUTF_LITE_RASPBERRY_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.${NUGET_NATIVE_PLATFORM_ID_RASPBIAN}")
-  
-  SET(EMGUTF_LITE_RASPBERRY_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Raspberry Pi OS")	
+
 
   SET(EMGUTF_LITE_ANDROID_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.android")  
   #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
@@ -870,15 +894,34 @@ IF (HAVE_LINUX_X86_64_LITE)
 		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
     </dependencies>")	
 ENDIF()
-IF (HAVE_LINUX_ARM_LITE)
-  SET(EMGUTF_LITE_RASPBERRY_NUGET_FILE_LIST "${EMGUTF_LITE_RASPBERRY_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\..\\lib\\arm\\*.so\" target=\"runtimes\\${NUGET_NATIVE_PLATFORM_ID_RASPBIAN}\\native\" />
-	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
-	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />")
-  SET(EMGUTF_LITE_RASPBERRY_NUGET_DEPENDENCY "${EMGUTF_LITE_RASPBERRY_NUGET_DEPENDENCY}
+
+#SET(EMGUTF_LITE_DEBIAN_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.${NUGET_NATIVE_PLATFORM_ID_DEBIAN}")
+  
+#SET(EMGUTF_LITE_DEBIAN_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Debian (including Raspberry Pi OS)")	
+
+IF (HAVE_LINUX_ARM_LITE OR HAVE_LINUX_ARM64_LITE)
+  SET(EMGUTF_LITE_DEBIAN_NUGET_DEPENDENCY "${EMGUTF_LITE_DEBIAN_NUGET_DEPENDENCY}
     <dependencies>
 		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
     </dependencies>")	
+	
+  IF(HAVE_LINUX_ARM_LITE)
+    SET(EMGUTF_LITE_DEBIAN_ARM_NUGET_ID "${EMGUTF_LITE_NUGET_BASE_ID}.runtime.debian-arm")
+    SET(EMGUTF_LITE_DEBIAN_ARM_NUGET_TITLE "Native ARM runtime of Emgu TF Lite for Debian (including Raspberry Pi OS)")
+    SET(EMGUTF_LITE_DEBIAN_ARM_NUGET_FILE_LIST "${EMGUTF_LITE_DEBIAN_ARM_NUGET_FILE_LIST} 
+    <file src=\"..\\..\\..\\lib\\arm\\*.so\" target=\"runtimes\\${NUGET_NATIVE_PLATFORM_ID_DEBIAN_ARM}\\native\" />
+	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />")
+  ENDIF()
+
+  IF(HAVE_LINUX_ARM64_LITE)
+    SET(EMGUTF_LITE_DEBIAN_ARM64_NUGET_ID "${EMGUTF_LITE_NUGET_BASE_ID}.runtime.debian-arm64")
+    SET(EMGUTF_LITE_DEBIAN_ARM64_NUGET_TITLE "Native ARM64 runtime of Emgu TF Lite for Debian (including Raspberry Pi OS)")  
+    SET(EMGUTF_LITE_DEBIAN_ARM64_NUGET_FILE_LIST "${EMGUTF_LITE_DEBIAN_ARM64_NUGET_FILE_LIST} 
+    <file src=\"..\\..\\..\\lib\\arm64\\*.so\" target=\"runtimes\\${NUGET_NATIVE_PLATFORM_ID_DEBIAN_ARM64}\\native\" />
+	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />")
+  ENDIF()  
 ENDIF()
 
 SET(EMGUTF_NUGET_DEPENDENCY "")
@@ -1220,8 +1263,10 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.android.Pa
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.ios.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.ios/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.ubuntu.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.ubuntu/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.ubuntu.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.runtime.ubuntu/Package.nuspec)
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.linux-arm.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.linux-arm/Package.nuspec)
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.linux-arm.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.runtime.linux-arm/Package.nuspec)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.debian-arm.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.debian-arm/Package.nuspec)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.debian-arm.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.runtime.debian-arm/Package.nuspec)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.debian-arm64.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.debian-arm64/Package.nuspec)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.debian-arm64.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.runtime.debian-arm64/Package.nuspec)
 
 # ----------------------------------------------------------------------------
 #  Generate readme file for Emgu TF project
