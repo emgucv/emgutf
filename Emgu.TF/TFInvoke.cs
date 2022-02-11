@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Runtime.InteropServices;
 using Emgu.TF.Util;
 
@@ -289,6 +288,10 @@ namespace Emgu.TF
                     loadDirectory, 
                     IsGoogleCudaEnabled, 
                     String.Join(",", devices)));
+                
+                //AddLogListenerSink();
+                RegisterLogListener(TfDefaultLogListener);
+                TfInvoke.LogMsgReceived += TfInvoke_LogMsgReceived;
             }
             else
             {
@@ -301,6 +304,11 @@ namespace Emgu.TF
             }
 
             return success;
+        }
+
+        private static void TfInvoke_LogMsgReceived(object sender, string e)
+        {
+            Trace.WriteLine(String.Format("TF LOG: {0}", e));
         }
 
         /// <summary>
@@ -577,5 +585,41 @@ namespace Emgu.TF
 
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         private static extern void tfeListAllPhysicalDevices(IntPtr nameBuffer, IntPtr status);
+
+
+        [UnmanagedFunctionPointer(TfCallingConvention)]
+        public delegate void TfLogListener(IntPtr msg);
+
+        [DllImport(
+            ExternLibrary, 
+            CallingConvention = TfInvoke.TfCallingConvention,
+            EntryPoint = "tfeRegisterLogListener")]
+        public static extern void RegisterLogListener(TfLogListener listener);
+
+        /*
+        [DllImport(
+            ExternLibrary,
+            CallingConvention = TfInvoke.TfCallingConvention,
+            EntryPoint = "tfeAddLogListenerSink")]
+        public static extern void AddLogListenerSink();
+
+        [DllImport(
+            ExternLibrary,
+            CallingConvention = TfInvoke.TfCallingConvention,
+            EntryPoint = "tfeRemoveLogListenerSink")]
+        public static extern void RemoveLogListenerSink();
+        */
+
+        public static event EventHandler<String> LogMsgReceived;
+
+#if UNITY_WSA || UNITY_ANDROID || UNITY_STANDALONE
+        [AOT.MonoPInvokeCallback(typeof(TfLogListener))]
+#endif
+        public static void TfDefaultLogListener(IntPtr msgPtr)
+        {
+            //String msg = System.Runtime.InteropServices.Marshal.PtrToStringAuto(msgPtr);
+            String msg = System.Runtime.InteropServices.Marshal.PtrToStringAnsi(msgPtr);
+            LogMsgReceived?.Invoke(null, msg);
+        }
     }
 }
