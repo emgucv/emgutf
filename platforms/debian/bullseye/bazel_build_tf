@@ -26,7 +26,7 @@ cd ..
 
 
 mkdir -p lib/$OUT_FOLDER
-cp -r tensorflow/bazel-bin/tensorflow/tfextern/*.so lib/$OUT_FOLDER
+cp -rf tensorflow/bazel-bin/tensorflow/tfextern/*.so lib/$OUT_FOLDER
 
 #cp -r tensorflow/bazel-bin/tensorflow/*.so.2 lib/arm
 #ln -s lib/libtensorflow_framework.so lib/libtensorflow_framework.so.2
