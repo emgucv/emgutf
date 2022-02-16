@@ -1,10 +1,22 @@
 #!/bin/bash
 
+SYSTEM_ARCH=$(getconf LONG_BIT)
+echo System is $SYSTEM_ARCH bit
+
+if [ $SYSTEM_ARCH == "64" ]
+then
+    OUT_FOLDER="arm64"
+else
+    OUT_FOLDER="arm"
+fi
+echo Compiled binary will be copied to lib/$OUT_FOLDER
+
+
 cd "$(dirname "$0")"
 cd ../../..
 cd tensorflow
 
 bazel build --jobs=2 //tensorflow/tfliteextern:libtfliteextern.so  
 cd ..
-mkdir -p lib/arm
-cp -f tensorflow/bazel-bin/tensorflow/tfliteextern/*.so lib/arm
+mkdir -p lib/$OUT_FOLDER
+cp -f tensorflow/bazel-bin/tensorflow/tfliteextern/*.so lib/$OUT_FOLDER
