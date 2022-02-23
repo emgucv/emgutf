@@ -9,6 +9,7 @@ using System.IO;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using Emgu.TF;
 using Emgu.Models;
@@ -63,6 +64,7 @@ namespace Emgu.TF.XamarinForms
         {
             if (_inceptionGraph == null)
             {
+                TfInvoke.AddLogListenerSink(Emgu.TF.TfInvoke.DefaultTfLogListenerSink);
                 using (SessionOptions so = new SessionOptions())
                 {
                     if (TfInvoke.IsGoogleCudaEnabled)
@@ -103,6 +105,15 @@ namespace Emgu.TF.XamarinForms
                         //The original inception model
                         await _inceptionGraph.Init();
                     }
+                }
+                TfInvoke.RemoveLogListenerSink(Emgu.TF.TfInvoke.DefaultTfLogListenerSink);
+
+                var logSink = Emgu.TF.TfInvoke.DefaultTfLogListenerSink;
+                String log = logSink.GetLog().Trim();
+                if (log != String.Empty)
+                {
+                    logSink.Clear();
+                    SetLog(log);
                 }
             }
         }
@@ -216,6 +227,7 @@ namespace Emgu.TF.XamarinForms
                 }
                 else
                 {
+                    TfInvoke.AddLogListenerSink(Emgu.TF.TfInvoke.DefaultTfLogListenerSink);
                     Tensor imageTensor;
                     if (_model == Model.Flower)
                     {
@@ -240,9 +252,21 @@ namespace Emgu.TF.XamarinForms
                     Stopwatch sw = Stopwatch.StartNew();
                     result = _inceptionGraph.Recognize(imageTensor)[0];
                     sw.Stop();
-
-                    String msg = String.Format("Object is {0} with {1}% probability. Recognized in {2} milliseconds.", result[0].Label, result[0].Probability * 100, sw.ElapsedMilliseconds);
+                    TfInvoke.RemoveLogListenerSink(Emgu.TF.TfInvoke.DefaultTfLogListenerSink);
+                    String msg = String.Format(
+                        "Object is {0} with {1}% probability. Recognized in {2} milliseconds.",
+                        result[0].Label,
+                        result[0].Probability * 100,
+                        sw.ElapsedMilliseconds);
                     SetMessage(msg);
+
+                    var logSink = Emgu.TF.TfInvoke.DefaultTfLogListenerSink;
+                    String log = logSink.GetLog().Trim();
+                    if (log != String.Empty)
+                    {
+                        logSink.Clear();
+                        SetLog(log);
+                    }
 
 #if __ANDROID__
                     var bmp = Emgu.Models.NativeImageIO.ImageFileToBitmap(images[0]);

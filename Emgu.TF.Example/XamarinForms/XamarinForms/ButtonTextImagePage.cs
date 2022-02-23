@@ -25,6 +25,12 @@ namespace Emgu.TF.XamarinForms
             get { return _messageLabel; }
         }
 
+        private Label _logLabel = new Label();
+        public Label LogLabel
+        {
+            get { return _logLabel; }
+        }
+
         private Image _displayImage = new Image();
 
         public Image DisplayImage
@@ -59,7 +65,14 @@ namespace Emgu.TF.XamarinForms
             _mainLayout.Padding = new Thickness(10, 10, 10, 10);
 
             DisplayImage.HorizontalOptions = LayoutOptions.Center;
-            
+
+            LogLabel.Text = "";
+            LogLabel.HorizontalOptions = LayoutOptions.Center;
+            LogLabel.VerticalOptions = LayoutOptions.Center;
+            LogLabel.VerticalTextAlignment = TextAlignment.Center;
+            LogLabel.HorizontalTextAlignment = TextAlignment.Center;
+            LogLabel.FontSize = LogLabel.FontSize / 2;
+
             /*
             DisplayImage.BackgroundColor = new Color(1, 0, 0);
             MessageLabel.BackgroundColor = new Color(0, 0, 1);
@@ -69,7 +82,8 @@ namespace Emgu.TF.XamarinForms
             _mainLayout.Children.Add(TopButton);
             _mainLayout.Children.Add(MessageLabel);
             _mainLayout.Children.Add(DisplayImage);
-            
+            _mainLayout.Children.Add(LogLabel);
+
             Content = _mainLayout;
         }
 
@@ -232,6 +246,21 @@ namespace Emgu.TF.XamarinForms
 
                     this.MessageLabel.LineBreakMode = LineBreakMode.WordWrap;
                     this.MessageLabel.Focus();
+                }
+            );
+        }
+
+        public void SetLog(String log)
+        {
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(
+                () =>
+                {
+                    this.LogLabel.Text = log;
+                    this.LogLabel.WidthRequest = this.Width;
+                    this.LogLabel.HeightRequest = 60;
+
+                    this.LogLabel.LineBreakMode = LineBreakMode.WordWrap;
+                    this.LogLabel.Focus();
                 }
             );
         }

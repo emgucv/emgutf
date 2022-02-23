@@ -16,7 +16,7 @@ namespace Emgu.TF.XamarinForms
         public App()
         {
             Emgu.TF.TfInvoke.Init();
-            
+
             List<View> buttons = new List<View>();
 
             Button multiboxDetectionButton = new Button();

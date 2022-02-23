@@ -53,6 +53,7 @@ namespace Emgu.TF.XamarinForms
 
         public AboutPage()
         {
+            TfInvoke.AddLogListenerSink(Emgu.TF.TfInvoke.DefaultTfLogListenerSink);
             Session.Device[] devices = GetSessionDevices();
             StringBuilder sb = new StringBuilder();
             foreach (Session.Device d in devices)
@@ -60,6 +61,10 @@ namespace Emgu.TF.XamarinForms
                 sb.Append(String.Format("<H4 style=\"color: blue;\">{1}: {0}</H4>", d.Name, d.Type));
             }
             String tensorflowVer = TfInvoke.Version;
+            var listenerSink = TfInvoke.DefaultTfLogListenerSink;
+
+            TfInvoke.RemoveLogListenerSink(Emgu.TF.TfInvoke.DefaultTfLogListenerSink);
+
             Title = "About Emgu TF";
             Content =
 
@@ -71,6 +76,12 @@ namespace Emgu.TF.XamarinForms
                         {
                             Html = String.Format(
                             @"<html>
+                    <head>
+                    <style>body {{ background-color: #EEEEEE; }}</style>
+                    <style type=""text/css"">
+                    textarea {{ width: 100%; margin: 0; padding: 0; border - width: 0; }}
+                    </style>
+                    </head>
                     <body>
                     <H1> Emgu TF Demos </H1>
                     <H3> Tensorflow version: {0} </H3>
@@ -85,7 +96,9 @@ namespace Emgu.TF.XamarinForms
                     <H3> IsBuiltWithROCm: {6} </H3>
                     <H3> IsBuiltWithNvcc: {7} </H3>
                     <H3> GpuSupportsHalfMatMulAndConv: {8} </H3>
-                    <H3> IsMklEnabled: {9} </H3>"
+                    <H3> IsMklEnabled: {9} </H3>
+                    <H4> Log: </H4>
+                    <textarea rows=""30"">{10}</textarea>"
                             + @"
                     </body>
                     </html>",
@@ -98,7 +111,8 @@ namespace Emgu.TF.XamarinForms
                             TfInvoke.IsBuiltWithROCm,
                             TfInvoke.IsBuiltWithNvcc,
                             TfInvoke.GpuSupportsHalfMatMulAndConv,
-                            TfInvoke.IsMklEnabled
+                            TfInvoke.IsMklEnabled,
+                            listenerSink.GetLog()
                             )
                         }
             };

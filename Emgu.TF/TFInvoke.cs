@@ -411,6 +411,8 @@ namespace Emgu.TF
                 Trace.WriteLine(errMsg);
                 throw new DllNotFoundException(errMsg, e);
             }
+
+            _defaultTfLogListenerSink = new Emgu.TF.TfLogListenerSink();
         }
 
         /// <summary>
@@ -596,19 +598,44 @@ namespace Emgu.TF
             EntryPoint = "tfeRegisterLogListener")]
         public static extern void RegisterLogListener(TfLogListener listener);
 
-        /*
+        
         [DllImport(
             ExternLibrary,
-            CallingConvention = TfInvoke.TfCallingConvention,
-            EntryPoint = "tfeAddLogListenerSink")]
-        public static extern void AddLogListenerSink();
+            CallingConvention = TfInvoke.TfCallingConvention)]
+        private static extern void tfeAddLogListenerSink(IntPtr sink);
+
+        public static void AddLogListenerSink(Emgu.TF.TfLogListenerSink sink)
+        {
+            tfeAddLogListenerSink(sink);
+        }
 
         [DllImport(
             ExternLibrary,
-            CallingConvention = TfInvoke.TfCallingConvention,
-            EntryPoint = "tfeRemoveLogListenerSink")]
-        public static extern void RemoveLogListenerSink();
-        */
+            CallingConvention = TfInvoke.TfCallingConvention)]
+        private static extern void tfeRemoveLogListenerSink(IntPtr sink);
+
+        public static void RemoveLogListenerSink(Emgu.TF.TfLogListenerSink sink)
+        {
+            tfeRemoveLogListenerSink(sink);
+        }
+
+
+        [DllImport(
+            ExternLibrary,
+            CallingConvention = TfInvoke.TfCallingConvention)]
+        internal static extern IntPtr tfeGetDefaultTFLogSink();
+
+
+        [DllImport(
+            ExternLibrary,
+            CallingConvention = TfInvoke.TfCallingConvention)]
+        internal static extern void TFLogListenerSinkGet(IntPtr sink, IntPtr msg);
+
+
+        [DllImport(
+            ExternLibrary,
+            CallingConvention = TfInvoke.TfCallingConvention)]
+        internal static extern void TFLogListenerSinkClear(IntPtr sink);
 
         public static event EventHandler<String> LogMsgReceived;
 
@@ -620,6 +647,45 @@ namespace Emgu.TF
             //String msg = System.Runtime.InteropServices.Marshal.PtrToStringAuto(msgPtr);
             String msg = System.Runtime.InteropServices.Marshal.PtrToStringAnsi(msgPtr);
             LogMsgReceived?.Invoke(null, msg);
+        }
+
+        private static Emgu.TF.TfLogListenerSink _defaultTfLogListenerSink = null;
+        public static Emgu.TF.TfLogListenerSink DefaultTfLogListenerSink
+        {
+            get
+            {
+                //if (_defaultTfLogListener == null)
+                    
+                return _defaultTfLogListenerSink;
+            }
+            
+        }
+    }
+
+    public class TfLogListenerSink : UnmanagedObject
+    {
+        public TfLogListenerSink()
+        {
+            _ptr = TfInvoke.tfeGetDefaultTFLogSink();
+        }
+
+        public String GetLog()
+        {
+            IntPtr buffer = Marshal.AllocHGlobal(4096);
+            TfInvoke.TFLogListenerSinkGet(_ptr, buffer);
+            String msg = System.Runtime.InteropServices.Marshal.PtrToStringAnsi(buffer);
+            Marshal.FreeHGlobal(buffer);
+            return msg;
+        }
+
+        public void Clear()
+        {
+            TfInvoke.TFLogListenerSinkClear(_ptr);
+        }
+
+        protected override void DisposeObject()
+        {
+            //throw new NotImplementedException();
         }
     }
 }
