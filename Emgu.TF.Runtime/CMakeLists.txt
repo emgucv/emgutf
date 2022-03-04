@@ -92,12 +92,12 @@ IF(HAVE_FULL_BUILD)
 	
   INSTALL(
     DIRECTORY
-    ${CMAKE_CURRENT_SOURCE_DIR}/Raspbian
+    ${CMAKE_CURRENT_SOURCE_DIR}/Debian
     DESTINATION Emgu.TF.Runtime
     COMPONENT emgutf_source
     FILES_MATCHING 
-	PATTERN "Emgu.TF.Runtime.Raspbian.shproj"
-	PATTERN "Emgu.TF.Runtime.Raspbian.projitems"
+	PATTERN "Emgu.TF.Runtime.Debian.shproj"
+	PATTERN "Emgu.TF.Runtime.Debian.projitems"
     PATTERN ".svn" EXCLUDE
     PATTERN "obj" EXCLUDE
     PATTERN "CMakeFiles" EXCLUDE
@@ -191,12 +191,12 @@ IF(HAVE_LITE_BUILD)
     )
   INSTALL(
     DIRECTORY
-    ${CMAKE_CURRENT_SOURCE_DIR}/Raspbian
+    ${CMAKE_CURRENT_SOURCE_DIR}/Debian
     DESTINATION Emgu.TF.Runtime
     COMPONENT emgutf_source
     FILES_MATCHING 
-	PATTERN "Emgu.TF.Lite.Runtime.Raspbian.shproj"
-	PATTERN "Emgu.TF.Lite.Runtime.Raspbian.projitems"
+	PATTERN "Emgu.TF.Lite.Runtime.Debian.shproj"
+	PATTERN "Emgu.TF.Lite.Runtime.Debian.projitems"
     PATTERN ".svn" EXCLUDE
     PATTERN "obj" EXCLUDE
     PATTERN "CMakeFiles" EXCLUDE
