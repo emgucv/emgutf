@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31903.59
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32126.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Util.Shared", "..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.shproj", "{98561642-5EC3-4244-BAF9-6876D9BA5527}"
 EndProject
@@ -39,8 +39,8 @@ Global
 		..\..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.projitems*{0eec5380-c708-4caa-9a1c-fb70ed57a610}*SharedItemsImports = 5
 		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems*{0eec5380-c708-4caa-9a1c-fb70ed57a610}*SharedItemsImports = 5
 		..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems*{0eec5380-c708-4caa-9a1c-fb70ed57a610}*SharedItemsImports = 5
+		..\..\Emgu.TF.Runtime\Debian\Emgu.TF.Lite.Runtime.Debian.projitems*{2622cba3-4b2d-4b2b-8075-1fa9f5f5bf16}*SharedItemsImports = 5
 		..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Lite.Runtime.Mac.projitems*{2622cba3-4b2d-4b2b-8075-1fa9f5f5bf16}*SharedItemsImports = 5
-		..\..\Emgu.TF.Runtime\Raspbian\Emgu.TF.Lite.Runtime.Raspbian.projitems*{2622cba3-4b2d-4b2b-8075-1fa9f5f5bf16}*SharedItemsImports = 5
 		..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Lite.Runtime.Ubuntu.projitems*{2622cba3-4b2d-4b2b-8075-1fa9f5f5bf16}*SharedItemsImports = 5
 		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems*{2622cba3-4b2d-4b2b-8075-1fa9f5f5bf16}*SharedItemsImports = 5
 		..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite\XamarinForms.Lite.projitems*{26f4d7af-57b6-4d2d-9a1c-aafa757ddc4a}*SharedItemsImports = 13
