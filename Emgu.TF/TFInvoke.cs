@@ -290,7 +290,7 @@ namespace Emgu.TF
                     String.Join(",", devices)));
                 
                 //AddLogListenerSink();
-                RegisterLogListener(TfDefaultLogListener);
+                RegisterLogListener(_defaultLogListener);
                 TfInvoke.LogMsgReceived += TfInvoke_LogMsgReceived;
             }
             else
@@ -599,6 +599,7 @@ namespace Emgu.TF
         public static extern void RegisterLogListener(TfLogListener listener);
 
         
+
         [DllImport(
             ExternLibrary,
             CallingConvention = TfInvoke.TfCallingConvention)]
@@ -631,6 +632,8 @@ namespace Emgu.TF
             CallingConvention = TfInvoke.TfCallingConvention)]
         internal static extern void TFLogListenerSinkGet(IntPtr sink, IntPtr msg);
 
+
+        private static TfLogListener _defaultLogListener = TfDefaultLogListener;
 
         [DllImport(
             ExternLibrary,
