@@ -38,10 +38,10 @@ namespace Inception.Console.Netstandard
                 return;
             }
             Trace.WriteLine(String.Format("Working on file {0}", _inputFileInfo.FullName));
- 
+
             await Run();
-            //System.Console.WriteLine("Press any key to continue:");
-            //System.Console.ReadKey();
+            System.Console.WriteLine("Press any key to continue:");
+            System.Console.ReadKey();
         }
 
         private static async Task Run()
@@ -52,7 +52,7 @@ namespace Inception.Console.Netstandard
             if (TfInvoke.IsGoogleCudaEnabled)
             {
                 config.GpuOptions = new Tensorflow.GPUOptions();
-                config.GpuOptions.AllowGrowth = true;                
+                config.GpuOptions.AllowGrowth = true;
             }
             so.SetConfig(config.ToProtobuf());
 
@@ -60,13 +60,14 @@ namespace Inception.Console.Netstandard
             _inceptionGraph.OnDownloadProgressChanged += onDownloadProgressChanged;
             //_inceptionGraph.OnDownloadCompleted += onDownloadCompleted;
 
+            System.Console.WriteLine("Initializing model");
             //use a retrained model to recognize followers
             await _inceptionGraph.Init(
                 new string[] { "optimized_graph.pb", "output_labels.txt" },
                 "https://github.com/emgucv/models/raw/master/inception_flower_retrain/",
                 "Placeholder",
                 "final_result");
-
+            System.Console.WriteLine("Model initialized.");
             Session.Device[] devices = GetSessionDevices(_inceptionGraph.Session);
             StringBuilder sb = new StringBuilder();
             foreach (Session.Device d in devices)
@@ -75,14 +76,17 @@ namespace Inception.Console.Netstandard
             }
             System.Console.WriteLine(String.Format("Default Session Devices:{0}{1}", Environment.NewLine, sb.ToString()));
 
+
             Stopwatch watch = Stopwatch.StartNew();
+            System.Console.WriteLine("Reading image into tensor");
             Tensor imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(_inputFileInfo.FullName, 299, 299, 0.0f, 1.0f / 255.0f, false, false);
+            System.Console.WriteLine("Running inference...");
             var results = _inceptionGraph.Recognize(imageTensor);
             watch.Stop();
 
             String resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", results[0][0].Label, results[0][0].Probability * 100, watch.ElapsedMilliseconds);
             System.Console.WriteLine(resStr);
-            
+
         }
 
         private static Session.Device[] GetSessionDevices(Session session)
@@ -101,7 +105,7 @@ namespace Inception.Console.Netstandard
         }
 
 
-        
+
         /// <summary>
         /// Get the directory from the assembly
         /// </summary>
@@ -109,7 +113,7 @@ namespace Inception.Console.Netstandard
         {
             get
             {
-                FileInfo assemblyFileInfo = new System.IO.FileInfo( Assembly.GetExecutingAssembly().Location );
+                FileInfo assemblyFileInfo = new System.IO.FileInfo(Assembly.GetExecutingAssembly().Location);
                 return assemblyFileInfo.DirectoryName;
             }
         }

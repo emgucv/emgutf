@@ -34,7 +34,7 @@ namespace Emgu.Models
         public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
 
         private List<DownloadableFile> _files = new List<DownloadableFile>();
-        
+
         /// <summary>
         /// Clear the list of files
         /// </summary>
@@ -140,7 +140,7 @@ namespace Emgu.Models
         /// <returns>The async Task</returns>
         public async Task Download(int retry = 1)
         {
-            await Download( _files.ToArray(), retry, this.OnDownloadProgressChanged);
+            await Download(_files.ToArray(), retry, this.OnDownloadProgressChanged);
         }
 
         private static async Task Download(
@@ -153,30 +153,32 @@ namespace Emgu.Models
 
         private static async Task DownloadHelperMultiple(
             DownloadableFile[] downloadableFiles,
-            int retry = 1, 
+            int retry = 1,
             System.Net.DownloadProgressChangedEventHandler onDownloadProgressChanged = null)
         {
             if (downloadableFiles == null || downloadableFiles.Length == 0)
             {
                 return;
-            } else if (downloadableFiles.Length == 1)
+            }
+            else if (downloadableFiles.Length == 1)
             {
                 await DownloadHelper(downloadableFiles[0], retry, onDownloadProgressChanged);
-            } else
+            }
+            else
             {
                 DownloadableFile currentFile = downloadableFiles[0];
                 DownloadableFile[] remainingFiles = new DownloadableFile[downloadableFiles.Length - 1];
                 Array.Copy(downloadableFiles, 1, remainingFiles, 0, remainingFiles.Length);
                 await DownloadHelper(currentFile, retry, onDownloadProgressChanged);
-                    
+
                 await DownloadHelperMultiple(remainingFiles, retry, onDownloadProgressChanged);
-                    
+
             }
         }
 
         private static async Task DownloadHelper(
             DownloadableFile downloadableFile,
-            int retry = 1, 
+            int retry = 1,
             System.Net.DownloadProgressChangedEventHandler onDownloadProgressChanged = null
             )
         {
@@ -189,32 +191,48 @@ namespace Emgu.Models
             {
                 try
                 {
+                    if (File.Exists(downloadableFile.LocalFile))
+                    {
+                        Trace.WriteLine($"Delete existing corrupted file :{downloadableFile.LocalFile}");
+                        File.Delete(downloadableFile.LocalFile);
+                    }
+
                     //Download the file
-                    Trace.WriteLine("downloading file from:" + downloadableFile.Url + " to: " + downloadableFile.LocalFile);
-                    System.Net.WebClient downloadClient = new System.Net.WebClient();
-                    
-                    if (onDownloadProgressChanged != null)
-                        downloadClient.DownloadProgressChanged += onDownloadProgressChanged;
-                    
+                    Trace.WriteLine($"downloading file from:{downloadableFile.Url} to: {downloadableFile.LocalFile}");
+
                     FileInfo fi = new FileInfo(downloadableFile.LocalFile);
                     if (!fi.Directory.Exists)
                     {
                         fi.Directory.Create();
                     }
+                    System.Net.WebClient downloadClient = new System.Net.WebClient();
+
+                    if (onDownloadProgressChanged != null)
+                        downloadClient.DownloadProgressChanged += onDownloadProgressChanged;
+
                     await downloadClient.DownloadFileTaskAsync(new Uri(downloadableFile.Url), downloadableFile.LocalFile);
-                    
+
+                    if ((!downloadableFile.IsLocalFileValid) && File.Exists(downloadableFile.LocalFile))
+                    {
+                        Trace.WriteLine($"File on disk ({downloadableFile.LocalFile}) is corrupted, deleting file.");
+                        //The downloaded file may be corrupted, should delete it
+                        File.Delete(downloadableFile.LocalFile);
+                    }
+                    else
+                        Trace.WriteLine($"File downloaded from: {downloadableFile.Url} to: {downloadableFile.LocalFile}");
                 }
                 catch (Exception e)
                 {
-                    if (!downloadableFile.IsLocalFileValid)
+                    if ((!downloadableFile.IsLocalFileValid) && File.Exists(downloadableFile.LocalFile))
                     {
+                        Trace.WriteLine($"File on disk ({downloadableFile.LocalFile}) is corrupted, deleting file.");
                         //The downloaded file may be corrupted, should delete it
                         File.Delete(downloadableFile.LocalFile);
                     }
 
                     if (retry > 0)
                     {
-                        await DownloadHelper( downloadableFile,  retry - 1);
+                        await DownloadHelper(downloadableFile, retry - 1);
                     }
                     else
                     {
@@ -222,7 +240,7 @@ namespace Emgu.Models
                         throw;
                     }
                 }
-            } 
+            }
         }
 #endif
     }
