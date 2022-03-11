@@ -45,20 +45,33 @@ namespace Emgu.TF.XamarinForms
         {
             if (_resnet == null)
             {
+
                 SessionOptions so = new SessionOptions();
+                Tensorflow.ConfigProto config = new Tensorflow.ConfigProto();
+                config.LogDevicePlacement = true;
                 if (TfInvoke.IsGoogleCudaEnabled)
                 {
-                    Tensorflow.ConfigProto config = new Tensorflow.ConfigProto();
                     config.GpuOptions = new Tensorflow.GPUOptions();
                     config.GpuOptions.AllowGrowth = true;
-                    so.SetConfig(config.ToProtobuf());
                 }
+                so.SetConfig(config.ToProtobuf());
                 _resnet = new Resnet(null, so);
                 _resnet.OnDownloadProgressChanged += onProgressChanged;
 
-                //The resnet model
-                await _resnet.Init();
-                
+                //Capturing the log using logSink
+                using (LogListenerSink logSink = new LogListenerSink(App.EnableLogging))
+                {
+                    //The resnet model
+                    await _resnet.Init();
+
+                    String log = logSink.GetLog().Trim();
+                    if (log != String.Empty)
+                    {
+                        logSink.Clear();
+                    }
+                    SetLog(log);
+                }
+
             }
         }
 
@@ -156,36 +169,51 @@ namespace Emgu.TF.XamarinForms
                     }
                     else
                     {
-                        Tensor imageTensor =
-                            Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(images[0], 224, 224, 0.0f, 1.0f/255.0f, false, false);
-                        
-                        Resnet.RecognitionResult[] result;
-                        if (_coldSession)
+                        using (LogListenerSink logSink = new LogListenerSink(App.EnableLogging))
                         {
-                            //First run of the recognition graph, here we will compile the graph and initialize the session
-                            //This is expected to take much longer time than consecutive runs.
+                            
+                            Tensor imageTensor =
+                                Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(images[0], 224, 224, 0.0f,
+                                    1.0f / 255.0f, false, false);
+
+                            Resnet.RecognitionResult[] result;
+                            if (_coldSession)
+                            {
+                                //First run of the recognition graph, here we will compile the graph and initialize the session
+                                //This is expected to take much longer time than consecutive runs.
+                                result = _resnet.Recognize(imageTensor)[0];
+                                _coldSession = false;
+                            }
+
+                            //Here we are trying to time the execution of the graph after it is loaded
+                            //If we are not interest in the performance, we can skip the following 3 lines
+                            Stopwatch sw = Stopwatch.StartNew();
                             result = _resnet.Recognize(imageTensor)[0];
-                            _coldSession = false;
-                        }
+                            sw.Stop();
 
-                        //Here we are trying to time the execution of the graph after it is loaded
-                        //If we are not interest in the performance, we can skip the following 3 lines
-                        Stopwatch sw = Stopwatch.StartNew();
-                        result = _resnet.Recognize(imageTensor)[0];
-                        sw.Stop();
+                            String msg = String.Format(
+                                "Object is {0} with {1}% probability. Recognized in {2} milliseconds.",
+                                result[0].Label, result[0].Probability * 100, sw.ElapsedMilliseconds);
+                            SetMessage(msg);
 
-                        String msg = String.Format("Object is {0} with {1}% probability. Recognized in {2} milliseconds.",
-                            result[0].Label, result[0].Probability * 100, sw.ElapsedMilliseconds);
-                        SetMessage(msg);
+                            String log = logSink.GetLog().Trim();
+                            if (log != String.Empty)
+                            {
+                                logSink.Clear();
+                                
+                            }
+                            SetLog(log);
+                            
 
 #if __ANDROID__
-                        var bmp = Emgu.Models.NativeImageIO.ImageFileToBitmap(images[0]);
-                        SetImage(bmp);
+                            var bmp = Emgu.Models.NativeImageIO.ImageFileToBitmap(images[0]);
+                            SetImage(bmp);
 #else
-                        var jpeg = Emgu.Models.NativeImageIO.ImageFileToJpeg(images[0]);
-                        SetImage(jpeg.Raw, jpeg.Width, jpeg.Height);
+                            var jpeg = Emgu.Models.NativeImageIO.ImageFileToJpeg(images[0]);
+                            SetImage(jpeg.Raw, jpeg.Width, jpeg.Height);
 #endif
-                        this.TopButton.IsEnabled = true;
+                            this.TopButton.IsEnabled = true;
+                        }
                     }
 
                 }
@@ -196,7 +224,17 @@ namespace Emgu.TF.XamarinForms
                         SetMessage(msg);
                     }
 #endif
+                this.Disappearing += ResnetPage_Disappearing;
             };
+        }
+
+        private void ResnetPage_Disappearing(object sender, EventArgs e)
+        {
+            if (_resnet != null)
+            {
+                _resnet.Dispose();
+                _resnet = null;
+            }
         }
     }
 }

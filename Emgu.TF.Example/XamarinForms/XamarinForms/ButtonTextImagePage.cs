@@ -25,10 +25,10 @@ namespace Emgu.TF.XamarinForms
             get { return _messageLabel; }
         }
 
-        private Label _logLabel = new Label();
-        public Label LogLabel
+        private Editor _logEditor = new Editor();
+        public Editor LogEditor
         {
-            get { return _logLabel; }
+            get { return _logEditor; }
         }
 
         private Image _displayImage = new Image();
@@ -66,12 +66,10 @@ namespace Emgu.TF.XamarinForms
 
             DisplayImage.HorizontalOptions = LayoutOptions.Center;
 
-            LogLabel.Text = "";
-            LogLabel.HorizontalOptions = LayoutOptions.Center;
-            LogLabel.VerticalOptions = LayoutOptions.Center;
-            LogLabel.VerticalTextAlignment = TextAlignment.Center;
-            LogLabel.HorizontalTextAlignment = TextAlignment.Center;
-            LogLabel.FontSize = LogLabel.FontSize / 2;
+            LogEditor.Text = "";
+            LogEditor.HorizontalOptions = LayoutOptions.Center;
+            LogEditor.VerticalOptions = LayoutOptions.Center;
+            LogEditor.FontSize = LogEditor.FontSize / 2;
 
             /*
             DisplayImage.BackgroundColor = new Color(1, 0, 0);
@@ -82,9 +80,11 @@ namespace Emgu.TF.XamarinForms
             _mainLayout.Children.Add(TopButton);
             _mainLayout.Children.Add(MessageLabel);
             _mainLayout.Children.Add(DisplayImage);
-            _mainLayout.Children.Add(LogLabel);
+            _mainLayout.Children.Add(LogEditor);
 
             Content = _mainLayout;
+
+            SetLog(null);
         }
 
         public bool HasCameraOption { get; set; }
@@ -255,12 +255,21 @@ namespace Emgu.TF.XamarinForms
             Xamarin.Forms.Device.BeginInvokeOnMainThread(
                 () =>
                 {
-                    this.LogLabel.Text = log;
-                    this.LogLabel.WidthRequest = this.Width;
-                    this.LogLabel.HeightRequest = 60;
+                    if (String.IsNullOrEmpty(log))
+                    {
+                        this.LogEditor.IsVisible = false;
+                    }
+                    else
+                    {
+                        this.LogEditor.IsVisible = true;
+                    }
 
-                    this.LogLabel.LineBreakMode = LineBreakMode.WordWrap;
-                    this.LogLabel.Focus();
+                    this.LogEditor.Text = log;
+                    this.LogEditor.WidthRequest = this.Width;
+                    this.LogEditor.HeightRequest = 120;
+
+                    //this.LogLabel.LineBreakMode = LineBreakMode.WordWrap;
+                    this.LogEditor.Focus();
                 }
             );
         }

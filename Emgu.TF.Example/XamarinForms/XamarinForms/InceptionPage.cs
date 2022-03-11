@@ -64,55 +64,57 @@ namespace Emgu.TF.XamarinForms
         {
             if (_inceptionGraph == null)
             {
-                TfInvoke.AddLogListenerSink(Emgu.TF.TfInvoke.DefaultTfLogListenerSink);
-                using (SessionOptions so = new SessionOptions())
+                //Capturing the log using logSink
+                using (LogListenerSink logSink = new LogListenerSink(App.EnableLogging))
                 {
-                    if (TfInvoke.IsGoogleCudaEnabled)
+                    using (SessionOptions so = new SessionOptions())
                     {
                         Tensorflow.ConfigProto config = new Tensorflow.ConfigProto();
-                        config.GpuOptions = new Tensorflow.GPUOptions();
-                        config.GpuOptions.AllowGrowth = true;
+                        if (TfInvoke.IsGoogleCudaEnabled)
+                        {
+                            config.GpuOptions = new Tensorflow.GPUOptions();
+                            config.GpuOptions.AllowGrowth = true;
+                        }
+                        config.LogDevicePlacement = true;
                         so.SetConfig(config.ToProtobuf());
+
+                        _inceptionGraph = new Inception(null, so);
+                        _inceptionGraph.OnDownloadProgressChanged += onProgressChanged;
+
+                        if (_model == Model.Flower)
+                        {
+                            String localModelFolder = "InceptionFlower";
+                            DownloadableFile modelFile = new DownloadableFile(
+                                "https://github.com/emgucv/models/raw/master/inception_flower_retrain/optimized_graph.pb",
+                                localModelFolder,
+                                "DE83CAD3F87B5070E24EFEADB8B84F72C940B73974DC69B46D96CDFB913385C4"
+                            );
+
+                            DownloadableFile labelFile = new DownloadableFile(
+                                "https://github.com/emgucv/models/raw/master/inception_flower_retrain/output_labels.txt",
+                                localModelFolder,
+                                "298454B11DBEE503F0303367F3714D449855071DF9ECAC16AB0A01A0A7377DB6"
+                            );
+
+                            //use a retrained model to recognize followers
+                            await _inceptionGraph.Init(
+                                modelFile,
+                                labelFile,
+                                "Placeholder",
+                                "final_result");
+                        }
+                        else
+                        {
+                            //The original inception model
+                            await _inceptionGraph.Init();
+                        }
                     }
-
-                    _inceptionGraph = new Inception(null, so);
-                    _inceptionGraph.OnDownloadProgressChanged += onProgressChanged;
-
-                    if (_model == Model.Flower)
+   
+                    String log = logSink.GetLog().Trim();
+                    if (log != String.Empty)
                     {
-                        String localModelFolder = "InceptionFlower";
-                        DownloadableFile modelFile = new DownloadableFile(
-                            "https://github.com/emgucv/models/raw/master/inception_flower_retrain/optimized_graph.pb",
-                            localModelFolder,
-                            "DE83CAD3F87B5070E24EFEADB8B84F72C940B73974DC69B46D96CDFB913385C4"
-                        );
-                        
-                        DownloadableFile labelFile = new DownloadableFile(
-                            "https://github.com/emgucv/models/raw/master/inception_flower_retrain/output_labels.txt",
-                            localModelFolder,
-                            "298454B11DBEE503F0303367F3714D449855071DF9ECAC16AB0A01A0A7377DB6"
-                        );
-                        
-                        //use a retrained model to recognize followers
-                        await _inceptionGraph.Init(
-                            modelFile, 
-                            labelFile,
-                            "Placeholder",
-                            "final_result");
+                        logSink.Clear();
                     }
-                    else
-                    {
-                        //The original inception model
-                        await _inceptionGraph.Init();
-                    }
-                }
-                TfInvoke.RemoveLogListenerSink(Emgu.TF.TfInvoke.DefaultTfLogListenerSink);
-
-                var logSink = Emgu.TF.TfInvoke.DefaultTfLogListenerSink;
-                String log = logSink.GetLog().Trim();
-                if (log != String.Empty)
-                {
-                    logSink.Clear();
                     SetLog(log);
                 }
             }
@@ -227,55 +229,61 @@ namespace Emgu.TF.XamarinForms
                 }
                 else
                 {
-                    TfInvoke.AddLogListenerSink(Emgu.TF.TfInvoke.DefaultTfLogListenerSink);
-                    Tensor imageTensor;
-                    if (_model == Model.Flower)
+                    using (LogListenerSink logSink = new LogListenerSink(App.EnableLogging))
                     {
-                        imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(images[0], 299, 299, 0.0f, 1.0f / 255.0f, false, false);
-                    }
-                    else
-                    {
-                        imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(images[0], 224, 224, 128.0f, 1.0f);
-                    }
 
-                    Inception.RecognitionResult[] result;
-                    if (_coldSession)
-                    {
-                        //First run of the recognition graph, here we will compile the graph and initialize the session
-                        //This is expected to take much longer time than consecutive runs.
+                        Tensor imageTensor;
+                        if (_model == Model.Flower)
+                        {
+                            imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(images[0], 299, 299,
+                                0.0f, 1.0f / 255.0f, false, false);
+                        }
+                        else
+                        {
+                            imageTensor =
+                                Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(images[0], 224, 224, 128.0f,
+                                    1.0f);
+                        }
+
+                        Inception.RecognitionResult[] result;
+                        if (_coldSession)
+                        {
+                            //First run of the recognition graph, here we will compile the graph and initialize the session
+                            //This is expected to take much longer time than consecutive runs.
+                            result = _inceptionGraph.Recognize(imageTensor)[0];
+                            _coldSession = false;
+                        }
+
+                        //Here we are trying to time the execution of the graph after it is loaded
+                        //If we are not interest in the performance, we can skip the following 3 lines
+                        Stopwatch sw = Stopwatch.StartNew();
                         result = _inceptionGraph.Recognize(imageTensor)[0];
-                        _coldSession = false;
-                    }
+                        sw.Stop();
+                        
+                        String msg = String.Format(
+                            "Object is {0} with {1}% probability. Recognized in {2} milliseconds.",
+                            result[0].Label,
+                            result[0].Probability * 100,
+                            sw.ElapsedMilliseconds);
+                        SetMessage(msg);
 
-                    //Here we are trying to time the execution of the graph after it is loaded
-                    //If we are not interest in the performance, we can skip the following 3 lines
-                    Stopwatch sw = Stopwatch.StartNew();
-                    result = _inceptionGraph.Recognize(imageTensor)[0];
-                    sw.Stop();
-                    TfInvoke.RemoveLogListenerSink(Emgu.TF.TfInvoke.DefaultTfLogListenerSink);
-                    String msg = String.Format(
-                        "Object is {0} with {1}% probability. Recognized in {2} milliseconds.",
-                        result[0].Label,
-                        result[0].Probability * 100,
-                        sw.ElapsedMilliseconds);
-                    SetMessage(msg);
-
-                    var logSink = Emgu.TF.TfInvoke.DefaultTfLogListenerSink;
-                    String log = logSink.GetLog().Trim();
-                    if (log != String.Empty)
-                    {
-                        logSink.Clear();
+                        
+                        String log = logSink.GetLog().Trim();
+                        if (log != String.Empty)
+                        {
+                            logSink.Clear();
+                        }
                         SetLog(log);
-                    }
-
+                        
 #if __ANDROID__
-                    var bmp = Emgu.Models.NativeImageIO.ImageFileToBitmap(images[0]);
-                    SetImage(bmp);
+                        var bmp = Emgu.Models.NativeImageIO.ImageFileToBitmap(images[0]);
+                        SetImage(bmp);
 #else
-                    var jpeg = Emgu.Models.NativeImageIO.ImageFileToJpeg(images[0]);
-                    SetImage(jpeg.Raw, jpeg.Width, jpeg.Height);
+                        var jpeg = Emgu.Models.NativeImageIO.ImageFileToJpeg(images[0]);
+                        SetImage(jpeg.Raw, jpeg.Width, jpeg.Height);
 #endif
-                    this.TopButton.IsEnabled = true;
+                        this.TopButton.IsEnabled = true;
+                    }
                 }
             }
 #if !DEBUG
@@ -285,7 +293,16 @@ namespace Emgu.TF.XamarinForms
                         SetMessage(msg);
                     }
 #endif
+            this.Disappearing += InceptionPage_Disappearing;
         }
 
+        private void InceptionPage_Disappearing(object sender, EventArgs e)
+        {
+            if (_inceptionGraph != null)
+            {
+                _inceptionGraph.Dispose();
+                _inceptionGraph = null;
+            }
+        }
     }
 }

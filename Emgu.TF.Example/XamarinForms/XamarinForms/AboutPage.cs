@@ -43,8 +43,8 @@ namespace Emgu.TF.XamarinForms
             using (Session session = new Session(graph, so))
             {
                 //Execute the session and get the sum
-                Tensor[] results = session.Run(new Output[] {opA, opB}, new Tensor[] {tensorA, tensorB},
-                    new Output[] {sumOp});
+                Tensor[] results = session.Run(new Output[] { opA, opB }, new Tensor[] { tensorA, tensorB },
+                    new Output[] { sumOp });
 
                 Session.Device[] devices = session.ListDevices(null);
                 return devices;
@@ -53,28 +53,25 @@ namespace Emgu.TF.XamarinForms
 
         public AboutPage()
         {
-            TfInvoke.AddLogListenerSink(Emgu.TF.TfInvoke.DefaultTfLogListenerSink);
-            Session.Device[] devices = GetSessionDevices();
-            StringBuilder sb = new StringBuilder();
-            foreach (Session.Device d in devices)
+            using (LogListenerSink logSink = new LogListenerSink(App.EnableLogging))
             {
-                sb.Append(String.Format("<H4 style=\"color: blue;\">{1}: {0}</H4>", d.Name, d.Type));
-            }
-            String tensorflowVer = TfInvoke.Version;
-            var listenerSink = TfInvoke.DefaultTfLogListenerSink;
+                Session.Device[] devices = GetSessionDevices();
+                StringBuilder sb = new StringBuilder();
+                foreach (Session.Device d in devices)
+                {
+                    sb.Append(String.Format("<H4 style=\"color: blue;\">{1}: {0}</H4>", d.Name, d.Type));
+                }
 
-            TfInvoke.RemoveLogListenerSink(Emgu.TF.TfInvoke.DefaultTfLogListenerSink);
-
-            Title = "About Emgu TF";
-            Content =
-
-                    new WebView()
+                String tensorflowVer = TfInvoke.Version;
+                
+                Title = "About Emgu TF";
+                Content = new WebView()
+                {
+                    WidthRequest = 400,
+                    HeightRequest = 1000,
+                    Source = new HtmlWebViewSource()
                     {
-                        WidthRequest =  400,
-                        HeightRequest = 1000,
-                        Source =  new HtmlWebViewSource()
-                        {
-                            Html = String.Format(
+                        Html = String.Format(
                             @"<html>
                     <head>
                     <style>body {{ background-color: #EEEEEE; }}</style>
@@ -106,16 +103,17 @@ namespace Emgu.TF.XamarinForms
                             System.Runtime.InteropServices.RuntimeInformation.OSDescription,
                             System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription,
                             System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture,
-                            sb.ToString(), 
+                            sb.ToString(),
                             TfInvoke.IsGoogleCudaEnabled,
                             TfInvoke.IsBuiltWithROCm,
                             TfInvoke.IsBuiltWithNvcc,
                             TfInvoke.GpuSupportsHalfMatMulAndConv,
                             TfInvoke.IsMklEnabled,
-                            listenerSink.GetLog()
-                            )
-                        }
-            };
+                            logSink.GetLog()
+                        )
+                    }
+                };
+            }
         }
     }
 }
