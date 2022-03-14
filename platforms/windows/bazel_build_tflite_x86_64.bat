@@ -81,6 +81,9 @@ SET VS2017=%VS2017_DIR%\Common7\IDE\devenv.com
 FOR /F "tokens=* USEBACKQ" %%F IN (`miscellaneous\vswhere.exe -version [16.0^,17.0^) -property installationPath`) DO SET VS2019_DIR=%%F
 SET VS2019=%VS2019_DIR%\Common7\IDE\devenv.com
 
+FOR /F "tokens=* USEBACKQ" %%F IN (`miscellaneous\vswhere.exe -version [17.0^,18.0^) -property installationPath`) DO SET VS2022_DIR=%%F
+SET VS2022=%VS2022_DIR%\Common7\IDE\devenv.com
+
 IF EXIST "%windir%\Microsoft.NET\Framework\v3.5\MSBuild.exe" SET MSBUILD35=%windir%\Microsoft.NET\Framework\v3.5\MSBuild.exe
 IF EXIST "%windir%\Microsoft.NET\Framework64\v3.5\MSBuild.exe" SET MSBUILD35=%windir%\Microsoft.NET\Framework64\v3.5\MSBuild.exe
 IF EXIST "%windir%\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe" SET MSBUILD40=%windir%\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe
@@ -89,6 +92,7 @@ IF EXIST "%MSBUILD35%" SET DEVENV=%MSBUILD35%
 IF EXIST "%MSBUILD40%" SET DEVENV=%MSBUILD40%
 IF EXIST "%VS2017%" SET DEVENV=%VS2017%
 IF EXIST "%VS2019%" SET DEVENV=%VS2019%
+IF EXIST "%VS2022%" SET DEVENV=%VS2022%
 IF EXIST "%BUILD_TOOLS_FOLDER%" SET DEVENV=%BUILD_TOOLS_FOLDER%
 
 
@@ -107,6 +111,7 @@ SET PYTHON_LIB_PATH=%PYTHON_LIB_PATH:\=/%
 :SET_BAZEL_VS_VC
 IF "%DEVENV%"=="%VS2017%" SET BAZEL_VS=%VS2017:\Common7\IDE\devenv.com=%
 IF "%DEVENV%"=="%VS2019%" SET BAZEL_VS=%VS2019:\Common7\IDE\devenv.com=%
+IF "%DEVENV%"=="%VS2022%" SET BAZEL_VS=%VS2022:\Common7\IDE\devenv.com=%
 IF "%DEVENV%"=="%BUILD_TOOLS_FOLDER%" SET BAZEL_VS=%BUILD_TOOLS_FOLDER%
 IF NOT "%BAZEL_VS%"=="" SET BAZEL_VC=%BAZEL_VS%\VC
 REM SET BAZEL_VS="%BAZEL_VS%"
@@ -130,6 +135,7 @@ cp -f tensorflow/bazel-bin/tensorflow/tfliteextern/libtfliteextern.so lib/x64/tf
 IF "%BAZEL_VC%"=="" GOTO END_OF_MSVC_DEPENDENCY
 IF "%DEVENV%"=="%VS2017%" GOTO VS2017_DEPENDENCY
 IF "%DEVENV%"=="%VS2019%" GOTO VS2019_DEPENDENCY
+IF "%DEVENV%"=="%VS2022%" GOTO VS2022_DEPENDENCY
 IF "%DEVENV%"=="%BUILDTOOLS%" GOTO VS2019_DEPENDENCY
 GOTO END_OF_MSVC_DEPENDENCY
 
@@ -147,6 +153,11 @@ copy /Y "%VS2019_REDIST%\*.dll" lib\x64\
 REM copy /Y "%VS2019_REDIST%\*140_1.dll" lib\x64\
 REM copy /Y "%VS2019_REDIST%\*140_2.dll" lib\x64\
 REM rm lib\x64\vccorlib140.dll
+GOTO END_OF_MSVC_DEPENDENCY
+
+:VS2022_DEPENDENCY
+for /d %%i in ( "%BAZEL_VC%\Redist\MSVC\14*" ) do SET VS2022_REDIST=%%i\x64\Microsoft.VC143.CRT
+copy /Y "%VS2022_REDIST%\*.dll" lib\x64\
 
 :END_OF_MSVC_DEPENDENCY
 popd
