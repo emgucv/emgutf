@@ -11,9 +11,14 @@ using Emgu.TF.Util;
 
 namespace Emgu.TF
 {
-
+    /// <summary>
+    /// The interface for LogSink (tensorflow::TFLogSink)
+    /// </summary>
     public interface ILogSink
     {
+        /// <summary>
+        /// Return a pointer to the native tensorflow::TFLogSink
+        /// </summary>
         IntPtr LogSinkPtr { get; }
     }
 

@@ -17,7 +17,7 @@ namespace Emgu.TF.XamarinForms
         {
             get
             {
-                return false;
+                return true;
             }
         }
         public App()

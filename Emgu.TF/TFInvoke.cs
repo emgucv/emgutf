@@ -412,7 +412,7 @@ namespace Emgu.TF
                 throw new DllNotFoundException(errMsg, e);
             }
 
-            _defaultLogForwarderSink = new Emgu.TF.LogForwarderSink();
+            _defaultLogForwarderSink = new Emgu.TF.LogForwarderSink(true);
         }
 
         /// <summary>
@@ -588,23 +588,33 @@ namespace Emgu.TF
         [DllImport(ExternLibrary, CallingConvention = TfInvoke.TfCallingConvention)]
         private static extern void tfeListAllPhysicalDevices(IntPtr nameBuffer, IntPtr status);
 
-
+        /// <summary>
+        /// A Log Listener call back
+        /// </summary>
+        /// <param name="msg">The pointer to the native message.</param>
         [UnmanagedFunctionPointer(TfCallingConvention)]
         public delegate void TfLogListener(IntPtr msg);
 
+        /// <summary>
+        /// Register a Log Listener
+        /// </summary>
+        /// <param name="listener">The Log listener to be registered.</param>
         [DllImport(
             ExternLibrary, 
             CallingConvention = TfInvoke.TfCallingConvention,
             EntryPoint = "tfeRegisterLogListener")]
         public static extern void RegisterLogListener(TfLogListener listener);
 
-        
 
         [DllImport(
             ExternLibrary,
             CallingConvention = TfInvoke.TfCallingConvention)]
         private static extern void tfeAddLogSink(IntPtr sink);
 
+        /// <summary>
+        /// Add a log sink to receive log messages (tensorflow::TFAddLogSink)
+        /// </summary>
+        /// <param name="sink">The log sink to be added</param>
         public static void AddLogSink(ILogSink sink)
         {
             tfeAddLogSink(sink.LogSinkPtr);
@@ -615,18 +625,27 @@ namespace Emgu.TF
             CallingConvention = TfInvoke.TfCallingConvention)]
         private static extern void tfeRemoveLogSink(IntPtr sink);
 
+        /// <summary>
+        /// Remove a log sink from receiving log messages (tensorflow::TFRemoveLogSink)
+        /// </summary>
+        /// <param name="sink">The log sink to be removed</param>
         public static void RemoveLogSink(ILogSink sink)
         {
             tfeRemoveLogSink(sink.LogSinkPtr);
         }
 
-
         private static TfLogListener _defaultLogListener = TfDefaultLogListener;
 
 
-
+        /// <summary>
+        /// Handle the event when Log Message is received
+        /// </summary>
         public static event EventHandler<String> LogMsgReceived;
 
+        /// <summary>
+        /// The default Log message listener
+        /// </summary>
+        /// <param name="msgPtr"></param>
 #if UNITY_WSA || UNITY_ANDROID || UNITY_STANDALONE
         [AOT.MonoPInvokeCallback(typeof(TfLogListener))]
 #endif
@@ -637,7 +656,12 @@ namespace Emgu.TF
             LogMsgReceived?.Invoke(null, msg);
         }
 
+        
         private static ILogSink _defaultLogForwarderSink = null;
+
+        /// <summary>
+        /// Get the default log forwarder sink
+        /// </summary>
         public static ILogSink DefaultLogForwarderSink
         {
             get
