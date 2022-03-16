@@ -1242,7 +1242,7 @@ SET(EMGUTF_PROTOBUF_NUGET_DEPENDENCY "${EMGUTF_PROTOBUF_NUGET_DEPENDENCY}
     <dependencies>
 		<group targetFramework=\".NETStandard2.0\">
 			<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
-			<dependency id=\"Google.Protobuf\" version=\"[${PROTOBUF_VERSION}]\" />
+			<dependency id=\"Google.Protobuf\" version=\"${PROTOBUF_VERSION}\" />
 		</group>
     </dependencies>") 
 
