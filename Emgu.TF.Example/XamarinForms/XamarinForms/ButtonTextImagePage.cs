@@ -1,4 +1,8 @@
-﻿using System;
+﻿//----------------------------------------------------------------------------
+//  Copyright (C) 2004-2022 by EMGU Corporation. All rights reserved.       
+//----------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,7 +11,6 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-
 
 namespace Emgu.TF.XamarinForms
 {
@@ -85,6 +88,20 @@ namespace Emgu.TF.XamarinForms
             Content = _mainLayout;
 
             SetLog(null);
+
+            TfInvoke.LogMsgReceived += LogMsgReceived;
+
+            this.Disappearing += ButtonTextImagePage_Disappearing;
+        }
+
+        private void ButtonTextImagePage_Disappearing(object sender, EventArgs e)
+        {
+            TfInvoke.LogMsgReceived -= LogMsgReceived;
+        }
+
+        private void LogMsgReceived(object sender, string e)
+        {
+            AppendLog(e);
         }
 
         public bool HasCameraOption { get; set; }
@@ -250,7 +267,18 @@ namespace Emgu.TF.XamarinForms
             );
         }
 
-        public void SetLog(String log)
+        private String _log = String.Empty;
+
+        public void AppendLog(String log)
+        {
+            if (String.IsNullOrEmpty(_log))
+                _log = log;
+            else
+                _log = log + _log;
+            RenderLog(_log);
+        }
+
+        private void RenderLog(String log)
         {
             Xamarin.Forms.Device.BeginInvokeOnMainThread(
                 () =>
@@ -272,6 +300,12 @@ namespace Emgu.TF.XamarinForms
                     this.LogEditor.Focus();
                 }
             );
+        }
+
+        public void SetLog(String log)
+        {
+            _log = log;
+            RenderLog(_log);
         }
 
         private static String ByteToSizeStr(long byteCount)

@@ -40,13 +40,16 @@ namespace Emgu.TF.XamarinForms
             if (_stylizeGraph == null)
             {
                 SessionOptions so = new SessionOptions();
+                Tensorflow.ConfigProto config = new Tensorflow.ConfigProto();
                 if (TfInvoke.IsGoogleCudaEnabled)
                 {
-                    Tensorflow.ConfigProto config = new Tensorflow.ConfigProto();
                     config.GpuOptions = new Tensorflow.GPUOptions();
                     config.GpuOptions.AllowGrowth = true;
-                    so.SetConfig(config.ToProtobuf());
                 }
+#if DEBUG
+                config.LogDevicePlacement = true;
+#endif
+                so.SetConfig(config.ToProtobuf());
                 _stylizeGraph = new StylizeGraph(null, so);
                 _stylizeGraph.OnDownloadProgressChanged += onProgressChanged;
 

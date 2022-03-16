@@ -13,13 +13,7 @@ namespace Emgu.TF.XamarinForms
 {
     public class App : Application
     {
-        public static bool EnableLogging
-        {
-            get
-            {
-                return true;
-            }
-        }
+
         public App()
         {
             Emgu.TF.TfInvoke.Init();

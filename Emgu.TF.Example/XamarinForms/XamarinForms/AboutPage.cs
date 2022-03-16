@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Tensorflow;
 using Xamarin.Forms;
@@ -53,7 +52,7 @@ namespace Emgu.TF.XamarinForms
 
         public AboutPage()
         {
-            using (LogListenerSink logSink = new LogListenerSink(App.EnableLogging))
+            using (LogListenerSink logSink = new LogListenerSink(true))
             {
                 Session.Device[] devices = GetSessionDevices();
                 StringBuilder sb = new StringBuilder();

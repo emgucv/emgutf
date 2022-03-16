@@ -64,59 +64,53 @@ namespace Emgu.TF.XamarinForms
         {
             if (_inceptionGraph == null)
             {
-                //Capturing the log using logSink
-                using (LogListenerSink logSink = new LogListenerSink(App.EnableLogging))
+
+                using (SessionOptions so = new SessionOptions())
                 {
-                    using (SessionOptions so = new SessionOptions())
+                    Tensorflow.ConfigProto config = new Tensorflow.ConfigProto();
+                    if (TfInvoke.IsGoogleCudaEnabled)
                     {
-                        Tensorflow.ConfigProto config = new Tensorflow.ConfigProto();
-                        if (TfInvoke.IsGoogleCudaEnabled)
-                        {
-                            config.GpuOptions = new Tensorflow.GPUOptions();
-                            config.GpuOptions.AllowGrowth = true;
-                        }
-                        config.LogDevicePlacement = true;
-                        so.SetConfig(config.ToProtobuf());
-
-                        _inceptionGraph = new Inception(null, so);
-                        _inceptionGraph.OnDownloadProgressChanged += onProgressChanged;
-
-                        if (_model == Model.Flower)
-                        {
-                            String localModelFolder = "InceptionFlower";
-                            DownloadableFile modelFile = new DownloadableFile(
-                                "https://github.com/emgucv/models/raw/master/inception_flower_retrain/optimized_graph.pb",
-                                localModelFolder,
-                                "DE83CAD3F87B5070E24EFEADB8B84F72C940B73974DC69B46D96CDFB913385C4"
-                            );
-
-                            DownloadableFile labelFile = new DownloadableFile(
-                                "https://github.com/emgucv/models/raw/master/inception_flower_retrain/output_labels.txt",
-                                localModelFolder,
-                                "298454B11DBEE503F0303367F3714D449855071DF9ECAC16AB0A01A0A7377DB6"
-                            );
-
-                            //use a retrained model to recognize followers
-                            await _inceptionGraph.Init(
-                                modelFile,
-                                labelFile,
-                                "Placeholder",
-                                "final_result");
-                        }
-                        else
-                        {
-                            //The original inception model
-                            await _inceptionGraph.Init();
-                        }
+                        config.GpuOptions = new Tensorflow.GPUOptions();
+                        config.GpuOptions.AllowGrowth = true;
                     }
-   
-                    String log = logSink.GetLog().Trim();
-                    if (log != String.Empty)
+#if DEBUG
+                    config.LogDevicePlacement = true;
+#endif
+
+                    so.SetConfig(config.ToProtobuf());
+
+                    _inceptionGraph = new Inception(null, so);
+                    _inceptionGraph.OnDownloadProgressChanged += onProgressChanged;
+
+                    if (_model == Model.Flower)
                     {
-                        logSink.Clear();
+                        String localModelFolder = "InceptionFlower";
+                        DownloadableFile modelFile = new DownloadableFile(
+                            "https://github.com/emgucv/models/raw/master/inception_flower_retrain/optimized_graph.pb",
+                            localModelFolder,
+                            "DE83CAD3F87B5070E24EFEADB8B84F72C940B73974DC69B46D96CDFB913385C4"
+                        );
+
+                        DownloadableFile labelFile = new DownloadableFile(
+                            "https://github.com/emgucv/models/raw/master/inception_flower_retrain/output_labels.txt",
+                            localModelFolder,
+                            "298454B11DBEE503F0303367F3714D449855071DF9ECAC16AB0A01A0A7377DB6"
+                        );
+
+                        //use a retrained model to recognize followers
+                        await _inceptionGraph.Init(
+                            modelFile,
+                            labelFile,
+                            "Placeholder",
+                            "final_result");
                     }
-                    SetLog(log);
+                    else
+                    {
+                        //The original inception model
+                        await _inceptionGraph.Init();
+                    }
                 }
+
             }
         }
 
@@ -153,7 +147,7 @@ namespace Emgu.TF.XamarinForms
                 SetMessage("Please wait while we download and initialize the model ...");
                 await Init(this.onDownloadProgressChanged);
 
-                if (_inceptionGraph == null || (!_inceptionGraph.Imported) )
+                if (_inceptionGraph == null || (!_inceptionGraph.Imported))
                 {
                     _inceptionGraph = null;
                     SetMessage("Failed to import inception graph.");
@@ -224,66 +218,57 @@ namespace Emgu.TF.XamarinForms
                         }
                     });
 #else
-                        throw new NotImplementedException("Camera handling is not implemented");
+                    throw new NotImplementedException("Camera handling is not implemented");
 #endif
                 }
                 else
                 {
-                    using (LogListenerSink logSink = new LogListenerSink(App.EnableLogging))
+
+
+                    Tensor imageTensor;
+                    if (_model == Model.Flower)
                     {
+                        imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(images[0], 299, 299,
+                            0.0f, 1.0f / 255.0f, false, false);
+                    }
+                    else
+                    {
+                        imageTensor =
+                            Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(images[0], 224, 224, 128.0f,
+                                1.0f);
+                    }
 
-                        Tensor imageTensor;
-                        if (_model == Model.Flower)
-                        {
-                            imageTensor = Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(images[0], 299, 299,
-                                0.0f, 1.0f / 255.0f, false, false);
-                        }
-                        else
-                        {
-                            imageTensor =
-                                Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(images[0], 224, 224, 128.0f,
-                                    1.0f);
-                        }
-
-                        Inception.RecognitionResult[] result;
-                        if (_coldSession)
-                        {
-                            //First run of the recognition graph, here we will compile the graph and initialize the session
-                            //This is expected to take much longer time than consecutive runs.
-                            result = _inceptionGraph.Recognize(imageTensor)[0];
-                            _coldSession = false;
-                        }
-
-                        //Here we are trying to time the execution of the graph after it is loaded
-                        //If we are not interest in the performance, we can skip the following 3 lines
-                        Stopwatch sw = Stopwatch.StartNew();
+                    Inception.RecognitionResult[] result;
+                    if (_coldSession)
+                    {
+                        //First run of the recognition graph, here we will compile the graph and initialize the session
+                        //This is expected to take much longer time than consecutive runs.
                         result = _inceptionGraph.Recognize(imageTensor)[0];
-                        sw.Stop();
-                        
-                        String msg = String.Format(
-                            "Object is {0} with {1}% probability. Recognized in {2} milliseconds.",
-                            result[0].Label,
-                            result[0].Probability * 100,
-                            sw.ElapsedMilliseconds);
-                        SetMessage(msg);
+                        _coldSession = false;
+                    }
 
-                        
-                        String log = logSink.GetLog().Trim();
-                        if (log != String.Empty)
-                        {
-                            logSink.Clear();
-                        }
-                        SetLog(log);
-                        
+                    //Here we are trying to time the execution of the graph after it is loaded
+                    //If we are not interest in the performance, we can skip the following 3 lines
+                    Stopwatch sw = Stopwatch.StartNew();
+                    result = _inceptionGraph.Recognize(imageTensor)[0];
+                    sw.Stop();
+
+                    String msg = String.Format(
+                        "Object is {0} with {1}% probability. Recognized in {2} milliseconds.",
+                        result[0].Label,
+                        result[0].Probability * 100,
+                        sw.ElapsedMilliseconds);
+                    SetMessage(msg);
+
+
 #if __ANDROID__
                         var bmp = Emgu.Models.NativeImageIO.ImageFileToBitmap(images[0]);
                         SetImage(bmp);
 #else
-                        var jpeg = Emgu.Models.NativeImageIO.ImageFileToJpeg(images[0]);
-                        SetImage(jpeg.Raw, jpeg.Width, jpeg.Height);
+                    var jpeg = Emgu.Models.NativeImageIO.ImageFileToJpeg(images[0]);
+                    SetImage(jpeg.Raw, jpeg.Width, jpeg.Height);
 #endif
-                        this.TopButton.IsEnabled = true;
-                    }
+                    this.TopButton.IsEnabled = true;
                 }
             }
 #if !DEBUG

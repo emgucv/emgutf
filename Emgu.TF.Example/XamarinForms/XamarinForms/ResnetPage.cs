@@ -48,7 +48,9 @@ namespace Emgu.TF.XamarinForms
 
                 SessionOptions so = new SessionOptions();
                 Tensorflow.ConfigProto config = new Tensorflow.ConfigProto();
+#if DEBUG
                 config.LogDevicePlacement = true;
+#endif
                 if (TfInvoke.IsGoogleCudaEnabled)
                 {
                     config.GpuOptions = new Tensorflow.GPUOptions();
@@ -58,20 +60,7 @@ namespace Emgu.TF.XamarinForms
                 _resnet = new Resnet(null, so);
                 _resnet.OnDownloadProgressChanged += onProgressChanged;
 
-                //Capturing the log using logSink
-                using (LogListenerSink logSink = new LogListenerSink(App.EnableLogging))
-                {
-                    //The resnet model
-                    await _resnet.Init();
-
-                    String log = logSink.GetLog().Trim();
-                    if (log != String.Empty)
-                    {
-                        logSink.Clear();
-                    }
-                    SetLog(log);
-                }
-
+                await _resnet.Init();
             }
         }
 
@@ -119,8 +108,8 @@ namespace Emgu.TF.XamarinForms
                     SetMessage("Model Loaded.");
 
                     String[] images;
-                    images = await LoadImages(new string[] {"space_shuttle.jpg"});
-                    
+                    images = await LoadImages(new string[] { "space_shuttle.jpg" });
+
                     if (images == null)
                     {
                         //User canceled
@@ -169,51 +158,38 @@ namespace Emgu.TF.XamarinForms
                     }
                     else
                     {
-                        using (LogListenerSink logSink = new LogListenerSink(App.EnableLogging))
+                        Tensor imageTensor =
+                            Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(images[0], 224, 224, 0.0f,
+                                1.0f / 255.0f, false, false);
+
+                        Resnet.RecognitionResult[] result;
+                        if (_coldSession)
                         {
-                            
-                            Tensor imageTensor =
-                                Emgu.TF.Models.ImageIO.ReadTensorFromImageFile<float>(images[0], 224, 224, 0.0f,
-                                    1.0f / 255.0f, false, false);
-
-                            Resnet.RecognitionResult[] result;
-                            if (_coldSession)
-                            {
-                                //First run of the recognition graph, here we will compile the graph and initialize the session
-                                //This is expected to take much longer time than consecutive runs.
-                                result = _resnet.Recognize(imageTensor)[0];
-                                _coldSession = false;
-                            }
-
-                            //Here we are trying to time the execution of the graph after it is loaded
-                            //If we are not interest in the performance, we can skip the following 3 lines
-                            Stopwatch sw = Stopwatch.StartNew();
+                            //First run of the recognition graph, here we will compile the graph and initialize the session
+                            //This is expected to take much longer time than consecutive runs.
                             result = _resnet.Recognize(imageTensor)[0];
-                            sw.Stop();
+                            _coldSession = false;
+                        }
 
-                            String msg = String.Format(
-                                "Object is {0} with {1}% probability. Recognized in {2} milliseconds.",
-                                result[0].Label, result[0].Probability * 100, sw.ElapsedMilliseconds);
-                            SetMessage(msg);
+                        //Here we are trying to time the execution of the graph after it is loaded
+                        //If we are not interest in the performance, we can skip the following 3 lines
+                        Stopwatch sw = Stopwatch.StartNew();
+                        result = _resnet.Recognize(imageTensor)[0];
+                        sw.Stop();
 
-                            String log = logSink.GetLog().Trim();
-                            if (log != String.Empty)
-                            {
-                                logSink.Clear();
-                                
-                            }
-                            SetLog(log);
-                            
+                        String msg = String.Format(
+                            "Object is {0} with {1}% probability. Recognized in {2} milliseconds.",
+                            result[0].Label, result[0].Probability * 100, sw.ElapsedMilliseconds);
+                        SetMessage(msg);
 
 #if __ANDROID__
                             var bmp = Emgu.Models.NativeImageIO.ImageFileToBitmap(images[0]);
                             SetImage(bmp);
 #else
-                            var jpeg = Emgu.Models.NativeImageIO.ImageFileToJpeg(images[0]);
-                            SetImage(jpeg.Raw, jpeg.Width, jpeg.Height);
+                        var jpeg = Emgu.Models.NativeImageIO.ImageFileToJpeg(images[0]);
+                        SetImage(jpeg.Raw, jpeg.Width, jpeg.Height);
 #endif
-                            this.TopButton.IsEnabled = true;
-                        }
+                        this.TopButton.IsEnabled = true;
                     }
 
                 }
