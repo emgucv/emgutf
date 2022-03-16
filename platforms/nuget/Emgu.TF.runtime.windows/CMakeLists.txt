@@ -47,6 +47,9 @@ ENDIF()
 IF (TARGET Emgu.TF.runtime.windows.cuda.blas.nuget)
   ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.runtime.windows.cuda.blas.nuget)
 ENDIF()
+IF (TARGET Emgu.TF.runtime.windows.cuda.blas.lt.nuget)
+  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.runtime.windows.cuda.blas.lt.nuget)
+ENDIF()
 
 
 if(ENABLE_SOLUTION_FOLDERS)
