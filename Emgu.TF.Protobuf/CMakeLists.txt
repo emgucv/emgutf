@@ -31,13 +31,13 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
   
   SET(PROTOBUF_TOOLS_NUGET_URL https://www.nuget.org/api/v2/package/Google.Protobuf.Tools/${PROTOBUF_VERSION})
   IF(WIN32)
-    SET(PROTOBUF_TOOLS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../protobuf_archive)
+    SET(PROTOBUF_TOOLS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/bazel-bin/external/com_google_protobuf)
     FIND_PROGRAM (PROTOC_EXE 
       NAMES protoc
       PATHS
       ${PROTOBUF_TOOLS_PATH}
       )
-    SET(PROTOBUF_INCLUDE_PATH ${PROTOBUF_TOOLS_PATH}/src)
+    SET(PROTOBUF_INCLUDE_PATH ${PROTOBUF_TOOLS_PATH}/google/protobuf)
     
     if (("${PROTOC_EXE}" STREQUAL "PROTOC_EXE-NOTFOUND") OR NOT (EXISTS ${PROTOBUF_INCLUDE_PATH}))
       SET(PROTOBUF_TOOLS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/protobuf.tools)
@@ -47,7 +47,7 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
 	    PRE_BUILD
 	    COMMAND wget ${PROTOBUF_TOOLS_NUGET_URL} -O protobuf.tools.zip
 	    COMMAND unzip -uo protobuf.tools.zip -d protobuf.tools
-        COMMENT "Downloading and extractiong protobuf from ${PROTOBUF_TOOLS_NUGET_URL} to 'protobuf.tools' folder under ${CMAKE_CURRENT_SOURCE_DIR};"
+        COMMENT "Downloading and extracting protobuf from ${PROTOBUF_TOOLS_NUGET_URL} to 'protobuf.tools' folder under ${CMAKE_CURRENT_SOURCE_DIR};"
 	    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
       ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
 	    PRE_BUILD
@@ -69,7 +69,7 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
       PRE_BUILD
       COMMAND wget ${PROTOBUF_TOOLS_NUGET_URL} -O protobuf.tools.zip
       COMMAND unzip -u protobuf.tools.zip -d protobuf.tools
-      COMMENT "Downloading and extractiong protobuf from ${PROTOBUF_TOOLS_NUGET_URL} to 'protobuf.tools' folder under ${CMAKE_CURRENT_SOURCE_DIR};"
+      COMMENT "Downloading and extracting protobuf from ${PROTOBUF_TOOLS_NUGET_URL} to 'protobuf.tools' folder under ${CMAKE_CURRENT_SOURCE_DIR};"
       WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
     SET(PROTOBUF_TOOLS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/protobuf.tools)
     SET(PROTOC_EXE "${PROTOBUF_TOOLS_PATH}/tools/macosx_x64/protoc")

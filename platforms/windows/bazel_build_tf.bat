@@ -205,8 +205,9 @@ copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cudart64_*.dll" lib\x64\
 copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cusparse*.dll" lib\x64\
 :END_OF_DEPLOY_DEPENDENCY_GPU
 
-cp -rf tensorflow\bazel-bin\external\protobuf_archive .
-cp -rf tensorflow\bazel-tensorflow\external\protobuf_archive .
+REM copy the protoc compiler
+REM cp -rf tensorflow\bazel-bin\external\com_google_protobuf .
+REM cp -rf tensorflow\bazel-tensorflow\external\com_google_protobuf .
 
 IF "%3%" == "mkl" GOTO DEPLOY_DEPENDENCY_MKL
 GOTO END_OF_DEPLOY_DEPENDENCY_MKL
