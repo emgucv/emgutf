@@ -1,12 +1,43 @@
-#!/bin/bash
+#!/bin/bash -v
 
 cd "$(dirname "$0")"
 cd ../../
 mkdir -p lib/ios
 cd tensorflow
 
-export PYTHON_BIN_PATH="/usr/local/bin/python3"
-export PYTHON_LIB_PATH="/usr/local/lib/python3.9/site-packages"
+
+
+    
+
+
+
+
+
+
+
+if test -f "/usr/local/bin/python3"; then
+    if test -d "/usr/local/lib/python3.9/site-packages"; then
+	export PYTHON_BIN_PATH="/usr/local/bin/python3"
+	export PYTHON_LIB_PATH="/usr/local/lib/python3.9/site-packages"
+    fi
+fi
+
+if test -f "/opt/homebrew/bin/python3"; then
+    if test -d "/opt/homebrew/lib/python3.9/site-packages"; then
+	export PYTHON_BIN_PATH="/opt/homebrew/bin/python3"
+	export PYTHON_LIB_PATH="/opt/homebrew/lib/python3.9/site-packages"
+    fi
+fi
+
+if test -f "/usr/bin/python3"; then
+    if test -d "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/Current/lib/python3.8/site-packages"; then
+	export PYTHON_BIN_PATH="/use/bin/python3"
+	export PYTHON_LIB_PATH="/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/Current/lib/python3.8/site-packages"
+    fi
+fi
+
+echo PYTHON_BIN_PATH=$PYTHON_BIN_PATH
+echo PYTHON_LIB_PATH=$PYTHON_LIB_PATH
 
 export TF_CONFIGURE_IOS='1'
 export TF_ENABLE_XLA=1
@@ -22,6 +53,8 @@ BAZEL_OUTPUT_USER_ROOT="$(pwd)/../bazel_output"
 cp -f tensorflow/lite/ios/BUILD.apple tensorflow/lite/ios/BUILD
 
 ./configure
+#alias python="/usr/local/bin/python3"
+#bazel --output_user_root=$BAZEL_OUTPUT_USER_ROOT build --verbose_failures --config=ios_fat --copt="-DCL_DELEGATE_NO_GL" --copt="-D__IOS__" -c opt --action_env PATH="$PATH" //tensorflow/lite/ios:TensorFlowLiteC_framework
 bazel --output_user_root=$BAZEL_OUTPUT_USER_ROOT build --verbose_failures --incompatible_run_shell_command_string=false --config=ios_fat --copt="-DCL_DELEGATE_NO_GL" --copt="-D__IOS__" -c opt //tensorflow/lite/ios:TensorFlowLiteC_framework
 unzip -o bazel-bin/tensorflow/lite/ios/TensorFlowLiteC_framework.zip
 cp -r TensorFlowLiteC.framework/TensorFlowLiteC ../lib/ios/libtfliteextern.a
