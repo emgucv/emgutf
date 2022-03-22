@@ -34,7 +34,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Models.Netstandard"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Ubuntu", "..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Runtime.Ubuntu.shproj", "{0F30EC5F-39DD-4A62-AD79-14EBCB894208}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Raspbian", "..\..\Emgu.TF.Runtime\Raspbian\Emgu.TF.Runtime.Raspbian.shproj", "{61FEA54E-4DD5-4552-BCFC-860610295873}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Debian", "..\..\Emgu.TF.Runtime\Debian\Emgu.TF.Runtime.Debian.shproj", "{61FEA54E-4DD5-4552-BCFC-860610295873}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
