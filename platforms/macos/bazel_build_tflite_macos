@@ -1,24 +1,21 @@
-#!/bin/bash
+#!/bin/bash -v
 
 if [[ $# -lt 1 ]]; then
     BAZEL_CPU=darwin
+	BAZEL_OPTIONS=
 else
     BAZEL_CPU=$1
+	BAZEL_OPTIONS=${@:2}
 fi    
 cd "$(dirname "$0")"
 cd ../../
 mkdir -p lib/macos
 cd tensorflow
-bazel build --verbose_failures -c opt --cpu=$BAZEL_CPU --cxxopt='--std=c++14' //tensorflow/tfliteextern:libtfliteextern.so
+bazel build --verbose_failures -c opt --cpu=$BAZEL_CPU --cxxopt='--std=c++14' $BAZEL_OPTIONS //tensorflow/tfliteextern:libtfliteextern.so
 cp -f bazel-bin/tensorflow/tfliteextern/libtfliteextern.so ../lib/macos/libtfliteextern.dylib
-#cp -f bazel-bin/tensorflow/tfliteextern/libtfliteextern.so ../platforms/osx/darwin_x86_64/libtfliteextern.dylib
-
-#bazel build -c opt --cpu=darwin --cxxopt='--std=c++11' //tensorflow/tfliteextern:libtfliteextern.so
-#cp -f bazel-bin/tensorflow/tfliteextern/libtfliteextern.so ../platforms/osx/darwin/libtfliteextern.dylib
 
 cd ..
-#mkdir -p lib/osx
-#cp tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so lib/osx/libtfextern.dylib
+
 chmod u+w lib/macos/libtfliteextern.dylib
 install_name_tool -id @rpath/libtfliteextern.dylib lib/macos/libtfliteextern.dylib
 #install_name_tool -change @rpath/libtensorflow_framework.so @rpath/libtensorflow_framework.dylib lib/osx/libtfextern.dylib
