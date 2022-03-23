@@ -20,6 +20,7 @@ using System.Diagnostics;
 using System.Drawing;
 using UnityEngine.Experimental.Rendering;
 using Color = UnityEngine.Color;
+using Debug = System.Diagnostics.Debug;
 
 public class CocoSsdMobilenetBehavior : MonoBehaviour
 {
@@ -49,39 +50,42 @@ public class CocoSsdMobilenetBehavior : MonoBehaviour
         return annotations;
     }
 
-    private void DrawToTexture(Texture texture, Annotation[] annotations, Texture2D results)
+    private static void DrawToTexture(Texture texture, Annotation[] annotations, Texture2D results)
     {
+        Debug.Assert(texture.width == results.width && texture.height == results.height, "Input texture and output texture must have the same width & height.");
+        Color32[] pixels;
         if (texture is Texture2D)
         {
             Texture2D t2d = texture as Texture2D;
-            _drawableTexture.SetPixels32(t2d.GetPixels32());
+            pixels = t2d.GetPixels32();
         } else if (texture is WebCamTexture)
         {
             WebCamTexture wct = texture as WebCamTexture;
-            _drawableTexture.SetPixels32(wct.GetPixels32());
+            pixels = wct.GetPixels32();
         }
         else
         {
             Texture2D tmp = new Texture2D(texture.width, texture.height, GraphicsFormat.R8G8B8A8_SRGB, texture.mipmapCount, TextureCreationFlags.None);
             Graphics.CopyTexture(texture, tmp);
-            _drawableTexture.SetPixels32(tmp.GetPixels32());
+            pixels = tmp.GetPixels32();
             Destroy(tmp);
         }
 
         foreach (Annotation annotation in annotations)
         {
-            float left = annotation.Rectangle[0] * _drawableTexture.width;
-            float top = annotation.Rectangle[1] * _drawableTexture.height;
-            float right = annotation.Rectangle[2] * _drawableTexture.width;
-            float bottom = annotation.Rectangle[3] * _drawableTexture.height;
+            float left = annotation.Rectangle[0] * texture.width;
+            float top = annotation.Rectangle[1] * texture.height;
+            float right = annotation.Rectangle[2] * texture.width;
+            float bottom = annotation.Rectangle[3] * texture.height;
 
             Rect scaledLocation = new Rect(left, top, right - left, bottom - top);
 
             scaledLocation.y = texture.height - scaledLocation.y;
             scaledLocation.height = -scaledLocation.height;
 
-            NativeImageIO.DrawRect(_drawableTexture, scaledLocation, Color.red);
+            NativeImageIO.DrawRect(pixels, texture.width, texture.height, scaledLocation, Color.red);
         }
+        results.SetPixels32(pixels);
         results.Apply();
     }
 

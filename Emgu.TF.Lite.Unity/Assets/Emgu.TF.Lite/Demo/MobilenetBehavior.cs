@@ -21,7 +21,7 @@ using System.Diagnostics;
 public class MobilenetBehavior : MonoBehaviour
 {
     private WebCamTexture _webcamTexture;
-    private Quaternion baseRotation;
+    private Quaternion _baseRotation;
     private bool _staticViewRendered = false;
     private Mobilenet _mobilenet = null;
     public Text DisplayText;
@@ -70,7 +70,7 @@ public class MobilenetBehavior : MonoBehaviour
         {
             if (_webcamTexture.didUpdateThisFrame)
             {
-                transform.rotation = baseRotation * Quaternion.AngleAxis(_webcamTexture.videoRotationAngle, Vector3.up);
+                transform.rotation = _baseRotation * Quaternion.AngleAxis(_webcamTexture.videoRotationAngle, Vector3.up);
 
                 RecognizeAndUpdateText(_webcamTexture);
                 RawImage image = this.GetComponent<RawImage>();

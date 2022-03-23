@@ -126,9 +126,7 @@ namespace Emgu.Models
         {
             int maxIdx = pixels.Length - 1;
             Color32 drawingColor = col;
-            //int width = tex.width;
-            //int height = tex.height;
-
+            
             int dy = (int)(y1 - y0);
             int dx = (int)(x1 - x0);
             int stepx, stepy;
@@ -143,7 +141,7 @@ namespace Emgu.Models
             float fraction = 0;
 
             pixels[Math.Max(Math.Min(x0 + y0 * width, maxIdx), 0)] = drawingColor;
-            //tex.SetPixel(x0, y0, col);
+            
             if (dx > dy)
             {
                 fraction = dy - (dx >> 1);
@@ -176,9 +174,17 @@ namespace Emgu.Models
                     pixels[Math.Max(Math.Min(x0 + y0 * width, maxIdx), 0)] = drawingColor;
                 }
             }
-            //tex.SetPixels32(pixels);
+            
         }
         #endregion
+
+        public static void DrawRect(Color32[] pixels, int width, int height, Rect rect, Color color)
+        {
+            DrawLine(pixels, width, height, (int)rect.position.x, (int)rect.position.y, (int)(rect.position.x + rect.width), (int)rect.position.y, color);
+            DrawLine(pixels, width, height, (int)rect.position.x, (int)rect.position.y, (int)rect.position.x, (int)(rect.position.y + rect.height), color);
+            DrawLine(pixels, width, height, (int)(rect.position.x + rect.width), (int)(rect.position.y + rect.height), (int)(rect.position.x + rect.width), (int)rect.position.y, color);
+            DrawLine(pixels, width, height, (int)(rect.position.x + rect.width), (int)(rect.position.y + rect.height), (int)rect.position.x, (int)(rect.position.y + rect.height), color);
+        }
 
         public static void DrawRect(Texture2D image, Rect rect, Color color)
         {
