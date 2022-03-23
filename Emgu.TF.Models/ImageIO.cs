@@ -39,24 +39,41 @@ namespace Emgu.TF.Models
         /// <returns>The jpeg data</returns>
         private static byte[] EncodeJpeg(Tensor image, float scale = 1.0f, float inputMean = 0.0f)
         {
-            var graph = new Graph();
-            Operation input = graph.Placeholder(DataType.Float);
+            using (var graph = new Graph())
+            using (Tensor scaleTensor = new Tensor(scale))
+            using (Tensor mean = new Tensor(inputMean))
+            {
+                Operation input = graph.Placeholder(DataType.Float);
 
-            Tensor scaleTensor = new Tensor(scale);
-            Operation scaleOp = graph.Const(scaleTensor, scaleTensor.Type, opName: "scale");
-            Operation scaled = graph.Mul(input, scaleOp);
-            Tensor mean = new Tensor(inputMean);
-            Operation meanOp = graph.Const(mean, mean.Type, opName: "mean");
-            Operation added = graph.Add(scaled, meanOp);
-            Operation uintCaster = graph.Cast(added, DstT: DataType.Uint8); //cast to uint
-            Operation squeezed = graph.Squeeze(uintCaster, new long[] { 0 });
-            Operation jpegRaw = graph.EncodeJpeg(squeezed);
-            Session session = new Session(graph);
+                Operation scaleOp = graph.Const(scaleTensor, scaleTensor.Type, opName: "scale");
+                Operation scaled = graph.Mul(input, scaleOp);
 
-            Tensor[] raw = session.Run(new Output[] { input }, new Tensor[] { image },
-                new Output[] { jpegRaw });
 
-            return raw[0].DecodeString();
+                Operation meanOp = graph.Const(mean, mean.Type, opName: "mean");
+                Operation added = graph.Add(scaled, meanOp);
+
+                Operation uintCaster = graph.Cast(added, DstT: DataType.Uint8); //cast to uint
+                Operation squeezed = graph.Squeeze(uintCaster, new long[] { 0 });
+                Operation jpegRaw = graph.EncodeJpeg(squeezed);
+
+                using (Session session = new Session(graph))
+                {
+                    Tensor[] raw = session.Run(
+                        new Output[] { input },
+                        new Tensor[] { image },
+                        new Output[] { jpegRaw });
+
+                    try
+                    {
+                        return raw[0].DecodeString();
+                    }
+                    finally
+                    {
+                        raw[0].Dispose();
+                    }
+
+                }
+            }
         }
 
         /// <summary>
@@ -85,7 +102,8 @@ namespace Emgu.TF.Models
                 if (imageTensor.Type != DataType.Float)
                 {
                     floatCaster = graph.Cast(input, DstT: DataType.Float);
-                } else
+                }
+                else
                 {
                     floatCaster = input;
                 }
@@ -106,8 +124,8 @@ namespace Emgu.TF.Models
                 //run the graph
                 using (Session session = new Session(graph))
                 {
-                    Tensor[] imageResults = session.Run(new Output[] {input}, new Tensor[] {imageTensor},
-                        new Output[] {byteCaster});
+                    Tensor[] imageResults = session.Run(new Output[] { input }, new Tensor[] { imageTensor },
+                        new Output[] { byteCaster });
 
                     //get the raw data
                     byte[] raw = imageResults[0].Flat<byte>();
@@ -127,7 +145,7 @@ namespace Emgu.TF.Models
                             colors[idxColor++] = raw[idxRaw++];
                             colors[idxColor++] = raw[idxRaw++];
                             colors[idxColor++] = raw[idxRaw++];
-                            colors[idxColor++] = (byte) 255;
+                            colors[idxColor++] = (byte)255;
                         }
                         return colors;
                     }
@@ -136,6 +154,82 @@ namespace Emgu.TF.Models
                         throw new NotImplementedException(String.Format("Output channel count of {0} is not supported",
                             dstChannels));
                     }
+                }
+            }
+        }
+
+        public static Tensor TensorRgba32ToFloat(
+            Tensor rgba32,
+            int tensorHeight = -1,
+            int tensorWidth = -1,
+            float inputMean = 0.0f,
+            float scale = 1.0f,
+            bool flipUpsideDown = false)
+        {
+            int[] dim = rgba32.Dim;
+            Debug.Assert(dim[0] == 1 && dim[3] == 4, "Input tensor must be [1, height, wight, 4] dimension");
+            int inputHeight = dim[1];
+            int inputWidth = dim[2];
+            using (var graph = new Graph())
+            using (Tensor sliceBegin = new Tensor(new int[] { 0, 0, 0, 0 }))
+            using (Tensor sliceSize = new Tensor(new int[] { 1, -1, -1, 3 }))
+            using (Tensor boxes = new Tensor(DataType.Float, new int[] { 1, 4 }))
+            using (Tensor boxIdx = new Tensor(new int[] { 0 }))
+            using (Tensor cropSize = new Tensor(new int[]
+                   {
+                       tensorHeight <=0 ? inputHeight: tensorHeight,
+                       tensorWidth <=0 ? inputWidth: tensorWidth
+                   }))
+            using (Tensor mean = new Tensor(inputMean))
+            using (Tensor scaleTensor = new Tensor(scale))
+            {
+                Operation input = graph.Placeholder(DataType.Uint8);
+
+                #region Cast to float
+                Operation floatCaster = graph.Cast(input, DstT: DataType.Float); //cast to float
+                #endregion
+
+                #region slice out the alpha channel
+                Operation sliceBeginOp = graph.Const(sliceBegin, sliceBegin.Type, opName: "sliceBegin");
+                Operation sliceSizeOp = graph.Const(sliceSize, sliceSize.Type, opName: "sliceSize");
+                Operation sliced = graph.Slice(floatCaster, sliceBeginOp, sliceSizeOp, "slice");
+                #endregion
+
+                #region crop and resize image
+
+                float[] boxCorners;
+                if (flipUpsideDown)
+                {
+                    boxCorners = new float[] { 1f, 0f, 0f, 1f }; //y1, x1, y2, x2    
+                }
+                else
+                {
+                    boxCorners = new float[] { 0f, 0f, 1f, 1f }; //y1, x1, y2, x2    
+                }
+                Marshal.Copy(boxCorners, 0, boxes.DataPointer, boxCorners.Length);
+                Operation boxesOp = graph.Const(boxes, boxes.Type, "boxes");
+
+                Operation boxIdxOp = graph.Const(boxIdx, boxIdx.Type, "boxIdx");
+
+                Operation cropSizeOp = graph.Const(cropSize, cropSize.Type, "cropSize");
+                Operation resized = graph.CropAndResize(sliced, boxesOp, boxIdxOp, cropSizeOp);
+                #endregion
+
+                #region subtract mean
+                Operation meanOp = graph.Const(mean, mean.Type, opName: "mean");
+                Operation subtracted = graph.Sub(resized, meanOp);
+                #endregion
+
+                #region scale
+                Operation scaleOp = graph.Const(scaleTensor, scaleTensor.Type, opName: "scale");
+                Operation scaled = graph.Mul(subtracted, scaleOp);
+                #endregion
+
+                using (Session session = new Session(graph))
+                {
+                    Tensor[] imageResults = session.Run(new Output[] { input }, new Tensor[] { rgba32 },
+                        new Output[] { scaled });
+                    return imageResults[0];
                 }
             }
         }
@@ -152,89 +246,31 @@ namespace Emgu.TF.Models
             Color32[] colors,
             int colorWidth,
             int colorHeight,
-            int tensorHeight = -1, 
+            int tensorHeight = -1,
             int tensorWidth = -1,
-            float inputMean = 0.0f, 
-            float scale = 1.0f, 
+            float inputMean = 0.0f,
+            float scale = 1.0f,
             bool flipUpsideDown = false)
         {
-            #region Get the RGBA raw data as imgOrig
-            Tensor imgOrig = new Tensor(DataType.Uint8, new int[] { 1, colorHeight, colorWidth, 4 });
-            GCHandle colorsHandle = GCHandle.Alloc(colors, GCHandleType.Pinned);
-            Emgu.TF.TfInvoke.tfeMemcpy(imgOrig.DataPointer, colorsHandle.AddrOfPinnedObject(), colors.Length * Marshal.SizeOf(typeof(Color32)));
-            colorsHandle.Free();
-            #endregion
-
-            var graph = new Graph();
-            Operation input = graph.Placeholder(DataType.Uint8);
-
-            #region Cast to float
-            Operation floatCaster = graph.Cast(input, DstT: DataType.Float); //cast to float
-            #endregion
-
-            #region slice out the alpha channel
-            Tensor sliceBegin = new Tensor(new int[] { 0, 0, 0, 0 });
-            Operation sliceBeginOp = graph.Const(sliceBegin, sliceBegin.Type, opName: "sliceBegin");
-            Tensor sliceSize = new Tensor(new int[] { 1, -1, -1, 3 });
-            Operation sliceSizeOp = graph.Const(sliceSize, sliceSize.Type, opName: "sliceSize");
-            Operation sliced = graph.Slice(floatCaster, sliceBeginOp, sliceSizeOp, "slice");
-            #endregion
-
-            #region crop and resize image
-            Tensor boxes = new Tensor(DataType.Float, new int[] { 1, 4 });
-            float[] boxCorners;
-            if (flipUpsideDown)
+            using (Tensor imgOrig = new Tensor(DataType.Uint8, new int[] { 1, colorHeight, colorWidth, 4 }))
             {
-                boxCorners = new float[] { 1f, 0f, 0f, 1f }; //y1, x1, y2, x2    
+                #region Get the RGBA raw data as imgOrig
+                GCHandle colorsHandle = GCHandle.Alloc(colors, GCHandleType.Pinned);
+                Emgu.TF.TfInvoke.tfeMemcpy(imgOrig.DataPointer, colorsHandle.AddrOfPinnedObject(),
+                    colors.Length * Marshal.SizeOf(typeof(Color32)));
+                colorsHandle.Free();
+                #endregion
+
+                return TensorRgba32ToFloat(imgOrig, tensorHeight, tensorWidth, inputMean, scale, flipUpsideDown);
             }
-            else
-            {
-                boxCorners = new float[] { 0f, 0f, 1f, 1f }; //y1, x1, y2, x2    
-            }
-            Marshal.Copy(boxCorners, 0, boxes.DataPointer, boxCorners.Length);
-            Operation boxesOp = graph.Const(boxes, boxes.Type, "boxes");
-
-            Tensor boxIdx = new Tensor(new int[] { 0 });
-            Operation boxIdxOp = graph.Const(boxIdx, boxIdx.Type, "boxIdx");
-            int width, height;
-            if (tensorHeight > 0 || tensorWidth > 0)
-            {
-                width = tensorWidth;
-                height = tensorHeight;
-            }
-            else
-            {
-                width = colorWidth;
-                height = colorHeight;
-            }
-            Tensor cropSize = new Tensor(new int[] { height, width });
-            Operation cropSizeOp = graph.Const(cropSize, cropSize.Type, "cropSize");
-            Operation resized = graph.CropAndResize(sliced, boxesOp, boxIdxOp, cropSizeOp);
-            #endregion
-
-            Tensor mean = new Tensor(inputMean);
-            Operation meanOp = graph.Const(mean, mean.Type, opName: "mean");
-            Operation substracted = graph.Sub(resized, meanOp);
-
-            Tensor scaleTensor = new Tensor(scale);
-            Operation scaleOp = graph.Const(scaleTensor, scaleTensor.Type, opName: "scale");
-            Operation scaled = graph.Mul(substracted, scaleOp);
-
-            //Operation scaled = graph.
-            Session session = new Session(graph);
-
-            Tensor[] imageResults = session.Run(new Output[] { input }, new Tensor[] { imgOrig },
-                new Output[] { scaled });
-            return imageResults[0];
-
         }
 
         public static Tensor ReadTensorFromTexture2D(
-            Texture2D texture, 
-            int tensorHeight = -1, 
+            Texture2D texture,
+            int tensorHeight = -1,
             int tensorWidth = -1,
-            float inputMean = 0.0f, 
-            float scale = 1.0f, 
+            float inputMean = 0.0f,
+            float scale = 1.0f,
             bool flipUpsideDown = false)
         {
             Color32[] colors = texture.GetPixels32(); //32bit RGBA
@@ -255,7 +291,7 @@ namespace Emgu.TF.Models
             source.filterMode = FilterMode.Bilinear;
             RenderTexture rt = RenderTexture.GetTemporary(newWidth, newHeight);
             rt.filterMode = FilterMode.Bilinear;
-            
+
             RenderTexture.active = rt;
             Graphics.Blit(source, rt);
             var nTex = new Texture2D(newWidth, newHeight);

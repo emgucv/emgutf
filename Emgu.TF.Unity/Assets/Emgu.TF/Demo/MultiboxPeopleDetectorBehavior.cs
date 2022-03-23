@@ -13,7 +13,6 @@ using System.Text;
 using System.Runtime.InteropServices;
 using Emgu.TF;
 using Emgu.TF.Models;
-//using UnityEditor.VersionControl;
 using UnityEngine.UI;
 
 public class MultiboxPeopleDetectorBehavior : MonoBehaviour
@@ -39,7 +38,8 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
         bool loaded = TfInvoke.Init();
         //DisplayText.text = String.Format("Tensorflow library loaded: {0}", loaded);
 
-        _liveCameraView = true;
+        //Use the following flag to change detection based on image / camera
+        _liveCameraView = false;
 
         if (_liveCameraView)
         {

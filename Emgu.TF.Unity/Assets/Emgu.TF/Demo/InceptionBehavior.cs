@@ -17,12 +17,12 @@ using Emgu.Models;
 
 public class InceptionBehavior : MonoBehaviour
 {
-    private WebCamTexture webcamTexture;
-    private Texture2D resultTexture;
-    private Color32[] data;
-    private byte[] bytes;
-    private WebCamDevice[] devices;
-    public int cameraCount = 0;
+    private WebCamTexture _webcamTexture;
+    
+    private Color32[] _data;
+    
+    private WebCamDevice[] _devices;
+    public int _cameraCount = 0;
     private bool _textureResized = false;
     private Quaternion baseRotation;
     private bool _liveCameraView = false;
@@ -34,11 +34,33 @@ public class InceptionBehavior : MonoBehaviour
 
     private void RecognizeAndUpdateText(Texture2D texture)
     {
+        Color32[] colors = texture.GetPixels32(); //32bit RGBA
+        RecognizeAndUpdateText(colors, texture.width, texture.height);
+        /*
+        if (_inceptionGraph == null)
+            return;
         if (!_inceptionGraph.Imported)
             return;
         Tensor imageTensor = ImageIO.ReadTensorFromTexture2D(texture, 224, 224, 128.0f, 1.0f, true);
         Inception.RecognitionResult[][] results = _inceptionGraph.Recognize(imageTensor);
-        _displayMessage = String.Format("Object is {0} with {1}% probability.", results[0][0].Label, results[0][0].Probability*100);
+        _displayMessage = String.Format("Object is {0} with {1}% probability.", results[0][0].Label, results[0][0].Probability*100);*/
+    }
+
+    private void RecognizeAndUpdateText(Color32[] pixels, int width, int height)
+    {
+        if (_inceptionGraph == null)
+            return;
+        if (!_inceptionGraph.Imported)
+            return;
+        Inception.RecognitionResult[][] results;
+        using (Tensor imageTensor = ImageIO.ReadTensorFromColor32(pixels, width, height, 224, 224, 128.0f, 1.0f, true))
+        {
+            results = _inceptionGraph.Recognize(imageTensor);
+        }
+        _displayMessage = String.Format(
+            "Object is {0} with {1}% probability.", 
+            results[0][0].Label,
+            results[0][0].Probability * 100);
     }
 
 
@@ -47,24 +69,29 @@ public class InceptionBehavior : MonoBehaviour
     {
         bool loaded = TfInvoke.Init();
         _inceptionGraph = new Inception();
+
+        //Change the following flag to set default detection based on image / live camera view
         _liveCameraView = false;
-        /*
-        WebCamDevice[] devices = WebCamTexture.devices;
-        cameraCount = devices.Length;
 
-        if (cameraCount == 0)
+        if (_liveCameraView)
         {
-            _liveCameraView = false;
+            _devices = WebCamTexture.devices;
+            _cameraCount = _devices.Length;
+
+            if (_cameraCount == 0)
+            {
+                _liveCameraView = false;
+            }
+            else
+            {
+                _liveCameraView = true;
+                _webcamTexture = new WebCamTexture(_devices[0].name);
+
+                baseRotation = transform.rotation;
+                _webcamTexture.Play();
+                //data = new Color32[webcamTexture.width * webcamTexture.height];
+            }
         }
-        else
-        {
-            _liveCameraView = true;
-            webcamTexture = new WebCamTexture(devices[0].name);
-
-            baseRotation = transform.rotation;
-            webcamTexture.Play();
-            //data = new Color32[webcamTexture.width * webcamTexture.height];
-        }*/
 
         StartCoroutine(_inceptionGraph.Init());
     }
@@ -81,51 +108,29 @@ public class InceptionBehavior : MonoBehaviour
         }
         else if (_liveCameraView)
         {
-            if (webcamTexture != null && webcamTexture.didUpdateThisFrame)
+            if (_webcamTexture != null && _webcamTexture.didUpdateThisFrame)
             {
                 #region convert the webcam texture to RGBA bytes
 
-                if (data == null || (data.Length != webcamTexture.width * webcamTexture.height))
+                if (_data == null || (_data.Length != _webcamTexture.width * _webcamTexture.height))
                 {
-                    data = new Color32[webcamTexture.width * webcamTexture.height];
+                    _data = new Color32[_webcamTexture.width * _webcamTexture.height];
                 }
-                webcamTexture.GetPixels32(data);
-
-                if (bytes == null || bytes.Length != data.Length * 4)
-                {
-                    bytes = new byte[data.Length * 4];
-                }
-                GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-                Marshal.Copy(handle.AddrOfPinnedObject(), bytes, 0, bytes.Length);
-                handle.Free();
-
+                _webcamTexture.GetPixels32(_data);
                 #endregion
-
-                #region convert the RGBA bytes to texture2D
-
-                if (resultTexture == null || resultTexture.width != webcamTexture.width ||
-                    resultTexture.height != webcamTexture.height)
-                {
-                    resultTexture = new Texture2D(webcamTexture.width, webcamTexture.height, TextureFormat.RGBA32,
-                        false);
-                }
-
-                resultTexture.LoadRawTextureData(bytes);
-                resultTexture.Apply();
-
-                #endregion
-
+                
                 if (!_textureResized)
                 {
-                    ResizeTexture(resultTexture);
+                    ResizeTexture(_webcamTexture);
                     _textureResized = true;
                 }
+                
+                transform.rotation = baseRotation * Quaternion.AngleAxis(_webcamTexture.videoRotationAngle, Vector3.up);
 
-                transform.rotation = baseRotation * Quaternion.AngleAxis(webcamTexture.videoRotationAngle, Vector3.up);
+                
+                RecognizeAndUpdateText(_data, _webcamTexture.width, _webcamTexture.height);
 
-                RecognizeAndUpdateText(resultTexture);
-
-                RenderTexture(resultTexture);
+                RenderTexture(_webcamTexture);
                 
                 //count++;
 
@@ -145,16 +150,8 @@ public class InceptionBehavior : MonoBehaviour
 
             RenderTexture(texture);
             ResizeTexture(texture);
-            /*
-            Image image = this.GetComponent<Image>();
-            image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-            var transform = image.rectTransform;
-            transform.sizeDelta = new Vector2(texture.width, texture.height);
-            transform.position = new Vector3(-texture.width / 2, -texture.height / 2);
-            transform.anchoredPosition = new Vector2(0, 0);            //this.GetComponent<Image>().pixelInset = new Rect(-texture.width / 2, -texture.height / 2, texture.width, texture.height);
-            */
+            
             _staticViewRendered = true;
-            //DisplayText.text = _displayMessage;
         }
 
         DisplayText.text = _displayMessage;
