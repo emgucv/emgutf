@@ -18,15 +18,14 @@ using UnityEngine.UI;
 
 public class MultiboxPeopleDetectorBehavior : MonoBehaviour
 {
-    private WebCamTexture webcamTexture;
-    private Texture2D resultTexture;
-    private Texture2D drawableTexture;
-    private Color32[] data;
-    private byte[] bytes;
-    private WebCamDevice[] devices;
-    public int cameraCount = 0;
+    private WebCamTexture _webcamTexture;
+    private Texture2D _drawableTexture;
+    private Color32[] _data;
+    private byte[] _bytes;
+    private WebCamDevice[] _devices;
+    public int _cameraCount = 0;
     private bool _textureResized = false;
-    private Quaternion baseRotation;
+    private Quaternion _baseRotation;
     private bool _liveCameraView = false;
     private bool _staticViewRendered = false;
     private MultiboxGraph _multiboxGraph;
@@ -40,25 +39,26 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
         bool loaded = TfInvoke.Init();
         //DisplayText.text = String.Format("Tensorflow library loaded: {0}", loaded);
 
-        _liveCameraView = false;
+        _liveCameraView = true;
 
-        /*
-        WebCamDevice[] devices = WebCamTexture.devices;
-        int cameraCount = devices.Length;
-
-        if (cameraCount == 0)
+        if (_liveCameraView)
         {
-            _liveCameraView = false;
+            _devices = WebCamTexture.devices;
+            _cameraCount = _devices.Length;
 
+            if (_cameraCount == 0)
+            {
+                _liveCameraView = false;
+
+            }
+            else
+            {
+                _liveCameraView = true;
+                _webcamTexture = new WebCamTexture(_devices[0].name);
+                _baseRotation = this.transform.rotation;
+                _webcamTexture.Play();
+            }
         }
-        else
-        {
-            _liveCameraView = true;
-            webcamTexture = new WebCamTexture(devices[0].name);
-            baseRotation = transform.rotation;
-            webcamTexture.Play(); 
-        }*/
-
     }
 
     private String _displayMessage = String.Empty;
@@ -78,59 +78,63 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
         {
             _displayMessage = String.Empty;
 
-            if (webcamTexture != null && webcamTexture.didUpdateThisFrame)
+            if (_webcamTexture != null && _webcamTexture.didUpdateThisFrame)
             {
+                int webcamWidth = _webcamTexture.width;
+                int webcamHeight = _webcamTexture.height;
                 #region convert the webcam texture to RGBA bytes
 
-                if (data == null || (data.Length != webcamTexture.width * webcamTexture.height))
+                if (_data == null || (_data.Length != webcamWidth * webcamHeight))
                 {
-                    data = new Color32[webcamTexture.width * webcamTexture.height];
+                    _data = new Color32[webcamWidth * webcamHeight];
                 }
-                webcamTexture.GetPixels32(data);
-
-                if (bytes == null || bytes.Length != data.Length * 4)
+                _webcamTexture.GetPixels32(_data);
+                
+                if (_bytes == null || _bytes.Length != _data.Length * 4)
                 {
-                    bytes = new byte[data.Length * 4];
+                    _bytes = new byte[_data.Length * 4];
                 }
-                GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-                Marshal.Copy(handle.AddrOfPinnedObject(), bytes, 0, bytes.Length);
+                GCHandle handle = GCHandle.Alloc(_data, GCHandleType.Pinned);
+                Marshal.Copy(handle.AddrOfPinnedObject(), _bytes, 0, _bytes.Length);
                 handle.Free();
 
                 #endregion
 
                 #region convert the RGBA bytes to texture2D
-
-                if (resultTexture == null || resultTexture.width != webcamTexture.width ||
-                    resultTexture.height != webcamTexture.height)
+                if (_drawableTexture == null || _drawableTexture.width != webcamWidth ||
+                    _drawableTexture.height != webcamHeight)
                 {
-                    resultTexture = new Texture2D(webcamTexture.width, webcamTexture.height, TextureFormat.RGBA32,
+                    _drawableTexture = new Texture2D(webcamWidth, webcamHeight, TextureFormat.RGBA32,
                         false);
                 }
-
-                resultTexture.LoadRawTextureData(bytes);
-                resultTexture.Apply();
+                
+                _drawableTexture.LoadRawTextureData(_bytes);
+                _drawableTexture.Apply();
 
                 #endregion
 
-                transform.rotation = baseRotation * Quaternion.AngleAxis(webcamTexture.videoRotationAngle, Vector3.up);
-
-                Tensor imageTensor = ImageIO.ReadTensorFromTexture2D(resultTexture, 224, 224, 128.0f, 1.0f/128.0f, true);
+                //Tensor imageTensor = ImageIO.ReadTensorFromTexture2D(_drawableTexture, 224, 224, 128.0f, 1.0f/128.0f, true);
+                Tensor imageTensor = ImageIO.ReadTensorFromColor32(
+                    _data, 
+                    webcamWidth, 
+                    webcamHeight, 
+                    224, 
+                    224, 
+                    128.0f, 
+                    1.0f / 128.0f, 
+                    true);
                 MultiboxGraph.Result[] results = _multiboxGraph.Detect(imageTensor);
 
-                if (drawableTexture == null || drawableTexture.width != resultTexture.width ||
-                    drawableTexture.height != resultTexture.height)
-                    drawableTexture = new Texture2D(resultTexture.width, resultTexture.height, TextureFormat.RGBA32, false);
-                //drawableTexture.SetPixels(resultTexture.GetPixels()); //slower implementation
-                drawableTexture.LoadRawTextureData(resultTexture.GetRawTextureData()); //faster implementation
-
-                MultiboxGraph.DrawResults(drawableTexture, results, 0.2f, true);
+                MultiboxGraph.DrawResults(_drawableTexture, results, 0.2f, true);
 
                 if (!_textureResized)
                 {
-                    ResizeTexture(drawableTexture);
+                    ResizeTexture(_drawableTexture);
                     _textureResized = true;
                 }
-                RenderTexture(drawableTexture);
+
+                this.transform.rotation = _baseRotation * Quaternion.AngleAxis(_webcamTexture.videoRotationAngle, Vector3.up);
+                RenderTexture(_drawableTexture);
                 //count++;
 
             }
@@ -145,12 +149,12 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
 
             MultiboxGraph.Result[] results = _multiboxGraph.Detect(imageTensor);
 
-            drawableTexture = new Texture2D(texture.width, texture.height, TextureFormat.ARGB32, false);
-            drawableTexture.SetPixels32(texture.GetPixels32());
-            MultiboxGraph.DrawResults(drawableTexture, results, 0.1f, true);
+            _drawableTexture = new Texture2D(texture.width, texture.height, TextureFormat.ARGB32, false);
+            _drawableTexture.SetPixels32(texture.GetPixels32());
+            MultiboxGraph.DrawResults(_drawableTexture, results, 0.1f, true);
 
-            RenderTexture(drawableTexture);
-            ResizeTexture(drawableTexture);
+            RenderTexture(_drawableTexture);
+            ResizeTexture(_drawableTexture);
 
             _displayMessage = String.Empty;
             _staticViewRendered = true;
@@ -170,9 +174,9 @@ public class MultiboxPeopleDetectorBehavior : MonoBehaviour
     private void ResizeTexture(Texture texture)
     {
         RawImage image = this.GetComponent<RawImage>();
-        var transform = image.rectTransform;
-        transform.sizeDelta = new Vector2(texture.width, texture.height);
-        transform.position = new Vector3(-texture.width / 2, -texture.height / 2);
-        transform.anchoredPosition = new Vector2(0, 0);
+        var iTransform = image.rectTransform;
+        iTransform.sizeDelta = new Vector2(texture.width, texture.height);
+        iTransform.position = new Vector3(-texture.width / 2, -texture.height / 2);
+        iTransform.anchoredPosition = new Vector2(0, 0);
     }
 }

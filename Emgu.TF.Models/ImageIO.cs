@@ -148,17 +148,22 @@ namespace Emgu.TF.Models
             return ReadTensorFromTexture2D(texture, inputHeight, inputWidth, inputMean, scale, flipUpsideDown);
         }
 
-        public static Tensor ReadTensorFromTexture2D(
-            Texture2D texture, int inputHeight = -1, int inputWidth = -1,
-            float inputMean = 0.0f, float scale = 1.0f, bool flipUpsideDown = false)
+        public static Tensor ReadTensorFromColor32(
+            Color32[] colors,
+            int colorWidth,
+            int colorHeight,
+            int tensorHeight = -1, 
+            int tensorWidth = -1,
+            float inputMean = 0.0f, 
+            float scale = 1.0f, 
+            bool flipUpsideDown = false)
         {
-#region Get the RGBA raw data as imgOrig
-            Tensor imgOrig = new Tensor(DataType.Uint8, new int[] { 1, texture.height, texture.width, 4 });
-            Color32[] colors = texture.GetPixels32(); //32bit RGBA
+            #region Get the RGBA raw data as imgOrig
+            Tensor imgOrig = new Tensor(DataType.Uint8, new int[] { 1, colorHeight, colorWidth, 4 });
             GCHandle colorsHandle = GCHandle.Alloc(colors, GCHandleType.Pinned);
             Emgu.TF.TfInvoke.tfeMemcpy(imgOrig.DataPointer, colorsHandle.AddrOfPinnedObject(), colors.Length * Marshal.SizeOf(typeof(Color32)));
             colorsHandle.Free();
-#endregion
+            #endregion
 
             var graph = new Graph();
             Operation input = graph.Placeholder(DataType.Uint8);
@@ -176,7 +181,7 @@ namespace Emgu.TF.Models
             #endregion
 
             #region crop and resize image
-            Tensor boxes = new Tensor(DataType.Float, new int[] {1, 4});
+            Tensor boxes = new Tensor(DataType.Float, new int[] { 1, 4 });
             float[] boxCorners;
             if (flipUpsideDown)
             {
@@ -188,22 +193,21 @@ namespace Emgu.TF.Models
             }
             Marshal.Copy(boxCorners, 0, boxes.DataPointer, boxCorners.Length);
             Operation boxesOp = graph.Const(boxes, boxes.Type, "boxes");
-            
 
-            Tensor boxIdx = new Tensor(new int[] {0});
+            Tensor boxIdx = new Tensor(new int[] { 0 });
             Operation boxIdxOp = graph.Const(boxIdx, boxIdx.Type, "boxIdx");
             int width, height;
-            if (inputHeight > 0 || inputWidth > 0)
+            if (tensorHeight > 0 || tensorWidth > 0)
             {
-                width = inputWidth;
-                height = inputHeight;
+                width = tensorWidth;
+                height = tensorHeight;
             }
             else
             {
-                width = texture.width;
-                height = texture.height;
+                width = colorWidth;
+                height = colorHeight;
             }
-            Tensor cropSize = new Tensor(new int[] {height, width });
+            Tensor cropSize = new Tensor(new int[] { height, width });
             Operation cropSizeOp = graph.Const(cropSize, cropSize.Type, "cropSize");
             Operation resized = graph.CropAndResize(sliced, boxesOp, boxIdxOp, cropSizeOp);
             #endregion
@@ -222,6 +226,27 @@ namespace Emgu.TF.Models
             Tensor[] imageResults = session.Run(new Output[] { input }, new Tensor[] { imgOrig },
                 new Output[] { scaled });
             return imageResults[0];
+
+        }
+
+        public static Tensor ReadTensorFromTexture2D(
+            Texture2D texture, 
+            int tensorHeight = -1, 
+            int tensorWidth = -1,
+            float inputMean = 0.0f, 
+            float scale = 1.0f, 
+            bool flipUpsideDown = false)
+        {
+            Color32[] colors = texture.GetPixels32(); //32bit RGBA
+            return ReadTensorFromColor32(
+                colors,
+                texture.width,
+                texture.height,
+                tensorHeight,
+                tensorWidth,
+                inputMean,
+                scale,
+                flipUpsideDown);
         }
 
 
