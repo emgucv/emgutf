@@ -204,6 +204,15 @@ namespace Emgu.TF.Models
             using (ImportGraphDefOptions options = new ImportGraphDefOptions())
                 _graph.ImportGraphDef(modelBuffer, options, _status);
 
+            #region Sorted the detected region by confident
+            Tensor shapeIdxTensor = new Tensor(1);
+            Operation shapeIdx = _graph.Const(shapeIdxTensor, DataType.Int32, opName: "shape_idx");
+            Operation outputScores = _graph["output_scores/Reshape"];
+            Operation shape = _graph.Shape(outputScores, null, "output_scores_shape");
+            Operation kValue = _graph.Gather(shape, shapeIdx, true, "get_output_scores_k");
+            Operation topK = _graph.TopKV2(outputScores, kValue, opName: "top_k_output_scores");
+            #endregion
+
             _session?.Dispose();
 
             _session = new Session(_graph, _sessionOptions);
@@ -223,15 +232,18 @@ namespace Emgu.TF.Models
                 throw new NullReferenceException("The multibox graph has not been initialized. Please call the Init function first.");
             }
             Tensor[] finalTensor = _session.Run(new Output[] { _graph["ResizeBilinear"] }, new Tensor[] { image },
-                new Output[] { _graph["output_scores/Reshape"], _graph["output_locations/Reshape"] });
+                new Output[]
+                {
+                    _graph["output_scores/Reshape"], 
+                    _graph["output_locations/Reshape"], 
+                    new Output(_graph["top_k_output_scores"],0),
+                    new Output(_graph["top_k_output_scores"],1)
+                });
 
-           
-            Tensor[] topK = GetTopDetections(finalTensor[0]);
-
-            float[] encodedScores = topK[0].Flat<float>();
+            float[] encodedScores = finalTensor[2].Flat<float>();
             float[] encodedLocations = finalTensor[1].Flat<float>();
 
-            int[] indices = topK[1].Flat<int>();
+            int[] indices = finalTensor[3].Flat<int>();
             float[] scores = DecodeScoresEncoding(encodedScores);
             Result[] results = new Result[indices.Length];
             float[][] locations = MultiboxGraph.DecodeLocationsEncoding(encodedLocations, _boxPriors);
@@ -260,24 +272,6 @@ namespace Emgu.TF.Models
             /// The location for the detection
             /// </summary>
             public float[] DecodedLocations;
-        }
-
-        private static Tensor[] GetTopDetections(Tensor scoreTensor)
-        {
-            int labelsCount = scoreTensor.Dim[1];
-            using (var graph = new Graph())
-            {
-                Operation input = graph.Placeholder(DataType.Float);
-                Tensor countTensor = new Tensor(labelsCount);
-                Operation countOp = graph.Const(countTensor, countTensor.Type, opName: "count");
-                Operation topK = graph.TopKV2(input, countOp, opName: "TopK");
-                using (Session session = new Session(graph))
-                {
-                    Tensor[] topKResult = session.Run(new Output[] {input}, new Tensor[] {scoreTensor},
-                        new Output[] {new Output(topK, 0), new Output(topK, 1)});
-                    return topKResult;
-                }
-            }
         }
 
         /// <summary>
