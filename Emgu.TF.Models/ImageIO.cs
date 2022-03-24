@@ -167,7 +167,7 @@ namespace Emgu.TF.Models
             bool flipUpsideDown = false)
         {
             int[] dim = rgba32.Dim;
-            Debug.Assert(dim[0] == 1 && dim[3] == 4, "Input tensor must be [1, height, wight, 4] dimension");
+            System.Diagnostics.Debug.Assert(dim[0] == 1 && dim[3] == 4, "Input tensor must be [1, height, wight, 4] dimension");
             int inputHeight = dim[1];
             int inputWidth = dim[2];
             using (var graph = new Graph())
