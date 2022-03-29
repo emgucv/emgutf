@@ -21,11 +21,13 @@ namespace Emgu.TF.Models
     public class MaskRcnnInceptionV2Coco : Emgu.TF.Util.UnmanagedObject
     {
         private FileDownloadManager _downloadManager;
-        private Graph _graph = null;
+        //private Graph _graph = null;
         private SessionOptions _sessionOptions = null;
         private Session _session = null;
         private Status _status = null;
         private String[] _labels = null;
+        private String _savedModelDir = null;
+
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
         public double DownloadProgress
@@ -94,7 +96,7 @@ namespace Emgu.TF.Models
                 DownloadableFile labelFile = null
             )
         {
-            if (_graph == null)
+            if (_session == null)
             {
                 _downloadManager.Clear();
 
@@ -102,16 +104,16 @@ namespace Emgu.TF.Models
                 if (modelFile == null)
                 {
                     modelFile = new DownloadableFile(
-                        "https://github.com/emgucv/models/raw/master/mask_rcnn_inception_v2_coco_2018_01_28/frozen_inference_graph.pb",
+                        "https://emgu-public.s3.amazonaws.com/mask_rcnn_inception_v2_coco_saved_model/mask_rcnn_inception_v2_coco_saved_model.zip",
                         defaultLocalSubfolder,
-                        "AC9B51CDE227B24D20030042E6C1E29AF75668F509E51AA84ED686787CCCC309"
+                        "4F043142473125E3758BCF9042AFF6F14C0C04A5D2273F20D1831A337176DAAC"
                     );
                 }
 
                 if (labelFile == null)
                 {
                     labelFile = new DownloadableFile(
-                        "https://github.com/emgucv/models/raw/master/mask_rcnn_inception_v2_coco_2018_01_28/coco-labels-paper.txt",
+                        "https://emgu-public.s3.amazonaws.com/mask_rcnn_inception_v2_coco_saved_model/coco-labels-paper.txt",
                         defaultLocalSubfolder,
                         "8925173E1B0AABFAEFDA27DE2BB908233BB8FB6E7582323D72988E4BE15A5F0B"
                     );
@@ -126,7 +128,21 @@ namespace Emgu.TF.Models
                 await _downloadManager.Download();
 #endif
                 if (_downloadManager.AllFilesDownloaded)
-                    ImportGraph();
+                {
+                    System.IO.FileInfo localZipFile = new System.IO.FileInfo(_downloadManager.Files[0].LocalFile);
+
+                    _savedModelDir = System.IO.Path.Combine(localZipFile.DirectoryName, "SavedModel");
+                    if (!System.IO.Directory.Exists(_savedModelDir))
+                    {
+                        System.IO.Directory.CreateDirectory(_savedModelDir);
+
+                        System.IO.Compression.ZipFile.ExtractToDirectory(
+                            localZipFile.FullName,
+                            _savedModelDir);
+                    }
+                    
+                    CreateSession();
+                }
                 else
                 {
                     System.Diagnostics.Trace.WriteLine("Failed to download files");
@@ -159,8 +175,8 @@ namespace Emgu.TF.Models
             }
             else
             {
-                String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/mask_rcnn_inception_v2_coco_2018_01_28/" : downloadUrl;
-                String[] fileNames = modelFiles == null ? new string[] { "frozen_inference_graph.pb", "coco-labels-paper.txt" } : modelFiles;
+                String url = downloadUrl == null ? "https://emgu-public.s3.amazonaws.com/mask_rcnn_inception_v2_coco_saved_model/" : downloadUrl;
+                String[] fileNames = modelFiles == null ? new string[] { "mask_rcnn_inception_v2_coco_saved_model.zip", "coco-labels-paper.txt" } : modelFiles;
                 downloadableFiles = new DownloadableFile[fileNames.Length];
                 for (int i = 0; i < fileNames.Length; i++)
                     downloadableFiles[i] = new DownloadableFile(url + fileNames[i], localModelFolder);
@@ -182,35 +198,29 @@ namespace Emgu.TF.Models
         {
             get
             {
-                return _graph != null;
+                return _session != null;
             }
         }
 
-        private void ImportGraph()
+        private void CreateSession()
         {
-            if (_graph != null)
-                _graph.Dispose();
-
-#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
-            UnityEngine.Debug.Log("Reading model definition");
-#endif
-            _graph = new Graph();
-            String localFileName = _downloadManager.Files[0].LocalFile;
-            byte[] model = File.ReadAllBytes(localFileName);
-            if (model.Length == 0)
-                throw new FileNotFoundException(String.Format("Unable to load file {0}", localFileName));
-            Buffer modelBuffer = Buffer.FromString(model);
+            if (_session != null)
+                _session.Dispose();
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             UnityEngine.Debug.Log("Importing model");
 #endif
-            using (ImportGraphDefOptions options = new ImportGraphDefOptions())
-                _graph.ImportGraphDef(modelBuffer, options, _status);
+
+            _session = new Session(
+                _savedModelDir,
+                new string[] { "serve" },
+                _sessionOptions
+            );
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             UnityEngine.Debug.Log("Model imported");
 #endif
-            _session = new Session(_graph, _sessionOptions, _status);
+            //_session = new Session(_graph, _sessionOptions, _status);
             _labels = File.ReadAllLines(_downloadManager.Files[1].LocalFile);
         }
 
@@ -221,7 +231,9 @@ namespace Emgu.TF.Models
         {
             get
             {
-                return _graph;
+                if (_session == null)
+                    return null;
+                return _session.Graph;
             }
         }
 
@@ -240,8 +252,31 @@ namespace Emgu.TF.Models
         /// <returns>The recognition result.</returns>
         public RecognitionResult[][] Recognize(Tensor image)
         {
-            Output input = _graph["image_tensor"];
-            Output[] outputs = new Output[] { _graph["detection_boxes"], _graph["detection_scores"], _graph["detection_classes"], _graph["num_detections"], _graph["detection_masks"] };
+            // Use this from command line to find out the input tensor name:
+            // saved_model_cli show --dir SavedModel --tag_set serve --signature_def serving_default
+            //   inputs['input_tensor'] tensor_info:
+            //   dtype: DT_UINT8
+            //   shape: (1, -1, -1, 3)
+            //   name: serving_default_input_tensor: 0
+            Output input = _session.Graph["serving_default_input_tensor"]; 
+
+            Output[] outputs = new Output[]
+            {
+                //_session.Graph["detection_boxes"], 
+                new Output(_session.Graph["StatefulPartitionedCall"], 4),
+
+                //_session.Graph["detection_scores"], 
+                new Output(_session.Graph["StatefulPartitionedCall"], 8),
+
+                //_session.Graph["detection_classes"],
+                new Output(_session.Graph["StatefulPartitionedCall"], 5),
+
+                //_session.Graph["num_detections"],
+                new Output(_session.Graph["StatefulPartitionedCall"], 12),
+
+                //_session.Graph["detection_masks"]
+                new Output(_session.Graph["StatefulPartitionedCall"], 6),
+            };
 
             Tensor[] finalTensor = _session.Run(new Output[] { input }, new Tensor[] { image }, outputs);
             
@@ -319,11 +354,12 @@ namespace Emgu.TF.Models
         /// </summary>
         protected override void DisposeObject()
         {
+            /*
             if (_graph != null)
             {
                 _graph.Dispose();
                 _graph = null;
-            }
+            }*/
 
             if (_session != null)
             {

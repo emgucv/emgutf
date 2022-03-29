@@ -269,11 +269,20 @@ namespace Emgu.TF.XamarinForms
 
         private String _log = String.Empty;
 
+        public void ClearLog()
+        {
+            SetLog(String.Empty);
+        }
+
+        public void SetLog(String log)
+        {
+            _log = log;
+            RenderLog(_log);
+        }
+
         public void AppendLog(String log)
         {
-            if (String.IsNullOrEmpty(_log))
-                _log = log;
-            else
+            if (!String.IsNullOrEmpty(_log))
                 _log = log + _log;
             RenderLog(_log);
         }
@@ -300,12 +309,6 @@ namespace Emgu.TF.XamarinForms
                     this.LogEditor.Focus();
                 }
             );
-        }
-
-        public void SetLog(String log)
-        {
-            _log = log;
-            RenderLog(_log);
         }
 
         private static String ByteToSizeStr(long byteCount)

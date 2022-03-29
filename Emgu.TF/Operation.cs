@@ -425,6 +425,14 @@ namespace Emgu.TF
             }
         }
 
+        /// <summary>
+        /// Return the string representation of this operation
+        /// </summary>
+        /// <returns>The string representation of this operation</returns>
+        public override string ToString()
+        {
+            return base.ToString() + " " + Name;
+        }
     }
 
     public static partial class TfInvoke
