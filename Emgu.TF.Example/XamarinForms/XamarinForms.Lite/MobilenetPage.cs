@@ -52,15 +52,18 @@ namespace Emgu.TF.XamarinForms
 
             #if __ANDROID__
             if (TfLiteInvoke.DefaultNnApiDelegate != null)
+            {
                 picker.Items.Add("NNAPI");
+            }
             #endif
 
+            
             if (TfLiteInvoke.DefaultGpuDelegateV2 != null)
+            {
                 picker.Items.Add("GPU");
+            }
 
-            picker.IsVisible = true;
-
-
+            picker.IsVisible = picker.Items.Count > 1;
 
             picker.SelectedIndexChanged += (sender, args) =>
             {
@@ -107,10 +110,28 @@ namespace Emgu.TF.XamarinForms
                 String selectedBackend = picker.SelectedItem.ToString();
                 if (selectedBackend.Equals("NNAPI"))
                 {
-                    _mobilenet.Interpreter.ModifyGraphWithDelegate(TfLiteInvoke.DefaultNnApiDelegate);
+                    try
+                    {
+                        Status addNNApiDelegateStatus = _mobilenet.Interpreter.ModifyGraphWithDelegate(TfLiteInvoke.DefaultNnApiDelegate);
+                    }
+                    catch (Exception e)
+                    {
+                        System.Diagnostics.Trace.WriteLine(e);
+                        throw;
+                    }
+                    
                 } else if (selectedBackend.Equals("GPU"))
                 {
-                    _mobilenet.Interpreter.ModifyGraphWithDelegate(TfLiteInvoke.DefaultGpuDelegateV2);
+                    try
+                    {
+                        Status addGpuDelegateStatus = _mobilenet.Interpreter.ModifyGraphWithDelegate(TfLiteInvoke.DefaultGpuDelegateV2);
+                    }
+                    catch (Exception e)
+                    {
+                        System.Diagnostics.Trace.WriteLine(e);
+                        throw;
+                    }
+                    
                 }
             }
 
