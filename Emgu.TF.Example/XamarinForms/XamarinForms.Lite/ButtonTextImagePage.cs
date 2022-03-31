@@ -26,6 +26,13 @@ namespace Emgu.TF.XamarinForms
         : ContentPage
 #endif
     {
+        private Picker _picker = new Picker();
+
+        public Picker Picker
+        {
+            get { return _picker; }
+        }
+
         private Button _topButton = new Button();
         public Button TopButton
         {
@@ -87,6 +94,8 @@ namespace Emgu.TF.XamarinForms
             MessageLabel.BackgroundColor = new Color(0, 0, 1);
             _mainLayout.BackgroundColor = new Color(0, 1, 0);
             */
+            _mainLayout.Children.Add(Picker);
+            Picker.IsVisible = false;
 
             _mainLayout.Children.Add(TopButton);
             _mainLayout.Children.Add(MessageLabel);

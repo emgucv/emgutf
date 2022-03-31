@@ -41,12 +41,35 @@ namespace Emgu.TF.XamarinForms
         {
 
             var button = this.TopButton;
-            button.Text = "Perform Image Classification";
+            button.Text = "Perform Mobilenet Image Classification";
             button.Clicked += OnButtonClicked;
 
-            _mobilenet = new Mobilenet();
-            _mobilenet.OnDownloadProgressChanged += onDownloadProgressChanged;
+            var picker = this.Picker;
+            picker.Title = "TF Lite backend";
 
+
+            picker.Items.Add("CPU");
+
+            #if __ANDROID__
+            if (TfLiteInvoke.DefaultNnApiDelegate != null)
+                picker.Items.Add("NNAPI");
+            #endif
+
+            if (TfLiteInvoke.DefaultGpuDelegateV2 != null)
+                picker.Items.Add("GPU");
+
+            picker.IsVisible = true;
+
+
+
+            picker.SelectedIndexChanged += (sender, args) =>
+            {
+                if (_mobilenet != null)
+                {
+                    _mobilenet.Dispose();
+                    _mobilenet = null;
+                }
+            };
         }
 
         private void onDownloadProgressChanged(object sender, System.Net.DownloadProgressChangedEventArgs e)
@@ -59,9 +82,6 @@ namespace Emgu.TF.XamarinForms
 
         private async void OnButtonClicked(Object sender, EventArgs args)
         {
-            SetMessage("Please wait while the Mobilenet Model is being downloaded...");
-            await _mobilenet.Init();
-
             SetImage();
             String[] imageFiles = await LoadImages(new string[] { "space_shuttle.jpg" });
             //handle user cancel
@@ -69,6 +89,29 @@ namespace Emgu.TF.XamarinForms
             {
                 SetMessage("");
                 return;
+            }
+
+            SetMessage("Please wait while the Mobilenet Model is being downloaded...");
+
+            if (_mobilenet == null)
+            {
+                _mobilenet = new Mobilenet();
+                _mobilenet.OnDownloadProgressChanged += onDownloadProgressChanged;
+            }
+
+            await _mobilenet.Init();
+
+            var picker = this.Picker;
+            if (picker.SelectedIndex > 0)
+            {
+                String selectedBackend = picker.SelectedItem.ToString();
+                if (selectedBackend.Equals("NNAPI"))
+                {
+                    _mobilenet.Interpreter.ModifyGraphWithDelegate(TfLiteInvoke.DefaultNnApiDelegate);
+                } else if (selectedBackend.Equals("GPU"))
+                {
+                    _mobilenet.Interpreter.ModifyGraphWithDelegate(TfLiteInvoke.DefaultGpuDelegateV2);
+                }
             }
 
             Stopwatch watch = Stopwatch.StartNew();

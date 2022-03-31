@@ -21,7 +21,7 @@ namespace Emgu.TF.XamarinForms
             multiboxDetectionButton.Text = "Coco SSD Mobilenet";
             
             Button mobilenetButton = new Button();
-            mobilenetButton.Text = "Inception Object recognition";
+            mobilenetButton.Text = "Mobilenet Object recognition";
             /*
             Button smartReplyButton = new Button();
             smartReplyButton.Text = "Smart Reply";

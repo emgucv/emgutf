@@ -18,7 +18,7 @@ namespace Emgu.TF.Lite
         private IntPtr _delegatePtr;
 
         /// <summary>
-        /// Create a Stategul NNAPI delegate
+        /// Create a Stateful NNAPI delegate
         /// </summary>
         public StatefulNnApiDelegate()
         {
@@ -65,7 +65,9 @@ namespace Emgu.TF.Lite
             {
                 if (_nnApiDelegate == null)
                 {
-                    _nnApiDelegate = new StatefulNnApiDelegate();
+                    StatefulNnApiDelegate d = new StatefulNnApiDelegate();
+                    if (d.Ptr != IntPtr.Zero)
+                        _nnApiDelegate = d;
                 }
 
                 return _nnApiDelegate;

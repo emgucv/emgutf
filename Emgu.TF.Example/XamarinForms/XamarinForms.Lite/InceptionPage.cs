@@ -72,7 +72,7 @@ namespace Emgu.TF.XamarinForms
             await _inception.Init();
             if (!_inception.Imported)
             {
-                SetMessage("Failed to initialize mobilenet.");
+                SetMessage("Failed to initialize Inception Model.");
                 return;
             }
             SetImage();
