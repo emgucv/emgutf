@@ -16,6 +16,10 @@ SET OS_MODE=
 IF "%1%"=="64" SET OS_MODE= Win64
 IF "%1%"=="ARM" SET OS_MODE= ARM
 
+SET NATIVE_RUNTIME_DIR=
+IF "%1%"=="64" SET NATIVE_RUNTIME_DIR=lib\x64
+IF "%1%"=="ARM" SET NATIVE_RUNTIME_DIR=lib\arm
+
 SET BUILD_TOOLS_FOLDER=C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools
 
 REM IF NOT "%4%"=="clean_bazel" GOTO END_OF_CLEAN_BAZEL
@@ -145,7 +149,7 @@ set PATH=%MSYS64_BIN%;%PATH%
 REM %MSYS64_PATH%\usr\bin\bash.exe libtensorflow_cpu.sh
 
 cd ../../../../../
-IF NOT EXIST lib\x64 mkdir lib\x64
+IF NOT EXIST %NATIVE_RUNTIME_DIR% mkdir %NATIVE_RUNTIME_DIR%
 
 REM one more try to make sure it builds, in-case bazel doesn't like msys64 bash.
 cd tensorflow
@@ -159,7 +163,7 @@ REM call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUT
 call cmd.exe /v /c "set PATH=%PYTHON_BASE_PATH%;%MSYS64_BIN%;%CUDA_TOOLKIT_PATH%/extras/CUPTI/lib64;%PATH% & %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build //tensorflow/tfextern:libtfextern.so --verbose_failures %DOCKER_FLAGS% %TF_BAZEL_EXTRA_CONFIG%"
 cd ..
 
-cp -f tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so lib/x64/tfextern.dll
+cp -f tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so %NATIVE_RUNTIME_DIR:/=\%/tfextern.dll
 
 :START_OF_MSVC_DEPENDENCY
 IF "%BAZEL_VC%"=="" GOTO END_OF_MSVC_DEPENDENCY
@@ -174,7 +178,7 @@ for /d %%i in ( "%BAZEL_VC%\Redist\MSVC\*" ) do SET VS2017_REDIST=%%i\x64\Micros
 copy /Y "%VS2017_REDIST%\*140.dll" lib\x64\
 copy /Y "%VS2017_REDIST%\*140_1.dll" lib\x64\
 copy /Y "%VS2017_REDIST%\*140_2.dll" lib\x64\
-REM　rm lib\x64\vccorlib140.dll
+REM　rm %NATIVE_RUNTIME_DIR%\vccorlib140.dll
 GOTO END_OF_MSVC_DEPENDENCY
 
 :VS2019_DEPENDENCY
@@ -196,13 +200,14 @@ IF "%2%" == "gpu" GOTO DEPLOY_DEPENDENCY_GPU
 GOTO END_OF_DEPLOY_DEPENDENCY_GPU
 :DEPLOY_DEPENDENCY_GPU
 SET CUDA_TOOLKIT_BIN_PATH=%CUDA_TOOLKIT_PATH%/bin
-copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cusolver*.dll" lib\x64\ 
-copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cublas*.dll" lib\x64\
-copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cudnn*.dll" lib\x64\
-copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cufft*.dll" lib\x64\
-copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\curand*.dll" lib\x64\
-copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cudart64_*.dll" lib\x64\
-copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cusparse*.dll" lib\x64\
+copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cusolver*.dll" %NATIVE_RUNTIME_DIR%\
+copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cublas*.dll" %NATIVE_RUNTIME_DIR%\
+copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cudnn*.dll" %NATIVE_RUNTIME_DIR%\
+copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\zlibwapi.dll" %NATIVE_RUNTIME_DIR%\
+copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cufft*.dll" %NATIVE_RUNTIME_DIR%\
+copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\curand*.dll" %NATIVE_RUNTIME_DIR%\
+copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cudart64_*.dll" %NATIVE_RUNTIME_DIR%\
+copy /Y "%CUDA_TOOLKIT_BIN_PATH:/=\%\cusparse*.dll" %NATIVE_RUNTIME_DIR%\
 :END_OF_DEPLOY_DEPENDENCY_GPU
 
 REM copy the protoc compiler
@@ -214,7 +219,7 @@ GOTO END_OF_DEPLOY_DEPENDENCY_MKL
 
 :DEPLOY_DEPENDENCY_MKL
 SET INTEL_REDIST=%ONEAPI_ROOT%compiler\latest\windows\redist\intel64_win\compiler
-copy /Y "%INTEL_REDIST%\LIBIOMP5MD.DLL" lib\x64\
+copy /Y "%INTEL_REDIST%\LIBIOMP5MD.DLL" %NATIVE_RUNTIME_DIR%\
 :END_OF_DEPLOY_DEPENDENCY_MKL
 
 
