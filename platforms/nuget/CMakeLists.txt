@@ -19,6 +19,7 @@ IF (WIN32 AND HAVE_WINDESKTOP)
   add_subdirectory(Emgu.runtime.windows.cuda.blas.lt)
   add_subdirectory(Emgu.runtime.windows.cuda.solver)
   add_subdirectory(Emgu.runtime.windows.cuda.solver.mg)
+  add_subdirectory(Emgu.runtime.windows.zlibwapi.x64)
   add_subdirectory(Emgu.TF.runtime.windows)
 ENDIF()
 

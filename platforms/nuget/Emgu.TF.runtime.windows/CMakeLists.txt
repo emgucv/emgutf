@@ -44,11 +44,15 @@ ENDIF()
 IF (TARGET Emgu.runtime.windows.cuda.sparse.nuget)
   ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.runtime.windows.cuda.sparse.nuget)
 ENDIF()
-IF (TARGET Emgu.TF.runtime.windows.cuda.blas.nuget)
+IF (TARGET Emgu.runtime.windows.cuda.blas.nuget)
   ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.runtime.windows.cuda.blas.nuget)
 ENDIF()
-IF (TARGET Emgu.TF.runtime.windows.cuda.blas.lt.nuget)
+IF (TARGET Emgu.runtime.windows.cuda.blas.lt.nuget)
   ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.runtime.windows.cuda.blas.lt.nuget)
+ENDIF()
+
+IF (TARGET Emgu.runtime.windows.zlibwapi.x64.nuget)
+  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.runtime.windows.zlibwapi.x64.nuget)
 ENDIF()
 
 

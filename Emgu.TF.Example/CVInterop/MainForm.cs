@@ -41,7 +41,7 @@ namespace CVInterop
                 config.GpuOptions.AllowGrowth = true;
 
                 //Force to run on CPU
-                config.DeviceCount["GPU"] = 0;
+                //config.DeviceCount["GPU"] = 0;
             }
 #if DEBUG
             config.LogDevicePlacement = true;

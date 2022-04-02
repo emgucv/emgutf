@@ -512,6 +512,8 @@ SET(EMGUTF_MODEL_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.Models")
 SET(EMGUTF_PROTOBUF_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.Protobuf")
 SET(EMGU_WINDOWS_MSVCRT_X86_NUGET_ID "Emgu.runtime.windows.msvc.rt.x86")
 SET(EMGU_WINDOWS_MSVCRT_X64_NUGET_ID "Emgu.runtime.windows.msvc.rt.x64")
+SET(EMGU_ZLIBWAPI_ID "Emgu.runtime.windows.zlibwapi.x64")
+SET(EMGU_ZLIBWAPI_VERSION "1.2.3")
 
 SET(EMGUTF_NUGET_TITLE_ARCH "")
 IF(HAVE_WINDESKTOP_X86)
@@ -1021,6 +1023,7 @@ IF(HAVE_WINDESKTOP)
 	  FILE(GLOB CURAND_DEPENDENCY_DLLS "${CUDA_TOOLKIT_ROOT_DIR}/bin/curand*.dll")
 	  FILE(GLOB CUSOLVER_DEPENDENCY_DLLS "${CUDA_TOOLKIT_ROOT_DIR}/bin/cusolver*.dll")
 	  FILE(GLOB CUSPARSE_DEPENDENCY_DLLS "${CUDA_TOOLKIT_ROOT_DIR}/bin/cusparse*.dll")
+	  FILE(GLOB CUDNN_DEPENDENCY_DLLS "${CUDA_TOOLKIT_ROOT_DIR}/bin/cudnn*.dll" "${CUDA_TOOLKIT_ROOT_DIR}/bin/zlibwapi.dll")
       LIST(APPEND TFEXTERN_DEPENDENCY_DLLS 
 	    ${CUDART_FILES}
 	    ${CUFFT_DEPENDENCY_DLLS}
@@ -1028,6 +1031,7 @@ IF(HAVE_WINDESKTOP)
 	    ${CURAND_DEPENDENCY_DLLS}
 	    ${CUSOLVER_DEPENDENCY_DLLS}
 		${CUSPARSE_DEPENDENCY_DLLS}
+		${CUDNN_DEPENDENCY_DLLS}
 	  )
       SET(EMGU_TF_CUFFT_FILE_VERSION "${NPP_POSTFIX}")
 #    ELSE()
@@ -1123,6 +1127,7 @@ IF(HAVE_WINDESKTOP)
 	SET(EMGU_TF_DNN_DEPENDENCY "${EMGU_TF_DNN_DEPENDENCY}
         <dependencies>
 			<dependency id=\"${EMGU_TF_CUDART_ID}\" version=\"[${EMGU_TF_CUDA_VERSION}]\" />
+			<dependency id=\"${EMGU_ZLIBWAPI_ID}\" version=\"[${EMGU_ZLIBWAPI_VERSION}]\" />
         </dependencies>")
 	SET(EMGU_TF_DNN_OPS_DEPENDENCY "${EMGU_TF_DNN_OPS_DEPENDENCY}
         <dependencies>
@@ -1147,6 +1152,7 @@ IF(HAVE_WINDESKTOP)
 			<dependency id=\"${EMGU_TF_DNN_OPS_ID}\" version=\"[${EMGU_TF_DNN_VERSION}]\" />
 			<dependency id=\"${EMGU_TF_DNN_CNN_TRAIN_ID}\" version=\"[${EMGU_TF_DNN_VERSION}]\" />
 			<dependency id=\"${EMGU_TF_DNN_CNN_INFER_ID}\" version=\"[${EMGU_TF_DNN_VERSION}]\" />
+			<dependency id=\"${EMGU_ZLIBWAPI_ID}\" version=\"[${EMGU_ZLIBWAPI_VERSION}]\" />
 			<dependency id=\"${EMGU_TF_CUFFT_ID}\" version=\"[${EMGU_TF_CUDA_VERSION}]\" />
 			<dependency id=\"${EMGU_TF_CUSPARSE_ID}\" version=\"[${EMGU_TF_CUDA_VERSION}]\" />
 			<dependency id=\"${EMGU_TF_CUBLAS_ID}\" version=\"[${EMGU_TF_CUDA_VERSION}]\" />
@@ -1158,6 +1164,8 @@ IF(HAVE_WINDESKTOP)
     
 	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_DNN_CNN_TRAIN_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_DNN_CNN_TRAIN_ID}/Package.nuspec)
 	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_DNN_CNN_INFER_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_DNN_CNN_INFER_ID}/Package.nuspec)
+	
+	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_ZLIBWAPI_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_ZLIBWAPI_ID}/Package.nuspec)
     
 	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_TF_DNN_OPS_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_TF_DNN_OPS_ID}/Package.nuspec)
     
@@ -1178,7 +1186,7 @@ IF(HAVE_WINDESKTOP)
 	#<file src=\"..\\..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />")
   ENDIF()
   SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "${EMGUTF_WINDOWS_NUGET_FILE_LIST} 
-	<file src=\"..\\..\\..\\lib\\x64\\*.dll\" exclude=\"..\\..\\..\\lib\\x64\\cu*.dll;..\\..\\..\\lib\\x64\\concrt*.dll;..\\..\\..\\lib\\x64\\msvcp*.dll;..\\..\\..\\lib\\x64\\vcruntime*.dll;..\\..\\..\\lib\\x64\\vccorlib*.dll\" target=\"runtimes\\win-x64\\native\" />")
+	<file src=\"..\\..\\..\\lib\\x64\\*.dll\" exclude=\"..\\..\\..\\lib\\x64\\cu*.dll;..\\..\\..\\lib\\x64\\concrt*.dll;..\\..\\..\\lib\\x64\\msvcp*.dll;..\\..\\..\\lib\\x64\\vcruntime*.dll;..\\..\\..\\lib\\x64\\vccorlib*.dll;..\\..\\..\\lib\\x64\\zlibwapi.dll\" target=\"runtimes\\win-x64\\native\" />")
 ENDIF()
 
 IF (HAVE_WINDESKTOP OR HAVE_WINDESKTOP_X64_LITE)

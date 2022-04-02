@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>${EMGU_ZLIBWAPI_ID}</id>
+	<title>Native zlibwapi windows runtime dependency for CUDNN</title>
+    <version>${EMGU_ZLIBWAPI_VERSION}</version>
+    <authors>${CPACK_PACKAGE_VENDOR}</authors>
+    <owners>${CPACK_PACKAGE_VENDOR}</owners>
+    <license type="file">zlib_license.txt</license>
+    <projectUrl>${EMGUTF_MAIN_WEB_URL}</projectUrl>
+	<icon>icon.png</icon>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+	<summary>This package provides the native zlibwapi runtime dependencies for CUDNN </summary>
+    <description>This package provides the native zlibwapi runtime dependencies for CUDNN</description>
+    <releaseNotes>This is the ${EMGU_ZLIBWAPI_VERSION} release of zlibwapi runtime. </releaseNotes>
+    <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved</copyright>
+    <tags>emgu zlib zlibwapi</tags>
+  </metadata>
+  <files>
+	<file src="..\..\..\lib\x64\zlibwapi.dll"  target="runtimes\win-x64\native" />
+	<file src="..\..\..\miscellaneous\nuget_icon.png" target="icon.png" />
+	<file src="zlib_license.txt" target="zlib_license.txt" />
+  </files>
+</package>

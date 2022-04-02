@@ -48,7 +48,11 @@ namespace Inception.Console.Netstandard
         {
             SessionOptions so = new SessionOptions();
             Tensorflow.ConfigProto config = new Tensorflow.ConfigProto();
+
+#if DEBUG
             config.LogDevicePlacement = true;
+#endif
+
             if (TfInvoke.IsGoogleCudaEnabled)
             {
                 config.GpuOptions = new Tensorflow.GPUOptions();
