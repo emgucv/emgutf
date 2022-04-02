@@ -16,10 +16,12 @@ PROJECT(Emgu.runtime.windows.cuda.dnn.nuget)
   IF (EMGU_NUGET_SIGN_FOUND)
     EMGU_SIGN_NUGET(${PROJECT_NAME} "${NUGET_OUTPUT_DIR}/${EMGU_TF_DNN_ID}.${EMGU_TF_DNN_VERSION}.nupkg")
   ENDIF()
-ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.runtime.windows.cuda.rt.nuget)
+  
+  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.runtime.windows.cuda.rt.nuget)
+  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.runtime.windows.zlibwapi.nuget)
 
-if(ENABLE_SOLUTION_FOLDERS)
-  set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "NUGET")
-endif() 
+  if(ENABLE_SOLUTION_FOLDERS)
+    set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "NUGET")
+  endif() 
 
 ENDIF()
