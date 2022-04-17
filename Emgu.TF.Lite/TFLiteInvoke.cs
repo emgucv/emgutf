@@ -109,44 +109,57 @@ namespace Emgu.TF.Lite
             {
                 List<String> subfolderOptions = new List<string>();
 
-                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices
-                        .OSPlatform.Windows)
-                    || System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices
-                        .OSPlatform.Linux)
-                )
+                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
                 {
-                    if (RuntimeInformation.ProcessArchitecture == Architecture.X86)
+                    subfolderOptions.Add(Path.Combine("runtimes", "osx", "native"));
+                }
+                else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
+                {
+                    switch (RuntimeInformation.ProcessArchitecture)
                     {
-                        if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime
-                            .InteropServices.OSPlatform.Windows))
-                        {
-                            //throw new Exception(
-                            //    "Emgu TF Lite is only compatible with 64bit mode in Windows (not compatible with 32bit x86 mode)");
+                        case Architecture.X86:
+                            subfolderOptions.Add(Path.Combine("runtimes", "linux-x86", "native"));
+                            subfolderOptions.Add(Path.Combine("runtimes", "ubuntu-x86", "native"));
+                            subfolderOptions.Add("x86");
+                            break;
+                        case Architecture.X64:
+                            subfolderOptions.Add(Path.Combine("runtimes", "linux-x64", "native"));
+                            subfolderOptions.Add(Path.Combine("runtimes", "ubuntu-x64", "native"));
+                            subfolderOptions.Add("x64");
+                            break;
+                        case Architecture.Arm:
+                            subfolderOptions.Add(Path.Combine("runtimes", "linux-arm", "native"));
+                            subfolderOptions.Add(Path.Combine("runtimes", "ubuntu-arm", "native"));
+                            subfolderOptions.Add("arm");
+                            break;
+                        case Architecture.Arm64:
+                            subfolderOptions.Add(Path.Combine("runtimes", "linux-arm64", "native"));
+                            subfolderOptions.Add(Path.Combine("runtimes", "ubuntu-arm64", "native"));
+                            subfolderOptions.Add("arm64");
+                            break;
+                    }
+                }
+                else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+                {
+                    switch (RuntimeInformation.ProcessArchitecture)
+                    {
+                        case Architecture.X86:
                             subfolderOptions.Add(Path.Combine("runtimes", "win-x86", "native"));
-                        }
-
-                        subfolderOptions.Add("x86");
-                    }
-                    else if (RuntimeInformation.ProcessArchitecture == Architecture.X64)
-                    {
-                        if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime
-                            .InteropServices.OSPlatform.Windows))
+                            subfolderOptions.Add("x86");
+                            break;
+                        case Architecture.X64:
                             subfolderOptions.Add(Path.Combine("runtimes", "win-x64", "native"));
-                        subfolderOptions.Add("x64");
+                            subfolderOptions.Add("x64");
+                            break;
+                        case Architecture.Arm:
+                            subfolderOptions.Add(Path.Combine("runtimes", "win-arm", "native"));
+                            subfolderOptions.Add("arm");
+                            break;
+                        case Architecture.Arm64:
+                            subfolderOptions.Add(Path.Combine("runtimes", "win-arm64", "native"));
+                            subfolderOptions.Add("arm64");
+                            break;
                     }
-                    else if (RuntimeInformation.ProcessArchitecture == Architecture.Arm)
-                    {
-                        subfolderOptions.Add("arm");
-                    }
-                    else if (RuntimeInformation.ProcessArchitecture == Architecture.Arm64)
-                    {
-                        subfolderOptions.Add("arm64");
-                    }
-
-                    //if ("x86".Equals(subfolder) && System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
-                    //{
-                    //    throw new Exception("Emgu TF Lite is only compatible with 64bit mode in Windows (not compatible with 32bit x86 mode)");
-                    //}
                 }
 
                 String subfolder = String.Empty;

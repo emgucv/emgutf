@@ -15,12 +15,12 @@
   <PropertyGroup>
     <EmguTFWindowsLinkTarget>Windows</EmguTFWindowsLinkTarget>
     <EmguTFWindowsBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguTFWindowsBuildX64>
-    <EmguTFWindowsNativeFileX64>$(EmguTFWindowsBinaryDir)\x64\tfextern.dll</EmguTFWindowsNativeFileX64>
+    <EmguTFWindowsNativeFileX64>$(EmguTFWindowsBinaryDir)\runtimes\win-x64\native\tfextern.dll</EmguTFWindowsNativeFileX64>
     <EmguTFWindowsErrorMessage Condition="'$(EmguTFWindowsBuildX64)'=='True' AND !Exists('$(EmguTFWindowsNativeFileX64)')">This package do not contain necessary binary for $(EmguTFWindowsLinkTarget). Windows x64 is targeted, but file $(EmguTFWindowsNativeFileX64) is missing. PInvoke may fail on Windows x64 platforms</EmguTFWindowsErrorMessage>
     <EmguTFWindowsDeployMessage Condition="'$(EmguTFWindowsBuildX64)'=='True' AND Exists('$(EmguTFWindowsNativeFileX64)')">$(EmguTFWindowsDeployMessage)x64 </EmguTFWindowsDeployMessage>
   </PropertyGroup>
   <ItemGroup Condition="'$(EmguTFWindowsBuildX64)'=='True' AND Exists('$(EmguTFWindowsNativeFileX64)')">
-    <Content Include="$(EmguTFWindowsBinaryDir)\x64\*.dll">
+    <Content Include="$(EmguTFWindowsBinaryDir)\runtimes\win-x64\native\*.dll">
       <Link>runtimes\win-x64\native\%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

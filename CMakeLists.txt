@@ -162,7 +162,7 @@ MESSAGE(STATUS "Building for ${EMGUTF_ARCH}")
 SET(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib)
 IF(WIN32)
   IF ("${EMGUTF_ARCH}" STREQUAL "win64")
-      SET(UNMANAGED_LIBRARY_OUTPUT_SUBFOLDER "/x64")
+      SET(UNMANAGED_LIBRARY_OUTPUT_SUBFOLDER "/runtimes/win-x64/native")
   ELSEIF("${EMGUTF_ARCH}" STREQUAL "arm")
 	SET(UNMANAGED_LIBRARY_OUTPUT_SUBFOLDER "/arm")
   ELSEIF("${EMGUTF_ARCH}" STREQUAL "arm64")
@@ -271,13 +271,12 @@ IF(HAVE_ANDROID_LITE)
   MESSAGE(STATUS "HAVE_ANDROID_LITE: ${HAVE_ANDROID_LITE}")
 ENDIF()
 
-#CHECK_BINARY_EXIST("lib/x86" "tfextern.dll" HAVE_WINDESKTOP_X86 OFF)
-CHECK_BINARY_EXIST("lib/x64" "tfextern.dll" HAVE_WINDESKTOP_X64 OFF)
-CHECK_BINARY_EXIST("lib/x86" "tfliteextern.dll" HAVE_WINDESKTOP_X86_LITE OFF)
-CHECK_BINARY_EXIST("lib/x64" "tfliteextern.dll" HAVE_WINDESKTOP_X64_LITE OFF)
-CHECK_BINARY_EXIST("lib/x64" "cudart64*.dll" HAVE_WINDESKTOP_X64_CUDA OFF)
+CHECK_BINARY_EXIST("lib/runtimes/win-x64/native" "tfextern.dll" HAVE_WINDESKTOP_X64 OFF)
+CHECK_BINARY_EXIST("lib/runtimes/win-x86/native" "tfliteextern.dll" HAVE_WINDESKTOP_X86_LITE OFF)
+CHECK_BINARY_EXIST("lib/runtimes/win-x64/native" "tfliteextern.dll" HAVE_WINDESKTOP_X64_LITE OFF)
+CHECK_BINARY_EXIST("lib/runtimes/win-x64/native" "cudart64*.dll" HAVE_WINDESKTOP_X64_CUDA OFF)
 
-CHECK_BINARY_EXIST("lib/x64" "libiomp5md.dll" HAVE_WINDESKTOP_MKL OFF)
+CHECK_BINARY_EXIST("lib/runtimes/win-x64/native" "libiomp5md.dll" HAVE_WINDESKTOP_MKL OFF)
 
 IF(HAVE_WINDESKTOP_X64)	
   SET(WINDESKTOP_LABEL "-windesktop_x64")
@@ -782,20 +781,20 @@ IF (HAVE_WINDESKTOP OR HAVE_WINDESKTOP_LITE)
     IF (HAVE_WINDESKTOP OR HAVE_WINDESKTOP_X64_LITE)
       SET(EMGU_WINDOWS_MSVCRT_X64_NUGET_TITLE "MSVC x64 runtime for windows")
 	  SET(EMGU_WINDOWS_MSVCRT_X64_NUGET_FILE_LIST "${EMGU_WINDOWS_MSVCRT_X64_NUGET_FILE_LIST} 
-	<file src=\"..\\..\\..\\lib\\x64\\concrt*.dll\" target=\"runtimes\\win-x64\\native\" /> 
-	<file src=\"..\\..\\..\\lib\\x64\\msvcp*.dll\" target=\"runtimes\\win-x64\\native\" /> 
-	<file src=\"..\\..\\..\\lib\\x64\\vcruntime*.dll\" target=\"runtimes\\win-x64\\native\" />     
-	<file src=\"..\\..\\..\\lib\\x64\\vccorlib*.dll\" target=\"runtimes\\win-x64\\native\" />     
+	<file src=\"..\\..\\..\\lib\\runtimes\\win-x64\\native\\concrt*.dll\" target=\"runtimes\\win-x64\\native\" /> 
+	<file src=\"..\\..\\..\\lib\\runtimes\\win-x64\\native\\msvcp*.dll\" target=\"runtimes\\win-x64\\native\" /> 
+	<file src=\"..\\..\\..\\lib\\runtimes\\win-x64\\native\\vcruntime*.dll\" target=\"runtimes\\win-x64\\native\" />     
+	<file src=\"..\\..\\..\\lib\\runtimes\\win-x64\\native\\vccorlib*.dll\" target=\"runtimes\\win-x64\\native\" />     
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
     <file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
     ENDIF()
 	IF (HAVE_WINDESKTOP_X86_LITE)
       SET(EMGU_WINDOWS_MSVCRT_X86_NUGET_TITLE "MSVC x86 runtime for windows")
 	  SET(EMGU_WINDOWS_MSVCRT_X86_NUGET_FILE_LIST "${EMGU_WINDOWS_MSVCRT_X86_NUGET_FILE_LIST} 
-	<file src=\"..\\..\\..\\lib\\x86\\concrt*.dll\" target=\"runtimes\\win-x86\\native\" /> 
-	<file src=\"..\\..\\..\\lib\\x86\\msvcp*.dll\" target=\"runtimes\\win-x86\\native\" /> 
-	<file src=\"..\\..\\..\\lib\\x86\\vcruntime*.dll\" target=\"runtimes\\win-x86\\native\" />     
-	<file src=\"..\\..\\..\\lib\\x86\\vccorlib*.dll\" target=\"runtimes\\win-x86\\native\" />     
+	<file src=\"..\\..\\..\\lib\\runtimes\\win-x86\\native\\concrt*.dll\" target=\"runtimes\\win-x86\\native\" /> 
+	<file src=\"..\\..\\..\\lib\\runtimes\\win-x86\\native\\msvcp*.dll\" target=\"runtimes\\win-x86\\native\" /> 
+	<file src=\"..\\..\\..\\lib\\runtimes\\win-x86\\native\\vcruntime*.dll\" target=\"runtimes\\win-x86\\native\" />     
+	<file src=\"..\\..\\..\\lib\\runtimes\\win-x86\\native\\vccorlib*.dll\" target=\"runtimes\\win-x86\\native\" />     
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
     <file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
     ENDIF()
@@ -834,12 +833,12 @@ ENDIF()
 IF( HAVE_WINDESKTOP_LITE )
   IF( HAVE_WINDESKTOP_X64_LITE )
   SET(EMGUTF_LITE_WINDOWS_NUGET_FILE_LIST "${EMGUTF_LITE_WINDOWS_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\..\\lib\\x64\\*.dll\" exclude=\"..\\..\\..\\lib\\x64\\concrt*.dll;..\\..\\..\\lib\\x64\\msvcp*.dll;..\\..\\..\\lib\\x64\\vcruntime*.dll;..\\..\\..\\lib\\x64\\vccorlib*.dll\" target=\"runtimes\\win-x64\\native\" />
+    <file src=\"..\\..\\..\\lib\\runtimes\\win-x64\\native\\*.dll\" exclude=\"..\\..\\..\\lib\\runtimes\\win-x64\\native\\concrt*.dll;..\\..\\..\\lib\\runtimes\\win-x64\\native\\msvcp*.dll;..\\..\\..\\lib\\runtimes\\win-x64\\native\\vcruntime*.dll;..\\..\\..\\lib\\runtimes\\win-x64\\native\\vccorlib*.dll\" target=\"runtimes\\win-x64\\native\" />
 	")
   ENDIF()
   IF( HAVE_WINDESKTOP_X86_LITE )
   SET(EMGUTF_LITE_WINDOWS_NUGET_FILE_LIST "${EMGUTF_LITE_WINDOWS_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\..\\lib\\x86\\*.dll\" exclude=\"..\\..\\..\\lib\\x86\\concrt*.dll;..\\..\\..\\lib\\x86\\msvcp*.dll;..\\..\\..\\lib\\x86\\vcruntime*.dll;..\\..\\..\\lib\\x86\\vccorlib*.dll\" target=\"runtimes\\win-x86\\native\" />
+    <file src=\"..\\..\\..\\lib\\runtimes\\win-x86\\native\\*.dll\" exclude=\"..\\..\\..\\lib\\runtimes\\win-x86\\native\\concrt*.dll;..\\..\\..\\lib\\runtimes\\win-x86\\native\\msvcp*.dll;..\\..\\..\\lib\\runtimes\\win-x86\\native\\vcruntime*.dll;..\\..\\..\\lib\\runtimes\\win-x86\\native\\vccorlib*.dll\" target=\"runtimes\\win-x86\\native\" />
 	")
   ENDIF()  
   SET(EMGUTF_LITE_WINDOWS_NUGET_FILE_LIST "${EMGUTF_LITE_WINDOWS_NUGET_FILE_LIST} 
@@ -1186,7 +1185,7 @@ IF(HAVE_WINDESKTOP)
 	#<file src=\"..\\..\\..\\lib\\x64\\*.dll\" target=\"build\\x64\" />")
   ENDIF()
   SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "${EMGUTF_WINDOWS_NUGET_FILE_LIST} 
-	<file src=\"..\\..\\..\\lib\\x64\\*.dll\" exclude=\"..\\..\\..\\lib\\x64\\cu*.dll;..\\..\\..\\lib\\x64\\concrt*.dll;..\\..\\..\\lib\\x64\\msvcp*.dll;..\\..\\..\\lib\\x64\\vcruntime*.dll;..\\..\\..\\lib\\x64\\vccorlib*.dll;..\\..\\..\\lib\\x64\\zlibwapi.dll\" target=\"runtimes\\win-x64\\native\" />")
+	<file src=\"..\\..\\..\\lib\\runtimes\\win-x64\\native\\*.dll\" exclude=\"..\\..\\..\\lib\\runtimes\\win-x64\\native\\cu*.dll;..\\..\\..\\lib\\runtimes\\win-x64\\native\\concrt*.dll;..\\..\\..\\lib\\runtimes\\win-x64\\native\\msvcp*.dll;..\\..\\..\\lib\\runtimes\\win-x64\\native\\vcruntime*.dll;..\\..\\..\\lib\\runtimes\\win-x64\\native\\vccorlib*.dll;..\\..\\..\\lib\\runtimes\\win-x64\\native\\zlibwapi.dll\" target=\"runtimes\\win-x64\\native\" />")
 ENDIF()
 
 IF (HAVE_WINDESKTOP OR HAVE_WINDESKTOP_X64_LITE)

@@ -66,40 +66,72 @@ namespace Emgu.TF
         /// <remarks>If <paramref name="loadDirectory"/> is null, the default location on windows is the dll's path appended by either "x64" or "x86", depends on the applications current mode.</remarks>
         public static bool LoadUnmanagedModules(String loadDirectory, params String[] unmanagedModules)
         {
+#if UNITY_WSA || UNITY_STANDALONE || UNITY_EDITOR || UNITY_ANDROID || UNITY_IOS || UNITY_WEBGL
+            if (loadDirectory != null)
+            {
+                throw new NotImplementedException("Loading modules from a specific directory is not implemented on the current platform");
+            }
+            //Let unity handle the library loading
+            return true;
+#else
             String oldDir = String.Empty;
 
             if (loadDirectory == null)
             {
                 List<String> subfolderOptions = new List<string>();
 
-                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows)
-                    || System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux)
-                )
+                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
                 {
-                    if (RuntimeInformation.ProcessArchitecture == Architecture.X86)
+                    subfolderOptions.Add(Path.Combine("runtimes", "osx", "native"));
+                }
+                else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
+                {
+                    switch (RuntimeInformation.ProcessArchitecture)
                     {
-                        if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
-                        {
-                            throw new Exception("Emgu TF is only compatible with 64bit mode in Windows (not compatible with 32bit x86 mode)");
-                            //subfolderOptions.Add(Path.Combine("runtimes", "win-x86", "native"));
-                        }
-                        subfolderOptions.Add("x86");
+                        case Architecture.X86:
+                            subfolderOptions.Add(Path.Combine("runtimes", "linux-x86", "native"));
+                            subfolderOptions.Add(Path.Combine("runtimes", "ubuntu-x86", "native"));
+                            subfolderOptions.Add("x86");
+                            break;
+                        case Architecture.X64:
+                            subfolderOptions.Add(Path.Combine("runtimes", "linux-x64", "native"));
+                            subfolderOptions.Add(Path.Combine("runtimes", "ubuntu-x64", "native"));
+                            subfolderOptions.Add("x64");
+                            break;
+                        case Architecture.Arm:
+                            subfolderOptions.Add(Path.Combine("runtimes", "linux-arm", "native"));
+                            subfolderOptions.Add(Path.Combine("runtimes", "ubuntu-arm", "native"));
+                            subfolderOptions.Add("arm");
+                            break;
+                        case Architecture.Arm64:
+                            subfolderOptions.Add(Path.Combine("runtimes", "linux-arm64", "native"));
+                            subfolderOptions.Add(Path.Combine("runtimes", "ubuntu-arm64", "native"));
+                            subfolderOptions.Add("arm64");
+                            break;
                     }
-                    else if (RuntimeInformation.ProcessArchitecture == Architecture.X64)
+                }
+                else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+                {
+                    switch (RuntimeInformation.ProcessArchitecture)
                     {
-                        if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+                        case Architecture.X86:
+                            throw new Exception("Emgu TF is only compatible with 64 bit mode in Windows (not compatible with 32 bit x86 mode)");
+                        //subfolderOptions.Add(Path.Combine("runtimes", "win-x86", "native"));
+                        //subfolderOptions.Add("x86");
+                        //break;
+                        case Architecture.X64:
                             subfolderOptions.Add(Path.Combine("runtimes", "win-x64", "native"));
-                        subfolderOptions.Add("x64");
+                            subfolderOptions.Add("x64");
+                            break;
+                        case Architecture.Arm:
+                            subfolderOptions.Add(Path.Combine("runtimes", "win-arm", "native"));
+                            subfolderOptions.Add("arm");
+                            break;
+                        case Architecture.Arm64:
+                            subfolderOptions.Add(Path.Combine("runtimes", "win-arm64", "native"));
+                            subfolderOptions.Add("arm64");
+                            break;
                     }
-                    else if (RuntimeInformation.ProcessArchitecture == Architecture.Arm)
-                    {
-                        subfolderOptions.Add("arm");
-                    }
-                    else if (RuntimeInformation.ProcessArchitecture == Architecture.Arm64)
-                    {
-                        subfolderOptions.Add("arm64");
-                    }
-
                 }
 
                 String subfolder = String.Empty;
@@ -283,12 +315,12 @@ namespace Emgu.TF
                 bool IsGoogleCudaEnabled = TfInvoke.IsGoogleCudaEnabled;
                 String version = Emgu.TF.TfInvoke.Version;
                 String[] devices = ListAllPhysicalDevices();
-                System.Diagnostics.Trace.WriteLine(String.Format("Successfully loaded tensorflow {0} binary from {1}; IsGoogleCudaEnabled = {2}; PhysicalDevices=[{3}]", 
-                    version, 
-                    loadDirectory, 
-                    IsGoogleCudaEnabled, 
+                System.Diagnostics.Trace.WriteLine(String.Format("Successfully loaded tensorflow {0} binary from {1}; IsGoogleCudaEnabled = {2}; PhysicalDevices=[{3}]",
+                    version,
+                    loadDirectory,
+                    IsGoogleCudaEnabled,
                     String.Join(",", devices)));
-                
+
                 //AddLogListenerSink();
                 RegisterLogListener(_defaultLogListener);
                 TfInvoke.LogMsgReceived += TfInvoke_LogMsgReceived;
@@ -304,6 +336,7 @@ namespace Emgu.TF
             }
 
             return success;
+#endif
         }
 
         private static void TfInvoke_LogMsgReceived(object sender, string e)
@@ -600,7 +633,7 @@ namespace Emgu.TF
         /// </summary>
         /// <param name="listener">The Log listener to be registered.</param>
         [DllImport(
-            ExternLibrary, 
+            ExternLibrary,
             CallingConvention = TfInvoke.TfCallingConvention,
             EntryPoint = "tfeRegisterLogListener")]
         public static extern void RegisterLogListener(TfLogListener listener);
@@ -656,7 +689,7 @@ namespace Emgu.TF
             LogMsgReceived?.Invoke(null, msg);
         }
 
-        
+
         private static ILogSink _defaultLogForwarderSink = null;
 
         /// <summary>
@@ -668,7 +701,7 @@ namespace Emgu.TF
             {
                 return _defaultLogForwarderSink;
             }
-            
+
         }
     }
 

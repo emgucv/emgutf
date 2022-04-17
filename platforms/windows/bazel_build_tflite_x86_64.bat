@@ -128,8 +128,8 @@ call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_
       
 cd ..
 
-IF NOT EXIST lib\x64 mkdir lib\x64
-cp -f tensorflow/bazel-bin/tensorflow/tfliteextern/libtfliteextern.so lib/x64/tfliteextern.dll
+IF NOT EXIST lib\runtimes\win-x64\native mkdir lib\runtimes\win-x64\native
+copy /Y "tensorflow\bazel-bin\tensorflow\tfliteextern\libtfliteextern.so" lib\runtimes\win-x64\native\tfliteextern.dll
 
 :START_OF_MSVC_DEPENDENCY
 IF "%BAZEL_VC%"=="" GOTO END_OF_MSVC_DEPENDENCY
@@ -141,23 +141,23 @@ GOTO END_OF_MSVC_DEPENDENCY
 
 :VS2017_DEPENDENCY
 for /d %%i in ( "%BAZEL_VC%\Redist\MSVC\*" ) do SET VS2017_REDIST=%%i\x64\Microsoft.VC141.CRT
-copy /Y "%VS2017_REDIST%\*140.dll" lib\x64\
-copy /Y "%VS2017_REDIST%\*140_1.dll" lib\x64\
-copy /Y "%VS2017_REDIST%\*140_2.dll" lib\x64\
-REM　rm lib\x64\vccorlib140.dll
+copy /Y "%VS2017_REDIST%\*140.dll" lib\runtimes\win-x64\native\
+copy /Y "%VS2017_REDIST%\*140_1.dll" lib\runtimes\win-x64\native\
+copy /Y "%VS2017_REDIST%\*140_2.dll" lib\runtimes\win-x64\native\
+REM　rm lib\runtimes\win-x64\native\vccorlib140.dll
 GOTO END_OF_MSVC_DEPENDENCY
 
 :VS2019_DEPENDENCY
 for /d %%i in ( "%BAZEL_VC%\Redist\MSVC\14*" ) do SET VS2019_REDIST=%%i\x64\Microsoft.VC142.CRT
-copy /Y "%VS2019_REDIST%\*.dll" lib\x64\
-REM copy /Y "%VS2019_REDIST%\*140_1.dll" lib\x64\
-REM copy /Y "%VS2019_REDIST%\*140_2.dll" lib\x64\
-REM rm lib\x64\vccorlib140.dll
+copy /Y "%VS2019_REDIST%\*.dll" lib\runtimes\win-x64\native\
+REM copy /Y "%VS2019_REDIST%\*140_1.dll" lib\runtimes\win-x64\native\
+REM copy /Y "%VS2019_REDIST%\*140_2.dll" lib\runtimes\win-x64\native\
+REM rm lib\runtimes\win-x64\native\vccorlib140.dll
 GOTO END_OF_MSVC_DEPENDENCY
 
 :VS2022_DEPENDENCY
 for /d %%i in ( "%BAZEL_VC%\Redist\MSVC\14*" ) do SET VS2022_REDIST=%%i\x64\Microsoft.VC143.CRT
-copy /Y "%VS2022_REDIST%\*.dll" lib\x64\
+copy /Y "%VS2022_REDIST%\*.dll" lib\runtimes\win-x64\native\
 
 :END_OF_MSVC_DEPENDENCY
 popd

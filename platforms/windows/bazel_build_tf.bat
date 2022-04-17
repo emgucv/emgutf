@@ -17,7 +17,7 @@ IF "%1%"=="64" SET OS_MODE= Win64
 IF "%1%"=="ARM" SET OS_MODE= ARM
 
 SET NATIVE_RUNTIME_DIR=
-IF "%1%"=="64" SET NATIVE_RUNTIME_DIR=lib\x64
+IF "%1%"=="64" SET NATIVE_RUNTIME_DIR=lib\runtimes\win-x64\native
 IF "%1%"=="ARM" SET NATIVE_RUNTIME_DIR=lib\arm
 
 SET BUILD_TOOLS_FOLDER=C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools
@@ -175,23 +175,23 @@ GOTO END_OF_MSVC_DEPENDENCY
 
 :VS2017_DEPENDENCY
 for /d %%i in ( "%BAZEL_VC%\Redist\MSVC\*" ) do SET VS2017_REDIST=%%i\x64\Microsoft.VC141.CRT
-copy /Y "%VS2017_REDIST%\*140.dll" lib\x64\
-copy /Y "%VS2017_REDIST%\*140_1.dll" lib\x64\
-copy /Y "%VS2017_REDIST%\*140_2.dll" lib\x64\
+copy /Y "%VS2017_REDIST%\*140.dll" %NATIVE_RUNTIME_DIR%\
+copy /Y "%VS2017_REDIST%\*140_1.dll" %NATIVE_RUNTIME_DIR%\
+copy /Y "%VS2017_REDIST%\*140_2.dll" %NATIVE_RUNTIME_DIR%\
 REM　rm %NATIVE_RUNTIME_DIR%\vccorlib140.dll
 GOTO END_OF_MSVC_DEPENDENCY
 
 :VS2019_DEPENDENCY
 for /d %%i in ( "%BAZEL_VC%\Redist\MSVC\14*" ) do SET VS2019_REDIST=%%i\x64\Microsoft.VC142.CRT
-copy /Y "%VS2019_REDIST%\*.dll" lib\x64\
-REM copy /Y "%VS2019_REDIST%\*140_1.dll" lib\x64\
-REM copy /Y "%VS2019_REDIST%\*140_2.dll" lib\x64\
+copy /Y "%VS2019_REDIST%\*.dll" %NATIVE_RUNTIME_DIR%\
+REM copy /Y "%VS2019_REDIST%\*140_1.dll" %NATIVE_RUNTIME_DIR%\
+REM copy /Y "%VS2019_REDIST%\*140_2.dll" %NATIVE_RUNTIME_DIR%\
 REM rm lib\x64\vccorlib140.dll
 GOTO END_OF_MSVC_DEPENDENCY
 
 :VS2022_DEPENDENCY
 for /d %%i in ( "%BAZEL_VC%\Redist\MSVC\14*" ) do SET VS2022_REDIST=%%i\x64\Microsoft.VC143.CRT
-copy /Y "%VS2022_REDIST%\*.dll" lib\x64\
+copy /Y "%VS2022_REDIST%\*.dll" %NATIVE_RUNTIME_DIR%\
 
 
 :END_OF_MSVC_DEPENDENCY

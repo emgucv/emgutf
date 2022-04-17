@@ -2,13 +2,40 @@ REM @echo off
 pushd %~p0
 cd ..\..
 
-IF "%1%"=="64" ECHO "BUILDING 64bit solution" 
-IF "%1%"=="ARM" ECHO "BUILDING ARM solution"
-IF "%1%"=="32" ECHO "BUILDING 32bit solution"
+SET BUILD_FOLDER=build
+IF "%1%"=="32" GOTO ENV_x86
+IF "%1%"=="64" GOTO ENV_x64
+IF "%1%"=="ARM" GOTO ENV_ARM
+IF "%1%"=="ARM64" GOTO ENV_ARM64
 
-SET OS_MODE=
-IF "%1%"=="64" SET OS_MODE= Win64
-IF "%1%"=="ARM" SET OS_MODE= ARM
+GOTO ENV_END
+
+:ENV_x86
+SET BUILD_FOLDER=%BUILD_FOLDER%_x86
+ECHO "BUILDING 32bit solution in %BUILD_FOLDER%"
+IF EXIST "%BUILD_TOOLS_FOLDER%\vc\Auxiliary\Build\vcvars32.bat" SET ENV_SETUP_SCRIPT=%BUILD_TOOLS_FOLDER%\vc\Auxiliary\Build\vcvars32.bat
+GOTO ENV_END
+
+:ENV_x64
+SET BUILD_FOLDER=%BUILD_FOLDER%_x64
+ECHO "BUILDING 64bit solution in %BUILD_FOLDER%" 
+IF EXIST "%BUILD_TOOLS_FOLDER%\vc\Auxiliary\Build\vcvars64.bat" SET ENV_SETUP_SCRIPT=%BUILD_TOOLS_FOLDER%\vc\Auxiliary\Build\vcvars64.bat
+SET OS_MODE= Win64
+GOTO ENV_END
+
+:ENV_ARM
+SET BUILD_FOLDER=%BUILD_FOLDER%_ARM
+ECHO "BUILDING ARM solution in %BUILD_FOLDER%"
+IF EXIST "%BUILD_TOOLS_FOLDER%\vc\Auxiliary\Build\vcvarsamd64_arm.bat" SET ENV_SETUP_SCRIPT=%BUILD_TOOLS_FOLDER%\vc\Auxiliary\Build\vcvarsamd64_arm.bat
+SET OS_MODE= ARM
+GOTO ENV_END
+
+:ENV_ARM64
+SET BUILD_FOLDER=%BUILD_FOLDER%_ARM64
+ECHO "BUILDING ARM64 solution in %BUILD_FOLDER%"
+IF EXIST "%BUILD_TOOLS_FOLDER%\vc\Auxiliary\Build\vcvarsamd64_arm64.bat" SET ENV_SETUP_SCRIPT=%BUILD_TOOLS_FOLDER%\vc\Auxiliary\Build\vcvarsamd64_arm64.bat
+
+:ENV_END
 
 IF "%2%"=="gpu" SET GPU_MODE= -Dtensorflow_ENABLE_GPU=ON ^
 -DCUDNN_HOME="%CUDA_PATH_V9_0:\=/%" ^
@@ -126,8 +153,8 @@ call tensorflow\tensorflow\contrib\cmake\make.bat
 
 cd tensorflow\tensorflow\contrib\cmake
 
-mkdir build
-cd build
+mkdir %BUILD_FOLDER%
+cd %BUILD_FOLDER%
 %CMAKE% .. ^
 -DCMAKE_BUILD_TYPE=Release ^
 -G %CMAKE_CONF% %GPU_MODE%^
