@@ -1,4 +1,14 @@
-#!/bin/bash -v
+#!/bin/bash
+
+SYSTEM_ARCH=$(uname -m)
+echo System is $SYSTEM_ARCH
+
+if [ $SYSTEM_ARCH == "x86_64" ]
+then
+    OUT_FOLDER="runtimes/ubuntu-x64/native"
+fi
+
+echo Output folder is $OUT_FOLDER
 
 cd "$(dirname "$0")"
 cd ../../..
@@ -7,5 +17,7 @@ cd tensorflow
 
 bazel --output_user_root=$BAZEL_TMP_FOLDER build --verbose_failures ${@:1} //tensorflow/tfliteextern:libtfliteextern.so 
 cd ..
-mkdir -p lib/x64
-cp -f tensorflow/bazel-bin/tensorflow/tfliteextern/*.so lib/x64
+mkdir -p lib/${OUT_FOLDER}
+cp -f tensorflow/bazel-bin/tensorflow/tfliteextern/*.so lib/${OUT_FOLDER}
+
+echo Files copied to lib/$OUT_FOLDER

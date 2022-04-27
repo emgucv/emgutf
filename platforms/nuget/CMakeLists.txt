@@ -33,9 +33,7 @@ IF(HAVE_OSX)
   add_subdirectory(Emgu.TF.runtime.macos)
 ENDIF()
 
-IF(HAVE_LINUX_X86_64)
-  add_subdirectory(Emgu.TF.runtime.ubuntu)
-ENDIF()
+add_subdirectory(Emgu.TF.runtime.ubuntu)
   
 IF(HAVE_LINUX_ARM)
   add_subdirectory(Emgu.TF.runtime.debian-arm)

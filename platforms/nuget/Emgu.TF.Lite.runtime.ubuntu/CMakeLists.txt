@@ -2,7 +2,7 @@
 #  Copyright (C) 2004-2022 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-IF (HAVE_LINUX_X86_64_LITE)
+IF (HAVE_UBUNTU_X86_64_LITE)
 
   PROJECT(Emgu.TF.Lite.runtime.ubuntu.nuget)
 

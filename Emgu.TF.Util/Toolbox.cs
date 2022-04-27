@@ -89,10 +89,23 @@ namespace Emgu.TF.Util
             }
             else
             {
-                IntPtr handler = Dlopen(dllname, 0x00102); // 0x00002 == RTLD_NOW, 0x00100 = RTL_GLOBAL
-                if (handler == IntPtr.Zero)
+                IntPtr handler;
+                try
                 {
-                    System.Diagnostics.Trace.WriteLine(String.Format("Failed to use dlopen to load {0}", dllname));
+                    handler = Dlopen(dllname, 0x00102); // 0x00002 == RTLD_NOW, 0x00100 = RTL_GLOBAL
+                    if (handler == IntPtr.Zero)
+                    {
+                        System.Diagnostics.Trace.WriteLine(String.Format("Failed to use dlopen to load {0}", dllname));
+                    }
+                }
+                catch
+                {
+                    System.Diagnostics.Trace.WriteLine(String.Format("Failed to use dlopen from libdl.so to load {0}, will try using libdl.so.2 instead", dllname));
+                    handler = Dlopen2(dllname, 0x00102); // 0x00002 == RTLD_NOW, 0x00100 = RTL_GLOBAL
+                    if (handler == IntPtr.Zero)
+                    {
+                        System.Diagnostics.Trace.WriteLine(String.Format("Failed to use dlopen from libdl.so.2 to load {0}", dllname));
+                    }
                 }
 
                 return handler;
@@ -111,6 +124,11 @@ namespace Emgu.TF.Util
         private static extern IntPtr Dlopen(
             [MarshalAs(UnmanagedType.LPStr)]
             String dllname, int mode);
+
+        [DllImport("libdl.so.2", EntryPoint = "dlopen")]
+        private static extern IntPtr Dlopen2(
+                    [MarshalAs(UnmanagedType.LPStr)]
+                            String dllname, int mode);
 
         /*
         /// <summary>

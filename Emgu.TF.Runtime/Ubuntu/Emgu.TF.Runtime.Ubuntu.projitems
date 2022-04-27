@@ -15,16 +15,16 @@
   <PropertyGroup>
     <EmguTFUbuntuLinkTarget>Ubuntu</EmguTFUbuntuLinkTarget>
     <EmguTFUbuntuBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguTFUbuntuBuildX64>
-    <EmguTFUbuntuNativeFileX64>$(EmguTFUbuntuBinaryDir)\x64\libtfextern.so</EmguTFUbuntuNativeFileX64>
+    <EmguTFUbuntuNativeFileX64>$(EmguTFUbuntuBinaryDir)\runtimes\ubuntu-x64\native\libtfextern.so</EmguTFUbuntuNativeFileX64>
     <EmguTFUbuntuErrorMessage Condition="'$(EmguTFUbuntuBuildX64)'=='True' AND !Exists('$(EmguTFUbuntuNativeFileX64)')">This package do not contain necessary binary for $(EmguTFUbuntuLinkTarget). Ubuntu x64 is targeted, but file $(EmguTFUbuntuNativeFileX64) is missing. PInvoke may fail on Ubuntu x64 platforms</EmguTFUbuntuErrorMessage>
     <EmguTFUbuntuDeployMessage Condition="'$(EmguTFUbuntuBuildX64)'=='True' AND Exists('$(EmguTFUbuntuNativeFileX64)')">$(EmguTFUbuntuDeployMessage)ubuntu_x64 </EmguTFUbuntuDeployMessage>
   </PropertyGroup>
   <ItemGroup Condition="'$(EmguTFUbuntuBuildX64)'=='True' AND Exists('$(EmguTFUbuntuNativeFileX64)')">
-    <Content Include="$(EmguTFUbuntuBinaryDir)\x64\*.so">
+    <Content Include="$(EmguTFUbuntuBinaryDir)\runtimes\ubuntu-x64\native\*.so">
       <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-	<Content Include="$(EmguTFUbuntuBinaryDir)\x64\*.so.*">
+	<Content Include="$(EmguTFUbuntuBinaryDir)\runtimes\ubuntu-x64\native\*.so.*">
       <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

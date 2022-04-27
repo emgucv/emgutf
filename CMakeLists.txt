@@ -124,7 +124,7 @@ IF ( IS_UBUNTU )
   STRING(TOLOWER "${NUGET_NATIVE_PLATFORM_ID_UBUNTU}" NUGET_NATIVE_PLATFORM_ID_UBUNTU)
   MESSAGE(STATUS "NUGET_NATIVE_PLATFORM_ID_UBUNTU: ${NUGET_NATIVE_PLATFORM_ID_UBUNTU}")
 ELSE()
-  SET(NUGET_NATIVE_PLATFORM_ID_UBUNTU "ubuntu.20.04-x64")
+  SET(NUGET_NATIVE_PLATFORM_ID_UBUNTU "ubuntu.22.04-x64")
 ENDIF()
 
 IF (WIN32)
@@ -214,6 +214,8 @@ CHECK_BINARY_EXIST("lib/macos" "libtensorflow_framework.dylib;libtfextern.dylib"
 CHECK_BINARY_EXIST("lib/macos" "libtfliteextern.dylib" HAVE_OSX_LITE OFF)
 CHECK_BINARY_EXIST("lib/x64" "libtfextern.so" HAVE_LINUX_X86_64 OFF)
 CHECK_BINARY_EXIST("lib/x64" "libtfliteextern.so" HAVE_LINUX_X86_64_LITE OFF)
+CHECK_BINARY_EXIST("lib/runtimes/ubuntu-x64/native" "libtfextern.so" HAVE_UBUNTU_X86_64 OFF)
+CHECK_BINARY_EXIST("lib/runtimes/ubuntu-x64/native" "libtfliteextern.so" HAVE_UBUNTU_X86_64_LITE OFF)
 CHECK_BINARY_EXIST("lib/arm" "libtfextern.so" HAVE_LINUX_ARM OFF)
 CHECK_BINARY_EXIST("lib/arm" "libtfliteextern.so" HAVE_LINUX_ARM_LITE OFF)
 CHECK_BINARY_EXIST("lib/arm64" "libtfextern.so" HAVE_LINUX_ARM64 OFF)
@@ -402,13 +404,13 @@ ELSEIF(NOT ("${ANDROID_LITE_LABEL}" STREQUAL ""))
 ENDIF()
 
 SET(HAVE_FULL_BUILD OFF)
-IF(HAVE_ANDROID OR HAVE_OSX OR HAVE_WINDESKTOP_X64 OR HAVE_WINDESKTOP_X64_CUDA OR HAVE_LINUX)
+IF(HAVE_ANDROID OR HAVE_OSX OR HAVE_WINDESKTOP_X64 OR HAVE_WINDESKTOP_X64_CUDA OR HAVE_LINUX OR HAVE_UBUNTU_X86_64)
   SET(HAVE_FULL_BUILD ON)
   MESSAGE(STATUS "Have Tensorflow full build: ${HAVE_FULL_BUILD}")
 ENDIF()
 
 SET(HAVE_LITE_BUILD OFF)
-IF(HAVE_ANDROID_LITE OR HAVE_IOS_LITE OR HAVE_OSX_LITE OR HAVE_WINDESKTOP_LITE OR HAVE_LINUX_LITE)
+IF(HAVE_ANDROID_LITE OR HAVE_IOS_LITE OR HAVE_OSX_LITE OR HAVE_WINDESKTOP_LITE OR HAVE_LINUX_LITE OR HAVE_UBUNTU_X86_64_LITE)
   SET(HAVE_LITE_BUILD ON)
   MESSAGE(STATUS "Have Tensorflow Lite build: ${HAVE_LITE_BUILD}")
 ENDIF()
@@ -607,15 +609,15 @@ IF(HAVE_OSX)
     </dependencies>") 
 ENDIF()
 
-IF(HAVE_LINUX_X86_64)
+IF(HAVE_UBUNTU_X86_64)
   SET(EMGUTF_UBUNTU_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.runtime.${NUGET_NATIVE_PLATFORM_ID_UBUNTU}")
   #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
   #  SET(EMGUTF_UBUNTU_NUGET_ID "${EMGUTF_UBUNTU_NUGET_ID}-CR")  
   #ENDIF()
   SET(EMGUTF_UBUNTU_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Ubuntu")
   SET(EMGUTF_UBUNTU_NUGET_FILE_LIST " 
-    <file src=\"..\\..\\..\\lib\\x64\\*.so\" target=\"runtimes\\${NUGET_NATIVE_PLATFORM_ID_UBUNTU}\\native\" />
-    <file src=\"..\\..\\..\\lib\\x64\\*.so.${TENSORFLOW_VERSION_MAJOR}\" target=\"runtimes\\${NUGET_NATIVE_PLATFORM_ID_UBUNTU}\\native\" />
+    <file src=\"..\\..\\..\\lib\\runtimes\\ubuntu-x64\\native\\*.so\" target=\"runtimes\\ubuntu-x64\\native\" />
+    <file src=\"..\\..\\..\\lib\\runtimes\\ubuntu-x64\\native\\*.so.${TENSORFLOW_VERSION_MAJOR}\" target=\"runtimes\\ubuntu-x64\\native\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
 	#<file src=\"Emgu.TF.runtime.ubuntu.targets\" target=\"build\\${EMGUTF_UBUNTU_NUGET_ID}.targets\" />")
@@ -886,9 +888,9 @@ IF(HAVE_ANDROID_LITE)
 		</group>
     </dependencies>")
 ENDIF()
-IF (HAVE_LINUX_X86_64_LITE)
+IF (HAVE_UBUNTU_X86_64_LITE)
   SET(EMGUTF_LITE_UBUNTU_NUGET_FILE_LIST "${EMGUTF_LITE_UBUNTU_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\..\\lib\\x64\\*.so\" target=\"runtimes\\${NUGET_NATIVE_PLATFORM_ID_UBUNTU}\\native\" />
+    <file src=\"..\\..\\..\\lib\\runtimes\\ubuntu-x64\\native\\*.so\" target=\"runtimes\\runtimes\\ubuntu-x64\\native\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
 	#<file src=\"Emgu.TF.Lite.runtime.ubuntu.targets\" target=\"build\\${EMGUTF_LITE_UBUNTU_NUGET_ID}.targets\" />")
