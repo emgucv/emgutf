@@ -1,9 +1,9 @@
 #!/bin/bash
 
-if [ \( -n "$1" \) -o \( -n "$2" \) ]; then
-    echo "Building with config android_$1 for $2 architecture"
+if [ \( -n "$1" \) ]; then
+    echo "Building with config android_$1"
 else
-    echo "Please specify the android config and architecture to build. e.g. $0 x86 x86; $0 x86_64 x86_64; $0 arm armeabi-v7a; $0 arm64 arm64-v8a;"
+    echo "Please specify the android config and architecture to build. e.g. $0 x86; $0 x86_64; $0 arm; $0 arm64;"
     exit 1
 fi
 
@@ -19,22 +19,7 @@ docker run \
   -v $(pwd):/src/workspace \
   -v /tmp/build_output:/tmp/build_output \
   -v /etc/passwd:/etc/passwd \
-  -w /src/workspace/tensorflow \
-  emgu/bazel-android:dotnet-6.0-bazel-4.2.1 \
-  bazel \
-  --output_user_root=/tmp/build_output \
-  build -c opt \
-      --config=android_$1\
-      --cxxopt='--std=c++14' \
-      --action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk-bundle \
-      --action_env ANDROID_NDK_API_LEVEL=28 \
-      --action_env ANDROID_SDK_API_LEVEL=23 \
-      --action_env ANDROID_SDK_HOME=/usr/lib/android-sdk \
-      --verbose_failures \
-      //tensorflow/tfliteextern:libtfliteextern.so
-
-#      --action_env ANDROID_BUILD_TOOLS_VERSION=debian \
-
-mkdir -p lib/android/$2
-cp -rf tensorflow/bazel-bin/tensorflow/tfliteextern/*.so lib/android/$2
+  -w /src/workspace/platforms/android/ \
+  emgu/bazel-android:dotnet-6.0-bazel-5.0.0-ubuntu-22.04 \
+  ./build_tflite_android $1
 

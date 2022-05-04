@@ -9,8 +9,8 @@ docker run \
   -u="$(id -u)" \
   -v $(pwd):/src/workspace \
   -v /etc/passwd:/etc/passwd \
-  -w /src/workspace \
-  emgu/bazel-android:latest \
-  /bin/bash -c "mkdir -p b; cd b; cmake ..; make; make package"
-   
+  -w /src/workspace/platforms/ubuntu/22.04 \
+  emgu/bazel-android:dotnet-6.0-bazel-5.0.0-ubuntu-22.04 \
+  ./build_emgutf
+
 

@@ -245,7 +245,13 @@ MACRO(MSBUILD_CSPROJ_IN_SOLUTION target solution_file project_name extra_flags)
 	COMMAND ${MAC_FRESH_SHELL_PREFIX} ${MSBUILD_EXECUTABLE} -t:restore /p:Configuration=${DEFAULT_CS_CONFIG} ${extra_flags} ${solution_file}
 	COMMAND ${MAC_FRESH_SHELL_PREFIX} ${MSBUILD_EXECUTABLE} /p:Configuration=${DEFAULT_CS_CONFIG} ${extra_flags} ${solution_file} ${MSBUILD_TARGET_OPTION}
 	COMMENT "Building ${target} with command: ${MSBUILD_EXECUTABLE} /p:Configuration=${DEFAULT_CS_CONFIG} ${extra_flags} ${solution_file} ${MSBUILD_TARGET_OPTION}")
-  ELSE()
+  ELSEIF(DOTNET_EXECUTABLE)
+    ADD_CUSTOM_COMMAND (
+	TARGET ${target}
+	COMMAND ${MAC_FRESH_SHELL_PREFIX} ${DOTNET_EXECUTABLE} msbuild -t:restore /p:Configuration=${DEFAULT_CS_CONFIG} ${extra_flags} ${solution_file}
+	COMMAND ${MAC_FRESH_SHELL_PREFIX} ${DOTNET_EXECUTABLE} msbuild /p:Configuration=${DEFAULT_CS_CONFIG} ${extra_flags} ${solution_file} ${MSBUILD_TARGET_OPTION}
+	COMMENT "Building ${target} with command: ${DOTNET_EXECUTABLE} msbuild /p:Configuration=${DEFAULT_CS_CONFIG} ${extra_flags} ${solution_file} ${MSBUILD_TARGET_OPTION}")
+  ELSE()    
     MESSAGE(FATAL_ERROR "msbuild command is not found!")
   ENDIF()
 ENDMACRO()
