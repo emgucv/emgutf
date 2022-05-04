@@ -89,45 +89,44 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
   ENDIF()
   
   SET(PROTO_SOURCE)
-  FILE(GLOB PROTO_SOURCE_FILES_FRAME_WORK RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/framework/" "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/framework/*.proto")
+  FILE(GLOB PROTO_SOURCE_FILES_FRAME_WORK RELATIVE 
+    "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/framework/" 
+    "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/framework/*.proto")
   FOREACH(PROTO_SOURCE_FILE ${PROTO_SOURCE_FILES_FRAME_WORK} )
     #MESSAGE(STATUS "File: ${PROTO_SOURCE_FILE}")
-    IF(WIN32)
-      LIST(APPEND PROTO_SOURCE "tensorflow\\core\\framework\\${PROTO_SOURCE_FILE}" )
-    ELSE()
-      LIST(APPEND PROTO_SOURCE "tensorflow/core/framework/${PROTO_SOURCE_FILE}" )
-    ENDIF()
+    LIST(APPEND PROTO_SOURCE "tensorflow/core/framework/${PROTO_SOURCE_FILE}" )
   ENDFOREACH()
   
-  FILE(GLOB PROTO_SOURCE_FILES_PROTOBUF RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/protobuf/" "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/protobuf/*.proto")
-  #LIST(REMOVE_ITEM PROTO_SOURCE_FILES_PROTOBUF "meta_graph.proto" "saved_model.proto" "worker.proto" "worker_service.proto")
-  #LIST(REMOVE_ITEM PROTO_SOURCE_FILES_PROTOBUF "saved_model.proto" "worker.proto" "worker_service.proto")
-  LIST(REMOVE_ITEM PROTO_SOURCE_FILES_PROTOBUF "worker.proto" "worker_service.proto")
+  FILE(GLOB PROTO_SOURCE_FILES_PROTOBUF RELATIVE 
+    "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/protobuf/" 
+    "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/protobuf/*.proto")
+  LIST(REMOVE_ITEM PROTO_SOURCE_FILES_PROTOBUF 
+    "worker.proto" 
+    "worker_service.proto")
   FOREACH(PROTO_SOURCE_FILE ${PROTO_SOURCE_FILES_PROTOBUF} )
-    #MESSAGE(STATUS "Protobuf File: ${PROTO_SOURCE_FILE}")
-    IF(WIN32)
-      LIST(APPEND PROTO_SOURCE "tensorflow\\core\\protobuf\\${PROTO_SOURCE_FILE}" )
-    ELSE()
       LIST(APPEND PROTO_SOURCE "tensorflow/core/protobuf/${PROTO_SOURCE_FILE}" )
-    ENDIF()
   ENDFOREACH()
   
-  #FILE(GLOB PROTO_SOURCE_FILES_LIB_CORE RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/lib/core" "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/lib/core/*.proto")
-  #FOREACH(PROTO_SOURCE_FILE ${PROTO_SOURCE_FILES_LIB_CORE} )
-  #  IF(WIN32)
-  #    LIST(APPEND PROTO_SOURCE "tensorflow\\core\\lib\\core\\${PROTO_SOURCE_FILE}" )
-  #  ELSE()
-  #    LIST(APPEND PROTO_SOURCE "tensorflow/core/lib/core/${PROTO_SOURCE_FILE}" )
-  #  ENDIF()
-  #ENDFOREACH()
-  
-  IF(WIN32)
-    LIST(APPEND PROTO_SOURCE "tensorflow\\stream_executor\\dnn.proto" )
-  ELSE()
-    LIST(APPEND PROTO_SOURCE "tensorflow/stream_executor/dnn.proto" )
-  ENDIF()
-  
-  SET(PROTO_GEN_COMMAND "${PROTOC_EXE}" "--proto_path=." "--proto_path=\"${PROTOBUF_INCLUDE_PATH}\""  "--csharp_out=\"${CMAKE_CURRENT_SOURCE_DIR}\"" "--csharp_opt=file_extension=.g.cs" ${PROTO_SOURCE})
+  FILE(GLOB PROTO_SOURCE_FILES_PROTOBUF_TPU RELATIVE 
+    "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/protobuf/tpu" 
+    "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/protobuf/tpu*.proto")
+  FOREACH(PROTO_SOURCE_FILE ${PROTO_SOURCE_FILES_PROTOBUF_TPU} )
+      LIST(APPEND PROTO_SOURCE "tensorflow/core/protobuf/tpu/${PROTO_SOURCE_FILE}" )
+  ENDFOREACH()
+
+  LIST(APPEND PROTO_SOURCE 
+    "tensorflow/stream_executor/dnn.proto"
+    "tensorflow/compiler/xla/xla.proto"
+    "tensorflow/compiler/xla/xla_data.proto"
+    "tensorflow/compiler/xla/service/hlo.proto"
+    "tensorflow/compiler/xla/pjrt/distributed/protocol.proto")
+
+  SET (PROTO_SOURCE_NATIVE_PATH )
+  FOREACH(PROTO_SOURCE_FILE ${PROTO_SOURCE})
+    file(TO_NATIVE_PATH ${PROTO_SOURCE_FILE} PROTO_SOURCE_FILE)
+    LIST(APPEND PROTO_SOURCE_NATIVE_PATH ${PROTO_SOURCE_FILE})
+  ENDFOREACH()
+  SET(PROTO_GEN_COMMAND "${PROTOC_EXE}" "--proto_path=." "--proto_path=\"${PROTOBUF_INCLUDE_PATH}\""  "--csharp_out=\"${CMAKE_CURRENT_SOURCE_DIR}\"" "--csharp_opt=file_extension=.g.cs" ${PROTO_SOURCE_NATIVE_PATH})
   
   #IF(NOT WIN32)
   #  SET(PROTO_GEN_COMMAND mono ${PROTO_GEN_COMMAND})
