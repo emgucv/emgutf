@@ -3,23 +3,23 @@
 # --------------------------------------------------------
 
 IF(HAVE_LITE_BUILD) 
-INSTALL(
-  DIRECTORY
-  ${CMAKE_CURRENT_SOURCE_DIR}
-  DESTINATION .
-  COMPONENT emgutf_source
-  FILES_MATCHING 
-  PATTERN "*.cs"
-  PATTERN "*.projitems"
-  PATTERN "*.shproj"
-  PATTERN "*.csproj"
-  PATTERN ".svn" EXCLUDE
-  PATTERN "obj" EXCLUDE
-  PATTERN "CMakeFiles" EXCLUDE
-  PATTERN "x64" EXCLUDE #exclude build artifacts from Visual Studio build process
-  PATTERN "${PROJECT_NAME}.dir" EXCLUDE
-  )
-
+  INSTALL(
+    DIRECTORY
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    DESTINATION .
+    COMPONENT emgutf_source
+    FILES_MATCHING 
+    PATTERN "*.cs"
+    PATTERN "*.projitems"
+    PATTERN "*.shproj"
+    PATTERN "*.csproj"
+    PATTERN ".svn" EXCLUDE
+    PATTERN "obj" EXCLUDE
+    PATTERN "CMakeFiles" EXCLUDE
+    PATTERN "x64" EXCLUDE #exclude build artifacts from Visual Studio build process
+    PATTERN "${PROJECT_NAME}.dir" EXCLUDE
+    )
+  
   INSTALL(
     DIRECTORY
     ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.Models.Netstandard
@@ -123,7 +123,7 @@ IF(HAVE_IOS_LITE)
 ENDIF()
 
 IF(HAVE_ANDROID_LITE)
-  PROJECT(Emgu.TF.Lite.Models.Android)
+
   INSTALL(
     DIRECTORY
     "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}"
@@ -148,23 +148,26 @@ IF(HAVE_ANDROID_LITE)
     PATTERN "Release" EXCLUDE  
     )
 
-  MSBUILD_CSPROJ_IN_SOLUTION(
-    ${PROJECT_NAME} 
-    "${CMAKE_CURRENT_SOURCE_DIR}/../Solution/Android/Emgu.TF.Lite.Android.sln" 
-    "Emgu.TF.Lite.Models.Android" 
-    "${EXTRA_BUILD_FLAGS}" 
-    ALL)
-
-  IF (EMGU_SIGN_FOUND)
-    EMGU_SIGN_BINARY(${PROJECT_NAME}  ${LIBRARY_OUTPUT_PATH}/android/Emgu.TF.Lite.Models.dll)
+  IF (WIN32 OR APPLE)
+    PROJECT(Emgu.TF.Lite.Models.Android)
+    MSBUILD_CSPROJ_IN_SOLUTION(
+      ${PROJECT_NAME} 
+      "${CMAKE_CURRENT_SOURCE_DIR}/../Solution/Android/Emgu.TF.Lite.Android.sln" 
+      "Emgu.TF.Lite.Models.Android" 
+      "${EXTRA_BUILD_FLAGS}" 
+      ALL)
+    
+    IF (EMGU_SIGN_FOUND)
+      EMGU_SIGN_BINARY(${PROJECT_NAME}  ${LIBRARY_OUTPUT_PATH}/android/Emgu.TF.Lite.Models.dll)
+    ENDIF()
+    
+    INSTALL(
+      FILES 
+      ${LIBRARY_OUTPUT_PATH}/android/Emgu.TF.Lite.Models.xml
+      ${LIBRARY_OUTPUT_PATH}/android/Emgu.TF.Lite.Models.dll 
+      DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
+      COMPONENT emgutf_binary)
+    
+    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Netstandard)
   ENDIF()
-  
-  INSTALL(
-    FILES 
-    ${LIBRARY_OUTPUT_PATH}/android/Emgu.TF.Lite.Models.xml
-    ${LIBRARY_OUTPUT_PATH}/android/Emgu.TF.Lite.Models.dll 
-    DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
-    COMPONENT emgutf_binary)
-  
-  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Netstandard)
 ENDIF()
