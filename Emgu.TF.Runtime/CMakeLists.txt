@@ -2,50 +2,6 @@
 #  Copyright (C) 2004-2022 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-
-IF(WIN32 OR APPLE)
-  INSTALL(
-    DIRECTORY
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    DESTINATION .
-    COMPONENT emgutf_source
-    FILES_MATCHING 
-    
-    PATTERN "*.cs"
-    PATTERN "*.resx"
-    PATTERN ".svn" EXCLUDE
-    PATTERN "obj" EXCLUDE
-    PATTERN "CMakeFiles" EXCLUDE
-    PATTERN "${PROJECT_NAME}.dir" EXCLUDE
-    )
-ENDIF()  
-
-IF(HAVE_IOS_LITE)
-  #APPLE IOS
-  INSTALL(
-    DIRECTORY
-    ${CMAKE_CURRENT_SOURCE_DIR}/ios
-    DESTINATION Emgu.TF.Runtime
-    COMPONENT emgutf_source
-    FILES_MATCHING 
-    PATTERN "Emgu.TF.Lite.Runtime.iOS.csproj"
-    PATTERN ".svn" EXCLUDE
-    PATTERN "obj" EXCLUDE
-    PATTERN "CMakeFiles" EXCLUDE
-    PATTERN "${PROJECT_NAME}.dir" EXCLUDE
-    )
-  IF(APPLE)
-    PROJECT(Emgu.TF.Lite.Runtime.iOS)
-    BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/ios/${PROJECT_NAME}.csproj" "" ALL)
-    INSTALL(
-      FILES 
-      ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.xml
-      ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll 
-      DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
-      COMPONENT emgutf_binary)
-  ENDIF()	
-ENDIF()
-
 IF(HAVE_FULL_BUILD)
   #MacOS
   INSTALL(
@@ -68,22 +24,22 @@ IF(HAVE_FULL_BUILD)
     DESTINATION Emgu.TF.Runtime
     COMPONENT emgutf_source
     FILES_MATCHING 
-	PATTERN "Emgu.TF.Runtime.Windows.shproj"
-	PATTERN "Emgu.TF.Runtime.Windows.projitems"
+    PATTERN "Emgu.TF.Runtime.Windows.shproj"
+    PATTERN "Emgu.TF.Runtime.Windows.projitems"
     PATTERN ".svn" EXCLUDE
     PATTERN "obj" EXCLUDE
     PATTERN "CMakeFiles" EXCLUDE
     PATTERN "${PROJECT_NAME}.dir" EXCLUDE
     )
-	
+  
   INSTALL(
     DIRECTORY
     ${CMAKE_CURRENT_SOURCE_DIR}/Ubuntu
     DESTINATION Emgu.TF.Runtime
     COMPONENT emgutf_source
     FILES_MATCHING 
-	PATTERN "Emgu.TF.Runtime.Ubuntu.shproj"
-	PATTERN "Emgu.TF.Runtime.Ubuntu.projitems"
+    PATTERN "Emgu.TF.Runtime.Ubuntu.shproj"
+    PATTERN "Emgu.TF.Runtime.Ubuntu.projitems"
     PATTERN ".svn" EXCLUDE
     PATTERN "obj" EXCLUDE
     PATTERN "CMakeFiles" EXCLUDE
@@ -96,8 +52,8 @@ IF(HAVE_FULL_BUILD)
     DESTINATION Emgu.TF.Runtime
     COMPONENT emgutf_source
     FILES_MATCHING 
-	PATTERN "Emgu.TF.Runtime.Debian.shproj"
-	PATTERN "Emgu.TF.Runtime.Debian.projitems"
+    PATTERN "Emgu.TF.Runtime.Debian.shproj"
+    PATTERN "Emgu.TF.Runtime.Debian.projitems"
     PATTERN ".svn" EXCLUDE
     PATTERN "obj" EXCLUDE
     PATTERN "CMakeFiles" EXCLUDE
@@ -106,35 +62,37 @@ IF(HAVE_FULL_BUILD)
 ENDIF()
 
 IF(HAVE_ANDROID)
-  PROJECT(Emgu.TF.Runtime.Android)
   INSTALL(
     DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/Android
     DESTINATION Emgu.TF.Runtime
     COMPONENT emgutf_source
     FILES_MATCHING 
-    PATTERN "${PROJECT_NAME}.csproj"
+    PATTERN "Emgu.TF.Runtime.Android.csproj"
+    PATTERN "TfInvoke*"
     PATTERN ".svn" EXCLUDE
     PATTERN "obj" EXCLUDE
     PATTERN "CMakeFiles" EXCLUDE
     PATTERN "${PROJECT_NAME}.dir" EXCLUDE
     )
-  MSBUILD_CSPROJ_IN_SOLUTION(
-    ${PROJECT_NAME} 
-    "${CMAKE_CURRENT_SOURCE_DIR}/../Solution/Android/Emgu.TF.Android.sln" 
-    ${PROJECT_NAME}
-    "${EXTRA_BUILD_FLAGS}" 
-    ALL)
-  #BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/Android/${PROJECT_NAME}.csproj" "${EXTRA_BUILD_FLAGS}" ALL)
-  #ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
-#	PRE_BUILD
-#	COMMAND ${DOTNET_EXECUTABLE} restore ${PROJECT_NAME}.csproj
-#	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/Android")
-  INSTALL(
-    FILES 
-    ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.xml
-    ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll 
-    DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
-    COMPONENT emgutf_binary)
+  IF(APPLE OR WIN32)
+    PROJECT(Emgu.TF.Runtime.Android)
+    MSBUILD_CSPROJ_IN_SOLUTION(
+      ${PROJECT_NAME} 
+      "${CMAKE_CURRENT_SOURCE_DIR}/../Solution/Android/Emgu.TF.Android.sln" 
+      ${PROJECT_NAME}
+      "${EXTRA_BUILD_FLAGS}" 
+      ALL)
+    IF (EMGU_SIGN_FOUND AND WIN32)
+      EMGU_SIGN_BINARY(${PROJECT_NAME} ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll )
+    ENDIF()
+
+    INSTALL(
+      FILES 
+      ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.xml
+      ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll 
+      DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
+      COMPONENT emgutf_binary)
+  ENDIF()
 ENDIF()
 
 IF(HAVE_LITE_BUILD)
@@ -144,8 +102,8 @@ IF(HAVE_LITE_BUILD)
     DESTINATION Emgu.TF.Runtime
     COMPONENT emgutf_source
     FILES_MATCHING 
-	PATTERN "Emgu.TF.Lite.Runtime.Mac.shproj"
-	PATTERN "Emgu.TF.Lite.Runtime.Mac.projitems"
+    PATTERN "Emgu.TF.Lite.Runtime.Mac.shproj"
+    PATTERN "Emgu.TF.Lite.Runtime.Mac.projitems"
     PATTERN ".svn" EXCLUDE
     PATTERN "obj" EXCLUDE
     PATTERN "CMakeFiles" EXCLUDE
@@ -157,8 +115,8 @@ IF(HAVE_LITE_BUILD)
     DESTINATION Emgu.TF.Runtime
     COMPONENT emgutf_source
     FILES_MATCHING 
-	PATTERN "Emgu.TF.Lite.Runtime.Windows.shproj"
-	PATTERN "Emgu.TF.Lite.Runtime.Windows.projitems"
+    PATTERN "Emgu.TF.Lite.Runtime.Windows.shproj"
+    PATTERN "Emgu.TF.Lite.Runtime.Windows.projitems"
     PATTERN ".svn" EXCLUDE
     PATTERN "obj" EXCLUDE
     PATTERN "CMakeFiles" EXCLUDE
@@ -170,20 +128,8 @@ IF(HAVE_LITE_BUILD)
     DESTINATION Emgu.TF.Runtime
     COMPONENT emgutf_source
     FILES_MATCHING 
-	PATTERN "Emgu.TF.Lite.Runtime.Ubuntu.shproj"
-	PATTERN "Emgu.TF.Lite.Runtime.Ubuntu.projitems"
-    PATTERN ".svn" EXCLUDE
-    PATTERN "obj" EXCLUDE
-    PATTERN "CMakeFiles" EXCLUDE
-    PATTERN "${PROJECT_NAME}.dir" EXCLUDE
-    )
-  INSTALL(
-    DIRECTORY
-    ${CMAKE_CURRENT_SOURCE_DIR}/Android
-    DESTINATION Emgu.TF.Runtime
-    COMPONENT emgutf_source
-    FILES_MATCHING 
-    PATTERN "Emgu.TF.Lite.Runtime.Android.csproj"
+    PATTERN "Emgu.TF.Lite.Runtime.Ubuntu.shproj"
+    PATTERN "Emgu.TF.Lite.Runtime.Ubuntu.projitems"
     PATTERN ".svn" EXCLUDE
     PATTERN "obj" EXCLUDE
     PATTERN "CMakeFiles" EXCLUDE
@@ -195,8 +141,8 @@ IF(HAVE_LITE_BUILD)
     DESTINATION Emgu.TF.Runtime
     COMPONENT emgutf_source
     FILES_MATCHING 
-	PATTERN "Emgu.TF.Lite.Runtime.Debian.shproj"
-	PATTERN "Emgu.TF.Lite.Runtime.Debian.projitems"
+    PATTERN "Emgu.TF.Lite.Runtime.Debian.shproj"
+    PATTERN "Emgu.TF.Lite.Runtime.Debian.projitems"
     PATTERN ".svn" EXCLUDE
     PATTERN "obj" EXCLUDE
     PATTERN "CMakeFiles" EXCLUDE
@@ -204,24 +150,63 @@ IF(HAVE_LITE_BUILD)
     )
 ENDIF()
 
-IF(HAVE_ANDROID_LITE)
-  PROJECT(Emgu.TF.Lite.Runtime.Android)
-  #BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/Android/${PROJECT_NAME}.csproj" "${EXTRA_BUILD_FLAGS}" ALL)
-  #ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
-#	PRE_BUILD
-#	COMMAND ${DOTNET_EXECUTABLE} restore ${PROJECT_NAME}.csproj
-#	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/Android"
-#	COMMENT "Restoring nuget packages")
-  MSBUILD_CSPROJ_IN_SOLUTION(
-    ${PROJECT_NAME} 
-    "${CMAKE_CURRENT_SOURCE_DIR}/../Solution/Android/Emgu.TF.Lite.Android.sln" 
-    ${PROJECT_NAME}
-    "${EXTRA_BUILD_FLAGS}" 
-    ALL)
+IF(HAVE_IOS_LITE)
+  #APPLE IOS
   INSTALL(
-    FILES 
-    ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.xml
-    ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll 
-    DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
-    COMPONENT emgutf_binary)
+    DIRECTORY
+    ${CMAKE_CURRENT_SOURCE_DIR}/ios
+    DESTINATION Emgu.TF.Runtime
+    COMPONENT emgutf_source
+    FILES_MATCHING 
+    PATTERN "Emgu.TF.Lite.Runtime.iOS.csproj"
+    PATTERN "*.cs"
+    PATTERN ".svn" EXCLUDE
+    PATTERN "obj" EXCLUDE
+    PATTERN "CMakeFiles" EXCLUDE
+    PATTERN "${PROJECT_NAME}.dir" EXCLUDE
+    )
+  IF(APPLE)
+    PROJECT(Emgu.TF.Lite.Runtime.iOS)
+    BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/ios/${PROJECT_NAME}.csproj" "" ALL)
+    INSTALL(
+      FILES 
+      ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.xml
+      ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll 
+      DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
+      COMPONENT emgutf_binary)
+  ENDIF()	
+ENDIF()
+
+IF(HAVE_ANDROID_LITE)
+  INSTALL(
+    DIRECTORY
+    ${CMAKE_CURRENT_SOURCE_DIR}/Android
+    DESTINATION Emgu.TF.Runtime
+    COMPONENT emgutf_source
+    FILES_MATCHING 
+    PATTERN "Emgu.TF.Lite.Runtime.Android.csproj"
+    PATTERN "TfLite*.cs"
+    PATTERN ".svn" EXCLUDE
+    PATTERN "obj" EXCLUDE
+    PATTERN "CMakeFiles" EXCLUDE
+    PATTERN "${PROJECT_NAME}.dir" EXCLUDE
+    )
+  IF (WIN32 OR APPLE)
+    PROJECT(Emgu.TF.Lite.Runtime.Android)
+    MSBUILD_CSPROJ_IN_SOLUTION(
+      ${PROJECT_NAME} 
+      "${CMAKE_CURRENT_SOURCE_DIR}/../Solution/Android/Emgu.TF.Lite.Android.sln" 
+      ${PROJECT_NAME}
+      "${EXTRA_BUILD_FLAGS}" 
+      ALL)
+    IF (EMGU_SIGN_FOUND AND WIN32)
+      EMGU_SIGN_BINARY(${PROJECT_NAME} ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll )
+    ENDIF()
+    INSTALL(
+      FILES 
+      ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.xml
+      ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll 
+      DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
+      COMPONENT emgutf_binary)
+  ENDIF()
 ENDIF()
