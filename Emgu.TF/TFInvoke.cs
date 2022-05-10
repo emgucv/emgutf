@@ -112,6 +112,10 @@ namespace Emgu.TF
                 }
                 else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
                 {
+                    String existingDllDirectory = Emgu.TF.Util.Toolbox.GetDllDirectory();
+                    if (existingDllDirectory != null)
+                        subfolderOptions.Add(existingDllDirectory);
+
                     switch (RuntimeInformation.ProcessArchitecture)
                     {
                         case Architecture.X86:
@@ -348,8 +352,9 @@ namespace Emgu.TF
         /// Attempts to load tensorflow modules from the specific location
         /// </summary>
         /// <param name="modules">The names of tensorflow modules.</param>
+        /// <param name="loadDirectory">The path to load the opencv modules. If null, will use the default path.</param>
         /// <returns>True if all the modules has been loaded successfully</returns>
-        public static bool DefaultLoadUnmanagedModules(String[] modules)
+        public static bool DefaultLoadUnmanagedModules(String[] modules, String loadDirectory = null)
         {
             bool libraryLoaded = true;
 
@@ -367,11 +372,20 @@ namespace Emgu.TF
                         {
                             try
                             {
-                                Trace.WriteLine(string.Format("Trying to load {0} ({1} bit).", module,
+                                String fullModulePath;
+                                if (loadDirectory != null)
+                                {
+                                    fullModulePath = Path.Combine(loadDirectory, module);
+                                }
+                                else
+                                {
+                                    fullModulePath = module;
+                                }
+                                Trace.WriteLine(string.Format("Trying to load {0} ({1} bit).", fullModulePath,
                                     IntPtr.Size * 8));
-                                loadLibraryMethodInfo.Invoke(null, new object[] { module });
+                                loadLibraryMethodInfo.Invoke(null, new object[] { fullModulePath });
                                 //Java.Lang.JavaSystem.LoadLibrary(module);
-                                Trace.WriteLine(string.Format("Loaded {0}.", module));
+                                Trace.WriteLine(string.Format("Loaded {0}.", fullModulePath));
                             }
                             catch (Exception e)
                             {
@@ -391,7 +405,7 @@ namespace Emgu.TF
                 //for (int i = 0; i < modules.Length; ++i)
                 //    modules[i] = String.Format(formatString, modules[i]);
 
-                libraryLoaded &= LoadUnmanagedModules(null, modules);
+                libraryLoaded &= LoadUnmanagedModules(loadDirectory, modules);
             }
             return libraryLoaded;
         }
