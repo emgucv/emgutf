@@ -21,7 +21,7 @@
     <EmguTFDebianDeployMessage Condition="'$(EmguTFDebianBuildArm)'=='True' AND Exists('$(EmguTFDebianNativeFileArm)')">$(EmguTFDebianDeployMessage)Debian_arm </EmguTFDebianDeployMessage>
 	-->
     <EmguTFDebianBuildArm64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='ARM64'">True</EmguTFDebianBuildArm64>
-    <EmguTFDebianNativeFileArm64>$(EmguTFDebianBinaryDir)\arm64\libtfextern.so</EmguTFDebianNativeFileArm64>
+    <EmguTFDebianNativeFileArm64>$(EmguTFDebianBinaryDir)\runtimes\linux-arm64\native\libtfextern.so</EmguTFDebianNativeFileArm64>
     <EmguTFDebianErrorMessage Condition="'$(EmguTFDebianBuildArm64)'=='True' AND !Exists('$(EmguTFDebianNativeFileArm64)')">This package do not contain necessary binary for $(EmguTFDebianLinkTarget). Debian arm64 is targeted, but file $(EmguTFDebianNativeFileArm64) is missing. PInvoke may fail on Debian arm64 platforms</EmguTFDebianErrorMessage>
     <EmguTFDebianDeployMessage Condition="'$(EmguTFDebianBuildArm64)'=='True' AND Exists('$(EmguTFDebianNativeFileArm64)')">$(EmguTFDebianDeployMessage)Debian_arm64 </EmguTFDebianDeployMessage>
   </PropertyGroup>
@@ -34,7 +34,7 @@
   </ItemGroup>
   -->
   <ItemGroup Condition="'$(EmguTFDebianBuildArm64)'=='True' AND Exists('$(EmguTFDebianNativeFileArm64)')">
-    <Content Include="$(EmguTFDebianBinaryDir)\arm64\*.so">
+    <Content Include="$(EmguTFDebianBinaryDir)\runtimes\linux-arm64\native\*.so">
       <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -5,9 +5,9 @@ echo System is $SYSTEM_ARCH bit
 
 if [ $SYSTEM_ARCH == "64" ]
 then
-    OUT_FOLDER="arm64"
+    OUT_FOLDER="runtimes/linux-arm64/native"
 else
-    OUT_FOLDER="arm"
+    OUT_FOLDER="runtimes/linux-arm/native"
 fi
 echo Compiled binary will be copied to lib/$OUT_FOLDER
 

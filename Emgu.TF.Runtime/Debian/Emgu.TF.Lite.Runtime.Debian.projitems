@@ -15,23 +15,23 @@
         <EmguTFLiteDebianLinkTarget>Debian</EmguTFLiteDebianLinkTarget>
 		
         <EmguTFLiteDebianBuildArm Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='ARM'">True</EmguTFLiteDebianBuildArm>
-        <EmguTFLiteDebianNativeFileArm>$(TFLiteBinaryDir)\arm\libtfliteextern.so</EmguTFLiteDebianNativeFileArm>
+        <EmguTFLiteDebianNativeFileArm>$(TFLiteBinaryDir)\runtimes\linux-arm\native\libtfliteextern.so</EmguTFLiteDebianNativeFileArm>
         <EmguTFLiteDebianErrorMessage Condition="'$(EmguTFLiteDebianBuildArm)'=='True' AND !Exists('$(EmguTFLiteDebianNativeFileArm)')">This package do not contain necessary binary for $(EmguTFLiteDebianLinkTarget). Debian_arm is targeted, but file $(EmguTFLiteDebianNativeFileArm) is missing. PInvoke may fail on Debian arm platform.</EmguTFLiteDebianErrorMessage>
         <EmguTFLiteDebianDeployMessage Condition="'$(EmguTFLiteDebianBuildArm)'=='True' AND Exists('$(EmguTFLiteDebianNativeFileArm)')">$(EmguTFLiteDebianDeployMessage)Debian_arm </EmguTFLiteDebianDeployMessage>
 		
 		<EmguTFLiteDebianBuildArm64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='ARM64'">True</EmguTFLiteDebianBuildArm64>
-        <EmguTFLiteDebianNativeFileArm64>$(TFLiteBinaryDir)\arm64\libtfliteextern.so</EmguTFLiteDebianNativeFileArm64>
+        <EmguTFLiteDebianNativeFileArm64>$(TFLiteBinaryDir)\runtimes\linux-arm64\native\libtfliteextern.so</EmguTFLiteDebianNativeFileArm64>
         <EmguTFLiteDebianErrorMessage Condition="'$(EmguTFLiteDebianBuildArm64)'=='True' AND !Exists('$(EmguTFLiteDebianNativeFileArm64)')">This package do not contain necessary binary for $(EmguTFLiteDebianLinkTarget). Debian_arm64 is targeted, but file $(EmguTFLiteDebianNativeFileArm64) is missing. PInvoke may fail on Debian arm64 platform.</EmguTFLiteDebianErrorMessage>
         <EmguTFLiteDebianDeployMessage Condition="'$(EmguTFLiteDebianBuildArm64)'=='True' AND Exists('$(EmguTFLiteDebianNativeFileArm64)')">$(EmguTFLiteDebianDeployMessage)Debian_arm64 </EmguTFLiteDebianDeployMessage>
       </PropertyGroup>
       <ItemGroup Condition="'$(EmguTFLiteDebianBuildArm)'=='True' AND Exists('$(EmguTFLiteDebianNativeFileArm)')">
-        <Content Include="$(TFLiteBinaryDir)\arm\*.so">
+        <Content Include="$(TFLiteBinaryDir)\runtimes\linux-arm\native\*.so">
           <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
       </ItemGroup>
 	  <ItemGroup Condition="'$(EmguTFLiteDebianBuildArm64)'=='True' AND Exists('$(EmguTFLiteDebianNativeFileArm64)')">
-        <Content Include="$(TFLiteBinaryDir)\arm64\*.so">
+        <Content Include="$(TFLiteBinaryDir)\runtimes\linux-arm64\native\*.so">
           <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>

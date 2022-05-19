@@ -5,11 +5,11 @@ echo System is $SYSTEM_ARCH bit
 
 if [ $SYSTEM_ARCH == "64" ]
 then
-    OUT_FOLDER="arm64"
+    OUT_FOLDER="runtimes/linux-arm64/native"
     BAZEL_XNN_FLAGS=ON
     JOB_COUNT=2
 else
-    OUT_FOLDER="arm"
+    OUT_FOLDER="runtimes/linux-arm/native"
     BAZEL_XNN_FLAGS=OFF
     JOB_COUNT=1
 fi
