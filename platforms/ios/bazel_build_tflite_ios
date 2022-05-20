@@ -5,26 +5,30 @@ cd ../../
 mkdir -p lib/ios
 cd tensorflow
 
+#check for x86_64 version of python3 from homebew
 if test -f "/usr/local/bin/python3"; then
     if test -d "/usr/local/lib/python3.9/site-packages"; then
-	export PYTHON_BIN_PATH="/usr/local/bin/python3"
-	export PYTHON_LIB_PATH="/usr/local/lib/python3.9/site-packages"
+        export PYTHON_BIN_PATH="/usr/local/bin/python3"
+        export PYTHON_LIB_PATH="/usr/local/lib/python3.9/site-packages"
     fi
 fi
 
+#check for arm64 version of python3, if it is available, use this instead.
 if test -f "/opt/homebrew/bin/python3"; then
     if test -d "/opt/homebrew/lib/python3.9/site-packages"; then
-	export PYTHON_BIN_PATH="/opt/homebrew/bin/python3"
-	export PYTHON_LIB_PATH="/opt/homebrew/lib/python3.9/site-packages"
+        export PYTHON_BIN_PATH="/opt/homebrew/bin/python3"
+        export PYTHON_LIB_PATH="/opt/homebrew/lib/python3.9/site-packages"
     fi
 fi
 
-if test -f "/usr/bin/python3"; then
-    if test -d "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/Current/lib/python3.8/site-packages"; then
-	export PYTHON_BIN_PATH="/usr/bin/python3"
-	export PYTHON_LIB_PATH="/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/Current/lib/python3.8/site-packages"
-    fi
-fi
+#The python3 comes with Xcode seems to have issues when compiling for tflite using bazel, will disable it now.
+
+#if test -f "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/Current/bin/python3"; then
+#    if test -d "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/Current/lib/python3.8/site-packages"; then
+        export PYTHON_BIN_PATH="/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/Current/bin/python3"
+        export PYTHON_LIB_PATH="/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/Current/lib/python3.8/site-packages"
+#    fi
+#fi
 
 echo PYTHON_BIN_PATH=$PYTHON_BIN_PATH
 echo PYTHON_LIB_PATH=$PYTHON_LIB_PATH
