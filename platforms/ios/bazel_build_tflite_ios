@@ -25,8 +25,8 @@ fi
 
 #if test -f "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/Current/bin/python3"; then
 #    if test -d "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/Current/lib/python3.8/site-packages"; then
-        export PYTHON_BIN_PATH="/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/Current/bin/python3"
-        export PYTHON_LIB_PATH="/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/Current/lib/python3.8/site-packages"
+#        export PYTHON_BIN_PATH="/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/Current/bin/python3"
+#        export PYTHON_LIB_PATH="/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/Current/lib/python3.8/site-packages"
 #    fi
 #fi
 
