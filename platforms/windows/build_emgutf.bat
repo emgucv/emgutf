@@ -8,9 +8,9 @@ cd ..\..
 REM SET TF_TYPE=FULL
 REM IF "%1%"=="lite" SET TF_TYPE=LITE
 
-IF EXIST "lib\x86\tfliteextern.dll" SET HAS_TF_LITE=Y
-IF EXIST "lib\x64\tfliteextern.dll" SET HAS_TF_LITE=Y
-IF EXIST "lib\x64\tfextern.dll" SET HAS_TF_FULL=Y
+IF EXIST "lib\runtimes\win-x86\native\tfliteextern.dll" SET HAS_TF_LITE=Y
+IF EXIST "lib\runtimes\win-x64\native\tfliteextern.dll" SET HAS_TF_LITE=Y
+IF EXIST "lib\runtimes\win-x64\native\tfextern.dll" SET HAS_TF_FULL=Y
 
 IF "%2%"=="64" ECHO "BUILDING 64bit solution" 
 IF "%2%"=="ARM" ECHO "BUILDING ARM solution"
@@ -46,11 +46,15 @@ SET VS2017="%VS2017_DIR%\Common7\IDE\devenv.com"
 FOR /F "tokens=* USEBACKQ" %%F IN (`miscellaneous\vswhere.exe -version [16.0^,17.0^) -property installationPath`) DO SET VS2019_DIR=%%F
 SET VS2019="%VS2019_DIR%\Common7\IDE\devenv.com"
 
+FOR /F "tokens=* USEBACKQ" %%F IN (`miscellaneous\vswhere.exe -version [17.0^,18.0^) -property installationPath`) DO SET VS2022_DIR=%%F
+SET VS2022=%VS2022_DIR%\Common7\IDE\devenv.com
+
 IF EXIST "%BUILD_TOOLS_FOLDER%\MSBuild\Current\Bin\MSBuild.exe" SET MSBUILD_BUILDTOOLS=%BUILD_TOOLS_FOLDER%\MSBuild\Current\Bin\MSBuild.exe
 
 
-IF EXIST %VS2017% SET DEVENV=%VS2017%
-IF EXIST %VS2019% SET DEVENV=%VS2019%
+IF EXIST "%VS2017%" SET DEVENV=%VS2017%
+IF EXIST "%VS2019%" SET DEVENV=%VS2019%
+IF EXIST "%VS2022%" SET DEVENV=%VS2022%
 IF EXIST "%MSBUILD_BUILDTOOLS%" SET DEVENV="%MSBUILD_BUILDTOOLS%"
 
 
@@ -58,10 +62,12 @@ IF EXIST "%MSBUILD_BUILDTOOLS%" SET DEVENV="%MSBUILD_BUILDTOOLS%"
 
 IF %DEVENV%==%VS2017% SET BUILD_TYPE=/Build Release
 IF %DEVENV%==%VS2019% SET BUILD_TYPE=/Build Release
+IF %DEVENV%==%VS2022% SET BUILD_TYPE=/Build Release
 IF %DEVENV%=="%MSBUILD_BUILDTOOLS%" SET BUILD_TYPE=/property:Configuration=Release
 
 IF %DEVENV%==%VS2017% SET CMAKE_CONF="Visual Studio 15%OS_MODE%"
 IF %DEVENV%==%VS2019% SET CMAKE_CONF="Visual Studio 16" %BUILD_ARCH%
+IF %DEVENV%==%VS2022% SET CMAKE_CONF="Visual Studio 17" %BUILD_ARCH%
 
 IF %DEVENV%=="%MSBUILD_BUILDTOOLS%" SET CMAKE_CONF="Visual Studio 16" %BUILD_ARCH%
 
