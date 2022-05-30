@@ -637,7 +637,7 @@ IF (HAVE_LINUX_ARM OR HAVE_LINUX_ARM64)
     SET(EMGUTF_DEBIAN_ARM_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.runtime.debian-arm")
     SET(EMGUTF_DEBIAN_ARM_NUGET_TITLE "Native ARM runtime of Emgu TF for Debian (including Raspberry Pi OS)")		
     SET(EMGUTF_DEBIAN_ARM_NUGET_FILE_LIST " 
-    <file src=\"..\\..\\..\\lib\\arm\\*.so\" target=\"runtimes\\${NUGET_NATIVE_PLATFORM_ID_DEBIAN_ARM}\\native\" />
+    <file src=\"..\\..\\..\\lib\\runtimes\\linux-arm\\native\\*.so\" target=\"runtimes\\${NUGET_NATIVE_PLATFORM_ID_DEBIAN_ARM}\\native\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
   ENDIF()
@@ -646,7 +646,7 @@ IF (HAVE_LINUX_ARM OR HAVE_LINUX_ARM64)
     SET(EMGUTF_DEBIAN_ARM64_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.runtime.debian-arm64")
     SET(EMGUTF_DEBIAN_ARM64_NUGET_TITLE "Native ARM64 runtime of Emgu TF for Debian (including Raspberry Pi OS)")		
     SET(EMGUTF_DEBIAN_ARM64_NUGET_FILE_LIST " 
-    <file src=\"..\\..\\..\\lib\\arm64\\*.so\" target=\"runtimes\\${NUGET_NATIVE_PLATFORM_ID_DEBIAN_ARM64}\\native\" />
+    <file src=\"..\\..\\..\\lib\\runtimes\\linux-arm64\\native\\*.so\" target=\"runtimes\\${NUGET_NATIVE_PLATFORM_ID_DEBIAN_ARM64}\\native\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
   ENDIF()
