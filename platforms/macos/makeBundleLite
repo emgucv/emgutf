@@ -4,7 +4,7 @@ rm -rf tfliteextern.bundle
 mkdir -p tfliteextern.bundle/Contents/MacOS
 mkdir -p tfliteextern.bundle/Contents/Resources
 
-cp ../../lib/macos/libtfliteextern.dylib tfliteextern.bundle/Contents/MacOS/
+cp ../../lib/runtimes/osx/native/libtfliteextern.dylib tfliteextern.bundle/Contents/MacOS/
 chmod u+w tfliteextern.bundle/Contents/MacOS/libtfliteextern.dylib
 
 cp Info.lite.plist tfliteextern.bundle/Contents/Info.plist

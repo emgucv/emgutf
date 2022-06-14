@@ -9,16 +9,16 @@ else
 fi    
 cd "$(dirname "$0")"
 cd ../../
-mkdir -p lib/macos
+mkdir -p lib/runtimes/osx/native
 cd tensorflow
 bazel build --verbose_failures -c opt --cpu=$BAZEL_CPU --cxxopt='--std=c++14' $BAZEL_OPTIONS //tensorflow/tfliteextern:libtfliteextern.so
-cp -f bazel-bin/tensorflow/tfliteextern/libtfliteextern.so ../lib/macos/libtfliteextern.dylib
+cp -f bazel-bin/tensorflow/tfliteextern/libtfliteextern.so ../lib/runtimes/osx/native/libtfliteextern.dylib
 
 cd ..
 
-chmod u+w lib/macos/libtfliteextern.dylib
-install_name_tool -id @rpath/libtfliteextern.dylib lib/macos/libtfliteextern.dylib
+chmod u+w lib/runtimes/osx/native/libtfliteextern.dylib
+install_name_tool -id @rpath/libtfliteextern.dylib lib/runtimes/osx/native/libtfliteextern.dylib
 #install_name_tool -change @rpath/libtensorflow_framework.so @rpath/libtensorflow_framework.dylib lib/osx/libtfextern.dylib
-chmod u-w lib/macos/libtfliteextern.dylib
+chmod u-w lib/runtimes/osx/native/libtfliteextern.dylib
 
 
