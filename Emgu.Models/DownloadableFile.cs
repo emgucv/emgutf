@@ -157,7 +157,8 @@ namespace Emgu.Models
 #if  UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
             return System.IO.Path.Combine(UnityEngine.Application.persistentDataPath, _localSubfolder, fileName);
 #else
-            String personalFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            //String personalFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            String appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             return Path.Combine(personalFolder, _localSubfolder, fileName);
 #endif
         }
