@@ -159,7 +159,7 @@ namespace Emgu.Models
 #else
             //String personalFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             String appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            return Path.Combine(personalFolder, _localSubfolder, fileName);
+            return Path.Combine(appDataFolder, _localSubfolder, fileName);
 #endif
         }
     }
