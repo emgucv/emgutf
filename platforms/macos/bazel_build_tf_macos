@@ -8,21 +8,21 @@ tensorflow/tools/ci_build/osx/libtensorflow_cpu.sh
 bazel build //tensorflow/tfextern:libtfextern.so
 
 cd ..
-mkdir -p lib/macos
-cp -f tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so lib/macos/libtfextern.dylib
-chmod u+w lib/macos/libtfextern.dylib
-install_name_tool -change @rpath/libtfextern.so @rpath/libtfextern.dylib lib/macos/libtfextern.dylib
-install_name_tool -id @rpath/libtfextern.dylib lib/macos/libtfextern.dylib
-chmod u-w lib/macos/libtfextern.dylib
+mkdir -p lib/runtimes/osx/native
+cp -f tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so lib/runtimes/osx/native/libtfextern.dylib
+chmod u+w lib/runtimes/osx/native/libtfextern.dylib
+install_name_tool -change @rpath/libtfextern.so @rpath/libtfextern.dylib lib/runtimes/osx/native/libtfextern.dylib
+install_name_tool -id @rpath/libtfextern.dylib lib/runtimes/osx/native/libtfextern.dylib
+chmod u-w lib/runtimes/osx/native/libtfextern.dylib
 
 if [ -f tensorflow/bazel-bin/tensorflow/libtensorflow_framework.dylib ]
 then
-  cp -fL tensorflow/bazel-bin/tensorflow/libtensorflow_framework.dylib lib/macos/libtensorflow_framework.dylib
-  chmod u+w lib/macos/libtensorflow_framework.dylib
-  install_name_tool -id @rpath/libtensorflow_framework.dylib lib/macos/libtensorflow_framework.dylib
-  chmod u-w lib/macos/libtensorflow_framework.dylib
-  chmod u+w lib/macos/libtfextern.dylib
-  install_name_tool -change @rpath/libtensorflow_framework.2.dylib @rpath/libtensorflow_framework.dylib lib/macos/libtfextern.dylib
-  chmod u-w lib/macos/libtfextern.dylib
+  cp -fL tensorflow/bazel-bin/tensorflow/libtensorflow_framework.dylib lib/runtimes/osx/native/libtensorflow_framework.dylib
+  chmod u+w lib/runtimes/osx/native/libtensorflow_framework.dylib
+  install_name_tool -id @rpath/libtensorflow_framework.dylib lib/runtimes/osx/native/libtensorflow_framework.dylib
+  chmod u-w lib/runtimes/osx/native/libtensorflow_framework.dylib
+  chmod u+w lib/runtimes/osx/native/libtfextern.dylib
+  install_name_tool -change @rpath/libtensorflow_framework.2.dylib @rpath/libtensorflow_framework.dylib lib/runtimes/osx/native/libtfextern.dylib
+  chmod u-w lib/runtimes/osx/native/libtfextern.dylib
 fi
 
