@@ -108,6 +108,11 @@ IF(HAVE_IOS_LITE)
     PATTERN "x86" EXCLUDE #exclude build artifacts from Visual Studio build process
     PATTERN "${PROJECT_NAME}.dir" EXCLUDE
     )
+	
+  #IF (EMGU_SIGN_FOUND)
+  #  EMGU_SIGN_BINARY(${PROJECT_NAME} ${LIBRARY_OUTPUT_PATH}/ios/Emgu.TF.Lite.Models.dll)
+  #ENDIF()
+  
   INSTALL(
     FILES 
     ${LIBRARY_OUTPUT_PATH}/ios/Emgu.TF.Lite.Models.xml
