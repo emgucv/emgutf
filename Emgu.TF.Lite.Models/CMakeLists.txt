@@ -108,6 +108,11 @@ IF(HAVE_IOS_LITE)
     PATTERN "x86" EXCLUDE #exclude build artifacts from Visual Studio build process
     PATTERN "${PROJECT_NAME}.dir" EXCLUDE
     )
+	
+  #IF (EMGU_SIGN_FOUND)
+  #  EMGU_SIGN_BINARY(${PROJECT_NAME} ${LIBRARY_OUTPUT_PATH}/ios/Emgu.TF.Lite.Models.dll)
+  #ENDIF()
+  
   INSTALL(
     FILES 
     ${LIBRARY_OUTPUT_PATH}/ios/Emgu.TF.Lite.Models.xml
@@ -126,8 +131,8 @@ IF(HAVE_ANDROID_LITE)
 
   INSTALL(
     DIRECTORY
-    "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}"
-    DESTINATION Emgu.TF.Lite.Models/${PROJECT_NAME}/
+    "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.Models.Android"
+    DESTINATION Emgu.TF.Lite.Models/Emgu.TF.Lite.Models.Android/
     COMPONENT emgutf_source
     FILES_MATCHING 
     PATTERN "*.cs"
@@ -145,7 +150,8 @@ IF(HAVE_ANDROID_LITE)
     PATTERN "*.json"
     PATTERN ".git" EXCLUDE
     PATTERN "Debug" EXCLUDE
-    PATTERN "Release" EXCLUDE  
+    PATTERN "Release" EXCLUDE 
+    PATTERN "obj" EXCLUDE
     )
 
   IF (WIN32 OR APPLE)

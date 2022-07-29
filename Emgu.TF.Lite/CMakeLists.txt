@@ -84,13 +84,13 @@ IF (DOTNET_FOUND)
   BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj" "" ALL)
   
   IF (EMGU_SIGN_FOUND)
-    EMGU_SIGN_BINARY(${PROJECT_NAME} ${LIBRARY_OUTPUT_PATH}/iOS/Emgu.TF.Lite.Netstandard.dll)
+    EMGU_SIGN_BINARY(${PROJECT_NAME} ${LIBRARY_OUTPUT_PATH}/ios/Emgu.TF.Lite.Netstandard.dll)
   ENDIF()
 
   INSTALL(
     FILES 
-    ${LIBRARY_OUTPUT_PATH}/iOS/Emgu.TF.Lite.Netstandard.xml
-    ${LIBRARY_OUTPUT_PATH}/iOS/Emgu.TF.Lite.Netstandard.dll 
+    ${LIBRARY_OUTPUT_PATH}/ios/Emgu.TF.Lite.Netstandard.xml
+    ${LIBRARY_OUTPUT_PATH}/ios/Emgu.TF.Lite.Netstandard.dll 
     DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
     COMPONENT emgutf_binary)
 ENDIF()
