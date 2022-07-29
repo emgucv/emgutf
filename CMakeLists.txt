@@ -599,7 +599,7 @@ IF(HAVE_OSX)
   #ENDIF()
   SET(EMGUTF_MACOS_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for MacOS")	
   SET(EMGUTF_MACOS_NUGET_FILE_LIST " 
-    <file src=\"..\\..\\..\\lib\\macos\\*.dylib\" target=\"runtimes\\osx\\native\" />
+    <file src=\"..\\..\\..\\lib\\runtimes\\osx\\native\\*.dylib\" target=\"runtimes\\osx\\native\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
 	#<file src=\"Emgu.TF.runtime.macos.targets\" target=\"build\\${EMGUTF_MACOS_NUGET_ID}.targets\" />")
@@ -864,7 +864,7 @@ ENDIF()
 
 IF( HAVE_OSX_LITE ) 
   SET(EMGUTF_LITE_MACOS_NUGET_FILE_LIST "${EMGUTF_LITE_MACOS_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\..\\lib\\macos\\*.dylib\" target=\"runtimes\\osx\\native\" />
+    <file src=\"..\\..\\..\\lib\\runtimes\\osx\\native\\*.dylib\" target=\"runtimes\\osx\\native\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />")
 	#<file src=\"Emgu.TF.Lite.runtime.macos.targets\" target=\"build\\${EMGUTF_LITE_MACOS_NUGET_ID}.targets\" />")
