@@ -11,7 +11,7 @@ cd "$(dirname "$0")"
 cd ../../
 mkdir -p lib/runtimes/osx/native
 cd tensorflow
-bazel build --verbose_failures -c opt --cpu=$BAZEL_CPU --cxxopt='--std=c++14' $BAZEL_OPTIONS //tensorflow/tfliteextern:libtfliteextern.so
+bazel build --verbose_failures -c opt --cpu=$BAZEL_CPU $BAZEL_OPTIONS //tensorflow/tfliteextern:libtfliteextern.so
 cp -f bazel-bin/tensorflow/tfliteextern/libtfliteextern.so ../lib/runtimes/osx/native/libtfliteextern-$BAZEL_CPU.dylib
 
 cd ..
