@@ -668,11 +668,8 @@ IF(HAVE_LITE_BUILD)
   #ENDIF()
   SET(EMGUTF_LITE_WINDOWS_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Windows")	
   
-  SET(EMGUTF_LITE_MACOS_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.mac")
-  #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
-  #  SET(EMGUTF_LITE_MACOS_NUGET_ID "${EMGUTF_LITE_MACOS_NUGET_ID}-CR")  
-  #ENDIF()
-  SET(EMGUTF_LITE_MACOS_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for MacOS")	
+  SET(EMGUTF_LITE_XAMARIN_MACOS_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.xamarin.macos")
+  SET(EMGUTF_LITE_XAMARIN_MACOS_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Xamarin Mac OS")	
   
   SET(EMGUTF_LITE_UBUNTU_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.${NUGET_NATIVE_PLATFORM_ID_UBUNTU}") 
   #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
@@ -863,12 +860,12 @@ IF( HAVE_WINDESKTOP_LITE )
 ENDIF()
 
 IF( HAVE_OSX_LITE ) 
-  SET(EMGUTF_LITE_MACOS_NUGET_FILE_LIST "${EMGUTF_LITE_MACOS_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\..\\lib\\runtimes\\osx\\native\\*.dylib\" target=\"runtimes\\osx\\native\" />
+  SET(EMGUTF_LITE_XAMARIN_MACOS_NUGET_FILE_LIST "${EMGUTF_LITE_XAMARIN_MACOS_NUGET_FILE_LIST} 
+    <file src=\"..\\..\\..\\lib\\runtimes\\osx\\native\\libtfliteextern.dylib\" target=\"runtimes\\osx\\native\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />")
 	#<file src=\"Emgu.TF.Lite.runtime.macos.targets\" target=\"build\\${EMGUTF_LITE_MACOS_NUGET_ID}.targets\" />")
-  SET(EMGUTF_LITE_MACOS_NUGET_DEPENDENCY "${EMGUTF_LITE_MACOS_NUGET_DEPENDENCY}
+  SET(EMGUTF_LITE_XAMARIN_MACOS_NUGET_DEPENDENCY "${EMGUTF_LITE_XAMARIN_MACOS_NUGET_DEPENDENCY}
     <dependencies>
 		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
     </dependencies>")	
