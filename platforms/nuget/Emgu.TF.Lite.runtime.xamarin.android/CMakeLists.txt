@@ -3,9 +3,9 @@
 # --------------------------------------------------------
 
 IF ( HAVE_ANDROID_LITE )
-  IF (TARGET Emgu.TF.Lite.Runtime.Android)
+  IF (TARGET Emgu.TF.Lite.Platform.Xamarin.Android)
     
-    PROJECT(Emgu.TF.Lite.runtime.android.nuget)
+    PROJECT(Emgu.TF.Lite.runtime.xamarin.android.nuget)
     
     get_filename_component(NUGET_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
     BUILD_NUGET_PACKAGE(
@@ -19,7 +19,7 @@ IF ( HAVE_ANDROID_LITE )
       EMGU_SIGN_NUGET(${PROJECT_NAME} "${NUGET_OUTPUT_DIR}/${EMGUTF_LITE_ANDROID_NUGET_ID}.${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}.nupkg")
     ENDIF()
     
-    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Runtime.Android Emgu.TF.Lite.nuget)
+    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Platform.Xamarin.Android Emgu.TF.Lite.nuget)
     
     if(ENABLE_SOLUTION_FOLDERS)
       set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "NUGET")

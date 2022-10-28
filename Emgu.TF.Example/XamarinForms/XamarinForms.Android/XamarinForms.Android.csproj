@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
     <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
     <AndroidLinkMode>None</AndroidLinkMode>
-    <AndroidSupportedAbis>x86_64;arm64-v8a</AndroidSupportedAbis>
+    <AndroidSupportedAbis>x86;x86_64;arm64-v8a</AndroidSupportedAbis>
     <AotAssemblies>false</AotAssemblies>
     <EnableLLVM>false</EnableLLVM>
     <BundleAssemblies>false</BundleAssemblies>
@@ -469,13 +469,13 @@
       <Project>{65e850a1-d9b6-4999-9bb6-bbf586ce2b0b}</Project>
       <Name>Emgu.TF.Models.Android</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Emgu.TF.Platform\Xamarin\Android\Emgu.TF.Platform.Xamarin.Android.csproj">
+      <Project>{b2f6d900-aa34-49d2-98ee-3c9f8dd896f2}</Project>
+      <Name>Emgu.TF.Platform.Xamarin.Android</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Netstandard\Emgu.TF.Protobuf.Netstandard.csproj">
       <Project>{f6f7c7bc-1ea0-4623-966c-bcd3fc7b8d88}</Project>
       <Name>Emgu.TF.Protobuf.Netstandard</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Emgu.TF.Runtime\Android\Emgu.TF.Runtime.Android.csproj">
-      <Project>{b2f6d900-aa34-49d2-98ee-3c9f8dd896f2}</Project>
-      <Name>Emgu.TF.Runtime.Android</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj">
       <Project>{c096e7e5-ab7f-4255-b4fc-d6fbe96cbfdf}</Project>

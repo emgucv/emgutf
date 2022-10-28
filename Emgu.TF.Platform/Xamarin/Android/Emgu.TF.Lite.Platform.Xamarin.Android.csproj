@@ -11,7 +11,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Emgu.TF.Lite</RootNamespace>
-    <AssemblyName>Emgu.TF.Lite.Runtime.Android</AssemblyName>
+    <AssemblyName>Emgu.TF.Lite.Platform.Xamarin.Android</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
@@ -19,11 +19,15 @@
     <TargetFrameworkVersion>v11.0</TargetFrameworkVersion>
     <AndroidUseAapt2>true</AndroidUseAapt2>
   </PropertyGroup>
+  <PropertyGroup>
+    <TFLiteBinaryDir>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\..\lib))</TFLiteBinaryDir>
+    <EmguTFLiteDir>$(MSBuildThisFileDirectory)</EmguTFLiteDir>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>portable</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\lib\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>$(TFLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -32,15 +36,11 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>portable</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\lib\Build\$(AssemblyName)\.$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>$(TFLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <TFLiteBinaryDir>$(MSBuildThisFileDirectory)..\..\lib</TFLiteBinaryDir>
-    <EmguTFLiteDir>$(MSBuildThisFileDirectory)</EmguTFLiteDir>
   </PropertyGroup>
   <PropertyGroup>
     <EmguTFLiteLinkTarget Condition="('$(AndroidApplication)'=='True' OR '$(AndroidApplication)'=='true')">Xamarin Android App</EmguTFLiteLinkTarget>
@@ -133,13 +133,13 @@
     <Folder Include="Resources\values\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\CommonAssemblyInfo.cs">
+    <Compile Include="..\..\..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="TfLiteInvokeAndroid.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.Netstandard.csproj">
+    <ProjectReference Include="..\..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.Netstandard.csproj">
       <Project>{fdab1bd5-2bc7-4839-83a6-3dcd6e8c4b5a}</Project>
       <Name>Emgu.TF.Lite.Netstandard</Name>
     </ProjectReference>

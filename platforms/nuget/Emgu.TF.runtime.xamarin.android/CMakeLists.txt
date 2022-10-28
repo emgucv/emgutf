@@ -3,8 +3,8 @@
 # --------------------------------------------------------
 
 IF ( HAVE_ANDROID )
-  IF (TARGET Emgu.TF.Runtime.Android)
-    PROJECT(Emgu.TF.runtime.android.nuget)
+  IF (TARGET Emgu.TF.Platform.Xamarin.Android)
+    PROJECT(Emgu.TF.runtime.xamarin.android.nuget)
     
     get_filename_component(NUGET_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
     
@@ -20,7 +20,7 @@ IF ( HAVE_ANDROID )
       EMGU_SIGN_NUGET(${PROJECT_NAME} "${NUGET_OUTPUT_DIR}/${EMGUTF_ANDROID_NUGET_ID}.${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}.nupkg")
     ENDIF()
     
-    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Runtime.Android Emgu.TF.nuget)
+    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Platform.Xamarin.Android Emgu.TF.nuget)
     
     if(ENABLE_SOLUTION_FOLDERS)
       set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "NUGET")

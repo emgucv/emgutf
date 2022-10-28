@@ -26,7 +26,7 @@ IF (WIN32 AND HAVE_WINDESKTOP)
 ENDIF()
 
 IF (HAVE_ANDROID)
-  add_subdirectory(Emgu.TF.runtime.android)
+  add_subdirectory(Emgu.TF.runtime.xamarin.android)
 ENDIF()
 
 IF(HAVE_OSX)
@@ -66,7 +66,7 @@ IF(HAVE_OSX_LITE)
 ENDIF()
 
 IF ( HAVE_ANDROID_LITE )
-  add_subdirectory(Emgu.TF.Lite.runtime.android)
+  add_subdirectory(Emgu.TF.Lite.runtime.xamarin.android)
 ENDIF()
 
 IF ( HAVE_IOS_LITE )

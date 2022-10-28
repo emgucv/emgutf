@@ -7,11 +7,11 @@
     <ProjectTypeGuids>{8FFB629D-F513-41CE-95D2-7ECE97B6EEEC};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <RootNamespace>Emgu.TF.Lite</RootNamespace>
-    <AssemblyName>Emgu.TF.Lite.Runtime.iOS</AssemblyName>
+    <AssemblyName>Emgu.TF.Lite.Platform.Xamarin.iOS</AssemblyName>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
   </PropertyGroup>
   <PropertyGroup>
-    <TFLiteBinaryDir>$(MSBuildThisFileDirectory)..\..\lib</TFLiteBinaryDir>
+    <TFLiteBinaryDir>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\..\lib))</TFLiteBinaryDir>
     <EmguTFLiteDir>$(MSBuildThisFileDirectory)</EmguTFLiteDir>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -86,7 +86,7 @@
     <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard.IOS\Emgu.TF.Lite.Netstandard.IOS.csproj">
+    <ProjectReference Include="..\..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard.IOS\Emgu.TF.Lite.Netstandard.IOS.csproj">
       <Project>{f167aea1-eba9-4164-b944-5ca6c8bc1914}</Project>
       <Name>Emgu.TF.Lite.Netstandard.IOS</Name>
     </ProjectReference>
