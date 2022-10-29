@@ -18,7 +18,7 @@
     <EmguTFMacNativeFile2>$(EmguTFMacBinaryDir)\libtensorflow_framework.dylib</EmguTFMacNativeFile2>
     <EmguTFMacErrorMessage Condition="!Exists('$(EmguTFMacNativeFile)')">This package do not contain necessary binary for $(EmguTFMacLinkTarget). Missing $(EmguTFMacNativeFile). PInvoke may fail on Mac OS.</EmguTFMacErrorMessage>
 	<EmguTFMacErrorMessage2 Condition="!Exists('$(EmguTFMacNativeFile2)')">This package do not contain necessary binary for $(EmguTFMacLinkTarget). Missing $(EmguTFMacNativeFile2). PInvoke may fail on Mac OS.</EmguTFMacErrorMessage2>
-    <EmguTFMacDeployMessage Condition="Exists('$(EmguTFMacNativeFile)')">$(EmguTFMacDeployMessage)MacOS x64 </EmguTFMacDeployMessage>
+    <EmguTFMacDeployMessage Condition="Exists('$(EmguTFMacNativeFile)')">$(EmguTFMacDeployMessage)MacOS </EmguTFMacDeployMessage>
   </PropertyGroup>
   <ItemGroup Condition="Exists('$(EmguTFMacNativeFile)')">
     <Content Include="$(EmguTFMacNativeFile)">
@@ -36,7 +36,7 @@
     <!-- <Message Condition="'$(EmguTFMacLinkTarget)'!=''" Text="Emgu.TF.Runtime.Mac shared project compiling against $(EmguTFMacLinkTarget)" Importance="High" /> -->
     <Warning Text="'$(EmguTFMacErrorMessage)'" Condition="'$(EmguTFMacErrorMessage)'!=''" />
 	<Warning Text="'$(EmguTFMacErrorMessage2)'" Condition="'$(EmguTFMacErrorMessage2)'!=''" />
-    <Message Text="Emgu.TF.Runtime.Mac Compiling with $(EmguTFMacDeployMessage)binary" Condition="'$(EmguTFMacDeployMessage)'!=''" Importance="High" />
+    <Message Text="Emgu TF Compiling with $(EmguTFMacDeployMessage)binary" Condition="'$(EmguTFMacDeployMessage)'!=''" Importance="High" />
     <Message Text="Native binary is NOT deployed by the Emgu.TF.Runtime.Mac shared project." Condition="'$(EmguTFMacDeployMessage)'==''" Importance="High" />
   </Target>
 </Project>

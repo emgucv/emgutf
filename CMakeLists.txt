@@ -433,7 +433,7 @@ SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Emgu TF is a cross platform .Net wrapper 
 SET(FULL_BUILD_LABEL "")
 IF(HAVE_FULL_BUILD)
   SET(FULL_BUILD_LABEL "${ANDROID_LABEL}${WINDOWS_LABEL}${OSX_LABEL}")
-  IF("${FULL_BUILD_LABEL}" STREQUAL "-android-windesktop_x64_mkl-macos")
+  IF( ("${FULL_BUILD_LABEL}" STREQUAL "-android-windesktop_x64_mkl-macos") OR ("${FULL_BUILD_LABEL}" STREQUAL "-android-windesktop_x64-macos"))
     SET(FULL_BUILD_LABEL "-pro")
   ENDIF()
   SET(FULL_BUILD_LABEL "tf${FULL_BUILD_LABEL}")
