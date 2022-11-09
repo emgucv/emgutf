@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Netstandard", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Lite.Models.Android", "..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Android\Emgu.TF.Lite.Models.Android.csproj", "{B8C8535C-D4B3-49E3-82E7-8C16F607D624}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Lite.Runtime.Android", "..\..\Emgu.TF.Runtime\Android\Emgu.TF.Lite.Runtime.Android.csproj", "{D11AA8F3-DEF2-4F40-A4E5-FB8A8938DDB7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Lite.Platform.Xamarin.Android", "..\..\Emgu.TF.Platform\Xamarin\Android\Emgu.TF.Lite.Platform.Xamarin.Android.csproj", "{D11AA8F3-DEF2-4F40-A4E5-FB8A8938DDB7}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
