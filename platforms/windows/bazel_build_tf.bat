@@ -108,7 +108,8 @@ cd tensorflow\tensorflow\tools\ci_build\windows
 SET MSYS64_PATH=c:\msys64
 SET MSYS64_BIN=%MSYS64_PATH%\usr\bin
 
-SET TF_BAZEL_EXTRA_CONFIG=--jobs=1
+SET TF_BAZEL_EXTRA_CONFIG=
+REM SET TF_BAZEL_EXTRA_CONFIG=--jobs=1
 
 IF "%3%" == "mkl" GOTO BUILD_WITH_MKL
 GOTO END_MKL
