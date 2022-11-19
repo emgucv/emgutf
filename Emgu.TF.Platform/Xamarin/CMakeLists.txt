@@ -70,3 +70,29 @@ IF(HAVE_ANDROID)
       COMPONENT emgutf_binary)
   ENDIF()
 ENDIF()
+
+IF(HAVE_IOS_LITE)
+  #APPLE IOS
+  INSTALL(
+    DIRECTORY
+    ${CMAKE_CURRENT_SOURCE_DIR}/iOS
+    DESTINATION Emgu.TF.Platform/Xamarin
+    COMPONENT emgutf_source
+    FILES_MATCHING 
+    PATTERN "Emgu.TF.Lite.Platform.Xamarin.iOS.csproj"
+    PATTERN "*.cs"
+    PATTERN ".svn" EXCLUDE
+    PATTERN "obj" EXCLUDE
+    PATTERN "CMakeFiles" EXCLUDE
+    )
+  IF(APPLE)
+    PROJECT(Emgu.TF.Lite.Platform.Xamarin.iOS)
+    BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/iOS/${PROJECT_NAME}.csproj" "" ALL)
+    INSTALL(
+      FILES 
+      ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.xml
+      ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll 
+      DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
+      COMPONENT emgutf_binary)
+  ENDIF()	
+ENDIF()
