@@ -102,7 +102,13 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
     "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/protobuf/*.proto")
   LIST(REMOVE_ITEM PROTO_SOURCE_FILES_PROTOBUF 
     "worker.proto" 
-    "worker_service.proto")
+    "master.proto"
+    "queue_runner.proto"
+    "replay_log.proto"
+    "worker_service.proto"
+    "master_service.proto"
+    "error_codes.proto"
+  )
   FOREACH(PROTO_SOURCE_FILE ${PROTO_SOURCE_FILES_PROTOBUF} )
       LIST(APPEND PROTO_SOURCE "tensorflow/core/protobuf/${PROTO_SOURCE_FILE}" )
   ENDFOREACH()
@@ -115,7 +121,9 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
   ENDFOREACH()
 
   LIST(APPEND PROTO_SOURCE 
-    "tensorflow/stream_executor/dnn.proto"
+    "tensorflow/tsl/protobuf/error_codes.proto"
+    "tensorflow/tsl/protobuf/histogram.proto"
+    "tensorflow/compiler/xla/stream_executor/dnn.proto"
     "tensorflow/compiler/xla/xla.proto"
     "tensorflow/compiler/xla/xla_data.proto"
     "tensorflow/compiler/xla/service/hlo.proto"
@@ -146,6 +154,24 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
     COMMENT "PROTO_GEN_COMMAND: ${PROTO_GEN_COMMAND}"
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/"
     )
+
+
+#  LIST(APPEND PROTO_SOURCE_2 
+#    "tensorflow/tsl/protobuf/error_codes.proto")
+#  SET (PROTO_SOURCE_NATIVE_PATH_2 )
+#  FOREACH(PROTO_SOURCE_FILE_2 ${PROTO_SOURCE_2})
+#    file(TO_NATIVE_PATH ${PROTO_SOURCE_FILE_2} PROTO_SOURCE_FILE_2)
+#    LIST(APPEND PROTO_SOURCE_NATIVE_PATH_2 ${PROTO_SOURCE_FILE_2})
+#  ENDFOREACH()
+#  SET(PROTO_GEN_COMMAND_2 "${PROTOC_EXE}" "--proto_path=." "--proto_path=\"${PROTOBUF_INCLUDE_PATH}\""  "--csharp_out=\"${CMAKE_CURRENT_SOURCE_DIR}\"" "--csharp_opt=file_extension=.2.g.cs" ${PROTO_SOURCE_NATIVE_PATH})
+#  
+#  ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
+#    PRE_BUILD
+#    COMMAND ${PROTO_GEN_COMMAND_2}
+#    COMMENT "PROTO_GEN_COMMAND_2: ${PROTO_GEN_COMMAND_2}"
+#    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/"
+#    )
+
   
   IF (EMGU_SIGN_FOUND)
     EMGU_SIGN_BINARY(${PROJECT_NAME} ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll )
