@@ -24,7 +24,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Protobuf" Version="3.19.1" />
+    <PackageReference Include="Google.Protobuf" Version="3.21.9" />
   </ItemGroup>
 
   <ItemGroup>
