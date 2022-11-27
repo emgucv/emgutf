@@ -118,30 +118,30 @@ IF(HAVE_LITE_BUILD)
     )
 ENDIF()
 
-IF(HAVE_IOS_LITE)
-  #APPLE IOS
-  INSTALL(
-    DIRECTORY
-    ${CMAKE_CURRENT_SOURCE_DIR}/ios
-    DESTINATION Emgu.TF.Runtime
-    COMPONENT emgutf_source
-    FILES_MATCHING 
-    PATTERN "Emgu.TF.Lite.Runtime.iOS.csproj"
-    PATTERN "*.cs"
-    PATTERN ".svn" EXCLUDE
-    PATTERN "obj" EXCLUDE
-    PATTERN "CMakeFiles" EXCLUDE
-    PATTERN "${PROJECT_NAME}.dir" EXCLUDE
-    )
-  IF(APPLE)
-    PROJECT(Emgu.TF.Lite.Runtime.iOS)
-    BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/ios/${PROJECT_NAME}.csproj" "" ALL)
-    INSTALL(
-      FILES 
-      ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.xml
-      ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll 
-      DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
-      COMPONENT emgutf_binary)
-  ENDIF()	
-ENDIF()
+#IF(HAVE_IOS_LITE)
+#  #APPLE IOS
+#  INSTALL(
+#    DIRECTORY
+#    ${CMAKE_CURRENT_SOURCE_DIR}/ios
+#    DESTINATION Emgu.TF.Runtime
+#    COMPONENT emgutf_source
+#    FILES_MATCHING 
+#    PATTERN "Emgu.TF.Lite.Runtime.iOS.csproj"
+#    PATTERN "*.cs"
+#    PATTERN ".svn" EXCLUDE
+#    PATTERN "obj" EXCLUDE
+#    PATTERN "CMakeFiles" EXCLUDE
+#    PATTERN "${PROJECT_NAME}.dir" EXCLUDE
+#    )
+#  IF(APPLE)
+#    PROJECT(Emgu.TF.Lite.Runtime.iOS)
+#    BUILD_CSPROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/ios/${PROJECT_NAME}.csproj" "" ALL)
+#    INSTALL(
+#      FILES 
+#      ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.xml
+#      ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll 
+#      DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
+#      COMPONENT emgutf_binary)
+#  ENDIF()	
+#ENDIF()
 

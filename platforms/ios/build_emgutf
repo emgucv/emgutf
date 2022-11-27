@@ -2,4 +2,6 @@
 
 cd "$(dirname "$0")"
 cd ../../
-cmake . -DCMAKE_BUILD_TYPE=Release 
+mkdir -p build_ios
+cd build_ios
+cmake .. -DCMAKE_BUILD_TYPE=Release 
