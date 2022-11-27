@@ -4,7 +4,7 @@
 
 IF ( HAVE_IOS_LITE )
 
-PROJECT(Emgu.TF.Lite.runtime.ios.nuget)
+PROJECT(Emgu.TF.Lite.runtime.xamarin.ios.nuget)
 
   get_filename_component(NUGET_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
 
