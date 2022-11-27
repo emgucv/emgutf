@@ -70,7 +70,7 @@ IF ( HAVE_ANDROID_LITE )
 ENDIF()
 
 IF ( HAVE_IOS_LITE )
-  add_subdirectory(Emgu.TF.Lite.runtime.ios)
+  add_subdirectory(Emgu.TF.Lite.runtime.xamarin.ios)
 ENDIF()
 
 add_subdirectory(Emgu.TF.Lite.runtime.ubuntu)
