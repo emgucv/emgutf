@@ -680,13 +680,13 @@ IF(HAVE_LITE_BUILD)
   
 
 
-  SET(EMGUTF_LITE_ANDROID_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.android")  
+  SET(EMGUTF_LITE_XAMARIN_ANDROID_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.xamarin.android")  
   #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
   #  SET(EMGUTF_LITE_ANDROID_NUGET_ID "${EMGUTF_LITE_ANDROID_NUGET_ID}-CR")  
   #ENDIF()
-  SET(EMGUTF_LITE_ANDROID_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Android")	
+  SET(EMGUTF_LITE_XAMARIN_ANDROID_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Xamarin Android")	
   
-  SET(EMGUTF_LITE_XAMARIN_IOS_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.xamarin.runtime.ios")  
+  SET(EMGUTF_LITE_XAMARIN_IOS_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.xamarin.ios")  
   SET(EMGUTF_LITE_XAMARIN_IOS_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Xamarin iOS")	
 
   SET(EMGUTF_LITE_MODEL_NUGET_TITLE "Emgu TF Lite Models")
@@ -868,13 +868,13 @@ IF (HAVE_IOS_LITE)
 	<file src=\"readme.txt\" target=\"\" />")
 ENDIF()
 IF(HAVE_ANDROID_LITE)
-  SET(EMGUTF_LITE_ANDROID_NUGET_FILE_LIST "${EMGUTF_LITE_ANDROID_NUGET_FILE_LIST}
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Runtime.Android.dll\" target=\"lib\\MonoAndroid10\" />
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Runtime.Android.xml\" target=\"lib\\MonoAndroid10\" />
+  SET(EMGUTF_LITE_XAMARIN_ANDROID_NUGET_FILE_LIST "${EMGUTF_LITE_XAMARIN_ANDROID_NUGET_FILE_LIST}
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Xamarin.Runtime.Android.dll\" target=\"lib\\MonoAndroid10\" />
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Xamarin.Runtime.Android.xml\" target=\"lib\\MonoAndroid10\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
 	<file src=\"readme.txt\" target=\"\" />")
-  SET(EMGUTF_LITE_ANDROID_NUGET_DEPENDENCY "${EMGUTF_LITE_ANDROID_NUGET_DEPENDENCY}
+  SET(EMGUTF_LITE_ANDROID_NUGET_DEPENDENCY "${EMGUTF_LITE_XAMARIN_ANDROID_NUGET_DEPENDENCY}
     <dependencies>
 	    <group targetFramework=\"MonoAndroid1.0\">
 		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
@@ -1276,7 +1276,7 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.Models.Package.nus
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.windows.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.windows/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.windows.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.windows/README.md)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.macos.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.macos/Package.nuspec)
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.android.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.android/Package.nuspec)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.xamarin.android.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.xamarin.android/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.xamarin.ios.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.xamarin.ios/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.ubuntu.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.ubuntu/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.ubuntu.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.runtime.ubuntu/Package.nuspec)
