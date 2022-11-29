@@ -869,8 +869,8 @@ IF (HAVE_IOS_LITE)
 ENDIF()
 IF(HAVE_ANDROID_LITE)
   SET(EMGUTF_LITE_XAMARIN_ANDROID_NUGET_FILE_LIST "${EMGUTF_LITE_XAMARIN_ANDROID_NUGET_FILE_LIST}
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Xamarin.Runtime.Android.dll\" target=\"lib\\MonoAndroid10\" />
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Xamarin.Runtime.Android.xml\" target=\"lib\\MonoAndroid10\" />
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Platform.Xamarin.Runtime.Android.dll\" target=\"lib\\MonoAndroid10\" />
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Platform.Xamarin.Runtime.Android.xml\" target=\"lib\\MonoAndroid10\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
 	<file src=\"readme.txt\" target=\"\" />")
