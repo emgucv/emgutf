@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>${EMGUTF_LITE_ANDROID_NUGET_ID}</id>
-	<title>${EMGUTF_LITE_ANDROID_NUGET_TITLE}</title>
+    <id>${EMGUTF_LITE_XAMARIN_ANDROID_NUGET_ID}</id>
+	<title>${EMGUTF_LITE_XAMARIN_ANDROID_NUGET_TITLE}</title>
     <version>${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}</version>
     <authors>${CPACK_PACKAGE_VENDOR}</authors>
     <owners>${CPACK_PACKAGE_VENDOR}</owners>
@@ -13,7 +13,7 @@
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
 	<summary>Runtime package of Emgu TF Lite for Android</summary>
     <description>This package contains the native runtime of Emgu TF Lite for Android</description>
-    <releaseNotes>This is the ${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX} release of Emgu TF Lite for Android. For online documentation please visit
+    <releaseNotes>This is the ${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX} release of Emgu TF Lite for Xamarin Android. For online documentation please visit
 http://www.emgu.com/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}/document-lite/</releaseNotes>
 	${EMGUTF_LITE_XAMARIN_ANDROID_NUGET_DEPENDENCY}
     <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved.</copyright>
