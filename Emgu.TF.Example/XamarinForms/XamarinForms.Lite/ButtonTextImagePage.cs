@@ -217,7 +217,7 @@ namespace Emgu.TF.XamarinForms
                         Android.App.Application.Context, 
                         imageNames[i], 
                         "tmp",
-                        Emgu.TF.Util.AndroidFileAsset.OverwriteMethod.AlwaysOverwrite);
+                        Emgu.TF.Util.AndroidFileAsset.OverwritePolicy.AlwaysOverwrite);
 
                     mats[i] = fi.FullName;
 #else

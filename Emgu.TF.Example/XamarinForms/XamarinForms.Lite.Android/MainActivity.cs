@@ -44,11 +44,20 @@ namespace XamarinForms.Droid
             }
             else
             {
-                if (PackageManager.CheckPermission(Manifest.Permission.ReadExternalStorage, PackageName) != Permission.Granted
+                if (PackageManager.CheckPermission(Manifest.Permission.ReadMediaImages, PackageName) != Permission.Granted
+                    && PackageManager.CheckPermission(Manifest.Permission.ReadMediaAudio, PackageName) != Permission.Granted
+                    && PackageManager.CheckPermission(Manifest.Permission.ReadMediaVideo, PackageName) != Permission.Granted
                     && PackageManager.CheckPermission(Manifest.Permission.WriteExternalStorage, PackageName) != Permission.Granted
                     && PackageManager.CheckPermission(Manifest.Permission.Camera, PackageName) != Permission.Granted)
                 {
-                    var permissions = new string[] { Manifest.Permission.ReadExternalStorage, Manifest.Permission.WriteExternalStorage, Manifest.Permission.Camera };
+                    var permissions = new string[]
+                    {
+                        Manifest.Permission.ReadMediaImages,
+                        Manifest.Permission.ReadMediaAudio,
+                        Manifest.Permission.ReadMediaVideo,
+                        Manifest.Permission.WriteExternalStorage, 
+                        Manifest.Permission.Camera
+                    };
                     RequestPermissions(permissions, 1);
                 }
             }
