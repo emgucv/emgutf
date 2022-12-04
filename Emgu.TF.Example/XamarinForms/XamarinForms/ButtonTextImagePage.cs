@@ -166,7 +166,7 @@ namespace Emgu.TF.XamarinForms
                 {
 #if __ANDROID__
                     FileInfo fi = Emgu.TF.Util.AndroidFileAsset.WritePermanentFileAsset(Plugin.CurrentActivity.CrossCurrentActivity.Current.Activity, imageNames[i], "tmp",
-                        Emgu.TF.Util.AndroidFileAsset.OverwriteMethod.AlwaysOverwrite);
+                        Emgu.TF.Util.AndroidFileAsset.OverwritePolicy.AlwaysOverwrite);
 
                     mats[i] = fi.FullName;
 #else
