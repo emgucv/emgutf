@@ -16,7 +16,7 @@
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v11.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v13.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup>
     <TFBinaryDir>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\..\lib))</TFBinaryDir>
@@ -74,7 +74,6 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-
   <PropertyGroup>
     <EmguTFLinkTarget>Xamarin Android Library</EmguTFLinkTarget>
     <!-- 
@@ -130,9 +129,11 @@
     </Compile>
     <Compile Include="TfInvokeAndroid.cs" />
   </ItemGroup>
+  <!--
   <ItemGroup>
     <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="28.0.0.3" />
   </ItemGroup>
+  -->
   <ItemGroup>
     <ProjectReference Include="..\..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj">
       <Project>{c096e7e5-ab7f-4255-b4fc-d6fbe96cbfdf}</Project>
