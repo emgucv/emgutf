@@ -78,14 +78,15 @@ MACRO(CHECK_LICENSE_TYPE)
   #SET (EMGUTF_LICENSE_URL "https://www.gnu.org/licenses/gpl-3.0.txt")
   IF(${GPL_LICENSE_LENGTH} EQUAL 0)
     SET(LICENSE_TYPE "Commercial")
-    #	SET (EMGUTF_LICENSE_URL "http://www.emgu.com/wiki/files/Emgu.TF.Commercial.License.1.0.pdf")
+    #	SET (EMGUTF_LICENSE_URL "https://www.emgu.com/wiki/files/Emgu.TF.Commercial.License.1.0.pdf")
   ENDIF()
   
   MESSAGE(STATUS "LICENSE_TYPE: ${LICENSE_TYPE}")
 ENDMACRO()
 
 CHECK_LICENSE_TYPE()
-SET(EMGUTF_MAIN_WEB_URL "http://www.emgu.com/wiki/index.php/Emgu_TF")
+SET(NUGET_EMGU_URL "https://www.emgu.com")
+SET(EMGUTF_MAIN_WEB_URL "${NUGET_EMGU_URL}/wiki/index.php/Emgu_TF")
 
 
 IF(MSVC)
