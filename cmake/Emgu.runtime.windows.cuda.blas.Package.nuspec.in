@@ -15,7 +15,7 @@
     <releaseNotes>This is the ${EMGU_TF_CUDA_VERSION} release of CUDA. </releaseNotes>
     ${EMGU_TF_CUBLAS_DEPENDENCY}
     <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved</copyright>
-    <tags>emgu tensorflow cuda</tags>
+    <tags>emgu cuda</tags>
   </metadata>
   <files>
     <file src="..\..\..\lib\runtimes\win-x64\native\cublas64*.dll" target="runtimes\win-x64\native" />

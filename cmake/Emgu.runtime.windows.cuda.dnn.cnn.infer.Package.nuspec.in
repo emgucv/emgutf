@@ -15,7 +15,7 @@
     <releaseNotes>This is the ${EMGU_TF_DNN_VERSION} release of DNN for CUDA ${EMGU_TF_CUFFT_VERSION}. </releaseNotes>
 	${EMGU_TF_DNN_CNN_INFER_DEPENDENCY}
     <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved</copyright>
-    <tags>emgu tensorflow dnn cuda</tags>
+    <tags>emgu dnn cuda</tags>
   </metadata>
   <files>
     <file src="..\..\..\lib\runtimes\win-x64\native\cudnn_cnn_infer*.dll" target="runtimes\win-x64\native" />

@@ -15,7 +15,7 @@
     <releaseNotes>This is the ${EMGU_TF_CUFFT_VERSION} release of CUDA CUFFT. </releaseNotes>
 	${EMGU_TF_CUFFT_DEPENDENCY}
     <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved</copyright>
-    <tags>emgu tensorflow cuda</tags>
+    <tags>emgu cuda fft</tags>
   </metadata>
   <files>
     <file src="..\..\..\lib\runtimes\win-x64\native\cufft*.dll" target="runtimes\win-x64\native" />

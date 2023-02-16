@@ -15,7 +15,7 @@
     <releaseNotes>This is the ${EMGU_TF_CUDA_VERSION} release of CUDA runtime. </releaseNotes>
 	${EMGUTF_CUDART_NUGET_DEPENDENCY}
     <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved</copyright>
-    <tags>emgu tensorflow cuda</tags>
+    <tags>emgu cuda</tags>
   </metadata>
   <files>
 	<file 

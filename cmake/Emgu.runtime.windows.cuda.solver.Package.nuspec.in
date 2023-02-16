@@ -15,7 +15,7 @@
     <releaseNotes>This is the ${EMGU_TF_CUDA_VERSION} release of CUDA. </releaseNotes>
 	${EMGU_TF_CUSOLVER_DEPENDENCY}
     <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved</copyright>
-    <tags>emgu tensorflow cuda</tags>
+    <tags>emgu cuda</tags>
   </metadata>
   <files>
     <file src="..\..\..\lib\runtimes\win-x64\native\cusolver*.dll" exclude="..\..\..\lib\runtimes\win-x64\native\cusolverMg*.dll" target="runtimes\win-x64\native" />
