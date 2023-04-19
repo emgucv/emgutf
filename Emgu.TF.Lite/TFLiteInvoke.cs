@@ -76,9 +76,22 @@ namespace Emgu.TF.Lite
         {
             foreach (String sfo in subfolderOptions)
             {
-                if (Directory.Exists(Path.Combine(baseFolder, sfo)))
+                String combinedPath = Path.Combine(baseFolder, sfo);
+                if (Directory.Exists(combinedPath))
                 {
-                    return sfo;
+                    if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices
+                            .OSPlatform.Windows))
+                    {
+                        DirectoryInfo di = new DirectoryInfo(combinedPath);
+                        FileInfo[] dllFiles = di.GetFiles("tfliteextern.dll");
+                        if (dllFiles.Length == 0)
+                            continue;
+                        return sfo;
+                    }
+                    else
+                    {
+                        return sfo;
+                    }
                 }
             }
 

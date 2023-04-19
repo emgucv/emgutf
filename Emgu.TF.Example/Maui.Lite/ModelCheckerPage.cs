@@ -6,14 +6,15 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using Emgu.CV.Platform.Maui.UI;
 using Emgu.TF.Lite;
-using Xamarin.Forms;
+//using Xamarin.Forms;
 
-namespace Emgu.TF.XamarinForms
+namespace Maui.Demo.Lite
 {
     public class ModelCheckerPage : ButtonTextImagePage
     {
-        private Xamarin.Forms.Editor _editor;
+        private Editor _editor;
 
         public ModelCheckerPage()
             : base()
@@ -26,9 +27,11 @@ namespace Emgu.TF.XamarinForms
             
             //MessageLabel.MaxLines = -1;
             //MessageLabel.BackgroundColor = Color.Aqua;
-            
-            
+
+
             _editor = new Editor();
+            _editor.AutoSize = EditorAutoSizeOption.TextChanges;
+            
             //_editor.BackgroundColor = Color.BlueViolet;
             
             MainLayout.Children.Add(_editor);
@@ -39,7 +42,7 @@ namespace Emgu.TF.XamarinForms
         
         void SetEditorMessage(String message, int heightRequest = 600)
         {
-            Xamarin.Forms.Device.BeginInvokeOnMainThread(
+            this.Dispatcher.Dispatch(
                 () =>
                 {
                     this._editor.Text = message;
@@ -122,7 +125,11 @@ namespace Emgu.TF.XamarinForms
 
         private async void OnButtonClicked(Object sender, EventArgs args)
         {
-
+            FileResult fileResult = await FilePicker.PickAsync(PickOptions.Default);
+            if (fileResult == null) //canceled
+                return;
+            String fileName = fileResult.FullPath;
+            /*
 #if !(__ANDROID__ || __IOS__ || __MACOS__)
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.Multiselect = false;
@@ -136,7 +143,7 @@ namespace Emgu.TF.XamarinForms
                 return;
             string fileName = fileResult.FullPath;
 #endif
-            
+            */
             SetEditorMessage(GetModelInfo(fileName), 600);
 
         }

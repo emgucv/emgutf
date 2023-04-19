@@ -219,6 +219,17 @@ namespace Emgu.TF.Lite.Models
         }
 
         /// <summary>
+        /// Get the input tensor for this graph
+        /// </summary>
+        public Tensor InputTensor
+        {
+            get
+            {
+                return _inputTensor;
+            }
+        }
+
+        /// <summary>
         /// Get the labels
         /// </summary>
         public String[] Labels
@@ -265,14 +276,7 @@ namespace Emgu.TF.Lite.Models
                 flipUpsideDown,
                 swapBR);
 
-            _interpreter.Invoke();
-
-            float[] probability = _outputTensor.GetData(false) as float[];
-            if (probability == null)
-                return null;
-
-            return SortResults(probability);
-
+            return Invoke();
         }
 #else
         /// <summary>
@@ -283,23 +287,32 @@ namespace Emgu.TF.Lite.Models
         /// <param name="height">The height of the input tensor</param>
         /// <param name="mean">The mean to be subtracted when converting the image to input tensor</param>
         /// <param name="scale">The scale to be multiplied when converting the image to input tensor</param>
-        /// <param name="flipUpsideDown">If true, the image will be flipped upside down when it is coverted to input tensor</param>
+        /// <param name="flipUpsideDown">If true, the image will be flipped upside down when it is converted to input tensor</param>
         /// <param name="swapBR">If true, the blue and red channel will be swapped when converting the image to input tensor </param>
         /// <returns>The recognition result sorted by probability</returns>
         public RecognitionResult[] Recognize(String imageFile, int width = 299, int height = 299, float mean = 0.0f, float scale = 1.0f/255.0f, bool flipUpsideDown = false, bool swapBR = true)
         {
             NativeImageIO.ReadImageFileToTensor<float>(imageFile, _inputTensor.DataPointer, height, width, mean, scale, flipUpsideDown, swapBR);
 
+            return Invoke();
+            
+        }
+
+#endif
+
+        /// <summary>
+        /// Run data in the input tensor through the mobile net graph and return the recognition results
+        /// </summary>
+        /// <returns>The recognition result sorted by probability</returns>
+        public RecognitionResult[] Invoke()
+        {
             _interpreter.Invoke();
 
             float[] probability = _outputTensor.Data as float[];
             if (probability == null)
                 return null;
             return SortResults(probability);
-
         }
-
-#endif
         /// <summary>
         /// The result of the class labeling
         /// </summary>
