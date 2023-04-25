@@ -16,7 +16,7 @@ using Emgu.CV.Platform.Maui.UI;
 using Emgu.TF.Lite;
 using Emgu.Models;
 using Emgu.TF.Lite.Models;
-using Size = Microsoft.Maui.Graphics.Size;
+using Size = System.Drawing.Size;
 
 /*
 #if __ANDROID__

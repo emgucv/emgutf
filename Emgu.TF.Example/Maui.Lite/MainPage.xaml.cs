@@ -24,6 +24,11 @@ public partial class MainPage : ContentPage
 
         Button mobilenetButton = new Button();
         mobilenetButton.Text = "Mobilenet Object recognition";
+        mobilenetButton.Clicked += (sender, args) =>
+        {
+            this.Navigation.PushAsync(new MobilenetPage());
+        };
+
         /*
         Button smartReplyButton = new Button();
         smartReplyButton.Text = "Smart Reply";
@@ -52,10 +57,7 @@ public partial class MainPage : ContentPage
             inceptionButton,
             modelCheckerButton
         };
-
-
-
-
+        
 
         StackLayout buttonsLayout = new StackLayout
         {

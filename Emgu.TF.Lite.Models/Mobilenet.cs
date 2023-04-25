@@ -12,6 +12,7 @@ using System.IO;
 using System.ComponentModel;
 using System.Net;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 #if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
 using UnityEngine;
@@ -206,6 +207,17 @@ namespace Emgu.TF.Lite.Models
         }
 
         /// <summary>
+        /// Get the input tensor for this graph
+        /// </summary>
+        public Tensor InputTensor
+        {
+            get
+            {
+                return _inputTensor;
+            }
+        }
+
+        /// <summary>
         /// Get the labels
         /// </summary>
         public String[] Labels
@@ -242,13 +254,7 @@ namespace Emgu.TF.Lite.Models
                 flipUpsideDown,
                 swapBR);
 
-            _interpreter.Invoke();
-
-            float[] probability = _outputTensor.GetData(false) as float[];
-            if (probability == null)
-                return null;
-
-            return SortResults(probability);
+            return Invoke();
 
         }
 #else
@@ -261,16 +267,25 @@ namespace Emgu.TF.Lite.Models
         {
             NativeImageIO.ReadImageFileToTensor<float>(imageFile, _inputTensor.DataPointer, 224, 224, 128.0f, 1.0f / 128.0f);
 
+            return Invoke();
+        }
+
+#endif
+
+        /// <summary>
+        /// Run data in the input tensor through the mobile net graph and return the recognition results
+        /// </summary>
+        /// <returns>The recognition result sorted by probability</returns>
+        public RecognitionResult[] Invoke()
+        {
             _interpreter.Invoke();
 
             float[] probability = _outputTensor.Data as float[];
             if (probability == null)
                 return null;
             return SortResults(probability);
-
         }
 
-#endif
         /// <summary>
         /// The result of the class labeling
         /// </summary>

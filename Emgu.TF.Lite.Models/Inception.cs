@@ -301,7 +301,7 @@ namespace Emgu.TF.Lite.Models
 #endif
 
         /// <summary>
-        /// Run data in the input tensor through the mobile net graph and return the recognition results
+        /// Run data in the input tensor through the inception graph and return the recognition results
         /// </summary>
         /// <returns>The recognition result sorted by probability</returns>
         public RecognitionResult[] Invoke()
@@ -313,6 +313,7 @@ namespace Emgu.TF.Lite.Models
                 return null;
             return SortResults(probability);
         }
+
         /// <summary>
         /// The result of the class labeling
         /// </summary>
