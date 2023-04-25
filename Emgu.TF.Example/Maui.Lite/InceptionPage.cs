@@ -18,24 +18,6 @@ using Emgu.Models;
 using Emgu.TF.Lite.Models;
 using Size = System.Drawing.Size;
 
-/*
-#if __ANDROID__
-using Android.App;
-using Android.Content;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Android.OS;
-using Android.Graphics;
-using Android.Preferences;
-#elif __UNIFIED__ && !__IOS__
-using AppKit;
-using CoreGraphics;
-#elif __IOS__
-using UIKit;
-using CoreGraphics;
-#endif
-*/
 
 namespace Maui.Demo.Lite
 {
@@ -83,17 +65,15 @@ namespace Maui.Demo.Lite
                 return;
             }
             SetImage(null);
-            Mat[] imageFiles = await LoadImages(new string[] { "tulips.jpg" });
+            Mat[] images = await LoadImages(new string[] { "tulips.jpg" });
 
             //handle user cancel
-            if (imageFiles == null || (imageFiles.Length > 0 && imageFiles[0] == null))
+            if (images == null || (images.Length > 0 && images[0] == null))
             {
                 SetMessage("");
                 return;
             }
-
-            Stopwatch watch = Stopwatch.StartNew();
-
+            
             Tensor t = _inception.InputTensor;
             System.Drawing.Size s = new System.Drawing.Size(299, 299);
             using (Mat resizedMat = new Mat(s, DepthType.Cv8U, 3))
@@ -104,17 +84,17 @@ namespace Maui.Demo.Lite
                        t.DataPointer,
                        3 * s.Width * Marshal.SizeOf<float>()))
             {
-                CvInvoke.Resize(imageFiles[0], resizedMat, s);
+                CvInvoke.Resize(images[0], resizedMat, s);
                 CvInvoke.CvtColor(resizedMat, resizedMat, ColorConversion.Bgr2Rgb);
                 resizedMat.ConvertTo(tensorMat, DepthType.Cv32F, 1.0/255.0, -0.0);
-                
             }
 
+            Stopwatch watch = Stopwatch.StartNew();
             var result = _inception.Invoke();
             watch.Stop();
             String resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", result[0].Label, result[0].Probability * 100, watch.ElapsedMilliseconds);
 
-            SetImage(imageFiles[0]);
+            SetImage(images[0]);
             SetMessage(resStr);
         }
 

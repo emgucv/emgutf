@@ -221,6 +221,17 @@ namespace Emgu.TF.Lite.Models
         }
 
         /// <summary>
+        /// Get the input tensor for this graph
+        /// </summary>
+        public Tensor InputTensor
+        {
+            get
+            {
+                return _inputTensor;
+            }
+        }
+
+        /// <summary>
         /// Get the labels
         /// </summary>
         public String[] Labels
@@ -301,9 +312,8 @@ namespace Emgu.TF.Lite.Models
         public RecognitionResult[] Recognize(String imageFile, float scoreThreshold = 0.0f)
         {
             ReadImageFileToTensor(imageFile);
-            //Stopwatch w = Stopwatch.StartNew();
+            
             _interpreter.Invoke();
-            //w.Stop();
             return GetResults(scoreThreshold);
         }
 #endif

@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading;
 using Emgu.CV.Platform.Maui.UI;
 using Emgu.TF.Lite;
-//using Xamarin.Forms;
 
 namespace Maui.Demo.Lite
 {

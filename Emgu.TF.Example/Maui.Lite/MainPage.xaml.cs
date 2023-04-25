@@ -1,4 +1,9 @@
-﻿namespace Maui.Demo.Lite;
+﻿//----------------------------------------------------------------------------
+//  Copyright (C) 2004-2023 by EMGU Corporation. All rights reserved.       
+//----------------------------------------------------------------------------
+
+
+namespace Maui.Demo.Lite;
 
 public partial class MainPage : ContentPage
 {
@@ -19,8 +24,12 @@ public partial class MainPage : ContentPage
         );
         this.ToolbarItems.Add(aboutItem);
 
-        Button multiboxDetectionButton = new Button();
-        multiboxDetectionButton.Text = "Coco SSD Mobilenet";
+        Button cocoSscMobilenetButton = new Button();
+        cocoSscMobilenetButton.Text = "Coco SSD Mobilenet";
+        cocoSscMobilenetButton.Clicked += (sender, args) =>
+        {
+            this.Navigation.PushAsync(new CocoSsdMobilenetPage());
+        };
 
         Button mobilenetButton = new Button();
         mobilenetButton.Text = "Mobilenet Object recognition";
@@ -52,7 +61,7 @@ public partial class MainPage : ContentPage
 
         List<View> buttonList = new List<View>()
         {
-            multiboxDetectionButton,
+            cocoSscMobilenetButton,
             mobilenetButton,
             inceptionButton,
             modelCheckerButton

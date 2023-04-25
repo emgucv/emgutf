@@ -1,4 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
+﻿//----------------------------------------------------------------------------
+//  Copyright (C) 2004-2023 by EMGU Corporation. All rights reserved.       
+//----------------------------------------------------------------------------
+
+
+using Microsoft.Extensions.Logging;
 
 namespace Maui.Demo.Lite;
 

@@ -92,9 +92,9 @@ namespace Maui.Demo.Lite
         private async void OnButtonClicked(Object sender, EventArgs args)
         {
             SetImage(null);
-            Mat[] imageFiles = await LoadImages(new string[] { "space_shuttle.jpg" });
+            Mat[] images = await LoadImages(new string[] { "space_shuttle.jpg" });
             //handle user cancel
-            if (imageFiles == null || (imageFiles.Length > 0 && imageFiles[0] == null))
+            if (images == null || (images.Length > 0 && images[0] == null))
             {
                 SetMessage("");
                 return;
@@ -153,7 +153,7 @@ namespace Maui.Demo.Lite
                        t.DataPointer,
                        3 * s.Width * Marshal.SizeOf<float>()))
             {
-                CvInvoke.Resize(imageFiles[0], resizedMat, s);
+                CvInvoke.Resize(images[0], resizedMat, s);
                 //CvInvoke.CvtColor(resizedMat, resizedMat, ColorConversion.Bgr2Rgb);
                 resizedMat.ConvertTo(tensorMat, DepthType.Cv32F, 1.0 / 128.0, -1.0/128.0);
             }
@@ -162,7 +162,7 @@ namespace Maui.Demo.Lite
             //var result = _mobilenet.Recognize(imageFiles[0]);
             watch.Stop();
             String resStr = String.Format("Object is {0} with {1}% probability. Recognition completed in {2} milliseconds.", result[0].Label, result[0].Probability * 100, watch.ElapsedMilliseconds);
-            SetImage(imageFiles[0]);
+            SetImage(images[0]);
             SetMessage(resStr);
         }
 

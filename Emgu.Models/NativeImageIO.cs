@@ -15,7 +15,7 @@ namespace Emgu.Models
     /// </summary>
     public partial class NativeImageIO
     {
-        private static float[] ScaleLocation(float[] location, int imageWidth, int imageHeight)
+        public static float[] ScaleLocation(float[] location, int imageWidth, int imageHeight)
         {
             float left = location[0] * imageWidth;
             float top = location[1] * imageHeight;
