@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<Project>
+  <!-- https://learn.microsoft.com/en-us/visualstudio/msbuild/customize-by-directory?view=vs-2022 -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+  <PropertyGroup>
+    <PackageId>${EMGUTF_LITE_MAUI_ANDROID_NUGET_ID}</PackageId>
+	
+	<title>${EMGUTF_LITE_MAUI_ANDROID_NUGET_TITLE}</title>
+    <version>${CPACK_PACKAGE_VERSION}</version>
+    <authors>${CPACK_PACKAGE_VENDOR}</authors>
+    <owners>${CPACK_PACKAGE_VENDOR}</owners>
+	<summary>Android runtime package of Emgu TF Lite for MAUI</summary>
+    <Description>This package contains the native Android runtime of Emgu TF Lite for MAUI</Description>
+    <PackageReleaseNotes>This is the ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH} release of Emgu TF Lite. For online documentation please visit
+${NUGET_EMGU_URL}/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}/document/index.html    	        
+</PackageReleaseNotes>
+	
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<PackageIcon>nuget_icon.png</PackageIcon>
+    <PackageReadmeFile>docs/README.md</PackageReadmeFile>
+	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+	<RepositoryUrl>https://github.com/emgucv/emgutf</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageOutputPath>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\..\platforms\nuget))</PackageOutputPath>
+	<PackageTags>tensorflow;emgu;emgutf;ai;image;android;maui</PackageTags>
+    <PackageProjectUrl>${NUGET_EMGU_URL}</PackageProjectUrl>
+    <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved.</copyright>
+    
+  </PropertyGroup>
+ 
+    <ItemGroup>
+      <None Include="..\..\..\LICENSE.txt">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
+      <None Include="..\..\..\miscellaneous\nuget_icon.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="docs\README.md">
+        <Pack>True</Pack>
+        <PackagePath>docs\</PackagePath>
+      </None>
+    </ItemGroup>
+	<ItemGroup Condition="Exists('..\..\..\lib\android\arm64-v8a\arm64-v8a_version_string.inc')">
+	  <None Include="..\..\..\lib\android\arm64-v8a\arm64-v8a_version_string.inc">
+        <Pack>True</Pack>
+        <PackagePath>docs\</PackagePath>
+      </None>
+	</ItemGroup>
+	<ItemGroup Condition="Exists('..\..\..\lib\android\arm64-v8a\armeabi-v7a_version_string.inc')">
+	  <None Include="..\..\..\lib\android\arm64-v8a\armeabi-v7a_version_string.inc">
+        <Pack>True</Pack>
+        <PackagePath>docs\</PackagePath>
+      </None>
+	</ItemGroup>
+	<ItemGroup Condition="Exists('..\..\..\lib\android\x86\x86_version_string.inc')">
+	  <None Include="..\..\..\lib\android\x86\x86_version_string.inc">
+        <Pack>True</Pack>
+        <PackagePath>docs\</PackagePath>
+      </None>
+	</ItemGroup>
+	<ItemGroup Condition="Exists('..\..\..\lib\android\x86_64\x86_64_version_string.inc')">
+	  <None Include="..\..\..\lib\android\x86_64\x86_64_version_string.inc">
+        <Pack>True</Pack>
+        <PackagePath>docs\</PackagePath>
+      </None>
+	</ItemGroup>
+  ${EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_BINARY}
+  ${EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_NUGET}
+</Project>

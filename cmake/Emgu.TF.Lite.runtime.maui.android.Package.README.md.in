@@ -1,0 +1,13 @@
+## About this package
+
+This package is part of the ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH} release of Emgu TF Lite. 
+
+For online documentation please visit
+<${NUGET_EMGU_URL}/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}/document/index.html>
+
+Release note can be found at
+<${NUGET_EMGU_URL}/wiki/index.php/Emgu_TF_Version_History#Emgu.TF-${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}>
+
+## Setup
+
+Please make sure to call Emgu.TF.Lite.TfLiteInvokeAndroid.Init() before making any other calls to Emgu TF Lite library on Android.

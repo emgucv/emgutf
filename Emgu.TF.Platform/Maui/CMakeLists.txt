@@ -2,5 +2,6 @@
 #  Copyright (C) 2004-2023 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-ADD_SUBDIRECTORY(Xamarin)
-ADD_SUBDIRECTORY(Maui)
+ADD_SUBDIRECTORY(Android)
+ADD_SUBDIRECTORY(iOS)
+ADD_SUBDIRECTORY(UI)
