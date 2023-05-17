@@ -1,0 +1,130 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Shared", "..\..\Emgu.TF\Emgu.TF.Shared.shproj", "{D47D776E-9970-4552-BC8A-24CADCBEA009}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Util.Shared", "..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.shproj", "{98561642-5EC3-4244-BAF9-6876D9BA5527}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Models.Shared", "..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.shproj", "{752279F0-17EF-4EC8-857C-8F5F897AF0E8}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.Models.Shared", "..\..\Emgu.Models\Emgu.Models.Shared.shproj", "{8EDCE0C8-BA71-4396-9428-35D05877258C}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "XamarinForms", "..\..\Emgu.TF.Example\XamarinForms\XamarinForms\XamarinForms.shproj", "{26BDB58D-52D9-4AD1-9205-BE5792781A98}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamarinForms.WPF", "..\..\Emgu.TF.Example\XamarinForms\XamarinForms.WPF\XamarinForms.WPF.csproj", "{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Protobuf.Shared", "..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.shproj", "{88FED2CB-EE86-4B5E-85A0-9F5FDF42111F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Netstandard", "..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj", "{AAE51EB4-F01C-4E68-B275-ADC86D1019CA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Models.Netstandard", "..\..\Emgu.TF.Models\Emgu.TF.Models.Netstandard\Emgu.TF.Models.Netstandard.csproj", "{1E761DE9-F20C-4133-9C52-F790EEBCE34A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inception.Console.NetCore", "..\..\Emgu.TF.Example\Inception.Console.NetCore\Inception.Console.NetCore.csproj", "{56D9DEE1-6E33-4DC5-BAC4-DC164B35C129}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Protobuf.Netstandard", "..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Netstandard\Emgu.TF.Protobuf.Netstandard.csproj", "{DB17DF2E-D7A4-4CD4-B4D9-FC3447E5AFD8}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Windows", "..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Runtime.Windows.shproj", "{3088794D-7022-4049-98BC-41E2949E48B4}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Mac", "..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Runtime.Mac.shproj", "{B1E7D925-5D1C-4A1E-9BA0-35163883A110}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Ubuntu", "..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Runtime.Ubuntu.shproj", "{0F30EC5F-39DD-4A62-AD79-14EBCB894208}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVInterop.NetCore", "..\..\Emgu.TF.Example\CVInterop\CVInterop.NetCore.csproj", "{E9C01169-799F-46B3-B4BC-E11ED7D39907}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Debian", "..\..\Emgu.TF.Runtime\Debian\Emgu.TF.Runtime.Debian.shproj", "{61FEA54E-4DD5-4552-BCFC-860610295873}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\Emgu.TF.Example\XamarinForms\XamarinForms\XamarinForms.projitems*{0a7a7b86-35e5-4887-b337-96c2f1b1fcf8}*SharedItemsImports = 5
+		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Runtime.Windows.projitems*{0a7a7b86-35e5-4887-b337-96c2f1b1fcf8}*SharedItemsImports = 5
+		..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Runtime.Ubuntu.projitems*{0f30ec5f-39dd-4a62-ad79-14ebcb894208}*SharedItemsImports = 13
+		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{1e761de9-f20c-4133-9c52-f790eebce34a}*SharedItemsImports = 5
+		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{1e761de9-f20c-4133-9c52-f790eebce34a}*SharedItemsImports = 5
+		..\..\Emgu.TF.Example\XamarinForms\XamarinForms\XamarinForms.projitems*{26bdb58d-52d9-4ad1-9205-be5792781a98}*SharedItemsImports = 13
+		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Runtime.Windows.projitems*{3088794d-7022-4049-98bc-41e2949e48b4}*SharedItemsImports = 13
+		..\..\Emgu.TF.Runtime\Debian\Emgu.TF.Runtime.Debian.projitems*{56d9dee1-6e33-4dc5-bac4-dc164b35c129}*SharedItemsImports = 5
+		..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Runtime.Mac.projitems*{56d9dee1-6e33-4dc5-bac4-dc164b35c129}*SharedItemsImports = 5
+		..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Runtime.Ubuntu.projitems*{56d9dee1-6e33-4dc5-bac4-dc164b35c129}*SharedItemsImports = 5
+		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Runtime.Windows.projitems*{56d9dee1-6e33-4dc5-bac4-dc164b35c129}*SharedItemsImports = 5
+		..\..\Emgu.TF.Runtime\Debian\Emgu.TF.Runtime.Debian.projitems*{61fea54e-4dd5-4552-bcfc-860610295873}*SharedItemsImports = 13
+		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{752279f0-17ef-4ec8-857c-8f5f897af0e8}*SharedItemsImports = 13
+		..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems*{88fed2cb-ee86-4b5e-85a0-9f5fdf42111f}*SharedItemsImports = 13
+		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{8edce0c8-ba71-4396-9428-35d05877258c}*SharedItemsImports = 13
+		..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems*{98561642-5ec3-4244-baf9-6876d9ba5527}*SharedItemsImports = 13
+		..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems*{aae51eb4-f01c-4e68-b275-adc86d1019ca}*SharedItemsImports = 5
+		..\..\Emgu.TF\Emgu.TF.Shared.projitems*{aae51eb4-f01c-4e68-b275-adc86d1019ca}*SharedItemsImports = 5
+		..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Runtime.Mac.projitems*{b1e7d925-5d1c-4a1e-9ba0-35163883a110}*SharedItemsImports = 13
+		..\..\Emgu.TF\Emgu.TF.Shared.projitems*{d47d776e-9970-4552-bc8a-24cadcbea009}*SharedItemsImports = 13
+		..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems*{db17df2e-d7a4-4cd4-b4d9-fc3447e5afd8}*SharedItemsImports = 5
+		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{e9c01169-799f-46b3-b4bc-e11ed7d39907}*SharedItemsImports = 5
+		..\..\Emgu.TF.Models\Emgu.TF.Models.Shared.projitems*{e9c01169-799f-46b3-b4bc-e11ed7d39907}*SharedItemsImports = 5
+		..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.projitems*{e9c01169-799f-46b3-b4bc-e11ed7d39907}*SharedItemsImports = 5
+		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Runtime.Windows.projitems*{e9c01169-799f-46b3-b4bc-e11ed7d39907}*SharedItemsImports = 5
+		..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems*{e9c01169-799f-46b3-b4bc-e11ed7d39907}*SharedItemsImports = 5
+		..\..\Emgu.TF\Emgu.TF.Shared.projitems*{e9c01169-799f-46b3-b4bc-e11ed7d39907}*SharedItemsImports = 5
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Debug|x64.ActiveCfg = Debug|x64
+		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Debug|x64.Build.0 = Debug|x64
+		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Release|x64.ActiveCfg = Release|x64
+		{0A7A7B86-35E5-4887-B337-96C2F1B1FCF8}.Release|x64.Build.0 = Release|x64
+		{AAE51EB4-F01C-4E68-B275-ADC86D1019CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAE51EB4-F01C-4E68-B275-ADC86D1019CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAE51EB4-F01C-4E68-B275-ADC86D1019CA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AAE51EB4-F01C-4E68-B275-ADC86D1019CA}.Debug|x64.Build.0 = Debug|Any CPU
+		{AAE51EB4-F01C-4E68-B275-ADC86D1019CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAE51EB4-F01C-4E68-B275-ADC86D1019CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAE51EB4-F01C-4E68-B275-ADC86D1019CA}.Release|x64.ActiveCfg = Release|Any CPU
+		{AAE51EB4-F01C-4E68-B275-ADC86D1019CA}.Release|x64.Build.0 = Release|Any CPU
+		{1E761DE9-F20C-4133-9C52-F790EEBCE34A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E761DE9-F20C-4133-9C52-F790EEBCE34A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E761DE9-F20C-4133-9C52-F790EEBCE34A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1E761DE9-F20C-4133-9C52-F790EEBCE34A}.Debug|x64.Build.0 = Debug|Any CPU
+		{1E761DE9-F20C-4133-9C52-F790EEBCE34A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E761DE9-F20C-4133-9C52-F790EEBCE34A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E761DE9-F20C-4133-9C52-F790EEBCE34A}.Release|x64.ActiveCfg = Release|Any CPU
+		{1E761DE9-F20C-4133-9C52-F790EEBCE34A}.Release|x64.Build.0 = Release|Any CPU
+		{56D9DEE1-6E33-4DC5-BAC4-DC164B35C129}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56D9DEE1-6E33-4DC5-BAC4-DC164B35C129}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56D9DEE1-6E33-4DC5-BAC4-DC164B35C129}.Debug|x64.ActiveCfg = Debug|x64
+		{56D9DEE1-6E33-4DC5-BAC4-DC164B35C129}.Debug|x64.Build.0 = Debug|x64
+		{56D9DEE1-6E33-4DC5-BAC4-DC164B35C129}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56D9DEE1-6E33-4DC5-BAC4-DC164B35C129}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56D9DEE1-6E33-4DC5-BAC4-DC164B35C129}.Release|x64.ActiveCfg = Release|x64
+		{56D9DEE1-6E33-4DC5-BAC4-DC164B35C129}.Release|x64.Build.0 = Release|x64
+		{DB17DF2E-D7A4-4CD4-B4D9-FC3447E5AFD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB17DF2E-D7A4-4CD4-B4D9-FC3447E5AFD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB17DF2E-D7A4-4CD4-B4D9-FC3447E5AFD8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DB17DF2E-D7A4-4CD4-B4D9-FC3447E5AFD8}.Debug|x64.Build.0 = Debug|Any CPU
+		{DB17DF2E-D7A4-4CD4-B4D9-FC3447E5AFD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB17DF2E-D7A4-4CD4-B4D9-FC3447E5AFD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB17DF2E-D7A4-4CD4-B4D9-FC3447E5AFD8}.Release|x64.ActiveCfg = Release|Any CPU
+		{DB17DF2E-D7A4-4CD4-B4D9-FC3447E5AFD8}.Release|x64.Build.0 = Release|Any CPU
+		{E9C01169-799F-46B3-B4BC-E11ED7D39907}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9C01169-799F-46B3-B4BC-E11ED7D39907}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9C01169-799F-46B3-B4BC-E11ED7D39907}.Debug|x64.ActiveCfg = Debug|x64
+		{E9C01169-799F-46B3-B4BC-E11ED7D39907}.Debug|x64.Build.0 = Debug|x64
+		{E9C01169-799F-46B3-B4BC-E11ED7D39907}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9C01169-799F-46B3-B4BC-E11ED7D39907}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9C01169-799F-46B3-B4BC-E11ED7D39907}.Release|x64.ActiveCfg = Release|x64
+		{E9C01169-799F-46B3-B4BC-E11ED7D39907}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EF91EAF2-3F12-4F88-953B-881437D9B94C}
+	EndGlobalSection
+EndGlobal

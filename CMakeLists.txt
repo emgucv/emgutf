@@ -733,6 +733,9 @@ IF(HAVE_LITE_BUILD)
     <group targetFramework=\"Xamarin.iOS1.0\">
         <dependency id=\"System.Runtime.InteropServices.RuntimeInformation\" version=\"4.3.0\" />
     </group>")
+	
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.ios.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Platform/Maui/iOS/Directory.Build.props)
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.ios.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Platform/Maui/iOS/docs/README.md)
   ENDIF()
   
   SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
@@ -760,7 +763,8 @@ IF(HAVE_LITE_BUILD)
     <group targetFramework=\"Xamarin.Mac2.0\">
         <dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
     </group>")	
-ENDIF()	
+  ENDIF()	
+  
   IF (HAVE_IOS_LITE)
   SET(EMGUTF_LITE_MODEL_NUGET_FILE_LIST "${EMGUTF_LITE_MODEL_NUGET_FILE_LIST} 
     <file src=\"..\\..\\..\\lib\\ios\\Emgu.TF.Lite.Models.dll\" target=\"lib\\xamarinios10\" />
@@ -769,13 +773,12 @@ ENDIF()
     <group targetFramework=\"Xamarin.iOS1.0\">
         <dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
     </group>")	
-ENDIF()
+  ENDIF()
 
-CHECK_BINARY_EXIST("lib/android" "Emgu.TF.Lite.Models.dll" HAVE_EMGUTF_LITE_MODEL_ANDROID OFF)  
-IF(TARGET Emgu.TF.Lite.Models.Android)
-  SET(HAVE_EMGUTF_LITE_MODEL_ANDROID ON)
-ENDIF()
-
+  CHECK_BINARY_EXIST("lib/android" "Emgu.TF.Lite.Models.dll" HAVE_EMGUTF_LITE_MODEL_ANDROID OFF)  
+  IF(TARGET Emgu.TF.Lite.Models.Android)
+    SET(HAVE_EMGUTF_LITE_MODEL_ANDROID ON)
+  ENDIF()
 
 IF (HAVE_EMGUTF_LITE_MODEL_ANDROID)
   SET(EMGUTF_LITE_MODEL_NUGET_FILE_LIST "${EMGUTF_LITE_MODEL_NUGET_FILE_LIST} 
