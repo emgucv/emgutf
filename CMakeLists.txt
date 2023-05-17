@@ -573,18 +573,18 @@ ENDIF()
 
 
 IF(HAVE_ANDROID)
-  SET(EMGUTF_ANDROID_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.runtime.android")
+  SET(EMGUTF_XAMARIN_ANDROID_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.runtime.xamarin.android")
   #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
   #  SET(EMGUTF_ANDROID_NUGET_ID "${EMGUTF_ANDROID_NUGET_ID}-CR")  
   #ENDIF()
-  SET(EMGUTF_ANDROID_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Android")	
-  SET(EMGUTF_ANDROID_NUGET_FILE_LIST " 
+  SET(EMGUTF_XAMARIN_ANDROID_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Xamarin Android")	
+  SET(EMGUTF_XAMARIN_ANDROID_NUGET_FILE_LIST " 
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Platform.Xamarin.Android.dll\" target=\"lib\\MonoAndroid10\" />
 	<file src=\"..\\..\\..\\lib\\Emgu.TF.Platform.Xamarin.Android.xml\" target=\"lib\\MonoAndroid10\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
 	<file src=\"readme.txt\" target=\"\" />")
-  SET(EMGUTF_ANDROID_NUGET_DEPENDENCY "${EMGUTF_ANDROID_NUGET_DEPENDENCY}
+  SET(EMGUTF_XAMARIN_ANDROID_NUGET_DEPENDENCY "${EMGUTF_XAMARIN_ANDROID_NUGET_DEPENDENCY}
     <dependencies>
 	    <group targetFramework=\"MonoAndroid1.0\">
 		    <dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
@@ -703,9 +703,9 @@ IF(HAVE_LITE_BUILD)
 	  ")
     ENDIF()
     SET(EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_BINARY "${EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_BINARY}
-      <Message Text=\"Copying $(OutputPath)$(AssemblyName).dll, $(OutputPath)$(AssemblyName).xml to $(OpenCVBinaryDir)\" Importance=\"high\" />
-      <Copy SourceFiles=\"$(OutputPath)$(AssemblyName).dll\" DestinationFolder=\"$(OpenCVBinaryDir)\" ContinueOnError=\"true\" />
-      <Copy SourceFiles=\"$(OutputPath)$(AssemblyName).xml\" DestinationFolder=\"$(OpenCVBinaryDir)\" ContinueOnError=\"true\" />
+      <Message Text=\"Copying $(OutputPath)$(AssemblyName).dll, $(OutputPath)$(AssemblyName).xml to $(TfLiteBinaryDir)\" Importance=\"high\" />
+      <Copy SourceFiles=\"$(OutputPath)$(AssemblyName).dll\" DestinationFolder=\"$(TfLiteBinaryDir)\" ContinueOnError=\"true\" />
+      <Copy SourceFiles=\"$(OutputPath)$(AssemblyName).xml\" DestinationFolder=\"$(TfLiteBinaryDir)\" ContinueOnError=\"true\" />
     </Target>")
 	
 	# Sign the nuget package
@@ -721,8 +721,8 @@ IF(HAVE_LITE_BUILD)
     </Target>")
     ENDIF()
 	
-	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.android.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Platform/Maui/Android/Directory.Build.props)
-    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.android.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Platform/Maui/Android/docs/README.md)
+	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.android.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Platform/Maui/Android/Lite/Directory.Build.props)
+    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.android.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Platform/Maui/Android/Lite/docs/README.md)
   ENDIF()
   
   IF (HAVE_IOS_LITE)

@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
     <PropertyGroup>
-    <TfLiteBinaryDir>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\..\lib))</TfLiteBinaryDir>
+    <TfLiteBinaryDir>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\..\..\lib))</TfLiteBinaryDir>
   </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

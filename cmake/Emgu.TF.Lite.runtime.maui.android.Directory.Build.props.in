@@ -46,26 +46,26 @@ ${NUGET_EMGU_URL}/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKA
         <PackagePath>docs\</PackagePath>
       </None>
     </ItemGroup>
-	<ItemGroup Condition="Exists('..\..\..\lib\android\arm64-v8a\arm64-v8a_version_string.inc')">
-	  <None Include="..\..\..\lib\android\arm64-v8a\arm64-v8a_version_string.inc">
+	<ItemGroup Condition="Exists('${TfLiteBinaryDir}\android\arm64-v8a\arm64-v8a_version_string.inc')">
+	  <None Include="${TfLiteBinaryDir}\android\arm64-v8a\arm64-v8a_version_string.inc">
         <Pack>True</Pack>
         <PackagePath>docs\</PackagePath>
       </None>
 	</ItemGroup>
-	<ItemGroup Condition="Exists('..\..\..\lib\android\arm64-v8a\armeabi-v7a_version_string.inc')">
-	  <None Include="..\..\..\lib\android\arm64-v8a\armeabi-v7a_version_string.inc">
+	<ItemGroup Condition="Exists('${TfLiteBinaryDir}\android\arm64-v8a\armeabi-v7a_version_string.inc')">
+	  <None Include="${TfLiteBinaryDir}\android\arm64-v8a\armeabi-v7a_version_string.inc">
         <Pack>True</Pack>
         <PackagePath>docs\</PackagePath>
       </None>
 	</ItemGroup>
-	<ItemGroup Condition="Exists('..\..\..\lib\android\x86\x86_version_string.inc')">
-	  <None Include="..\..\..\lib\android\x86\x86_version_string.inc">
+	<ItemGroup Condition="Exists('${TfLiteBinaryDir}\android\x86\x86_version_string.inc')">
+	  <None Include="${TfLiteBinaryDir}\android\x86\x86_version_string.inc">
         <Pack>True</Pack>
         <PackagePath>docs\</PackagePath>
       </None>
 	</ItemGroup>
-	<ItemGroup Condition="Exists('..\..\..\lib\android\x86_64\x86_64_version_string.inc')">
-	  <None Include="..\..\..\lib\android\x86_64\x86_64_version_string.inc">
+	<ItemGroup Condition="Exists('${TfLiteBinaryDir}\android\x86_64\x86_64_version_string.inc')">
+	  <None Include="${TfLiteBinaryDir}android\x86_64\x86_64_version_string.inc">
         <Pack>True</Pack>
         <PackagePath>docs\</PackagePath>
       </None>

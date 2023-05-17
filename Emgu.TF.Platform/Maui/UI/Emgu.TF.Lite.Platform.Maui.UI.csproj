@@ -23,7 +23,7 @@
 	  <ProjectReference Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Android\Emgu.TF.Lite.Models.Android.csproj" />
 	  <ProjectReference Condition="!($([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios' or $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android')" Include="..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Netstandard\Emgu.TF.Lite.Models.Netstandard.csproj" />
 	  
-	  <ProjectReference Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="..\..\..\Emgu.TF.Platform\Maui\Android\Emgu.TF.Lite.Platform.Maui.Android.csproj" />
+	  <ProjectReference Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="..\..\..\Emgu.TF.Platform\Maui\Android\Lite\Emgu.TF.Lite.Platform.Maui.Android.csproj" />
 	  <ProjectReference Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'" Include="..\..\..\Emgu.TF.Platform\Maui\iOS\Emgu.TF.Lite.Platform.Maui.iOS.csproj" /> 
 	  
 	  

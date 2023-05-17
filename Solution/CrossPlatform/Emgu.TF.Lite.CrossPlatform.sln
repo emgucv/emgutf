@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Lite.Models.Android
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Lite.Platform.Xamarin.Android", "..\..\Emgu.TF.Platform\Xamarin\Android\Emgu.TF.Lite.Platform.Xamarin.Android.csproj", "{D11AA8F3-DEF2-4F40-A4E5-FB8A8938DDB7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Platform.Maui.Android", "..\..\Emgu.TF.Platform\Maui\Android\Emgu.TF.Lite.Platform.Maui.Android.csproj", "{4318036D-46DC-4310-8ECE-93ADF819F280}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Platform.Maui.Android", "..\..\Emgu.TF.Platform\Maui\Android\Lite\Emgu.TF.Lite.Platform.Maui.Android.csproj", "{4318036D-46DC-4310-8ECE-93ADF819F280}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Netstandard.IOS", "..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard.IOS\Emgu.TF.Lite.Netstandard.IOS.csproj", "{35CA3176-A100-43AF-9D96-97DE0B1172FE}"
 EndProject
