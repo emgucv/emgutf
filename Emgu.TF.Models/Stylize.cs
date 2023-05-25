@@ -34,7 +34,7 @@ namespace Emgu.TF.Models
         }
 
 
-        public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
+        public event FileDownloadManager.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
 
         /// <summary>
         /// Return true if the graph has been imported
@@ -104,10 +104,10 @@ namespace Emgu.TF.Models
             }
         }
 
-        private void onDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        private void onDownloadProgressChanged(long? totalBytesToReceive, long bytesReceived, double? progressPercentage)
         {
             if (OnDownloadProgressChanged != null)
-                OnDownloadProgressChanged(sender, e);
+                OnDownloadProgressChanged(totalBytesToReceive, bytesReceived, progressPercentage);
         }
 
         private const int NumStyles = 26;

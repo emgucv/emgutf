@@ -78,7 +78,7 @@ namespace Emgu.TF.Models
         /// <summary>
         /// Callback when the model download progress is changed.
         /// </summary>
-        public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
+        public event FileDownloadManager.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
 
         /// <summary>
         /// Initiate the graph by checking if the model file exist locally, if not download the graph from internet.
@@ -173,9 +173,9 @@ namespace Emgu.TF.Models
             }
         }
 
-        private void onDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        private void onDownloadProgressChanged(long? totalBytesToReceive, long bytesReceived, double? progressPercentage)
         {
-            OnDownloadProgressChanged?.Invoke(sender, e);
+            OnDownloadProgressChanged?.Invoke(totalBytesToReceive, bytesReceived, progressPercentage);
         }
 
         /// <summary>
