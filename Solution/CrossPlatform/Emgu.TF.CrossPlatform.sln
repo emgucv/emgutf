@@ -37,6 +37,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Debian", ".
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Platform.Maui.Android", "..\..\Emgu.TF.Platform\Maui\Android\Full\Emgu.TF.Platform.Maui.Android.csproj", "{C98A8C60-C90D-4AC4-8897-FF1EE46E6ADE}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Platform.Maui.UI", "..\..\Emgu.TF.Platform\Maui\UI\Full\Emgu.TF.Platform.Maui.UI.csproj", "{52C72E25-AED5-43F2-A24D-F3A194D95241}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +103,14 @@ Global
 		{C98A8C60-C90D-4AC4-8897-FF1EE46E6ADE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C98A8C60-C90D-4AC4-8897-FF1EE46E6ADE}.Release|x64.ActiveCfg = Release|Any CPU
 		{C98A8C60-C90D-4AC4-8897-FF1EE46E6ADE}.Release|x64.Build.0 = Release|Any CPU
+		{52C72E25-AED5-43F2-A24D-F3A194D95241}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52C72E25-AED5-43F2-A24D-F3A194D95241}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52C72E25-AED5-43F2-A24D-F3A194D95241}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{52C72E25-AED5-43F2-A24D-F3A194D95241}.Debug|x64.Build.0 = Debug|Any CPU
+		{52C72E25-AED5-43F2-A24D-F3A194D95241}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52C72E25-AED5-43F2-A24D-F3A194D95241}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52C72E25-AED5-43F2-A24D-F3A194D95241}.Release|x64.ActiveCfg = Release|Any CPU
+		{52C72E25-AED5-43F2-A24D-F3A194D95241}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
