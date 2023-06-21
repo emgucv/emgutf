@@ -33,7 +33,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Lite.Models.IOS", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Platform.Maui.iOS", "..\..\Emgu.TF.Platform\Maui\iOS\Emgu.TF.Lite.Platform.Maui.iOS.csproj", "{3E60EE87-FDE0-4913-A502-01FDF8BAF502}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Platform.Maui.UI", "..\..\Emgu.TF.Platform\Maui\UI\Emgu.TF.Lite.Platform.Maui.UI.csproj", "{E260A929-085E-44A7-9DC9-14B47D7C351B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Platform.Maui.UI", "..\..\Emgu.TF.Platform\Maui\UI\Lite\Emgu.TF.Lite.Platform.Maui.UI.csproj", "{E260A929-085E-44A7-9DC9-14B47D7C351B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamarinForms.Lite.WPF", "..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite.WPF\XamarinForms.Lite.WPF.csproj", "{8085656C-9A36-40F9-8ABE-B451F5406EBB}"
 EndProject

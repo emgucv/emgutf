@@ -26,7 +26,7 @@ namespace Emgu.TF.XamarinForms
     {
         private MultiboxGraph _multiboxGraph;
 
-        private async Task InitMultibox(DownloadProgressChangedEventHandler onProgressChanged)
+        private async Task InitMultibox(FileDownloadManager.DownloadProgressChangedEventHandler onProgressChanged)
         {
             if (_multiboxGraph == null)
             {

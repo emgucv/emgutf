@@ -60,7 +60,7 @@ namespace Emgu.TF.XamarinForms
             this.TopButton.Clicked += OnTopButtonOnClicked;
         }
 
-        private async Task Init(DownloadProgressChangedEventHandler onProgressChanged)
+        private async Task Init(FileDownloadManager.DownloadProgressChangedEventHandler onProgressChanged)
         {
             if (_inceptionGraph == null)
             {

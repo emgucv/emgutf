@@ -47,21 +47,6 @@ namespace Emgu.TF.Models
             }
         }
 
-        /*
-        public async Task Init(
-            String[] modelFiles = null, 
-            String downloadUrl = null, 
-            String localModelFolder = "stylize")
-        {
-            _downloadManager.Clear();
-            String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/stylize_v1/" : downloadUrl;
-            String[] fileNames = modelFiles == null ? new string[] { "stylize_quantized.pb" } : modelFiles;
-            for (int i = 0; i < fileNames.Length; i++)
-                _downloadManager.AddFile(url + fileNames[i], localModelFolder);
-            await _downloadManager.Download();
-            ImportGraph();
-        }*/
-
         /// <summary>
         /// Initiate the graph by checking if the model file exist locally, if not download the graph from internet.
         /// </summary>

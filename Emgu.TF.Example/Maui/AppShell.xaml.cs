@@ -1,4 +1,4 @@
-﻿namespace Maui
+﻿namespace Emgu.TF.Maui.Demo
 {
     public partial class AppShell : Shell
     {

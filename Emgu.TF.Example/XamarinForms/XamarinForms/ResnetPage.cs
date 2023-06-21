@@ -24,24 +24,10 @@ namespace Emgu.TF.XamarinForms
         : ButtonTextImagePage
 #endif
     {
-        /// <summary>
-        /// The inception model to use.
-        /// </summary>
-        public enum Model
-        {
-            /// <summary>
-            /// The default inception model
-            /// </summary>
-            Default,
-            /// <summary>
-            /// The flower re-train model
-            /// </summary>
-            Flower
-        }
 
         private Resnet _resnet;
 
-        private async Task Init(DownloadProgressChangedEventHandler onProgressChanged)
+        private async Task Init(FileDownloadManager.DownloadProgressChangedEventHandler onProgressChanged)
         {
             if (_resnet == null)
             {

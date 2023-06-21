@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace Maui
+namespace Emgu.TF.Maui.Demo
 {
     public static class MauiProgram
     {

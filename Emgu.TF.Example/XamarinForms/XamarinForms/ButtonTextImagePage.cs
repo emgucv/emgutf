@@ -327,13 +327,13 @@ namespace Emgu.TF.XamarinForms
             }
         }
 
-        protected void onDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        protected void onDownloadProgressChanged(long? totalBytesToReceive, long bytesReceived, double? progressPercentage)
         {
             String msg;
-            if (e.TotalBytesToReceive > 0)
-                msg = String.Format("{0} of {1} downloaded ({2}%)", ByteToSizeStr(e.BytesReceived), ByteToSizeStr(e.TotalBytesToReceive), e.ProgressPercentage);
+            if (totalBytesToReceive > 0)
+                msg = String.Format("{0} of {1} downloaded ({2}%)", ByteToSizeStr(bytesReceived), ByteToSizeStr(totalBytesToReceive.Value), progressPercentage);
             else
-                msg = String.Format("{0} downloaded", ByteToSizeStr(e.BytesReceived));
+                msg = String.Format("{0} downloaded", ByteToSizeStr(bytesReceived));
             SetMessage(msg);
         }
     }

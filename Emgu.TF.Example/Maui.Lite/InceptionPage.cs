@@ -41,7 +41,7 @@ namespace Maui.Demo.Lite
         private void onDownloadProgressChanged(object sender, System.Net.DownloadProgressChangedEventArgs e)
         {
             if (e.TotalBytesToReceive <= 0)
-                SetMessage(String.Format("{0} bytes downloaded", e.BytesReceived, e.ProgressPercentage));
+                SetMessage(String.Format("{0} bytes downloaded", e.BytesReceived));
             else
                 SetMessage(String.Format("{0} of {1} bytes downloaded ({2}%)", e.BytesReceived, e.TotalBytesToReceive, e.ProgressPercentage));
         }

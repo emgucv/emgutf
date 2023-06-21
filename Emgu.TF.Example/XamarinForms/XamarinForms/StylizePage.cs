@@ -35,7 +35,7 @@ namespace Emgu.TF.XamarinForms
     {
         private StylizeGraph _stylizeGraph;
         
-        private async Task Init(DownloadProgressChangedEventHandler onProgressChanged)
+        private async Task Init(FileDownloadManager.DownloadProgressChangedEventHandler onProgressChanged)
         {
             if (_stylizeGraph == null)
             {
