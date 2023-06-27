@@ -74,17 +74,16 @@ namespace Emgu.TF.Lite.Models
             _downloadManager = new FileDownloadManager();
             _downloadManager.OnDownloadProgressChanged += onDownloadProgressChanged;
         }
-
-        private void onDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        private void onDownloadProgressChanged(long? totalBytesToReceive, long bytesReceived, double? progressPercentage)
         {
             if (OnDownloadProgressChanged != null)
-                OnDownloadProgressChanged(sender, e);
+                OnDownloadProgressChanged(totalBytesToReceive, bytesReceived, progressPercentage);
         }
 
         /// <summary>
-        /// Event handler that triggers when download progress changed.
+        /// Callback when model download progress is changed.
         /// </summary>
-        public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
+        public event FileDownloadManager.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
 
         /// <summary>
         /// Initialize the CocoSSDMobileNet model

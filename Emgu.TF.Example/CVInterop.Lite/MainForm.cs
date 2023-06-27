@@ -34,9 +34,13 @@ namespace CVInterop.Lite.Net
             _mobileNet.OnDownloadProgressChanged += OnDownloadProgressChangedEventHandler;
         }
 
-        public void OnDownloadProgressChangedEventHandler(object sender, System.Net.DownloadProgressChangedEventArgs e)
+        public void OnDownloadProgressChangedEventHandler(long? totalBytesToReceive, long bytesReceived, double? progressPercentage)
         {
-            String msg = String.Format("Downloading models, please wait... {0} of {1} bytes ({2}%) downloaded.", e.BytesReceived, e.TotalBytesToReceive, e.ProgressPercentage);
+            String msg = String.Format("Downloading models, please wait... ");
+            if (totalBytesToReceive.HasValue && totalBytesToReceive > 0)
+                msg += String.Format("{0} of {1} bytes downloaded ({2}%)", bytesReceived, totalBytesToReceive, progressPercentage);
+            else
+                msg += String.Format("{0} bytes downloaded.", bytesReceived);
             if (InvokeRequired)
             {
                 this.Invoke((MethodInvoker)(() =>

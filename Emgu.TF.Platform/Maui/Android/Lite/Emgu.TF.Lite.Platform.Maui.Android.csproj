@@ -102,7 +102,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)\..\..\Android\*.cs" />
   </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Emgu.TF.Lite\Emgu.TF.Lite.NetStandard\Emgu.TF.Lite.Netstandard.csproj" />
+      <ProjectReference Include="..\..\..\..\Emgu.TF.Lite\Emgu.TF.Lite.NetStandard\Emgu.TF.Lite.Netstandard.csproj" />
     </ItemGroup>
   <Target Name="EmguTfLiteMauiAndroidPackageBuildImports" BeforeTargets="PrepareForBuild">
     <Warning Text="'$(EmguTfLiteMauiAndroidErrorMessage)'" Condition="'$(EmguTfLiteMauiAndroidErrorMessage)'!=''" />
