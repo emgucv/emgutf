@@ -87,7 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard.IOS\Emgu.TF.Lite.Netstandard.IOS.csproj">
-      <Project>{f167aea1-eba9-4164-b944-5ca6c8bc1914}</Project>
+      <Project>{35CA3176-A100-43AF-9D96-97DE0B1172FE}</Project>
       <Name>Emgu.TF.Lite.Netstandard.IOS</Name>
     </ProjectReference>
   </ItemGroup>

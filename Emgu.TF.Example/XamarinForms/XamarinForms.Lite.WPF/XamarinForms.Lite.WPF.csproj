@@ -29,13 +29,16 @@
   <ItemGroup>
     <PackageReference Include="Xamarin.Essentials" Version="1.7.5" />
     <PackageReference Include="Xamarin.Forms.Platform.WPF" Version="5.0.0.2578" />
-    <PackageReference Include="WpfLightToolkit">
-      <Version>1.0.3</Version>
+    <PackageReference Include="WpfLightToolkit" Version="1.0.3">
     </PackageReference>
   </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Netstandard\Emgu.TF.Lite.Models.Netstandard.csproj" />
-      <ProjectReference Include="..\..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.Netstandard.csproj" />
+      <ProjectReference Include="..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Netstandard\Emgu.TF.Lite.Models.Netstandard.csproj">
+        <ReferenceSourceTarget></ReferenceSourceTarget>
+      </ProjectReference>
+      <ProjectReference Include="..\..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.Netstandard.csproj">
+        <ReferenceSourceTarget></ReferenceSourceTarget>
+      </ProjectReference>
     </ItemGroup>
     <Import Project="..\XamarinForms.Lite\XamarinForms.Lite.projitems" Label="Shared" />
     <Import Project="..\..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems" Label="Shared" />

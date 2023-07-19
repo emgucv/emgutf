@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0-ios11.0</TargetFramework>
+    <TargetFramework>net7.0-ios11.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>true</ImplicitUsings>
     <IsBindingProject>true</IsBindingProject>
@@ -10,8 +10,8 @@
   <PropertyGroup>
     <EmguTfLiteIOSLinkTarget>MAUI IOS Library</EmguTfLiteIOSLinkTarget>
     <TfLiteBinaryDir>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\..\lib))</TfLiteBinaryDir>
-    <EmguTfLiteNativeIOSBinary>$(TfLiteBinaryDir)\iOS\libtfliteextern_universal.a</EmguTfLiteNativeIOSBinary>    
-    <EmguTfLiteMauiIOSErrorMessage Condition="!Exists('$(EmguTfLiteNativeIOSBinary)')">This package do not contain necessary binary for $(EmguTfLiteIOSLinkTarget). Emgu CV for iOS Commercial License is required. iOS is targeted, but file $(EmguTfLiteNativeIOSBinary) is missing.</EmguTfLiteMauiIOSErrorMessage>
+    <EmguTfLiteNativeIOSBinary>$(TfLiteBinaryDir)\ios\libtfliteextern.a</EmguTfLiteNativeIOSBinary>    
+    <EmguTfLiteMauiIOSErrorMessage Condition="!Exists('$(EmguTfLiteNativeIOSBinary)')">This package do not contain necessary binary for $(EmguTfLiteIOSLinkTarget). Emgu TF Lite for iOS Commercial License is required. iOS is targeted, but file $(EmguTfLiteNativeIOSBinary) is missing.</EmguTfLiteMauiIOSErrorMessage>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <WarningLevel>4</WarningLevel>

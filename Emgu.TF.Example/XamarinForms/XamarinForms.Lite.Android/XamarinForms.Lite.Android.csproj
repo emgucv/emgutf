@@ -16,7 +16,6 @@
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
-    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v13.0</TargetFrameworkVersion>
     <AndroidStoreUncompressedFileExtensions />
     <LangVersion>8.0</LangVersion>
@@ -294,7 +293,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\Emgu.TF.Platform\Xamarin\Android\Emgu.TF.Lite.Platform.Xamarin.Android.csproj">
       <Project>{d11aa8f3-def2-4f40-a4e5-fb8a8938ddb7}</Project>
-      <Name>Emgu.TF.Lite.Runtime.Android</Name>
+      <Name>Emgu.TF.Lite.Platform.Xamarin.Android</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\XamarinForms.Lite\XamarinForms.Lite.projitems" Label="Shared" />
