@@ -84,7 +84,61 @@
     <DebugSymbols></DebugSymbols>
     <DebugType></DebugType>
     <Optimize></Optimize>
-    <OutputPath></OutputPath>
+    <OutputPath>$(TFLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants></DefineConstants>
+    <WarningLevel></WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DocumentationFile></DocumentationFile>
+    <ConsolePause>true</ConsolePause>
+    <ExternalConsole>false</ExternalConsole>
+    <Commandlineparameters></Commandlineparameters>
+    <RunWithWarnings>true</RunWithWarnings>
+    <AndroidManagedSymbols>false</AndroidManagedSymbols>
+    <MandroidExtraArgs></MandroidExtraArgs>
+    <AndroidLinkSkip></AndroidLinkSkip>
+    <AndroidLinkMode></AndroidLinkMode>
+    <AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
+    <BundleAssemblies></BundleAssemblies>
+    <AndroidStoreUncompressedFileExtensions></AndroidStoreUncompressedFileExtensions>
+    <MandroidI18n></MandroidI18n>
+    <JavaMaximumHeapSize></JavaMaximumHeapSize>
+    <JavaOptions></JavaOptions>
+    <AndroidKeyStore></AndroidKeyStore>
+    <AndroidSigningKeyStore></AndroidSigningKeyStore>
+    <AndroidSigningStorePass></AndroidSigningStorePass>
+    <AndroidSigningKeyAlias></AndroidSigningKeyAlias>
+    <AndroidSigningKeyPass></AndroidSigningKeyPass>
+    <AndroidPackageFormat></AndroidPackageFormat>
+    <AotAssemblies></AotAssemblies>
+    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
+    <EnableLLVM>false</EnableLLVM>
+    <AndroidEnableSGenConcurrent>false</AndroidEnableSGenConcurrent>
+    <AndroidUseAapt2></AndroidUseAapt2>
+    <AndroidEnableMultiDex></AndroidEnableMultiDex>
+    <AndroidFastDeploymentType></AndroidFastDeploymentType>
+    <AndroidManifest></AndroidManifest>
+    <AndroidDexTool></AndroidDexTool>
+    <AssemblyName></AssemblyName>
+    <SignAssembly>false</SignAssembly>
+    <DelaySign>false</DelaySign>
+    <PublicSign>false</PublicSign>
+    <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
+    <NoWarn></NoWarn>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <LangVersion></LangVersion>
+    <NoStdLib>false</NoStdLib>
+    <PlatformTarget>anycpu</PlatformTarget>
+    <WarningsNotAsErrors></WarningsNotAsErrors>
+    <Nullable></Nullable>
+    <EmbedAssembliesIntoApk></EmbedAssembliesIntoApk>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <IntermediateOutputPath></IntermediateOutputPath>
+    <DebugSymbols></DebugSymbols>
+    <DebugType>$(TFLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</DebugType>
+    <Optimize></Optimize>
+    <OutputPath>$(TFLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants></DefineConstants>
     <WarningLevel></WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
@@ -138,7 +192,7 @@
     <DebugSymbols></DebugSymbols>
     <DebugType></DebugType>
     <Optimize></Optimize>
-    <OutputPath></OutputPath>
+    <OutputPath>$(TFLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants></DefineConstants>
     <WarningLevel></WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
@@ -192,61 +246,7 @@
     <DebugSymbols></DebugSymbols>
     <DebugType></DebugType>
     <Optimize></Optimize>
-    <OutputPath></OutputPath>
-    <DefineConstants></DefineConstants>
-    <WarningLevel></WarningLevel>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <DocumentationFile></DocumentationFile>
-    <ConsolePause>true</ConsolePause>
-    <ExternalConsole>false</ExternalConsole>
-    <Commandlineparameters></Commandlineparameters>
-    <RunWithWarnings>true</RunWithWarnings>
-    <AndroidManagedSymbols>false</AndroidManagedSymbols>
-    <MandroidExtraArgs></MandroidExtraArgs>
-    <AndroidLinkSkip></AndroidLinkSkip>
-    <AndroidLinkMode></AndroidLinkMode>
-    <AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
-    <BundleAssemblies></BundleAssemblies>
-    <AndroidStoreUncompressedFileExtensions></AndroidStoreUncompressedFileExtensions>
-    <MandroidI18n></MandroidI18n>
-    <JavaMaximumHeapSize></JavaMaximumHeapSize>
-    <JavaOptions></JavaOptions>
-    <AndroidKeyStore></AndroidKeyStore>
-    <AndroidSigningKeyStore></AndroidSigningKeyStore>
-    <AndroidSigningStorePass></AndroidSigningStorePass>
-    <AndroidSigningKeyAlias></AndroidSigningKeyAlias>
-    <AndroidSigningKeyPass></AndroidSigningKeyPass>
-    <AndroidPackageFormat></AndroidPackageFormat>
-    <AotAssemblies></AotAssemblies>
-    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
-    <EnableLLVM>false</EnableLLVM>
-    <AndroidEnableSGenConcurrent>false</AndroidEnableSGenConcurrent>
-    <AndroidUseAapt2></AndroidUseAapt2>
-    <AndroidEnableMultiDex></AndroidEnableMultiDex>
-    <AndroidFastDeploymentType></AndroidFastDeploymentType>
-    <AndroidManifest></AndroidManifest>
-    <AndroidDexTool></AndroidDexTool>
-    <AssemblyName></AssemblyName>
-    <SignAssembly>false</SignAssembly>
-    <DelaySign>false</DelaySign>
-    <PublicSign>false</PublicSign>
-    <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
-    <NoWarn></NoWarn>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
-    <LangVersion></LangVersion>
-    <NoStdLib>false</NoStdLib>
-    <PlatformTarget>anycpu</PlatformTarget>
-    <WarningsNotAsErrors></WarningsNotAsErrors>
-    <Nullable></Nullable>
-    <EmbedAssembliesIntoApk></EmbedAssembliesIntoApk>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <IntermediateOutputPath></IntermediateOutputPath>
-    <DebugSymbols></DebugSymbols>
-    <DebugType></DebugType>
-    <Optimize></Optimize>
-    <OutputPath></OutputPath>
+    <OutputPath>$(TFLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants></DefineConstants>
     <WarningLevel></WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
@@ -300,7 +300,7 @@
     <DebugSymbols>false</DebugSymbols>
     <DebugType></DebugType>
     <Optimize></Optimize>
-    <OutputPath></OutputPath>
+    <OutputPath>$(TFLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants></DefineConstants>
     <WarningLevel></WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
@@ -354,7 +354,7 @@
     <DebugSymbols>false</DebugSymbols>
     <DebugType></DebugType>
     <Optimize></Optimize>
-    <OutputPath></OutputPath>
+    <OutputPath>$(TFLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants></DefineConstants>
     <WarningLevel></WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
@@ -408,7 +408,7 @@
     <DebugSymbols>false</DebugSymbols>
     <DebugType></DebugType>
     <Optimize></Optimize>
-    <OutputPath></OutputPath>
+    <OutputPath>$(TFLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants></DefineConstants>
     <WarningLevel></WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
@@ -462,7 +462,7 @@
     <DebugSymbols>false</DebugSymbols>
     <DebugType></DebugType>
     <Optimize></Optimize>
-    <OutputPath></OutputPath>
+    <OutputPath>$(TFLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants></DefineConstants>
     <WarningLevel></WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
