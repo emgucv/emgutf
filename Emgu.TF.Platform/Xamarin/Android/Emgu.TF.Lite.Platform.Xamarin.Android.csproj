@@ -118,7 +118,6 @@
     <AndroidFastDeploymentType></AndroidFastDeploymentType>
     <AndroidManifest></AndroidManifest>
     <AndroidDexTool></AndroidDexTool>
-    <AssemblyName></AssemblyName>
     <SignAssembly>false</SignAssembly>
     <DelaySign>false</DelaySign>
     <PublicSign>false</PublicSign>
@@ -172,7 +171,6 @@
     <AndroidFastDeploymentType></AndroidFastDeploymentType>
     <AndroidManifest></AndroidManifest>
     <AndroidDexTool></AndroidDexTool>
-    <AssemblyName></AssemblyName>
     <SignAssembly>false</SignAssembly>
     <DelaySign>false</DelaySign>
     <PublicSign>false</PublicSign>
@@ -226,7 +224,6 @@
     <AndroidFastDeploymentType></AndroidFastDeploymentType>
     <AndroidManifest></AndroidManifest>
     <AndroidDexTool></AndroidDexTool>
-    <AssemblyName></AssemblyName>
     <SignAssembly>false</SignAssembly>
     <DelaySign>false</DelaySign>
     <PublicSign>false</PublicSign>
@@ -280,7 +277,6 @@
     <AndroidFastDeploymentType></AndroidFastDeploymentType>
     <AndroidManifest></AndroidManifest>
     <AndroidDexTool></AndroidDexTool>
-    <AssemblyName></AssemblyName>
     <SignAssembly>false</SignAssembly>
     <DelaySign>false</DelaySign>
     <PublicSign>false</PublicSign>
@@ -334,7 +330,6 @@
     <AndroidFastDeploymentType></AndroidFastDeploymentType>
     <AndroidManifest></AndroidManifest>
     <AndroidDexTool></AndroidDexTool>
-    <AssemblyName></AssemblyName>
     <SignAssembly>false</SignAssembly>
     <DelaySign>false</DelaySign>
     <PublicSign>false</PublicSign>
@@ -388,7 +383,6 @@
     <AndroidFastDeploymentType></AndroidFastDeploymentType>
     <AndroidManifest></AndroidManifest>
     <AndroidDexTool></AndroidDexTool>
-    <AssemblyName></AssemblyName>
     <SignAssembly>false</SignAssembly>
     <DelaySign>false</DelaySign>
     <PublicSign>false</PublicSign>
@@ -442,7 +436,6 @@
     <AndroidFastDeploymentType></AndroidFastDeploymentType>
     <AndroidManifest></AndroidManifest>
     <AndroidDexTool></AndroidDexTool>
-    <AssemblyName></AssemblyName>
     <SignAssembly>false</SignAssembly>
     <DelaySign>false</DelaySign>
     <PublicSign>false</PublicSign>
@@ -496,7 +489,6 @@
     <AndroidFastDeploymentType></AndroidFastDeploymentType>
     <AndroidManifest></AndroidManifest>
     <AndroidDexTool></AndroidDexTool>
-    <AssemblyName></AssemblyName>
     <SignAssembly>false</SignAssembly>
     <DelaySign>false</DelaySign>
     <PublicSign>false</PublicSign>
