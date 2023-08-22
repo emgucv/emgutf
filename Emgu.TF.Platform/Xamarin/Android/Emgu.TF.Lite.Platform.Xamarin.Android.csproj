@@ -88,7 +88,7 @@
     <DefineConstants></DefineConstants>
     <WarningLevel></WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <DocumentationFile></DocumentationFile>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <ConsolePause>true</ConsolePause>
     <ExternalConsole>false</ExternalConsole>
     <Commandlineparameters></Commandlineparameters>
@@ -142,7 +142,7 @@
     <DefineConstants></DefineConstants>
     <WarningLevel></WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <DocumentationFile></DocumentationFile>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <ConsolePause>true</ConsolePause>
     <ExternalConsole>false</ExternalConsole>
     <Commandlineparameters></Commandlineparameters>
@@ -196,7 +196,7 @@
     <DefineConstants></DefineConstants>
     <WarningLevel></WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <DocumentationFile></DocumentationFile>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <ConsolePause>true</ConsolePause>
     <ExternalConsole>false</ExternalConsole>
     <Commandlineparameters></Commandlineparameters>
@@ -250,7 +250,7 @@
     <DefineConstants></DefineConstants>
     <WarningLevel></WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <DocumentationFile></DocumentationFile>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <ConsolePause>true</ConsolePause>
     <ExternalConsole>false</ExternalConsole>
     <Commandlineparameters></Commandlineparameters>
@@ -304,7 +304,7 @@
     <DefineConstants></DefineConstants>
     <WarningLevel></WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <DocumentationFile></DocumentationFile>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <ConsolePause>true</ConsolePause>
     <ExternalConsole>false</ExternalConsole>
     <Commandlineparameters></Commandlineparameters>
@@ -358,7 +358,7 @@
     <DefineConstants></DefineConstants>
     <WarningLevel></WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <DocumentationFile></DocumentationFile>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <ConsolePause>true</ConsolePause>
     <ExternalConsole>false</ExternalConsole>
     <Commandlineparameters></Commandlineparameters>
@@ -412,7 +412,7 @@
     <DefineConstants></DefineConstants>
     <WarningLevel></WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <DocumentationFile></DocumentationFile>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <ConsolePause>true</ConsolePause>
     <ExternalConsole>false</ExternalConsole>
     <Commandlineparameters></Commandlineparameters>
@@ -466,7 +466,7 @@
     <DefineConstants></DefineConstants>
     <WarningLevel></WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <DocumentationFile></DocumentationFile>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <ConsolePause>true</ConsolePause>
     <ExternalConsole>false</ExternalConsole>
     <Commandlineparameters></Commandlineparameters>
