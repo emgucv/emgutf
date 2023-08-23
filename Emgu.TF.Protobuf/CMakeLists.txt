@@ -148,7 +148,7 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
     LIST(APPEND PROTO_SOURCE_NATIVE_PATH ${PROTO_SOURCE_FILE})
   ENDFOREACH()
 
-  SET(PROTO_GEN_COMMAND "${PROTOC_EXE}" "--proto_path=." "--proto_path=\"${PROTOBUF_INCLUDE_PATH}\""  "--csharp_out=\"${CMAKE_CURRENT_SOURCE_DIR}\"" "--csharp_opt=file_extension=.g.cs" ${PROTO_SOURCE_NATIVE_PATH})
+  SET(PROTO_GEN_COMMAND "${PROTOC_EXE}" "--experimental_allow_proto3_optional" "--proto_path=." "--proto_path=\"${PROTOBUF_INCLUDE_PATH}\""  "--csharp_out=\"${CMAKE_CURRENT_SOURCE_DIR}\"" "--csharp_opt=file_extension=.g.cs" ${PROTO_SOURCE_NATIVE_PATH})
 
 
   SET(PROTO_SOURCE_TSL)
@@ -180,7 +180,7 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
 
 
 
-  SET(PROTO_GEN_COMMAND_TSL "${PROTOC_EXE}" "--proto_path=." "--proto_path=\"${PROTOBUF_INCLUDE_PATH}\""  "--csharp_out=\"${CMAKE_CURRENT_SOURCE_DIR}\"" "--csharp_opt=file_extension=.tsl.g.cs" ${PROTO_SOURCE_TSL_NATIVE_PATH})
+  SET(PROTO_GEN_COMMAND_TSL "${PROTOC_EXE}" "--experimental_allow_proto3_optional" "--proto_path=." "--proto_path=\"${PROTOBUF_INCLUDE_PATH}\""  "--csharp_out=\"${CMAKE_CURRENT_SOURCE_DIR}\"" "--csharp_opt=file_extension=.tsl.g.cs" ${PROTO_SOURCE_TSL_NATIVE_PATH})
   
   #IF(NOT WIN32)
   #  SET(PROTO_GEN_COMMAND mono ${PROTO_GEN_COMMAND})
