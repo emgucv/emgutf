@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0-android</TargetFramework>
+    <TargetFramework>net7.0-android</TargetFramework>
     <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-    <PropertyGroup>
+  <PropertyGroup>
     <TfBinaryDir>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\..\..\lib))</TfBinaryDir>
   </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -109,4 +109,5 @@
     <Message Text="Emgu TF MAUI Android Compiling with $(EmguTfMauiAndroidDeployMessage)binary" Condition="'$(EmguTfMauiAndroidDeployMessage)'!=''" Importance="High" />
     <Message Text="Native binary is NOT deployed by the project." Condition="'$(EmguTfMauiAndroidDeployMessage)'==''" Importance="High" />
   </Target>
+
 </Project>

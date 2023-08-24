@@ -4,16 +4,16 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
   <PropertyGroup>
-    <PackageId>${EMGUTF_LITE_MAUI_ANDROID_NUGET_ID}</PackageId>
+    <PackageId>${EMGUTF_MAUI_ANDROID_NUGET_ID}</PackageId>
 	
-	<title>${EMGUTF_LITE_MAUI_ANDROID_NUGET_TITLE}</title>
+	<title>${EMGUTF_MAUI_ANDROID_NUGET_TITLE}</title>
     <version>${CPACK_PACKAGE_VERSION}</version>
     <authors>${CPACK_PACKAGE_VENDOR}</authors>
     <owners>${CPACK_PACKAGE_VENDOR}</owners>
-	<summary>Android runtime package of Emgu TF Lite for MAUI</summary>
-    <Description>This package contains the native Android runtime of Emgu TF Lite for MAUI</Description>
-    <PackageReleaseNotes>This is the ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH} release of Emgu TF Lite. For online documentation please visit
-${NUGET_EMGU_URL}/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}/document-lite/index.html    	        
+	<summary>Android runtime package of Emgu TF for MAUI</summary>
+    <Description>This package contains the native Android runtime of Emgu TF for MAUI</Description>
+    <PackageReleaseNotes>This is the ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH} release of Emgu TF. For online documentation please visit
+${NUGET_EMGU_URL}/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}/document/index.html   	        
 </PackageReleaseNotes>
 	
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -46,30 +46,30 @@ ${NUGET_EMGU_URL}/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKA
         <PackagePath>docs\</PackagePath>
       </None>
     </ItemGroup>
-	<ItemGroup Condition="Exists('${TfLiteBinaryDir}\android\arm64-v8a\arm64-v8a_version_string.inc')">
-	  <None Include="${TfLiteBinaryDir}\android\arm64-v8a\arm64-v8a_version_string.inc">
+	<ItemGroup Condition="Exists('${TfBinaryDir}\android\arm64-v8a\arm64-v8a_version_string.inc')">
+	  <None Include="${TfBinaryDir}\android\arm64-v8a\arm64-v8a_version_string.inc">
         <Pack>True</Pack>
         <PackagePath>docs\</PackagePath>
       </None>
 	</ItemGroup>
-	<ItemGroup Condition="Exists('${TfLiteBinaryDir}\android\arm64-v8a\armeabi-v7a_version_string.inc')">
-	  <None Include="${TfLiteBinaryDir}\android\arm64-v8a\armeabi-v7a_version_string.inc">
+	<ItemGroup Condition="Exists('${TfBinaryDir}\libs\android\arm64-v8a\armeabi-v7a_version_string.inc')">
+	  <None Include="${TfBinaryDir}\libs\android\arm64-v8a\armeabi-v7a_version_string.inc">
         <Pack>True</Pack>
         <PackagePath>docs\</PackagePath>
       </None>
 	</ItemGroup>
-	<ItemGroup Condition="Exists('${TfLiteBinaryDir}\android\x86\x86_version_string.inc')">
-	  <None Include="${TfLiteBinaryDir}\android\x86\x86_version_string.inc">
+	<ItemGroup Condition="Exists('${TfBinaryDir}\libs\android\x86\x86_version_string.inc')">
+	  <None Include="${TfBinaryDir}\libs\android\x86\x86_version_string.inc">
         <Pack>True</Pack>
         <PackagePath>docs\</PackagePath>
       </None>
 	</ItemGroup>
-	<ItemGroup Condition="Exists('${TfLiteBinaryDir}\android\x86_64\x86_64_version_string.inc')">
-	  <None Include="${TfLiteBinaryDir}android\x86_64\x86_64_version_string.inc">
+	<ItemGroup Condition="Exists('${TfBinaryDir}\libs\android\x86_64\x86_64_version_string.inc')">
+	  <None Include="${TfBinaryDir}\libs\android\x86_64\x86_64_version_string.inc">
         <Pack>True</Pack>
         <PackagePath>docs\</PackagePath>
       </None>
 	</ItemGroup>
-  ${EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_BINARY}
-  ${EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_NUGET}
+  ${EMGUTF_MAUI_ANDROID_POST_PROCESS_BINARY}
+  ${EMGUTF_MAUI_ANDROID_POST_PROCESS_NUGET}
 </Project>
