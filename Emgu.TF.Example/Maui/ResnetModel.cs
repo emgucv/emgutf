@@ -20,6 +20,7 @@ using Tensorflow;
 using Size = System.Drawing.Size;
 using Emgu.CV.CvEnum;
 using System.Runtime.InteropServices;
+using Emgu.CV.Models;
 
 namespace Emgu.TF.Maui.Demo
 {
@@ -46,6 +47,10 @@ namespace Emgu.TF.Maui.Demo
         {
         }
 
+        public RenderType RenderMethod
+        {
+            get { return Emgu.CV.Models.RenderType.Update; }
+        }
 
         public void Clear()
         {
@@ -130,14 +135,11 @@ namespace Emgu.TF.Maui.Demo
                 resizedMat.ConvertTo(tensorMat, DepthType.Cv32F, 1.0f / 255.0f, 0.0);
             }
 
-
             //Here we are trying to time the execution of the graph after it is loaded
             //If we are not interest in the performance, we can skip the following 3 lines
             Stopwatch sw = Stopwatch.StartNew();
             Resnet.RecognitionResult[] result = _resnet.Recognize(_inputTensor)[0];
             sw.Stop();
-
-
 
             String msg = String.Format(
                 "Object is {0} with {1}% probability. Recognized in {2} milliseconds.",

@@ -4,7 +4,7 @@ namespace Emgu.TF.Maui.Demo
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
+        //int count = 0;
 
         public MainPage()
         {
@@ -91,7 +91,8 @@ namespace Emgu.TF.Maui.Demo
                 buttonList.Add(stylizeButton);
             }
 
-            if (Device.RuntimePlatform != Device.Android)
+            //if (Device.RuntimePlatform != Device.Android)
+            if (Microsoft.Maui.Devices.DeviceInfo.Platform != DevicePlatform.Android)
             {
                 //LoadSavedModel is not available for Android
                 Button resnetButton = new Button();

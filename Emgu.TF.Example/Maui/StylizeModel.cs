@@ -20,6 +20,7 @@ using Tensorflow;
 using Size = System.Drawing.Size;
 using Emgu.CV.CvEnum;
 using System.Runtime.InteropServices;
+using Emgu.CV.Models;
 
 namespace Emgu.TF.Maui.Demo
 {
@@ -47,7 +48,10 @@ namespace Emgu.TF.Maui.Demo
         {
         }
 
-
+        public RenderType RenderMethod
+        {
+            get { return Emgu.CV.Models.RenderType.Overwrite; }
+        }
         public void Clear()
         {
             if (_stylizeGraph != null)

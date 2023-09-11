@@ -55,7 +55,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Emgu.CV.runtime.maui.mini" Version="4.7.0.5276" />
+		<PackageReference Include="Emgu.CV.runtime.maui.mini" Version="4.8.0.5324" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 	</ItemGroup>
 

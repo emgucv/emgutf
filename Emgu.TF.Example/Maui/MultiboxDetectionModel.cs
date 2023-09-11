@@ -22,6 +22,7 @@ using Emgu.CV.CvEnum;
 using System.Runtime.InteropServices;
 using Emgu.CV.Structure;
 using static Emgu.CV.DISOpticalFlow;
+using Emgu.CV.Models;
 
 namespace Emgu.TF.Maui.Demo
 {
@@ -48,6 +49,10 @@ namespace Emgu.TF.Maui.Demo
         {
         }
 
+        public RenderType RenderMethod
+        {
+            get { return Emgu.CV.Models.RenderType.Update; }
+        }
 
         public void Clear()
         {
@@ -143,7 +148,7 @@ namespace Emgu.TF.Maui.Demo
             using (InputArray iaImage = imageIn.GetInputArray())
             {
                 var imgSize = iaImage.GetSize();
-                iaImage.CopyTo(imageOut);
+                //iaImage.CopyTo(imageOut);
 
                 foreach (Emgu.Models.Annotation annotation in annotations)
                 {
