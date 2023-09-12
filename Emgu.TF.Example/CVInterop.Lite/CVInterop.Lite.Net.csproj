@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <Platforms>AnyCPU;x86;x64</Platforms>
   </PropertyGroup>
@@ -18,10 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Emgu.CV" Version="4.6.0.5131" />
-    <PackageReference Include="Emgu.CV.Bitmap" Version="4.6.0.5131" />
-    <PackageReference Include="Emgu.CV.runtime.windows" Version="4.6.0.5131" />
-    <PackageReference Include="Emgu.CV.UI" Version="4.6.0.5131" />
+    <PackageReference Include="Emgu.CV" Version="4.8.0.5324" />
+    <PackageReference Include="Emgu.CV.Bitmap" Version="4.8.0.5324" />
+    <PackageReference Include="Emgu.CV.runtime.windows" Version="4.8.0.5324" />
+    <PackageReference Include="Emgu.CV.UI" Version="4.8.0.5324" />
   </ItemGroup>
 
   <Import Project="..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems" Label="Shared" />

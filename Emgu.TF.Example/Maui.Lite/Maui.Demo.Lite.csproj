@@ -67,7 +67,7 @@
 	    <!-- <ProjectReference Condition="!($([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios' or $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android')" Include="..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Netstandard\Emgu.TF.Lite.Models.Netstandard.csproj" /> -->
 		<ProjectReference Include="..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Netstandard\Emgu.TF.Lite.Models.Netstandard.csproj" />
         
-		<PackageReference Include="Emgu.CV.runtime.maui.mini" Version="4.7.0.5276" />
+		<PackageReference Include="Emgu.CV.runtime.maui.mini" Version="4.8.0.5324" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 	</ItemGroup>
 	

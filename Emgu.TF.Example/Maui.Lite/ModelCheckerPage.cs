@@ -128,21 +128,7 @@ namespace Maui.Demo.Lite
             if (fileResult == null) //canceled
                 return;
             String fileName = fileResult.FullPath;
-            /*
-#if !(__ANDROID__ || __IOS__ || __MACOS__)
-            Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
-            dialog.Multiselect = false;
-            dialog.Title = "Select a TF Lite Model File";
-            if (dialog.ShowDialog() == false) //canceled
-                return;
-            string fileName = dialog.FileName;
-#else
-            var fileResult = await Xamarin.Essentials.FilePicker.PickAsync(Xamarin.Essentials.PickOptions.Images);
-            if (fileResult == null) //canceled
-                return;
-            string fileName = fileResult.FullPath;
-#endif
-            */
+
             SetEditorMessage(GetModelInfo(fileName), 600);
 
         }
