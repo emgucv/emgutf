@@ -85,7 +85,7 @@ IF(HAVE_OSX_LITE)
   
   IF(APPLE)
     PROJECT(Emgu.TF.Lite.Models.Mac)
-    MSBUILD_CSPROJ_IN_SOLUTION(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/../Solution/macos/Emgu.TF.Lite.Mac.sln" "${PROJECT_NAME}" "" ALL)    
+    MSBUILD_CSPROJ_IN_SOLUTION(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/../Solution/macos/Emgu.TF.Lite.Xamarin.Mac.sln" "${PROJECT_NAME}" "" ALL)    
     ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Netstandard)
   ENDIF()
 ENDIF()

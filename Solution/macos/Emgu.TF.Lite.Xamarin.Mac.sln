@@ -1,0 +1,155 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34009.444
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Util.Shared", "..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.shproj", "{98561642-5EC3-4244-BAF9-6876D9BA5527}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinForms.Lite.Mac", "..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite.Mac\XamarinForms.Lite.Mac.csproj", "{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.Models.Shared", "..\..\Emgu.Models\Emgu.Models.Shared.shproj", "{8EDCE0C8-BA71-4396-9428-35D05877258C}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "XamarinForms.Lite", "..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite\XamarinForms.Lite.shproj", "{26F4D7AF-57B6-4D2D-9A1C-AAFA757DDC4A}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Shared", "..\..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.shproj", "{8F587FB9-BBA6-4C30-9329-8CBAC7020FE0}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Models.Shared", "..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.shproj", "{E956DD26-1294-4731-8A90-C4CBA9F291B6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.NetStandard", "..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.NetStandard.csproj", "{C07F7FE3-3835-460D-B6C2-166250C03AC0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Models.Netstandard", "..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Netstandard\Emgu.TF.Lite.Models.Netstandard.csproj", "{971A6E6A-E7D4-4FF6-931E-8A25D572161C}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Runtime.Mac", "..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Lite.Runtime.Mac.shproj", "{8519B2B8-E96B-47FD-A466-C6031D34AAAB}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Runtime.Windows", "..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.shproj", "{0D7C99EA-3AAE-4F45-9BA7-3B4AF8313753}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Lite.Models.Mac", "..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Mac\Emgu.TF.Lite.Models.Mac.csproj", "{FF3D6E2C-3E0B-411C-A802-F61EE8A4829F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|iPhone = Debug|iPhone
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|ARM = Release|ARM
+		Release|iPhone = Release|iPhone
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}.Debug|ARM.ActiveCfg = Debug|ARM
+		{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}.Debug|ARM.Build.0 = Debug|ARM
+		{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}.Debug|iPhone.Build.0 = Debug|iPhone
+		{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}.Debug|x64.ActiveCfg = Debug|x64
+		{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}.Debug|x64.Build.0 = Debug|x64
+		{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}.Debug|x86.ActiveCfg = Debug|x64
+		{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}.Debug|x86.Build.0 = Debug|x64
+		{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}.Release|ARM.ActiveCfg = Release|ARM
+		{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}.Release|ARM.Build.0 = Release|ARM
+		{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}.Release|iPhone.ActiveCfg = Release|iPhone
+		{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}.Release|iPhone.Build.0 = Release|iPhone
+		{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}.Release|x64.ActiveCfg = Release|x64
+		{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}.Release|x64.Build.0 = Release|x64
+		{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}.Release|x86.ActiveCfg = Release|x64
+		{A5BE7C8B-C4DF-4CCE-8640-D533DF7D6892}.Release|x86.Build.0 = Release|x64
+		{C07F7FE3-3835-460D-B6C2-166250C03AC0}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{C07F7FE3-3835-460D-B6C2-166250C03AC0}.Debug|ARM.Build.0 = Debug|Any CPU
+		{C07F7FE3-3835-460D-B6C2-166250C03AC0}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{C07F7FE3-3835-460D-B6C2-166250C03AC0}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{C07F7FE3-3835-460D-B6C2-166250C03AC0}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{C07F7FE3-3835-460D-B6C2-166250C03AC0}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{C07F7FE3-3835-460D-B6C2-166250C03AC0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C07F7FE3-3835-460D-B6C2-166250C03AC0}.Debug|x64.Build.0 = Debug|Any CPU
+		{C07F7FE3-3835-460D-B6C2-166250C03AC0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C07F7FE3-3835-460D-B6C2-166250C03AC0}.Debug|x86.Build.0 = Debug|Any CPU
+		{C07F7FE3-3835-460D-B6C2-166250C03AC0}.Release|ARM.ActiveCfg = Release|Any CPU
+		{C07F7FE3-3835-460D-B6C2-166250C03AC0}.Release|ARM.Build.0 = Release|Any CPU
+		{C07F7FE3-3835-460D-B6C2-166250C03AC0}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{C07F7FE3-3835-460D-B6C2-166250C03AC0}.Release|iPhone.Build.0 = Release|Any CPU
+		{C07F7FE3-3835-460D-B6C2-166250C03AC0}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{C07F7FE3-3835-460D-B6C2-166250C03AC0}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{C07F7FE3-3835-460D-B6C2-166250C03AC0}.Release|x64.ActiveCfg = Release|Any CPU
+		{C07F7FE3-3835-460D-B6C2-166250C03AC0}.Release|x64.Build.0 = Release|Any CPU
+		{C07F7FE3-3835-460D-B6C2-166250C03AC0}.Release|x86.ActiveCfg = Release|Any CPU
+		{C07F7FE3-3835-460D-B6C2-166250C03AC0}.Release|x86.Build.0 = Release|Any CPU
+		{971A6E6A-E7D4-4FF6-931E-8A25D572161C}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{971A6E6A-E7D4-4FF6-931E-8A25D572161C}.Debug|ARM.Build.0 = Debug|Any CPU
+		{971A6E6A-E7D4-4FF6-931E-8A25D572161C}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{971A6E6A-E7D4-4FF6-931E-8A25D572161C}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{971A6E6A-E7D4-4FF6-931E-8A25D572161C}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{971A6E6A-E7D4-4FF6-931E-8A25D572161C}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{971A6E6A-E7D4-4FF6-931E-8A25D572161C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{971A6E6A-E7D4-4FF6-931E-8A25D572161C}.Debug|x64.Build.0 = Debug|Any CPU
+		{971A6E6A-E7D4-4FF6-931E-8A25D572161C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{971A6E6A-E7D4-4FF6-931E-8A25D572161C}.Debug|x86.Build.0 = Debug|Any CPU
+		{971A6E6A-E7D4-4FF6-931E-8A25D572161C}.Release|ARM.ActiveCfg = Release|Any CPU
+		{971A6E6A-E7D4-4FF6-931E-8A25D572161C}.Release|ARM.Build.0 = Release|Any CPU
+		{971A6E6A-E7D4-4FF6-931E-8A25D572161C}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{971A6E6A-E7D4-4FF6-931E-8A25D572161C}.Release|iPhone.Build.0 = Release|Any CPU
+		{971A6E6A-E7D4-4FF6-931E-8A25D572161C}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{971A6E6A-E7D4-4FF6-931E-8A25D572161C}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{971A6E6A-E7D4-4FF6-931E-8A25D572161C}.Release|x64.ActiveCfg = Release|Any CPU
+		{971A6E6A-E7D4-4FF6-931E-8A25D572161C}.Release|x64.Build.0 = Release|Any CPU
+		{971A6E6A-E7D4-4FF6-931E-8A25D572161C}.Release|x86.ActiveCfg = Release|Any CPU
+		{971A6E6A-E7D4-4FF6-931E-8A25D572161C}.Release|x86.Build.0 = Release|Any CPU
+		{FF3D6E2C-3E0B-411C-A802-F61EE8A4829F}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{FF3D6E2C-3E0B-411C-A802-F61EE8A4829F}.Debug|ARM.Build.0 = Debug|Any CPU
+		{FF3D6E2C-3E0B-411C-A802-F61EE8A4829F}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{FF3D6E2C-3E0B-411C-A802-F61EE8A4829F}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{FF3D6E2C-3E0B-411C-A802-F61EE8A4829F}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{FF3D6E2C-3E0B-411C-A802-F61EE8A4829F}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{FF3D6E2C-3E0B-411C-A802-F61EE8A4829F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FF3D6E2C-3E0B-411C-A802-F61EE8A4829F}.Debug|x64.Build.0 = Debug|Any CPU
+		{FF3D6E2C-3E0B-411C-A802-F61EE8A4829F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FF3D6E2C-3E0B-411C-A802-F61EE8A4829F}.Debug|x86.Build.0 = Debug|Any CPU
+		{FF3D6E2C-3E0B-411C-A802-F61EE8A4829F}.Release|ARM.ActiveCfg = Release|Any CPU
+		{FF3D6E2C-3E0B-411C-A802-F61EE8A4829F}.Release|ARM.Build.0 = Release|Any CPU
+		{FF3D6E2C-3E0B-411C-A802-F61EE8A4829F}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{FF3D6E2C-3E0B-411C-A802-F61EE8A4829F}.Release|iPhone.Build.0 = Release|Any CPU
+		{FF3D6E2C-3E0B-411C-A802-F61EE8A4829F}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{FF3D6E2C-3E0B-411C-A802-F61EE8A4829F}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{FF3D6E2C-3E0B-411C-A802-F61EE8A4829F}.Release|x64.ActiveCfg = Release|Any CPU
+		{FF3D6E2C-3E0B-411C-A802-F61EE8A4829F}.Release|x64.Build.0 = Release|Any CPU
+		{FF3D6E2C-3E0B-411C-A802-F61EE8A4829F}.Release|x86.ActiveCfg = Release|Any CPU
+		{FF3D6E2C-3E0B-411C-A802-F61EE8A4829F}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2D73C022-CB13-4DE8-AD29-F2A971F78815}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems*{0d7c99ea-3aae-4f45-9ba7-3b4af8313753}*SharedItemsImports = 13
+		..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite\XamarinForms.Lite.projitems*{26f4d7af-57b6-4d2d-9a1c-aafa757ddc4a}*SharedItemsImports = 13
+		..\..\Emgu.TF.Runtime\Debian\Emgu.TF.Lite.Runtime.Debian.projitems*{7f80ae6a-bd36-45ba-a152-5d366bcf8570}*SharedItemsImports = 5
+		..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Lite.Runtime.Mac.projitems*{7f80ae6a-bd36-45ba-a152-5d366bcf8570}*SharedItemsImports = 5
+		..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Lite.Runtime.Ubuntu.projitems*{7f80ae6a-bd36-45ba-a152-5d366bcf8570}*SharedItemsImports = 5
+		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems*{7f80ae6a-bd36-45ba-a152-5d366bcf8570}*SharedItemsImports = 5
+		..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Lite.Runtime.Mac.projitems*{8519b2b8-e96b-47fd-a466-c6031d34aaab}*SharedItemsImports = 13
+		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{8edce0c8-ba71-4396-9428-35d05877258c}*SharedItemsImports = 13
+		..\..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.projitems*{8f587fb9-bba6-4c30-9329-8cbac7020fe0}*SharedItemsImports = 13
+		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{971a6e6a-e7d4-4ff6-931e-8a25d572161c}*SharedItemsImports = 5
+		..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems*{971a6e6a-e7d4-4ff6-931e-8a25d572161c}*SharedItemsImports = 5
+		..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems*{98561642-5ec3-4244-baf9-6876d9ba5527}*SharedItemsImports = 13
+		..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite\XamarinForms.Lite.projitems*{a5be7c8b-c4df-4cce-8640-d533df7d6892}*SharedItemsImports = 4
+		..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Lite.Runtime.Mac.projitems*{a5be7c8b-c4df-4cce-8640-d533df7d6892}*SharedItemsImports = 4
+		..\..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.projitems*{c07f7fe3-3835-460d-b6c2-166250c03ac0}*SharedItemsImports = 5
+		..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems*{c07f7fe3-3835-460d-b6c2-166250c03ac0}*SharedItemsImports = 5
+		..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems*{e956dd26-1294-4731-8a90-c4cba9f291b6}*SharedItemsImports = 13
+		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{ff3d6e2c-3e0b-411c-a802-f61ee8a4829f}*SharedItemsImports = 4
+		..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems*{ff3d6e2c-3e0b-411c-a802-f61ee8a4829f}*SharedItemsImports = 4
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
+		$0.StandardHeader = $2
+	EndGlobalSection
+EndGlobal

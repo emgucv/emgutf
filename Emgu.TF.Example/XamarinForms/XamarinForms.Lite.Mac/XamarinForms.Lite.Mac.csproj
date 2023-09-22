@@ -36,7 +36,6 @@
     <LinkMode>None</LinkMode>
     <XamMacArch>x86_64</XamMacArch>
     <AOTMode>None</AOTMode>
-    <AssemblyName>XamarinForms.Lite.Mac</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <DebugType>pdbonly</DebugType>
@@ -59,7 +58,6 @@
     <XamMacArch>
     </XamMacArch>
     <AOTMode>None</AOTMode>
-    <AssemblyName>XamarinForms.Lite.Mac</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <UseSGen>false</UseSGen>
