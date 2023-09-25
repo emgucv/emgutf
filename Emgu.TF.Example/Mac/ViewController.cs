@@ -58,15 +58,13 @@ namespace Example.OSX
             }
         }
 
-
-
-        void OnDownloadProgressChanged(object sender, System.Net.DownloadProgressChangedEventArgs e)
-		{
+        private void OnDownloadProgressChanged(long? totalBytesToReceive, long bytesReceived, double? progressPercentage)
+        {
             String msg;
-            if (e.TotalBytesToReceive > 0)
-                msg = String.Format("{0} of {1} downloaded ({2}%)", ByteToSizeStr(e.BytesReceived), ByteToSizeStr(e.TotalBytesToReceive), e.ProgressPercentage);
+            if (totalBytesToReceive.HasValue && totalBytesToReceive > 0)
+                msg = String.Format("{0} of {1} bytes downloaded ({2}%)", bytesReceived, totalBytesToReceive, progressPercentage);
             else
-                msg = String.Format("{0} downloaded", ByteToSizeStr(e.BytesReceived));
+                msg = String.Format("{0} bytes downloaded", bytesReceived, progressPercentage);
             SetMessage(msg);
         }
 
@@ -112,7 +110,7 @@ namespace Example.OSX
             String resStr = String.Empty;
             if (recognitionResults != null && recognitionResults.Length > 0)
             {
-                resStr = String.Format("Object is {0} with {1}% probability.", recognitionResults[0].Label, recognitionResults[0].Probability * 100);
+                resStr = String.Format("Object is {0} with {1}% probability.", recognitionResults[0][0].Label, recognitionResults[0][0].Probability * 100);
             }
             SetMessage(resStr);
             SetImage(new NSImage(fileName));
