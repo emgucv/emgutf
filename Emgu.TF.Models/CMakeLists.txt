@@ -81,7 +81,7 @@ IF(HAVE_FULL_BUILD)
 	  SET(EXTRA_BUILD_FLAGS "")
       MSBUILD_CSPROJ_IN_SOLUTION(
 		${PROJECT_NAME} 
-		"${CMAKE_CURRENT_SOURCE_DIR}/../Solution/macos/Emgu.TF.Mac.sln" 
+		"${CMAKE_CURRENT_SOURCE_DIR}/../Solution/macos/Emgu.TF.Xamarin.Mac.sln" 
 		"Emgu.TF.Models.Mac" 
 		"${EXTRA_BUILD_FLAGS}" 
 		ALL)	
