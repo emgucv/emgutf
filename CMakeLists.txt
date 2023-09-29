@@ -8,8 +8,9 @@
 #
 # --------------------------------------------------------
 
-PROJECT(emgutf)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.1)
+
+PROJECT(emgutf)
 
 # ----------------------------------------------------------------------------
 #  Autodetect if we are in a GIT repository
