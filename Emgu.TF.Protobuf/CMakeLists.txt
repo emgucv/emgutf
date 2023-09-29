@@ -123,24 +123,6 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
       LIST(APPEND PROTO_SOURCE "tensorflow/core/protobuf/tpu/${PROTO_SOURCE_FILE}" )
   ENDFOREACH()
 
-
-
-  LIST(APPEND PROTO_SOURCE 
-  #  "tensorflow/tsl/protobuf/error_codes.proto"
-  #  "tensorflow/tsl/protobuf/histogram.proto"
-  #  "tensorflow/tsl/protobuf/dnn.proto"
-  #  "tensorflow/tsl/protobuf/rpc_options.proto"
-  #  "tensorflow/tsl/protobuf/coordination_service.proto"
-  #  "tensorflow/tsl/protobuf/coordination_config.proto"
-    "tensorflow/compiler/xla/stream_executor/device_description.proto"
-    "tensorflow/compiler/xla/stream_executor/dnn.proto"
-    "tensorflow/compiler/xla/xla.proto"
-    "tensorflow/compiler/xla/xla_data.proto"
-    "tensorflow/compiler/xla/autotune_results.proto"
-    "tensorflow/compiler/xla/service/hlo.proto"
-    "tensorflow/compiler/xla/pjrt/distributed/protocol.proto"
-  )
-
   SET (PROTO_SOURCE_NATIVE_PATH)
   FOREACH(PROTO_SOURCE_FILE ${PROTO_SOURCE})
     file(TO_NATIVE_PATH ${PROTO_SOURCE_FILE} PROTO_SOURCE_FILE)
@@ -150,23 +132,10 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
 
   SET(PROTO_GEN_COMMAND "${PROTOC_EXE}" "--experimental_allow_proto3_optional" "--proto_path=." "--proto_path=\"${PROTOBUF_INCLUDE_PATH}\""  "--csharp_out=\"${CMAKE_CURRENT_SOURCE_DIR}\"" "--csharp_opt=file_extension=.g.cs" ${PROTO_SOURCE_NATIVE_PATH})
 
-
   SET(PROTO_SOURCE_TSL)
   FILE(GLOB PROTO_SOURCE_FILES_PROTOBUF_TSL RELATIVE 
     "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/tsl/protobuf"
     "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/tsl/protobuf/*.proto")
-  #LIST(REMOVE_ITEM PROTO_SOURCE_FILES_PROTOBUF_TSL 
-    #"worker.proto" 
-    #"master.proto"
-    #"queue_runner.proto"
-    #"replay_log.proto"
-    #"worker_service.proto"
-    #"master_service.proto"
-    #"error_codes.proto"
-    #"rpc_options.proto"
-    #"bfc_memory_map.proto"
-    #"autotuning.proto"
-  #)
   FOREACH(PROTO_SOURCE_FILE ${PROTO_SOURCE_FILES_PROTOBUF_TSL} )
       LIST(APPEND PROTO_SOURCE_TSL "tensorflow/tsl/protobuf/${PROTO_SOURCE_FILE}" )
   ENDFOREACH()
@@ -177,10 +146,27 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
     MESSAGE(STATUS "Adding proto source: ${PROTO_SOURCE_TSL_FILE}")
     LIST(APPEND PROTO_SOURCE_TSL_NATIVE_PATH ${PROTO_SOURCE_TSL_FILE})
   ENDFOREACH()
-
-
-
+  
   SET(PROTO_GEN_COMMAND_TSL "${PROTOC_EXE}" "--experimental_allow_proto3_optional" "--proto_path=." "--proto_path=\"${PROTOBUF_INCLUDE_PATH}\""  "--csharp_out=\"${CMAKE_CURRENT_SOURCE_DIR}\"" "--csharp_opt=file_extension=.tsl.g.cs" ${PROTO_SOURCE_TSL_NATIVE_PATH})
+
+  SET(PROTO_SOURCE_XLA
+    "tensorflow/compiler/xla/stream_executor/device_description.proto"
+    "tensorflow/compiler/xla/stream_executor/dnn.proto"
+    "tensorflow/compiler/xla/xla.proto"
+    "tensorflow/compiler/xla/xla_data.proto"
+    "tensorflow/compiler/xla/autotune_results.proto"
+	"tensorflow/compiler/xla/autotuning.proto"
+    "tensorflow/compiler/xla/service/hlo.proto"
+    "tensorflow/compiler/xla/pjrt/distributed/protocol.proto"
+  )
+  SET (PROTO_SOURCE_XLA_NATIVE_PATH)
+  FOREACH(PROTO_SOURCE_XLA_FILE ${PROTO_SOURCE_XLA})
+    file(TO_NATIVE_PATH ${PROTO_SOURCE_XLA_FILE} PROTO_SOURCE_XLA_FILE)
+    MESSAGE(STATUS "Adding proto source: ${PROTO_SOURCE_XLA_FILE}")
+    LIST(APPEND PROTO_SOURCE_XLA_NATIVE_PATH ${PROTO_SOURCE_XLA_FILE})
+  ENDFOREACH()
+  
+  SET(PROTO_GEN_COMMAND_XLA "${PROTOC_EXE}" "--experimental_allow_proto3_optional" "--proto_path=." "--proto_path=\"${PROTOBUF_INCLUDE_PATH}\""  "--csharp_out=\"${CMAKE_CURRENT_SOURCE_DIR}\"" "--csharp_opt=file_extension=.xla.g.cs" ${PROTO_SOURCE_XLA_NATIVE_PATH})
   
   #IF(NOT WIN32)
   #  SET(PROTO_GEN_COMMAND mono ${PROTO_GEN_COMMAND})
@@ -198,6 +184,7 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
     PRE_BUILD
     COMMAND ${PROTO_GEN_COMMAND}
     COMMAND ${PROTO_GEN_COMMAND_TSL}
+	COMMAND ${PROTO_GEN_COMMAND_XLA}
     COMMENT "PROTO_GEN_COMMAND: ${PROTO_GEN_COMMAND}"
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/"
     )
