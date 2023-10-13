@@ -1,0 +1,30 @@
+#!/bin/bash -v
+
+SYSTEM_ARCH=$(getconf LONG_BIT)
+echo System is $SYSTEM_ARCH bit
+
+if [ $SYSTEM_ARCH == "64" ]
+then
+    OUT_FOLDER="runtimes/linux-arm64/native"
+    BAZEL_XNN_FLAGS=ON
+    JOB_COUNT=2
+else
+    OUT_FOLDER="runtimes/linux-arm/native"
+    BAZEL_XNN_FLAGS=OFF
+    JOB_COUNT=1
+fi
+
+cd "$(dirname "$0")"
+
+mkdir -p build
+
+CURRENT_FOLDER=$PWD
+TOP_FOLDER=$PWD/../../../
+
+cd $TOP_FOLDER
+
+cd tensorflow/tensorflow/tfliteextern
+mkdir -p build
+cd build
+cmake -DTFLITE_ENABLE_XNNPACK:BOOL=$BAZEL_XNN_FLAGS ..
+cmake --build . --config Release --parallel $JOB_COUNT 
