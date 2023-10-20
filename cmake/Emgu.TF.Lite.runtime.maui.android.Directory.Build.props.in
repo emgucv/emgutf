@@ -23,7 +23,7 @@ ${NUGET_EMGU_URL}/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKA
 	<RepositoryUrl>https://github.com/emgucv/emgutf</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
 	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <PackageOutputPath>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\..\platforms\nuget))</PackageOutputPath>
+    <PackageOutputPath>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\..\..\platforms\nuget))</PackageOutputPath>
 	<PackageTags>tensorflow;emgu;emgutf;ai;image;android;maui</PackageTags>
     <PackageProjectUrl>${NUGET_EMGU_URL}</PackageProjectUrl>
     <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved.</copyright>
