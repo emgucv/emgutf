@@ -4,27 +4,26 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
   <PropertyGroup>
-    <PackageId>${EMGUCV_MAUI_IOS_NUGET_ID}</PackageId>
-	
-	<title>${EMGUCV_MAUI_IOS_NUGET_TITLE}</title>
+    <PackageId>${EMGUTF_LITE_MAUI_IOS_NUGET_ID}</PackageId>
+	<title>${EMGUTF_LITE_MAUI_IOS_NUGET_TITLE}</title>
     <version>${CPACK_PACKAGE_VERSION}</version>
     <authors>${CPACK_PACKAGE_VENDOR}</authors>
     <owners>${CPACK_PACKAGE_VENDOR}</owners>
-	<summary>iOS runtime package of Emgu CV for MAUI</summary>
-    <Description>This package contains the native iOS runtime of Emgu CV for MAUI</Description>
-    <PackageReleaseNotes>This is the ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH} release of Emgu CV. For online documentation please visit
-${NUGET_EMGU_URL}/wiki/files/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}/document/index.html    	        
+	<summary>iOS runtime package of Emgu TF Lite for MAUI</summary>
+    <Description>This package contains the native iOS runtime of Emgu TF Lite for MAUI</Description>
+    <PackageReleaseNotes>This is the ${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX} release of Emgu TF Lite for Maui iOS. For online documentation please visit
+http://www.emgu.com/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}/document-lite/    	        
 </PackageReleaseNotes>
 	
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<PackageIcon>nuget_icon.png</PackageIcon>
     <PackageReadmeFile>docs/README.md</PackageReadmeFile>
 	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-	<RepositoryUrl>https://github.com/emgucv/emgucv</RepositoryUrl>
+	<RepositoryUrl>https://github.com/emgucv/emgutf</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
 	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <PackageOutputPath>..\..\..\platforms\nuget</PackageOutputPath>
-	<PackageTags>opencv;emgu;emgucv;ai;image;ios;maui</PackageTags>
+    <PackageOutputPath>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\..\..\platforms\nuget))</PackageOutputPath>
+	<PackageTags>tensorflow;emgu;emgutf;ai;image;ios;maui</PackageTags>
     <PackageProjectUrl>${NUGET_EMGU_URL}</PackageProjectUrl>
     <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved.</copyright>
     
@@ -46,17 +45,18 @@ ${NUGET_EMGU_URL}/wiki/files/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERS
         <PackagePath>docs\</PackagePath>
       </None>
     </ItemGroup>
-	<ItemGroup Condition="Exists('..\..\..\libs\iOS\iphoneos_arm64_version_string.inc')">
-	  <None Include="..\..\..\libs\iOS\iphoneos_arm64_version_string.inc">
+	<ItemGroup Condition="Exists('..\..\..\lib\ios\iphoneos_arm64_version_string.inc')">
+	  <None Include="..\..\..\lib\ios\iphoneos_arm64_version_string.inc">
         <Pack>True</Pack>
         <PackagePath>docs\</PackagePath>
       </None>
 	</ItemGroup>
-	<ItemGroup Condition="Exists('..\..\..\libs\iOS\simulator_x86_64_version_string.inc')">
-	  <None Include="..\..\..\libs\iOS\simulator_x86_64_version_string.inc">
+	<ItemGroup Condition="Exists('..\..\..\lib\ios\simulator_x86_64_version_string.inc')">
+	  <None Include="..\..\..\lib\ios\simulator_x86_64_version_string.inc">
         <Pack>True</Pack>
         <PackagePath>docs\</PackagePath>
       </None>
 	</ItemGroup>
-  ${EMGUCV_MAUI_IOS_POST_PROCESS_BINARY}
+  ${EMGUTF_LITE_MAUI_IOS_POST_PROCESS_BINARY}
+  ${EMGUTF_LITE_MAUI_IOS_POST_PROCESS_NUGET}
 </Project>
