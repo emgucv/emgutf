@@ -1542,8 +1542,8 @@ INSTALL(
   "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.snk"
   "${CMAKE_CURRENT_SOURCE_DIR}/CommonAssemblyInfo.cs"
   "${CMAKE_CURRENT_SOURCE_DIR}/${LICENSE_FILE_NAME}"
-  "${CMAKE_CURRENT_SOURCE_DIR}/nuget.config"
-  "${CMAKE_CURRENT_SOURCE_DIR}/components.config"
+  #"${CMAKE_CURRENT_SOURCE_DIR}/nuget.config"
+  #"${CMAKE_CURRENT_SOURCE_DIR}/components.config"
   DESTINATION .
   COMPONENT emgutf_source
   )
