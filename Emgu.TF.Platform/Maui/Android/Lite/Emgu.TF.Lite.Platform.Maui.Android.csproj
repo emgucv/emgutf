@@ -164,6 +164,7 @@
     <EmguTfLiteBuildAndroidx8664 Condition="$(AndroidSupportedAbis.Contains('x86_64%3')) OR $(AndroidSupportedAbis.Contains('x86_64,')) OR $(AndroidSupportedAbis.Contains('x86_64;')) OR $(AndroidSupportedAbis.EndsWith('x86_64')) OR ('$(AndroidSupportedAbis)'=='' AND '$(Platform)'=='AnyCPU') OR ('$(Platform)'=='x86_64')">True</EmguTfLiteBuildAndroidx8664>
     <EmguTfLiteMauiAndroidErrorMessage Condition="'$(EmguTfLiteBuildAndroidx8664)'=='True' AND !Exists('$(EmguTfLiteNativex8664)')">This package do not contain necessary binary for $(EmguTfLiteLinkTarget). Emgu TF for Android Commercial License is required. x86_64 is targeted, but file $(EmguTfLiteNativex8664) is missing.</EmguTfLiteMauiAndroidErrorMessage>
     <EmguTfLiteMauiAndroidDeployMessage Condition="'$(EmguTfLiteBuildAndroidx8664)'=='True' AND Exists('$(EmguTfLiteNativex8664)')">$(EmguTfLiteMauiAndroidDeployMessage)x86_64 </EmguTfLiteMauiAndroidDeployMessage>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <!-- armeabi-v7a -->
   <ItemGroup Condition="'$(EmguTfLiteBuildAndroidArmeabiv7a)'=='True' AND Exists('$(EmguTfLiteNativeArmeabiv7a)')">
