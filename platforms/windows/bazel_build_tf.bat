@@ -3,7 +3,8 @@ REM @echo off
 REM POSSIBLE OPTIONS: 
 REM %1%: "64", "ARM"
 REM %2%: "gpu", build with CUDA
-REM %3%: "mkl", build with intel mkl
+REM %3%: "mkl", build with intel mkl. Doesn't work, MKL not supported on windows: https://github.com/tensorflow/tensorflow/issues/61661 
+REM %3%  "avx2", build with avx2 support
 REM %4%: "docker", build within docker 
 
 pushd %~p0
@@ -116,6 +117,13 @@ GOTO END_MKL
 :BUILD_WITH_MKL
 SET TF_BAZEL_EXTRA_CONFIG=%TF_BAZEL_EXTRA_CONFIG% --config=mkl
 :END_MKL
+
+IF "%3%" == "avx2" GOTO BUILD_WITH_AVX2
+GOTO END_AVX2
+:BUILD_WITH_AVX2
+SET TF_BAZEL_EXTRA_CONFIG=%TF_BAZEL_EXTRA_CONFIG% --copt=/arch:AVX2
+:END_AVX2
+
 
 IF "%2%" == "gpu" GOTO BUILD_GPU
 :BUILD_CPU
