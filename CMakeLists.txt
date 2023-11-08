@@ -926,21 +926,14 @@ IF(HAVE_MAUI_LITE)
       <group targetFramework=\"${EMGUTF_MAUI_ANDROID_DST_FOLDER}\">
 	    <dependency id=\"${EMGUTF_LITE_MAUI_ANDROID_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
 	    <dependency id=\"${EMGUTF_LITE_MODELS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
-        <dependency id=\"System.Drawing.Primitives\" version=\"4.3.0\" exclude=\"Build,Analyzers\" />
-        <dependency id=\"System.Runtime.InteropServices\" version=\"4.3.0\" exclude=\"Build,Analyzers\" />
       </group>
       <group targetFramework=\"${EMGUTF_MAUI_IOS_DST_FOLDER}\">
 	    <dependency id=\"${EMGUTF_LITE_MAUI_IOS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
         <dependency id=\"${EMGUTF_LITE_MODELS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
-        <dependency id=\"System.Drawing.Primitives\" version=\"4.3.0\" exclude=\"Build,Analyzers\" />
-        <dependency id=\"System.Runtime.InteropServices\" version=\"4.3.0\" exclude=\"Build,Analyzers\" />
       </group>
       <group targetFramework=\"${EMGUTF_MAUI_WINDOWS_DST_FOLDER}\">
 	    <dependency id=\"${EMGUTF_LITE_WINDOWS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
 	    <dependency id=\"${EMGUTF_LITE_MODELS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
-        <dependency id=\"System.Drawing.Primitives\" version=\"4.3.0\" exclude=\"Build,Analyzers\" />
-        <dependency id=\"System.Runtime.InteropServices\" version=\"4.3.0\" exclude=\"Build,Analyzers\" />
-        <dependency id=\"System.Runtime.InteropServices.WindowsRuntime\" version=\"4.3.0\" exclude=\"Build,Analyzers\" />
       </group>
     </dependencies>")
   # Sign and copy the binary
