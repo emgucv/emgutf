@@ -814,6 +814,25 @@ IF(HAVE_LITE_BUILD)
 	
   ENDIF()
   
+  
+  SET(HAVE_MAUI_LITE OFF)
+  IF(HAVE_IOS_LITE AND HAVE_ANDROID_LITE AND HAVE_WINDESKTOP_LITE)
+    SET (HAVE_MAUI_LITE ON)
+    MESSAGE(STATUS "HAVE_MAUI_LITE: ${HAVE_MAUI_LITE}")
+  ENDIF()
+  
+  SET(EMGUTF_MAUI_DOTNET_VERSION "net7.0")
+
+  SET(EMGUTF_MAUI_ANDROID_SRC_FOLDER "${EMGUTF_MAUI_DOTNET_VERSION}-android")
+  SET(EMGUTF_MAUI_IOS_SRC_FOLDER "${EMGUTF_MAUI_DOTNET_VERSION}-ios")
+  #SET(EMGUTF_MAUI_MACOS_SRC_FOLDER "${EMGUTF_MAUI_DOTNET_VERSION}-maccatalyst")
+  SET(EMGUTF_MAUI_WINDOWS_SRC_FOLDER "${EMGUTF_MAUI_DOTNET_VERSION}-windows10.0.19041.0")
+
+  SET(EMGUTF_MAUI_ANDROID_DST_FOLDER "${EMGUTF_MAUI_DOTNET_VERSION}-android33.0")
+  SET(EMGUTF_MAUI_IOS_DST_FOLDER "${EMGUTF_MAUI_DOTNET_VERSION}-ios16.1")
+  #SET(EMGUTF_MAUI_MACOS_DST_FOLDER "${EMGUCV_MAUI_DOTNET_VERSION}-maccatalyst16.1")
+  SET(EMGUTF_MAUI_WINDOWS_DST_FOLDER "${EMGUTF_MAUI_DOTNET_VERSION}-windows10.0.19041.0")
+  
   SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
     <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Netstandard.dll\" target=\"lib\\netstandard2.0\" />
 	<file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Netstandard.xml\" target=\"lib\\netstandard2.0\" />")
@@ -883,6 +902,74 @@ ENDIF()
     </dependencies>")
 ENDIF()
 
+IF(HAVE_MAUI_LITE)
+  SET(EMGUTF_LITE_MAUI_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.maui${EMGUTF_LITE_RUNTIME_EXTRA_TAG}")
+  SET(EMGUTF_LITE_MAUI_NUGET_TITLE "Emgu TF Lite for MAUI Native Runtime")
+  
+  SET(EMGUTF_LITE_MAUI_NUGET_FILE_LIST "	
+    <file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
+	
+	<file src=\"..\\..\\..\\lib\\${EMGUTF_MAUI_ANDROID_SRC_FOLDER}\\Emgu.TF.Lite.Platform.Maui.UI.dll\" target=\"lib\\${EMGUTF_MAUI_ANDROID_DST_FOLDER}\" />
+    <file src=\"..\\..\\..\\lib\\${EMGUTF_MAUI_ANDROID_SRC_FOLDER}\\Emgu.TF.Lite.Platform.Maui.UI.xml\" target=\"lib\\${EMGUTF_MAUI_ANDROID_DST_FOLDER}\" />
+	
+	<file src=\"..\\..\\..\\lib\\${EMGUTF_MAUI_IOS_SRC_FOLDER}\\Emgu.TF.Lite.Platform.Maui.UI.dll\" target=\"lib\\${EMGUTF_MAUI_IOS_DST_FOLDER}\" />
+    <file src=\"..\\..\\..\\lib\\${EMGUTF_MAUI_IOS_SRC_FOLDER}\\Emgu.TF.Lite.Platform.Maui.UI.xml\" target=\"lib\\${EMGUTF_MAUI_IOS_DST_FOLDER}\" />
+	
+	<file src=\"..\\..\\..\\lib\\${EMGUTF_MAUI_WINDOWS_SRC_FOLDER}\\Emgu.TF.Lite.Platform.Maui.UI.dll\" target=\"lib\\${EMGUTF_MAUI_WINDOWS_DST_FOLDER}\" />
+    <file src=\"..\\..\\..\\lib\\${EMGUTF_MAUI_WINDOWS_SRC_FOLDER}\\Emgu.TF.Lite.Platform.Maui.UI.xml\" target=\"lib\\${EMGUTF_MAUI_WINDOWS_DST_FOLDER}\" />
+	
+	<file src=\"README.md\" target=\"docs\\\" />
+    <file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+  
+  SET(EMGUTF_LITE_MAUI_NUGET_DEPENDENCY "
+      <dependencies>
+      <group targetFramework=\"${EMGUTF_MAUI_ANDROID_DST_FOLDER}\">
+	    <dependency id=\"${EMGUTF_LITE_MAUI_ANDROID_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
+	    <dependency id=\"${EMGUTF_LITE_MODELS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
+        <dependency id=\"System.Drawing.Primitives\" version=\"4.3.0\" exclude=\"Build,Analyzers\" />
+        <dependency id=\"System.Runtime.InteropServices\" version=\"4.3.0\" exclude=\"Build,Analyzers\" />
+      </group>
+      <group targetFramework=\"${EMGUTF_MAUI_IOS_DST_FOLDER}\">
+	    <dependency id=\"${EMGUTF_LITE_MAUI_IOS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
+        <dependency id=\"${EMGUTF_LITE_MODELS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
+        <dependency id=\"System.Drawing.Primitives\" version=\"4.3.0\" exclude=\"Build,Analyzers\" />
+        <dependency id=\"System.Runtime.InteropServices\" version=\"4.3.0\" exclude=\"Build,Analyzers\" />
+      </group>
+      <group targetFramework=\"${EMGUTF_MAUI_WINDOWS_DST_FOLDER}\">
+	    <dependency id=\"${EMGUTF_LITE_WINDOWS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
+	    <dependency id=\"${EMGUTF_LITE_MODELS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
+        <dependency id=\"System.Drawing.Primitives\" version=\"4.3.0\" exclude=\"Build,Analyzers\" />
+        <dependency id=\"System.Runtime.InteropServices\" version=\"4.3.0\" exclude=\"Build,Analyzers\" />
+        <dependency id=\"System.Runtime.InteropServices.WindowsRuntime\" version=\"4.3.0\" exclude=\"Build,Analyzers\" />
+      </group>
+    </dependencies>")
+  # Sign and copy the binary
+  SET(EMGUTF_LITE_MAUI_POST_PROCESS_BINARY "
+    <!--
+    <PropertyGroup>
+	  <OutputFullPath>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)$(OutputPath)))</OutputFullPath>
+	</PropertyGroup>
+	-->
+	<Target Name=\"PostProcessBinary\" AfterTargets=\"PostBuildEvent\">")
+  IF(EMGU_SIGN_FOUND AND WIN32)
+    file(TO_NATIVE_PATH ${EMGU_SIGN_EXECUTABLE} EMGU_SIGN_EXECUTABLE_NATIVE_PATH)
+	file(TO_NATIVE_PATH ${SIGNTOOL_EXECUTABLE} SIGNTOOL_EXECUTABLE_NATIVE_PATH)
+    SET(EMGUTF_LITE_MAUI_POST_PROCESS_BINARY "${EMGUTF_LITE_MAUI_POST_PROCESS_BINARY}
+    <Message Text=\"Signing $(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll\" Importance=\"high\" />
+	<MakeDir Directories=\"$(MSBuildThisFileDirectory)$(OutputPath)\\signed\"/>
+    <Exec Command='${EMGU_SIGN_EXECUTABLE_NATIVE_PATH} \"$(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll\" \"$(MSBuildThisFileDirectory)$(OutputPath)\\signed\" \"${SIGNTOOL_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(MSBuildThisFileDirectory)$(OutputPath)\" />
+	")
+  ENDIF()
+  SET(EMGUTF_LITE_MAUI_POST_PROCESS_BINARY "${EMGUTF_LITE_MAUI_POST_PROCESS_BINARY}
+    <Message Text=\"Copying $(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll, $(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).xml to $(TfLiteBinaryDir)\\$(TargetFramework)\" Importance=\"high\" />
+    <Copy SourceFiles=\"$(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll\" DestinationFolder=\"$(TfLiteBinaryDir)\\$(TargetFramework)\" ContinueOnError=\"true\" />
+    <Copy SourceFiles=\"$(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).xml\" DestinationFolder=\"$(TfLiteBinaryDir)\\$(TargetFramework)\" ContinueOnError=\"true\" />
+  </Target>")    
+  
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.Platform.Maui.UI.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Platform/Maui/UI/Lite/Directory.Build.props)
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.maui/README.md)
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.maui/Package.nuspec)
+ENDIF()
 
 IF (HAVE_WINDESKTOP OR HAVE_WINDESKTOP_LITE)
     IF (HAVE_WINDESKTOP OR HAVE_WINDESKTOP_X64_LITE)
