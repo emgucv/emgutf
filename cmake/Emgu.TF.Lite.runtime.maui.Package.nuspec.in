@@ -12,14 +12,14 @@
 	<icon>icon.png</icon>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
 	<summary>Runtime package of Emgu TF Lite for MAUI</summary>
-    <description>This package contains the native runtime of Emgu TF Lite for MAUI</description>
+    <description>This package contains the native runtime of Emgu TF Lite for MAUI. Android, iOS and Windows platforms are supported.</description>
     <releaseNotes>This is the ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH} release of Emgu TF Lite. For online documentation please visit
 ${NUGET_EMGU_URL}/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}/document-lite/index.html    	        
     </releaseNotes>
 	<readme>docs/README.md</readme>
 	${EMGUTF_LITE_MAUI_NUGET_DEPENDENCY}
     <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved.</copyright>
-    <tags>opencv emgu emgutf ai image maui</tags>
+    <tags>tensorflow emgu emgutf ai image maui</tags>
   </metadata>
   <files>
   ${EMGUTF_LITE_MAUI_NUGET_FILE_LIST}
