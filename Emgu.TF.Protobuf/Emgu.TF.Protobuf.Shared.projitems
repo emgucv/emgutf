@@ -11,6 +11,20 @@
   <ItemGroup>
 
     <Compile Include="$(MSBuildThisFileDirectory)*.cs" />
+	<Compile Include="$(MSBuildThisFileDirectory)/Tensorflow/*.cs" />
+	<Compile Include="$(MSBuildThisFileDirectory)/Tensorflow/Core/*.cs" />
+	<Compile Include="$(MSBuildThisFileDirectory)/Tensorflow/Core/Platform/*.cs" />
+	<Compile Include="$(MSBuildThisFileDirectory)/Tensorflow/Data/*.cs" />
+	<Compile Include="$(MSBuildThisFileDirectory)/Tensorflow/Data/Model/*.cs" />
+	<Compile Include="$(MSBuildThisFileDirectory)/Tensorflow/Data/Experimental/*.cs" />
+	<Compile Include="$(MSBuildThisFileDirectory)/Tensorflow/Dummy/*.cs" />
+	<Compile Include="$(MSBuildThisFileDirectory)/Tensorflow/Eager/*.cs" />
+	<Compile Include="$(MSBuildThisFileDirectory)/Tensorflow/Error/*.cs" />
+	<Compile Include="$(MSBuildThisFileDirectory)/Tensorflow/Error/Dummy/*.cs" />
+	<Compile Include="$(MSBuildThisFileDirectory)/Tensorflow/Tpu/*.cs" />
+	<!-- <Compile Include="$(MSBuildThisFileDirectory)/Xla/*.cs" /> -->
+	<Compile Include="$(MSBuildThisFileDirectory)/StreamExecutor/*.cs" />
+	<Compile Include="$(MSBuildThisFileDirectory)/StreamExecutor/Dnn/*.cs" />
    
   </ItemGroup>
 </Project>
