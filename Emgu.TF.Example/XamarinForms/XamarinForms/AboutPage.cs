@@ -16,13 +16,17 @@ namespace Emgu.TF.XamarinForms
         private static Session.Device[] GetSessionDevices()
         {
             SessionOptions so = new SessionOptions();
+            Tensorflow.ConfigProto config = new Tensorflow.ConfigProto();
             if (TfInvoke.IsGoogleCudaEnabled)
             {
-                Tensorflow.ConfigProto config = new Tensorflow.ConfigProto();
                 config.GpuOptions = new Tensorflow.GPUOptions();
                 config.GpuOptions.AllowGrowth = true;
-                so.SetConfig(config.ToProtobuf());
             }
+#if DEBUG
+            config.LogDevicePlacement = true;
+#endif
+            so.SetConfig(config.ToProtobuf());
+
             int a = 1;
             int b = 1;
             //Creating tensor from value a
