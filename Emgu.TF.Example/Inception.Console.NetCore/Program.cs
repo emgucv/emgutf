@@ -23,7 +23,7 @@ namespace Inception.Console.Netstandard
 
         static async Task Main(string[] args)
         {
-            System.Console.WriteLine("Starting...");
+            System.Console.WriteLine(String.Format("Starting Emgu TF v{0}", TfInvoke.Version));
 #if DEBUG
             ConsoleTraceListener consoleTraceListener = new ConsoleTraceListener();
             Trace.Listeners.Add(consoleTraceListener);
