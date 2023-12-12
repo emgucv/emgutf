@@ -1,5 +1,6 @@
 #!/bin/bash
 
+extra_flags=
 if [ \( -n "$1" \) ]; then
     if [ "$1" = "x86" ]; then
 	arch="x86"
@@ -7,8 +8,10 @@ if [ \( -n "$1" \) ]; then
 	arch="x86_64"
     elif [ "$1" = "arm" ]; then
 	arch="armeabi-v7a"
+	extra_flags="--define=xnn_enable_arm_i8mm=false"
     elif [ "$1" = "arm64" ]; then
 	arch="arm64-v8a"
+	extra_flags="--define=xnn_enable_arm_i8mm=false"
     fi
     echo "Building with config android_$1 for $arch architecture"
 else
@@ -24,13 +27,14 @@ set -x
 bazel --output_user_root=$OUTPUT_USER_ROOT \
       build -c opt \
       --config=android_$1\
-      --action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/25.2.9519653 \
+      --action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/21.4.7075529 \
       --action_env ANDROID_NDK_API_LEVEL=28 \
       --action_env ANDROID_SDK_API_LEVEL=23 \
       --action_env ANDROID_SDK_HOME=/usr/lib/android-sdk \
-      --verbose_failures \
+      --verbose_failures $extra_flags\
       //tensorflow/tfliteextern:libtfliteextern.so
-	  
+
+#--action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/25.2.9519653 \
 #--action_env ANDROID_BUILD_TOOLS_VERSION=debian \
 
 set +x
