@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/usr/bin/env bash 
 
 SYSTEM_ARCH=$(uname -m)
 echo System is $SYSTEM_ARCH
