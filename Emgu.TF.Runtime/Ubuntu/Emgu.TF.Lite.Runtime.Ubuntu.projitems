@@ -9,17 +9,18 @@
     <Import_RootNamespace>Emgu.TF.Lite</Import_RootNamespace>
   </PropertyGroup>
    <PropertyGroup>
-    <TFLiteBinaryDir>$(MSBuildThisFileDirectory)..\..\lib</TFLiteBinaryDir>
+    <TFLiteBinaryDir>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\lib))</TFLiteBinaryDir>
+	<TFLiteUbuntuX64NativeRuntimeFolder>runtimes\ubuntu-x64\native</TFLiteUbuntuX64NativeRuntimeFolder>
   </PropertyGroup> 
-          <PropertyGroup>
+      <PropertyGroup>
         <EmguTFLiteUbuntuLinkTarget>Ubuntu</EmguTFLiteUbuntuLinkTarget>
         <EmguTFLiteUbuntuBuildX64 Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">True</EmguTFLiteUbuntuBuildX64>
-        <EmguTFLiteUbuntuNativeFileX64>$(TFLiteBinaryDir)\runtimes\ubuntu-x64\native\libtfliteextern.so</EmguTFLiteUbuntuNativeFileX64>
+        <EmguTFLiteUbuntuNativeFileX64>$(TFLiteBinaryDir)\$(TFLiteUbuntuX64NativeRuntimeFolder)\libtfliteextern.so</EmguTFLiteUbuntuNativeFileX64>
         <EmguTFLiteUbuntuErrorMessage Condition="'$(EmguTFLiteUbuntuBuildX64)'=='True' AND !Exists('$(EmguTFLiteUbuntuNativeFileX64)')">This package do not contain necessary binary for $(EmguTFLiteUbuntuLinkTarget). ubuntu_x64 is targeted, but file $(EmguTFLiteUbuntuNativeFileX64) is missing. PInvoke may fail on Ubuntu.</EmguTFLiteUbuntuErrorMessage>
         <EmguTFLiteUbuntuDeployMessage Condition="'$(EmguTFLiteUbuntuBuildX64)'=='True' AND Exists('$(EmguTFLiteUbuntuNativeFileX64)')">$(EmguTFLiteUbuntuDeployMessage)ubuntu_x64 </EmguTFLiteUbuntuDeployMessage>
       </PropertyGroup>
       <ItemGroup Condition="'$(EmguTFLiteUbuntuBuildX64)'=='True' AND Exists('$(EmguTFLiteUbuntuNativeFileX64)')">
-        <Content Include="$(TFLiteBinaryDir)\runtimes\ubuntu-x64\native\*.so">
+        <Content Include="$(TFLiteBinaryDir)\$(TFLiteUbuntuX64NativeRuntimeFolder)\*.so">
           <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>

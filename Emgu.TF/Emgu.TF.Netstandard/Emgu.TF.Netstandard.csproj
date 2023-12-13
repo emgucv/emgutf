@@ -2,7 +2,8 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-		<AssemblyName>Emgu.TF.Netstandard</AssemblyName>
+		<AssemblyName>Emgu.TF</AssemblyName>
+		<TargetName>$(AssemblyName)</TargetName>
 		<Platforms>AnyCPU;x64</Platforms>
 	</PropertyGroup>
 	<PropertyGroup>

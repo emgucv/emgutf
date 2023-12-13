@@ -3,7 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-	<AssemblyName>Emgu.TF.Lite.Netstandard</AssemblyName>
+	<AssemblyName>Emgu.TF.Lite</AssemblyName>
+	<TargetName>$(AssemblyName)</TargetName>
 	<Platforms>AnyCPU;x64;x86;ARM</Platforms>
   </PropertyGroup>
 
