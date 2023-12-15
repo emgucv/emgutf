@@ -26,7 +26,7 @@ PROJECT(Emgu.TF.Lite.runtime.xamarin.ios.nuget)
 ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.nuget)
 
 IF(TARGET Emgu.TF.Lite.Platform.Xamarin.iOS)
-  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Platform.Xamarin..iOS)
+  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Platform.Xamarin.iOS)
 ENDIF()
 
 if(ENABLE_SOLUTION_FOLDERS)
