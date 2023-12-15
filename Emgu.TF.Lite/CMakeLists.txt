@@ -75,8 +75,8 @@ IF (DOTNET_FOUND)
 
   INSTALL(
     FILES 
-    ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.xml
-    ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll 
+    ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Lite.xml
+    ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Lite.dll 
     DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
     COMPONENT emgutf_binary)
 	
@@ -89,8 +89,8 @@ IF (DOTNET_FOUND)
 
   INSTALL(
     FILES 
-    ${LIBRARY_OUTPUT_PATH}/ios/Emgu.TF.Lite.Netstandard.xml
-    ${LIBRARY_OUTPUT_PATH}/ios/Emgu.TF.Lite.Netstandard.dll 
+    ${LIBRARY_OUTPUT_PATH}/ios/Emgu.TF.Lite.xml
+    ${LIBRARY_OUTPUT_PATH}/ios/Emgu.TF.Lite.dll 
     DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
     COMPONENT emgutf_binary)
 ENDIF()
