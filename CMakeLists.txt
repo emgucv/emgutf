@@ -799,8 +799,8 @@ IF(HAVE_LITE_BUILD)
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.ios.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Platform/Maui/iOS/docs/README.md)
   
   SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\..\\lib\\ios\\Emgu.TF.Lite.Netstandard.dll\" target=\"lib\\xamarinios10\" />
-	<file src=\"..\\..\\..\\lib\\ios\\Emgu.TF.Lite.Netstandard.xml\" target=\"lib\\xamarinios10\" />")
+    <file src=\"..\\..\\..\\lib\\ios\\Emgu.TF.Lite.dll\" target=\"lib\\xamarinios10\" />
+	<file src=\"..\\..\\..\\lib\\ios\\Emgu.TF.Lite.xml\" target=\"lib\\xamarinios10\" />")
   SET(EMGUTF_LITE_NUGET_DEPENDENCY "${EMGUTF_LITE_NUGET_DEPENDENCY}
     <group targetFramework=\"Xamarin.iOS1.0\">
         <dependency id=\"System.Runtime.InteropServices.RuntimeInformation\" version=\"4.3.0\" />
@@ -815,8 +815,8 @@ IF(HAVE_LITE_BUILD)
   MESSAGE(STATUS "HAVE_MAUI_LITE: ${HAVE_MAUI_LITE}")
       
   SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Netstandard.dll\" target=\"lib\\netstandard2.0\" />
-	<file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Netstandard.xml\" target=\"lib\\netstandard2.0\" />")
+    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.dll\" target=\"lib\\netstandard2.0\" />
+	<file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.xml\" target=\"lib\\netstandard2.0\" />")
   SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST}
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
