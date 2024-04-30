@@ -27,8 +27,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Essentials" Version="1.8.0" />
-    <PackageReference Include="Xamarin.Forms.Platform.WPF" Version="5.0.0.2622" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.8.1" />
+    <PackageReference Include="Xamarin.Forms.Platform.WPF" Version="5.0.0.2662" />
     <PackageReference Include="WpfLightToolkit" Version="1.0.3" />
   </ItemGroup>
     <ItemGroup>
