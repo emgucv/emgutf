@@ -4,8 +4,10 @@ extra_flags=
 if [ \( -n "$1" \) ]; then
     if [ "$1" = "x86" ]; then
 	arch="x86"
+	extra_flags="--define=xnn_enable_avxvnni=false"
     elif [ "$1" = "x86_64" ]; then
 	arch="x86_64"
+	extra_flags="--define=xnn_enable_avxvnni=false"
     elif [ "$1" = "arm" ]; then
 	arch="armeabi-v7a"
 	extra_flags="--define=xnn_enable_arm_i8mm=false"
@@ -36,6 +38,8 @@ bazel --output_user_root=$OUTPUT_USER_ROOT \
 
 #--action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/25.2.9519653 \
 #--action_env ANDROID_BUILD_TOOLS_VERSION=debian \
+
+bazel --version
 
 set +x
 #bazel clean
