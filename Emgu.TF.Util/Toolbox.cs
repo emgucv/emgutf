@@ -199,10 +199,13 @@ namespace Emgu.TF.Util
         */
 
         /// <summary>
-        /// Find the loaded assembly with the specific assembly name
+        /// Searches for and returns the first loaded assembly in the current AppDomain with the specified assembly name.
         /// </summary>
-        /// <param name="assembleName"></param>
-        /// <returns></returns>
+        /// <param name="assembleName">The name of the assembly to find.</param>
+        /// <returns>The loaded assembly with the specified name if found; otherwise, null.</returns>
+        /// <remarks>
+        /// This method will catch and log any exceptions that occur during the search, returning null if an exception is caught.
+        /// </remarks>
         public static System.Reflection.Assembly FindAssembly(String assembleName)
         {
             try
