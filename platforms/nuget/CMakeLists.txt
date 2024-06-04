@@ -2,9 +2,9 @@
 #  Copyright (C) 2004-2024 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-add_subdirectory(Emgu.TF)
-add_subdirectory(Emgu.TF.Models)
-add_subdirectory(Emgu.TF.Protobuf)
+#add_subdirectory(Emgu.TF)
+#add_subdirectory(Emgu.TF.Models)
+#add_subdirectory(Emgu.TF.Protobuf)
 
 IF (WIN32 AND HAVE_WINDESKTOP)
   add_subdirectory(Emgu.runtime.windows.zlibwapi.x64)
@@ -25,9 +25,9 @@ IF (WIN32 AND HAVE_WINDESKTOP)
   add_subdirectory(Emgu.TF.runtime.windows)
 ENDIF()
 
-IF (HAVE_ANDROID)
-  add_subdirectory(Emgu.TF.runtime.xamarin.android)
-ENDIF()
+#IF (HAVE_ANDROID)
+#  add_subdirectory(Emgu.TF.runtime.xamarin.android)
+#ENDIF()
 
 IF(HAVE_OSX)
   add_subdirectory(Emgu.TF.runtime.macos)
@@ -46,8 +46,8 @@ ENDIF()
 #MESSAGE(STATUS "-------HAVE_OSX_LITE: ${HAVE_OSX_LITE}")
 #MESSAGE(STATUS "-------HAVE_LITE_BUILD: ${HAVE_LITE_BUILD}")
 
-add_subdirectory(Emgu.TF.Lite)
-add_subdirectory(Emgu.TF.Lite.Models)
+#add_subdirectory(Emgu.TF.Lite)
+#add_subdirectory(Emgu.TF.Lite.Models)
 
 IF (HAVE_WINDESKTOP_LITE)
   add_subdirectory(Emgu.TF.Lite.runtime.windows)
@@ -65,13 +65,13 @@ IF(HAVE_OSX_LITE)
   add_subdirectory(Emgu.TF.Lite.runtime.macos)
 ENDIF()
 
-IF ( HAVE_ANDROID_LITE )
-  add_subdirectory(Emgu.TF.Lite.runtime.xamarin.android)
-ENDIF()
+#IF ( HAVE_ANDROID_LITE )
+#  add_subdirectory(Emgu.TF.Lite.runtime.xamarin.android)
+#ENDIF()
 
-IF ( HAVE_IOS_LITE )
-  add_subdirectory(Emgu.TF.Lite.runtime.xamarin.ios)
-ENDIF()
+#IF ( HAVE_IOS_LITE )
+#  add_subdirectory(Emgu.TF.Lite.runtime.xamarin.ios)
+#ENDIF()
 
 add_subdirectory(Emgu.TF.Lite.runtime.ubuntu)
 

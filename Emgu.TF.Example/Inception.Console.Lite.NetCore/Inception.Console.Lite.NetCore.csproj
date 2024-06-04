@@ -30,7 +30,7 @@
   </PropertyGroup>
 	
   <ItemGroup>
-    <Content Include="..\XamarinForms\XamarinForms\tulips.jpg" Link="tulips.jpg">
+    <Content Include="tulips.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

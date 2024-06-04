@@ -2,7 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+	<!--
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	-->
 	<AssemblyName>Emgu.TF.Models</AssemblyName>
 	<Configurations>Release;Debug</Configurations>
 	<Platforms>AnyCPU;x64</Platforms>
@@ -39,10 +41,11 @@
   <ItemGroup>
     <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
   </ItemGroup>
+  <!--
   <Target Name="DeployBinary" AfterTargets="AfterBuild">
     <Message Text="Copying $(OutputPath)$(AssemblyName).dll, $(OutputPath)$(AssemblyName).xml to ..\..\lib" Importance="high" />
     <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="..\..\lib" ContinueOnError="true" />
     <Copy SourceFiles="$(OutputPath)$(AssemblyName).xml" DestinationFolder="..\..\lib" ContinueOnError="true" />
   </Target>
-  
+  -->
 </Project>

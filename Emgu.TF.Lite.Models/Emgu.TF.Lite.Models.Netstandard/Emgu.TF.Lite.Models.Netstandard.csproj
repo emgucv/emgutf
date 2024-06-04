@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
-	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <TargetFrameworks>netstandard2.0;net8.0-ios;net8.0-android;net8.0-maccatalyst</TargetFrameworks>
+	<!-- <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath> -->
 	<AssemblyName>Emgu.TF.Lite.Models</AssemblyName>
 	<LangVersion>9</LangVersion>
 	<Configurations>Release;Debug</Configurations>

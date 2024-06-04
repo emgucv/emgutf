@@ -21,7 +21,7 @@ PROJECT(Emgu.TF.runtime.windows.nuget)
   IF (EMGU_NUGET_SIGN_FOUND)
     EMGU_SIGN_NUGET(${PROJECT_NAME} "${NUGET_OUTPUT_DIR}/${EMGUTF_WINDOWS_NUGET_ID}.${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}.nupkg")
   ENDIF()
-ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.nuget)
+#ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.nuget)
 
 IF (TARGET Emgu.runtime.windows.cuda.solver.mg.nuget)
   ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.runtime.windows.cuda.solver.mg.nuget)
