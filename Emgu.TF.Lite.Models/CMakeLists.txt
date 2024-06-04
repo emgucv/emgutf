@@ -91,27 +91,6 @@ IF(HAVE_OSX_LITE)
 ENDIF()
 
 IF(HAVE_IOS_LITE)
-  INSTALL(
-    DIRECTORY
-    ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.Models.IOS
-    DESTINATION .
-    COMPONENT emgutf_source
-    FILES_MATCHING 
-    PATTERN "*.cs"
-    PATTERN "*.projitems"
-    PATTERN "*.shproj"
-    PATTERN "*.csproj"
-    PATTERN ".svn" EXCLUDE
-    PATTERN "obj" EXCLUDE
-    PATTERN "CMakeFiles" EXCLUDE
-    PATTERN "x64" EXCLUDE #exclude build artifacts from Visual Studio build process
-    PATTERN "x86" EXCLUDE #exclude build artifacts from Visual Studio build process
-    PATTERN "${PROJECT_NAME}.dir" EXCLUDE
-    )
-	
-  #IF (EMGU_SIGN_FOUND)
-  #  EMGU_SIGN_BINARY(${PROJECT_NAME} ${LIBRARY_OUTPUT_PATH}/ios/Emgu.TF.Lite.Models.dll)
-  #ENDIF()
   
   INSTALL(
     FILES 
@@ -120,11 +99,6 @@ IF(HAVE_IOS_LITE)
     DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
     COMPONENT emgutf_binary)
   
-  IF(APPLE)
-    PROJECT(Emgu.TF.Lite.Models.IOS)
-    MSBUILD_CSPROJ_IN_SOLUTION(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/../Solution/iOS/Emgu.TF.Lite.Example.iOS.sln" "${PROJECT_NAME}" "" ALL)    
-    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Netstandard)
-  ENDIF()
 ENDIF()
 
 IF(HAVE_ANDROID_LITE)

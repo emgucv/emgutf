@@ -117,10 +117,10 @@ namespace Emgu.Models
                     (int)uiimage.Size.Width,
                     (int)uiimage.Size.Height);
                 CGRect cgRect = new CGRect(
-                                           (nfloat)rects[0],
-                                           (nfloat)rects[1],
-                                           (nfloat)(rects[2] - rects[0]),
-                                           (nfloat)(rects[3] - rects[1]));
+                                           (NFloat)rects[0],
+                                           (NFloat)rects[1],
+                                           (NFloat)(rects[2] - rects[0]),
+                                           (NFloat)(rects[3] - rects[1]));
                 context.AddRect(cgRect);
                 context.DrawPath(CGPathDrawingMode.Stroke);
             }
@@ -133,7 +133,7 @@ namespace Emgu.Models
                     (int)uiimage.Size.Width,
                     (int)uiimage.Size.Height);
                 context.SelectFont("Helvetica", 18, CGTextEncoding.MacRoman);
-                context.SetFillColor((nfloat)1.0, (nfloat)0.0, (nfloat)0.0, (nfloat)1.0);
+                context.SetFillColor((NFloat)1.0, (NFloat)0.0, (NFloat)0.0, (NFloat)1.0);
                 context.SetTextDrawingMode(CGTextDrawingMode.Fill);
                 context.ShowTextAtPoint(rects[0], uiimage.Size.Height - rects[1], annotations[i].Label);
             }
