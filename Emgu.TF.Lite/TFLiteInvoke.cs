@@ -426,11 +426,18 @@ namespace Emgu.TF.Lite
         {
             bool libraryLoaded = true;
 #if !(UNITY_ANDROID || UNITY_IOS || UNITY_EDITOR || UNITY_STANDALONE)
-            System.Reflection.Assembly monoAndroidAssembly = Emgu.TF.Util.Toolbox.FindAssembly("Mono.Android.dll");
-            if (monoAndroidAssembly != null)
+
+            #region Check for MAUI iOS
+            if (Emgu.TF.Util.Toolbox.FindAssembly("Microsoft.iOS.dll") != null)
+                return libraryLoaded;
+            #endregion
+
+            #region Check for MAUI Android
+            System.Reflection.Assembly mauiAndroidAssembly = Emgu.TF.Util.Toolbox.FindAssembly("Microsoft.Android.dll");
+            if (mauiAndroidAssembly != null)
             {
                 //Running on Xamarin Android
-                Type javaSystemType = monoAndroidAssembly.GetType("Java.Lang.JavaSystem");
+                Type javaSystemType = mauiAndroidAssembly.GetType("Java.Lang.JavaSystem");
                 if (javaSystemType != null)
                 {
                     System.Reflection.MethodInfo loadLibraryMethodInfo = javaSystemType.GetMethod("LoadLibrary");
@@ -468,7 +475,9 @@ namespace Emgu.TF.Lite
                     }
                 }
             }
-            else if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices
+            #endregion
+
+            if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices
                 .OSPlatform.OSX))
             {
                 //String formatString = GetModuleFormatString();
@@ -500,9 +509,9 @@ namespace Emgu.TF.Lite
 
             try
             {
-                if (Emgu.TF.Util.Toolbox.FindAssembly("Xamarin.iOS.dll") == null)
+                if (Emgu.TF.Util.Toolbox.FindAssembly("Microsoft.iOS.dll") == null)
                 {
-                    //Not running on iOS
+                    //When not running on iOS
                     //Use the custom error handler
                     RedirectError(TfliteErrorHandlerThrowException);
                 }
