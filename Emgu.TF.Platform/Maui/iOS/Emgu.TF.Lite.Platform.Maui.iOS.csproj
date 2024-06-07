@@ -55,7 +55,7 @@
   </ItemGroup>
   
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard.IOS\Emgu.TF.Lite.Netstandard.IOS.csproj" />
+      <ProjectReference Include="..\..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.Netstandard.csproj" />
     </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Message Text="Copying $(OutputPath)$(AssemblyName).dll and $(OutputPath)$(AssemblyName).xml to $(TfLiteBinaryDir)" Importance="high" />

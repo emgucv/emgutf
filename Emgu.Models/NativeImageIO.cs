@@ -15,6 +15,13 @@ namespace Emgu.Models
     /// </summary>
     public partial class NativeImageIO
     {
+        /// <summary>
+        /// Scales the location of a rectangle in an image.
+        /// </summary>
+        /// <param name="location">An array of four float values representing the top left (x0, y0) and bottom right (x1, y1) corners of a rectangle. The values should be in the range of [0, 1].</param>
+        /// <param name="imageWidth">The width of the image.</param>
+        /// <param name="imageHeight">The height of the image.</param>
+        /// <returns>An array of four float values representing the scaled top left (x0, y0) and bottom right (x1, y1) corners of the rectangle in the image.</returns>
         public static float[] ScaleLocation(float[] location, int imageWidth, int imageHeight)
         {
             float left = location[0] * imageWidth;

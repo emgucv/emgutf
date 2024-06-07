@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<Project>
+ <PropertyGroup>
+    <PackageId>${EMGUTF_LITE_MODEL_NUGET_ID}</PackageId>
+	<title>${EMGUTF_LITE_MODEL_NUGET_TITLE}</title>
+    <version>${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}</version>
+    <authors>${CPACK_PACKAGE_VENDOR}</authors>
+    <owners>${CPACK_PACKAGE_VENDOR}</owners>
+	<summary>Utility to download Tensorflow models for Emgu TF Lite</summary>
+    <Description>Emgu TF Lite is a cross platform .Net wrapper for the Google Tensorflow Lite library. Allows Tensorflow Lite functions to be called from .NET compatible languages such as C#, VB, VC++, IronPython.</Description>
+    <PackageReleaseNotes>This is the ${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX} release of Emgu TF Lite. For online documentation please visit
+http://www.emgu.com/wiki/files/emgutflite/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}/document/</PackageReleaseNotes>
+	
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<PackageIcon>nuget_icon.png</PackageIcon>
+    <PackageReadmeFile>docs/README.md</PackageReadmeFile>
+	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+	<RepositoryUrl>${GITHUB_REPO_URL}</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageOutputPath>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\platforms\nuget))</PackageOutputPath>
+	<PackageTags>tensorflow emgu emgutf ai</PackageTags>
+    <PackageProjectUrl>${NUGET_EMGU_URL}</PackageProjectUrl>
+    <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved.</copyright>
+    
+ </PropertyGroup>
+ 
+    <ItemGroup>
+      <None Include="..\..\LICENSE.txt">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
+      <None Include="..\..\miscellaneous\nuget_icon.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="docs\README.md">
+        <Pack>True</Pack>
+        <PackagePath>docs\</PackagePath>
+      </None>
+    </ItemGroup>
+	
+  <!-- https://learn.microsoft.com/en-us/visualstudio/msbuild/customize-by-directory?view=vs-2022 -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+  ${EMGUTF_LITE_POST_PROCESS_BINARY}
+  
+</Project>

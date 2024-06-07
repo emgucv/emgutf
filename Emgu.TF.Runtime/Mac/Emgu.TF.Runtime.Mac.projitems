@@ -13,7 +13,7 @@
     <EmguTFMacDir>$(MSBuildThisFileDirectory)</EmguTFMacDir>
   </PropertyGroup>
   <PropertyGroup>
-    <EmguTFMacLinkTarget>Xamarin.Mac</EmguTFMacLinkTarget>
+    <EmguTFMacLinkTarget>Mac OS</EmguTFMacLinkTarget>
     <EmguTFMacNativeFile>$(EmguTFMacBinaryDir)\libtfextern.dylib</EmguTFMacNativeFile>
     <EmguTFMacNativeFile2>$(EmguTFMacBinaryDir)\libtensorflow_framework.dylib</EmguTFMacNativeFile2>
     <EmguTFMacErrorMessage Condition="!Exists('$(EmguTFMacNativeFile)')">This package do not contain necessary binary for $(EmguTFMacLinkTarget). Missing $(EmguTFMacNativeFile). PInvoke may fail on Mac OS.</EmguTFMacErrorMessage>

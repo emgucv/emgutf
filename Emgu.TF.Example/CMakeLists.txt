@@ -3,92 +3,18 @@
 # --------------------------------------------------------
 
 
-#XamarinForms
-
-IF (HAVE_ANDROID OR HAVE_IOS OR HAVE_OSX OR HAVE_WINDESKTOP_X64) 
-  INSTALL(
-    DIRECTORY
-    "${CMAKE_CURRENT_SOURCE_DIR}/XamarinForms/XamarinForms/"
-    DESTINATION Emgu.TF.Example/XamarinForms/XamarinForms/
-    COMPONENT emgutf_example_source
-    FILES_MATCHING 
-    PATTERN "*.cs"
-    PATTERN "*.csproj"
-    PATTERN "*.config"
-    PATTERN "*.shproj"
-    PATTERN "*.Xamarin"
-    PATTERN "*.projitems"
-    PATTERN "*.axml"
-    PATTERN "*.xaml"
-    PATTERN "*.xml"
-    PATTERN "*.txt"
-    PATTERN "*.dll"
-    PATTERN "*.json"
-    PATTERN ".git" EXCLUDE
-    PATTERN "Debug" EXCLUDE
-    PATTERN "Release" EXCLUDE  
-    )
-ENDIF()
-
 IF (HAVE_ANDROID OR HAVE_IOS OR HAVE_OSX OR HAVE_WINDESKTOP_X64 OR HAVE_ANDROID_LITE OR HAVE_IOS_LITE OR HAVE_OSX_LITE OR HAVE_WINDESKTOP_LITE) 	
-  INSTALL(
-    DIRECTORY
-    "${CMAKE_CURRENT_SOURCE_DIR}/XamarinForms/XamarinForms/"
-    DESTINATION Emgu.TF.Example/XamarinForms/XamarinForms/
-    COMPONENT emgutf_example_source
-    FILES_MATCHING 
-    PATTERN "*.png"
-	PATTERN "*.jpg"
-    PATTERN ".git" EXCLUDE
-    PATTERN "Debug" EXCLUDE
-    PATTERN "Release" EXCLUDE  
-    )
   INSTALL(FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/examples/multibox_detector/data/surfers.jpg"
     DESTINATION tensorflow/tensorflow/examples/multibox_detector/data 
 	COMPONENT emgutf_example_source)
 	
-  #INSTALL(FILES
-  #  "${CMAKE_CURRENT_SOURCE_DIR}/InceptionObjectRecognition/space_shuttle.jpg"
-  #  DESTINATION Emgu.TF.Example/InceptionObjectRecognition
-  #  COMPONENT emgutf_example_source)
-	
-  #INSTALL(FILES
-  #  "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/examples/label_image/data/grace_hopper.jpg"
-  #  DESTINATION tensorflow/tensorflow/examples/label_image/data 
-  #	COMPONENT emgutf_example_source)
-  
   INSTALL(FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/CVInterop/dog416.png"
     DESTINATION Emgu.TF.Example/CVInterop
 	COMPONENT emgutf_example_source)
 ENDIF()
 
-IF (HAVE_LITE_BUILD) 
-  INSTALL(
-    DIRECTORY
-    "${CMAKE_CURRENT_SOURCE_DIR}/XamarinForms/XamarinForms.Lite/"
-    DESTINATION Emgu.TF.Example/XamarinForms/XamarinForms.Lite/
-    COMPONENT emgutf_example_source
-    FILES_MATCHING 
-    PATTERN "*.cs"
-    PATTERN "*.csproj"
-    PATTERN "*.config"
-    PATTERN "*.shproj"
-    PATTERN "*.Xamarin"
-    PATTERN "*.projitems"
-    PATTERN "*.axml"
-    PATTERN "*.xaml"
-    PATTERN "*.xml"
-    PATTERN "*.txt"
-    PATTERN "*.png"
-    PATTERN "*.dll"
-    PATTERN "*.json"
-    PATTERN ".git" EXCLUDE
-    PATTERN "Debug" EXCLUDE
-    PATTERN "Release" EXCLUDE  
-    )	
-ENDIF()
 
 
 IF(HAVE_ANDROID)
@@ -117,11 +43,11 @@ IF(HAVE_ANDROID)
     )
 ENDIF()
 
-IF(HAVE_ANDROID_LITE)
+IF(HAVE_ANDROID_LITE OR HAVE_IOS_LITE OR HAVE_WINDESKTOP_LITE)
   INSTALL(
     DIRECTORY
-    "${CMAKE_CURRENT_SOURCE_DIR}/XamarinForms/XamarinForms.Lite.Android/"
-    DESTINATION Emgu.TF.Example/XamarinForms/XamarinForms.Lite.Android/
+    "${CMAKE_CURRENT_SOURCE_DIR}/Maui.Lite"
+    DESTINATION Emgu.TF.Example/Maui.Lite
     COMPONENT emgutf_example_source
     FILES_MATCHING 
     PATTERN "*.cs"
@@ -143,11 +69,11 @@ IF(HAVE_ANDROID_LITE)
     )
 ENDIF()
   
-IF(HAVE_IOS)
+IF(HAVE_IOS OR HAVE_WINDESKTOP_X64)
   INSTALL(
     DIRECTORY
-    "${CMAKE_CURRENT_SOURCE_DIR}/XamarinForms/XamarinForms.iOS/"
-    DESTINATION Emgu.TF.Example/XamarinForms/XamarinForms.iOS/
+    "${CMAKE_CURRENT_SOURCE_DIR}/Maui"
+    DESTINATION Emgu.TF.Example/Maui/
     COMPONENT emgutf_example_source
     FILES_MATCHING 
     PATTERN "*.cs"
@@ -170,168 +96,6 @@ IF(HAVE_IOS)
     PATTERN "Debug" EXCLUDE
     PATTERN "Release" EXCLUDE  
     )  
-ENDIF()
-
-IF(HAVE_IOS_LITE)
-  INSTALL(
-    DIRECTORY
-    "${CMAKE_CURRENT_SOURCE_DIR}/XamarinForms/XamarinForms.Lite.iOS/"
-    DESTINATION Emgu.TF.Example/XamarinForms/XamarinForms.Lite.iOS/
-    COMPONENT emgutf_example_source
-    FILES_MATCHING 
-    PATTERN "*.cs"
-    PATTERN "*.csproj"
-    PATTERN "*.config"
-    PATTERN "*.shproj"
-    PATTERN "*.Xamarin"
-    PATTERN "*.projitems"
-    PATTERN "*.axml"
-    PATTERN "*.xaml"
-    PATTERN "*.xml"
-    PATTERN "*.txt"
-    PATTERN "*.png"
-    PATTERN "*.dll"
-    PATTERN "*.json"
-    PATTERN "*.plist"
-    PATTERN "iTunesArtwork*"
-    PATTERN "*.storyboard"
-    PATTERN ".git" EXCLUDE
-    PATTERN "Debug" EXCLUDE
-    PATTERN "Release" EXCLUDE  
-    )  
-ENDIF()
-
-IF(HAVE_OSX)
-  INSTALL(
-    DIRECTORY
-    "${CMAKE_CURRENT_SOURCE_DIR}/XamarinForms/XamarinForms.Mac/"
-    DESTINATION Emgu.TF.Example/XamarinForms/XamarinForms.Mac/
-    COMPONENT emgutf_example_source
-    FILES_MATCHING
-    PATTERN "*.cs"
-    PATTERN "*.csproj"
-    PATTERN "*.config"
-    PATTERN "*.Xamarin"
-    PATTERN "*.axml"
-    PATTERN "*.xaml"
-    PATTERN "*.xml"
-    PATTERN "*.txt"
-    PATTERN "*.png"
-    PATTERN "*.dll"
-    PATTERN "*.json"
-    PATTERN "*.plist"
-    PATTERN "iTunesArtwork*"
-    PATTERN "*.storyboard"
-    PATTERN ".git" EXCLUDE
-    PATTERN "Debug" EXCLUDE
-    PATTERN "Release" EXCLUDE
-    )
-	
-  INSTALL(
-    DIRECTORY
-    "${CMAKE_CURRENT_SOURCE_DIR}/Mac/"
-    DESTINATION Emgu.TF.Example/Mac/
-    COMPONENT emgutf_example_source
-    FILES_MATCHING
-    PATTERN "*.cs"
-    PATTERN "*.csproj"
-    PATTERN "*.config"
-    PATTERN "*.Xamarin"
-    PATTERN "*.axml"
-    PATTERN "*.xaml"
-    PATTERN "*.xml"
-    PATTERN "*.txt"
-    PATTERN "*.png"
-    PATTERN "*.dll"
-    PATTERN "*.json"
-    PATTERN "*.plist"
-    PATTERN "iTunesArtwork*"
-    PATTERN "*.storyboard"
-    PATTERN ".git" EXCLUDE
-    PATTERN "Debug" EXCLUDE
-    PATTERN "Release" EXCLUDE
-    )
-ENDIF()
-
-IF(HAVE_OSX_LITE)
-  INSTALL(
-    DIRECTORY
-    "${CMAKE_CURRENT_SOURCE_DIR}/XamarinForms/XamarinForms.Lite.Mac/"
-    DESTINATION Emgu.TF.Example/XamarinForms/XamarinForms.Lite.Mac/
-    COMPONENT emgutf_example_source
-    FILES_MATCHING
-    PATTERN "*.cs"
-    PATTERN "*.csproj"
-    PATTERN "*.config"
-    PATTERN "*.Xamarin"
-    PATTERN "*.axml"
-    PATTERN "*.xaml"
-    PATTERN "*.xml"
-    PATTERN "*.txt"
-    PATTERN "*.png"
-    PATTERN "*.dll"
-    PATTERN "*.json"
-    PATTERN "*.plist"
-    PATTERN "iTunesArtwork*"
-    PATTERN "*.storyboard"
-    PATTERN ".git" EXCLUDE
-    PATTERN "Debug" EXCLUDE
-    PATTERN "Release" EXCLUDE
-    )	
-ENDIF()
-
-IF(HAVE_WINDESKTOP_LITE)
-  INSTALL(
-    DIRECTORY
-    "${CMAKE_CURRENT_SOURCE_DIR}/XamarinForms/XamarinForms.Lite.WPF/"
-    DESTINATION Emgu.TF.Example/XamarinForms/XamarinForms.Lite.WPF/
-    COMPONENT emgutf_example_source
-    FILES_MATCHING 
-    PATTERN "*.cs"
-    PATTERN "*.csproj"
-    PATTERN "*.config"
-    PATTERN "*.shproj"
-    PATTERN "*.Xamarin"
-    PATTERN "*.projitems"
-    PATTERN "*.axml"
-    PATTERN "*.xaml"
-    PATTERN "*.xml"
-    PATTERN "*.txt"
-    PATTERN "*.png"
-    PATTERN "*.dll"
-    PATTERN "*.json"
-    PATTERN "*.resx"
-    PATTERN "*.settings"
-    PATTERN ".git" EXCLUDE
-    PATTERN "Debug" EXCLUDE
-    PATTERN "Release" EXCLUDE  
-    )
-ENDIF()
-
-IF(HAVE_WINDESKTOP_X64)
-  INSTALL(
-    DIRECTORY
-    "${CMAKE_CURRENT_SOURCE_DIR}/XamarinForms/XamarinForms.WPF/"
-    DESTINATION Emgu.TF.Example/XamarinForms/XamarinForms.WPF/
-    COMPONENT emgutf_example_source
-    FILES_MATCHING 
-    PATTERN "*.cs"
-    PATTERN "*.csproj"
-    PATTERN "*.config"
-    PATTERN "*.shproj"
-    PATTERN "*.Xamarin"
-    PATTERN "*.projitems"
-    PATTERN "*.axml"
-    PATTERN "*.xaml"
-    PATTERN "*.xml"
-    PATTERN "*.txt"
-    PATTERN "*.png"
-    PATTERN "*.dll"
-    PATTERN "*.json"
-    PATTERN ".git" EXCLUDE
-    PATTERN "Debug" EXCLUDE
-    PATTERN "Release" EXCLUDE  
-    )
 ENDIF()
 
 IF(HAVE_LITE_BUILD)

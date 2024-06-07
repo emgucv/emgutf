@@ -39,25 +39,6 @@ INSTALL(
   PATTERN "${PROJECT_NAME}.dir" EXCLUDE
   )
 
-INSTALL(
-  DIRECTORY
-  ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.Netstandard.IOS
-  DESTINATION Emgu.TF.Lite
-  COMPONENT emgutf_source
-  FILES_MATCHING 
-  PATTERN "*.cs"
-  PATTERN "*.projitems"
-  PATTERN "*.shproj"
-  PATTERN "*.csproj"
-  PATTERN ".svn" EXCLUDE
-  PATTERN "obj" EXCLUDE
-  PATTERN "CMakeFiles" EXCLUDE
-  PATTERN "x64" EXCLUDE #exclude build artifacts from Visual Studio build process
-  PATTERN "x86" EXCLUDE #exclude build artifacts from Visual Studio build process
-  PATTERN "${PROJECT_NAME}.dir" EXCLUDE
-  )
-
-
 IF (DOTNET_FOUND)
   PROJECT(Emgu.TF.Lite.Netstandard)
   #MESSAGE("In Emgu.TF.Lite.Netstandard project now. HAVE_WINDESKTOP_X64: ${HAVE_WINDESKTOP_X64}")
@@ -80,18 +61,5 @@ IF (DOTNET_FOUND)
     DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
     COMPONENT emgutf_binary)
 	
-  PROJECT(Emgu.TF.Lite.Netstandard.IOS)
-  BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj" "" ALL)
-  
-  IF (EMGU_SIGN_FOUND)
-    EMGU_SIGN_BINARY(${PROJECT_NAME} ${LIBRARY_OUTPUT_PATH}/ios/Emgu.TF.Lite.dll)
-  ENDIF()
-
-  INSTALL(
-    FILES 
-    ${LIBRARY_OUTPUT_PATH}/ios/Emgu.TF.Lite.xml
-    ${LIBRARY_OUTPUT_PATH}/ios/Emgu.TF.Lite.dll 
-    DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
-    COMPONENT emgutf_binary)
 ENDIF()
 ENDIF()

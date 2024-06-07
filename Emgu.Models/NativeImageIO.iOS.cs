@@ -41,66 +41,72 @@ namespace Emgu.Models
             bool swapBR = false)
             where T : struct
         {
-            
+
             if (inputHeight <= 0)
-                inputHeight = (int) image.Size.Height;
+                inputHeight = (int)image.Size.Height;
 
             if (inputWidth <= 0)
                 inputWidth = (int)image.Size.Width;
 
-            
-                int[] intValues = new int[inputWidth * inputHeight];
-                System.Runtime.InteropServices.GCHandle handle = System.Runtime.InteropServices.GCHandle.Alloc(intValues, System.Runtime.InteropServices.GCHandleType.Pinned);
-                using (CGImage cgimage = image.CGImage)
-                using (CGColorSpace cspace = CGColorSpace.CreateDeviceRGB())
-                using (CGBitmapContext context = new CGBitmapContext(
+
+            int[] intValues = new int[inputWidth * inputHeight];
+            System.Runtime.InteropServices.GCHandle handle = System.Runtime.InteropServices.GCHandle.Alloc(intValues, System.Runtime.InteropServices.GCHandleType.Pinned);
+            using (CGImage cgimage = image.CGImage)
+            using (CGColorSpace cspace = CGColorSpace.CreateDeviceRGB())
+            using (CGBitmapContext context = new CGBitmapContext(
+                handle.AddrOfPinnedObject(),
+                inputWidth,
+                inputHeight,
+                8,
+                inputWidth * 4,
+                cspace,
+                CGImageAlphaInfo.PremultipliedLast
+                ))
+            {
+                context.DrawImage(new CGRect(new CGPoint(), new CGSize(inputWidth, inputHeight)), cgimage);
+
+            }
+
+            if (typeof(T) == typeof(float))
+            {
+                Emgu.TF.Util.Toolbox.Pixel32ToPixelFloat(
                     handle.AddrOfPinnedObject(),
                     inputWidth,
                     inputHeight,
-                    8,
-                    inputWidth * 4,
-                    cspace,
-                    CGImageAlphaInfo.PremultipliedLast
-                    ))
-                {
-                    context.DrawImage(new CGRect(new CGPoint(), new CGSize(inputWidth, inputHeight)), cgimage);
+                    inputMean,
+                    scale,
+                    flipUpSideDown,
+                    swapBR,
+                    dest
+                    );
+            }
+            else if (typeof(T) == typeof(byte))
+            {
+                Emgu.TF.Util.Toolbox.Pixel32ToPixelByte(
+                    handle.AddrOfPinnedObject(),
+                    inputWidth,
+                    inputHeight,
+                    inputMean,
+                    scale,
+                    flipUpSideDown,
+                    swapBR,
+                    dest
+                    );
+            }
+            else
+            {
+                throw new NotImplementedException(String.Format("Destination data type {0} is not supported.", typeof(T).ToString()));
+            }
+            handle.Free();
 
-                }
-                
-                if (typeof(T) == typeof(float))
-                {
-                    Emgu.TF.Util.Toolbox.Pixel32ToPixelFloat(
-                        handle.AddrOfPinnedObject(),
-                        inputWidth,
-                        inputHeight,
-                        inputMean,
-                        scale,
-                        flipUpSideDown,
-                        swapBR,
-                        dest
-                        );
-                }
-                else if (typeof(T) == typeof(byte))
-                {
-                    Emgu.TF.Util.Toolbox.Pixel32ToPixelByte(
-                        handle.AddrOfPinnedObject(),
-                        inputWidth,
-                        inputHeight,
-                        inputMean,
-                        scale,
-                        flipUpSideDown,
-                        swapBR,
-                        dest
-                        );
-                }
-                else
-                {
-                    throw new NotImplementedException(String.Format("Destination data type {0} is not supported.", typeof(T).ToString()));
-                }
-                handle.Free();
-            
         }
 
+        /// <summary>
+        /// Draws annotations on a given UIImage.
+        /// </summary>
+        /// <param name="uiimage">The UIImage to draw annotations on.</param>
+        /// <param name="annotations">An array of Annotation objects representing the annotations to be drawn.</param>
+        /// <returns>A new UIImage with the annotations drawn on it.</returns>
         public static UIImage DrawAnnotations(UIImage uiimage, Annotation[] annotations)
         {
             UIGraphics.BeginImageContextWithOptions(uiimage.Size, false, 0);
@@ -117,10 +123,10 @@ namespace Emgu.Models
                     (int)uiimage.Size.Width,
                     (int)uiimage.Size.Height);
                 CGRect cgRect = new CGRect(
-                                           (nfloat)rects[0],
-                                           (nfloat)rects[1],
-                                           (nfloat)(rects[2] - rects[0]),
-                                           (nfloat)(rects[3] - rects[1]));
+                                           (NFloat)rects[0],
+                                           (NFloat)rects[1],
+                                           (NFloat)(rects[2] - rects[0]),
+                                           (NFloat)(rects[3] - rects[1]));
                 context.AddRect(cgRect);
                 context.DrawPath(CGPathDrawingMode.Stroke);
             }
@@ -133,7 +139,7 @@ namespace Emgu.Models
                     (int)uiimage.Size.Width,
                     (int)uiimage.Size.Height);
                 context.SelectFont("Helvetica", 18, CGTextEncoding.MacRoman);
-                context.SetFillColor((nfloat)1.0, (nfloat)0.0, (nfloat)0.0, (nfloat)1.0);
+                context.SetFillColor((NFloat)1.0, (NFloat)0.0, (NFloat)0.0, (NFloat)1.0);
                 context.SetTextDrawingMode(CGTextDrawingMode.Fill);
                 context.ShowTextAtPoint(rects[0], uiimage.Size.Height - rects[1], annotations[i].Label);
             }
@@ -146,7 +152,7 @@ namespace Emgu.Models
         /// Read the file and draw rectangles on it.
         /// </summary>
         /// <param name="fileName">The name of the file.</param>
-        /// <param name="annotations">Annotations to be add to the image. Can consist of rectangles and labels</param>
+        /// <param name="annotations">Annotations to be added to the image. Can consist of rectangles and labels</param>
         /// <returns>The image in Jpeg stream format</returns>
         public static JpegData ImageFileToJpeg(String fileName, Annotation[] annotations = null)
         {
@@ -154,8 +160,8 @@ namespace Emgu.Models
 
             UIImage imgWithRect = DrawAnnotations(uiimage, annotations);
             var jpegData = imgWithRect.AsJPEG();
-			byte[] jpeg = new byte[jpegData.Length];
-			System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, jpeg, 0, (int)jpegData.Length);
+            byte[] jpeg = new byte[jpegData.Length];
+            System.Runtime.InteropServices.Marshal.Copy(jpegData.Bytes, jpeg, 0, (int)jpegData.Length);
             JpegData result = new JpegData();
             result.Raw = jpeg;
             result.Width = (int)uiimage.Size.Width;
@@ -215,10 +221,10 @@ namespace Emgu.Models
             int inputHeight = -1,
             int inputWidth = -1,
             float inputMean = 0.0f,
-            float scale = 1.0f, 
+            float scale = 1.0f,
             bool flipUpSideDown = false,
             bool swapBR = false)
-            where T: struct
+            where T : struct
         {
             if (!File.Exists(fileName))
                 throw new FileNotFoundException(String.Format("File {0} do not exist.", fileName));

@@ -8,22 +8,22 @@
   <PropertyGroup Label="Configuration">
     <Import_RootNamespace>Emgu.TF.Lite</Import_RootNamespace>
   </PropertyGroup>
-    <PropertyGroup>
-    <TFLiteBinaryDir>$(MSBuildThisFileDirectory)..\..\lib</TFLiteBinaryDir>
-  </PropertyGroup>  
   <PropertyGroup>
-    <EmguTFLiteMacLinkTarget>Xamarin.Mac</EmguTFLiteMacLinkTarget>
+    <TFLiteBinaryDir>$(MSBuildThisFileDirectory)..\..\lib</TFLiteBinaryDir>
+  </PropertyGroup>
+  <PropertyGroup>
+    <EmguTFLiteMacLinkTarget>Mac OS</EmguTFLiteMacLinkTarget>
     <EmguTFLiteMacNativeFile>$(TFLiteBinaryDir)\runtimes\osx\native\libtfliteextern.dylib</EmguTFLiteMacNativeFile>
-    <EmguTFLiteMacErrorMessage Condition="!Exists('$(EmguTFLiteMacNativeFile)')"> This package do not contain necessary binary for $(EmguTFLiteMacLinkTarget). Missing $(EmguTFLiteMacNativeFile). PInvoke may fail on Mac OS.</EmguTFLiteMacErrorMessage>
+    <EmguTFLiteMacErrorMessage Condition="!Exists('$(EmguTFLiteMacNativeFile)')">This package do not contain necessary binary for $(EmguTFLiteMacLinkTarget). Missing $(EmguTFLiteMacNativeFile). PInvoke may fail on Mac OS.</EmguTFLiteMacErrorMessage>
     <EmguTFLiteMacDeployMessage Condition="Exists('$(EmguTFLiteMacNativeFile)')">$(EmguTFLiteMacDeployMessage)macOS_x64 </EmguTFLiteMacDeployMessage>
   </PropertyGroup>
-      <ItemGroup Condition="Exists('$(EmguTFLiteMacNativeFile)')">
-        <Content Include="$(TFLiteBinaryDir)\runtimes\osx\native\libtfliteextern.dylib">
-          <Link>libtfliteextern.dylib</Link>
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-      </ItemGroup>
-    <Target Name="EmguTFLiteMacPackageBuildImports" BeforeTargets="PrepareForBuild">
+  <ItemGroup Condition="Exists('$(EmguTFLiteMacNativeFile)')">
+    <Content Include="$(TFLiteBinaryDir)\runtimes\osx\native\libtfliteextern.dylib">
+      <Link>libtfliteextern.dylib</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Target Name="EmguTFLiteMacPackageBuildImports" BeforeTargets="PrepareForBuild">
     <!-- <Message Condition="'$(EmguTFLiteMacLinkTarget)'!=''" Text="Emgu TF Lite shared project compiling against $(EmguTFLiteMacLinkTarget)" Importance="High" /> -->
     <Warning Text="'$(EmguTFLiteMacErrorMessage)'" Condition="'$(EmguTFLiteMacErrorMessage)'!=''" />
     <Message Text="Emgu TF Lite Compiling with $(EmguTFLiteMacDeployMessage)binary" Condition="'$(EmguTFLiteMacDeployMessage)'!=''" Importance="High" />
