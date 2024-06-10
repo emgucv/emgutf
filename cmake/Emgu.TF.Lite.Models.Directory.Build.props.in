@@ -44,6 +44,6 @@ http://www.emgu.com/wiki/files/emgutflite/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK
 	
   <!-- https://learn.microsoft.com/en-us/visualstudio/msbuild/customize-by-directory?view=vs-2022 -->
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
-  ${EMGUTF_LITE_POST_PROCESS_BINARY}
-  
+  ${EMGUTF_LITE_MODELS_POST_PROCESS_BINARY}
+  ${EMGUTF_LITE_MODELS_POST_PROCESS_NUGET}
 </Project>

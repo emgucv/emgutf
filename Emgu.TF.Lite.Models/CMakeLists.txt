@@ -42,18 +42,20 @@ IF(HAVE_LITE_BUILD)
     PROJECT(Emgu.TF.Lite.Models.Netstandard)
 
     BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj" "" ALL)
-    
-    IF (EMGU_SIGN_FOUND)
-      EMGU_SIGN_BINARY(${PROJECT_NAME}  ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Lite.Models.dll)
-    ENDIF()
+
+    # Binary signing should be done during project build time.
+    #IF (EMGU_SIGN_FOUND)
+    #  EMGU_SIGN_BINARY(${PROJECT_NAME} ${LIBRARY_OUTPUT_PATH}/Build/Emgu.TF.Lite.Models/AnyCPU/Release/netstandard2.0/Emgu.TF.Lite.Models.dll)
+    #  EMGU_SIGN_BINARY(${PROJECT_NAME} ${LIBRARY_OUTPUT_PATH}/Build/Emgu.TF.Lite.Models/AnyCPU/Release/net8.0-ios/Emgu.TF.Lite.Models.dll)
+    #  EMGU_SIGN_BINARY(${PROJECT_NAME} ${LIBRARY_OUTPUT_PATH}/Build/Emgu.TF.Lite.Models/AnyCPU/Release/net8.0-maccatalyst/Emgu.TF.Lite.Models.dll)
+    #ENDIF()
 
     ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Netstandard)
 
     INSTALL(
-      FILES 
-      ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Lite.Models.dll
-      ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Lite.Models.xml
-      DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
+      DIRECTORY 
+      ${LIBRARY_OUTPUT_PATH}/Build/Emgu.TF.Lite.Models
+      DESTINATION lib
       COMPONENT emgutf_binary)
   ENDIF()
 ENDIF()

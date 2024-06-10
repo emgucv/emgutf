@@ -525,6 +525,16 @@ IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
   #SET(EMGUTF_PROTOBUF_NUGET_TITLE "${EMGUTF_PROTOBUF_NUGET_TITLE} Commercial Release")
 ENDIF()
 
+IF(EMGU_SIGN_FOUND AND WIN32)
+  file(TO_NATIVE_PATH ${EMGU_SIGN_EXECUTABLE} EMGU_SIGN_EXECUTABLE_NATIVE_PATH)
+  file(TO_NATIVE_PATH ${SIGNTOOL_EXECUTABLE} SIGNTOOL_EXECUTABLE_NATIVE_PATH)
+ENDIF()
+
+IF(EMGU_NUGET_SIGN_FOUND AND WIN32)
+  file(TO_NATIVE_PATH ${EMGU_NUGET_SIGN_EXECUTABLE} EMGU_NUGET_SIGN_EXECUTABLE_NATIVE_PATH)
+  file(TO_NATIVE_PATH ${NUGET_EXECUTABLE} NUGET_EXECUTABLE_NATIVE_PATH)
+ENDIF()
+
 SET(EMGUTF_WINDOWS_NUGET_FILE_LIST "")
 
 IF(HAVE_WINDESKTOP)
@@ -553,26 +563,7 @@ IF(HAVE_WINDESKTOP)
 		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />") 
 ENDIF()
 
-
 IF(HAVE_ANDROID)
-  #SET(EMGUTF_XAMARIN_ANDROID_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.runtime.xamarin.android")
-  #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
-  #  SET(EMGUTF_ANDROID_NUGET_ID "${EMGUTF_ANDROID_NUGET_ID}-CR")  
-  #ENDIF()
-  #SET(EMGUTF_XAMARIN_ANDROID_NUGET_TITLE "Native Android runtime of ${EMGUTF_NUGET_TITLE} for Xamarin")	
-  #SET(EMGUTF_XAMARIN_ANDROID_NUGET_FILE_LIST " 
-  #  <file src=\"..\\..\\..\\lib\\Emgu.TF.Platform.Xamarin.Android.dll\" target=\"lib\\MonoAndroid10\" />
-#	<file src=\"..\\..\\..\\lib\\Emgu.TF.Platform.Xamarin.Android.xml\" target=\"lib\\MonoAndroid10\" />
-#	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
-#	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
-#	<file src=\"readme.txt\" target=\"\" />")
-#  SET(EMGUTF_XAMARIN_ANDROID_NUGET_DEPENDENCY "${EMGUTF_XAMARIN_ANDROID_NUGET_DEPENDENCY}
-#    <dependencies>
-#	    <group targetFramework=\"MonoAndroid1.0\">
-#		    <dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
-#		    <dependency id=\"Xamarin.Android.Support.v7.AppCompat\" version=\"28.0.0.3\" />
-#		</group>
-#    </dependencies>") 
 	
   SET(EMGUTF_MAUI_ANDROID_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.runtime.maui.android")
   #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
@@ -583,8 +574,6 @@ IF(HAVE_ANDROID)
     # Sign and copy the binary
     SET(EMGUTF_MAUI_ANDROID_POST_PROCESS_BINARY "<Target Name=\"PostProcessBinary\" AfterTargets=\"PostBuildEvent\">")
     IF(EMGU_SIGN_FOUND AND WIN32)
-      file(TO_NATIVE_PATH ${EMGU_SIGN_EXECUTABLE} EMGU_SIGN_EXECUTABLE_NATIVE_PATH)
-	  file(TO_NATIVE_PATH ${SIGNTOOL_EXECUTABLE} SIGNTOOL_EXECUTABLE_NATIVE_PATH)
       SET(EMGUTF_MAUI_ANDROID_POST_PROCESS_BINARY "${EMGUTF_MAUI_ANDROID_POST_PROCESS_BINARY}
       <Message Text=\"Signing $(OutputPath)$(AssemblyName).dll\" Importance=\"high\" />
 	  <MakeDir Directories=\"$(OutputPath)\\signed\"/>
@@ -729,13 +718,38 @@ IF(HAVE_LITE_BUILD)
   #MESSAGE(STATUS ">>> HAVE_WINDESKTOP_LITE: ${HAVE_WINDESKTOP_LITE}")
   
   IF(EMGU_SIGN_FOUND AND WIN32)
-      file(TO_NATIVE_PATH ${EMGU_SIGN_EXECUTABLE} EMGU_SIGN_EXECUTABLE_NATIVE_PATH)
-	  file(TO_NATIVE_PATH ${SIGNTOOL_EXECUTABLE} SIGNTOOL_EXECUTABLE_NATIVE_PATH)
+  
+	  SET(EMGUTF_LITE_POST_PROCESS_BINARY "<Target Name=\"PostProcessBinary\" AfterTargets=\"PostBuildEvent\">")
+      SET(EMGUTF_LITE_MODELS_POST_PROCESS_BINARY "<Target Name=\"PostProcessBinary\" AfterTargets=\"PostBuildEvent\">")
+	  SET(EMGUTF_LITE_POST_PROCESS_BINARY "${EMGUTF_LITE_POST_PROCESS_BINARY}
+    <Message Text=\"Signing $(OutputPath)$(AssemblyName).dll\" Importance=\"high\" />
+	<MakeDir Directories=\"$(OutputPath)\\signed\"/>
+    <Exec Command='${EMGU_SIGN_EXECUTABLE_NATIVE_PATH} \"$(OutputPath)$(AssemblyName).dll\" \"$(OutputPath)signed\" \"${SIGNTOOL_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(OutputPath)\" />
+	</Target>")
+	  SET(EMGUTF_LITE_MODELS_POST_PROCESS_BINARY "${EMGUTF_LITE_MODELS_POST_PROCESS_BINARY}
+    <Message Text=\"Signing $(OutputPath)$(AssemblyName).dll\" Importance=\"high\" />
+	<MakeDir Directories=\"$(OutputPath)\\signed\"/>
+    <Exec Command='${EMGU_SIGN_EXECUTABLE_NATIVE_PATH} \"$(OutputPath)$(AssemblyName).dll\" \"$(OutputPath)signed\" \"${SIGNTOOL_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(OutputPath)\" />
+	</Target>")
   ENDIF()
   IF(EMGU_NUGET_SIGN_FOUND AND WIN32)
-      file(TO_NATIVE_PATH ${EMGU_NUGET_SIGN_EXECUTABLE} EMGU_NUGET_SIGN_EXECUTABLE_NATIVE_PATH)
-	  file(TO_NATIVE_PATH ${NUGET_EXECUTABLE} NUGET_EXECUTABLE_NATIVE_PATH)
+	  
+	  SET(EMGUTF_LITE_POST_PROCESS_NUGET "${EMGUTF_LITE_POST_PROCESS_NUGET}
+    <Target Name=\"PostProcessNuget\" AfterTargets=\"Pack\">
+      <Message Text=\"Signing $(PackageOutputPath)\\$(PackageId).$(PackageVersion).nupkg\" Importance=\"high\" />
+      <MakeDir Directories=\"$(PackageOutputPath)\\signed\"/>
+      <Exec Command='${EMGU_NUGET_SIGN_EXECUTABLE_NATIVE_PATH} \"$(PackageOutputPath)\\$(PackageId).$(PackageVersion).nupkg\" \"$(PackageOutputPath)\\signed\" \"${NUGET_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(PackageOutputPath)\" />
+    </Target>")
+	  SET(EMGUTF_LITE_MODELS_POST_PROCESS_NUGET "${EMGUTF_LITE_MODELS_POST_PROCESS_NUGET}
+    <Target Name=\"PostProcessNuget\" AfterTargets=\"Pack\">
+      <Message Text=\"Signing $(PackageOutputPath)\\$(PackageId).$(PackageVersion).nupkg\" Importance=\"high\" />
+      <MakeDir Directories=\"$(PackageOutputPath)\\signed\"/>
+      <Exec Command='${EMGU_NUGET_SIGN_EXECUTABLE_NATIVE_PATH} \"$(PackageOutputPath)\\$(PackageId).$(PackageVersion).nupkg\" \"$(PackageOutputPath)\\signed\" \"${NUGET_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(PackageOutputPath)\" />
+    </Target>")
+	
   ENDIF()
+  
+  
   
   IF (HAVE_ANDROID_LITE)
     # Sign and copy the binary
@@ -797,14 +811,6 @@ IF(HAVE_LITE_BUILD)
 	
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.ios.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Platform/Maui/iOS/Directory.Build.props)
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.ios.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Platform/Maui/iOS/docs/README.md)
-  
-#  SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
-#    <file src=\"..\\..\\..\\lib\\ios\\Emgu.TF.Lite.dll\" target=\"lib\\xamarinios10\" />
-#	<file src=\"..\\..\\..\\lib\\ios\\Emgu.TF.Lite.xml\" target=\"lib\\xamarinios10\" />")
-#  SET(EMGUTF_LITE_NUGET_DEPENDENCY "${EMGUTF_LITE_NUGET_DEPENDENCY}
-#    <group targetFramework=\"Xamarin.iOS1.0\">
-#        <dependency id=\"System.Runtime.InteropServices.RuntimeInformation\" version=\"4.3.0\" />
-#    </group>")
 	
   ENDIF()
   
@@ -814,73 +820,6 @@ IF(HAVE_LITE_BUILD)
   ENDIF()
   MESSAGE(STATUS "HAVE_MAUI_LITE: ${HAVE_MAUI_LITE}")
       
-#  SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST} 
-#    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.dll\" target=\"lib\\netstandard2.0\" />
-#	<file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.xml\" target=\"lib\\netstandard2.0\" />")
-#  SET(EMGUTF_LITE_NUGET_FILE_LIST "${EMGUTF_LITE_NUGET_FILE_LIST}
-#	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
-#	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
-#	<file src=\"README.md\" target=\"docs\\\" />")
-
-#  SET(EMGUTF_LITE_NUGET_DEPENDENCY "${EMGUTF_LITE_NUGET_DEPENDENCY}
-#    <group targetFramework=\".NETStandard2.0\">
-#        <dependency id=\"System.Runtime.InteropServices.RuntimeInformation\" version=\"4.3.0\" />
-#    </group>")
-#  SET(EMGUTF_LITE_NUGET_DEPENDENCY "
-#    <dependencies>
-#		${EMGUTF_LITE_NUGET_DEPENDENCY}
-#    </dependencies>")
-		
-#  IF( HAVE_OSX_LITE ) 
-#  SET(EMGUTF_LITE_MODEL_NUGET_FILE_LIST "${EMGUTF_LITE_MODEL_NUGET_FILE_LIST}
-#    <file src=\"..\\..\\..\\lib\\macos\\Emgu.TF.Lite.Models.dll\" target=\"lib\\Xamarin.Mac20\" />
-#    <file src=\"..\\..\\..\\lib\\macos\\Emgu.TF.Lite.Models.xml\" target=\"lib\\Xamarin.Mac20\" />")
-#  SET(EMGUTF_LITE_MODEL_NUGET_DEPENDENCY "${EMGUTF_LITE_MODEL_NUGET_DEPENDENCY}
-#    <group targetFramework=\"Xamarin.Mac2.0\">
-#        <dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
-#    </group>")	
-#  ENDIF()	
-  
-#  IF (HAVE_IOS_LITE)
-#  SET(EMGUTF_LITE_MODEL_NUGET_FILE_LIST "${EMGUTF_LITE_MODEL_NUGET_FILE_LIST} 
-#    <file src=\"..\\..\\..\\lib\\ios\\Emgu.TF.Lite.Models.dll\" target=\"lib\\xamarinios10\" />
-#	<file src=\"..\\..\\..\\lib\\ios\\Emgu.TF.Lite.Models.xml\" target=\"lib\\xamarinios10\" />")
-#  SET(EMGUTF_LITE_MODEL_NUGET_DEPENDENCY "${EMGUTF_LITE_MODEL_NUGET_DEPENDENCY}
-#    <group targetFramework=\"Xamarin.iOS1.0\">
-#        <dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
-#    </group>")	
-#  ENDIF()
-
-#  CHECK_BINARY_EXIST("lib/android" "Emgu.TF.Lite.Models.dll" HAVE_EMGUTF_LITE_MODEL_ANDROID OFF)  
-#  IF(TARGET Emgu.TF.Lite.Models.Android)
-#    SET(HAVE_EMGUTF_LITE_MODEL_ANDROID ON)
-#  ENDIF()
-
-#IF (HAVE_EMGUTF_LITE_MODEL_ANDROID)
-#  SET(EMGUTF_LITE_MODEL_NUGET_FILE_LIST "${EMGUTF_LITE_MODEL_NUGET_FILE_LIST} 
-#    <file src=\"..\\..\\..\\lib\\android\\Emgu.TF.Lite.Models.dll\" target=\"lib\\MonoAndroid10\" />
-#	<file src=\"..\\..\\..\\lib\\android\\Emgu.TF.Lite.Models.xml\" target=\"lib\\MonoAndroid10\" />")
-#  SET(EMGUTF_LITE_MODEL_NUGET_DEPENDENCY "${EMGUTF_LITE_MODEL_NUGET_DEPENDENCY}
-#    <group targetFramework=\"MonoAndroid1.0\">
-#        <dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
-#    </group>")	  
-#ENDIF()
-
-#  SET(EMGUTF_LITE_MODEL_NUGET_FILE_LIST "${EMGUTF_LITE_MODEL_NUGET_FILE_LIST} 
-#    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.dll\" target=\"lib\\netstandard2.0\" />
-#    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Models.xml\" target=\"lib\\netstandard2.0\" />
-#	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
-#    <file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
-
-#  SET(EMGUTF_LITE_MODEL_NUGET_DEPENDENCY "${EMGUTF_LITE_MODEL_NUGET_DEPENDENCY}
-#    <group targetFramework=\".NETStandard2.0\">
-#        <dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
-#        <dependency id=\"System.Drawing.Common\" version=\"6.0.0\" exclude=\"Build,Analyzers\"/>
-#    </group>")
-#  SET(EMGUTF_LITE_MODEL_NUGET_DEPENDENCY "
-#    <dependencies>
-#		${EMGUTF_LITE_MODEL_NUGET_DEPENDENCY}
-#    </dependencies>")
 ENDIF()
 
 IF(HAVE_MAUI_LITE)
@@ -926,8 +865,6 @@ IF(HAVE_MAUI_LITE)
 	-->
 	<Target Name=\"PostProcessBinary\" AfterTargets=\"PostBuildEvent\">")
   IF(EMGU_SIGN_FOUND AND WIN32)
-    file(TO_NATIVE_PATH ${EMGU_SIGN_EXECUTABLE} EMGU_SIGN_EXECUTABLE_NATIVE_PATH)
-	file(TO_NATIVE_PATH ${SIGNTOOL_EXECUTABLE} SIGNTOOL_EXECUTABLE_NATIVE_PATH)
     SET(EMGUTF_LITE_MAUI_POST_PROCESS_BINARY "${EMGUTF_LITE_MAUI_POST_PROCESS_BINARY}
     <Message Text=\"Signing $(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll\" Importance=\"high\" />
 	<MakeDir Directories=\"$(MSBuildThisFileDirectory)$(OutputPath)\\signed\"/>
@@ -988,8 +925,6 @@ IF(HAVE_MAUI)
 	-->
 	<Target Name=\"PostProcessBinary\" AfterTargets=\"PostBuildEvent\">")
   IF(EMGU_SIGN_FOUND AND WIN32)
-    file(TO_NATIVE_PATH ${EMGU_SIGN_EXECUTABLE} EMGU_SIGN_EXECUTABLE_NATIVE_PATH)
-	file(TO_NATIVE_PATH ${SIGNTOOL_EXECUTABLE} SIGNTOOL_EXECUTABLE_NATIVE_PATH)
     SET(EMGUTF_MAUI_POST_PROCESS_BINARY "${EMGUTF_MAUI_POST_PROCESS_BINARY}
     <Message Text=\"Signing $(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll\" Importance=\"high\" />
 	<MakeDir Directories=\"$(MSBuildThisFileDirectory)$(OutputPath)\\signed\"/>
@@ -1083,39 +1018,7 @@ IF( HAVE_WINDESKTOP_LITE )
     </dependencies>")
 ENDIF()
 
-#IF( HAVE_OSX_LITE ) 
-#  SET(EMGUTF_LITE_XAMARIN_MACOS_NUGET_FILE_LIST "${EMGUTF_LITE_XAMARIN_MACOS_NUGET_FILE_LIST} 
-#    <file src=\"..\\..\\..\\lib\\runtimes\\osx\\native\\libtfliteextern.dylib\" target=\"runtimes\\osx\\native\" />
-#	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
-#	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />")
-#  SET(EMGUTF_LITE_XAMARIN_MACOS_NUGET_DEPENDENCY "${EMGUTF_LITE_XAMARIN_MACOS_NUGET_DEPENDENCY}
-#    <dependencies>
-#		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
-#    </dependencies>")	
-#ENDIF()
-#IF (HAVE_IOS_LITE)
-#  SET(EMGUTF_LITE_XAMARIN_IOS_NUGET_FILE_LIST "${EMGUTF_LITE_XAMARIN_IOS_NUGET_FILE_LIST}
-#    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Platform.Xamarin.iOS.dll\" target=\"lib\\Xamarin.iOS10\" />
-#    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Platform.Xamarin.iOS.xml\" target=\"lib\\Xamarin.iOS10\" />
-#	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
-#	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
-#	<file src=\"readme.txt\" target=\"\" />")
-#ENDIF()
-#IF(HAVE_ANDROID_LITE)
-#  SET(EMGUTF_LITE_XAMARIN_ANDROID_NUGET_FILE_LIST "${EMGUTF_LITE_XAMARIN_ANDROID_NUGET_FILE_LIST}
-#    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Platform.Xamarin.Android.dll\" target=\"lib\\MonoAndroid10\" />
-#    <file src=\"..\\..\\..\\lib\\Emgu.TF.Lite.Platform.Xamarin.Android.xml\" target=\"lib\\MonoAndroid10\" />
-#	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
-#	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
-#	<file src=\"readme.txt\" target=\"\" />")
-#  SET(EMGUTF_LITE_ANDROID_NUGET_DEPENDENCY "${EMGUTF_LITE_XAMARIN_ANDROID_NUGET_DEPENDENCY}
-#    <dependencies>
-#	    <group targetFramework=\"MonoAndroid1.0\">
-#		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
-#		<dependency id=\"Xamarin.Android.Support.v7.AppCompat\" version=\"28.0.0.3\" />
-#		</group>
-#    </dependencies>")
-#ENDIF()
+
 IF (HAVE_UBUNTU_X86_64_LITE)
   SET(EMGUTF_LITE_UBUNTU_NUGET_FILE_LIST "${EMGUTF_LITE_UBUNTU_NUGET_FILE_LIST} 
     <file src=\"..\\..\\..\\lib\\runtimes\\ubuntu-x64\\native\\*.so\" target=\"runtimes\\runtimes\\ubuntu-x64\\native\" />
@@ -1127,10 +1030,6 @@ IF (HAVE_UBUNTU_X86_64_LITE)
 		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
     </dependencies>")	
 ENDIF()
-
-#SET(EMGUTF_LITE_DEBIAN_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.${NUGET_NATIVE_PLATFORM_ID_DEBIAN}")
-  
-#SET(EMGUTF_LITE_DEBIAN_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Debian (including Raspberry Pi OS)")	
 
 IF (HAVE_LINUX_ARM_LITE OR HAVE_LINUX_ARM64_LITE)
   SET(EMGUTF_LITE_DEBIAN_NUGET_DEPENDENCY "${EMGUTF_LITE_DEBIAN_NUGET_DEPENDENCY}
@@ -1161,12 +1060,24 @@ SET(EMGUTF_NUGET_DEPENDENCY "")
 SET(EMGUTF_PROTOBUF_NUGET_DEPENDENCY "")
 
 IF(HAVE_FULL_BUILD)
-  SET(EMGUTF_NUGET_FILE_LIST "${EMGUTF_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.dll\" target=\"lib\\netstandard2.0\" />
-	<file src=\"..\\..\\..\\lib\\Emgu.TF.xml\" target=\"lib\\netstandard2.0\" />
-	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
-	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
-	<file src=\"README.md\" target=\"docs\\\" />")
+  IF(EMGU_SIGN_FOUND AND WIN32)	  
+	  SET(EMGUTF_POST_PROCESS_BINARY "<Target Name=\"PostProcessBinary\" AfterTargets=\"PostBuildEvent\">
+    <Message Text=\"Signing $(OutputPath)$(AssemblyName).dll\" Importance=\"high\" />
+	<MakeDir Directories=\"$(OutputPath)\\signed\"/>
+    <Exec Command='${EMGU_SIGN_EXECUTABLE_NATIVE_PATH} \"$(OutputPath)$(AssemblyName).dll\" \"$(OutputPath)signed\" \"${SIGNTOOL_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(OutputPath)\" />
+	</Target>")
+	  SET(EMGUTF_MODELS_POST_PROCESS_BINARY "<Target Name=\"PostProcessBinary\" AfterTargets=\"PostBuildEvent\">
+    <Message Text=\"Signing $(OutputPath)$(AssemblyName).dll\" Importance=\"high\" />
+	<MakeDir Directories=\"$(OutputPath)\\signed\"/>
+    <Exec Command='${EMGU_SIGN_EXECUTABLE_NATIVE_PATH} \"$(OutputPath)$(AssemblyName).dll\" \"$(OutputPath)signed\" \"${SIGNTOOL_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(OutputPath)\" />
+	</Target>")
+	  SET(EMGUTF_PROTOBUF_POST_PROCESS_BINARY "<Target Name=\"PostProcessBinary\" AfterTargets=\"PostBuildEvent\">
+    <Message Text=\"Signing $(OutputPath)$(AssemblyName).dll\" Importance=\"high\" />
+	<MakeDir Directories=\"$(OutputPath)\\signed\"/>
+    <Exec Command='${EMGU_SIGN_EXECUTABLE_NATIVE_PATH} \"$(OutputPath)$(AssemblyName).dll\" \"$(OutputPath)signed\" \"${SIGNTOOL_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(OutputPath)\" />
+	</Target>")
+  ENDIF()
+
 ENDIF()
 
 IF(HAVE_WINDESKTOP)
@@ -1174,12 +1085,7 @@ IF(HAVE_WINDESKTOP)
   SET(BAZEL_CUDA_TOOLKIT_PATH_FILE "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/tensorflow/tools/CUDA_TOOLKIT_PATH.txt")
   
   SET(TFEXTERN_DEPENDENCY_DLLS)
-  
-  #IF(EXISTS ${BAZEL_GENERATED_CUFFT_VERSION_FILE})
-  #  SET(BAZEL_GENERATED_CUFFT_VERSION_FILE_FOUND ON)
-  #ENDIF()
-  #MESSAGE(STATUS ">>>>>>>>> BAZEL_GENERATED_CUFFT_VERSION_FILE ${BAZEL_GENERATED_CUFFT_VERSION_FILE_FOUND}: ${BAZEL_GENERATED_CUFFT_VERSION_FILE}")
-  
+
   IF(EXISTS ${BAZEL_CUDA_TOOLKIT_PATH_FILE})
     SET(CUDA_POSTFIX 64)
     SET(CMAKE_GENERATED_CUFFT_VERSION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/tensorflow/tensorflow/contrib/cmake/emgu.tf.cufft.version.txt")	
@@ -1440,42 +1346,32 @@ SET(EMGUTF_MODEL_NUGET_DEPENDENCY "${EMGUTF_MODEL_NUGET_DEPENDENCY}
         <dependency id=\"System.Drawing.Common\" version=\"6.0.0\" exclude=\"Build,Analyzers\" />
     </group>")
 
-#IF( HAVE_OSX ) 
-#  SET(EMGUTF_MODEL_NUGET_FILE_LIST "${EMGUTF_MODEL_NUGET_FILE_LIST}
-#    <file src=\"..\\..\\..\\lib\\macos\\Emgu.TF.Models.dll\" target=\"lib\\xamarinmac20\" />
-#    <file src=\"..\\..\\..\\lib\\macos\\Emgu.TF.Models.xml\" target=\"lib\\xamarinmac20\" />")
-#  SET(EMGUTF_MODEL_NUGET_DEPENDENCY "${EMGUTF_MODEL_NUGET_DEPENDENCY}
-#    <group targetFramework=\"Xamarin.Mac2.0\">
-#        <dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
-#    </group>")
-#ENDIF()
-
-
 CHECK_BINARY_EXIST("lib/android" "Emgu.TF.Models.dll" HAVE_EMGUTF_MODEL_ANDROID OFF)  
 IF(TARGET Emgu.TF.Models.Android)
   SET(HAVE_EMGUTF_MODEL_ANDROID ON)
 ENDIF()
-IF(HAVE_EMGUTF_MODEL_ANDROID)
-  SET(EMGUTF_MODEL_NUGET_FILE_LIST "${EMGUTF_MODEL_NUGET_FILE_LIST}
-    <file src=\"..\\..\\..\\lib\\android\\Emgu.TF.Models.dll\" target=\"lib\\MonoAndroid10\" />
-    <file src=\"..\\..\\..\\lib\\android\\Emgu.TF.Models.xml\" target=\"lib\\MonoAndroid10\" />")
-  SET(EMGUTF_MODEL_NUGET_DEPENDENCY "${EMGUTF_MODEL_NUGET_DEPENDENCY}
-    <group targetFramework=\"MonoAndroid1.0\">
-        <dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
-        <dependency id=\"Xamarin.Android.Support.v7.AppCompat\" version=\"28.0.0.3\" />
-    </group>")
-ENDIF()
 
-SET(EMGUTF_MODEL_NUGET_DEPENDENCY "
-    <dependencies>
-		${EMGUTF_MODEL_NUGET_DEPENDENCY}
-    </dependencies>")
+#IF(HAVE_EMGUTF_MODEL_ANDROID)
+#  SET(EMGUTF_MODEL_NUGET_FILE_LIST "${EMGUTF_MODEL_NUGET_FILE_LIST}
+#    <file src=\"..\\..\\..\\lib\\android\\Emgu.TF.Models.dll\" target=\"lib\\MonoAndroid10\" />
+#    <file src=\"..\\..\\..\\lib\\android\\Emgu.TF.Models.xml\" target=\"lib\\MonoAndroid10\" />")
+#  SET(EMGUTF_MODEL_NUGET_DEPENDENCY "${EMGUTF_MODEL_NUGET_DEPENDENCY}
+#    <group targetFramework=\"MonoAndroid1.0\">
+#        <dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
+#        <dependency id=\"Xamarin.Android.Support.v7.AppCompat\" version=\"28.0.0.3\" />
+#    </group>")
+#ENDIF()
 
-SET(EMGUTF_PROTOBUF_NUGET_FILE_LIST "
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.Netstandard.dll\" target=\"lib\\netstandard2.0\" />
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.Netstandard.xml\" target=\"lib\\netstandard2.0\" />
-    <file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
-    <file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+#SET(EMGUTF_MODEL_NUGET_DEPENDENCY "
+#    <dependencies>
+#		${EMGUTF_MODEL_NUGET_DEPENDENCY}
+#    </dependencies>")
+
+#SET(EMGUTF_PROTOBUF_NUGET_FILE_LIST "
+#    <file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.Netstandard.dll\" target=\"lib\\netstandard2.0\" />
+#    <file src=\"..\\..\\..\\lib\\Emgu.TF.Protobuf.Netstandard.xml\" target=\"lib\\netstandard2.0\" />
+#    <file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
+#    <file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
 
 SET(EMGUTF_PROTOBUF_PROJECT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf/Emgu.TF.Protobuf.Netstandard/Emgu.TF.Protobuf.Netstandard.csproj")
 file(STRINGS "${EMGUTF_PROTOBUF_PROJECT_FILE}" EMGUTF_PROTOBUF_PROJECT_PARTS REGEX "Google.Protobuf" )
@@ -1483,13 +1379,13 @@ string(REGEX REPLACE ".+Version=\"([0-9]+.[0-9]+.[0-9]+)\".*" "\\1" PROTOBUF_VER
 #MESSAGE(STATUS "EMGUTF_PROTOBUF_PROJECT_PARTS: ${EMGUTF_PROTOBUF_PROJECT_PARTS}" )	
 #MESSAGE(STATUS "PROTOBUF_VERSION: ${PROTOBUF_VERSION}" )	
 	
-SET(EMGUTF_PROTOBUF_NUGET_DEPENDENCY "${EMGUTF_PROTOBUF_NUGET_DEPENDENCY}
-    <dependencies>
-        <group targetFramework=\".NETStandard2.0\">
-            <dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
-            <dependency id=\"Google.Protobuf\" version=\"${PROTOBUF_VERSION}\" />
-        </group>
-    </dependencies>") 
+#SET(EMGUTF_PROTOBUF_NUGET_DEPENDENCY "${EMGUTF_PROTOBUF_NUGET_DEPENDENCY}
+#    <dependencies>
+#        <group targetFramework=\".NETStandard2.0\">
+#            <dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
+#            <dependency id=\"Google.Protobuf\" version=\"${PROTOBUF_VERSION}\" />
+#        </group>
+#    </dependencies>") 
 
 SET(EMGUTF_WINDOWS_NUGET_DEPENDENCY "
     <dependencies>

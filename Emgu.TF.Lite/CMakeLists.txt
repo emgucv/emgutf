@@ -51,14 +51,14 @@ IF (DOTNET_FOUND)
 	IF (WIN32 AND HAVE_WINDESKTOP_X86_LITE)
       EMGU_SIGN_BINARY(${PROJECT_NAME} ${LIBRARY_OUTPUT_PATH}/runtimes/win-x86/native/tfliteextern.dll)
     ENDIF()
-    EMGU_SIGN_BINARY(${PROJECT_NAME} ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Lite.dll)
+    #Binary signing should be done during project build time
+    #EMGU_SIGN_BINARY(${PROJECT_NAME} ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Lite.dll)
   ENDIF()
 
   INSTALL(
-    FILES 
-    ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Lite.xml
-    ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Lite.dll 
-    DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
+    DIRECTORY
+    ${LIBRARY_OUTPUT_PATH}/Build/Emgu.TF.Lite
+    DESTINATION lib
     COMPONENT emgutf_binary)
 	
 ENDIF()
