@@ -24,8 +24,9 @@ namespace Emgu.TF.Lite
         }
 
         /// <summary>
-        /// XNNPackDelegate
+        /// Initializes a new instance of the <see cref="XNNPackDelegate"/> class with the specified number of threads.
         /// </summary>
+        /// <param name="numThreads">The number of threads to be used by the XNNPack delegate.</param>
         public XNNPackDelegate(int numThreads)
         {
             _ptr = TfLiteInvoke.tfeXNNPackDelegateCreate(numThreads);
