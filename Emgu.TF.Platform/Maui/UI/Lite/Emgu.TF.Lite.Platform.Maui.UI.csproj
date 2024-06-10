@@ -21,8 +21,8 @@
 	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
     <ItemGroup>
-	  <ProjectReference Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'" Include="..\..\..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard.IOS\Emgu.TF.Lite.Netstandard.IOS.csproj" />
-	  <ProjectReference Condition="!($([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios')" Include="..\..\..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.Netstandard.csproj" />
+	  
+	  <ProjectReference Include="..\..\..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.Netstandard.csproj" />
 	  
 	  <!-- <ProjectReference Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'" Include="..\..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.IOS\Emgu.TF.Lite.Models.IOS.csproj" /> -->
 	  <!-- <ProjectReference Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="..\..\..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Android\Emgu.TF.Lite.Models.Android.csproj" /> -->

@@ -7,15 +7,19 @@
 	<TargetName>$(AssemblyName)</TargetName>
 	<Platforms>AnyCPU;x64;x86;ARM</Platforms>
   </PropertyGroup>
+  
+  <PropertyGroup>
+    <TensorflowBinaryDir>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\lib))</TensorflowBinaryDir>
+  </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\..\lib\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>$(TensorflowBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <DefineConstants>TRACE;__NETSTANDARD_2_0__</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\..\lib\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>$(TensorflowBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <DefineConstants>TRACE;__NETSTANDARD_2_0__</DefineConstants>
   </PropertyGroup>
@@ -30,9 +34,9 @@
   <Import Project="..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems" Label="Shared" />
   <!-- 
   <Target Name="DeployBinary" AfterTargets="AfterBuild">
-    <Message Text="Copying $(OutputPath)$(AssemblyName).dll, $(OutputPath)$(AssemblyName).xml to ..\..\lib" Importance="high" />
-    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="..\..\lib" ContinueOnError="true" />
-    <Copy SourceFiles="$(OutputPath)$(AssemblyName).xml" DestinationFolder="..\..\lib" ContinueOnError="true" />
+    <Message Text="Copying $(OutputPath)$(AssemblyName).dll, $(OutputPath)$(AssemblyName).xml to $(TensorflowBinaryDir)" Importance="high" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="$(TensorflowBinaryDir)" ContinueOnError="true" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).xml" DestinationFolder="$(TensorflowBinaryDir)" ContinueOnError="true" />
   </Target>
   -->
 </Project>
