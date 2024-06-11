@@ -2,7 +2,8 @@
 #  Copyright (C) 2004-2024 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-IF(HAVE_MAUI_LITE)
+# Only build MAUI projects on Windows or MacOS. MAUI compilation on Linux seems to be a problem.
+IF(HAVE_MAUI_LITE AND (APPLE OR WIN32))
   PROJECT(Emgu.TF.Lite.Platform.Maui.UI)
   INSTALL(
     DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
