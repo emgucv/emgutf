@@ -40,23 +40,16 @@ INSTALL(
     )
 
 IF (DOTNET_FOUND)
-#  MESSAGE(STATUS "Adding Emgu.TF.Netstandard project")
-  PROJECT(Emgu.TF.Netstandard)
+#  MESSAGE(STATUS "Adding Emgu.TF project")
+  PROJECT(Emgu.TF)
   
-  BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj" "" ALL)
-  
-  IF (EMGU_SIGN_FOUND)
-    IF (WIN32 AND HAVE_WINDESKTOP)
-      EMGU_SIGN_BINARY(${PROJECT_NAME} ${LIBRARY_OUTPUT_PATH}/runtimes/win-x64/native/tfextern.dll)
-    ENDIF()
-    EMGU_SIGN_BINARY(${PROJECT_NAME} ${LIBRARY_OUTPUT_PATH}/Emgu.TF.dll )
-  ENDIF()
+  BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Netstandard/Emgu.TF.Netstandard.csproj" "" ALL)
 
   INSTALL(
-    FILES 
-    ${LIBRARY_OUTPUT_PATH}/Emgu.TF.xml
-    ${LIBRARY_OUTPUT_PATH}/Emgu.TF.dll 
+    DIRECTORY
+    ${LIBRARY_OUTPUT_PATH}/Build/Emgu.TF
     DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
     COMPONENT emgutf_binary)
+
 ENDIF()
 ENDIF()

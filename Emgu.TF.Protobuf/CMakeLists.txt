@@ -2,8 +2,6 @@
 #  Copyright (C) 2004-2024 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-
-
 #MESSAGE("In protobug project now. HAVE_WINDESKTOP_X64: ${HAVE_WINDESKTOP_X64}")
 
 INSTALL(
@@ -25,9 +23,9 @@ INSTALL(
   )
 
 #MESSAGE("Adding protobuf project")
-IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
-  PROJECT(Emgu.TF.Protobuf.Netstandard)
-  BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj" "" ALL)
+IF (DOTNET_FOUND AND (TARGET Emgu.TF))
+  PROJECT(Emgu.TF.Protobuf)
+  BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf.Netstandard/Emgu.TF.Protobuf.Netstandard.csproj" "" ALL)
   
   SET(PROTOBUF_TOOLS_NUGET_URL https://www.nuget.org/api/v2/package/Google.Protobuf.Tools/${PROTOBUF_VERSION})
   IF(WIN32)
@@ -170,18 +168,12 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF.Netstandard))
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/third_party/xla/third_party/tsl/"
     )
 
-  
-  IF (EMGU_SIGN_FOUND)
-    EMGU_SIGN_BINARY(${PROJECT_NAME} ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll )
-  ENDIF()
-
   INSTALL(
-    FILES 
-    ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.xml
-    ${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.dll 
+    DIRECTORY
+    ${LIBRARY_OUTPUT_PATH}/Build/Emgu.TF.Protobuf
     DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
     COMPONENT emgutf_binary)
   
-  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Netstandard)
+  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF)
   
 ENDIF()

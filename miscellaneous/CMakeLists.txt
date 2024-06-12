@@ -24,7 +24,7 @@ ELSE()
        SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.html.shfbproj
        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../
     )
-    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Netstandard Emgu.TF.Protobuf.Netstandard Emgu.TF.Models.Netstandard)
+    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF Emgu.TF.Protobuf Emgu.TF.Models)
     
     PROJECT(Emgu.TF.Documentation.chm)
     ADD_CUSTOM_TARGET(
@@ -32,7 +32,8 @@ ELSE()
        COMMAND ${MSBUILD_EXECUTABLE} /p:Configuration=Release ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.html.shfbproj /property:OutputPath=. /property:HelpFileFormat=HtmlHelp1 /property:HelpFileVersion=${CPACK_PACKAGE_VERSION}
        SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.html.shfbproj
     )
-    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Netstandard Emgu.TF.Netstandard Emgu.TF.Protobuf.Netstandard Emgu.TF.Models.Netstandard)
+    #Making sure documentation project is build one by one
+    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Document.Html)
   
     INSTALL(
       FILES
@@ -50,19 +51,13 @@ ELSE()
        SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.html.shfbproj
     )
     
-	ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Netstandard Emgu.TF.Lite.Models.Netstandard)
+	ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite Emgu.TF.Lite.Models)
 
-	IF(TARGET Emgu.TF.Lite.nuget)
-		#Make sure the document project is build after the nuget package
-		#To avoid compiling Emgu.TF.Lite.Netstandard from two targets at the same time
-		ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.nuget)
+	IF(TARGET Emgu.TF.Documentation.chm)
+        #If Emgu.TF documentation is also build with the same solution
+		#Make sure the document project is build one by one
+		ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Documentation.chm)
 	ENDIF()
-
-	IF(TARGET Emgu.TF.Lite.Models.nuget)
-	    #Make sure the document project is build after the nuget package
-		#To avoid compiling Emgu.TF.Lite.Models.Netstandard from two targets at the same time
-		ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Models.nuget)
-    ENDIF()
 
     PROJECT(Emgu.TF.Lite.Documentation.chm)
     ADD_CUSTOM_TARGET(
@@ -70,6 +65,7 @@ ELSE()
        COMMAND ${MSBUILD_EXECUTABLE} /p:Configuration=Release ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.html.shfbproj /property:OutputPath=. /property:HelpFileFormat=HtmlHelp1
        SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.html.shfbproj
     )
+    #Making sure documentation project is build one by one
     ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Document.Html)
     
     INSTALL(

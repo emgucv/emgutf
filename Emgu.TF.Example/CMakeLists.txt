@@ -16,33 +16,6 @@ IF (HAVE_ANDROID OR HAVE_IOS OR HAVE_OSX OR HAVE_WINDESKTOP_X64 OR HAVE_ANDROID_
 ENDIF()
 
 
-
-IF(HAVE_ANDROID)
-  INSTALL(
-    DIRECTORY
-    "${CMAKE_CURRENT_SOURCE_DIR}/XamarinForms/XamarinForms.Android/"
-    DESTINATION Emgu.TF.Example/XamarinForms/XamarinForms.Android/
-    COMPONENT emgutf_example_source
-    FILES_MATCHING 
-    PATTERN "*.cs"
-    PATTERN "*.csproj"
-    PATTERN "*.config"
-    PATTERN "*.shproj"
-    PATTERN "*.Xamarin"
-    PATTERN "*.projitems"
-    PATTERN "*.axml"
-    PATTERN "*.xaml"
-    PATTERN "*.xml"
-    PATTERN "*.txt"
-    PATTERN "*.png"
-    PATTERN "*.dll"
-    PATTERN "*.json"
-    PATTERN ".git" EXCLUDE
-    PATTERN "Debug" EXCLUDE
-    PATTERN "Release" EXCLUDE  
-    )
-ENDIF()
-
 IF(HAVE_ANDROID_LITE OR HAVE_IOS_LITE OR HAVE_WINDESKTOP_LITE)
   INSTALL(
     DIRECTORY
@@ -126,7 +99,7 @@ IF(HAVE_LITE_BUILD)
   IF (DOTNET_FOUND)
     PROJECT(Inception.Console.Lite.NetCore)
     BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj" "" ALL)
-    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Netstandard Emgu.TF.Lite.Models.Netstandard)
+    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite Emgu.TF.Lite.Models)
   ENDIF()
 ENDIF()
 
@@ -157,7 +130,7 @@ IF(HAVE_FULL_BUILD)
   IF (DOTNET_FOUND)
     PROJECT(Inception.Console.NetCore)
     BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj"  "" ALL)
-    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Netstandard Emgu.TF.Protobuf.Netstandard Emgu.TF.Models.Netstandard)
+    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF Emgu.TF.Protobuf Emgu.TF.Models)
   ENDIF() 
 ENDIF()
 

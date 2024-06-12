@@ -39,21 +39,24 @@ IF(HAVE_FULL_BUILD)
     )
 
   IF (DOTNET_FOUND)
-    PROJECT(Emgu.TF.Models.Netstandard)
+    PROJECT(Emgu.TF.Models)
     
-    BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj" "" ALL)
-    IF (EMGU_SIGN_FOUND)
-      EMGU_SIGN_BINARY(${PROJECT_NAME} ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Models.dll)
-    ENDIF()
-    
+    BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Models.Netstandard/Emgu.TF.Models.Netstandard.csproj" "" ALL)
+        
+    #INSTALL(
+    #  FILES 
+    #  ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Models.xml
+    #  ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Models.dll 
+    #  DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
+    #  COMPONENT emgutf_binary)
+
     INSTALL(
-      FILES 
-      ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Models.xml
-      ${LIBRARY_OUTPUT_PATH}/Emgu.TF.Models.dll 
+      DIRECTORY 
+      ${LIBRARY_OUTPUT_PATH}/Build/Emgu.TF.Models
       DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
       COMPONENT emgutf_binary)
-    
-    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Netstandard)
+
+    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF)
   ENDIF()
   
 ENDIF()
