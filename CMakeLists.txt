@@ -857,26 +857,21 @@ IF(HAVE_MAUI_LITE)
       </group>
     </dependencies>")
   # Sign and copy the binary
-  SET(EMGUTF_LITE_MAUI_POST_PROCESS_BINARY "
-    <!--
-    <PropertyGroup>
-	  <OutputFullPath>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)$(OutputPath)))</OutputFullPath>
-	</PropertyGroup>
-	-->
-	<Target Name=\"PostProcessBinary\" AfterTargets=\"PostBuildEvent\">")
+  SET(EMGUTF_LITE_MAUI_POST_PROCESS_BINARY "")
   IF(EMGU_SIGN_FOUND AND WIN32)
     SET(EMGUTF_LITE_MAUI_POST_PROCESS_BINARY "${EMGUTF_LITE_MAUI_POST_PROCESS_BINARY}
+	<Target Name=\"PostProcessBinary\" AfterTargets=\"PostBuildEvent\">
     <Message Text=\"Signing $(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll\" Importance=\"high\" />
 	<MakeDir Directories=\"$(MSBuildThisFileDirectory)$(OutputPath)\\signed\"/>
     <Exec Command='${EMGU_SIGN_EXECUTABLE_NATIVE_PATH} \"$(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll\" \"$(MSBuildThisFileDirectory)$(OutputPath)\\signed\" \"${SIGNTOOL_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(MSBuildThisFileDirectory)$(OutputPath)\" />
-	")
-  ENDIF()
+	</Target>")
 #  SET(EMGUTF_LITE_MAUI_POST_PROCESS_BINARY "${EMGUTF_LITE_MAUI_POST_PROCESS_BINARY}
 #    <Message Text=\"Copying $(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll, $(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).xml to $(TfLiteBinaryDir)\\$(TargetFramework)\" Importance=\"high\" />
 #    <Copy SourceFiles=\"$(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll\" DestinationFolder=\"$(TfLiteBinaryDir)\\$(TargetFramework)\" ContinueOnError=\"true\" />
 #    <Copy SourceFiles=\"$(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).xml\" DestinationFolder=\"$(TfLiteBinaryDir)\\$(TargetFramework)\" ContinueOnError=\"true\" />
-#  </Target>")    
-  
+#  ") 	
+  ENDIF()
+   
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.Platform.Maui.UI.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Platform/Maui/UI/Lite/Directory.Build.props)
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.maui/README.md)
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.maui/Package.nuspec)

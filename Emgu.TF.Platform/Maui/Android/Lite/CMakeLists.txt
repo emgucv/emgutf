@@ -23,11 +23,11 @@ IF(HAVE_ANDROID_LITE)
   #if(ENABLE_SOLUTION_FOLDERS)
   #    set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "emgu")
   #endif() 
-  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Netstandard)
+  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite)
+  
   INSTALL(
-    FILES 
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../lib/${PROJECT_NAME}.xml
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../lib/${PROJECT_NAME}.dll 
+    DIRECTORY
+    ${LIBRARY_OUTPUT_PATH}/Build/Emgu.TF.Lite.Platform.Maui.Android
     DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
     COMPONENT emgutf_binary)
 ENDIF()

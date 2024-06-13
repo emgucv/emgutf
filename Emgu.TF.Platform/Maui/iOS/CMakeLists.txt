@@ -23,10 +23,10 @@ IF(HAVE_IOS_LITE)
     BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}.csproj" "${EXTRA_BUILD_FLAGS}" ALL)
     #DOTNET_MSBUILD_CSPROJ_IN_SOLUTION(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/../../../Solution/iOS/Emgu.CV.iOS.Maui.sln" "${PROJECT_NAME}" "${EXTRA_BUILD_FLAGS}" ALL)
 
-    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.Netstandard.IOS)  
-    if(ENABLE_SOLUTION_FOLDERS)
-      set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "emgu")
-    endif() 
+    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite)  
+    #if(ENABLE_SOLUTION_FOLDERS)
+    #  set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "emgu")
+    #endif() 
   ENDIF()
   
 ENDIF()
@@ -39,10 +39,4 @@ IF(HAVE_MAUI_IOS_LITE)
     DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
     COMPONENT emgutf_binary)
 	
-#  INSTALL(
-#      FILES 
-#      ${CMAKE_CURRENT_SOURCE_DIR}/../../../lib/Emgu.TF.Lite.Platform.Maui.iOS.xml
-#      ${CMAKE_CURRENT_SOURCE_DIR}/../../../lib/Emgu.TF.Lite.Platform.Maui.iOS.dll
-#      DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
-#      COMPONENT emgutf_binary)	  
 ENDIF()
