@@ -871,11 +871,11 @@ IF(HAVE_MAUI_LITE)
     <Exec Command='${EMGU_SIGN_EXECUTABLE_NATIVE_PATH} \"$(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll\" \"$(MSBuildThisFileDirectory)$(OutputPath)\\signed\" \"${SIGNTOOL_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(MSBuildThisFileDirectory)$(OutputPath)\" />
 	")
   ENDIF()
-  SET(EMGUTF_LITE_MAUI_POST_PROCESS_BINARY "${EMGUTF_LITE_MAUI_POST_PROCESS_BINARY}
-    <Message Text=\"Copying $(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll, $(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).xml to $(TfLiteBinaryDir)\\$(TargetFramework)\" Importance=\"high\" />
-    <Copy SourceFiles=\"$(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll\" DestinationFolder=\"$(TfLiteBinaryDir)\\$(TargetFramework)\" ContinueOnError=\"true\" />
-    <Copy SourceFiles=\"$(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).xml\" DestinationFolder=\"$(TfLiteBinaryDir)\\$(TargetFramework)\" ContinueOnError=\"true\" />
-  </Target>")    
+#  SET(EMGUTF_LITE_MAUI_POST_PROCESS_BINARY "${EMGUTF_LITE_MAUI_POST_PROCESS_BINARY}
+#    <Message Text=\"Copying $(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll, $(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).xml to $(TfLiteBinaryDir)\\$(TargetFramework)\" Importance=\"high\" />
+#    <Copy SourceFiles=\"$(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll\" DestinationFolder=\"$(TfLiteBinaryDir)\\$(TargetFramework)\" ContinueOnError=\"true\" />
+#    <Copy SourceFiles=\"$(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).xml\" DestinationFolder=\"$(TfLiteBinaryDir)\\$(TargetFramework)\" ContinueOnError=\"true\" />
+#  </Target>")    
   
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.Platform.Maui.UI.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Platform/Maui/UI/Lite/Directory.Build.props)
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.maui/README.md)

@@ -32,10 +32,17 @@ IF(HAVE_IOS_LITE)
 ENDIF()
 
 IF(HAVE_MAUI_IOS_LITE)
+
   INSTALL(
-      FILES 
-      ${CMAKE_CURRENT_SOURCE_DIR}/../../../lib/Emgu.TF.Lite.Platform.Maui.iOS.xml
-      ${CMAKE_CURRENT_SOURCE_DIR}/../../../lib/Emgu.TF.Lite.Platform.Maui.iOS.dll
-      DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
-      COMPONENT emgutf_binary)	  
+    DIRECTORY
+    ${LIBRARY_OUTPUT_PATH}/Build/Emgu.TF.Lite.Platform.Maui.iOS
+    DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
+    COMPONENT emgutf_binary)
+	
+#  INSTALL(
+#      FILES 
+#      ${CMAKE_CURRENT_SOURCE_DIR}/../../../lib/Emgu.TF.Lite.Platform.Maui.iOS.xml
+#      ${CMAKE_CURRENT_SOURCE_DIR}/../../../lib/Emgu.TF.Lite.Platform.Maui.iOS.dll
+#      DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
+#      COMPONENT emgutf_binary)	  
 ENDIF()

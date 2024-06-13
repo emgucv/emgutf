@@ -57,11 +57,14 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.Netstandard.csproj" />
     </ItemGroup>
+	
+  <!--	
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Message Text="Copying $(OutputPath)$(AssemblyName).dll and $(OutputPath)$(AssemblyName).xml to $(TfLiteBinaryDir)" Importance="high" />
     <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="$(TfLiteBinaryDir)" ContinueOnError="true" />
     <Copy SourceFiles="$(OutputPath)$(AssemblyName).xml" DestinationFolder="$(TfLiteBinaryDir)" ContinueOnError="true" />
   </Target>
+  -->
   
   <Target Name="EmguTfLiteMauiIOSPackageBuildImports" BeforeTargets="PrepareForBuild">
     <Warning Text="'$(EmguTfLiteMauiIOSErrorMessage)'" Condition="'$(EmguTfLiteMauiIOSErrorMessage)'!=''" />
