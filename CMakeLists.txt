@@ -693,8 +693,8 @@ IF(HAVE_LITE_BUILD)
   #ENDIF()
   SET(EMGUTF_LITE_WINDOWS_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Windows")	
   
-  #SET(EMGUTF_LITE_XAMARIN_MACOS_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.xamarin.macos")
-  #SET(EMGUTF_LITE_XAMARIN_MACOS_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Xamarin Mac OS")	
+  SET(EMGUTF_LITE_MACOS_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.macos")
+  SET(EMGUTF_LITE_MACOS_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Mac OS console or asp.net application. (not for MAUI)")	
   
   SET(EMGUTF_LITE_UBUNTU_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.${NUGET_NATIVE_PLATFORM_ID_UBUNTU}") 
   #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
@@ -861,9 +861,9 @@ IF(HAVE_MAUI_LITE)
   IF(EMGU_SIGN_FOUND AND WIN32)
     SET(EMGUTF_LITE_MAUI_POST_PROCESS_BINARY "${EMGUTF_LITE_MAUI_POST_PROCESS_BINARY}
 	<Target Name=\"PostProcessBinary\" AfterTargets=\"PostBuildEvent\">
-    <Message Text=\"Signing $(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll\" Importance=\"high\" />
-	<MakeDir Directories=\"$(MSBuildThisFileDirectory)$(OutputPath)\\signed\"/>
-    <Exec Command='${EMGU_SIGN_EXECUTABLE_NATIVE_PATH} \"$(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll\" \"$(MSBuildThisFileDirectory)$(OutputPath)\\signed\" \"${SIGNTOOL_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(MSBuildThisFileDirectory)$(OutputPath)\" />
+    <Message Text=\"Signing $(OutputPath)$(AssemblyName).dll\" Importance=\"high\" />
+	<MakeDir Directories=\"$(OutputPath)signed\"/>
+    <Exec Command='${EMGU_SIGN_EXECUTABLE_NATIVE_PATH} \"$(OutputPath)$(AssemblyName).dll\" \"$(OutputPath)signed\" \"${SIGNTOOL_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(OutputPath)\" />
 	</Target>")
 #  SET(EMGUTF_LITE_MAUI_POST_PROCESS_BINARY "${EMGUTF_LITE_MAUI_POST_PROCESS_BINARY}
 #    <Message Text=\"Copying $(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll, $(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).xml to $(TfLiteBinaryDir)\\$(TargetFramework)\" Importance=\"high\" />
@@ -1013,6 +1013,16 @@ IF( HAVE_WINDESKTOP_LITE )
     </dependencies>")
 ENDIF()
 
+IF( HAVE_OSX_LITE ) 
+  SET(EMGUTF_LITE_MACOS_NUGET_FILE_LIST "${EMGUTF_LITE_MACOS_NUGET_FILE_LIST} 
+    <file src=\"..\\..\\..\\lib\\runtimes\\osx\\native\\libtfliteextern.dylib\" target=\"runtimes\\osx\\native\" />
+	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
+	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />")
+  SET(EMGUTF_LITE_MACOS_NUGET_DEPENDENCY "${EMGUTF_LITE_MACOS_NUGET_DEPENDENCY}
+    <dependencies>
+		<dependency id=\"${EMGUTF_LITE_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
+    </dependencies>")	
+ENDIF()
 
 IF (HAVE_UBUNTU_X86_64_LITE)
   SET(EMGUTF_LITE_UBUNTU_NUGET_FILE_LIST "${EMGUTF_LITE_UBUNTU_NUGET_FILE_LIST} 
