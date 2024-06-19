@@ -23,7 +23,7 @@ IF(HAVE_ANDROID)
   #if(ENABLE_SOLUTION_FOLDERS)
   #    set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "emgu")
   #endif() 
-  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Netstandard)
+  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF)
   INSTALL(
     FILES 
     ${CMAKE_CURRENT_SOURCE_DIR}/../../../../lib/${PROJECT_NAME}.xml
