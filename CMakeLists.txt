@@ -928,9 +928,11 @@ IF(HAVE_MAUI)
 	")
   ENDIF()
   SET(EMGUTF_MAUI_POST_PROCESS_BINARY "${EMGUTF_MAUI_POST_PROCESS_BINARY}
+    <!--
     <Message Text=\"Copying $(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll, $(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).xml to $(TfBinaryDir)\\$(TargetFramework)\" Importance=\"high\" />
     <Copy SourceFiles=\"$(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll\" DestinationFolder=\"$(TfBinaryDir)\\$(TargetFramework)\" ContinueOnError=\"true\" />
     <Copy SourceFiles=\"$(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).xml\" DestinationFolder=\"$(TfBinaryDir)\\$(TargetFramework)\" ContinueOnError=\"true\" />
+	-->
   </Target>")    
   
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Platform.Maui.UI.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Platform/Maui/UI/Full/Directory.Build.props)
