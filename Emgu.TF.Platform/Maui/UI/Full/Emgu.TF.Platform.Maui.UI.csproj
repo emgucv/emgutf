@@ -17,19 +17,11 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		
-		<TfBinaryDir>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\..\..\lib))</TfBinaryDir>
+		<!-- <TfBinaryDir>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\..\..\lib))</TfBinaryDir> -->
+		<BaseOutputPath>$(TfBinaryDir)\Build\$(AssemblyName)\$(Platform)\</BaseOutputPath>
+		<DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	</PropertyGroup>
-
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	  <OutputPath>$(TfBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
-	  <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-	  <OutputPath>$(TfBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
-	  <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
-    </PropertyGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj" />

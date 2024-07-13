@@ -2,5 +2,9 @@
 <Project>
   <!-- https://learn.microsoft.com/en-us/visualstudio/msbuild/customize-by-directory?view=vs-2022 -->
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+  <PropertyGroup>
+    <EmguTFProjectRoot>$([System.IO.Path]::GetFullPath(${EMGU_TF_SOURCE_DIR}))</EmguTFProjectRoot>
+	<TfBinaryDir>$([System.IO.Path]::GetFullPath($(EmguTFProjectRoot)\lib))</TfBinaryDir>
+  </PropertyGroup>
   ${EMGUTF_MAUI_POST_PROCESS_BINARY}
 </Project>

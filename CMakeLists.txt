@@ -10,6 +10,8 @@
 
 CMAKE_MINIMUM_REQUIRED(VERSION 3.16)
 
+SET(EMGU_TF_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+
 PROJECT(emgutf)
 
 # ----------------------------------------------------------------------------
@@ -892,11 +894,11 @@ IF(HAVE_MAUI)
   SET(EMGUTF_MAUI_NUGET_FILE_LIST "	
     <file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	
-	<file src=\"..\\..\\..\\lib\\${EMGUTF_MAUI_ANDROID_SRC_FOLDER}\\Emgu.TF.Platform.Maui.UI.dll\" target=\"lib\\${EMGUTF_MAUI_ANDROID_DST_FOLDER}\" />
-    <file src=\"..\\..\\..\\lib\\${EMGUTF_MAUI_ANDROID_SRC_FOLDER}\\Emgu.TF.Platform.Maui.UI.xml\" target=\"lib\\${EMGUTF_MAUI_ANDROID_DST_FOLDER}\" />
+	<file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.Platform.Maui.UI\\AnyCPU\\Release\\${EMGUTF_MAUI_ANDROID_SRC_FOLDER}\\Emgu.TF.Platform.Maui.UI.dll\" target=\"lib\\${EMGUTF_MAUI_ANDROID_DST_FOLDER}\" />
+    <file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.Platform.Maui.UI\\AnyCPU\\Release\\${EMGUTF_MAUI_ANDROID_SRC_FOLDER}\\Emgu.TF.Platform.Maui.UI.xml\" target=\"lib\\${EMGUTF_MAUI_ANDROID_DST_FOLDER}\" />
 	
-	<file src=\"..\\..\\..\\lib\\${EMGUTF_MAUI_WINDOWS_SRC_FOLDER}\\Emgu.TF.Platform.Maui.UI.dll\" target=\"lib\\${EMGUTF_MAUI_WINDOWS_DST_FOLDER}\" />
-    <file src=\"..\\..\\..\\lib\\${EMGUTF_MAUI_WINDOWS_SRC_FOLDER}\\Emgu.TF.Platform.Maui.UI.xml\" target=\"lib\\${EMGUTF_MAUI_WINDOWS_DST_FOLDER}\" />
+	<file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.Platform.Maui.UI\\AnyCPU\\Release\\${EMGUTF_MAUI_WINDOWS_SRC_FOLDER}\\Emgu.TF.Platform.Maui.UI.dll\" target=\"lib\\${EMGUTF_MAUI_WINDOWS_DST_FOLDER}\" />
+    <file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.Platform.Maui.UI\\AnyCPU\\Release\\${EMGUTF_MAUI_WINDOWS_SRC_FOLDER}\\Emgu.TF.Platform.Maui.UI.xml\" target=\"lib\\${EMGUTF_MAUI_WINDOWS_DST_FOLDER}\" />
 	
 	<file src=\"README.md\" target=\"docs\\\" />
     <file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
@@ -914,25 +916,15 @@ IF(HAVE_MAUI)
     </dependencies>")
   # Sign and copy the binary
   SET(EMGUTF_MAUI_POST_PROCESS_BINARY "
-    <!--
-    <PropertyGroup>
-	  <OutputFullPath>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)$(OutputPath)))</OutputFullPath>
-	</PropertyGroup>
-	-->
 	<Target Name=\"PostProcessBinary\" AfterTargets=\"PostBuildEvent\">")
   IF(EMGU_SIGN_FOUND AND WIN32)
     SET(EMGUTF_MAUI_POST_PROCESS_BINARY "${EMGUTF_MAUI_POST_PROCESS_BINARY}
-    <Message Text=\"Signing $(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll\" Importance=\"high\" />
-	<MakeDir Directories=\"$(MSBuildThisFileDirectory)$(OutputPath)\\signed\"/>
-    <Exec Command='${EMGU_SIGN_EXECUTABLE_NATIVE_PATH} \"$(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll\" \"$(MSBuildThisFileDirectory)$(OutputPath)\\signed\" \"${SIGNTOOL_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(MSBuildThisFileDirectory)$(OutputPath)\" />
+    <Message Text=\"Signing $(OutputPath)$(AssemblyName).dll\" Importance=\"high\" />
+	<MakeDir Directories=\"$(OutputPath)\\signed\"/>
+    <Exec Command='${EMGU_SIGN_EXECUTABLE_NATIVE_PATH} \"$(OutputPath)$(AssemblyName).dll\" \"$(OutputPath)\\signed\" \"${SIGNTOOL_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(OutputPath)\" />
 	")
   ENDIF()
   SET(EMGUTF_MAUI_POST_PROCESS_BINARY "${EMGUTF_MAUI_POST_PROCESS_BINARY}
-    <!--
-    <Message Text=\"Copying $(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll, $(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).xml to $(TfBinaryDir)\\$(TargetFramework)\" Importance=\"high\" />
-    <Copy SourceFiles=\"$(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll\" DestinationFolder=\"$(TfBinaryDir)\\$(TargetFramework)\" ContinueOnError=\"true\" />
-    <Copy SourceFiles=\"$(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).xml\" DestinationFolder=\"$(TfBinaryDir)\\$(TargetFramework)\" ContinueOnError=\"true\" />
-	-->
   </Target>")    
   
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Platform.Maui.UI.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Platform/Maui/UI/Full/Directory.Build.props)

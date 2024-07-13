@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <Project>
  <PropertyGroup>
+    <EmguTFProjectRoot>$([System.IO.Path]::GetFullPath(${EMGU_TF_SOURCE_DIR}))</EmguTFProjectRoot>
+	<TfBinaryDir>$([System.IO.Path]::GetFullPath($(EmguTFProjectRoot)\lib))</TfBinaryDir>
     <PackageId>${EMGUTF_MODEL_NUGET_ID}</PackageId>
 	<title>${EMGUTF_MODEL_NUGET_TITLE}</title>
     <version>${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}</version>
@@ -18,7 +20,7 @@ http://www.emgu.com/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PAC
 	<RepositoryUrl>${GITHUB_REPO_URL}</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
 	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <PackageOutputPath>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\platforms\nuget))</PackageOutputPath>
+    <PackageOutputPath>$([System.IO.Path]::GetFullPath($(EmguTFProjectRoot)\platforms\nuget))</PackageOutputPath>
 	<PackageTags>tensorflow emgu emgutf ai</PackageTags>
     <PackageProjectUrl>${NUGET_EMGU_URL}</PackageProjectUrl>
     <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved.</copyright>
