@@ -13,15 +13,15 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.Models.Shared", "..\..
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Models.Shared", "..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.shproj", "{E956DD26-1294-4731-8A90-C4CBA9F291B6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Netstandard", "..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.Netstandard.csproj", "{FDAB1BD5-2BC7-4839-83A6-3DCD6E8C4B5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite", "..\..\Emgu.TF.Lite\NetStandard\Emgu.TF.Lite.csproj", "{FDAB1BD5-2BC7-4839-83A6-3DCD6E8C4B5A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Platform.Maui.Android", "..\..\Emgu.TF.Platform\Maui\Android\Lite\Emgu.TF.Lite.Platform.Maui.Android.csproj", "{4318036D-46DC-4310-8ECE-93ADF819F280}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.runtime.maui.android", "..\..\Emgu.TF.Runtime\Maui\Android\Lite\Emgu.TF.Lite.runtime.maui.android.csproj", "{4318036D-46DC-4310-8ECE-93ADF819F280}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Models.Netstandard", "..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Netstandard\Emgu.TF.Lite.Models.Netstandard.csproj", "{593619DC-5CDA-4EE4-9147-7849A4E2497B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Models", "..\..\Emgu.TF.Lite.Models\NetStandard\Emgu.TF.Lite.Models.csproj", "{593619DC-5CDA-4EE4-9147-7849A4E2497B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Platform.Maui.iOS", "..\..\Emgu.TF.Platform\Maui\iOS\Emgu.TF.Lite.Platform.Maui.iOS.csproj", "{3E60EE87-FDE0-4913-A502-01FDF8BAF502}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.runtime.maui.ios", "..\..\Emgu.TF.Runtime\Maui\iOS\Emgu.TF.Lite.runtime.maui.ios.csproj", "{3E60EE87-FDE0-4913-A502-01FDF8BAF502}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Platform.Maui.UI", "..\..\Emgu.TF.Platform\Maui\UI\Lite\Emgu.TF.Lite.Platform.Maui.UI.csproj", "{E260A929-085E-44A7-9DC9-14B47D7C351B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.runtime.maui", "..\..\Emgu.TF.Runtime\Maui\UI\Lite\Emgu.TF.Lite.runtime.maui.csproj", "{E260A929-085E-44A7-9DC9-14B47D7C351B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

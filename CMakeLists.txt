@@ -1373,7 +1373,7 @@ ENDIF()
 #    <file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 #    <file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
 
-SET(EMGUTF_PROTOBUF_PROJECT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf/Emgu.TF.Protobuf.Netstandard/Emgu.TF.Protobuf.Netstandard.csproj")
+SET(EMGUTF_PROTOBUF_PROJECT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf/NetStandard/Emgu.TF.Protobuf.csproj")
 file(STRINGS "${EMGUTF_PROTOBUF_PROJECT_FILE}" EMGUTF_PROTOBUF_PROJECT_PARTS REGEX "Google.Protobuf" )
 string(REGEX REPLACE ".+Version=\"([0-9]+.[0-9]+.[0-9]+)\".*" "\\1" PROTOBUF_VERSION "${EMGUTF_PROTOBUF_PROJECT_PARTS}")
 #MESSAGE(STATUS "EMGUTF_PROTOBUF_PROJECT_PARTS: ${EMGUTF_PROTOBUF_PROJECT_PARTS}" )	
@@ -1392,23 +1392,23 @@ SET(EMGUTF_WINDOWS_NUGET_DEPENDENCY "
         ${EMGUTF_WINDOWS_NUGET_DEPENDENCY}
     </dependencies>")
 
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF/Emgu.TF.Netstandard/Directory.Build.props)
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF/Emgu.TF.Netstandard/docs/README.md)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF/NetStandard/Directory.Build.props)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF/NetStandard/docs/README.md)
 
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Models.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Models/Emgu.TF.Models.Netstandard/Directory.Build.props)
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Models.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Models/Emgu.TF.Models.Netstandard/docs/README.md)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Models.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Models/NetStandard/Directory.Build.props)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Models.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Models/NetStandard/docs/README.md)
 
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Protobuf.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf/Emgu.TF.Protobuf.Netstandard/Directory.Build.props)
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Protobuf.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf/Emgu.TF.Protobuf.Netstandard/docs/README.md)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Protobuf.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf/NetStandard/Directory.Build.props)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Protobuf.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf/NetStandard/docs/README.md)
 
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.windows.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.runtime.windows/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.macos.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.runtime.macos/Package.nuspec)
 
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite/Emgu.TF.Lite.Netstandard/Directory.Build.props)
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite/Emgu.TF.Lite.Netstandard/docs/README.md)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite/NetStandard/Directory.Build.props)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite/NetStandard/docs/README.md)
 
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.Models.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.Models/Emgu.TF.Lite.Models.Netstandard/Directory.Build.props)
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.Models.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.Models/Emgu.TF.Lite.Models.Netstandard/docs/README.md)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.Models.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.Models/NetStandard/Directory.Build.props)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.Models.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.Models/NetStandard/docs/README.md)
 
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.windows.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.windows/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.windows.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.windows/README.md)
@@ -1449,7 +1449,7 @@ ADD_SUBDIRECTORY(Emgu.TF.Example)
 #ADD_SUBDIRECTORY(Emgu.TF.Test.Core)
 #ADD_SUBDIRECTORY(Emgu.TF.Test)
 ADD_SUBDIRECTORY(Emgu.TF.Runtime)
-ADD_SUBDIRECTORY(Emgu.TF.Platform)
+#ADD_SUBDIRECTORY(Emgu.TF.Platform)
 ADD_SUBDIRECTORY(Emgu.Models)
 IF(HAVE_FULL_BUILD)
   ADD_SUBDIRECTORY(Emgu.TF.Protobuf)

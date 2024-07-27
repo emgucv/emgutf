@@ -13,17 +13,17 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.Models.Shared", "..\..
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Protobuf.Shared", "..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.shproj", "{88FED2CB-EE86-4B5E-85A0-9F5FDF42111F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Netstandard", "..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj", "{C096E7E5-AB7F-4255-B4FC-D6FBE96CBFDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF", "..\..\Emgu.TF\NetStandard\Emgu.TF.csproj", "{C096E7E5-AB7F-4255-B4FC-D6FBE96CBFDF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Protobuf.Netstandard", "..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Netstandard\Emgu.TF.Protobuf.Netstandard.csproj", "{F6F7C7BC-1EA0-4623-966C-BCD3FC7B8D88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Protobuf", "..\..\Emgu.TF.Protobuf\NetStandard\Emgu.TF.Protobuf.csproj", "{F6F7C7BC-1EA0-4623-966C-BCD3FC7B8D88}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Platform.Maui.Android", "..\..\Emgu.TF.Platform\Maui\Android\Full\Emgu.TF.Platform.Maui.Android.csproj", "{39B023FA-458B-48F1-AAE4-C86760E065D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.runtime.maui.android", "..\..\Emgu.TF.Runtime\Maui\Android\Full\Emgu.TF.runtime.maui.android.csproj", "{39B023FA-458B-48F1-AAE4-C86760E065D8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Platform.Maui.UI", "..\..\Emgu.TF.Platform\Maui\UI\Full\Emgu.TF.Platform.Maui.UI.csproj", "{ACD115F0-220A-4CEA-ACCD-0C4FCB16BACE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.runtime.maui", "..\..\Emgu.TF.Runtime\Maui\UI\Full\Emgu.TF.runtime.maui.csproj", "{ACD115F0-220A-4CEA-ACCD-0C4FCB16BACE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maui.Demo", "..\..\Emgu.TF.Example\Maui\Maui.Demo.csproj", "{1C05BE37-C3B4-486C-B54F-8EAB83E2817C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Models.Netstandard", "..\..\Emgu.TF.Models\Emgu.TF.Models.Netstandard\Emgu.TF.Models.Netstandard.csproj", "{B393171F-CFF1-4D2A-B6CA-0481B3576C20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Models", "..\..\Emgu.TF.Models\NetStandard\Emgu.TF.Models.csproj", "{B393171F-CFF1-4D2A-B6CA-0481B3576C20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

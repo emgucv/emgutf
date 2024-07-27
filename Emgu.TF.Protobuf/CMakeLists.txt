@@ -25,7 +25,7 @@ INSTALL(
 #MESSAGE("Adding protobuf project")
 IF (DOTNET_FOUND AND (TARGET Emgu.TF))
   PROJECT(Emgu.TF.Protobuf)
-  BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Protobuf.Netstandard/Emgu.TF.Protobuf.Netstandard.csproj" "" ALL)
+  BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/NetStandard/Emgu.TF.Protobuf.csproj" "" ALL)
   
   SET(PROTOBUF_TOOLS_NUGET_URL https://www.nuget.org/api/v2/package/Google.Protobuf.Tools/${PROTOBUF_VERSION})
   IF(WIN32)

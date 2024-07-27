@@ -1,0 +1,72 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-ios</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>true</ImplicitUsings>
+    <IsBindingProject>true</IsBindingProject>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <NoBindingEmbedding>false</NoBindingEmbedding>
+  </PropertyGroup>
+  <PropertyGroup>
+    <EmguTfLiteIOSLinkTarget>MAUI IOS Library</EmguTfLiteIOSLinkTarget>
+    <TfLiteBinaryDir>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\..\lib))</TfLiteBinaryDir>
+    <EmguTfLiteNativeIOSBinary>$(TfLiteBinaryDir)\ios\libtfliteextern.a</EmguTfLiteNativeIOSBinary>    
+    <EmguTfLiteMauiIOSErrorMessage Condition="!Exists('$(EmguTfLiteNativeIOSBinary)')">This package do not contain necessary binary for $(EmguTfLiteIOSLinkTarget). Emgu TF Lite for iOS Commercial License is required. iOS is targeted, but file $(EmguTfLiteNativeIOSBinary) is missing.</EmguTfLiteMauiIOSErrorMessage>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <WarningLevel>4</WarningLevel>
+	<OutputPath>$(TfLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <MtouchLink>SdkOnly</MtouchLink>
+    <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
+    <PlatformTarget>anycpu</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  	<OutputPath>$(TfLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <MtouchLink>SdkOnly</MtouchLink>
+    <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
+    <ObjcBindingCoreSource Include="StructsAndEnums.cs" />
+  </ItemGroup>
+  
+    <ItemGroup>
+    <NativeReference Condition="Exists('$(EmguTfLiteNativeIOSBinary)')" Include="$(EmguTfLiteNativeIOSBinary)">
+      <Kind>Static</Kind>
+      <SmartLink>True</SmartLink>
+      <ForceLoad>True</ForceLoad>
+      <IsCxx>True</IsCxx>
+      <LinkerFlags>-stdlib=libc++ -ObjC -lc++</LinkerFlags>
+      <Frameworks>Foundation Accelerate CoreFoundation CoreGraphics AssetsLibrary AVFoundation CoreImage CoreMedia CoreVideo QuartzCore ImageIO UIKit CoreText</Frameworks>
+    </NativeReference>
+    <!-- 
+    <NativeReference Include="$(TfLiteBinaryDir)\iOS\libcvextern_simulator.a">
+      <Kind>Static</Kind>
+      <SmartLink>True</SmartLink>
+      <ForceLoad>True</ForceLoad>
+      <IsCxx>True</IsCxx>
+      <LinkerFlags>-stdlib=libc++ -ObjC -lc++</LinkerFlags>
+      <Frameworks>Foundation Accelerate CoreFoundation CoreGraphics AssetsLibrary AVFoundation CoreImage CoreMedia CoreVideo QuartzCore ImageIO UIKit CoreText</Frameworks>
+    </NativeReference>
+    -->
+  </ItemGroup>
+  
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Emgu.TF.Lite\NetStandard\Emgu.TF.Lite.csproj" />
+    </ItemGroup>
+	
+  <!--	
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Message Text="Copying $(OutputPath)$(AssemblyName).dll and $(OutputPath)$(AssemblyName).xml to $(TfLiteBinaryDir)" Importance="high" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="$(TfLiteBinaryDir)" ContinueOnError="true" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).xml" DestinationFolder="$(TfLiteBinaryDir)" ContinueOnError="true" />
+  </Target>
+  -->
+  
+  <Target Name="EmguTfLiteMauiIOSPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <Warning Text="'$(EmguTfLiteMauiIOSErrorMessage)'" Condition="'$(EmguTfLiteMauiIOSErrorMessage)'!=''" />
+  </Target>
+</Project>

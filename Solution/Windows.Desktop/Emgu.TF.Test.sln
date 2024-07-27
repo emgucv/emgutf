@@ -13,13 +13,13 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Models.Shared", "..
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.Models.Shared", "..\..\Emgu.Models\Emgu.Models.Shared.shproj", "{8EDCE0C8-BA71-4396-9428-35D05877258C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Protobuf.Netstandard", "..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Netstandard\Emgu.TF.Protobuf.Netstandard.csproj", "{01147797-9F30-4AB3-A86C-1C4509C88EDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Protobuf", "..\..\Emgu.TF.Protobuf\NetStandard\Emgu.TF.Protobuf.csproj", "{01147797-9F30-4AB3-A86C-1C4509C88EDB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Netstandard", "..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj", "{1C543CBF-F574-421D-BC17-EFFBB306694C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF", "..\..\Emgu.TF\NetStandard\Emgu.TF.csproj", "{1C543CBF-F574-421D-BC17-EFFBB306694C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Models.Netstandard", "..\..\Emgu.TF.Models\Emgu.TF.Models.Netstandard\Emgu.TF.Models.Netstandard.csproj", "{88534285-26F1-4421-B595-6C28C1C6DD78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Models", "..\..\Emgu.TF.Models\NetStandard\Emgu.TF.Models.csproj", "{88534285-26F1-4421-B595-6C28C1C6DD78}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.CodeGen.NetCore", "..\..\Emgu.TF.CodeGen\Emgu.TF.CodeGen.NetCore\Emgu.TF.CodeGen.NetCore.csproj", "{EFEA6188-E2ED-4B03-AB0B-6A9A14722485}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.CodeGen", "..\..\Emgu.TF.CodeGen\Emgu.TF.CodeGen.csproj", "{EFEA6188-E2ED-4B03-AB0B-6A9A14722485}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Windows", "..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Runtime.Windows.shproj", "{3088794D-7022-4049-98BC-41E2949E48B4}"
 EndProject

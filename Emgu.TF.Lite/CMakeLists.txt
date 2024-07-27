@@ -11,6 +11,7 @@ IF(HAVE_LITE_BUILD)
     FILES_MATCHING 
     PATTERN "*.cs"
     PATTERN "*.shproj"
+	PATTERN "*.csproj"
     PATTERN "*.projitems"
     PATTERN "*.resx"
     PATTERN "README.txt"
@@ -21,28 +22,28 @@ IF(HAVE_LITE_BUILD)
     PATTERN "*Unity*" EXCLUDE
     )
   
-  INSTALL(
-    DIRECTORY
-    ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.Netstandard
-    DESTINATION Emgu.TF.Lite
-    COMPONENT emgutf_source
-    FILES_MATCHING 
-    PATTERN "*.cs"
-    PATTERN "*.projitems"
-    PATTERN "*.shproj"
-    PATTERN "*.csproj"
-    PATTERN ".svn" EXCLUDE
-    PATTERN "obj" EXCLUDE
-    PATTERN "CMakeFiles" EXCLUDE
-    PATTERN "x64" EXCLUDE #exclude build artifacts from Visual Studio build process
-    PATTERN "x86" EXCLUDE #exclude build artifacts from Visual Studio build process
-    PATTERN "${PROJECT_NAME}.dir" EXCLUDE
-    )
+#  INSTALL(
+#    DIRECTORY
+#    ${CMAKE_CURRENT_SOURCE_DIR}/NetStandard
+#    DESTINATION Emgu.TF.Lite
+#    COMPONENT emgutf_source
+#    FILES_MATCHING 
+#    PATTERN "*.cs"
+#    PATTERN "*.projitems"
+#    PATTERN "*.shproj"
+#    PATTERN "*.csproj"
+#    PATTERN ".svn" EXCLUDE
+#    PATTERN "obj" EXCLUDE
+#    PATTERN "CMakeFiles" EXCLUDE
+#    PATTERN "x64" EXCLUDE #exclude build artifacts from Visual Studio build process
+#    PATTERN "x86" EXCLUDE #exclude build artifacts from Visual Studio build process
+#    PATTERN "${PROJECT_NAME}.dir" EXCLUDE
+#    )
   
   IF (DOTNET_FOUND)
     PROJECT(Emgu.TF.Lite)
     #MESSAGE("In Emgu.TF.Lite.Netstandard project now. HAVE_WINDESKTOP_X64: ${HAVE_WINDESKTOP_X64}")
-    BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.Netstandard/Emgu.TF.Lite.Netstandard.csproj" "" ALL)
+    BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/NetStandard/Emgu.TF.Lite.csproj" "" ALL)
     
     IF (EMGU_SIGN_FOUND)
       IF (WIN32 AND HAVE_WINDESKTOP_X64_LITE)

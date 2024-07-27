@@ -1,0 +1,204 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-android</TargetFramework>
+    <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+    <PropertyGroup>
+    <TfLiteBinaryDir>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\..\..\lib))</TfLiteBinaryDir>
+  </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>$(TfLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>portable</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>$(TfLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>$(TfLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors></TreatWarningsAsErrors>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <PlatformTarget>x86</PlatformTarget>
+    <IntermediateOutputPath></IntermediateOutputPath>
+    <ConsolePause>true</ConsolePause>
+    <ExternalConsole>false</ExternalConsole>
+    <Commandlineparameters></Commandlineparameters>
+    <RunWithWarnings>true</RunWithWarnings>
+    <AndroidManagedSymbols>false</AndroidManagedSymbols>
+    <MandroidExtraArgs></MandroidExtraArgs>
+    <AndroidLinkSkip></AndroidLinkSkip>
+    <AndroidLinkMode></AndroidLinkMode>
+    <AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
+    <BundleAssemblies></BundleAssemblies>
+    <AndroidStoreUncompressedFileExtensions></AndroidStoreUncompressedFileExtensions>
+    <MandroidI18n></MandroidI18n>
+    <AndroidHttpClientHandlerType></AndroidHttpClientHandlerType>
+    <JavaMaximumHeapSize></JavaMaximumHeapSize>
+    <JavaOptions></JavaOptions>
+    <AndroidKeyStore></AndroidKeyStore>
+    <AndroidSigningKeyStore></AndroidSigningKeyStore>
+    <AndroidSigningStorePass></AndroidSigningStorePass>
+    <AndroidSigningKeyAlias></AndroidSigningKeyAlias>
+    <AndroidSigningKeyPass></AndroidSigningKeyPass>
+    <AndroidPackageFormat></AndroidPackageFormat>
+    <AotAssemblies></AotAssemblies>
+    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
+    <EnableLLVM>false</EnableLLVM>
+    <AndroidEnableSGenConcurrent></AndroidEnableSGenConcurrent>
+    <AndroidUseAapt2></AndroidUseAapt2>
+    <AndroidEnableMultiDex></AndroidEnableMultiDex>
+    <AndroidFastDeploymentType></AndroidFastDeploymentType>
+    <AndroidManifest></AndroidManifest>
+    <AndroidDexTool></AndroidDexTool>
+    <AssemblyName></AssemblyName>
+    <SignAssembly></SignAssembly>
+    <DelaySign>false</DelaySign>
+    <PublicSign>false</PublicSign>
+    <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
+    <NoWarn></NoWarn>
+    <AllowUnsafeBlocks></AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow></CheckForOverflowUnderflow>
+    <LangVersion>Default</LangVersion>
+    <NoStdLib></NoStdLib>
+    <WarningsNotAsErrors></WarningsNotAsErrors>
+    <Nullable></Nullable>
+    <EmbedAssembliesIntoApk></EmbedAssembliesIntoApk>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols></DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>$(TfLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors></TreatWarningsAsErrors>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <PlatformTarget>x86</PlatformTarget>
+    <IntermediateOutputPath></IntermediateOutputPath>
+    <ConsolePause>true</ConsolePause>
+    <ExternalConsole>false</ExternalConsole>
+    <Commandlineparameters></Commandlineparameters>
+    <RunWithWarnings>true</RunWithWarnings>
+    <AndroidManagedSymbols></AndroidManagedSymbols>
+    <MandroidExtraArgs></MandroidExtraArgs>
+    <AndroidLinkSkip></AndroidLinkSkip>
+    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
+    <AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
+    <BundleAssemblies></BundleAssemblies>
+    <AndroidStoreUncompressedFileExtensions></AndroidStoreUncompressedFileExtensions>
+    <MandroidI18n></MandroidI18n>
+    <AndroidHttpClientHandlerType></AndroidHttpClientHandlerType>
+    <JavaMaximumHeapSize></JavaMaximumHeapSize>
+    <JavaOptions></JavaOptions>
+    <AndroidKeyStore></AndroidKeyStore>
+    <AndroidSigningKeyStore></AndroidSigningKeyStore>
+    <AndroidSigningStorePass></AndroidSigningStorePass>
+    <AndroidSigningKeyAlias></AndroidSigningKeyAlias>
+    <AndroidSigningKeyPass></AndroidSigningKeyPass>
+    <AndroidPackageFormat></AndroidPackageFormat>
+    <AotAssemblies></AotAssemblies>
+    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
+    <EnableLLVM>false</EnableLLVM>
+    <AndroidEnableSGenConcurrent></AndroidEnableSGenConcurrent>
+    <AndroidUseAapt2></AndroidUseAapt2>
+    <AndroidEnableMultiDex></AndroidEnableMultiDex>
+    <AndroidFastDeploymentType></AndroidFastDeploymentType>
+    <AndroidManifest></AndroidManifest>
+    <AndroidDexTool></AndroidDexTool>
+    <AssemblyName></AssemblyName>
+    <SignAssembly></SignAssembly>
+    <DelaySign>false</DelaySign>
+    <PublicSign>false</PublicSign>
+    <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
+    <NoWarn></NoWarn>
+    <AllowUnsafeBlocks></AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow></CheckForOverflowUnderflow>
+    <LangVersion>Default</LangVersion>
+    <NoStdLib></NoStdLib>
+    <WarningsNotAsErrors></WarningsNotAsErrors>
+    <Nullable></Nullable>
+    <EmbedAssembliesIntoApk></EmbedAssembliesIntoApk>
+  </PropertyGroup>
+    <PropertyGroup>
+	
+    <EmguTfLiteLinkTarget>MAUI Android Library</EmguTfLiteLinkTarget>
+    <!-- 
+		<EmguTfLiteNativeArmeabi>$(TfLiteBinaryDir)\android\armeabi\libcvextern.so</EmguTfLiteNativeArmeabi>
+        <EmguTfLiteBuildAndroidArmeabi Condition="$(AndroidSupportedAbis.Contains('armeabi%3')) OR $(AndroidSupportedAbis.Contains('armeabi,')) OR $(AndroidSupportedAbis.Contains('armeabi;')) OR $(AndroidSupportedAbis.EndsWith('armeabi')) OR ('$(AndroidSupportedAbis)'=='' AND '$(Platform)'=='AnyCPU') OR ('$(Platform)'=='armeabi')">True</EmguTfLiteBuildAndroidArmeabi>
+        <EmguTfLiteMauiAndroidErrorMessage Condition="'$(EmguTfLiteBuildAndroidArmeabi)'=='True' AND !Exists('$(EmguTfLiteNativeArmeabi)')">This package do not contain necessary binary for $(EmguTfLiteLinkTarget). Emgu CV for Android Commercial License is required. Armeabi is targeted, but file $(EmguTfLiteNativeArmeabi) is missing.</EmguTfLiteMauiAndroidErrorMessage>
+        <EmguTfLiteMauiAndroidDeployMessage Condition="'$(EmguTfLiteBuildAndroidArmeabi)'=='True' AND Exists('$(EmguTfLiteNativeArmeabi)')">$(EmguTfLiteMauiAndroidDeployMessage)armeabi </EmguTfLiteMauiAndroidDeployMessage>
+		-->
+    <EmguTfLiteNativeArmeabiv7a>$(TfLiteBinaryDir)\android\armeabi-v7a\libtfliteextern.so</EmguTfLiteNativeArmeabiv7a>
+    <EmguTfLiteBuildAndroidArmeabiv7a Condition="$(AndroidSupportedAbis.Contains('armeabi-v7a%3')) OR $(AndroidSupportedAbis.Contains('armeabi-v7a,')) OR $(AndroidSupportedAbis.Contains('armeabi-v7a;')) OR $(AndroidSupportedAbis.EndsWith('armeabi-v7a')) OR ('$(AndroidSupportedAbis)'=='' AND '$(Platform)'=='AnyCPU') OR ('$(Platform)'=='armeabi-v7a')">True</EmguTfLiteBuildAndroidArmeabiv7a>
+    <EmguTfLiteMauiAndroidErrorMessage Condition="'$(EmguTfLiteBuildAndroidArmeabiv7a)'=='True' AND !Exists('$(EmguTfLiteNativeArmeabiv7a)')">This package do not contain necessary binary for $(EmguTfLiteLinkTarget). Emgu TF for Android Commercial License is required. Armeabi-v7a is targeted, but file $(EmguTfLiteNativeArmeabiv7a) is missing.</EmguTfLiteMauiAndroidErrorMessage>
+    <EmguTfLiteMauiAndroidDeployMessage Condition="'$(EmguTfLiteBuildAndroidArmeabiv7a)'=='True' AND Exists('$(EmguTfLiteNativeArmeabiv7a)')">$(EmguTfLiteMauiAndroidDeployMessage)armeabi-v7a </EmguTfLiteMauiAndroidDeployMessage>
+    <EmguTfLiteNativeArm64v8a>$(TfLiteBinaryDir)\android\arm64-v8a\libtfliteextern.so</EmguTfLiteNativeArm64v8a>
+    <EmguTfLiteBuildAndroidArm64v8a Condition="$(AndroidSupportedAbis.Contains('arm64-v8a%3')) OR $(AndroidSupportedAbis.Contains('arm64-v8a,')) OR $(AndroidSupportedAbis.EndsWith('arm64-v8a;')) OR $(AndroidSupportedAbis.EndsWith('arm64-v8a')) OR ('$(AndroidSupportedAbis)'=='' AND '$(Platform)'=='AnyCPU')  OR ('$(Platform)'=='arm64-v8a')">True</EmguTfLiteBuildAndroidArm64v8a>
+    <EmguTfLiteMauiAndroidErrorMessage Condition="'$(EmguTfLiteBuildAndroidArm64v8a)'=='True' AND !Exists('$(EmguTfLiteNativeArm64v8a)')">This package do not contain necessary binary for $(EmguTfLiteLinkTarget). Emgu TF for Android Commercial License is required. Arm64-v8a is targeted, but file $(EmguTfLiteNativeArm64v8a) is missing.</EmguTfLiteMauiAndroidErrorMessage>
+    <EmguTfLiteMauiAndroidDeployMessage Condition="'$(EmguTfLiteBuildAndroidArm64v8a)'=='True' AND Exists('$(EmguTfLiteNativeArm64v8a)')">$(EmguTfLiteMauiAndroidDeployMessage)arm64-v8a </EmguTfLiteMauiAndroidDeployMessage>
+    <EmguTfLiteNativex86>$(TfLiteBinaryDir)\android\x86\libtfliteextern.so</EmguTfLiteNativex86>
+    <EmguTfLiteBuildAndroidx86 Condition="$(AndroidSupportedAbis.Contains('x86%3')) OR $(AndroidSupportedAbis.Contains('x86,')) OR $(AndroidSupportedAbis.Contains('x86;')) OR $(AndroidSupportedAbis.EndsWith('x86')) OR ('$(AndroidSupportedAbis)'=='' AND '$(Platform)'=='AnyCPU') OR ('$(Platform)'=='x86')">True</EmguTfLiteBuildAndroidx86>
+    <EmguTfLiteMauiAndroidErrorMessage Condition="'$(EmguTfLiteBuildAndroidx86)'=='True' AND !Exists('$(EmguTfLiteNativex86)')">This package do not contain necessary binary for $(EmguTfLiteLinkTarget). Emgu TF for Android Commercial License is required. x86 is targeted, but file $(EmguTfLiteNativex86) is missing.</EmguTfLiteMauiAndroidErrorMessage>
+    <EmguTfLiteMauiAndroidDeployMessage Condition="'$(EmguTfLiteBuildAndroidx86)'=='True' AND Exists('$(EmguTfLiteNativex86)')">$(EmguTfLiteMauiAndroidDeployMessage)x86 </EmguTfLiteMauiAndroidDeployMessage>
+    <EmguTfLiteNativex8664>$(TfLiteBinaryDir)\android\x86_64\libtfliteextern.so</EmguTfLiteNativex8664>
+    <EmguTfLiteBuildAndroidx8664 Condition="$(AndroidSupportedAbis.Contains('x86_64%3')) OR $(AndroidSupportedAbis.Contains('x86_64,')) OR $(AndroidSupportedAbis.Contains('x86_64;')) OR $(AndroidSupportedAbis.EndsWith('x86_64')) OR ('$(AndroidSupportedAbis)'=='' AND '$(Platform)'=='AnyCPU') OR ('$(Platform)'=='x86_64')">True</EmguTfLiteBuildAndroidx8664>
+    <EmguTfLiteMauiAndroidErrorMessage Condition="'$(EmguTfLiteBuildAndroidx8664)'=='True' AND !Exists('$(EmguTfLiteNativex8664)')">This package do not contain necessary binary for $(EmguTfLiteLinkTarget). Emgu TF for Android Commercial License is required. x86_64 is targeted, but file $(EmguTfLiteNativex8664) is missing.</EmguTfLiteMauiAndroidErrorMessage>
+    <EmguTfLiteMauiAndroidDeployMessage Condition="'$(EmguTfLiteBuildAndroidx8664)'=='True' AND Exists('$(EmguTfLiteNativex8664)')">$(EmguTfLiteMauiAndroidDeployMessage)x86_64 </EmguTfLiteMauiAndroidDeployMessage>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <!-- armeabi-v7a -->
+  <ItemGroup Condition="'$(EmguTfLiteBuildAndroidArmeabiv7a)'=='True' AND Exists('$(EmguTfLiteNativeArmeabiv7a)')">
+    <EmbeddedNativeLibrary Include="$(EmguTfLiteNativeArmeabiv7a)">
+      <Link>lib\armeabi-v7a\libtfliteextern.so</Link>
+    </EmbeddedNativeLibrary>
+  </ItemGroup>
+  <!-- arm64-v8a -->
+  <ItemGroup Condition="'$(EmguTfLiteBuildAndroidArm64v8a)'=='True' AND Exists('$(EmguTfLiteNativeArm64v8a)')">
+    <EmbeddedNativeLibrary Include="$(EmguTfLiteNativeArm64v8a)">
+      <Link>lib\arm64-v8a\libtfliteextern.so</Link>
+    </EmbeddedNativeLibrary>
+  </ItemGroup>
+  <!-- x86 -->
+  <ItemGroup Condition="'$(EmguTfLiteBuildAndroidx86)'=='True' AND Exists('$(EmguTfLiteNativex86)')">
+    <EmbeddedNativeLibrary Include="$(EmguTfLiteNativex86)">
+      <Link>lib\x86\libtfliteextern.so</Link>
+    </EmbeddedNativeLibrary>
+  </ItemGroup>
+  <!-- x86_64 -->
+  <ItemGroup Condition="'$(EmguTfLiteBuildAndroidx8664)'=='True' AND Exists('$(EmguTfLiteNativex8664)')">
+    <EmbeddedNativeLibrary Include="$(EmguTfLiteNativex8664)">
+      <Link>lib\x86_64\libtfliteextern.so</Link>
+    </EmbeddedNativeLibrary>
+  </ItemGroup>
+    <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Android\*.cs" />
+  </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\..\Emgu.TF.Lite\NetStandard\Emgu.TF.Lite.csproj" />
+    </ItemGroup>
+  <Target Name="EmguTfLiteMauiAndroidPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <Warning Text="'$(EmguTfLiteMauiAndroidErrorMessage)'" Condition="'$(EmguTfLiteMauiAndroidErrorMessage)'!=''" />
+    <Message Text="Emgu TF Lite MAUI Android Compiling with $(EmguTfLiteMauiAndroidDeployMessage)binary" Condition="'$(EmguTfLiteMauiAndroidDeployMessage)'!=''" Importance="High" />
+    <Message Text="Native binary is NOT deployed by the project." Condition="'$(EmguTfLiteMauiAndroidDeployMessage)'==''" Importance="High" />
+  </Target>
+</Project>

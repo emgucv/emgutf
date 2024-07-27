@@ -41,7 +41,7 @@ IF(HAVE_FULL_BUILD)
   IF (DOTNET_FOUND)
     PROJECT(Emgu.TF.Models)
     
-    BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Models.Netstandard/Emgu.TF.Models.Netstandard.csproj" "" ALL)
+    BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/NetStandard/Emgu.TF.Models.csproj" "" ALL)
         
     #INSTALL(
     #  FILES 

@@ -9,9 +9,9 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Shared", "..\.
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Runtime.Windows", "..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.shproj", "{0D7C99EA-3AAE-4F45-9BA7-3B4AF8313753}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Netstandard", "..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.Netstandard.csproj", "{B50754E1-32F5-4E53-A9AF-EAFD7780E6D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite", "..\..\Emgu.TF.Lite\NetStandard\Emgu.TF.Lite.csproj", "{B50754E1-32F5-4E53-A9AF-EAFD7780E6D0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Models.Netstandard", "..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Netstandard\Emgu.TF.Lite.Models.Netstandard.csproj", "{7F9787A4-9B20-4CD9-A84B-D6137273A4D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Models", "..\..\Emgu.TF.Lite.Models\NetStandard\Emgu.TF.Lite.Models.csproj", "{7F9787A4-9B20-4CD9-A84B-D6137273A4D2}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.Models.Shared", "..\..\Emgu.Models\Emgu.Models.Shared.shproj", "{8EDCE0C8-BA71-4396-9428-35D05877258C}"
 EndProject

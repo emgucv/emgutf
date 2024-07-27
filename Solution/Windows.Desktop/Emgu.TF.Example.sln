@@ -13,13 +13,13 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.Models.Shared", "..\..
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Protobuf.Shared", "..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Shared.shproj", "{88FED2CB-EE86-4B5E-85A0-9F5FDF42111F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Netstandard", "..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj", "{AAE51EB4-F01C-4E68-B275-ADC86D1019CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF", "..\..\Emgu.TF\NetStandard\Emgu.TF.csproj", "{AAE51EB4-F01C-4E68-B275-ADC86D1019CA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Models.Netstandard", "..\..\Emgu.TF.Models\Emgu.TF.Models.Netstandard\Emgu.TF.Models.Netstandard.csproj", "{1E761DE9-F20C-4133-9C52-F790EEBCE34A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Models", "..\..\Emgu.TF.Models\NetStandard\Emgu.TF.Models.csproj", "{1E761DE9-F20C-4133-9C52-F790EEBCE34A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inception.Console.NetCore", "..\..\Emgu.TF.Example\Inception.Console.NetCore\Inception.Console.NetCore.csproj", "{56D9DEE1-6E33-4DC5-BAC4-DC164B35C129}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inception.Console", "..\..\Emgu.TF.Example\Inception.Console\Inception.Console.csproj", "{56D9DEE1-6E33-4DC5-BAC4-DC164B35C129}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Protobuf.Netstandard", "..\..\Emgu.TF.Protobuf\Emgu.TF.Protobuf.Netstandard\Emgu.TF.Protobuf.Netstandard.csproj", "{DB17DF2E-D7A4-4CD4-B4D9-FC3447E5AFD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Protobuf", "..\..\Emgu.TF.Protobuf\NetStandard\Emgu.TF.Protobuf.csproj", "{DB17DF2E-D7A4-4CD4-B4D9-FC3447E5AFD8}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Windows", "..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Runtime.Windows.shproj", "{3088794D-7022-4049-98BC-41E2949E48B4}"
 EndProject
@@ -27,7 +27,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Mac", "..\.
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Ubuntu", "..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Runtime.Ubuntu.shproj", "{0F30EC5F-39DD-4A62-AD79-14EBCB894208}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVInterop.NetCore", "..\..\Emgu.TF.Example\CVInterop\CVInterop.NetCore.csproj", "{E9C01169-799F-46B3-B4BC-E11ED7D39907}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVInterop", "..\..\Emgu.TF.Example\CVInterop\CVInterop.csproj", "{E9C01169-799F-46B3-B4BC-E11ED7D39907}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Runtime.Debian", "..\..\Emgu.TF.Runtime\Debian\Emgu.TF.Runtime.Debian.shproj", "{61FEA54E-4DD5-4552-BCFC-860610295873}"
 EndProject

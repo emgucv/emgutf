@@ -7,7 +7,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Shared", "..\..\Emg
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Util.Shared", "..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.shproj", "{98561642-5EC3-4244-BAF9-6876D9BA5527}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Netstandard", "..\..\Emgu.TF\Emgu.TF.Netstandard\Emgu.TF.Netstandard.csproj", "{B407C80E-A485-40F4-AD39-01DFC4C1FF95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF", "..\..\Emgu.TF\NetStandard\Emgu.TF.csproj", "{B407C80E-A485-40F4-AD39-01DFC4C1FF95}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
