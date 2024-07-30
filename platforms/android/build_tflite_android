@@ -4,10 +4,10 @@ extra_flags=
 if [ \( -n "$1" \) ]; then
     if [ "$1" = "x86" ]; then
 	arch="x86"
-	extra_flags="--define=xnn_enable_avxvnni=false"
+	extra_flags="--define=xnn_enable_avxvnni=false --define=xnn_enable_avx512amx=false --define=xnn_enable_avx512fp16=false"
     elif [ "$1" = "x86_64" ]; then
 	arch="x86_64"
-	extra_flags="--define=xnn_enable_avxvnni=false"
+	extra_flags="--define=xnn_enable_avxvnni=false --define=xnn_enable_avx512amx=false --define=xnn_enable_avx512fp16=false"
     elif [ "$1" = "arm" ]; then
 	arch="armeabi-v7a"
 	extra_flags="--define=xnn_enable_arm_i8mm=false"
