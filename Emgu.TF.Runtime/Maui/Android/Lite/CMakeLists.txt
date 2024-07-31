@@ -27,7 +27,7 @@ IF(HAVE_ANDROID_LITE)
   
   INSTALL(
     DIRECTORY
-    ${LIBRARY_OUTPUT_PATH}/Build/Emgu.TF.Lite.Platform.Maui.Android
+    ${LIBRARY_OUTPUT_PATH}/Build/Emgu.TF.Lite.runtime.maui.android
     DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
     COMPONENT emgutf_binary)
 ENDIF()
