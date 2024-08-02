@@ -23,7 +23,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Runtime.Ubuntu
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Runtime.Debian", "..\..\Emgu.TF.Runtime\Debian\Emgu.TF.Lite.Runtime.Debian.shproj", "{32EBEB2C-7258-4987-9C05-C1952471F8C4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVInterop.Lite", "..\..\Emgu.TF.Example\CVInterop\CVInterop.Lite.csproj", "{0EEC5380-C708-4CAA-9A1C-FB70ED57A610}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVInterop.Lite", "..\..\Emgu.TF.Example\CVInterop.Lite\CVInterop.Lite.csproj", "{0EEC5380-C708-4CAA-9A1C-FB70ED57A610}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Runtime.Mac", "..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Lite.Runtime.Mac.shproj", "{8519B2B8-E96B-47FD-A466-C6031D34AAAB}"
 EndProject
