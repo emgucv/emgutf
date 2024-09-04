@@ -11,7 +11,7 @@ IF(HAVE_MAUI)
     BUILD_NUGET_PACKAGE(
       ${PROJECT_NAME} 
       #"${CMAKE_CURRENT_SOURCE_DIR}/../../../Emgu.TF/Emgu.TF.Netstandard/Emgu.TF.Netstandard.csproj"  #csproj_file 
-      "${CMAKE_CURRENT_SOURCE_DIR}/../../../Emgu.TF.Platform/Maui/UI/Full/Emgu.TF.Platform.Maui.UI.csproj"  #csproj_file 
+      "${CMAKE_CURRENT_SOURCE_DIR}/../../../Emgu.TF.Runtime/Maui/UI/Full/Emgu.TF.runtime.maui.csproj"  #csproj_file 
       "${CMAKE_CURRENT_SOURCE_DIR}/Package.nuspec" #nuspec_file 
       "${NUGET_OUTPUT_DIR}" #output_dir 
       "${CMAKE_CURRENT_SOURCE_DIR}" #working_dir
@@ -25,11 +25,13 @@ IF(HAVE_MAUI)
     set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "NUGET")
   endif() 
     
-  IF (TARGET Emgu.TF.Platform.Maui.Android)
-    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Platform.Maui.Android)
+  IF (TARGET Emgu.TF.runtime.maui.android)
+    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.runtime.maui.android)
   ENDIF()
   
-  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Platform.Maui.UI)
+  IF (TARGET Emgu.TF.runtime.maui)
+    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.runtime.maui)
+  ENDIF()
   
   ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF)
 

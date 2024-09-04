@@ -3,8 +3,11 @@
   <!-- https://learn.microsoft.com/en-us/visualstudio/msbuild/customize-by-directory?view=vs-2022 -->
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
   <PropertyGroup>
-    <EmguTFProjectRoot>$([System.IO.Path]::GetFullPath(${EMGU_TF_SOURCE_DIR}))</EmguTFProjectRoot>
+    <EmguTFProjectRoot>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\..\..\))</EmguTFProjectRoot>
 	<TfBinaryDir>$([System.IO.Path]::GetFullPath($(EmguTFProjectRoot)\lib))</TfBinaryDir>
   </PropertyGroup>
-  ${EMGUTF_MAUI_POST_PROCESS_BINARY}
+  <!--  ${EMGUTF_MAUI_POST_PROCESS_BINARY} -->
+  
+  <Import Project="SignBinary.Targets" Condition="exists('SignBinary.Targets')" />	
+  <Import Project="SignPkg.Targets" Condition="exists('SignPkg.Targets')" />	 
 </Project>

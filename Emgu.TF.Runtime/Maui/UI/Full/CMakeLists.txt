@@ -3,10 +3,10 @@
 # --------------------------------------------------------
 
 IF(HAVE_ANDROID AND HAVE_WINDESKTOP)
-  PROJECT(Emgu.TF.Platform.Maui.UI)
+  PROJECT(Emgu.TF.runtime.maui)
   INSTALL(
     DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    DESTINATION Emgu.TF.Platform/Maui/UI
+    DESTINATION Emgu.TF.Runtime/Maui/UI
     COMPONENT emgutf_source
     FILES_MATCHING 
 	PATTERN "*.cs"
