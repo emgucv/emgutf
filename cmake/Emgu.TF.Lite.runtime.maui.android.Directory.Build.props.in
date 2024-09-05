@@ -70,6 +70,11 @@ ${NUGET_EMGU_URL}/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKA
         <PackagePath>docs\</PackagePath>
       </None>
 	</ItemGroup>
+	<!--
   ${EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_BINARY}
   ${EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_NUGET}
+  -->
+  
+  <Import Project="SignBinary.Targets" Condition="exists('SignBinary.Targets')" />	
+  <Import Project="SignPkg.Targets" Condition="exists('SignPkg.Targets')" />	
 </Project>

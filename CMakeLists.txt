@@ -125,7 +125,7 @@ IF ( IS_UBUNTU )
   STRING(TOLOWER "${NUGET_NATIVE_PLATFORM_ID_UBUNTU}" NUGET_NATIVE_PLATFORM_ID_UBUNTU)
   MESSAGE(STATUS "NUGET_NATIVE_PLATFORM_ID_UBUNTU: ${NUGET_NATIVE_PLATFORM_ID_UBUNTU}")
 ELSE()
-  SET(NUGET_NATIVE_PLATFORM_ID_UBUNTU "ubuntu.22.04-x64")
+  SET(NUGET_NATIVE_PLATFORM_ID_UBUNTU "ubuntu.24.04-x64")
 ENDIF()
 
 IF (WIN32)
@@ -573,43 +573,14 @@ IF(HAVE_ANDROID)
   #ENDIF()
   SET(EMGUTF_MAUI_ANDROID_NUGET_TITLE "Native Android runtime of ${EMGUTF_NUGET_TITLE} for MAUI")	
 	
-    # Sign and copy the binary
-    #SET(EMGUTF_MAUI_ANDROID_POST_PROCESS_BINARY "<Target Name=\"PostProcessBinary\" AfterTargets=\"PostBuildEvent\">")
-    #IF(EMGU_SIGN_FOUND AND WIN32)
-    #  SET(EMGUTF_MAUI_ANDROID_POST_PROCESS_BINARY "${EMGUTF_MAUI_ANDROID_POST_PROCESS_BINARY}
-    #  <Message Text=\"Signing $(OutputPath)$(AssemblyName).dll\" Importance=\"high\" />
-	#  <MakeDir Directories=\"$(OutputPath)\\signed\"/>
-    #  <Exec Command='${EMGU_SIGN_EXECUTABLE_NATIVE_PATH} \"$(OutputPath)$(AssemblyName).dll\" \"$(OutputPath)signed\" \"${SIGNTOOL_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(OutputPath)\" />
-	#  ")
-    #ENDIF()
-    #SET(EMGUTF_MAUI_ANDROID_POST_PROCESS_BINARY "${EMGUTF_MAUI_ANDROID_POST_PROCESS_BINARY}
-    #  <Message Text=\"Copying $(OutputPath)$(AssemblyName).dll, $(OutputPath)$(AssemblyName).xml to $(TfBinaryDir)\" Importance=\"high\" />
-    #  <Copy SourceFiles=\"$(OutputPath)$(AssemblyName).dll\" DestinationFolder=\"$(TfBinaryDir)\" ContinueOnError=\"true\" />
-    #  <Copy SourceFiles=\"$(OutputPath)$(AssemblyName).xml\" DestinationFolder=\"$(TfBinaryDir)\" ContinueOnError=\"true\" />
-    #</Target>")
-	
-	# Sign the nuget package
-    #SET(EMGUTF_MAUI_ANDROID_POST_PROCESS_NUGET "")
-    #IF(EMGU_NUGET_SIGN_FOUND AND WIN32)
-    #  file(TO_NATIVE_PATH ${EMGU_NUGET_SIGN_EXECUTABLE} EMGU_NUGET_SIGN_EXECUTABLE_NATIVE_PATH)
-	#  file(TO_NATIVE_PATH ${NUGET_EXECUTABLE} NUGET_EXECUTABLE_NATIVE_PATH)
-  	#  SET(EMGUTF_MAUI_ANDROID_POST_PROCESS_NUGET "${EMGUTF_MAUI_ANDROID_POST_PROCESS_NUGET}
-    #<Target Name=\"PostProcessNuget\" AfterTargets=\"Pack\">
-    #  <Message Text=\"Signing $(PackageOutputPath)\\$(PackageId).$(PackageVersion).nupkg\" Importance=\"high\" />
-    #  <MakeDir Directories=\"$(PackageOutputPath)\\signed\"/>
-    #  <Exec Command='${EMGU_NUGET_SIGN_EXECUTABLE_NATIVE_PATH} \"$(PackageOutputPath)\\$(PackageId).$(PackageVersion).nupkg\" \"$(PackageOutputPath)\\signed\" \"${NUGET_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(PackageOutputPath)\" />
-    #</Target>")
-    #ENDIF()
-	
-	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.maui.android.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/Android/Full/Directory.Build.props)
-	IF(EMGU_SIGN_FOUND AND WIN32)
-      CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignBinary.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/Android/Full/SignBinary.Targets)
-    ENDIF()
-    IF(EMGU_NUGET_SIGN_FOUND AND WIN32)
-      CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignPkg.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/Android/Full/SignPkg.Targets)
-    ENDIF()
-    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.maui.android.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/Android/Full/docs/README.md)
-	
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.maui.android.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/Android/Full/Directory.Build.props)
+  IF(EMGU_SIGN_FOUND AND WIN32)
+    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignBinary.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/Android/Full/SignBinary.Targets)
+  ENDIF()
+  IF(EMGU_NUGET_SIGN_FOUND AND WIN32)
+    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignPkg.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/Android/Full/SignPkg.Targets)
+  ENDIF()
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.maui.android.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/Android/Full/docs/README.md)
 ENDIF()
 
 IF(HAVE_OSX)
@@ -761,63 +732,75 @@ IF(HAVE_LITE_BUILD)
   
   IF (HAVE_ANDROID_LITE)
     # Sign and copy the binary
-    SET(EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_BINARY "<Target Name=\"PostProcessBinary\" AfterTargets=\"PostBuildEvent\">")
-    IF(EMGU_SIGN_FOUND AND WIN32)
-      SET(EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_BINARY "${EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_BINARY}
-      <Message Text=\"Signing $(OutputPath)$(AssemblyName).dll\" Importance=\"high\" />
-	  <MakeDir Directories=\"$(OutputPath)\\signed\"/>
-      <Exec Command='${EMGU_SIGN_EXECUTABLE_NATIVE_PATH} \"$(OutputPath)$(AssemblyName).dll\" \"$(OutputPath)signed\" \"${SIGNTOOL_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(OutputPath)\" />
-	  ")
-    ENDIF()
-    SET(EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_BINARY "${EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_BINARY}
-      <Message Text=\"Copying $(OutputPath)$(AssemblyName).dll, $(OutputPath)$(AssemblyName).xml to $(TfLiteBinaryDir)\" Importance=\"high\" />
-      <Copy SourceFiles=\"$(OutputPath)$(AssemblyName).dll\" DestinationFolder=\"$(TfLiteBinaryDir)\" ContinueOnError=\"true\" />
-      <Copy SourceFiles=\"$(OutputPath)$(AssemblyName).xml\" DestinationFolder=\"$(TfLiteBinaryDir)\" ContinueOnError=\"true\" />
-    </Target>")
+    #SET(EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_BINARY "<Target Name=\"PostProcessBinary\" AfterTargets=\"PostBuildEvent\">")
+    #IF(EMGU_SIGN_FOUND AND WIN32)
+    #  SET(EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_BINARY "${EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_BINARY}
+    #  <Message Text=\"Signing $(OutputPath)$(AssemblyName).dll\" Importance=\"high\" />
+	#  <MakeDir Directories=\"$(OutputPath)\\signed\"/>
+    #  <Exec Command='${EMGU_SIGN_EXECUTABLE_NATIVE_PATH} \"$(OutputPath)$(AssemblyName).dll\" \"$(OutputPath)signed\" \"${SIGNTOOL_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(OutputPath)\" />
+	#  ")
+    #ENDIF()
+    #SET(EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_BINARY "${EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_BINARY}
+    #  <Message Text=\"Copying $(OutputPath)$(AssemblyName).dll, $(OutputPath)$(AssemblyName).xml to $(TfLiteBinaryDir)\" Importance=\"high\" />
+    #  <Copy SourceFiles=\"$(OutputPath)$(AssemblyName).dll\" DestinationFolder=\"$(TfLiteBinaryDir)\" ContinueOnError=\"true\" />
+    #  <Copy SourceFiles=\"$(OutputPath)$(AssemblyName).xml\" DestinationFolder=\"$(TfLiteBinaryDir)\" ContinueOnError=\"true\" />
+    #</Target>")
 	
 	# Sign the nuget package
-    SET(EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_NUGET "")
-    IF(EMGU_NUGET_SIGN_FOUND AND WIN32)
-  	  SET(EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_NUGET "${EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_NUGET}
-    <Target Name=\"PostProcessNuget\" AfterTargets=\"Pack\">
-      <Message Text=\"Signing $(PackageOutputPath)\\$(PackageId).$(PackageVersion).nupkg\" Importance=\"high\" />
-      <MakeDir Directories=\"$(PackageOutputPath)\\signed\"/>
-      <Exec Command='${EMGU_NUGET_SIGN_EXECUTABLE_NATIVE_PATH} \"$(PackageOutputPath)\\$(PackageId).$(PackageVersion).nupkg\" \"$(PackageOutputPath)\\signed\" \"${NUGET_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(PackageOutputPath)\" />
-    </Target>")
-    ENDIF()
+    #SET(EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_NUGET "")
+    #IF(EMGU_NUGET_SIGN_FOUND AND WIN32)
+  	#  SET(EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_NUGET "${EMGUTF_LITE_MAUI_ANDROID_POST_PROCESS_NUGET}
+    #<Target Name=\"PostProcessNuget\" AfterTargets=\"Pack\">
+    #  <Message Text=\"Signing $(PackageOutputPath)\\$(PackageId).$(PackageVersion).nupkg\" Importance=\"high\" />
+    #  <MakeDir Directories=\"$(PackageOutputPath)\\signed\"/>
+    #  <Exec Command='${EMGU_NUGET_SIGN_EXECUTABLE_NATIVE_PATH} \"$(PackageOutputPath)\\$(PackageId).$(PackageVersion).nupkg\" \"$(PackageOutputPath)\\signed\" \"${NUGET_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(PackageOutputPath)\" />
+    #</Target>")
+    #ENDIF()
 	
 	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.android.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/Android/Lite/Directory.Build.props)
+	IF(EMGU_SIGN_FOUND AND WIN32)
+      CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignBinary.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/Android/Lite/SignBinary.Targets)
+    ENDIF()
+    IF(EMGU_NUGET_SIGN_FOUND AND WIN32)
+      CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignPkg.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/Android/Lite/SignPkg.Targets)
+    ENDIF()
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.android.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/Android/Lite/docs/README.md)
   ENDIF()
   
   IF (HAVE_IOS_LITE)
     # Sign and copy the binary
-    SET(EMGUTF_LITE_MAUI_IOS_POST_PROCESS_BINARY "<Target Name=\"PostProcessBinary\" AfterTargets=\"PostBuildEvent\">")
-    IF(EMGU_SIGN_FOUND AND WIN32)
-      SET(EMGUTF_LITE_MAUI_IOS_POST_PROCESS_BINARY "${EMGUTF_LITE_MAUI_IOS_POST_PROCESS_BINARY}
-      <Message Text=\"Signing $(OutputPath)$(AssemblyName).dll\" Importance=\"high\" />
-	  <MakeDir Directories=\"$(OutputPath)\\signed\"/>
-      <Exec Command='${EMGU_SIGN_EXECUTABLE_NATIVE_PATH} \"$(OutputPath)$(AssemblyName).dll\" \"$(OutputPath)signed\" \"${SIGNTOOL_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(OutputPath)\" />
-	  ")
-    ENDIF()
-    SET(EMGUTF_LITE_MAUI_IOS_POST_PROCESS_BINARY "${EMGUTF_LITE_MAUI_IOS_POST_PROCESS_BINARY}
-      <Message Text=\"Copying $(OutputPath)$(AssemblyName).dll, $(OutputPath)$(AssemblyName).xml to $(TfLiteBinaryDir)\" Importance=\"high\" />
-      <Copy SourceFiles=\"$(OutputPath)$(AssemblyName).dll\" DestinationFolder=\"$(TfLiteBinaryDir)\" ContinueOnError=\"true\" />
-      <Copy SourceFiles=\"$(OutputPath)$(AssemblyName).xml\" DestinationFolder=\"$(TfLiteBinaryDir)\" ContinueOnError=\"true\" />
-    </Target>")
+    #SET(EMGUTF_LITE_MAUI_IOS_POST_PROCESS_BINARY "<Target Name=\"PostProcessBinary\" AfterTargets=\"PostBuildEvent\">")
+    #IF(EMGU_SIGN_FOUND AND WIN32)
+    #  SET(EMGUTF_LITE_MAUI_IOS_POST_PROCESS_BINARY "${EMGUTF_LITE_MAUI_IOS_POST_PROCESS_BINARY}
+    #  <Message Text=\"Signing $(OutputPath)$(AssemblyName).dll\" Importance=\"high\" />
+	#  <MakeDir Directories=\"$(OutputPath)\\signed\"/>
+    #  <Exec Command='${EMGU_SIGN_EXECUTABLE_NATIVE_PATH} \"$(OutputPath)$(AssemblyName).dll\" \"$(OutputPath)signed\" \"${SIGNTOOL_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(OutputPath)\" />
+	#  ")
+    #ENDIF()
+    #SET(EMGUTF_LITE_MAUI_IOS_POST_PROCESS_BINARY "${EMGUTF_LITE_MAUI_IOS_POST_PROCESS_BINARY}
+    #  <Message Text=\"Copying $(OutputPath)$(AssemblyName).dll, $(OutputPath)$(AssemblyName).xml to $(TfLiteBinaryDir)\" Importance=\"high\" />
+    #  <Copy SourceFiles=\"$(OutputPath)$(AssemblyName).dll\" DestinationFolder=\"$(TfLiteBinaryDir)\" ContinueOnError=\"true\" />
+    #  <Copy SourceFiles=\"$(OutputPath)$(AssemblyName).xml\" DestinationFolder=\"$(TfLiteBinaryDir)\" ContinueOnError=\"true\" />
+    #</Target>")
 	
 	# Sign the nuget package
-    SET(EMGUTF_LITE_MAUI_IOS_POST_PROCESS_NUGET "")
-    IF(EMGU_NUGET_SIGN_FOUND AND WIN32)
-  	  SET(EMGUTF_LITE_MAUI_IOS_POST_PROCESS_NUGET "${EMGUTF_LITE_MAUI_IOS_POST_PROCESS_NUGET}
-    <Target Name=\"PostProcessNuget\" AfterTargets=\"Pack\">
-      <Message Text=\"Signing $(PackageOutputPath)\\$(PackageId).$(PackageVersion).nupkg\" Importance=\"high\" />
-      <MakeDir Directories=\"$(PackageOutputPath)\\signed\"/>
-      <Exec Command='${EMGU_NUGET_SIGN_EXECUTABLE_NATIVE_PATH} \"$(PackageOutputPath)\\$(PackageId).$(PackageVersion).nupkg\" \"$(PackageOutputPath)\\signed\" \"${NUGET_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(PackageOutputPath)\" />
-    </Target>")
-    ENDIF()
+    #SET(EMGUTF_LITE_MAUI_IOS_POST_PROCESS_NUGET "")
+    #IF(EMGU_NUGET_SIGN_FOUND AND WIN32)
+  	#  SET(EMGUTF_LITE_MAUI_IOS_POST_PROCESS_NUGET "${EMGUTF_LITE_MAUI_IOS_POST_PROCESS_NUGET}
+    #<Target Name=\"PostProcessNuget\" AfterTargets=\"Pack\">
+    #  <Message Text=\"Signing $(PackageOutputPath)\\$(PackageId).$(PackageVersion).nupkg\" Importance=\"high\" />
+    #  <MakeDir Directories=\"$(PackageOutputPath)\\signed\"/>
+    #  <Exec Command='${EMGU_NUGET_SIGN_EXECUTABLE_NATIVE_PATH} \"$(PackageOutputPath)\\$(PackageId).$(PackageVersion).nupkg\" \"$(PackageOutputPath)\\signed\" \"${NUGET_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(PackageOutputPath)\" />
+    #</Target>")
+    #ENDIF()
 	
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.ios.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/iOS/Directory.Build.props)
+  IF(EMGU_SIGN_FOUND AND WIN32)
+    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignBinary.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/iOS/SignBinary.Targets)
+  ENDIF()
+  IF(EMGU_NUGET_SIGN_FOUND AND WIN32)
+    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignPkg.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/iOS/SignPkg.Targets)
+  ENDIF()
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.ios.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/iOS/docs/README.md)
 	
   ENDIF()
@@ -866,22 +849,28 @@ IF(HAVE_MAUI_LITE)
       </group>
     </dependencies>")
   # Sign and copy the binary
-  SET(EMGUTF_LITE_MAUI_POST_PROCESS_BINARY "")
-  IF(EMGU_SIGN_FOUND AND WIN32)
-    SET(EMGUTF_LITE_MAUI_POST_PROCESS_BINARY "${EMGUTF_LITE_MAUI_POST_PROCESS_BINARY}
-	<Target Name=\"PostProcessBinary\" AfterTargets=\"PostBuildEvent\">
-    <Message Text=\"Signing $(OutputPath)$(AssemblyName).dll\" Importance=\"high\" />
-	<MakeDir Directories=\"$(OutputPath)signed\"/>
-    <Exec Command='${EMGU_SIGN_EXECUTABLE_NATIVE_PATH} \"$(OutputPath)$(AssemblyName).dll\" \"$(OutputPath)signed\" \"${SIGNTOOL_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(OutputPath)\" />
-	</Target>")
+  #SET(EMGUTF_LITE_MAUI_POST_PROCESS_BINARY "")
+#  IF(EMGU_SIGN_FOUND AND WIN32)
+#    SET(EMGUTF_LITE_MAUI_POST_PROCESS_BINARY "${EMGUTF_LITE_MAUI_POST_PROCESS_BINARY}
+#	<Target Name=\"PostProcessBinary\" AfterTargets=\"PostBuildEvent\">
+#    <Message Text=\"Signing $(OutputPath)$(AssemblyName).dll\" Importance=\"high\" />
+#	<MakeDir Directories=\"$(OutputPath)signed\"/>
+#    <Exec Command='${EMGU_SIGN_EXECUTABLE_NATIVE_PATH} \"$(OutputPath)$(AssemblyName).dll\" \"$(OutputPath)signed\" \"${SIGNTOOL_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(OutputPath)\" />
+	#</Target>")
 #  SET(EMGUTF_LITE_MAUI_POST_PROCESS_BINARY "${EMGUTF_LITE_MAUI_POST_PROCESS_BINARY}
 #    <Message Text=\"Copying $(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll, $(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).xml to $(TfLiteBinaryDir)\\$(TargetFramework)\" Importance=\"high\" />
 #    <Copy SourceFiles=\"$(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).dll\" DestinationFolder=\"$(TfLiteBinaryDir)\\$(TargetFramework)\" ContinueOnError=\"true\" />
 #    <Copy SourceFiles=\"$(MSBuildThisFileDirectory)$(OutputPath)$(AssemblyName).xml\" DestinationFolder=\"$(TfLiteBinaryDir)\\$(TargetFramework)\" ContinueOnError=\"true\" />
 #  ") 	
-  ENDIF()
+#  ENDIF()
    
-  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.Platform.Maui.UI.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/UI/Lite/Directory.Build.props)
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.maui.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/UI/Lite/Directory.Build.props)
+  IF(EMGU_SIGN_FOUND AND WIN32)
+    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignBinary.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/UI/Lite/SignBinary.Targets)
+  ENDIF()
+  IF(EMGU_NUGET_SIGN_FOUND AND WIN32)
+    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignPkg.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/UI/Lite/SignPkg.Targets)
+  ENDIF()
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.maui/README.md)
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.maui/Package.nuspec)
 ENDIF()
@@ -1345,22 +1334,22 @@ IF (HAVE_WINDESKTOP_X86_LITE)
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EMGU_WINDOWS_MSVCRT_X86_NUGET_ID}.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/${EMGU_WINDOWS_MSVCRT_X86_NUGET_ID}/Package.nuspec)    
 ENDIF()
 
-SET(EMGUTF_MODEL_NUGET_FILE_LIST "
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.dll\" target=\"lib\\netstandard2.0\" />
-    <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.xml\" target=\"lib\\netstandard2.0\" />
-    <file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
-    <file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+#SET(EMGUTF_MODEL_NUGET_FILE_LIST "
+#    <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.dll\" target=\"lib\\netstandard2.0\" />
+#    <file src=\"..\\..\\..\\lib\\Emgu.TF.Models.xml\" target=\"lib\\netstandard2.0\" />
+#    <file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
+#    <file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
 	
-SET(EMGUTF_MODEL_NUGET_DEPENDENCY "${EMGUTF_MODEL_NUGET_DEPENDENCY}
-    <group targetFramework=\".NETStandard2.0\">
-        <dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
-        <dependency id=\"System.Drawing.Common\" version=\"6.0.0\" exclude=\"Build,Analyzers\" />
-    </group>")
+#SET(EMGUTF_MODEL_NUGET_DEPENDENCY "${EMGUTF_MODEL_NUGET_DEPENDENCY}
+#    <group targetFramework=\".NETStandard2.0\">
+#        <dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />
+#        <dependency id=\"System.Drawing.Common\" version=\"6.0.0\" exclude=\"Build,Analyzers\" />
+#    </group>")
 
-CHECK_BINARY_EXIST("lib/android" "Emgu.TF.Models.dll" HAVE_EMGUTF_MODEL_ANDROID OFF)  
-IF(TARGET Emgu.TF.Models.Android)
-  SET(HAVE_EMGUTF_MODEL_ANDROID ON)
-ENDIF()
+#CHECK_BINARY_EXIST("lib/android" "Emgu.TF.Models.dll" HAVE_EMGUTF_MODEL_ANDROID OFF)  
+#IF(TARGET Emgu.TF.Models.Android)
+#  SET(HAVE_EMGUTF_MODEL_ANDROID ON)
+#ENDIF()
 
 #IF(HAVE_EMGUTF_MODEL_ANDROID)
 #  SET(EMGUTF_MODEL_NUGET_FILE_LIST "${EMGUTF_MODEL_NUGET_FILE_LIST}
@@ -1434,13 +1423,26 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.windows.Package
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.macos.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.runtime.macos/Package.nuspec)
 
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite/NetStandard/Directory.Build.props)
+IF(EMGU_SIGN_FOUND AND WIN32)
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignBinary.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite/NetStandard/SignBinary.Targets)
+ENDIF()
+IF(EMGU_NUGET_SIGN_FOUND AND WIN32)
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignPkg.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite/NetStandard/SignPkg.Targets)
+ENDIF()
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite/NetStandard/docs/README.md)
 
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.Models.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.Models/NetStandard/Directory.Build.props)
+IF(EMGU_SIGN_FOUND AND WIN32)
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignBinary.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.Models/NetStandard/SignBinary.Targets)
+ENDIF()
+IF(EMGU_NUGET_SIGN_FOUND AND WIN32)
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignPkg.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}Emgu.TF.Lite.Models/NetStandard/SignPkg.Targets)
+ENDIF()
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.Models.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Lite.Models/NetStandard/docs/README.md)
 
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.windows.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.windows/Package.nuspec)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.windows.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.windows/README.md)
+
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.macos.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.macos/Package.nuspec)
 
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.ubuntu.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.ubuntu/Package.nuspec)
@@ -1475,10 +1477,7 @@ IF(HAVE_LITE_BUILD)
   ADD_SUBDIRECTORY(Emgu.TF.Lite)
 ENDIF()
 ADD_SUBDIRECTORY(Emgu.TF.Example)
-#ADD_SUBDIRECTORY(Emgu.TF.Test.Core)
-#ADD_SUBDIRECTORY(Emgu.TF.Test)
 ADD_SUBDIRECTORY(Emgu.TF.Runtime)
-#ADD_SUBDIRECTORY(Emgu.TF.Platform)
 ADD_SUBDIRECTORY(Emgu.Models)
 IF(HAVE_FULL_BUILD)
   ADD_SUBDIRECTORY(Emgu.TF.Protobuf)
@@ -1533,19 +1532,6 @@ IF(HAVE_ANDROID_LITE)
     PATTERN "bin" EXCLUDE
     )
 ENDIF()
-
-#IF(HAVE_IOS)
-#  INSTALL(
-#    DIRECTORY
-#    ${CMAKE_CURRENT_SOURCE_DIR}/Solution/iOS
-#    DESTINATION Solution
-#    COMPONENT emgutf_source
-#    FILES_MATCHING 
-#    PATTERN "Emgu.TF.Example.iOS.sln"
-#    PATTERN ".git" EXCLUDE
-#    PATTERN "bin" EXCLUDE
-#    )
-#ENDIF()
 
 IF(HAVE_IOS_LITE)
   INSTALL(
@@ -1638,8 +1624,6 @@ INSTALL(
   "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.snk"
   "${CMAKE_CURRENT_SOURCE_DIR}/CommonAssemblyInfo.cs"
   "${CMAKE_CURRENT_SOURCE_DIR}/${LICENSE_FILE_NAME}"
-  #"${CMAKE_CURRENT_SOURCE_DIR}/nuget.config"
-  #"${CMAKE_CURRENT_SOURCE_DIR}/components.config"
   DESTINATION .
   COMPONENT emgutf_source
   )

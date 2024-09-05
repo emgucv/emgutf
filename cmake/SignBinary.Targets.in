@@ -1,0 +1,3 @@
+<Project>
+  ${EMGUTF_POST_PROCESS_BINARY}
+</Project>

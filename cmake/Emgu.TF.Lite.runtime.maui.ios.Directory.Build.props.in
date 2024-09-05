@@ -57,6 +57,11 @@ http://www.emgu.com/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PAC
         <PackagePath>docs\</PackagePath>
       </None>
 	</ItemGroup>
+	
+  <Import Project="SignBinary.Targets" Condition="exists('SignBinary.Targets')" />	
+  <Import Project="SignPkg.Targets" Condition="exists('SignPkg.Targets')" />	 
+  <!--
   ${EMGUTF_LITE_MAUI_IOS_POST_PROCESS_BINARY}
   ${EMGUTF_LITE_MAUI_IOS_POST_PROCESS_NUGET}
+  -->
 </Project>
