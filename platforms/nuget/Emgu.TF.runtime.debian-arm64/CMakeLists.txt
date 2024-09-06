@@ -10,7 +10,7 @@ IF(HAVE_LINUX_ARM64)
 
   BUILD_NUGET_PACKAGE(
     ${PROJECT_NAME} 
-	"${CMAKE_CURRENT_SOURCE_DIR}/../../../Emgu.TF/Emgu.TF.Netstandard/Emgu.TF.Netstandard.csproj"  #csproj_file 
+	"${CMAKE_CURRENT_SOURCE_DIR}/../../../Emgu.TF/NetStandard/Emgu.TF.csproj"  #csproj_file 
 	"${CMAKE_CURRENT_SOURCE_DIR}/Package.nuspec" #nuspec_file 
 	"${NUGET_OUTPUT_DIR}" #output_dir 
 	"${CMAKE_CURRENT_SOURCE_DIR}" #working_dir

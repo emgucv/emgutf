@@ -6,6 +6,8 @@ echo System is $SYSTEM_ARCH
 if [ $SYSTEM_ARCH == "x86_64" ]
 then
     OUT_FOLDER="runtimes/ubuntu-x64/native"
+elif [ $SYSTEM_ARCH == "aarch64" ]
+    OUT_FOLDER="runtimes/ubuntu-arm64/native"
 fi
 
 echo Output folder is $OUT_FOLDER

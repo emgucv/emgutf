@@ -10,7 +10,7 @@ IF(HAVE_MAUI_LITE)
 
     BUILD_NUGET_PACKAGE(
       ${PROJECT_NAME} 
-      "${CMAKE_CURRENT_SOURCE_DIR}/../../../Emgu.TF.Lite/Emgu.TF.Lite.Netstandard/Emgu.TF.Lite.Netstandard.csproj"  #csproj_file 
+      "${CMAKE_CURRENT_SOURCE_DIR}/../../../Emgu.TF.Lite/NetStandard/Emgu.TF.Lite.csproj"  #csproj_file 
       "${CMAKE_CURRENT_SOURCE_DIR}/Package.nuspec" #nuspec_file 
       "${NUGET_OUTPUT_DIR}" #output_dir 
       "${CMAKE_CURRENT_SOURCE_DIR}" #working_dir

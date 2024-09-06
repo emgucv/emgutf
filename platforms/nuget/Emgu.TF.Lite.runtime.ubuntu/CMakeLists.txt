@@ -2,19 +2,14 @@
 #  Copyright (C) 2004-2024 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-IF (HAVE_UBUNTU_X86_64_LITE)
+IF (HAVE_UBUNTU_X86_64_LITE OR HAVE_UBUNTU_ARM64_LITE)
 
   PROJECT(Emgu.TF.Lite.runtime.ubuntu.nuget)
-
-  #ADD_CUSTOM_TARGET(
-  #  ${PROJECT_NAME} ALL
-  #  COMMAND ${DOTNET_EXECUTABLE} pack -c ${DEFAULT_CS_CONFIG} "${CMAKE_CURRENT_SOURCE_DIR}/../../../Emgu.TF.Lite/Emgu.TF.Lite.Netstandard/Emgu.TF.Lite.Netstandard.csproj" -p:NuspecFile="${CMAKE_CURRENT_SOURCE_DIR}/Package.nuspec" -o "${CMAKE_CURRENT_SOURCE_DIR}/../"
-  #  WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-  #  )
+  
   get_filename_component(NUGET_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
   BUILD_NUGET_PACKAGE(
     ${PROJECT_NAME} 
-	"${CMAKE_CURRENT_SOURCE_DIR}/../../../Emgu.TF.Lite/Emgu.TF.Lite.Netstandard/Emgu.TF.Lite.Netstandard.csproj"  #csproj_file 
+	"${CMAKE_CURRENT_SOURCE_DIR}/../../../Emgu.TF.Lite/NetStandard/Emgu.TF.Lite.csproj"  #csproj_file 
 	"${CMAKE_CURRENT_SOURCE_DIR}/Package.nuspec" #nuspec_file 
 	"${NUGET_OUTPUT_DIR}" #output_dir 
 	"${CMAKE_CURRENT_SOURCE_DIR}" #working_dir
