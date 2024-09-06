@@ -610,15 +610,24 @@ IF(HAVE_OSX)
     </dependencies>") 
 ENDIF()
 
-IF(HAVE_UBUNTU_X86_64)
+IF(HAVE_UBUNTU_X86_64 OR HAVE_UBUNTU_ARM64)
   SET(EMGUTF_UBUNTU_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.runtime.${NUGET_NATIVE_PLATFORM_ID_UBUNTU}")
   #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
   #  SET(EMGUTF_UBUNTU_NUGET_ID "${EMGUTF_UBUNTU_NUGET_ID}-CR")  
   #ENDIF()
   SET(EMGUTF_UBUNTU_NUGET_TITLE "Native runtime of ${EMGUTF_NUGET_TITLE} for Ubuntu")
-  SET(EMGUTF_UBUNTU_NUGET_FILE_LIST " 
+  SET(EMGUTF_UBUNTU_NUGET_FILE_LIST "")
+  IF (HAVE_UBUNTU_X86_64)
+   SET(EMGUTF_UBUNTU_NUGET_FILE_LIST "${EMGUTF_UBUNTU_NUGET_FILE_LIST}
     <file src=\"..\\..\\..\\lib\\runtimes\\ubuntu-x64\\native\\*.so\" target=\"runtimes\\ubuntu-x64\\native\" />
-    <file src=\"..\\..\\..\\lib\\runtimes\\ubuntu-x64\\native\\*.so.${TENSORFLOW_VERSION_MAJOR}\" target=\"runtimes\\ubuntu-x64\\native\" />
+    <file src=\"..\\..\\..\\lib\\runtimes\\ubuntu-x64\\native\\*.so.${TENSORFLOW_VERSION_MAJOR}\" target=\"runtimes\\ubuntu-x64\\native\" />")
+  ENDIF()
+  IF (HAVE_UBUNTU_ARM64)
+   SET(EMGUTF_UBUNTU_NUGET_FILE_LIST "${EMGUTF_UBUNTU_NUGET_FILE_LIST} 
+    <file src=\"..\\..\\..\\lib\\runtimes\\ubuntu-arm64\\native\\*.so\" target=\"runtimes\\ubuntu-arm64\\native\" />
+    <file src=\"..\\..\\..\\lib\\runtimes\\ubuntu-arm64\\native\\*.so.${TENSORFLOW_VERSION_MAJOR}\" target=\"runtimes\\ubuntu-arm64\\native\" />")
+  ENDIF()
+  SET(EMGUTF_UBUNTU_NUGET_FILE_LIST "${EMGUTF_UBUNTU_NUGET_FILE_LIST} 
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
 	#<file src=\"Emgu.TF.runtime.ubuntu.targets\" target=\"build\\${EMGUTF_UBUNTU_NUGET_ID}.targets\" />")
@@ -849,18 +858,6 @@ IF(HAVE_MAUI)
 	    <dependency id=\"${EMGUTF_MODELS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
       </group>
     </dependencies>")
-  # Sign and copy the binary
-  #SET(EMGUTF_MAUI_POST_PROCESS_BINARY "
-#	<Target Name=\"PostProcessBinary\" AfterTargets=\"PostBuildEvent\">")
-  #IF(EMGU_SIGN_FOUND AND WIN32)
-  #  SET(EMGUTF_MAUI_POST_PROCESS_BINARY "${EMGUTF_MAUI_POST_PROCESS_BINARY}
-  #  <Message Text=\"Signing $(OutputPath)$(AssemblyName).dll\" Importance=\"high\" />
-#	<MakeDir Directories=\"$(OutputPath)\\signed\"/>
- #   <Exec Command='${EMGU_SIGN_EXECUTABLE_NATIVE_PATH} \"$(OutputPath)$(AssemblyName).dll\" \"$(OutputPath)\\signed\" \"${SIGNTOOL_EXECUTABLE_NATIVE_PATH}\"' WorkingDirectory=\"$(OutputPath)\" />
-#	")
-  #ENDIF()
-  #SET(EMGUTF_MAUI_POST_PROCESS_BINARY "${EMGUTF_MAUI_POST_PROCESS_BINARY}
-  #</Target>")    
   
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.maui.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/UI/Full/Directory.Build.props)
   IF(EMGU_SIGN_FOUND AND WIN32)
@@ -949,7 +946,7 @@ IF( HAVE_WINDESKTOP_LITE )
     </dependencies>")
 ENDIF()
 
-IF( HAVE_OSX_LITE ) 
+IF(HAVE_OSX_LITE) 
   SET(EMGUTF_LITE_MACOS_NUGET_FILE_LIST "${EMGUTF_LITE_MACOS_NUGET_FILE_LIST} 
     <file src=\"..\\..\\..\\lib\\runtimes\\osx\\native\\libtfliteextern.dylib\" target=\"runtimes\\osx\\native\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />
@@ -960,9 +957,16 @@ IF( HAVE_OSX_LITE )
     </dependencies>")	
 ENDIF()
 
-IF (HAVE_UBUNTU_X86_64_LITE)
+IF (HAVE_UBUNTU_X86_64_LITE OR HAVE_UBUNTU_ARM64_LITE)
+  IF (HAVE_UBUNTU_X86_64_LITE)
+    SET(EMGUTF_LITE_UBUNTU_NUGET_FILE_LIST "${EMGUTF_LITE_UBUNTU_NUGET_FILE_LIST} 
+      <file src=\"..\\..\\..\\lib\\runtimes\\ubuntu-x64\\native\\*.so\" target=\"runtimes\\runtimes\\ubuntu-x64\\native\" />")
+  ENDIF()
+  IF (HAVE_UBUNTU_ARM64_LITE)
+    SET(EMGUTF_LITE_UBUNTU_NUGET_FILE_LIST "${EMGUTF_LITE_UBUNTU_NUGET_FILE_LIST} 
+      <file src=\"..\\..\\..\\lib\\runtimes\\ubuntu-arm64\\native\\*.so\" target=\"runtimes\\runtimes\\ubuntu-arm64\\native\" />")
+  ENDIF()
   SET(EMGUTF_LITE_UBUNTU_NUGET_FILE_LIST "${EMGUTF_LITE_UBUNTU_NUGET_FILE_LIST} 
-    <file src=\"..\\..\\..\\lib\\runtimes\\ubuntu-x64\\native\\*.so\" target=\"runtimes\\runtimes\\ubuntu-x64\\native\" />
 	<file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	<file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
 	#<file src=\"Emgu.TF.Lite.runtime.ubuntu.targets\" target=\"build\\${EMGUTF_LITE_UBUNTU_NUGET_ID}.targets\" />")
