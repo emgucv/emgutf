@@ -1,8 +1,0 @@
-#!/bin/bash -v
-
-cd "$(dirname "$0")"
-cd ../../..
-mkdir -p build
-cd build
-cmake ..
-make "$@"
