@@ -13,13 +13,20 @@ mkdir -p /tmp/build_output
 
 cd ../../..
 
+USER_ID=$(id -u)
+USER_NAME=$(whoami)
+
+echo "USER_ID=$USER_ID"
+echo "USER_NAME=$USER_NAME"
+
 docker run \
-  -e USER="$(id -u)" \
-  -u="$(id -u)" \
+  -e USER="$USER_ID" \
+  -u="$USER_ID" \
   -v $(pwd):/src/workspace \
+  -v /home/$USER_NAME/.cache/bazelisk:/home/$USER_NAME/.cache/bazelisk \
   -v /tmp/build_output:/tmp/build_output \
   -v /etc/passwd:/etc/passwd \
   -w /src/workspace/platforms/android/ \
-  emgu/bazel-android:dotnet-6.0-bazel-5.0.0-ubuntu-22.04 \
+  emgu/bazel-android:ubuntu-24.04-dotnet-8-bazelisk \
   ./build_tflite_android $1
 

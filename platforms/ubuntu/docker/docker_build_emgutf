@@ -4,13 +4,19 @@ cd "$(dirname "$0")"
 
 cd ../../..
 
+USER_ID=$(id -u)
+USER_NAME=$(whoami)
+
+echo "USER_ID=$USER_ID"
+echo "USER_NAME=$USER_NAME"
+
 docker run \
-  -e USER="$(id -u)" \
-  -u="$(id -u)" \
+  -e USER="$USER_ID" \
+  -u="$USER_ID" \
   -v $(pwd):/src/workspace \
   -v /etc/passwd:/etc/passwd \
-  -w /src/workspace/platforms/ubuntu/22.04 \
-  emgu/bazel-android:dotnet-6.0-bazel-5.0.0-ubuntu-22.04 \
+  -w /src/workspace/platforms/ubuntu/24.04 \
+  emgu/bazel-android:ubuntu-24.04-dotnet-8-bazelisk \
   ./build_emgutf
 
 
