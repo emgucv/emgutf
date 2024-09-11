@@ -2,7 +2,7 @@
 #  Copyright (C) 2004-2024 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-IF(HAVE_ANDROID_LITE)
+IF(HAVE_ANDROID_LITE AND (WIN32 OR APPLE))
   PROJECT(Emgu.TF.Lite.runtime.maui.android)
   INSTALL(
     DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
