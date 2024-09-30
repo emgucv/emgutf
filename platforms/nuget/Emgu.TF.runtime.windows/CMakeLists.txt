@@ -50,6 +50,10 @@ IF (TARGET Emgu.runtime.windows.zlibwapi.x64.nuget)
   ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.runtime.windows.zlibwapi.x64.nuget)
 ENDIF()
 
+IF (TARGET Emgu.runtime.windows.msvc.rt.x64.nuget)
+  ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.runtime.windows.msvc.rt.x64.nuget)
+ENDIF()
+
 
 if(ENABLE_SOLUTION_FOLDERS)
   set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "NUGET")

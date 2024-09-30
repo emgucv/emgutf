@@ -18,6 +18,15 @@ PROJECT(Emgu.TF.Lite.runtime.windows.nuget)
   IF (EMGU_NUGET_SIGN_FOUND)
     EMGU_SIGN_NUGET(${PROJECT_NAME} "${NUGET_OUTPUT_DIR}/${EMGUTF_LITE_WINDOWS_NUGET_ID}.${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}.nupkg")
   ENDIF()
+  
+  IF (TARGET Emgu.runtime.windows.msvc.rt.x64.nuget)
+  	ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.runtime.windows.msvc.rt.x64.nuget)
+  ENDIF()
+  
+  IF (TARGET Emgu.runtime.windows.msvc.rt.x86.nuget)
+  	ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.runtime.windows.msvc.rt.x86.nuget)
+  ENDIF()
+  
 #ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.nuget)
 
 if(ENABLE_SOLUTION_FOLDERS)

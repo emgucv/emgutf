@@ -6,6 +6,14 @@
 #add_subdirectory(Emgu.TF.Models)
 #add_subdirectory(Emgu.TF.Protobuf)
 
+IF (HAVE_WINDESKTOP_X64_LITE OR HAVE_WINDESKTOP)
+  ADD_SUBDIRECTORY(Emgu.runtime.windows.msvc.rt.x64)
+ENDIF()
+
+IF (HAVE_WINDESKTOP_X86_LITE)
+  ADD_SUBDIRECTORY(Emgu.runtime.windows.msvc.rt.x86)
+ENDIF()
+
 IF (WIN32 AND HAVE_WINDESKTOP)
   add_subdirectory(Emgu.runtime.windows.zlibwapi.x64)
   
@@ -53,13 +61,6 @@ IF (HAVE_WINDESKTOP_LITE)
   add_subdirectory(Emgu.TF.Lite.runtime.windows)
 ENDIF()
 
-IF (HAVE_WINDESKTOP_X64_LITE OR HAVE_WINDESKTOP)
-  ADD_SUBDIRECTORY(Emgu.runtime.windows.msvc.rt.x64)
-ENDIF()
-
-IF (HAVE_WINDESKTOP_X86_LITE)
-  ADD_SUBDIRECTORY(Emgu.runtime.windows.msvc.rt.x86)
-ENDIF()
 
 IF(HAVE_OSX_LITE)
   add_subdirectory(Emgu.TF.Lite.runtime.macos)
