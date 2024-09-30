@@ -8,7 +8,7 @@ IF(HAVE_WINDESKTOP)
   INSTALL(FILES
     ${SRC_Example_CVInterop}
 	"${CMAKE_CURRENT_SOURCE_DIR}/dog416.png"
-    ${CMAKE_CURRENT_SOURCE_DIR}/CVInterop.NetCore.csproj
+    ${CMAKE_CURRENT_SOURCE_DIR}/CVInterop.csproj
     #${CMAKE_CURRENT_SOURCE_DIR}/App.config
     DESTINATION Emgu.TF.Example/CVInterop COMPONENT emgutf_example_source)
 
