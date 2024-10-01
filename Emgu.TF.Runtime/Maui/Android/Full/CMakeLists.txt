@@ -24,11 +24,15 @@ IF(HAVE_ANDROID AND (WIN32 OR APPLE))
   #    set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "emgu")
   #endif() 
   ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF)
+  
   INSTALL(
-    FILES 
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../lib/${PROJECT_NAME}.xml
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../lib/${PROJECT_NAME}.dll 
-    DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}
-    COMPONENT emgutf_binary)
+    DIRECTORY 
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../libs/Build/${PROJECT_NAME}
+    DESTINATION ${CPACK_PACKAGE_CLI_FOLDER}/Build
+    COMPONENT emgutf_binary
+	FILES_MATCHING 
+        PATTERN "*.dll"
+        PATTERN "*.pdb"
+        PATTERN "*.xml")
 ENDIF()
 
