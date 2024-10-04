@@ -35,6 +35,10 @@ IF(HAVE_MAUI_LITE AND (APPLE OR WIN32))
     ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.runtime.maui.ios)
   ENDIF()
 
+  IF (TARGET Emgu.TF.Lite.runtime.windows.nuget)
+    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.Lite.runtime.windows.nuget)
+  ENDIF()
+
   INSTALL(
     DIRECTORY
     ${LIBRARY_OUTPUT_PATH}/Build/Emgu.TF.Lite.runtime.maui

@@ -796,32 +796,38 @@ IF(HAVE_MAUI_LITE)
 	
 	<file src=\"README.md\" target=\"docs\\\" />
     <file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
-  
+
   SET(EMGUTF_LITE_MAUI_NUGET_DEPENDENCY "
-      <dependencies>
-      <group targetFramework=\"${EMGUTF_MAUI_ANDROID_DST_FOLDER}\">
-	    <dependency id=\"${EMGUTF_LITE_MAUI_ANDROID_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
-	    <dependency id=\"${EMGUTF_LITE_MODELS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
-      </group>
-      <group targetFramework=\"${EMGUTF_MAUI_IOS_DST_FOLDER}\">
-	    <dependency id=\"${EMGUTF_LITE_MAUI_IOS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
-        <dependency id=\"${EMGUTF_LITE_MODELS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
-      </group>
-      <group targetFramework=\"${EMGUTF_MAUI_WINDOWS_DST_FOLDER}\">
-	    <dependency id=\"${EMGUTF_LITE_WINDOWS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
-	    <dependency id=\"${EMGUTF_LITE_MODELS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
-      </group>
-    </dependencies>")
+  	<ItemGroup>
+      <PackageReference Condition=\"$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'\" Include=\"${EMGUTF_LITE_WINDOWS_NUGET_ID}\" Version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\">
+	  </PackageReference>
+    </ItemGroup>")
+	
+#  SET(EMGUTF_LITE_MAUI_NUGET_DEPENDENCY "
+#      <dependencies>
+#      <group targetFramework=\"${EMGUTF_MAUI_ANDROID_DST_FOLDER}\">
+#	    <dependency id=\"${EMGUTF_LITE_MAUI_ANDROID_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
+#	    <dependency id=\"${EMGUTF_LITE_MODELS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
+#      </group>
+#      <group targetFramework=\"${EMGUTF_MAUI_IOS_DST_FOLDER}\">
+#	    <dependency id=\"${EMGUTF_LITE_MAUI_IOS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
+#        <dependency id=\"${EMGUTF_LITE_MODELS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
+#      </group>
+#      <group targetFramework=\"${EMGUTF_MAUI_WINDOWS_DST_FOLDER}\">
+#	    <dependency id=\"${EMGUTF_LITE_WINDOWS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
+#	    <dependency id=\"${EMGUTF_LITE_MODELS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
+#      </group>
+#    </dependencies>")
    
-  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.maui.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/UI/Lite/Directory.Build.props)
+  #CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.maui.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/UI/Lite/Directory.Build.props)
   IF(EMGU_SIGN_FOUND AND WIN32)
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignBinary.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/UI/Lite/SignBinary.Targets)
   ENDIF()
   IF(EMGU_NUGET_SIGN_FOUND AND WIN32)
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignPkg.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/UI/Lite/SignPkg.Targets)
   ENDIF()
-  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.maui/README.md)
-  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.Lite.runtime.maui/Package.nuspec)
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/UI/Lite/docs/README.md)
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/UI/Lite/Directory.Build.props)
 ENDIF()
 
 SET(HAVE_MAUI OFF)
@@ -1420,20 +1426,28 @@ ENDIF()
 IF(HAVE_LITE_BUILD)
   ADD_SUBDIRECTORY(Emgu.TF.Lite)
 ENDIF()
-ADD_SUBDIRECTORY(Emgu.TF.Example)
-ADD_SUBDIRECTORY(Emgu.TF.Runtime)
+
 ADD_SUBDIRECTORY(Emgu.Models)
+
+IF(HAVE_LITE_BUILD)
+  ADD_SUBDIRECTORY(Emgu.TF.Lite.Models)
+ENDIF()
+
 IF(HAVE_FULL_BUILD)
   ADD_SUBDIRECTORY(Emgu.TF.Protobuf)
   ADD_SUBDIRECTORY(Emgu.TF.Models)
   ADD_SUBDIRECTORY(Emgu.TF.CodeGen)
 ENDIF()
-IF(HAVE_LITE_BUILD)
-  ADD_SUBDIRECTORY(Emgu.TF.Lite.Models)
-ENDIF()
+
+
 IF (HAVE_FULL_BUILD OR HAVE_LITE_BUILD)
   ADD_SUBDIRECTORY(platforms)
 ENDIF()
+
+#Add MAUI project
+ADD_SUBDIRECTORY(Emgu.TF.Runtime)
+
+ADD_SUBDIRECTORY(Emgu.TF.Example)
 
 INSTALL(
   FILES
