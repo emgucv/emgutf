@@ -9,8 +9,10 @@
 	<Configurations>Release;Debug</Configurations>
 	<Platforms>AnyCPU;x64</Platforms>
 	<BaseOutputPath>$(TfBinaryDir)\Build\$(AssemblyName)\$(Platform)\</BaseOutputPath>
+	<DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
+  <!--
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
@@ -26,6 +28,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
+  -->
   
   <Import Project="..\Emgu.TF.Models.Shared.projitems" Label="Shared" />
 
