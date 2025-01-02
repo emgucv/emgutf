@@ -3,8 +3,16 @@
 if [ \( -n "$1" \) ]; then
     echo "Building with config $1"
 else
-    echo "Please specify the ios config and architecture to build. e.g. $0 ios_fat; $0 x86_64; $0 ios_sim_arm64; $0 arm64; $0 armv7; $0 i386;"
+    echo "Please specify the ios config and architecture to build. e.g. $0 ios_fat; $0 ios_x86_64; $0 ios_sim_arm64; $0 ios_arm64; $0 ios_armv7; $0 darwin_x86_64"
     exit 1
+fi
+
+if [ "$1" = "darwin_x86_64" ] || [ "$1" = "darwin_arm64" ]; then
+    echo "Building for Mac Catlyst"
+    BAZEL_BUILD_OPTION="--apple_platform_type=macos --cpu=$1" 
+else
+    echo "Building for iOS"
+    BAZEL_BUILD_OPTION="-config=$1"
 fi
 
 cd "$(dirname "$0")"
@@ -58,8 +66,9 @@ rm -rf bazel-bin/tensorflow/lite/ios/TensorFlowLiteC_framework.zip
 ./configure
 #alias python="/usr/local/bin/python3"
 #bazel --output_user_root=$BAZEL_OUTPUT_USER_ROOT build --verbose_failures --config=ios_fat --copt="-DCL_DELEGATE_NO_GL" --copt="-D__IOS__" -c opt --action_env PATH="$PATH" //tensorflow/lite/ios:TensorFlowLiteC_framework
-bazel --output_user_root=$BAZEL_OUTPUT_USER_ROOT build --verbose_failures --incompatible_run_shell_command_string=false --config=$1 --copt="-DCL_DELEGATE_NO_GL" --copt="-D__IOS__" -c opt ${@:2} //tensorflow/lite/ios:TensorFlowLiteC_framework
-unzip -o bazel-bin/tensorflow/lite/ios/TensorFlowLiteC_framework.zip TensorFlowLiteC.framework/TensorFlowLiteC ../lib/ios/libtfliteextern_$1.a
+bazel --output_user_root=$BAZEL_OUTPUT_USER_ROOT build --verbose_failures --incompatible_run_shell_command_string=false $BAZEL_BUILD_OPTION --copt="-DCL_DELEGATE_NO_GL" --copt="-D__IOS__" -c opt ${@:2} //tensorflow/lite/ios:TensorFlowLiteC_framework
+unzip -o bazel-bin/tensorflow/lite/ios/TensorFlowLiteC_framework.zip TensorFlowLiteC.framework/TensorFlowLiteC -d ../lib/ios
+mv ../lib/ios/TensorFlowLiteC.framework/TensorFlowLiteC ../lib/ios/libtfliteextern_$1.a
 #cp -r TensorFlowLiteC.framework/TensorFlowLiteC ../lib/ios/libtfliteextern.a
 cd ..
 

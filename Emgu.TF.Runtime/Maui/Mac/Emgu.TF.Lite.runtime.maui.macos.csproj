@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0-maccatalyst</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>true</ImplicitUsings>
+    <IsBindingProject>true</IsBindingProject>	
+    <AssemblyName>Emgu.TF.Lite.runtime.maui.macos</AssemblyName>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <TfLiteBinaryDir>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\..\lib))</TfLiteBinaryDir>
+    <EmguTfLiteCatalystBinaryDir>$(TfLiteBinaryDir)\ios</EmguTfLiteCatalystBinaryDir>
+    <EmguTfLiteCatalystNativeFileX64>$(EmguTfLiteCatalystBinaryDir)\libtfliteextern_darwin_x86_64.a</EmguTfLiteCatalystNativeFileX64>
+    <EmguTfLiteCatalystNativeFileARM64>$(EmguTfLiteCatalystBinaryDir)\libtfliteextern_darwin_arm64.a</EmguTfLiteCatalystNativeFileARM64>
+    <EmguTfLiteLinkTarget>MAUI MacCatalyst Library</EmguTfLiteLinkTarget>
+    <EmguTfLiteMauiMacErrorMessage Condition="!Exists('$(EmguTfLiteCatalystNativeFileX64)')">This package do not contains necessary binary for $(EmguTfLiteLinkTarget). Emgu TF for MacOS Commercial license is required, Mac Catalyst x86_64 is targeted, but file $(EmguTfLiteCatalystNativeFileX64) is missing.</EmguTfLiteMauiMacErrorMessage>
+    <EmguTfLiteMauiMacErrorMessage Condition="!Exists('$(EmguTfLiteCatalystNativeFileARM64)')">This package do not contains necessary binary for $(EmguTfLiteLinkTarget). Emgu TF for MacOS Commercial license is required, Mac Catalyst ARM64 is targeted, but file $(EmguTfLiteCatalystNativeFileARM64) is missing.</EmguTfLiteMauiMacErrorMessage>
+    <BaseOutputPath>$(TfLiteBinaryDir)\Build\$(AssemblyName)\$(Platform)\</BaseOutputPath>
+    </PropertyGroup>
+
+  <ItemGroup>
+    <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
+    <ObjcBindingCoreSource Include="StructsAndEnums.cs" />
+  </ItemGroup>
+
+    <ItemGroup Condition="Exists('$(EmguTfLiteCatalystNativeFileX64)')">
+      <NativeReference Include="$(EmguTfLiteCatalystNativeFileX64)">
+        <Kind>Static</Kind>
+        <SmartLink>True</SmartLink>
+	<ForceLoad>True</ForceLoad>
+	<IsCxx>True</IsCxx>
+	<LinkerFlags>-stdlib=libc++ -ObjC -lc++</LinkerFlags>
+        <Frameworks>Foundation Accelerate CoreFoundation CoreGraphics AssetsLibrary AVFoundation CoreImage CoreMedia CoreVideo QuartzCore ImageIO UIKit CoreText</Frameworks>
+      </NativeReference>
+    </ItemGroup>
+    <ItemGroup Condition="Exists('$(EmguTfLiteCatalystNativeFileARM64)')">
+      <NativeReference Include="$(EmguTfLiteCatalystNativeFileARM64)">
+        <Kind>Static</Kind>
+        <SmartLink>True</SmartLink>
+	<ForceLoad>True</ForceLoad>
+	<IsCxx>True</IsCxx>
+	<LinkerFlags>-stdlib=libc++ -ObjC -lc++</LinkerFlags>
+        <Frameworks>Foundation Accelerate CoreFoundation CoreGraphics AssetsLibrary AVFoundation CoreImage CoreMedia CoreVideo QuartzCore ImageIO UIKit CoreText</Frameworks>
+      </NativeReference>
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Emgu.TF.Lite\NetStandard\Emgu.TF.Lite.csproj" />
+    </ItemGroup>
+  <Target Name="DeployBinary" AfterTargets="AfterBuild">
+    <Warning Text="'$(EmguTfLiteMauiMacErrorMessage)'" Condition="'$(EmguTfLiteMauiMacErrorMessage)'!=''" />
+  </Target>
+</Project>
