@@ -218,6 +218,18 @@ ENDMACRO()
 
 
 CHECK_BINARY_EXIST("lib/ios" "libtfliteextern.a" HAVE_IOS_LITE OFF)
+
+CHECK_BINARY_EXIST("lib/ios" "libtfliteextern_darwin_arm64.a" HAVE_MAC_CATALYST_ARM64 OFF)
+CHECK_BINARY_EXIST("lib/ios" "libtfliteextern_darwin_x86_64.a" HAVE_MAC_CATALYST_X86_64 OFF)
+IF (HAVE_MAC_CATALYST_ARM64 OR HAVE_MAC_CATALYST_X86_64)
+  SET(HAVE_MAC_CATALYST ON)
+  MESSAGE(STATUS "HAVE_MAC_CATALYST: ${HAVE_MAC_CATALYST}")
+ELSE()
+  SET(HAVE_MAC_CATALYST OFF)
+ENDIF()
+CHECK_BINARY_EXIST("lib/Build/Emgu.TF.Lite.runtime.maui.macos/AnyCPU/Release/net${DOTNET_VERSION_MAJOR}.0-maccatalyst" "Emgu.TF.Lite.runtime.maui.macos.dll" HAVE_MAUI_MAC ${HAVE_MAC_CATALYST})
+
+
 CHECK_BINARY_EXIST("lib/runtimes/osx/native" "libtensorflow_framework.dylib;libtfextern.dylib" HAVE_OSX OFF)
 CHECK_BINARY_EXIST("lib/runtimes/osx/native" "libtfliteextern.dylib" HAVE_OSX_LITE OFF)
 CHECK_BINARY_EXIST("lib/runtimes/linux-x64/native" "libtfextern.so" HAVE_LINUX_X86_64 OFF)
@@ -663,7 +675,7 @@ IF (HAVE_LINUX_ARM OR HAVE_LINUX_ARM64)
 	
 ENDIF()
 
-SET(EMGUTF_MAUI_DOTNET_VERSION "net8.0")
+SET(EMGUTF_MAUI_DOTNET_VERSION "net${DOTNET_VERSION_MAJOR}.0")
 
 SET(EMGUTF_MAUI_ANDROID_SRC_FOLDER "${EMGUTF_MAUI_DOTNET_VERSION}-android")
 SET(EMGUTF_MAUI_IOS_SRC_FOLDER "${EMGUTF_MAUI_DOTNET_VERSION}-ios")
@@ -709,6 +721,9 @@ IF(HAVE_LITE_BUILD)
   SET(EMGUTF_LITE_MAUI_IOS_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.maui.ios")  
   SET(EMGUTF_LITE_MAUI_IOS_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Maui iOS")	
   
+  SET(EMGUTF_LITE_MAUI_MACOS_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.maui.macos")  
+  SET(EMGUTF_LITE_MAUI_MACOS_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Maui MacOS")	
+  
 #  SET(EMGUTF_LITE_XAMARIN_IOS_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.xamarin.ios")  
 #  SET(EMGUTF_LITE_XAMARIN_IOS_NUGET_TITLE "Native runtime of ${EMGUTF_LITE_NUGET_TITLE} for Xamarin iOS")	
 
@@ -747,7 +762,7 @@ IF(HAVE_LITE_BUILD)
 	
   ENDIF()
   
-  IF (HAVE_ANDROID_LITE)
+  #IF (HAVE_ANDROID_LITE)
 	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.android.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/Android/Lite/Directory.Build.props)
 	IF(EMGU_SIGN_FOUND AND WIN32)
       CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignBinary.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/Android/Lite/SignBinary.Targets)
@@ -756,9 +771,9 @@ IF(HAVE_LITE_BUILD)
       CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignPkg.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/Android/Lite/SignPkg.Targets)
     ENDIF()
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.android.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/Android/Lite/docs/README.md)
-  ENDIF()
+  #ENDIF()
   
-  IF (HAVE_IOS_LITE)	
+  #IF (HAVE_IOS_LITE)	
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.ios.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/iOS/Directory.Build.props)
   IF(EMGU_SIGN_FOUND AND WIN32)
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignBinary.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/iOS/SignBinary.Targets)
@@ -767,7 +782,16 @@ IF(HAVE_LITE_BUILD)
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignPkg.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/iOS/SignPkg.Targets)
   ENDIF()
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.ios.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/iOS/docs/README.md)
+  #ENDIF()
+
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.macos.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/Mac/Directory.Build.props)
+  IF(EMGU_SIGN_FOUND AND WIN32)
+    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignBinary.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/Mac/SignBinary.Targets)
   ENDIF()
+  IF(EMGU_NUGET_SIGN_FOUND AND WIN32)
+    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignPkg.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/Mac/SignPkg.Targets)
+  ENDIF()
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.macos.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/Mac/docs/README.md)
   
   SET(HAVE_MAUI_LITE OFF)
   IF(HAVE_IOS_LITE AND HAVE_ANDROID_LITE AND HAVE_WINDESKTOP_LITE)

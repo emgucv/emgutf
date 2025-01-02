@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<Project>
+  <!-- https://learn.microsoft.com/en-us/visualstudio/msbuild/customize-by-directory?view=vs-2022 -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+  <PropertyGroup>
+    <TargetFramework>net${DOTNET_VERSION_MAJOR}.0-maccatalyst</TargetFramework>
+    <PackageId>${EMGUTF_LITE_MAUI_MACOS_NUGET_ID}</PackageId>
+	<title>${EMGUTF_LITE_MAUI_MACOS_NUGET_TITLE}</title>
+    <version>${CPACK_PACKAGE_VERSION}</version>
+    <authors>${CPACK_PACKAGE_VENDOR}</authors>
+    <owners>${CPACK_PACKAGE_VENDOR}</owners>
+	<summary>Mac Catalyst runtime package of Emgu TF Lite for MAUI</summary>
+    <Description>This package contains the native Mac Catalyst runtime of Emgu TF Lite for MAUI</Description>
+    <PackageReleaseNotes>This is the ${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX} release of Emgu TF Lite for Maui MacOS. For online documentation please visit
+http://www.emgu.com/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}/document-lite/    	        
+</PackageReleaseNotes>
+	
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<PackageIcon>nuget_icon.png</PackageIcon>
+    <PackageReadmeFile>docs/README.md</PackageReadmeFile>
+	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+	<RepositoryUrl>https://github.com/emgucv/emgutf</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageOutputPath>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\..\platforms\nuget))</PackageOutputPath>
+	<PackageTags>tensorflow;emgu;emgutf;ai;image;macos;maui</PackageTags>
+    <PackageProjectUrl>${NUGET_EMGU_URL}</PackageProjectUrl>
+    <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved.</copyright>
+    
+  </PropertyGroup>
+ 
+    <ItemGroup>
+      <None Include="..\..\..\LICENSE.txt">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
+      <None Include="..\..\..\miscellaneous\nuget_icon.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="docs\README.md">
+        <Pack>True</Pack>
+        <PackagePath>docs\</PackagePath>
+      </None>
+    </ItemGroup>
+	<!-- 
+	<ItemGroup Condition="Exists('..\..\..\lib\ios\darwin_arm64_version_string.inc')">
+	  <None Include="..\..\..\lib\ios\darwin_arm64_version_string.inc">
+        <Pack>True</Pack>
+        <PackagePath>docs\</PackagePath>
+      </None>
+	</ItemGroup>
+	<ItemGroup Condition="Exists('..\..\..\lib\ios\darwin_x86_64_version_string.inc')">
+	  <None Include="..\..\..\lib\ios\darwin_x86_64_version_string.inc">
+        <Pack>True</Pack>
+        <PackagePath>docs\</PackagePath>
+      </None>
+	</ItemGroup>
+	-->
+  <Import Project="SignBinary.Targets" Condition="exists('SignBinary.Targets')" />	
+  <Import Project="SignPkg.Targets" Condition="exists('SignPkg.Targets')" />	 
+  <!--
+  ${EMGUTF_LITE_MAUI_MACOS_POST_PROCESS_BINARY}
+  ${EMGUTF_LITE_MAUI_MACOS_POST_PROCESS_NUGET}
+  -->
+</Project>

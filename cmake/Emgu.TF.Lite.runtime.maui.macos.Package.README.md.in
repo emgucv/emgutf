@@ -10,4 +10,4 @@ Release note can be found at
 
 ## Setup
 
-Please make sure to call Emgu.TF.Lite.TfLiteInvokeIOS.Init() before making any other calls to Emgu TF Lite library on Android.
+Please make sure to call Emgu.TF.Lite.TfLiteInvokeMacOS.Init() before making any other calls to Emgu TF Lite library on Android.

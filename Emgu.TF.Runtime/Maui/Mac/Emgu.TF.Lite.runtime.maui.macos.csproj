@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net9.0-maccatalyst</TargetFramework>
+    <!-- <TargetFramework>net9.0-maccatalyst</TargetFramework> -->
     <Nullable>enable</Nullable>
     <ImplicitUsings>true</ImplicitUsings>
     <IsBindingProject>true</IsBindingProject>	
@@ -19,6 +19,8 @@
   <ItemGroup>
     <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
     <ObjcBindingCoreSource Include="StructsAndEnums.cs" />
+	
+	<Compile Include="$(MSBuildThisFileDirectory)..\iOS\TfLiteInvokeIOS.cs" Link="TfLiteInvokeIOS.cs" />
   </ItemGroup>
 
     <ItemGroup Condition="Exists('$(EmguTfLiteCatalystNativeFileX64)')">
