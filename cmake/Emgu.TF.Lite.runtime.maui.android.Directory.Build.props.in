@@ -4,6 +4,9 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
   <PropertyGroup>
+  
+    <TargetFramework>net${DOTNET_VERSION_MAJOR}.0-android</TargetFramework>
+  
     <PackageId>${EMGUTF_LITE_MAUI_ANDROID_NUGET_ID}</PackageId>
 	
 	<title>${EMGUTF_LITE_MAUI_ANDROID_NUGET_TITLE}</title>

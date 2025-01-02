@@ -4,6 +4,7 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
   <PropertyGroup>
+    <TargetFramework>net${DOTNET_VERSION_MAJOR}.0-ios</TargetFramework>
     <PackageId>${EMGUTF_LITE_MAUI_IOS_NUGET_ID}</PackageId>
 	<title>${EMGUTF_LITE_MAUI_IOS_NUGET_TITLE}</title>
     <version>${CPACK_PACKAGE_VERSION}</version>

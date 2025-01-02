@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 <Project>
  <PropertyGroup>
+ 
+    <TargetFrameworks>net${DOTNET_VERSION_MAJOR}.0-android</TargetFrameworks>
+	<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net${DOTNET_VERSION_MAJOR}.0-windows10.0.19041.0</TargetFrameworks>
+	<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+	<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
+ 
     <PackageId>${EMGUTF_NUGET_ID}</PackageId>
 	<title>${EMGUTF_NUGET_TITLE}</title>
     <version>${CPACK_PACKAGE_VERSION}${TENSORFLOW_VERSION_SUFFIX}</version>
