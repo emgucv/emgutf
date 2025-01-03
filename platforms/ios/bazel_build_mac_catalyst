@@ -1,0 +1,7 @@
+#!/bin/bash -v
+
+./bazel_build_tflite_ios darwin_x86_64
+./bazel_build_tflite_ios darwin_arm64
+
+lipo -create -output ../../lib/ios/libtfliteextern_mac_catalyst.a ../../lib/ios/libtfliteextern_darwin_x86_64.a ../../lib/ios/libtfliteextern_darwin_arm64.a
+
