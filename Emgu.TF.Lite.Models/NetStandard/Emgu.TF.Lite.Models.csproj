@@ -2,7 +2,7 @@
 
   <PropertyGroup>
 	<AssemblyName>Emgu.TF.Lite.Models</AssemblyName>
-	<LangVersion>9</LangVersion>
+	<LangVersion>latest</LangVersion>
 	<Configurations>Release;Debug</Configurations>
     <TensorflowBinaryDir>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\lib))</TensorflowBinaryDir>
 	<OutputPath>$(TensorflowBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
