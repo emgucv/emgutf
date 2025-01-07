@@ -219,15 +219,15 @@ ENDMACRO()
 
 CHECK_BINARY_EXIST("lib/ios" "libtfliteextern.a" HAVE_IOS_LITE OFF)
 
-CHECK_BINARY_EXIST("lib/ios" "libtfliteextern_darwin_arm64.a" HAVE_MAC_CATALYST_ARM64 OFF)
-CHECK_BINARY_EXIST("lib/ios" "libtfliteextern_darwin_x86_64.a" HAVE_MAC_CATALYST_X86_64 OFF)
-IF (HAVE_MAC_CATALYST_ARM64 OR HAVE_MAC_CATALYST_X86_64)
-  SET(HAVE_MAC_CATALYST ON)
-  MESSAGE(STATUS "HAVE_MAC_CATALYST: ${HAVE_MAC_CATALYST}")
+CHECK_BINARY_EXIST("lib/ios" "libtfliteextern_darwin_arm64.a" HAVE_MAC_CATALYST_LITE_ARM64 OFF)
+CHECK_BINARY_EXIST("lib/ios" "libtfliteextern_darwin_x86_64.a" HAVE_MAC_CATALYST_LITE_X86_64 OFF)
+IF (HAVE_MAC_CATALYST_LITE_ARM64 OR HAVE_MAC_CATALYST_LITE_X86_64)
+  SET(HAVE_MAC_CATALYST_LITE ON)
+  MESSAGE(STATUS "HAVE_MAC_CATALYST_LITE: ${HAVE_MAC_CATALYST_LITE}")
 ELSE()
-  SET(HAVE_MAC_CATALYST OFF)
+  SET(HAVE_MAC_CATALYST_LITE OFF)
 ENDIF()
-CHECK_BINARY_EXIST("lib/Build/Emgu.TF.Lite.runtime.maui.macos/AnyCPU/Release/net${DOTNET_VERSION_MAJOR}.0-maccatalyst" "Emgu.TF.Lite.runtime.maui.macos.dll" HAVE_MAUI_MAC ${HAVE_MAC_CATALYST})
+CHECK_BINARY_EXIST("lib/Build/Emgu.TF.Lite.runtime.maui.macos/AnyCPU/Release/net${DOTNET_VERSION_MAJOR}.0-maccatalyst" "Emgu.TF.Lite.runtime.maui.macos.dll" HAVE_MAUI_MAC_LITE ${HAVE_MAC_CATALYST_LITE})
 
 
 CHECK_BINARY_EXIST("lib/runtimes/osx/native" "libtensorflow_framework.dylib;libtfextern.dylib" HAVE_OSX OFF)
@@ -417,7 +417,7 @@ IF(HAVE_ANDROID OR HAVE_OSX OR HAVE_WINDESKTOP_X64 OR HAVE_WINDESKTOP_X64_CUDA O
 ENDIF()
 
 SET(HAVE_LITE_BUILD OFF)
-IF(HAVE_ANDROID_LITE OR HAVE_IOS_LITE OR HAVE_OSX_LITE OR HAVE_WINDESKTOP_LITE OR HAVE_LINUX_LITE OR HAVE_UBUNTU_X86_64_LITE OR HAVE_UBUNTU_ARM64_LITE)
+IF(HAVE_ANDROID_LITE OR HAVE_IOS_LITE OR HAVE_OSX_LITE OR HAVE_MAC_CATALYST_LITE OR HAVE_WINDESKTOP_LITE OR HAVE_LINUX_LITE OR HAVE_UBUNTU_X86_64_LITE OR HAVE_UBUNTU_ARM64_LITE)
   SET(HAVE_LITE_BUILD ON)
   MESSAGE(STATUS "Have Tensorflow Lite build: ${HAVE_LITE_BUILD}")
 ENDIF()
@@ -801,56 +801,39 @@ IF(HAVE_LITE_BUILD)
       
 ENDIF()
 
-IF(HAVE_MAUI_LITE)
+#IF(HAVE_MAUI_LITE)
   SET(EMGUTF_LITE_MAUI_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.runtime.maui${EMGUTF_LITE_RUNTIME_EXTRA_TAG}")
   SET(EMGUTF_LITE_MODELS_NUGET_ID "${EMGUTF_LITE_NUGET_ID}.Models")
   SET(EMGUTF_LITE_MAUI_NUGET_TITLE "Emgu TF Lite for MAUI Native Runtime")
   
-  SET(EMGUTF_LITE_MAUI_NUGET_FILE_LIST "	
-    <file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
-	
-	<file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.Lite.Platform.Maui.UI\\AnyCPU\\Release\\${EMGUTF_MAUI_ANDROID_SRC_FOLDER}\\Emgu.TF.Lite.Platform.Maui.UI.dll\" target=\"lib\\${EMGUTF_MAUI_ANDROID_DST_FOLDER}\" />
-    <file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.Lite.Platform.Maui.UI\\AnyCPU\\Release\\${EMGUTF_MAUI_ANDROID_SRC_FOLDER}\\Emgu.TF.Lite.Platform.Maui.UI.xml\" target=\"lib\\${EMGUTF_MAUI_ANDROID_DST_FOLDER}\" />
-	
-	<file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.Lite.Platform.Maui.UI\\AnyCPU\\Release\\${EMGUTF_MAUI_IOS_SRC_FOLDER}\\Emgu.TF.Lite.Platform.Maui.UI.dll\" target=\"lib\\${EMGUTF_MAUI_IOS_DST_FOLDER}\" />
-    <file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.Lite.Platform.Maui.UI\\AnyCPU\\Release\\${EMGUTF_MAUI_IOS_SRC_FOLDER}\\Emgu.TF.Lite.Platform.Maui.UI.xml\" target=\"lib\\${EMGUTF_MAUI_IOS_DST_FOLDER}\" />
-	
-	<file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.Lite.Platform.Maui.UI\\AnyCPU\\Release\\${EMGUTF_MAUI_WINDOWS_SRC_FOLDER}\\Emgu.TF.Lite.Platform.Maui.UI.dll\" target=\"lib\\${EMGUTF_MAUI_WINDOWS_DST_FOLDER}\" />
-    <file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.Lite.Platform.Maui.UI\\AnyCPU\\Release\\${EMGUTF_MAUI_WINDOWS_SRC_FOLDER}\\Emgu.TF.Lite.Platform.Maui.UI.xml\" target=\"lib\\${EMGUTF_MAUI_WINDOWS_DST_FOLDER}\" />
-	
-	<file src=\"README.md\" target=\"docs\\\" />
-    <file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+#  SET(EMGUTF_LITE_MAUI_NUGET_FILE_LIST "	
+#    <file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
+#	
+#	<file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.Lite.Platform.Maui.UI\\AnyCPU\\Release\\${EMGUTF_MAUI_ANDROID_SRC_FOLDER}\\Emgu.TF.Lite.Platform.Maui.UI.dll\" target=\"lib\\${EMGUTF_MAUI_ANDROID_DST_FOLDER}\" />
+#    <file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.Lite.Platform.Maui.UI\\AnyCPU\\Release\\${EMGUTF_MAUI_ANDROID_SRC_FOLDER}\\Emgu.TF.Lite.Platform.Maui.UI.xml\" target=\"lib\\${EMGUTF_MAUI_ANDROID_DST_FOLDER}\" />
+#	
+#	<file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.Lite.Platform.Maui.UI\\AnyCPU\\Release\\${EMGUTF_MAUI_IOS_SRC_FOLDER}\\Emgu.TF.Lite.Platform.Maui.UI.dll\" target=\"lib\\${EMGUTF_MAUI_IOS_DST_FOLDER}\" />
+#    <file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.Lite.Platform.Maui.UI\\AnyCPU\\Release\\${EMGUTF_MAUI_IOS_SRC_FOLDER}\\Emgu.TF.Lite.Platform.Maui.UI.xml\" target=\"lib\\${EMGUTF_MAUI_IOS_DST_FOLDER}\" />
+#	
+#	<file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.Lite.Platform.Maui.UI\\AnyCPU\\Release\\${EMGUTF_MAUI_WINDOWS_SRC_FOLDER}\\Emgu.TF.Lite.Platform.Maui.UI.dll\" target=\"lib\\${EMGUTF_MAUI_WINDOWS_DST_FOLDER}\" />
+#    <file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.Lite.Platform.Maui.UI\\AnyCPU\\Release\\${EMGUTF_MAUI_WINDOWS_SRC_FOLDER}\\Emgu.TF.Lite.Platform.Maui.UI.xml\" target=\"lib\\${EMGUTF_MAUI_WINDOWS_DST_FOLDER}\" />
+#	
+#	<file src=\"README.md\" target=\"docs\\\" />
+#    <file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
 
   SET(EMGUTF_LITE_MAUI_NUGET_DEPENDENCY "
   	<ItemGroup>
       <PackageReference Condition=\"$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'\" Include=\"${EMGUTF_LITE_WINDOWS_NUGET_ID}\" Version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\">
 	  </PackageReference>
     </ItemGroup>")
-	
-#  SET(EMGUTF_LITE_MAUI_NUGET_DEPENDENCY "
-#      <dependencies>
-#      <group targetFramework=\"${EMGUTF_MAUI_ANDROID_DST_FOLDER}\">
-#	    <dependency id=\"${EMGUTF_LITE_MAUI_ANDROID_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
-#	    <dependency id=\"${EMGUTF_LITE_MODELS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
-#      </group>
-#      <group targetFramework=\"${EMGUTF_MAUI_IOS_DST_FOLDER}\">
-#	    <dependency id=\"${EMGUTF_LITE_MAUI_IOS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
-#        <dependency id=\"${EMGUTF_LITE_MODELS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
-#      </group>
-#      <group targetFramework=\"${EMGUTF_MAUI_WINDOWS_DST_FOLDER}\">
-#	    <dependency id=\"${EMGUTF_LITE_WINDOWS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
-#	    <dependency id=\"${EMGUTF_LITE_MODELS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
-#      </group>
-#    </dependencies>")
    
-  #CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.maui.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/UI/Lite/Directory.Build.props)
   IF(EMGU_SIGN_FOUND AND WIN32)
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignBinary.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/UI/Lite/SignBinary.Targets)
   ENDIF()
   IF(EMGU_NUGET_SIGN_FOUND AND WIN32)
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignPkg.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/UI/Lite/SignPkg.Targets)
   ENDIF()
-ENDIF()
+#ENDIF()
 
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/UI/Lite/docs/README.md)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.Lite.runtime.maui.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/UI/Lite/Directory.Build.props)
