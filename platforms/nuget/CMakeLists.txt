@@ -81,4 +81,4 @@ add_subdirectory(Emgu.TF.Lite.runtime.debian-arm64)
 
 #add_subdirectory(Emgu.TF.Lite.runtime.maui)
 
-add_subdirectory(Emgu.TF.runtime.maui)
+#add_subdirectory(Emgu.TF.runtime.maui)
