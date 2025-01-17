@@ -1,16 +1,63 @@
 <?xml version="1.0"?>
-<Project>
-
-  <TargetFrameworks>net${DOTNET_VERSION_MAJOR}.0-android</TargetFrameworks>
-  <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net${DOTNET_VERSION_MAJOR}.0-windows10.0.19041.0</TargetFrameworks>
-
+<Project>  
   <!-- https://learn.microsoft.com/en-us/visualstudio/msbuild/customize-by-directory?view=vs-2022 -->
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+  
   <PropertyGroup>
+    <TargetFrameworks>net${DOTNET_VERSION_MAJOR}.0-android</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net${DOTNET_VERSION_MAJOR}.0-windows10.0.19041.0</TargetFrameworks>
+
+    <MauiVersion Condition="'$(MauiVersion)' == ''">${DOTNET_VERSION_MAJOR}.0.0</MauiVersion>
+  
     <EmguTFProjectRoot>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\..\..\))</EmguTFProjectRoot>
 	<TfBinaryDir>$([System.IO.Path]::GetFullPath($(EmguTFProjectRoot)\lib))</TfBinaryDir>
+	
+	<PackageId>${EMGUTF_MAUI_NUGET_ID}</PackageId>
+	
+	<title>${EMGUTF_MAUI_NUGET_TITLE}</title>
+    <version>${CPACK_PACKAGE_VERSION}</version>
+    <authors>${CPACK_PACKAGE_VENDOR}</authors>
+    <owners>${CPACK_PACKAGE_VENDOR}</owners>
+	<summary>Runtime package of Emgu TF for MAUI</summary>
+    <Description>This package contains the native runtime of Emgu TF for MAUI. Android and Windows platforms are supported.</Description>
+    <PackageReleaseNotes>This is the ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH} release of Emgu TF Lite. For online documentation please visit
+${NUGET_EMGU_URL}/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}/document-lite/index.html    	        
+</PackageReleaseNotes>
+	
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<PackageIcon>nuget_icon.png</PackageIcon>
+    <PackageReadmeFile>docs/README.md</PackageReadmeFile>
+	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+	<RepositoryUrl>https://github.com/emgucv/emgutf</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageOutputPath>$([System.IO.Path]::GetFullPath($(EmguTFProjectRoot)\platforms\nuget))</PackageOutputPath>
+	<PackageTags>tensorflow emgu emgutf ai image maui</PackageTags>
+    <PackageProjectUrl>${NUGET_EMGU_URL}</PackageProjectUrl>
+    <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved.</copyright>
+    
+	<!-- Add local repository path to RestoreSources -->
+    <RestoreSources>$(RestoreSources);$(PackageOutputPath);https://api.nuget.org/v3/index.json</RestoreSources>
   </PropertyGroup>
-  <!--  ${EMGUTF_MAUI_POST_PROCESS_BINARY} -->
+  
+    ${EMGUTF_MAUI_PACKAGE_REFERENCE}
+
+     <ItemGroup>
+      <None Include="$(EmguTFProjectRoot)\LICENSE.txt">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
+      <None Include="$(EmguTFProjectRoot)\miscellaneous\nuget_icon.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="docs\README.md">
+        <Pack>True</Pack>
+        <PackagePath>docs\</PackagePath>
+      </None>
+    </ItemGroup>
   
   <Import Project="SignBinary.Targets" Condition="exists('SignBinary.Targets')" />	
   <Import Project="SignPkg.Targets" Condition="exists('SignPkg.Targets')" />	 
