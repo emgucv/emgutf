@@ -7,4 +7,5 @@
 lipo -create -output ../../lib/ios/libtfliteextern_ios_simulator.a ../../lib/ios/libtfliteextern_ios_x86_64.a ../../lib/ios/libtfliteextern_ios_sim_arm64.a
 lipo -create -output ../../lib/ios/libtfliteextern.a ../../lib/ios/libtfliteextern_ios_x86_64.a ../../lib/ios/libtfliteextern_ios_arm64.a
 
+rm -rf ../../lib/ios/libtfliteextern_ios.xcframework
 xcodebuild -create-xcframework -library ../../lib/ios/libtfliteextern_ios_simulator.a -library ../../lib/ios/libtfliteextern_ios_arm64.a -output ../../lib/ios/libtfliteextern_ios.xcframework

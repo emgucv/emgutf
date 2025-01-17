@@ -1498,16 +1498,16 @@ IF(HAVE_ANDROID_LITE)
     PATTERN ".git" EXCLUDE
     PATTERN "bin" EXCLUDE
     )
-  INSTALL(
-    DIRECTORY
-    ${CMAKE_CURRENT_SOURCE_DIR}/Solution/Android
-    DESTINATION Solution
-    COMPONENT emgutf_example_source
-    FILES_MATCHING 
-	PATTERN "Emgu.TF.Lite.Example.Android.sln"
-    PATTERN ".git" EXCLUDE
-    PATTERN "bin" EXCLUDE
-    )
+#  INSTALL(
+#    DIRECTORY
+#    ${CMAKE_CURRENT_SOURCE_DIR}/Solution/Android
+#    DESTINATION Solution
+#    COMPONENT emgutf_example_source
+#    FILES_MATCHING 
+#	PATTERN "Emgu.TF.Lite.Android.sln"
+#    PATTERN ".git" EXCLUDE
+#    PATTERN "bin" EXCLUDE
+#    )
 ENDIF()
 
 IF(HAVE_IOS_LITE)
@@ -1515,9 +1515,9 @@ IF(HAVE_IOS_LITE)
     DIRECTORY
     ${CMAKE_CURRENT_SOURCE_DIR}/Solution/iOS
     DESTINATION Solution
-    COMPONENT emgutf_example_source
+    COMPONENT emgutf_source
     FILES_MATCHING 
-    PATTERN "Emgu.TF.Lite.Example.iOS.sln"
+    PATTERN "Emgu.TF.Lite.iOS.sln"
     PATTERN ".git" EXCLUDE
     PATTERN "bin" EXCLUDE
     )

@@ -9,7 +9,8 @@ IF(HAVE_ANDROID_LITE AND (WIN32 OR APPLE))
     DESTINATION Emgu.TF.Runtime/Maui/Android
     COMPONENT emgutf_source
     FILES_MATCHING 
-	PATTERN "*.cs"
+    PATTERN "*.cs"
+    PATTERN "Directory.Build.props"
     PATTERN "${PROJECT_NAME}.csproj"
     PATTERN ".svn" EXCLUDE
     PATTERN "obj" EXCLUDE

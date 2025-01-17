@@ -10,7 +10,8 @@ IF(HAVE_IOS_LITE)
       COMPONENT emgutf_source
       FILES_MATCHING 
       PATTERN "*.csproj"
-	  PATTERN "*.cs"
+      PATTERN "Directory.Build.props"
+      PATTERN "*.cs"
       PATTERN ".svn" EXCLUDE
       PATTERN "obj" EXCLUDE
       PATTERN "CMakeFiles" EXCLUDE

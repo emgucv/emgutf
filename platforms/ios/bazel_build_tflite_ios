@@ -12,7 +12,7 @@ if [ "$1" = "darwin_x86_64" ] || [ "$1" = "darwin_arm64" ]; then
     BAZEL_BUILD_OPTION="--apple_platform_type=macos --cpu=$1" 
 else
     echo "Building for iOS"
-    BAZEL_BUILD_OPTION="-config=$1"
+    BAZEL_BUILD_OPTION="--config=$1"
 fi
 
 cd "$(dirname "$0")"
