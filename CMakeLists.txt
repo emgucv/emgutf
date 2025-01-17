@@ -587,12 +587,8 @@ IF(HAVE_WINDESKTOP)
 		<dependency id=\"${EMGUTF_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" />") 
 ENDIF()
 
-IF(HAVE_ANDROID)
-	
+#IF(HAVE_ANDROID)	
   SET(EMGUTF_MAUI_ANDROID_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.runtime.maui.android")
-  #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
-  #  SET(EMGUTF_ANDROID_NUGET_ID "${EMGUTF_ANDROID_NUGET_ID}-CR")  
-  #ENDIF()
   SET(EMGUTF_MAUI_ANDROID_NUGET_TITLE "Native Android runtime of ${EMGUTF_NUGET_TITLE} for MAUI")	
 	
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.maui.android.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/Android/Full/Directory.Build.props)
@@ -603,7 +599,7 @@ IF(HAVE_ANDROID)
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignPkg.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/Android/Full/SignPkg.Targets)
   ENDIF()
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.maui.android.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/Android/Full/docs/README.md)
-ENDIF()
+#ENDIF()
 
 IF(HAVE_OSX)
   SET(EMGUTF_MACOS_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.runtime.mac")
@@ -848,7 +844,7 @@ ENDIF()
 MESSAGE(STATUS "HAVE_MAUI: ${HAVE_MAUI}")
 
 
-IF(HAVE_MAUI)
+#IF(HAVE_MAUI)
   SET(EMGUTF_MAUI_NUGET_ID "${EMGUTF_NUGET_ID}.runtime.maui${EMGUTF_RUNTIME_EXTRA_TAG}")
   SET(EMGUTF_MAUI_NUGET_TITLE "Emgu TF for MAUI Native Runtime")
   
@@ -885,7 +881,7 @@ IF(HAVE_MAUI)
   ENDIF()
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.maui.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.runtime.maui/README.md)
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.maui.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.runtime.maui/Package.nuspec)
-ENDIF()
+#ENDIF()
 
 
 IF (HAVE_WINDESKTOP OR HAVE_WINDESKTOP_LITE)
