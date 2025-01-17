@@ -57,9 +57,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Emgu.CV.runtime.maui.mini" Version="4.8.1.5350" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="Emgu.CV.runtime.maui.mini" Version="4.10.0.5680" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.1" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+		<PackageReference Include="System.Drawing.Common" Version="9.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
