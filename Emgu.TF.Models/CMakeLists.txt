@@ -13,6 +13,7 @@ IF(HAVE_FULL_BUILD)
     PATTERN "*.projitems"
     PATTERN "*.shproj"
     PATTERN "*.csproj"
+	PATTERN "Directory.Build.props"
     PATTERN ".svn" EXCLUDE
     PATTERN "obj" EXCLUDE
     PATTERN "CMakeFiles" EXCLUDE
