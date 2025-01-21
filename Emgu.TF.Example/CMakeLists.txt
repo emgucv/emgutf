@@ -70,37 +70,7 @@ IF(HAVE_IOS OR HAVE_WINDESKTOP_X64)
 ENDIF()
 
 add_subdirectory(Inception.Console.Lite)
-
-IF(HAVE_FULL_BUILD)
-  INSTALL(
-    DIRECTORY
-    "${CMAKE_CURRENT_SOURCE_DIR}/Inception.Console/"
-    DESTINATION Emgu.TF.Example/Inception.Console/
-    COMPONENT emgutf_example_source
-    FILES_MATCHING 
-    PATTERN "*.cs"
-    PATTERN "*.csproj"
-    PATTERN "*.config"
-    PATTERN "*.shproj"
-    PATTERN "*.projitems"
-    PATTERN "*.axml"
-    PATTERN "*.xaml"
-    PATTERN "*.xml"
-    PATTERN "*.txt"
-    PATTERN "*.jpg"
-    PATTERN "*.dll"
-    PATTERN "*.json"
-	PATTERN "Directory.Build.props"
-    PATTERN ".git" EXCLUDE
-    PATTERN "Debug" EXCLUDE
-    PATTERN "Release" EXCLUDE  
-    )
-  IF (DOTNET_FOUND)
-    PROJECT(Inception.Console)
-    BUILD_DOTNET_PROJ(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}.csproj"  "" ALL)
-    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF Emgu.TF.Protobuf Emgu.TF.Models)
-  ENDIF() 
-ENDIF()
+add_subdirectory(Inception.Console)
 
 add_subdirectory(CVInterop)
 add_subdirectory(CVInterop.Lite)
