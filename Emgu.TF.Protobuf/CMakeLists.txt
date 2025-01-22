@@ -14,6 +14,7 @@ INSTALL(
   PATTERN "*.projitems"
   PATTERN "*.shproj"
   PATTERN "*.csproj"
+  PATTERN "Directory.Build.props"
   PATTERN ".svn" EXCLUDE
   PATTERN "obj" EXCLUDE
   PATTERN "CMakeFiles" EXCLUDE

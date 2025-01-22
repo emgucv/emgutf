@@ -7,6 +7,11 @@ public partial class App : Application
 		InitializeComponent();
         Emgu.CV.Platform.Maui.MauiInvoke.Init();
         Emgu.TF.Lite.Platform.Maui.MauiInvoke.Init();
-        MainPage = new AppShell();
+
 	}
+
+    protected override Window CreateWindow(IActivationState? activationState)
+    {
+        return new Window(new AppShell());
+    }
 }

@@ -15,30 +15,13 @@ INSTALL(
   PATTERN "*.projitems"
   PATTERN "*.resx"
   PATTERN "README.txt"
+  PATTERN "Directory.Build.props"
   PATTERN ".svn" EXCLUDE
   PATTERN "obj" EXCLUDE
   PATTERN "CMakeFiles" EXCLUDE
   PATTERN "${PROJECT_NAME}.dir" EXCLUDE
   PATTERN "*Unity*" EXCLUDE
   )
-
-#  INSTALL(
-#    DIRECTORY
-#    ${CMAKE_CURRENT_SOURCE_DIR}/NetStandard
-#    DESTINATION Emgu.TF
-#    COMPONENT emgutf_source
-#    FILES_MATCHING 
-#    PATTERN "*.cs"
-#    PATTERN "*.projitems"
-#    PATTERN "*.shproj"
-#    PATTERN "*.csproj"
-#    PATTERN ".svn" EXCLUDE
-#    PATTERN "obj" EXCLUDE
-#    PATTERN "CMakeFiles" EXCLUDE
-#    PATTERN "x64" EXCLUDE #exclude build artifacts from Visual Studio build process
-#    PATTERN "x86" EXCLUDE #exclude build artifacts from Visual Studio build process
-#    PATTERN "${PROJECT_NAME}.dir" EXCLUDE
-#    )
 
 IF (DOTNET_FOUND)
 #  MESSAGE(STATUS "Adding Emgu.TF project")
