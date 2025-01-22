@@ -9,7 +9,7 @@ IF(HAVE_LITE_BUILD)
 	"${CMAKE_CURRENT_SOURCE_DIR}/Program.cs"
 	"${CMAKE_CURRENT_SOURCE_DIR}/Inception.Console.Lite.csproj"
 	"${CMAKE_CURRENT_SOURCE_DIR}/tulips.jpg"
-	"${CMAKE_CURRENT_SOURCE_DIR}/runtimeconfig.template"
+	"${CMAKE_CURRENT_SOURCE_DIR}/runtimeconfig.template.json"
     DESTINATION Emgu.TF.Example/Inception.Console.Lite/
     COMPONENT emgutf_example_source
     )
