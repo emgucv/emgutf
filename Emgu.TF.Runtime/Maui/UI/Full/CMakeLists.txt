@@ -23,7 +23,12 @@ IF(HAVE_ANDROID AND HAVE_WINDESKTOP)
   #if(ENABLE_SOLUTION_FOLDERS)
   #    set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "emgu")
   #endif() 
+
   ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF)
+
+  IF (TARGET Emgu.TF.runtime.windows.nuget)
+    ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF.runtime.windows.nuget)
+  ENDIF()
   
 
 ENDIF()

@@ -606,7 +606,7 @@ IF(HAVE_ANDROID)
 ENDIF()
 
 IF(HAVE_OSX)
-  SET(EMGUTF_MACOS_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.runtime.mac")
+  SET(EMGUTF_MACOS_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.runtime.macos")
   #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
   #  SET(EMGUTF_MACOS_NUGET_ID "${EMGUTF_MACOS_NUGET_ID}-CR")  
   #ENDIF()
@@ -852,29 +852,36 @@ IF(HAVE_MAUI)
   SET(EMGUTF_MAUI_NUGET_ID "${EMGUTF_NUGET_ID}.runtime.maui${EMGUTF_RUNTIME_EXTRA_TAG}")
   SET(EMGUTF_MAUI_NUGET_TITLE "Emgu TF for MAUI Native Runtime")
   
-  SET(EMGUTF_MAUI_NUGET_FILE_LIST "	
-    <file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
+  #SET(EMGUTF_MAUI_NUGET_FILE_LIST "	
+  #  <file src=\"..\\..\\..\\miscellaneous\\nuget_icon.png\" target=\"icon.png\" />
 	
-	<file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.runtime.maui\\AnyCPU\\Release\\${EMGUTF_MAUI_ANDROID_SRC_FOLDER}\\Emgu.TF.runtime.maui.dll\" target=\"lib\\${EMGUTF_MAUI_ANDROID_DST_FOLDER}\" />
-    <file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.runtime.maui\\AnyCPU\\Release\\${EMGUTF_MAUI_ANDROID_SRC_FOLDER}\\Emgu.TF.runtime.maui.xml\" target=\"lib\\${EMGUTF_MAUI_ANDROID_DST_FOLDER}\" />
+  #	<file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.runtime.maui\\AnyCPU\\Release\\${EMGUTF_MAUI_ANDROID_SRC_FOLDER}\\Emgu.TF.runtime.maui.dll\" target=\"lib\\${EMGUTF_MAUI_ANDROID_DST_FOLDER}\" />
+  #  <file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.runtime.maui\\AnyCPU\\Release\\${EMGUTF_MAUI_ANDROID_SRC_FOLDER}\\Emgu.TF.runtime.maui.xml\" target=\"lib\\${EMGUTF_MAUI_ANDROID_DST_FOLDER}\" />
 	
-	<file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.runtime.maui\\AnyCPU\\Release\\${EMGUTF_MAUI_WINDOWS_SRC_FOLDER}\\Emgu.TF.runtime.maui.dll\" target=\"lib\\${EMGUTF_MAUI_WINDOWS_DST_FOLDER}\" />
-    <file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.runtime.maui\\AnyCPU\\Release\\${EMGUTF_MAUI_WINDOWS_SRC_FOLDER}\\Emgu.TF.runtime.maui.xml\" target=\"lib\\${EMGUTF_MAUI_WINDOWS_DST_FOLDER}\" />
+  #	<file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.runtime.maui\\AnyCPU\\Release\\${EMGUTF_MAUI_WINDOWS_SRC_FOLDER}\\Emgu.TF.runtime.maui.dll\" target=\"lib\\${EMGUTF_MAUI_WINDOWS_DST_FOLDER}\" />
+  #  <file src=\"..\\..\\..\\lib\\Build\\Emgu.TF.runtime.maui\\AnyCPU\\Release\\${EMGUTF_MAUI_WINDOWS_SRC_FOLDER}\\Emgu.TF.runtime.maui.xml\" target=\"lib\\${EMGUTF_MAUI_WINDOWS_DST_FOLDER}\" />
 	
-	<file src=\"README.md\" target=\"docs\\\" />
-    <file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+  #	<file src=\"README.md\" target=\"docs\\\" />
+  #  <file src=\"..\\..\\..\\${EMGUTF_LICENSE_FILE}\" target=\"\" />")
+  
+  #SET(EMGUTF_MAUI_NUGET_DEPENDENCY "
+  #    <dependencies>
+  #    <group targetFramework=\"${EMGUTF_MAUI_ANDROID_DST_FOLDER}\">
+  #	    <dependency id=\"${EMGUTF_MAUI_ANDROID_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
+  #	    <dependency id=\"${EMGUTF_MODELS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
+  #    </group>
+  #    <group targetFramework=\"${EMGUTF_MAUI_WINDOWS_DST_FOLDER}\">
+  #	    <dependency id=\"${EMGUTF_WINDOWS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
+  #	    <dependency id=\"${EMGUTF_MODELS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
+  #    </group>
+  #  </dependencies>")
   
   SET(EMGUTF_MAUI_NUGET_DEPENDENCY "
-      <dependencies>
-      <group targetFramework=\"${EMGUTF_MAUI_ANDROID_DST_FOLDER}\">
-	    <dependency id=\"${EMGUTF_MAUI_ANDROID_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
-	    <dependency id=\"${EMGUTF_MODELS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
-      </group>
-      <group targetFramework=\"${EMGUTF_MAUI_WINDOWS_DST_FOLDER}\">
-	    <dependency id=\"${EMGUTF_WINDOWS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
-	    <dependency id=\"${EMGUTF_MODELS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
-      </group>
-    </dependencies>")
+  	<ItemGroup>
+      <PackageReference Condition=\"$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'\" Include=\"${EMGUTF_WINDOWS_NUGET_ID}\" Version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\">
+	  </PackageReference>
+    </ItemGroup>")
+  
   
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.maui.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/UI/Full/Directory.Build.props)
   IF(EMGU_SIGN_FOUND AND WIN32)
@@ -883,8 +890,8 @@ IF(HAVE_MAUI)
   IF(EMGU_NUGET_SIGN_FOUND AND WIN32)
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/SignPkg.Targets.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/UI/Full/SignPkg.Targets)
   ENDIF()
-  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.maui.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.runtime.maui/README.md)
-  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.maui.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.runtime.maui/Package.nuspec)
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.maui.Package.README.md.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/UI/Full/docs/README.md)
+  #CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.maui.Package.nuspec.in ${CMAKE_CURRENT_SOURCE_DIR}/platforms/nuget/Emgu.TF.runtime.maui/Package.nuspec)
 ENDIF()
 
 
