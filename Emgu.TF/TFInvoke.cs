@@ -486,9 +486,15 @@ namespace Emgu.TF
         public static extern int DataTypeSize(DataType dt);
 
         /// <summary>
-        /// Get the proto buffer that contains the list of all the supported operations.
+        /// Retrieves a protocol buffer that contains the list of all supported TensorFlow operations.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// A <see cref="Buffer"/> object containing the serialized protocol buffer with the list of supported operations.
+        /// </returns>
+        /// <remarks>
+        /// The returned buffer holds a pointer to the serialized data and its associated length.
+        /// It is the caller's responsibility to manage the lifecycle of the buffer appropriately.
+        /// </remarks>
         public static Buffer GetAllOpList()
         {
             return new Buffer(tfeGetAllOpList(), true);
@@ -690,9 +696,9 @@ namespace Emgu.TF
         public static event EventHandler<String> LogMsgReceived;
 
         /// <summary>
-        /// The default Log message listener
+        /// Handles log messages received from the native library.
         /// </summary>
-        /// <param name="msgPtr"></param>
+        /// <param name="msgPtr">Pointer to the log message string.</param>
 #if UNITY_WSA || UNITY_ANDROID || UNITY_STANDALONE
         [AOT.MonoPInvokeCallback(typeof(TfLogListener))]
 #endif

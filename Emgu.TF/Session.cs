@@ -48,7 +48,9 @@ namespace Emgu.TF
         /// <param name="exportDir">Must be set to the path of the exported SavedModel.</param>
         /// <param name="tags">Must include the set of tags used to identify one MetaGraphDef in the SavedModel. Could be "serve", "tpu", "gpu", "train" or other values.</param>
         /// <param name="sessionOptions">Session options</param>
-        /// <param name="runOptions"></param>
+        /// <param name="runOptions">
+        /// Optional runtime options for the session.
+        /// </param>
         /// <param name="status">The status</param>
         public Session(
             String exportDir,
@@ -179,10 +181,11 @@ namespace Emgu.TF
         /// <param name="inputValues">The input values</param>
         /// <param name="outputs">The output nodes</param>
         /// <param name="targetOperations">Optional target operations</param>
-        /// <param name="runOptions"></param>
+        /// <param name="runOptions">
         /// May be NULL, in which case it will be ignored; or
         /// non-NULL, in which case it must point to a `TF_Buffer` containing the
         /// serialized representation of a `RunOptions` protocol buffer.
+        /// </param>
         /// <param name="runMetadata">
         /// May be NULL, in which case it will be ignored; or
         /// non-NULL, in which case it must point to an empty, freshly allocated
