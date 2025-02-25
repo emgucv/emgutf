@@ -14,7 +14,7 @@ IF(HAVE_LITE_BUILD)
 	PATTERN "*.csproj"
     PATTERN "*.projitems"
     PATTERN "*.resx"
-    PATTERN "README.txt"
+    PATTERN "README.md"
 	PATTERN "Directory.Build.props"
     PATTERN ".svn" EXCLUDE
     PATTERN "obj" EXCLUDE

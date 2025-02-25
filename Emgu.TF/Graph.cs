@@ -157,6 +157,7 @@ namespace Emgu.TF
         /// </summary>
         /// <return>The serialized VersionDef proto for this graph.</return>
         /// <param name="status">The status</param>
+        /// <returns>A <see cref="Buffer"/> containing the serialized VersionDef proto for this graph.</returns>
         public Buffer Versions(Status status = null)
         {
             using (StatusChecker checker = new StatusChecker(status))

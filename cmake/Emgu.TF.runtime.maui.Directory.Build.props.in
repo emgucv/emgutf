@@ -4,11 +4,11 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
   
   <PropertyGroup>
-    <TargetFrameworks>net${DOTNET_VERSION_MAJOR}.0-android</TargetFrameworks>
-    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net${DOTNET_VERSION_MAJOR}.0-windows10.0.19041.0</TargetFrameworks>
-
-    <MauiVersion Condition="'$(MauiVersion)' == ''">${DOTNET_VERSION_MAJOR}.0.0</MauiVersion>
-  
+  	<TargetFrameworks>netstandard2.0;net${DOTNET_VERSION_MAJOR}.0-android</TargetFrameworks>
+	<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net${DOTNET_VERSION_MAJOR}.0-windows10.0.19041.0</TargetFrameworks>
+	
+	<MauiVersion Condition="'$(MauiVersion)' == ''">${DOTNET_VERSION_MAJOR}.0.0</MauiVersion>
+	
     <EmguTFProjectRoot>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\..\..\..\))</EmguTFProjectRoot>
 	<TfBinaryDir>$([System.IO.Path]::GetFullPath($(EmguTFProjectRoot)\lib))</TfBinaryDir>
 	
@@ -20,7 +20,7 @@
     <owners>${CPACK_PACKAGE_VENDOR}</owners>
 	<summary>Runtime package of Emgu TF for MAUI</summary>
     <Description>This package contains the native runtime of Emgu TF for MAUI. Android and Windows platforms are supported.</Description>
-    <PackageReleaseNotes>This is the ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH} release of Emgu TF Lite. For online documentation please visit
+    <PackageReleaseNotes>This is the ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH} release of Emgu TF. For online documentation please visit
 ${NUGET_EMGU_URL}/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}/document-lite/index.html    	        
 </PackageReleaseNotes>
 	
@@ -40,9 +40,9 @@ ${NUGET_EMGU_URL}/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKA
     <RestoreSources>$(RestoreSources);$(PackageOutputPath);https://api.nuget.org/v3/index.json</RestoreSources>
   </PropertyGroup>
   
-    ${EMGUTF_MAUI_PACKAGE_REFERENCE}
-
-     <ItemGroup>
+  ${EMGUTF_MAUI_NUGET_DEPENDENCY}
+  
+    <ItemGroup>
       <None Include="$(EmguTFProjectRoot)\LICENSE.txt">
         <Pack>True</Pack>
         <PackagePath></PackagePath>

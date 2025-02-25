@@ -602,7 +602,7 @@ ENDIF()
 #ENDIF()
 
 IF(HAVE_OSX)
-  SET(EMGUTF_MACOS_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.runtime.mac")
+  SET(EMGUTF_MACOS_NUGET_ID "${EMGUTF_NUGET_BASE_ID}.runtime.macos")
   #IF ("${LICENSE_TYPE}" STREQUAL "Commercial")
   #  SET(EMGUTF_MACOS_NUGET_ID "${EMGUTF_MACOS_NUGET_ID}-CR")  
   #ENDIF()
@@ -877,6 +877,7 @@ ENDIF()
 #	    <dependency id=\"${EMGUTF_MODELS_NUGET_ID}\" version=\"${CPACK_PACKAGE_DEPENDENCY_VERSION}\" exclude=\"Build,Analyzers\" />
 #      </group>
 #    </dependencies>")
+  
   
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Emgu.TF.runtime.maui.Directory.Build.props.in ${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.Runtime/Maui/UI/Full/Directory.Build.props)
   IF(EMGU_SIGN_FOUND AND WIN32)
@@ -1602,10 +1603,17 @@ INSTALL(
   FILES
   "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.snk"
   "${CMAKE_CURRENT_SOURCE_DIR}/CommonAssemblyInfo.cs"
-  "${CMAKE_CURRENT_SOURCE_DIR}/${LICENSE_FILE_NAME}"
+  "${CMAKE_CURRENT_SOURCE_DIR}/${LICENSE_FILE_NAME}" #LICENSE
+  "${CMAKE_CURRENT_SOURCE_DIR}/${EMGUTF_LICENSE_FILE}" #LICENSE.txt
   DESTINATION .
   COMPONENT emgutf_source
   )
+
+INSTALL(
+  FILES 
+  "${CMAKE_CURRENT_SOURCE_DIR}/miscellaneous/nuget_icon.png" 
+  DESTINATION "miscellaneous/" 
+  COMPONENT emgutf_source)
 
 
 SET(CPACK_GENERATOR ZIP)
