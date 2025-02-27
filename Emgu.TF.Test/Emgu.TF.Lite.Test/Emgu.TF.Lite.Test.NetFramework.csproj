@@ -72,27 +72,27 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Netstandard\Emgu.TF.Lite.Models.Netstandard.csproj">
+    <ProjectReference Include="..\..\Emgu.TF.Lite.Models\NetStandard\Emgu.TF.Lite.Models.csproj">
       <Project>{b3ce21ad-95de-4bca-bdbc-9eaf87cadac4}</Project>
       <Name>Emgu.TF.Lite.Models.Netstandard</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Emgu.TF.Lite\Emgu.TF.Lite.Netstandard\Emgu.TF.Lite.NetStandard.csproj">
+    <ProjectReference Include="..\..\Emgu.TF.Lite\NetStandard\Emgu.TF.Lite.csproj">
       <Project>{b7f55b47-f2ab-4b5b-97a2-08a027f11002}</Project>
       <Name>Emgu.TF.Lite.NetStandard</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Emgu.CV.runtime.windows">
-      <Version>4.5.4.4788</Version>
+      <Version>4.10.0.5680</Version>
     </PackageReference>
     <PackageReference Include="MSTest.TestAdapter">
-      <Version>2.2.8</Version>
+      <Version>3.8.2</Version>
     </PackageReference>
     <PackageReference Include="MSTest.TestFramework">
-      <Version>2.2.8</Version>
+      <Version>3.8.2</Version>
     </PackageReference>
     <PackageReference Include="System.Drawing.Common">
-      <Version>6.0.0</Version>
+      <Version>9.0.2</Version>
     </PackageReference>
     <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation">
       <Version>4.3.0</Version>

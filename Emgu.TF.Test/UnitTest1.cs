@@ -53,10 +53,10 @@ namespace Emgu.TF.Test
             byte[] data = File.ReadAllBytes("grace_hopper.jpg");
             TString s = new TString(data);
             byte[] data2 = s.Data;
-            Assert.AreEqual(data.Length, data2.Length);
+            EmguAssert.AreEqual(data.Length, data2.Length);
             for (int i = 0; i < data.Length; i++)
             {
-                Assert.AreEqual(data[i], data2[i]);
+                EmguAssert.AreEqual(data[i], data2[i]);
             }
         }
 
@@ -440,7 +440,7 @@ namespace Emgu.TF.Test
             Tensor[] results = session.Run(new Output[] { }, new Tensor[] { }, new Output[] { helloOp });
             byte[] data = results[0].DecodeString();
             String output = System.Text.Encoding.Default.GetString(data);
-            Assert.IsTrue(output.Equals(h));
+            EmguAssert.IsTrue(output.Equals(h));
         }
 
         [TestAttribute]
@@ -469,9 +469,9 @@ namespace Emgu.TF.Test
         public void TestIsOperationSupported()
         {
             bool castSupported = TfInvoke.OpHasKernel("Cast");
-            Assert.IsTrue(castSupported);
-            bool notSuppoted = TfInvoke.OpHasKernel("NotASupportedOperation");
-            Assert.IsTrue(!notSuppoted);
+            EmguAssert.IsTrue(castSupported);
+            bool notSupported = TfInvoke.OpHasKernel("NotASupportedOperation");
+            EmguAssert.IsTrue(!notSupported);
             bool quantizeV2HasKernel = TfInvoke.OpHasKernel("QuantizeV2");
             bool quantizeV2IsRegistered = TfInvoke.OpIsRegistered("QuantizeV2");
 

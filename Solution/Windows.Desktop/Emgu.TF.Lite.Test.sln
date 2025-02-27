@@ -21,30 +21,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emgu.TF.Lite.Test.Net", "..
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Runtime.Ubuntu", "..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Lite.Runtime.Ubuntu.shproj", "{A481CD6D-F3FD-40D3-BA64-64B46219D09E}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Runtime.Raspbian", "..\..\Emgu.TF.Runtime\Raspbian\Emgu.TF.Lite.Runtime.Raspbian.shproj", "{32EBEB2C-7258-4987-9C05-C1952471F8C4}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Runtime.Debian", "..\..\Emgu.TF.Runtime\Debian\Emgu.TF.Lite.Runtime.Debian.shproj", "{32EBEB2C-7258-4987-9C05-C1952471F8C4}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Emgu.TF.Lite.Runtime.Mac", "..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Lite.Runtime.Mac.shproj", "{8519B2B8-E96B-47FD-A466-C6031D34AAAB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.TF.Lite.Test.NetFramework", "..\..\Emgu.TF.Test\Emgu.TF.Lite.Test\Emgu.TF.Lite.Test.NetFramework.csproj", "{D1F84983-691B-4E10-B202-448229F6564E}"
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems*{0d7c99ea-3aae-4f45-9ba7-3b4af8313753}*SharedItemsImports = 13
-		..\..\Emgu.TF.Example\XamarinForms\XamarinForms.Lite\XamarinForms.Lite.projitems*{26f4d7af-57b6-4d2d-9a1c-aafa757ddc4a}*SharedItemsImports = 13
-		..\..\Emgu.TF.Runtime\Raspbian\Emgu.TF.Lite.Runtime.Raspbian.projitems*{32ebeb2c-7258-4987-9c05-c1952471f8c4}*SharedItemsImports = 13
-		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems*{47c5c217-8cd6-4a69-9ad8-be574fb5a149}*SharedItemsImports = 5
-		..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Lite.Runtime.Mac.projitems*{8519b2b8-e96b-47fd-a466-c6031d34aaab}*SharedItemsImports = 13
-		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{8edce0c8-ba71-4396-9428-35d05877258c}*SharedItemsImports = 13
-		..\..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.projitems*{8f587fb9-bba6-4c30-9329-8cbac7020fe0}*SharedItemsImports = 13
-		..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems*{98561642-5ec3-4244-baf9-6876d9ba5527}*SharedItemsImports = 13
-		..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Lite.Runtime.Ubuntu.projitems*{a481cd6d-f3fd-40d3-ba64-64b46219d09e}*SharedItemsImports = 13
-		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{b3ce21ad-95de-4bca-bdbc-9eaf87cadac4}*SharedItemsImports = 5
-		..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems*{b3ce21ad-95de-4bca-bdbc-9eaf87cadac4}*SharedItemsImports = 5
-		..\..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.projitems*{b7f55b47-f2ab-4b5b-97a2-08a027f11002}*SharedItemsImports = 5
-		..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems*{b7f55b47-f2ab-4b5b-97a2-08a027f11002}*SharedItemsImports = 5
-		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems*{d1f84983-691b-4e10-b202-448229f6564e}*SharedItemsImports = 4
-		..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems*{e956dd26-1294-4731-8a90-c4cba9f291b6}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|iPhone = Debug|iPhone
@@ -126,5 +109,21 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0C5F3704-DA89-43A5-A528-F2F02311B324}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems*{0d7c99ea-3aae-4f45-9ba7-3b4af8313753}*SharedItemsImports = 13
+		..\..\Emgu.TF.Runtime\Debian\Emgu.TF.Lite.Runtime.Debian.projitems*{32ebeb2c-7258-4987-9c05-c1952471f8c4}*SharedItemsImports = 13
+		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems*{47c5c217-8cd6-4a69-9ad8-be574fb5a149}*SharedItemsImports = 5
+		..\..\Emgu.TF.Runtime\Mac\Emgu.TF.Lite.Runtime.Mac.projitems*{8519b2b8-e96b-47fd-a466-c6031d34aaab}*SharedItemsImports = 13
+		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{8edce0c8-ba71-4396-9428-35d05877258c}*SharedItemsImports = 13
+		..\..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.projitems*{8f587fb9-bba6-4c30-9329-8cbac7020fe0}*SharedItemsImports = 13
+		..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems*{98561642-5ec3-4244-baf9-6876d9ba5527}*SharedItemsImports = 13
+		..\..\Emgu.TF.Runtime\Ubuntu\Emgu.TF.Lite.Runtime.Ubuntu.projitems*{a481cd6d-f3fd-40d3-ba64-64b46219d09e}*SharedItemsImports = 13
+		..\..\Emgu.Models\Emgu.Models.Shared.projitems*{b3ce21ad-95de-4bca-bdbc-9eaf87cadac4}*SharedItemsImports = 5
+		..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems*{b3ce21ad-95de-4bca-bdbc-9eaf87cadac4}*SharedItemsImports = 5
+		..\..\Emgu.TF.Lite\Emgu.TF.Lite.Shared.projitems*{b7f55b47-f2ab-4b5b-97a2-08a027f11002}*SharedItemsImports = 5
+		..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems*{b7f55b47-f2ab-4b5b-97a2-08a027f11002}*SharedItemsImports = 5
+		..\..\Emgu.TF.Runtime\Windows\Emgu.TF.Lite.Runtime.Windows.projitems*{d1f84983-691b-4e10-b202-448229f6564e}*SharedItemsImports = 4
+		..\..\Emgu.TF.Lite.Models\Emgu.TF.Lite.Models.Shared.projitems*{e956dd26-1294-4731-8a90-c4cba9f291b6}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal
