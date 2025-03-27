@@ -10,7 +10,7 @@ IF (WIN32 AND (HAVE_WINDESKTOP_X64 OR HAVE_WINDESKTOP_X64_LITE))
 
   BUILD_NUGET_PACKAGE(
     ${PROJECT_NAME} 
-	"${CMAKE_CURRENT_SOURCE_DIR}/../../../Emgu.TF/Emgu.TF.Netstandard/Emgu.TF.Netstandard.csproj"  #csproj_file 
+	"${CMAKE_CURRENT_SOURCE_DIR}/../../../Emgu.TF/NetStandard/Emgu.TF.csproj"  #csproj_file 
 	"${CMAKE_CURRENT_SOURCE_DIR}/Package.nuspec" #nuspec_file 
 	"${NUGET_OUTPUT_DIR}/" #output_dir 
 	"${CMAKE_CURRENT_SOURCE_DIR}" #working_dir
