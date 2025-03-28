@@ -101,7 +101,7 @@ IF "%HAS_TF_FULL%"=="Y" SET CMAKE_BUILD_TARGET=%CMAKE_BUILD_TARGET% Emgu.TF.Docu
 
 :BUILD_TF_FULL_NUGET
 IF NOT "%4%"=="nuget" GOTO BUILD_TF_LITE
-IF "%HAS_TF_FULL%"=="Y" SET CMAKE_BUILD_TARGET=%CMAKE_BUILD_TARGET% Emgu.TF.Models.nuget Emgu.TF.Protobuf.nuget
+IF "%HAS_TF_FULL%"=="Y" SET CMAKE_BUILD_TARGET=%CMAKE_BUILD_TARGET% Emgu.TF.runtime.windows.nuget
 IF "%HAS_TF_FULL%"=="Y" SET MOVE_NUGET_SCRIPT=copy ..\platforms\nuget\*.nupkg ..\package
 REM GOTO BUILD
 
@@ -112,7 +112,7 @@ IF "%HAS_TF_LITE%"=="Y" SET ZIP_HELP_SCRIPT=zip package\Help.zip -r Help
 
 :BUILD_TF_LITE_NUGET
 IF NOT "%4%"=="nuget" GOTO BUILD
-IF "%HAS_TF_LITE%"=="Y" SET CMAKE_BUILD_TARGET=%CMAKE_BUILD_TARGET% Emgu.TF.Lite.Models.nuget Emgu.TF.Lite.nuget
+IF "%HAS_TF_LITE%"=="Y" SET CMAKE_BUILD_TARGET=%CMAKE_BUILD_TARGET% Emgu.TF.Lite.runtime.windows.nuget
 IF "%HAS_TF_LITE%"=="Y" SET MOVE_NUGET_SCRIPT=copy platforms\nuget\*.nupkg package
 
 :BUILD
