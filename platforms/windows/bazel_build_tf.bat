@@ -74,6 +74,8 @@ IF EXIST "%PROGRAMFILES_DIR_X86%\Microsoft Visual Studio\Shared\Python37_64" SET
 IF EXIST "C:\python-virt\python37" SET PYTHON_BASE_PATH=C:\python-virt\python37
 IF EXIST "C:\python38" SET PYTHON_BASE_PATH=C:\python38
 IF EXIST "C:\Python310" SET PYTHON_BASE_PATH=C:\Python310
+IF EXIST "C:\python-virt\python312" SET PYTHON_BASE_PATH=C:\python-virt\python312
+IF EXIST "C:\python-virt\python312" SET HERMETIC_PYTHON_VERSION=3.12
 ECHO PYTHON_BASE_PATH=%PYTHON_BASE_PATH%
 
 SET PYTHON_BIN_PATH=%PYTHON_BASE_PATH%\python.exe
@@ -126,7 +128,9 @@ SET TF_BAZEL_EXTRA_CONFIG=%TF_BAZEL_EXTRA_CONFIG% --copt=/arch:AVX2
 
 IF "%2%" == "gpu" GOTO BUILD_GPU
 :BUILD_CPU
-call cmd.exe /v /c "set PATH=%MSYS64_BIN%;%PATH% & %MSYS64_BIN%\bash.exe libtensorflow_cpu.sh"
+pushd ..\..\..\..
+call cmd.exe /v /c "set PATH=%MSYS64_BIN%;%PATH% & %MSYS64_BIN%\bash.exe tensorflow\tools\ci_build\windows\libtensorflow_cpu.sh"
+popd
 GOTO END_OF_BUILD
 
 :BUILD_GPU
