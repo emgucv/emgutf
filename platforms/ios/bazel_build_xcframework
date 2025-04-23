@@ -1,11 +1,10 @@
 #!/bin/bash -v
 
-#./bazel_build_tflite_ios ios_x86_64
+./bazel_build_tflite_ios ios_x86_64
 ./bazel_build_tflite_ios ios_arm64
 ./bazel_build_tflite_ios ios_sim_arm64
 
-#lipo -create -output ../../lib/ios/libtfliteextern_ios_simulator.a ../../lib/ios/libtfliteextern_ios_x86_64.a ../../lib/ios/libtfliteextern_ios_sim_arm64.a
-cp ../../lib/ios/libtfliteextern_ios_sim_arm64.a ../../lib/ios/libtfliteextern_ios_simulator.a
+lipo -create -output ../../lib/ios/libtfliteextern_ios_simulator.a ../../lib/ios/libtfliteextern_ios_x86_64.a ../../lib/ios/libtfliteextern_ios_sim_arm64.a
 lipo -create -output ../../lib/ios/libtfliteextern.a ../../lib/ios/libtfliteextern_ios_x86_64.a ../../lib/ios/libtfliteextern_ios_arm64.a
 
 rm -rf ../../lib/ios/libtfliteextern_ios.xcframework
