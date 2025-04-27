@@ -68,6 +68,8 @@ IF "%DEVENV%"=="%VS2022%" SET BAZEL_VS=%VS2022:\Common7\IDE\devenv.com=%
 IF "%DEVENV%"=="%BUILD_TOOLS_FOLDER%" SET BAZEL_VS=%BUILD_TOOLS_FOLDER%
 IF NOT "%BAZEL_VS%"=="" SET BAZEL_VC=%BAZEL_VS%\VC
 ECHO Using BAZEL_VC=%BAZEL_VC%
+IF EXIST "C:\Program Files\LLVM\bin" SET BAZEL_LLVM="C:\Program Files\LLVM"
+REM IF EXIST "C:\Program Files\LLVM\bin" SET PATH=C:/Program Files/LLVM/bin;%PATH% 
 IF NOT "%BAZEL_VC%"=="" SET BAZEL_LLVM=%BAZEL_VC%\Tools\Llvm\x64
 ECHO Using BAZEL_LLVM=%BAZEL_LLVM%
 
@@ -111,7 +113,7 @@ cd tensorflow\tensorflow\tools\ci_build\windows
 SET MSYS64_PATH=c:\msys64
 SET MSYS64_BIN=%MSYS64_PATH%\usr\bin
 
-SET TF_BAZEL_EXTRA_CONFIG=
+SET TF_BAZEL_EXTRA_CONFIG=--config=win_clang 
 REM SET TF_BAZEL_EXTRA_CONFIG=--jobs=1
 
 IF "%3%" == "mkl" GOTO BUILD_WITH_MKL
