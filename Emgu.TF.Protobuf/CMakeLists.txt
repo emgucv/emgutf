@@ -96,14 +96,14 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF))
     LIST(APPEND PROTO_SOURCE "tensorflow/core/framework/${PROTO_SOURCE_FILE}" )
   ENDFOREACH()
   
-  SET(PROTOBUF_TSL_INCLUDE_PATH_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/third_party/xla/third_party/tsl")
+  SET(PROTOBUF_TSL_INCLUDE_PATH_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/third_party/xla/xla")
   SET(PROTOBUF_TSL_INCLUDE_PATH "${PROTOBUF_TSL_INCLUDE_PATH_ROOT}/tsl/protobuf")
 
   SET(PROTO_SOURCE_XLA_INCLUDE_PATH_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/third_party/xla")
   
   FILE(GLOB PROTO_SOURCE_FILES_PROTOBUF RELATIVE 
     "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/protobuf/" 
-    "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/protobuf/*.proto")
+    "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/protobuf/rpc_options.proto")
   LIST(REMOVE_ITEM PROTO_SOURCE_FILES_PROTOBUF 
     "conv_autotuning.proto"
     "autotuning.proto"
@@ -113,6 +113,13 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF))
       LIST(APPEND PROTO_SOURCE "tensorflow/core/protobuf/${PROTO_SOURCE_FILE}" )
   ENDFOREACH()
   
+  #SET(PROTO_SOURCE_TSL)
+  #FILE(GLOB PROTO_SOURCE_FILES_TSL RELATIVE 
+  #  "${PROTOBUF_TSL_INCLUDE_PATH_ROOT}" 
+  #  "${PROTOBUF_TSL_INCLUDE_PATH_ROOT}/tsl/protobuf/*.proto")
+  #FOREACH(PROTO_SOURCE_FILE_TSL ${PROTO_SOURCE_FILES_TSL} )
+  #  LIST(APPEND PROTO_SOURCE "third_party/xla/xla/${PROTO_SOURCE_FILE_TSL}" )
+  #ENDFOREACH()
 
   SET (PROTO_SOURCE_NATIVE_PATH)
   FOREACH(PROTO_SOURCE_FILE ${PROTO_SOURCE})
@@ -132,7 +139,6 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF))
 	"--csharp_opt=file_extension=.g.cs"
     "--csharp_opt=base_namespace="	
 	${PROTO_SOURCE_NATIVE_PATH})
-
   
   ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
     PRE_BUILD
@@ -143,8 +149,8 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF))
 
   SET(PROTO_SOURCE_TSL)
   FILE(GLOB PROTO_SOURCE_FILES_TSL RELATIVE 
-    "${PROTOBUF_TSL_INCLUDE_PATH_ROOT}" 
-    "${PROTOBUF_TSL_INCLUDE_PATH_ROOT}/tsl/protobuf/*.proto")
+    "${PROTO_SOURCE_XLA_INCLUDE_PATH_ROOT}" 
+    "${PROTO_SOURCE_XLA_INCLUDE_PATH_ROOT}/xla/tsl/protobuf/*.proto")
   FOREACH(PROTO_SOURCE_FILE_TSL ${PROTO_SOURCE_FILES_TSL} )
     LIST(APPEND PROTO_SOURCE_TSL "${PROTO_SOURCE_FILE_TSL}" )
   ENDFOREACH()
@@ -157,17 +163,19 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF))
   SET(PROTO_GEN_COMMAND_TSL 
     "${PROTOC_EXE}" 
     "--proto_path=." 
-    "--proto_path=\"${PROTOBUF_INCLUDE_PATH}\""  
+    "--proto_path=\"${PROTOBUF_INCLUDE_PATH}\"" 
+    "--proto_path=\"${PROTOBUF_TSL_INCLUDE_PATH_ROOT}\""  
+    "--proto_path=\"${PROTO_SOURCE_XLA_INCLUDE_PATH_ROOT}\"" 
     "--csharp_out=\"${CMAKE_CURRENT_SOURCE_DIR}\"" 
     "--csharp_opt=file_extension=.tsl.g.cs" 
     "--csharp_opt=base_namespace="	
     ${PROTO_SOURCE_NATIVE_PATH_TSL})
-#  
+  
   ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
     PRE_BUILD
     COMMAND ${PROTO_GEN_COMMAND_TSL}
     COMMENT "PROTO_GEN_COMMAND_TSL: ${PROTO_GEN_COMMAND_TSL}"
-    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/third_party/xla/third_party/tsl/"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/third_party/xla"
     )
 
   INSTALL(
