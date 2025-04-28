@@ -31,18 +31,17 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF))
   
   SET(PROTOBUF_TOOLS_NUGET_URL https://www.nuget.org/api/v2/package/Google.Protobuf.Tools/${PROTOBUF_VERSION})
   IF(WIN32)
-    SET(PROTOBUF_TOOLS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/bazel-bin/external/com_google_protobuf)
     FIND_PROGRAM (PROTOC_EXE 
-      NAMES protoc
+      NAMES protoc protoc.exe
       PATHS
-      ${PROTOBUF_TOOLS_PATH}
+      ${CMAKE_CURRENT_SOURCE_DIR}/protobuf.tools/tools/windows_x64
       )
-    SET(PROTOBUF_INCLUDE_PATH ${PROTOBUF_TOOLS_PATH}/google/protobuf)
     
     if (("${PROTOC_EXE}" STREQUAL "PROTOC_EXE-NOTFOUND") OR NOT (EXISTS ${PROTOBUF_INCLUDE_PATH}))
       SET(PROTOBUF_TOOLS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/protobuf.tools)
       SET(PROTOC_EXE "${PROTOBUF_TOOLS_PATH}/tools/windows_x64/protoc.exe")
       SET(PROTOBUF_INCLUDE_PATH ${PROTOBUF_TOOLS_PATH}/tools)
+      # Download protobuf tools
       ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
 	    PRE_BUILD
 	    COMMAND wget ${PROTOBUF_TOOLS_NUGET_URL} -O protobuf.tools.zip
@@ -55,6 +54,8 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF))
         COMMENT "Adding execute permission to protoc.exe;"
 	    WORKING_DIRECTORY "${PROTOBUF_TOOLS_PATH}/tools/windows_x64/")
     ELSE()
+      MESSAGE(STATUS "PROTOC_EXE: ${PROTOC_EXE} FOUND")
+      SET(PROTOBUF_INCLUDE_PATH ${PROTOBUF_TOOLS_PATH}/google/protobuf)
       get_filename_component(PROTOC_EXEC_EXT "${PROTOC_EXE}" EXT)
       IF("${PROTOC_EXEC_EXT}" STREQUAL "")	
 	    #FILE(COPY "${PROTOC_EXE}" "${PROTOC_EXE}.exe")
@@ -89,38 +90,32 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF))
   ENDIF()
   
   SET(PROTO_SOURCE)
-  FILE(GLOB PROTO_SOURCE_FILES_FRAME_WORK RELATIVE 
+
+  # Add .proto files from tensorflow/core/framework
+  FILE(GLOB PROTO_SOURCE_FILES_FRAMEWORK RELATIVE 
     "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/framework/" 
     "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/framework/*.proto")
-  FOREACH(PROTO_SOURCE_FILE ${PROTO_SOURCE_FILES_FRAME_WORK} )
+  FOREACH(PROTO_SOURCE_FILE ${PROTO_SOURCE_FILES_FRAMEWORK} )
     LIST(APPEND PROTO_SOURCE "tensorflow/core/framework/${PROTO_SOURCE_FILE}" )
   ENDFOREACH()
   
   SET(PROTOBUF_TSL_INCLUDE_PATH_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/third_party/xla/xla")
   SET(PROTOBUF_TSL_INCLUDE_PATH "${PROTOBUF_TSL_INCLUDE_PATH_ROOT}/tsl/protobuf")
-
   SET(PROTO_SOURCE_XLA_INCLUDE_PATH_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/third_party/xla")
   
+  # Add .proto files from tensorflow/core/protobuf
   FILE(GLOB PROTO_SOURCE_FILES_PROTOBUF RELATIVE 
     "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/protobuf/" 
-    "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/protobuf/rpc_options.proto")
+    "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/tensorflow/core/protobuf/*.proto")
   LIST(REMOVE_ITEM PROTO_SOURCE_FILES_PROTOBUF 
     "conv_autotuning.proto"
     "autotuning.proto"
   )
-  
   FOREACH(PROTO_SOURCE_FILE ${PROTO_SOURCE_FILES_PROTOBUF} )
       LIST(APPEND PROTO_SOURCE "tensorflow/core/protobuf/${PROTO_SOURCE_FILE}" )
   ENDFOREACH()
-  
-  #SET(PROTO_SOURCE_TSL)
-  #FILE(GLOB PROTO_SOURCE_FILES_TSL RELATIVE 
-  #  "${PROTOBUF_TSL_INCLUDE_PATH_ROOT}" 
-  #  "${PROTOBUF_TSL_INCLUDE_PATH_ROOT}/tsl/protobuf/*.proto")
-  #FOREACH(PROTO_SOURCE_FILE_TSL ${PROTO_SOURCE_FILES_TSL} )
-  #  LIST(APPEND PROTO_SOURCE "third_party/xla/xla/${PROTO_SOURCE_FILE_TSL}" )
-  #ENDFOREACH()
 
+  # Compute native paths for the proto files
   SET (PROTO_SOURCE_NATIVE_PATH)
   FOREACH(PROTO_SOURCE_FILE ${PROTO_SOURCE})
     file(TO_NATIVE_PATH ${PROTO_SOURCE_FILE} PROTO_SOURCE_FILE)
@@ -128,6 +123,7 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF))
     LIST(APPEND PROTO_SOURCE_NATIVE_PATH ${PROTO_SOURCE_FILE})
   ENDFOREACH()
 
+  # Set the protobuf generation command
   SET(PROTO_GEN_COMMAND 
 	"${PROTOC_EXE}" 
 	"--experimental_allow_proto3_optional" 
@@ -147,6 +143,7 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF))
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../tensorflow/"
     )
 
+  # Add .proto files from tsl
   SET(PROTO_SOURCE_TSL)
   FILE(GLOB PROTO_SOURCE_FILES_TSL RELATIVE 
     "${PROTO_SOURCE_XLA_INCLUDE_PATH_ROOT}" 
@@ -155,11 +152,15 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF))
     LIST(APPEND PROTO_SOURCE_TSL "${PROTO_SOURCE_FILE_TSL}" )
   ENDFOREACH()
   
+  # Compute native paths for the proto files
   SET (PROTO_SOURCE_NATIVE_PATH_TSL )
   FOREACH(PROTO_SOURCE_FILE_TSL ${PROTO_SOURCE_TSL})
     file(TO_NATIVE_PATH ${PROTO_SOURCE_FILE_TSL} PROTO_SOURCE_FILE_TSL)
+    MESSAGE(STATUS "Adding proto source: ${PROTO_SOURCE_FILE_TSL}")
     LIST(APPEND PROTO_SOURCE_NATIVE_PATH_TSL ${PROTO_SOURCE_FILE_TSL})
   ENDFOREACH()
+
+  # Set the protobuf generation command for tsl
   SET(PROTO_GEN_COMMAND_TSL 
     "${PROTOC_EXE}" 
     "--proto_path=." 
