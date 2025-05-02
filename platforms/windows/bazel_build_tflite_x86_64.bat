@@ -100,6 +100,9 @@ IF EXIST "%PROGRAMFILES_DIR_X86%\Microsoft Visual Studio\Shared\Python37_64" SET
 IF EXIST "C:\python-virt\python37" SET PYTHON_BASE_PATH=C:\python-virt\python37
 IF EXIST "C:\python38" SET PYTHON_BASE_PATH=C:\python38
 IF EXIST "C:\Python310" SET PYTHON_BASE_PATH=C:\Python310
+IF EXIST "C:\python-virt\python312" SET PYTHON_BASE_PATH=C:\python-virt\python312
+IF EXIST "C:\python-virt\python312" SET HERMETIC_PYTHON_VERSION=3.12
+ECHO PYTHON_BASE_PATH=%PYTHON_BASE_PATH%
 
 SET PYTHON_BIN_PATH=%PYTHON_BASE_PATH%\python.exe
 SET PYTHON_LIB_PATH=%PYTHON_BASE_PATH%\lib\site-packages
