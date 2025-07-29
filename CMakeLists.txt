@@ -432,6 +432,7 @@ ENDIF()
 #  Setup Package information
 # ----------------------------------------------------------------------------
 SET(PACKAGE "${PROJECT_NAME}")
+SET(GITHUB_REPO_URL "https://github.com/emgucv/emgutf")
 SET(CPACK_PACKAGE_CONTACT "Emgu TF support <support@emgu.com>")
 SET(PACKAGE_BUGREPORT "${CPACK_PACKAGE_CONTACT}")
 SET(PACKAGE_NAME "${PROJECT_NAME}")
@@ -1603,6 +1604,7 @@ INSTALL(
   FILES
   "${CMAKE_CURRENT_SOURCE_DIR}/Emgu.TF.snk"
   "${CMAKE_CURRENT_SOURCE_DIR}/CommonAssemblyInfo.cs"
+  "${CMAKE_CURRENT_SOURCE_DIR}/Directory.Build.props"
   "${CMAKE_CURRENT_SOURCE_DIR}/${LICENSE_FILE_NAME}" #LICENSE
   "${CMAKE_CURRENT_SOURCE_DIR}/${EMGUTF_LICENSE_FILE}" #LICENSE.txt
   DESTINATION .
