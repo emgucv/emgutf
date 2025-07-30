@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <Project>
- <PropertyGroup>
- 
+  <!-- https://learn.microsoft.com/en-us/visualstudio/msbuild/customize-by-directory?view=vs-2022 -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+  <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
 	<!--
 	<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('osx')) Or $([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net${DOTNET_VERSION_MAJOR}.0-ios;net${DOTNET_VERSION_MAJOR}.0-maccatalyst</TargetFrameworks>
@@ -31,7 +33,6 @@ http://www.emgu.com/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PAC
 	<PackageTags>tensorflow emgu emgutf ai</PackageTags>
     <PackageProjectUrl>${NUGET_EMGU_URL}</PackageProjectUrl>
     <copyright>© ${CPACK_PACKAGE_VENDOR} ${CURRENT_YEAR}. All rights reserved.</copyright>
-    
  </PropertyGroup>
  
     <ItemGroup>
@@ -50,9 +51,6 @@ http://www.emgu.com/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PAC
         <PackagePath>docs\</PackagePath>
       </None>
     </ItemGroup>
-	
-  <!-- https://learn.microsoft.com/en-us/visualstudio/msbuild/customize-by-directory?view=vs-2022 -->
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
   
   <Import Project="SignBinary.Targets" Condition="exists('SignBinary.Targets')" />	
   <Import Project="SignPkg.Targets" Condition="exists('SignPkg.Targets')" />	 
