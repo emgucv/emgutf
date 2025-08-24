@@ -119,6 +119,9 @@ IF "%DEVENV%"=="%BUILD_TOOLS_FOLDER%" SET BAZEL_VS=%BUILD_TOOLS_FOLDER%
 IF NOT "%BAZEL_VS%"=="" SET BAZEL_VC=%BAZEL_VS%\VC
 REM SET BAZEL_VS="%BAZEL_VS%"
 ECHO Using BAZEL_VC=%BAZEL_VC%
+IF EXIST "C:\Program Files\LLVM\bin" SET BAZEL_LLVM="C:\Program Files\LLVM"
+IF NOT "%BAZEL_VC%"=="" SET BAZEL_LLVM=%BAZEL_VC%\Tools\Llvm\x64
+ECHO Using BAZEL_LLVM=%BAZEL_LLVM%
 
 cd tensorflow
 
@@ -127,7 +130,11 @@ SET MSYS_PATH=C:\msys64
 SET MSYS_BIN=%MSYS_PATH%\usr\bin
 IF EXIST "%MSYS_BIN%\bazel.exe" SET BAZEL_COMMAND=%MSYS_BIN%\bazel.exe
 
-call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build  --copt="-O2" --cxxopt="-O2" %BAZEL_XNN_FLAGS% %DOCKER_FLAGS% -c opt //tensorflow/tfliteextern:libtfliteextern.so --verbose_failures
+call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build --config=win_clang %BAZEL_XNN_FLAGS% %DOCKER_FLAGS% -c opt //tensorflow/lite:version --verbose_failures
+call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build --config=win_clang %BAZEL_XNN_FLAGS% %DOCKER_FLAGS% -c opt //tensorflow/tfliteextern:libtfliteextern.so --verbose_failures
+REM call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build --config=win_clang %BAZEL_XNN_FLAGS% %DOCKER_FLAGS% -c opt //tensorflow/lite/c:c_api //tensorflow/tfliteextern:libtfliteextern.so --verbose_failures
+REM call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build  --copt="-O2" --cxxopt="-O2" %BAZEL_XNN_FLAGS% %DOCKER_FLAGS% -c opt //tensorflow/tfliteextern:libtfliteextern.so --verbose_failures
+REM call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build  --copt="-O2" --cxxopt="-O2" --conlyopt=/std:c11 --conlyopt=/experimental:c11atomics %BAZEL_XNN_FLAGS% %DOCKER_FLAGS% -c opt //tensorflow/tfliteextern:libtfliteextern.so --verbose_failures
       
 cd ..
 
