@@ -175,19 +175,15 @@ mkdir %BUILD_FOLDER%
 cd %BUILD_FOLDER%
 %CMAKE% .. ^
 -DCMAKE_BUILD_TYPE=Release ^
--G %CMAKE_CONF% %CMAKE_XNN_FLAGS%^
+-G %CMAKE_CONF% %CMAKE_XNN_FLAGS% ^
+-DTFLITE_ENABLE_XNNPACK:BOOL=OFF ^
 -DPYTHON_EXECUTABLE="%PYTHON_EXECUTABLE%" ^
 -DTFLITE_ENABLE_MMAP:BOOL=OFF ^
 -DTFLITE_ENABLE_NNAPI:BOOL=OFF ^
 -Dtensorflow_BUILD_PYTHON_BINDINGS:BOOL=OFF
 
-REM download and build protobuf
-REM call %DEVENV% %BUILD_TYPE% tensorflow.sln /project protobuf
-REM Fix protobuf 64MB limit
-REM sed -i 's/kDefaultTotalBytesLimit = 64/kDefaultTotalBytesLimit = 500/g' .\protobuf\src\protobuf\src\google\protobuf\io\coded_stream.h
-REM need to clean the project to for the rebuild of protobuf
-REM call %DEVENV% %CLEAN_TYPE% tensorflow.sln /project protobuf
-REM build tfextern
+REM -DXNNPACK_DOWNLOAD_MISSING_DEPS=ON ^
+REM -DPTHREADPOOL_ENABLE_LIGHTWEIGHT=ON ^
 
 call %DEVENV% %BUILD_TYPE% tfliteextern.sln 
 
