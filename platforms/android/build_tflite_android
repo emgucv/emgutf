@@ -13,7 +13,7 @@ if [ \( -n "$1" \) ]; then
 	extra_flags="--define=xnn_enable_arm_i8mm=false"
     elif [ "$1" = "arm64" ]; then
 	arch="arm64-v8a"
-	extra_flags="--define=xnn_enable_arm_i8mm=false"
+	extra_flags="--define xnn_enable_assembly=false --define=xnn_enable_arm_i8mm=false --copt=-DXNN_ENABLE_ARM_DOTPROD=0 --copt=-DXNN_ENABLE_ARM_I8MM=0"
     fi
     echo "Building with config android_$1 for $arch architecture"
 else
@@ -23,53 +23,33 @@ fi
 
 cd "$(dirname "$0")"
 OUTPUT_USER_ROOT=$PWD/bazel_output_lite_$1
+BAZEL_CONFIG=--config=android_$1
 cd ../..
 cd tensorflow
 set -x
-bazel --output_user_root=$OUTPUT_USER_ROOT \
+build_with_bazel() {
+  bazel --output_user_root=$OUTPUT_USER_ROOT \
       build -c opt \
-      --config=android_$1 \
+      $BAZEL_CONFIG \
       --copt=-fPIC --cxxopt=-fPIC \
       --linkopt=-fuse-ld=lld \
-      --define xnn_enable_assembly=false \
-      --copt=-DXNN_ENABLE_ARM_DOTPROD=0 \
-      --copt=-DXNN_ENABLE_ARM_I8MM=0 \
-      --action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/25.2.9519653 \
-      --action_env ANDROID_NDK_VERSION=25 \
+      --action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/28.1.13356709 \
+      --action_env ANDROID_NDK_VERSION=28 \
       --action_env ANDROID_NDK_API_LEVEL=28 \
       --action_env ANDROID_SDK_API_LEVEL=36 \
       --action_env ANDROID_BUILD_TOOLS_VERSION=36.0.0 \
       --action_env ANDROID_SDK_HOME=/usr/lib/android-sdk \
       --verbose_failures $extra_flags\
       //tensorflow/tfliteextern:libtfliteextern.so
+}
 
+build_with_bazel
 pushd $OUTPUT_USER_ROOT
 find . -type f -path '*/external/local_config_python/BUILD' \
   -exec sed -i 's/interpreter_path = interpreter/interpreter = interpreter/' {} +
 popd
-
-bazel --output_user_root=$OUTPUT_USER_ROOT \
-      build -c opt \
-      --config=android_$1\
-      --copt=-fPIC --cxxopt=-fPIC \
-      --linkopt=-fuse-ld=lld \
-      --define xnn_enable_assembly=false \
-      --copt=-DXNN_ENABLE_ARM_DOTPROD=0 \
-      --copt=-DXNN_ENABLE_ARM_I8MM=0 \
-      --action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/25.2.9519653 \
-      --action_env ANDROID_NDK_VERSION=25 \
-      --action_env ANDROID_NDK_API_LEVEL=28 \
-      --action_env ANDROID_SDK_API_LEVEL=36 \
-      --action_env ANDROID_BUILD_TOOLS_VERSION=36.0.0 \
-      --action_env ANDROID_SDK_HOME=/usr/lib/android-sdk \
-      --verbose_failures $extra_flags\
-      //tensorflow/tfliteextern:libtfliteextern.so
-
-#--action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/21.4.7075529 \
-#--action_env ANDROID_BUILD_TOOLS_VERSION=debian \
-
+build_with_bazel
 bazel --version
-
 set +x
 #bazel clean
 cd ..
