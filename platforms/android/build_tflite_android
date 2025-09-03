@@ -34,7 +34,8 @@ bazel --output_user_root=$OUTPUT_USER_ROOT \
       --define xnn_enable_assembly=false \
       --copt=-DXNN_ENABLE_ARM_DOTPROD=0 \
       --copt=-DXNN_ENABLE_ARM_I8MM=0 \
-      --action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/21.4.7075529 \
+      --action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/25.2.9519653 \
+      --action_env ANDROID_NDK_VERSION=25 \
       --action_env ANDROID_NDK_API_LEVEL=28 \
       --action_env ANDROID_SDK_API_LEVEL=36 \
       --action_env ANDROID_BUILD_TOOLS_VERSION=36.0.0 \
@@ -55,7 +56,8 @@ bazel --output_user_root=$OUTPUT_USER_ROOT \
       --define xnn_enable_assembly=false \
       --copt=-DXNN_ENABLE_ARM_DOTPROD=0 \
       --copt=-DXNN_ENABLE_ARM_I8MM=0 \
-      --action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/21.4.7075529 \
+      --action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/25.2.9519653 \
+      --action_env ANDROID_NDK_VERSION=25 \
       --action_env ANDROID_NDK_API_LEVEL=28 \
       --action_env ANDROID_SDK_API_LEVEL=36 \
       --action_env ANDROID_BUILD_TOOLS_VERSION=36.0.0 \
@@ -63,7 +65,7 @@ bazel --output_user_root=$OUTPUT_USER_ROOT \
       --verbose_failures $extra_flags\
       //tensorflow/tfliteextern:libtfliteextern.so
 
-#--action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/25.2.9519653 \
+#--action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/21.4.7075529 \
 #--action_env ANDROID_BUILD_TOOLS_VERSION=debian \
 
 bazel --version
