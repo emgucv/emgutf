@@ -21,9 +21,10 @@ else
     exit 1
 fi
 
-cd "$(dirname "$0")"
 OUTPUT_USER_ROOT=$PWD/bazel_output_lite_$1
 BAZEL_CONFIG=--config=android_$1
+
+cd "$(dirname "$0")"
 cd ../..
 cd tensorflow
 set -x
@@ -33,7 +34,7 @@ build_with_bazel() {
       $BAZEL_CONFIG \
       --copt=-fPIC --cxxopt=-fPIC \
       --linkopt=-fuse-ld=lld \
-      --action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/28.1.13356709 \
+      --action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/ndk;28.2.13676358 \
       --action_env ANDROID_NDK_VERSION=28 \
       --action_env ANDROID_NDK_API_LEVEL=28 \
       --action_env ANDROID_SDK_API_LEVEL=36 \
