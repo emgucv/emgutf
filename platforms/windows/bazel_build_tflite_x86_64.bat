@@ -3,9 +3,10 @@
 pushd %~p0
 cd ../..
 
-SET BUILD_FOLDER=build
+SET BUILD_FOLDER=build_%1%
 SET BUILD_TOOLS_FOLDER=C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools
 
+SET CPU_FLAGS=
 IF "%1%"=="32" GOTO ENV_x86
 IF "%1%"=="64" GOTO ENV_x64
 IF "%1%"=="ARM" GOTO ENV_ARM
@@ -17,25 +18,28 @@ GOTO ENV_END
 REM SET BUILD_FOLDER=%BUILD_FOLDER%_x86
 ECHO "BUILDING 32bit solution in %BUILD_FOLDER%"
 IF EXIST "%BUILD_TOOLS_FOLDER%\vc\Auxiliary\Build\vcvars32.bat" SET ENV_SETUP_SCRIPT=%BUILD_TOOLS_FOLDER%\vc\Auxiliary\Build\vcvars32.bat
+SET CPU_FLAGS=--host_cpu=x64_windows --cpu=x64_x86_windows --copt=/arch:IA32 --linkopt=/MACHINE:x86 --compiler=msvc-cl
 GOTO ENV_END
 
 :ENV_x64
 REM SET BUILD_FOLDER=%BUILD_FOLDER%_x64
 ECHO "BUILDING 64bit solution in %BUILD_FOLDER%" 
 IF EXIST "%BUILD_TOOLS_FOLDER%\vc\Auxiliary\Build\vcvars64.bat" SET ENV_SETUP_SCRIPT=%BUILD_TOOLS_FOLDER%\vc\Auxiliary\Build\vcvars64.bat
+SET CPU_FLAGS=--config=win_clang
 GOTO ENV_END
 
 :ENV_ARM
 REM SET BUILD_FOLDER=%BUILD_FOLDER%_ARM
 ECHO "BUILDING ARM solution in %BUILD_FOLDER%"
 IF EXIST "%BUILD_TOOLS_FOLDER%\vc\Auxiliary\Build\vcvarsamd64_arm.bat" SET ENV_SETUP_SCRIPT=%BUILD_TOOLS_FOLDER%\vc\Auxiliary\Build\vcvarsamd64_arm.bat
+SET CPU_FLAGS=--config=win_clang
 GOTO ENV_END
 
 :ENV_ARM64
 REM SET BUILD_FOLDER=%BUILD_FOLDER%_ARM64
 ECHO "BUILDING ARM64 solution in %BUILD_FOLDER%"
 IF EXIST "%BUILD_TOOLS_FOLDER%\vc\Auxiliary\Build\vcvarsamd64_arm64.bat" SET ENV_SETUP_SCRIPT=%BUILD_TOOLS_FOLDER%\vc\Auxiliary\Build\vcvarsamd64_arm64.bat
-
+SET CPU_FLAGS=--host_cpu=x64_windows --cpu=x64_arm64_windows --linkopt=/MACHINE:ARM64 --compiler=msvc-cl
 :ENV_END
 IF "%ENV_SETUP_SCRIPT%"=="" GOTO ENV_SETUP_END
 
@@ -130,8 +134,8 @@ SET MSYS_PATH=C:\msys64
 SET MSYS_BIN=%MSYS_PATH%\usr\bin
 IF EXIST "%MSYS_BIN%\bazel.exe" SET BAZEL_COMMAND=%MSYS_BIN%\bazel.exe
 
-call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build --config=win_clang %BAZEL_XNN_FLAGS% %DOCKER_FLAGS% -c opt //tensorflow/lite:version --verbose_failures
-call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build --config=win_clang %BAZEL_XNN_FLAGS% %DOCKER_FLAGS% -c opt //tensorflow/tfliteextern:libtfliteextern.so --verbose_failures
+call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build %CPU_FLAGS% %BAZEL_XNN_FLAGS% %DOCKER_FLAGS% -c opt //tensorflow/lite:version --verbose_failures
+call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build %CPU_FLAGS% %BAZEL_XNN_FLAGS% %DOCKER_FLAGS% -c opt //tensorflow/tfliteextern:libtfliteextern.so --verbose_failures
 REM call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build --config=win_clang %BAZEL_XNN_FLAGS% %DOCKER_FLAGS% -c opt //tensorflow/lite/c:c_api //tensorflow/tfliteextern:libtfliteextern.so --verbose_failures
 REM call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build  --copt="-O2" --cxxopt="-O2" %BAZEL_XNN_FLAGS% %DOCKER_FLAGS% -c opt //tensorflow/tfliteextern:libtfliteextern.so --verbose_failures
 REM call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build  --copt="-O2" --cxxopt="-O2" --conlyopt=/std:c11 --conlyopt=/experimental:c11atomics %BAZEL_XNN_FLAGS% %DOCKER_FLAGS% -c opt //tensorflow/tfliteextern:libtfliteextern.so --verbose_failures
@@ -154,7 +158,7 @@ for /d %%i in ( "%BAZEL_VC%\Redist\MSVC\*" ) do SET VS2017_REDIST=%%i\x64\Micros
 copy /Y "%VS2017_REDIST%\*140.dll" lib\runtimes\win-x64\native\
 copy /Y "%VS2017_REDIST%\*140_1.dll" lib\runtimes\win-x64\native\
 copy /Y "%VS2017_REDIST%\*140_2.dll" lib\runtimes\win-x64\native\
-REM　rm lib\runtimes\win-x64\native\vccorlib140.dll
+REM rm lib\runtimes\win-x64\native\vccorlib140.dll
 GOTO END_OF_MSVC_DEPENDENCY
 
 :VS2019_DEPENDENCY
