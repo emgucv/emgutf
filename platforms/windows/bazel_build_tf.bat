@@ -72,12 +72,20 @@ IF EXIST "C:\Program Files\LLVM\bin" SET BAZEL_LLVM="C:\Program Files\LLVM"
 IF NOT "%BAZEL_VC%"=="" SET BAZEL_LLVM=%BAZEL_VC%\Tools\Llvm\x64
 ECHO Using BAZEL_LLVM=%BAZEL_LLVM%
 
+rem Get full path to the running Python executable
+for /f "usebackq delims=" %%A in (`python -c "import sys; print(sys.executable)"`) do set "PYEXE=%%~A"
+rem Extract just the drive+path (ends with a backslash)
+for %%A in ("%PYEXE%") do set "PYTHON_BASE_PATH=%%~dpA"
+rem (Optional) remove trailing backslash
+if "%PYTHON_BASE_PATH:~-1%"=="\" set "PYTHON_BASE_PATH=%PYTHON_BASE_PATH:~0,-1%"
+rem replace backward slash with forward slash
+rem set "PYTHON_BASE_PATH=%PYTHON_BASE_PATH:/=\%"
+
 IF EXIST "%PROGRAMFILES_DIR_X86%\Microsoft Visual Studio\Shared\Python37_64" SET PYTHON_BASE_PATH=%PROGRAMFILES_DIR_X86%\Microsoft Visual Studio\Shared\Python37_64
-IF EXIST "C:\python-virt\python37" SET PYTHON_BASE_PATH=C:\python-virt\python37
-IF EXIST "C:\python38" SET PYTHON_BASE_PATH=C:\python38
-IF EXIST "C:\Python310" SET PYTHON_BASE_PATH=C:\Python310
+IF EXIST "C:\Python312" SET PYTHON_BASE_PATH=C:\Python312
 IF EXIST "C:\python-virt\python312" SET PYTHON_BASE_PATH=C:\python-virt\python312
 IF EXIST "C:\python-virt\python312" SET HERMETIC_PYTHON_VERSION=3.12
+
 ECHO PYTHON_BASE_PATH=%PYTHON_BASE_PATH%
 
 SET PYTHON_BIN_PATH=%PYTHON_BASE_PATH%\python.exe
