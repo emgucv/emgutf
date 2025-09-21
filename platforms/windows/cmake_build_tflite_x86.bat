@@ -58,13 +58,6 @@ SET PROGRAMFILES_DIR_X86=%programfiles(x86)%
 if NOT EXIST "%PROGRAMFILES_DIR_X86%" SET PROGRAMFILES_DIR_X86=%programfiles%
 SET PROGRAMFILES_DIR=%programfiles%
 
-REM Find CMake  
-SET CMAKE="cmake.exe"
-IF EXIST "%PROGRAMFILES_DIR_X86%\CMake 2.8\bin\cmake.exe" SET CMAKE="%PROGRAMFILES_DIR_X86%\CMake 2.8\bin\cmake.exe"
-IF EXIST "%PROGRAMFILES_DIR_X86%\CMake\bin\cmake.exe" SET CMAKE="%PROGRAMFILES_DIR_X86%\CMake\bin\cmake.exe"
-IF EXIST "%PROGRAMFILES_DIR%\CMake\bin\cmake.exe" SET CMAKE="%PROGRAMFILES_DIR%\CMake\bin\cmake.exe"
-IF EXIST "%PROGRAMW6432%\CMake\bin\cmake.exe" SET CMAKE="%PROGRAMW6432%\CMake\bin\cmake.exe"
-
 REM Find Python Executable
 SET PYTHON_EXECUTABLE="python.exe"
 IF EXIST "%PROGRAMFILES_DIR_X86%\Anaconda2\python.exe" SET PYTHON_EXECUTABLE=%PROGRAMFILES_DIR_X86%\Anaconda2\python.exe
@@ -93,6 +86,14 @@ FOR /F "tokens=* USEBACKQ" %%F IN (`miscellaneous\vswhere.exe -version [17.0^,18
 SET VS2022="%VS2022_DIR%\Common7\IDE\devenv.com"
 
 FOR /F "tokens=* USEBACKQ" %%F IN (`miscellaneous\vswhere.exe -products * -property installationPath`) DO SET VS_BUILDTOOLS=%%F
+
+REM Find CMake  
+SET CMAKE="cmake.exe"
+IF EXIST "%VS2022_DIR%\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" SET CMAKE="%VS2022_DIR%\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe"
+IF EXIST "%PROGRAMFILES_DIR_X86%\CMake 2.8\bin\cmake.exe" SET CMAKE="%PROGRAMFILES_DIR_X86%\CMake 2.8\bin\cmake.exe"
+IF EXIST "%PROGRAMFILES_DIR_X86%\CMake\bin\cmake.exe" SET CMAKE="%PROGRAMFILES_DIR_X86%\CMake\bin\cmake.exe"
+IF EXIST "%PROGRAMFILES_DIR%\CMake\bin\cmake.exe" SET CMAKE="%PROGRAMFILES_DIR%\CMake\bin\cmake.exe"
+IF EXIST "%PROGRAMW6432%\CMake\bin\cmake.exe" SET CMAKE="%PROGRAMW6432%\CMake\bin\cmake.exe"
 
 
 IF EXIST "%windir%\Microsoft.NET\Framework\v3.5\MSBuild.exe" SET MSBUILD35=%windir%\Microsoft.NET\Framework\v3.5\MSBuild.exe
