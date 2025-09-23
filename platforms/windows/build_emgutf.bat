@@ -32,13 +32,6 @@ SET PROGRAMFILES_DIR=%programfiles%
 
 SET BUILD_TOOLS_2019_FOLDER=C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools
 
-REM Find CMake  
-SET CMAKE="cmake.exe"
-IF EXIST "%PROGRAMFILES_DIR_X86%\CMake 2.8\bin\cmake.exe" SET CMAKE="%PROGRAMFILES_DIR_X86%\CMake 2.8\bin\cmake.exe"
-IF EXIST "%PROGRAMFILES_DIR_X86%\CMake\bin\cmake.exe" SET CMAKE="%PROGRAMFILES_DIR_X86%\CMake\bin\cmake.exe"
-IF EXIST "%PROGRAMFILES_DIR%\CMake\bin\cmake.exe" SET CMAKE="%PROGRAMFILES_DIR%\CMake\bin\cmake.exe"
-IF EXIST "%PROGRAMW6432%\CMake\bin\cmake.exe" SET CMAKE="%PROGRAMW6432%\CMake\bin\cmake.exe"
-
 REM Find Visual Studio or Msbuild
 FOR /F "tokens=* USEBACKQ" %%F IN (`miscellaneous\vswhere.exe -version [15.0^,16.0^) -property installationPath`) DO SET VS2017_DIR=%%F
 SET VS2017="%VS2017_DIR%\Common7\IDE\devenv.com" 
@@ -51,12 +44,18 @@ SET VS2022="%VS2022_DIR%\Common7\IDE\devenv.com"
 
 IF EXIST "%BUILD_TOOLS_2019_FOLDER%\MSBuild\Current\Bin\MSBuild.exe" SET MSBUILD_BUILDTOOLS_2019="%BUILD_TOOLS_2019_FOLDER%\MSBuild\Current\Bin\MSBuild.exe"
 
-
 IF EXIST %VS2017% SET DEVENV=%VS2017%
 IF EXIST %VS2019% SET DEVENV=%VS2019%
 IF EXIST %MSBUILD_BUILDTOOLS_2019% SET DEVENV=%MSBUILD_BUILDTOOLS_2019%
 IF EXIST %VS2022% SET DEVENV=%VS2022%
 
+REM Find CMake  
+SET CMAKE="cmake.exe"
+IF EXIST "%VS2022_DIR%\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" SET CMAKE="%VS2022_DIR%\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe"
+IF EXIST "%PROGRAMFILES_DIR_X86%\CMake 2.8\bin\cmake.exe" SET CMAKE="%PROGRAMFILES_DIR_X86%\CMake 2.8\bin\cmake.exe"
+IF EXIST "%PROGRAMFILES_DIR_X86%\CMake\bin\cmake.exe" SET CMAKE="%PROGRAMFILES_DIR_X86%\CMake\bin\cmake.exe"
+IF EXIST "%PROGRAMFILES_DIR%\CMake\bin\cmake.exe" SET CMAKE="%PROGRAMFILES_DIR%\CMake\bin\cmake.exe"
+IF EXIST "%PROGRAMW6432%\CMake\bin\cmake.exe" SET CMAKE="%PROGRAMW6432%\CMake\bin\cmake.exe"
 
 
 :SET_BUILD_TYPE
