@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>netstandard2.0</TargetFramework>
+		<TargetFrameworks>netstandard2.0</TargetFrameworks>
 		<!-- <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath> -->
 		<AssemblyName>Emgu.TF</AssemblyName>
 		<TargetName>$(AssemblyName)</TargetName>
@@ -11,28 +11,12 @@
 		<OutputPath>$(TfBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath>
 		<DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<!-- <OutputPath>$(TfBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath> -->
-		<!-- <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile> -->
-		<DefineConstants>TRACE;__NETSTANDARD_2_0__</DefineConstants>
+	<PropertyGroup Condition="'$(Configuration)'=='Debug'">
+		<DefineConstants>$(DefineConstants);TRACE;__NETSTANDARD_2_0__</DefineConstants>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-		<!-- <OutputPath>$(TfBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath> -->
-		<!-- <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile> -->
-		<DefineConstants>TRACE;__NETSTANDARD_2_0__</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<!-- <OutputPath>$(TfBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath> -->
-		<!-- <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile> -->
-		<DefineConstants>TRACE;__NETSTANDARD_2_0__</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-		<!-- <OutputPath>$(TfBinaryDir)\Build\$(AssemblyName)\$(Platform)\$(Configuration)\</OutputPath> -->
-		<!-- <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile> -->
-		<DefineConstants>TRACE;__NETSTANDARD_2_0__</DefineConstants>
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
+		<DefineConstants>$(DefineConstants);TRACE;__NETSTANDARD_2_0__</DefineConstants>
 	</PropertyGroup>
 
 	<Import Project="..\..\Emgu.TF.Util\Emgu.TF.Util.Shared.projitems" Label="Shared" />
