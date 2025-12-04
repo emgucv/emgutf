@@ -1,7 +1,7 @@
 #!/bin/bash -v
 
 if command -v python3.12 >/dev/null 2>&1; then
-    HERMETIC_PYTHON_VERSION=3.12
+    export HERMETIC_PYTHON_VERSION=3.12
 fi
 
 cd "$(dirname "$0")"
