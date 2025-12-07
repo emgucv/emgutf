@@ -67,7 +67,7 @@
 		
 		<ProjectReference Include="..\..\Emgu.TF.Lite.Models\NetStandard\Emgu.TF.Lite.Models.csproj" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Emgu.CV.runtime.maui.mini" Version="4.9.0.5494" />
+		<PackageReference Include="Emgu.CV.runtime.maui.mini" Version="4.12.0.5764" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
 	</ItemGroup>
 	
