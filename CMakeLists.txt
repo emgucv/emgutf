@@ -675,7 +675,7 @@ ENDIF()
 
 SET(EMGUTF_MAUI_DOTNET_VERSION "net${DOTNET_VERSION_MAJOR}.0")
 if ("${DOTNET_VERSION_MAJOR}" STREQUAL "10")
-	SET(MauiVersionMsbuild "<MauiVersion>10.0.11</MauiVersion>")
+	SET(MAUI_VERSION_MSBUILD "<MauiVersion>10.0.11</MauiVersion>")
     #message(STATUS "Using .NET 10")
 endif()
 
