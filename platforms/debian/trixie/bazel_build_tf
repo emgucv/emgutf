@@ -1,0 +1,33 @@
+#!/bin/bash
+ 
+SYSTEM_ARCH=$(getconf LONG_BIT)
+echo System is $SYSTEM_ARCH bit
+
+if [ $SYSTEM_ARCH == "64" ]
+then
+    OUT_FOLDER="runtimes/linux-arm64/native"
+else
+    OUT_FOLDER="runtimes/linux-arm/native"
+fi
+echo Compiled binary will be copied to lib/$OUT_FOLDER
+
+cd "$(dirname "$0")"
+cd ../../..
+cd tensorflow
+
+bazel --host_jvm_args=-Xmx1024m --host_jvm_args=-Xms384m build --jobs=1 --repo_env=CC=/usr/bin/clang --repo_env=BAZEL_COMPILER=/usr/bin/clang --local_ram_resources=2048 --repo_env=TF_ENABLE_MLIR=0 --config=monolithic --host_linkopt=-latomic --verbose_failures --experimental_ui_max_stdouterr_bytes=10485760 --define with_xla_support=false //tensorflow/tfextern:libtfextern.so
+
+#CC=/usr/bin/clang BAZEL_COMPILER=/usr/bin/clang JAVA_TOOL_OPTS="-Xmx1024m" bazel --host_jvm_args=-Xmx1024m --host_jvm_args=-Xms384m build --jobs=1 --local_ram_resources=2048 --repo_env=TF_ENABLE_MLIR=0 --config=monolithic --config=noaws --host_linkopt=-latomic --verbose_failures --experimental_ui_max_stdouterr_bytes=10485760 --define with_xla_support=false //tensorflow/tfextern:libtfextern.so
+
+#bazel --host_jvm_args=-Xmx2g build --jobs=1 --repo_env=CC=clang --config=monolithic --config=noaws --host_linkopt=-latomic --verbose_failures --experimental_ui_max_stdouterr_bytes=10485760 --define with_xla_support=false //tensorflow/tfextern:libtfextern.so 
+#LDFLAGS=-latomic bazel --host_jvm_args=-Xmx2g build --jobs=1 --config=monolithic --config=noaws --host_linkopt=-latomic --verbose_failures --experimental_ui_max_stdouterr_bytes=10485760 --define with_xla_support=false //tensorflow/tfextern:libtfextern.so 
+#bazel build --jobs=2 --config=monolithic --config=noaws --host_linkopt=-latomic //tensorflow:libtensorflow_framework.so
+
+cd ..
+
+
+mkdir -p lib/$OUT_FOLDER
+cp -rf tensorflow/bazel-bin/tensorflow/tfextern/*.so lib/$OUT_FOLDER
+
+#cp -r tensorflow/bazel-bin/tensorflow/*.so.2 lib/arm
+#ln -s lib/libtensorflow_framework.so lib/libtensorflow_framework.so.2
