@@ -1,1 +1,0 @@
-call build_emgutf full 64 doc

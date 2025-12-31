@@ -1,4 +1,4 @@
-REM @echo off
+@echo off
 
 REM POSSIBLE OPTIONS: 
 REM %1%: "64", "ARM"
@@ -12,10 +12,6 @@ cd ..\..
 
 IF "%1%"=="64" ECHO "BUILDING 64bit solution" 
 IF "%1%"=="ARM" ECHO "BUILDING ARM solution"
-
-SET OS_MODE=
-IF "%1%"=="64" SET OS_MODE= Win64
-IF "%1%"=="ARM" SET OS_MODE= ARM
 
 SET NATIVE_RUNTIME_DIR=
 IF "%1%"=="64" SET NATIVE_RUNTIME_DIR=lib\runtimes\win-x64\native
@@ -45,6 +41,8 @@ SET VS2019=%VS2019_DIR%\Common7\IDE\devenv.com
 FOR /F "tokens=* USEBACKQ" %%F IN (`miscellaneous\vswhere.exe -version [17.0^,18.0^) -property installationPath`) DO SET VS2022_DIR=%%F
 SET VS2022=%VS2022_DIR%\Common7\IDE\devenv.com
 
+FOR /F "tokens=* USEBACKQ" %%F IN (`miscellaneous\vswhere.exe -version [18.0^,19.0^) -property installationPath`) DO SET VS2026_DIR=%%F
+SET VS2026=%VS2026_DIR%\Common7\IDE\devenv.com
 
 IF EXIST "%windir%\Microsoft.NET\Framework\v3.5\MSBuild.exe" SET MSBUILD35=%windir%\Microsoft.NET\Framework\v3.5\MSBuild.exe
 IF EXIST "%windir%\Microsoft.NET\Framework64\v3.5\MSBuild.exe" SET MSBUILD35=%windir%\Microsoft.NET\Framework64\v3.5\MSBuild.exe
@@ -58,13 +56,14 @@ REM Only use VS2017 in GPU build: CUDA 10.0 only support up to VS2017
 REM IF "%2%" == "gpu" GOTO SET_BAZEL_VS_VC
 IF EXIST "%VS2019%" SET DEVENV=%VS2019%
 IF EXIST "%VS2022%" SET DEVENV=%VS2022%
-
+IF EXIST "%VS2026%" SET DEVENV=%VS2026%
 IF EXIST "%BUILD_TOOLS_FOLDER%" SET DEVENV=%BUILD_TOOLS_FOLDER%
 
 :SET_BAZEL_VS_VC
 IF "%DEVENV%"=="%VS2017%" SET BAZEL_VS=%VS2017:\Common7\IDE\devenv.com=%
 IF "%DEVENV%"=="%VS2019%" SET BAZEL_VS=%VS2019:\Common7\IDE\devenv.com=%
 IF "%DEVENV%"=="%VS2022%" SET BAZEL_VS=%VS2022:\Common7\IDE\devenv.com=%
+IF "%DEVENV%"=="%VS2026%" SET BAZEL_VS=%VS2026:\Common7\IDE\devenv.com=%
 IF "%DEVENV%"=="%BUILD_TOOLS_FOLDER%" SET BAZEL_VS=%BUILD_TOOLS_FOLDER%
 IF NOT "%BAZEL_VS%"=="" SET BAZEL_VC=%BAZEL_VS%\VC
 ECHO Using BAZEL_VC=%BAZEL_VC%
@@ -83,17 +82,19 @@ rem set "PYTHON_BASE_PATH=%PYTHON_BASE_PATH:/=\%"
 
 IF EXIST "%PROGRAMFILES_DIR_X86%\Microsoft Visual Studio\Shared\Python37_64" SET PYTHON_BASE_PATH=%PROGRAMFILES_DIR_X86%\Microsoft Visual Studio\Shared\Python37_64
 IF EXIST "C:\Python312" SET PYTHON_BASE_PATH=C:\Python312
+IF EXIST "C:\Python312" SET HERMETIC_PYTHON_VERSION=3.12
 IF EXIST "C:\python-virt\python312" SET PYTHON_BASE_PATH=C:\python-virt\python312
 IF EXIST "C:\python-virt\python312" SET HERMETIC_PYTHON_VERSION=3.12
-
-ECHO PYTHON_BASE_PATH=%PYTHON_BASE_PATH%
 
 SET PYTHON_BIN_PATH=%PYTHON_BASE_PATH%\python.exe
 SET PYTHON_LIB_PATH=%PYTHON_BASE_PATH%\lib\site-packages
 
-SET PYTHON_BASE_PATH=%PYTHON_BASE_PATH:\=/%
-SET PYTHON_BIN_PATH=%PYTHON_BIN_PATH:\=/%
-SET PYTHON_LIB_PATH=%PYTHON_LIB_PATH:\=/%
+ECHO PYTHON_BASE_PATH=%PYTHON_BASE_PATH%
+ECHO PYTHON_BIN_PATH=%PYTHON_BIN_PATH%
+
+REM SET PYTHON_BASE_PATH=%PYTHON_BASE_PATH:\=/%
+REM SET PYTHON_BIN_PATH=%PYTHON_BIN_PATH:\=/%
+REM SET PYTHON_LIB_PATH=%PYTHON_LIB_PATH:\=/%
 
 IF NOT "%4%"=="docker" GOTO ENV_NOT_DOCKER
 
@@ -135,6 +136,7 @@ GOTO END_AVX2
 SET TF_BAZEL_EXTRA_CONFIG=%TF_BAZEL_EXTRA_CONFIG% --copt=/arch:AVX2
 :END_AVX2
 
+SET BAZEL_REPO_PATH=%PYTHON_BASE_PATH%;%PATH%
 
 IF "%2%" == "gpu" GOTO BUILD_GPU
 :BUILD_CPU
@@ -144,6 +146,7 @@ popd
 GOTO END_OF_BUILD
 
 :BUILD_GPU
+
 REM SET TF_CUDA_VERSION=10.0
 REM SET TF_CUDA_VERSION=10.1
 REM SET TF_CUDA_VERSION=10.2
@@ -164,11 +167,13 @@ REM SET TF_CUDA_COMPUTE_CAPABILITIES=7.0
 SET CUDA_TOOLKIT_PATH=C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v%TF_CUDA_VERSION%
 SET CUDNN_INSTALL_PATH=%CUDA_TOOLKIT_PATH%
 echo %CUDA_TOOLKIT_PATH% > ../../CUDA_TOOLKIT_PATH.txt
+SET BAZEL_REPO_PATH=%BAZEL_REPO_PATH%;%CUDA_TOOLKIT_PATH%\extras\CUPTI\lib64
+
 call cmd.exe /v /c "set PATH=%PYTHON_BASE_PATH%;%MSYS64_BIN%;%CUDA_TOOLKIT_PATH%/extras/CUPTI/lib64;%PATH% & %MSYS64_BIN%\bash.exe libtensorflow_gpu.sh"
 
 :END_OF_BUILD
 
-set PATH=%MSYS64_BIN%;%PATH%
+REM set PATH=%MSYS64_BIN%;%PATH%
 REM %MSYS64_PATH%\usr\bin\bash.exe libtensorflow_cpu.sh
 
 cd ../../../../../
@@ -183,7 +188,10 @@ SET MSYS_BIN=%MSYS_PATH%\usr\bin
 IF EXIST "%MSYS_BIN%\bazel.exe" SET BAZEL_COMMAND=%MSYS_BIN%\bazel.exe
 
 REM call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build //tensorflow/tfextern:libtfextern.so --verbose_failures %DOCKER_FLAGS% --local_ram_resources="HOST_RAM*.2" --local_cpu_resources="HOST_CPUS*.2" --jobs=2
-call cmd.exe /v /c "set PATH=%PYTHON_BASE_PATH%;%MSYS64_BIN%;%CUDA_TOOLKIT_PATH%/extras/CUPTI/lib64;%PATH% & %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build //tensorflow/tfextern:libtfextern.so --verbose_failures %DOCKER_FLAGS% %TF_BAZEL_EXTRA_CONFIG%"
+REM call cmd.exe /v /c "set PATH=%PYTHON_BASE_PATH%;%MSYS64_BIN%;%CUDA_TOOLKIT_PATH%/extras/CUPTI/lib64;%PATH% & %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build //tensorflow/tfextern:libtfextern.so --verbose_failures %DOCKER_FLAGS% %TF_BAZEL_EXTRA_CONFIG%"
+
+
+call cmd.exe /v /c %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build --repo_env=PATH="%BAZEL_REPO_PATH%" //tensorflow/tfextern:libtfextern.so --verbose_failures %DOCKER_FLAGS% %TF_BAZEL_EXTRA_CONFIG%
 cd ..
 
 cp -f tensorflow/bazel-bin/tensorflow/tfextern/libtfextern.so %NATIVE_RUNTIME_DIR:/=\%/tfextern.dll
@@ -193,6 +201,7 @@ IF "%BAZEL_VC%"=="" GOTO END_OF_MSVC_DEPENDENCY
 IF "%DEVENV%"=="%VS2017%" GOTO VS2017_DEPENDENCY
 IF "%DEVENV%"=="%VS2019%" GOTO VS2019_DEPENDENCY
 IF "%DEVENV%"=="%VS2022%" GOTO VS2022_DEPENDENCY
+IF "%DEVENV%"=="%VS2026%" GOTO VS2026_DEPENDENCY
 IF "%DEVENV%"=="%BUILD_TOOLS_FOLDER%" GOTO VS2019_DEPENDENCY
 GOTO END_OF_MSVC_DEPENDENCY
 
@@ -216,6 +225,9 @@ GOTO END_OF_MSVC_DEPENDENCY
 for /d %%i in ( "%BAZEL_VC%\Redist\MSVC\14*" ) do SET VS2022_REDIST=%%i\x64\Microsoft.VC143.CRT
 copy /Y "%VS2022_REDIST%\*.dll" %NATIVE_RUNTIME_DIR%\
 
+:VS2026_DEPENDENCY
+for /d %%i in ( "%BAZEL_VC%\Redist\MSVC\14*" ) do SET VS2026_REDIST=%%i\x64\Microsoft.VC145.CRT
+copy /Y "%VS2026_REDIST%\*.dll" %NATIVE_RUNTIME_DIR%\
 
 :END_OF_MSVC_DEPENDENCY
 
