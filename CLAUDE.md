@@ -34,6 +34,30 @@ The native C++ layer is exposed through P/Invoke via two extern libraries: `tfex
 - CMake 3.16+
 - TF Lite native DLL already built and placed under `lib/runtimes/`
 
+### Build native TF full (Windows x64)
+
+The full TensorFlow native binary (`tfextern.dll`) is built with **Bazel** via a helper script:
+
+```bat
+cd platforms/windows
+bazel_build_tf_x86_64.bat
+```
+
+This calls `bazel_build_tf.bat 64 cpu` internally, which:
+1. Detects the newest installed Visual Studio (2019/2022/2026) and sets `BAZEL_VS`/`BAZEL_VC`.
+2. Detects Python at `C:\Python312` or `C:\python-virt\python312` (falls back to `python` on PATH).
+3. Runs Bazel (`bazel.exe` or `C:\msys64\usr\bin\bazel.exe`) to build `//tensorflow/tfextern:libtfextern.so` with `--config=win_clang`.
+4. Copies the result to `lib/runtimes/win-x64/native/tfextern.dll` and deploys MSVC runtime DLLs alongside it.
+
+**Prerequisites for the Bazel build:**
+- Bazel (on PATH or at `C:\msys64\usr\bin\bazel.exe`)
+- MSYS64 at `C:\msys64` (provides `bash.exe` used by the TF build scripts)
+- Python 3.12 (ideally at `C:\Python312` or `C:\python-virt\python312`)
+- Visual Studio 2019, 2022, or 2026 with C++ workload
+
+**Optional second argument to `bazel_build_tf.bat`:**
+- `avx2` — add `/arch:AVX2` to compiler flags for better CPU performance
+
 ### Build native TF Lite (Windows x64)
 ```bat
 cd platforms/windows
