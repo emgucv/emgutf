@@ -15,7 +15,29 @@ cd "$(dirname "$0")"
 cd ../../
 mkdir -p lib/runtimes/osx/native
 cd tensorflow
-bazel build --verbose_failures -c opt --cpu=$BAZEL_CPU $BAZEL_OPTIONS //tensorflow/tfliteextern:libtfliteextern.so
+
+# If Xcode is installed outside /Applications (e.g. on a separate volume),
+# Bazel's sandbox won't mount it by default — add it explicitly.
+XCODE_DEVELOPER_DIR="$(xcode-select -p 2>/dev/null)"
+XCODE_MOUNT_POINT=""
+if [ -n "$XCODE_DEVELOPER_DIR" ]; then
+    case "$XCODE_DEVELOPER_DIR" in
+        /Volumes/*)
+            XCODE_MOUNT_POINT="$(echo "$XCODE_DEVELOPER_DIR" | cut -d/ -f1-3)"
+            ;;
+    esac
+fi
+
+BAZEL_XCODE_OPTS=""
+if [ -n "$XCODE_MOUNT_POINT" ] && [ "$XCODE_MOUNT_POINT" != "/" ]; then
+    echo "Xcode is on non-root volume: $XCODE_MOUNT_POINT — setting BAZEL_ALLOW_NON_APPLICATIONS_XCODE=1 and DEVELOPER_DIR"
+    export BAZEL_ALLOW_NON_APPLICATIONS_XCODE=1
+    export DEVELOPER_DIR="$XCODE_DEVELOPER_DIR"
+    APPLE_SDK_VERSION=$(xcrun --sdk macosx --show-sdk-version 2>/dev/null)
+    BAZEL_XCODE_OPTS="--action_env=DEVELOPER_DIR=$XCODE_DEVELOPER_DIR --action_env=APPLE_SDK_VERSION_OVERRIDE=$APPLE_SDK_VERSION --action_env=APPLE_SDK_PLATFORM=MacOSX"
+fi
+
+bazel build --verbose_failures -c opt --cpu=$BAZEL_CPU $BAZEL_XCODE_OPTS $BAZEL_OPTIONS //tensorflow/tfliteextern:libtfliteextern.so
 cp -f bazel-bin/tensorflow/tfliteextern/libtfliteextern.so ../lib/runtimes/osx/native/libtfliteextern-$BAZEL_CPU.dylib
 
 cd ..
