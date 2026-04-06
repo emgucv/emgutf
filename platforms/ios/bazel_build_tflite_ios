@@ -63,7 +63,60 @@ export TF_SET_ANDROID_WORKSPACE=0
 
 BAZEL_OUTPUT_USER_ROOT="$(pwd)/../bazel_output_$1"
 
+# If Xcode is installed outside /Applications (e.g. on a separate volume),
+# Bazel's sandbox won't mount it by default — add it explicitly.
+XCODE_DEVELOPER_DIR="$(xcode-select -p 2>/dev/null)"
+XCODE_MOUNT_POINT=""
+if [ -n "$XCODE_DEVELOPER_DIR" ]; then
+    # If Xcode is under /Volumes/<name>/..., the sandbox mount point is /Volumes/<name>.
+    # Paths on the boot volume start with /Applications or similar — no mount needed.
+    case "$XCODE_DEVELOPER_DIR" in
+        /Volumes/*)
+            XCODE_MOUNT_POINT="$(echo "$XCODE_DEVELOPER_DIR" | cut -d/ -f1-3)"
+            ;;
+    esac
+fi
+# Map target architecture to Apple SDK platform name (used by XcodeLocalEnvProvider to compute SDKROOT).
+case "$1" in
+    ios_sim_arm64|ios_x86_64) APPLE_SDK_PLATFORM="iPhoneSimulator" ;;
+    ios_arm64)                 APPLE_SDK_PLATFORM="iPhoneOS" ;;
+    darwin_x86_64|darwin_arm64) APPLE_SDK_PLATFORM="MacOSX" ;;
+    *)                         APPLE_SDK_PLATFORM="iPhoneSimulator" ;;
+esac
+
+if [ -n "$XCODE_MOUNT_POINT" ] && [ "$XCODE_MOUNT_POINT" != "/" ]; then
+    echo "Xcode is on non-root volume: $XCODE_MOUNT_POINT — setting BAZEL_ALLOW_NON_APPLICATIONS_XCODE=1 and DEVELOPER_DIR"
+    export BAZEL_ALLOW_NON_APPLICATIONS_XCODE=1
+    export DEVELOPER_DIR="$XCODE_DEVELOPER_DIR"
+    # XcodeLocalEnvProvider (Bazel Java class) injects SDKROOT into local spawn actions only
+    # when APPLE_SDK_VERSION_OVERRIDE is present in the action env.  The apple_env toolchain
+    # feature sets it for C++ actions but not ObjC/ObjC++ actions.  Pass it explicitly so
+    # ObjC compile actions (e.g. signpost_profiler.mm) also receive SDKROOT.
+    XCRUN_SDK=$(echo "$APPLE_SDK_PLATFORM" | tr '[:upper:]' '[:lower:]')
+    APPLE_SDK_VERSION=$(xcrun --sdk "$XCRUN_SDK" --show-sdk-version 2>/dev/null)
+    BAZEL_XCODE_OPTS="--action_env=DEVELOPER_DIR=$XCODE_DEVELOPER_DIR --action_env=APPLE_SDK_VERSION_OVERRIDE=$APPLE_SDK_VERSION --action_env=APPLE_SDK_PLATFORM=$APPLE_SDK_PLATFORM"
+else
+    BAZEL_XCODE_OPTS=""
+fi
+
+# Shut down any stale Bazel server so the fresh server starts with the current
+# environment (including DEVELOPER_DIR / BAZEL_ALLOW_NON_APPLICATIONS_XCODE).
+# XcodeLocalEnvProvider uses the server environment to call xcrun and inject
+# SDKROOT into ObjC compile actions; a stale server may fail to do this.
+bazel \
+    --output_user_root=$BAZEL_OUTPUT_USER_ROOT \
+    --bazelrc=/dev/null \
+    shutdown 2>/dev/null || true
+
 cp -f tensorflow/lite/ios/BUILD.apple tensorflow/lite/ios/BUILD
+# Work around Bazel 7.7.0 bug: objc_library non_arc_srcs ObjcCompile actions omit the
+# source file from command args.  Replace the profiling BUILD with a cc_library variant.
+# TODO: Remove this workaround once Bazel is upgraded past 7.7.0.
+# Bazel 7.7.0 bug: ObjcCompile actions for objc_library (both srcs and non_arc_srcs)
+# do not include the source file in the compiler command arguments, causing
+# "clang++: error: no input files". The patched BUILD replaces objc_library with a
+# genrule+cc_library stub. Check whether the bug is fixed before removing.
+cp -f ../platforms/ios/tflite_profiling_BUILD tensorflow/lite/profiling/BUILD
 
 rm -rf bazel-bin/tensorflow/lite/ios/TensorFlowLiteC_framework.zip
 
@@ -80,6 +133,7 @@ bazel \
     --incompatible_run_shell_command_string=false \
     $BAZEL_BUILD_OPTION \
     --platforms=@build_bazel_apple_support//platforms:$1 \
+    $BAZEL_XCODE_OPTS \
     --copt="-DCL_DELEGATE_NO_GL" \
     --copt="-D__IOS__" \
     -c opt ${@:2} \
