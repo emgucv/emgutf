@@ -148,7 +148,7 @@ IF EXIST "%MSYS_BIN%\bazel.exe" SET BAZEL_COMMAND=%MSYS_BIN%\bazel.exe
 call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build --repo_env=BAZEL_LLVM="%BAZEL_LLVM%"  %CPU_FLAGS% %BAZEL_XNN_FLAGS% %DOCKER_FLAGS% -c opt //tensorflow/lite:version --verbose_failures
 
 REM Patch pthreadpool bazel build script
-cp ../platforms/windows/pthreadpool.BUILD.bazel ../platforms/windows/output_base/external/pthreadpool/BUILD.bazel
+REM cp ../platforms/windows/pthreadpool.BUILD.bazel ../platforms/windows/output_base/external/pthreadpool/BUILD.bazel
 
 call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build --repo_env=BAZEL_LLVM="%BAZEL_LLVM%"  %CPU_FLAGS% %BAZEL_XNN_FLAGS% %DOCKER_FLAGS% -c opt //tensorflow/tfliteextern:libtfliteextern.so --verbose_failures
 REM call %BAZEL_COMMAND% --output_base=%OUTPUT_BASE_DIR% --output_user_root=%OUTPUT_USER_ROOT_DIR% build --config=win_clang %BAZEL_XNN_FLAGS% %DOCKER_FLAGS% -c opt //tensorflow/lite/c:c_api //tensorflow/tfliteextern:libtfliteextern.so --verbose_failures
