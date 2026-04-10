@@ -56,7 +56,7 @@ if [ -n "$XCODE_MOUNT_POINT" ] && [ "$XCODE_MOUNT_POINT" != "/" ]; then
     BAZEL_XCODE_OPTS="--action_env=DEVELOPER_DIR=$XCODE_DEVELOPER_DIR --action_env=APPLE_SDK_VERSION_OVERRIDE=$APPLE_SDK_VERSION --action_env=APPLE_SDK_PLATFORM=MacOSX"
 fi
 
-bazel build --verbose_failures -c opt $BAZEL_XCODE_OPTS //tensorflow/tfextern:libtfextern.so
+bazel build --verbose_failures -c opt $BAZEL_XCODE_OPTS --define=tensorflow_mkldnn_contraction_kernel=0 //tensorflow/tfextern:libtfextern.so
 
 cd ..
 mkdir -p lib/runtimes/osx/native
