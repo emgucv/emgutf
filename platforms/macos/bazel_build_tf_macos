@@ -1,5 +1,38 @@
 #!/bin/bash -v
 
+REAL_BAZEL="$(which bazel)"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+OUTPUT_BASE="$SCRIPT_DIR/bazel_output"
+USER_ROOT="$SCRIPT_DIR/bazel_user_root"
+REPO_CACHE="$SCRIPT_DIR/bazel_cache"
+mkdir -p "$OUTPUT_BASE" "$REPO_CACHE"
+# USER_ROOT is used for --output_user_root, which lets Bazel manage versioned
+# install_base subdirectories automatically (bazel_user_root/install/<hash>/).
+# This avoids version-mismatch errors when the Bazel version changes.
+
+# Create a temporary bazel shim so all subprocess bazel calls redirect all
+# Bazel state to $SCRIPT_DIR instead of the default /private/var/tmp and
+# ~/Library/Caches:
+#   --output_user_root: parent for install_base (versioned automatically)
+#   --output_base:      build outputs and action cache
+#   --repository_cache: downloaded external repository archives
+# --repository_cache is a build option (not a startup option), so it is
+# passed via a temporary bazelrc injected with --bazelrc.
+SHIM_DIR="$(mktemp -d)"
+SHIM_RC="$SHIM_DIR/shim.bazelrc"
+echo "common --repository_cache=$REPO_CACHE" > "$SHIM_RC"
+cat > "$SHIM_DIR/bazel" << EOF
+#!/bin/bash
+exec "$REAL_BAZEL" \
+  --output_user_root="$USER_ROOT" \
+  --output_base="$OUTPUT_BASE" \
+  --bazelrc="$SHIM_RC" \
+  "\$@"
+EOF
+chmod +x "$SHIM_DIR/bazel"
+export PATH="$SHIM_DIR:$PATH"
+trap 'rm -rf "$SHIM_DIR"' EXIT
+
 cd "$(dirname "$0")"
 cd ../../
 cd tensorflow
@@ -56,7 +89,39 @@ if [ -n "$XCODE_MOUNT_POINT" ] && [ "$XCODE_MOUNT_POINT" != "/" ]; then
     BAZEL_XCODE_OPTS="--action_env=DEVELOPER_DIR=$XCODE_DEVELOPER_DIR --action_env=APPLE_SDK_VERSION_OVERRIDE=$APPLE_SDK_VERSION --action_env=APPLE_SDK_PLATFORM=MacOSX"
 fi
 
-bazel build --verbose_failures -c opt $BAZEL_XCODE_OPTS --define=tensorflow_mkldnn_contraction_kernel=0 //tensorflow/tfextern:libtfextern.so
+# On macOS 15+, dyld requires LC_UUID in all executables. Bazel's Apple CC
+# toolchain (universal_exec_tool.bzl) explicitly passes -Wl,-no_uuid to the
+# linker when compiling exec-config tools like wrapped_clang_pp, which
+# suppresses UUID generation and causes dyld to abort on macOS 15+.
+#
+# Fix: let the first pass run so Bazel generates the @local_config_apple_cc
+# repository, then patch the -Wl,-no_uuid line out of universal_exec_tool.bzl,
+# delete the cached broken binaries, and retry. Bazel will recompile the tools
+# using the patched command and the resulting binaries will have LC_UUID.
+bazel build --verbose_failures -c opt $BAZEL_XCODE_OPTS --define=tensorflow_mkldnn_contraction_kernel=0 //tensorflow/tfextern:libtfextern.so || {
+  APPLE_CC_DIR="$OUTPUT_BASE/external/local_config_apple_cc"
+
+  # macOS 15+: dyld requires LC_UUID; Bazel's toolchain suppresses it with
+  # -Wl,-no_uuid. Remove that flag so the linker generates UUIDs normally.
+  UNIVERSAL_EXEC_TOOL="$APPLE_CC_DIR/universal_exec_tool.bzl"
+  if [ -f "$UNIVERSAL_EXEC_TOOL" ] && grep -q '\-no_uuid' "$UNIVERSAL_EXEC_TOOL"; then
+    echo "Patching universal_exec_tool.bzl: removing -Wl,-no_uuid..."
+    sed -i '' '/-Wl,-no_uuid/d' "$UNIVERSAL_EXEC_TOOL"
+    find "$OUTPUT_BASE" -path "*opt-exec*/bin/external/local_config_apple_cc/wrapped_clang*" \
+      -delete 2>/dev/null || true
+  fi
+
+  # If Xcode is on a non-standard volume, add /Volumes/ to the toolchain's
+  # cxx_builtin_include_directories so Bazel trusts those header paths.
+  APPLE_CC_BUILD="$APPLE_CC_DIR/BUILD"
+  if [ -f "$APPLE_CC_BUILD" ] && ! grep -q '"/Volumes/"' "$APPLE_CC_BUILD"; then
+    echo "Patching local_config_apple_cc/BUILD: adding /Volumes/ to cxx_builtin_include_directories..."
+    sed -i '' "s|\"$HOME/Library/\",|\"$HOME/Library/\",\n            \"/Volumes/\",|" "$APPLE_CC_BUILD"
+  fi
+
+  echo "Retrying build with patched toolchain..."
+  bazel build --verbose_failures -c opt $BAZEL_XCODE_OPTS --define=tensorflow_mkldnn_contraction_kernel=0 //tensorflow/tfextern:libtfextern.so
+}
 
 cd ..
 mkdir -p lib/runtimes/osx/native
@@ -76,4 +141,3 @@ then
   install_name_tool -change @rpath/libtensorflow_framework.2.dylib @rpath/libtensorflow_framework.dylib lib/runtimes/osx/native/libtfextern.dylib
   chmod u-w lib/runtimes/osx/native/libtfextern.dylib
 fi
-
