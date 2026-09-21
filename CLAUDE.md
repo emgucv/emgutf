@@ -4,27 +4,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Emgu TF is a cross-platform .NET wrapper for the Google TensorFlow library, enabling TF functions to be called from C#, VB, VC++, and IronPython. The repo contains two main wrappers:
-- **Emgu TF** — full TensorFlow model loading/running (Windows, macOS, Linux, Android)
-- **Emgu TF Lite** — TensorFlow Lite model loading/running (Windows, macOS, Linux, Android, iOS)
+Emgu TF is a cross-platform .NET wrapper for the Google TensorFlow library, enabling TF functions to be called from C#, VB, VC++, and IronPython. It provides full TensorFlow model loading/running on Windows, macOS, Linux, and Android.
 
-The native C++ layer is exposed through P/Invoke via two extern libraries: `tfextern` (full TF) and `tfliteextern` (TF Lite).
+The native C++ layer is exposed through P/Invoke via the `tfextern` extern library.
 
 ## Architecture
 
 ### Layer structure
-1. **Native layer** — C/C++ wrapper DLLs built from the `tensorflow/` submodule using CMake or Bazel. The DLLs (`tfextern`, `tfliteextern`) must be present in `lib/runtimes/<rid>/native/` before building .NET code.
-2. **P/Invoke layer** — `TfInvoke` (in `Emgu.TF/`) and `TfLiteInvoke` (in `Emgu.TF.Lite/`) are partial static classes that expose the native DLL entry points via `[DllImport]`.
-3. **Managed wrappers** — `Graph`, `Session`, `Tensor`, `Interpreter`, etc. inherit `UnmanagedObject` (from `Emgu.TF.Util/`) and wrap native handles with proper lifetime management.
-4. **Models layer** — `Emgu.TF.Models/` and `Emgu.TF.Lite.Models/` provide high-level pre-built model helpers (Inception, MobileNet, COCO SSD, etc.) that download weights and run inference.
+1. **Native layer** — C/C++ wrapper DLLs built from the `tensorflow/` submodule using CMake or Bazel. The DLL (`tfextern`) must be present in `lib/runtimes/<rid>/native/` before building .NET code.
+2. **P/Invoke layer** — `TfInvoke` (in `Emgu.TF/`) is a partial static class that exposes the native DLL entry points via `[DllImport]`.
+3. **Managed wrappers** — `Graph`, `Session`, `Tensor`, etc. inherit `UnmanagedObject` (from `Emgu.TF.Util/`) and wrap native handles with proper lifetime management.
+4. **Models layer** — `Emgu.TF.Models/` provides high-level pre-built model helpers (Inception, MobileNet, COCO SSD, etc.) that download weights and run inference.
 5. **Platform runtime packages** — `Emgu.TF.Runtime/` contains shared project items (`.shproj`/`.projitems`) that pull in the correct native binaries for each platform (Windows, macOS, Debian, Ubuntu, Maui).
-6. **Unity integration** — `Emgu.TF.Unity/` and `Emgu.TF.Lite.Unity/` are Unity projects that mirror the managed API for use in game engines.
+6. **Unity integration** — `Emgu.TF.Unity/` is a Unity project that mirrors the managed API for use in game engines.
 
 ### Code generation
 `Graph.g.cs` and similar `*.g.cs` files are **auto-generated** by `Emgu.TF.CodeGen/`. After changing TF version or modifying the codegen project, regenerate by building `Emgu.TF.CodeGen` — CMake runs the generator as a post-build step automatically.
 
 ### Shared projects
-`Emgu.TF.Shared.shproj`, `Emgu.TF.Lite.Shared.shproj`, etc. share source files across multiple target frameworks (NetStandard, Android, iOS, Unity). The `.projitems` files define which `.cs` files are included.
+`Emgu.TF.Shared.shproj`, etc. share source files across multiple target frameworks (NetStandard, Android, Unity). The `.projitems` files define which `.cs` files are included.
 
 ## Building
 
@@ -32,7 +30,7 @@ The native C++ layer is exposed through P/Invoke via two extern libraries: `tfex
 - .NET SDK
 - Visual Studio 2022 or VS 2026 (detected automatically by `vswhere.exe`)
 - CMake 3.16+
-- TF Lite native DLL already built and placed under `lib/runtimes/`
+- TF native DLL already built and placed under `lib/runtimes/`
 
 ### Build native TF full (Windows x64)
 
@@ -58,12 +56,6 @@ This calls `bazel_build_tf.bat 64 cpu` internally, which:
 **Optional second argument to `bazel_build_tf.bat`:**
 - `avx2` — add `/arch:AVX2` to compiler flags for better CPU performance
 
-### Build native TF Lite (Windows x64)
-```bat
-cd platforms/windows
-cmake_build_tflite_x86_64.bat
-```
-
 ### Build the full .NET solution (Windows)
 ```bat
 cd platforms/windows
@@ -80,21 +72,16 @@ cmake --build . --config Release
 
 ### Visual Studio solutions
 Platform-specific `.sln` files live under `Solution/`:
-- `Solution/Windows.Desktop/` — `Emgu.TF.sln`, `Emgu.TF.Lite.sln`, test/example solutions
-- `Solution/Android/`, `Solution/iOS/`, `Solution/CrossPlatform/`, `Solution/macos/`
+- `Solution/Windows.Desktop/` — `Emgu.TF.sln`, test/example solutions
+- `Solution/Android/`, `Solution/CrossPlatform/`, `Solution/macos/`
 
 ## Running Tests
 
 Tests use either NUnit or MSTest (selected at compile-time via the `VS_TEST` preprocessor symbol).
 
-### TF full — run all tests
+### Run all tests
 ```bash
 dotnet test Emgu.TF.Test/Emgu.TF.Test.Net/Emgu.TF.Test.Net.csproj
-```
-
-### TF Lite — run all tests
-```bash
-dotnet test Emgu.TF.Test/Emgu.TF.Lite.Test/Emgu.TF.Lite.Test.Net/Emgu.TF.Lite.Test.Net.csproj
 ```
 
 ### Run a single test
@@ -106,10 +93,10 @@ Test assets (e.g., `grace_hopper.jpg`) must be present in the working directory 
 
 ## Key Conventions
 
-- **Extern library names**: `tfextern` for full TF, `tfliteextern` for TF Lite. On iOS/Unity these resolve to `__Internal`.
+- **Extern library name**: `tfextern`. On Unity this resolves to `__Internal`.
 - **`*.g.cs` files**: auto-generated — do not edit manually.
 - **`UnmanagedObject`** (in `Emgu.TF.Util/`): base class for all objects wrapping a native pointer; handles `Dispose`/finalizer pattern.
 - **Calling convention**: `CallingConvention.Cdecl` throughout.
 - **Boolean marshaling**: `UnmanagedType.U1` for `bool`, `UnmanagedType.Bool` for `int`-as-bool.
-- **Error handling**: native errors are redirected via a callback delegate (`TfLiteErrorCallback`) and thrown as managed exceptions.
+- **Error handling**: native errors are surfaced via a `Status` object; `StatusChecker` throws a managed exception on disposal if the status is not OK.
 - The `tensorflow/` directory is a submodule pinned to the version declared in `cmake/modules/TensorflowVersion.cmake`. Do not modify files inside it directly.

@@ -6,11 +6,11 @@
 #add_subdirectory(Emgu.TF.Models)
 #add_subdirectory(Emgu.TF.Protobuf)
 
-IF (HAVE_WINDESKTOP_X64_LITE OR HAVE_WINDESKTOP)
+IF (HAVE_WINDESKTOP)
   ADD_SUBDIRECTORY(Emgu.runtime.windows.msvc.rt.x64)
 ENDIF()
 
-IF (HAVE_WINDESKTOP_X86_LITE)
+IF (HAVE_WINDESKTOP_X86)
   ADD_SUBDIRECTORY(Emgu.runtime.windows.msvc.rt.x86)
 ENDIF()
 
@@ -50,35 +50,5 @@ ENDIF()
 IF(HAVE_LINUX_ARM64)
   add_subdirectory(Emgu.TF.runtime.debian-arm64)
 ENDIF()
-
-#MESSAGE(STATUS "-------HAVE_OSX_LITE: ${HAVE_OSX_LITE}")
-#MESSAGE(STATUS "-------HAVE_LITE_BUILD: ${HAVE_LITE_BUILD}")
-
-#add_subdirectory(Emgu.TF.Lite)
-#add_subdirectory(Emgu.TF.Lite.Models)
-
-IF (HAVE_WINDESKTOP_LITE)
-  add_subdirectory(Emgu.TF.Lite.runtime.windows)
-ENDIF()
-
-
-IF(HAVE_OSX_LITE)
-  add_subdirectory(Emgu.TF.Lite.runtime.macos)
-ENDIF()
-
-#IF ( HAVE_ANDROID_LITE )
-#  add_subdirectory(Emgu.TF.Lite.runtime.xamarin.android)
-#ENDIF()
-
-#IF ( HAVE_IOS_LITE )
-#  add_subdirectory(Emgu.TF.Lite.runtime.xamarin.ios)
-#ENDIF()
-
-add_subdirectory(Emgu.TF.Lite.runtime.ubuntu)
-
-add_subdirectory(Emgu.TF.Lite.runtime.debian-arm)
-add_subdirectory(Emgu.TF.Lite.runtime.debian-arm64)
-
-#add_subdirectory(Emgu.TF.Lite.runtime.maui)
 
 #add_subdirectory(Emgu.TF.runtime.maui)

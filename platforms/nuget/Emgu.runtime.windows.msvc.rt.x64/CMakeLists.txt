@@ -2,7 +2,7 @@
 #  Copyright (C) 2004-2026 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-IF (WIN32 AND (HAVE_WINDESKTOP_X64 OR HAVE_WINDESKTOP_X64_LITE))
+IF (WIN32 AND HAVE_WINDESKTOP_X64)
 
   PROJECT(Emgu.runtime.windows.msvc.rt.x64.nuget)
 

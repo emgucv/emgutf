@@ -3,6 +3,4 @@
 # --------------------------------------------------------
 
 ADD_SUBDIRECTORY(Android)
-ADD_SUBDIRECTORY(iOS)
-ADD_SUBDIRECTORY(Mac)
 ADD_SUBDIRECTORY(UI)
