@@ -10,7 +10,7 @@ mkdir -p "$OUTPUT_BASE" "$REPO_CACHE"
 # install_base subdirectories automatically (bazel_user_root/install/<hash>/).
 # This avoids version-mismatch errors when the Bazel version changes.
 
-# Create a temporary bazel shim so all subprocess bazel calls redirect all
+# Create a bazel shim so all subprocess bazel calls redirect all
 # Bazel state to $SCRIPT_DIR instead of the default /private/var/tmp and
 # ~/Library/Caches:
 #   --output_user_root: parent for install_base (versioned automatically)
@@ -18,7 +18,13 @@ mkdir -p "$OUTPUT_BASE" "$REPO_CACHE"
 #   --repository_cache: downloaded external repository archives
 # --repository_cache is a build option (not a startup option), so it is
 # passed via a temporary bazelrc injected with --bazelrc.
-SHIM_DIR="$(mktemp -d)"
+# IMPORTANT: this directory's path must be stable (not a fresh mktemp path)
+# across invocations. It gets prepended to PATH below, and Bazel's local
+# action cache keys include the client's PATH for actions using the default
+# shell environment — a different PATH each run (e.g. a random mktemp dir)
+# invalidates the action cache for every compile action on every rebuild.
+SHIM_DIR="$SCRIPT_DIR/.bazel_shim"
+mkdir -p "$SHIM_DIR"
 SHIM_RC="$SHIM_DIR/shim.bazelrc"
 echo "common --repository_cache=$REPO_CACHE" > "$SHIM_RC"
 cat > "$SHIM_DIR/bazel" << EOF
