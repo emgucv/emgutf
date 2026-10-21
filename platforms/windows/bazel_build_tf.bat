@@ -68,7 +68,8 @@ IF "%DEVENV%"=="%BUILD_TOOLS_FOLDER%" SET BAZEL_VS=%BUILD_TOOLS_FOLDER%
 IF NOT "%BAZEL_VS%"=="" SET BAZEL_VC=%BAZEL_VS%\VC
 ECHO Using BAZEL_VC=%BAZEL_VC%
 IF EXIST "C:\Program Files\LLVM\bin" SET BAZEL_LLVM="C:\Program Files\LLVM"
-IF NOT "%BAZEL_VC%"=="" SET BAZEL_LLVM=%BAZEL_VC%\Tools\Llvm\x64
+REM Prefer the standalone LLVM if installed. The clang bundled with VS2026 reports a git hash instead of a version number, which breaks Bazel's builtin include directory detection.
+IF NOT "%BAZEL_VC%"=="" IF NOT EXIST "C:\Program Files\LLVM\bin\clang-cl.exe" SET BAZEL_LLVM=%BAZEL_VC%\Tools\Llvm\x64
 ECHO Using BAZEL_LLVM=%BAZEL_LLVM%
 
 rem Get full path to the running Python executable
