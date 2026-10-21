@@ -9,12 +9,12 @@ on:
 jobs:
   build:
 
-    runs-on: [self-hosted, Linux, X64]
-    # one day time out
-    timeout-minutes: 1440
+    runs-on: ubuntu-latest
+    # GitHub-hosted runners stop jobs after 6 hours
+    timeout-minutes: 360
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Check out submodules
       run: git submodule update --init --recursive
     - name: Build Emgu TF Android native binary

@@ -1,0 +1,36 @@
+name: Windows TF Builder
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    # GitHub-hosted runners stop jobs after 6 hours
+    timeout-minutes: 360
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Check out submodules
+      run: git submodule update --init --recursive
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - name: Build Emgu TF native binary
+      run: call bazel_build_tf_x86_64.bat
+      shell: cmd
+      working-directory: ${{ github.workspace }}\platforms\windows
+    - name: Build Emgu TF
+      run: call build_emgutf.bat
+      shell: cmd
+      working-directory: ${{ github.workspace }}\platforms\windows
+    - name: Run unit tests
+      run: dotnet test Emgu.TF.Test/Emgu.TF.Test.Net/Emgu.TF.Test.Net.csproj -c Release
+    - uses: actions/upload-artifact@v4
+      with:
+        name: emgutf-windows-native
+        path: ${{ github.workspace }}\lib\runtimes\win-x64\native\*.dll

@@ -9,13 +9,13 @@ on:
 jobs:
   build:
 
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: ubuntu-latest
 
-    # one day time out
-    timeout-minutes: 1440
+    # GitHub-hosted runners stop jobs after 6 hours
+    timeout-minutes: 360
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Check out submodules
       run: git submodule update --init --recursive
     - name: Build Emgu TF native binary
@@ -24,11 +24,11 @@ jobs:
     - name: Build Emgu TF package
       run: ./build_emgutf
       working-directory: ${{ github.workspace }}/platforms/ubuntu/20.04
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: emgutf-ubuntu-zip-package
         path: ${{ github.workspace }}/b/*.zip
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: emgutf-ubuntu-nuget-package
         path: ${{ github.workspace }}/platforms/nuget/*.nupkg 
