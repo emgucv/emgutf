@@ -449,7 +449,7 @@ namespace Emgu.TF.Test
             int inputHeight = 299;
             int inputWidth = 299;
             String file = "surfers.jpg";
-            Tensor t0 = new Tensor(DataType.Uint8, new int[] { 1, (int)inputHeight, (int)inputWidth, 3 });
+            Tensor t0 = new Tensor(DataType.Float, new int[] { 1, (int)inputHeight, (int)inputWidth, 3 });
             NativeImageIO.ReadImageFileToTensor<float>(file, t0.DataPointer, inputHeight, inputWidth, 0.0f,
                 1.0f / 255.0f);
             Tensor t1 = ImageIO.ReadTensorFromImageFile<float>(file);
