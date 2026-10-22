@@ -18,12 +18,18 @@ jobs:
     - uses: actions/checkout@v4
     - name: Check out submodules
       run: git submodule update --init --recursive
+    - name: Install bazelisk
+      run: |
+        sudo curl -fsSL -o /usr/local/bin/bazel https://github.com/bazelbuild/bazelisk/releases/latest/download/bazelisk-linux-amd64
+        sudo chmod +x /usr/local/bin/bazel
+    - name: Install build dependencies
+      run: sudo apt-get install -y build-essential protobuf-compiler libprotobuf-dev python-is-python3 python3-future mono-complete
     - name: Build Emgu TF native binary
       run: ./bazel_build_tf --jobs=2
-      working-directory: ${{ github.workspace }}/platforms/ubuntu/20.04
+      working-directory: ${{ github.workspace }}/platforms/ubuntu/24.04
     - name: Build Emgu TF package
       run: ./build_emgutf
-      working-directory: ${{ github.workspace }}/platforms/ubuntu/20.04
+      working-directory: ${{ github.workspace }}/platforms/ubuntu/24.04
     - uses: actions/upload-artifact@v4
       with:
         name: emgutf-ubuntu-zip-package
@@ -31,4 +37,4 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: emgutf-ubuntu-nuget-package
-        path: ${{ github.workspace }}/platforms/nuget/*.nupkg 
+        path: ${{ github.workspace }}/platforms/nuget/*.nupkg
