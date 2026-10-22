@@ -33,5 +33,17 @@ IF((HAVE_WINDESKTOP_X64 OR HAVE_LINUX) AND DOTNET_FOUND)
       WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../Emgu.TF/")
   ENDIF()
   
+  # The code generator writes Emgu.TF/Graph.g.cs, which is compiled into Emgu.TF.
+  # Emgu.TF has to be built first for the generator to run, so rebuild it once the file exists.
+  ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME}
+    POST_BUILD
+    COMMAND "${DOTNET_EXECUTABLE}" build -c ${DEFAULT_CS_CONFIG} "${CMAKE_CURRENT_SOURCE_DIR}/../Emgu.TF/NetStandard/Emgu.TF.csproj"
+    COMMENT "Rebuilding Emgu.TF with the generated Graph.g.cs")
+
   ADD_DEPENDENCIES(${PROJECT_NAME} Emgu.TF Emgu.TF.Protobuf)
+
+  # Emgu.TF.Models uses the generated operations, so it must be built after the generator has run.
+  IF(TARGET Emgu.TF.Models)
+    ADD_DEPENDENCIES(Emgu.TF.Models ${PROJECT_NAME})
+  ENDIF()
 ENDIF()
