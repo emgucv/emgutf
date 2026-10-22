@@ -36,15 +36,18 @@ The native C++ layer is exposed through P/Invoke via the `tfextern` extern libra
 
 The full TensorFlow native binary (`tfextern.dll`) is built with **Bazel** via a helper script:
 
-```bat
+```powershell
 cd platforms/windows
-bazel_build_tf_x86_64.bat
+./bazel_build_tf_x86_64.ps1
 ```
 
-This calls `bazel_build_tf.bat 64 cpu` internally, which:
+The scripts are PowerShell scripts and work with Windows PowerShell 5.1 and PowerShell 7. If script execution is
+blocked, run them as `powershell -ExecutionPolicy Bypass -File ./bazel_build_tf_x86_64.ps1`.
+
+This calls `bazel_build_tf.ps1`, which:
 1. Detects the newest installed Visual Studio (2019/2022/2026) and sets `BAZEL_VS`/`BAZEL_VC`.
 2. Detects Python at `C:\Python312` or `C:\python-virt\python312` (falls back to `python` on PATH).
-3. Runs Bazel (`bazel.exe` or `C:\msys64\usr\bin\bazel.exe`) to build `//tensorflow/tfextern:libtfextern.so` with `--config=win_clang`.
+3. Runs Bazel (`bazel.exe` or `C:\msys64\usr\bin\bazel.exe`) to build `//tensorflow/tfextern:libtfextern.so` with `--config=win_clang`. The script fails if Bazel fails.
 4. Copies the result to `lib/runtimes/win-x64/native/tfextern.dll` and deploys MSVC runtime DLLs alongside it.
 
 **Prerequisites for the Bazel build:**
@@ -53,15 +56,19 @@ This calls `bazel_build_tf.bat 64 cpu` internally, which:
 - Python 3.12 (ideally at `C:\Python312` or `C:\python-virt\python312`)
 - Visual Studio 2019, 2022, or 2026 with C++ workload
 
-**Optional second argument to `bazel_build_tf.bat`:**
-- `avx2` — add `/arch:AVX2` to compiler flags for better CPU performance
+**Optional switches of `bazel_build_tf.ps1`:**
+- `-Avx2` — add `/arch:AVX2` to compiler flags for better CPU performance
+- `-Fast` — low optimization, no debug info, no warnings: much faster to compile, but the binary is slower. For CI and development checks, not for binaries you ship. `-FastOptLevel Od|O1` selects the optimization level (default `Od`, about 25x faster to compile than the normal `/O2` on the slowest kernels; the DLL is much larger).
+- `-Docker` — build inside a docker container
+- `-DiskCache <dir>` — use Bazel's disk cache
+- `-DryRun` — print the Bazel command and environment without running it
 
 ### Build the full .NET solution (Windows)
-```bat
+```powershell
 cd platforms/windows
-build_emgutf.bat
+./build_emgutf.ps1
 ```
-Optional args: `doc` (build docs), `nuget` (build NuGet packages), `package` (build zip packages).
+Optional switches: `-Doc` (build docs), `-Nuget` (build NuGet packages), `-Package` (build zip packages).
 
 ### Build with CMake (cross-platform)
 ```bash

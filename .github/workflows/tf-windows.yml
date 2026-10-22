@@ -21,21 +21,16 @@ jobs:
       with:
         python-version: '3.12'
     - name: Install bazelisk
-      # bazel_build_tf.bat prefers C:\msys64\usr\bin\bazel.exe. Bazelisk picks the Bazel version from tensorflow/.bazelversion
-      run: curl -fsSL -o C:\msys64\usr\bin\bazel.exe https://github.com/bazelbuild/bazelisk/releases/latest/download/bazelisk-windows-amd64.exe
-      shell: cmd
+      # bazel_build_tf.ps1 prefers C:\msys64\usr\bin\bazel.exe. Bazelisk picks the Bazel version from tensorflow/.bazelversion
+      run: Invoke-WebRequest -Uri https://github.com/bazelbuild/bazelisk/releases/latest/download/bazelisk-windows-amd64.exe -OutFile C:\msys64\usr\bin\bazel.exe
+      shell: pwsh
     - name: Build Emgu TF native binary
-      run: call bazel_build_tf_x86_64.bat
-      shell: cmd
+      run: ./bazel_build_tf_x86_64.ps1
+      shell: pwsh
       working-directory: ${{ github.workspace }}\platforms\windows
-    - name: Check that tfextern.dll was built
-      # the build scripts exit with code 0 even when Bazel fails
-      run: if not exist lib\runtimes\win-x64\native\tfextern.dll exit /b 1
-      shell: cmd
-      working-directory: ${{ github.workspace }}
     - name: Build Emgu TF
-      run: call build_emgutf.bat
-      shell: cmd
+      run: ./build_emgutf.ps1
+      shell: pwsh
       working-directory: ${{ github.workspace }}\platforms\windows
     - name: Run unit tests
       run: dotnet test Emgu.TF.Test/Emgu.TF.Test.Net/Emgu.TF.Test.Net.csproj -c Release
