@@ -7,6 +7,8 @@
 #   -FastOptLevel optimization level used by -Fast: Od (default, no optimization) or O1.
 #                 Measured on cwise_op_select.cc: /O2 107 min, /O1 65 min, /Od 4 min.
 #   -DiskCache    directory for Bazel's --disk_cache
+#   -OutputRoot   put the Bazel output_base and output_user_root under this folder instead of next to the script
+#                 (the output of a full build is 25-40 GB; useful when the repository drive is small)
 #   -DryRun       print the Bazel command and environment without running it
 #
 # Requirements: Bazel (bazelisk) on PATH or at C:\msys64\usr\bin\bazel.exe, Python 3.12,
@@ -19,6 +21,7 @@ param(
     [ValidateSet('O1', 'Od')]
     [string]$FastOptLevel = 'Od',
     [string]$DiskCache,
+    [string]$OutputRoot,
     [switch]$DryRun
 )
 
@@ -62,8 +65,10 @@ if ($Docker) {
     $outputUserRoot = 'c:\bazel_output_user_root'
     $outputBase = 'c:\bazel_output_base'
 } else {
-    $outputUserRoot = Join-Path $PSScriptRoot 'output_user_root'
-    $outputBase = Join-Path $PSScriptRoot 'output_base'
+    $outputParent = $PSScriptRoot
+    if ($OutputRoot) { $outputParent = $OutputRoot }
+    $outputUserRoot = Join-Path $outputParent 'output_user_root'
+    $outputBase = Join-Path $outputParent 'output_base'
 }
 
 # ---- Bazel command line ------------------------------------------------------------------------------------------

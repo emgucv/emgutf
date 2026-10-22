@@ -61,6 +61,7 @@ This calls `bazel_build_tf.ps1`, which:
 - `-Fast` — low optimization, no debug info, no warnings: much faster to compile, but the binary is slower. For CI and development checks, not for binaries you ship. `-FastOptLevel Od|O1` selects the optimization level (default `Od`, about 25x faster to compile than the normal `/O2` on the slowest kernels; the DLL is much larger).
 - `-Docker` — build inside a docker container
 - `-DiskCache <dir>` — use Bazel's disk cache
+- `-OutputRoot <dir>` — put the Bazel output folders (25-40 GB) under `<dir>` instead of `platforms/windows`
 - `-DryRun` — print the Bazel command and environment without running it
 
 ### Build the full .NET solution (Windows)
