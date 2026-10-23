@@ -1,0 +1,37 @@
+name: macOS TF Builder
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+    # GitHub-hosted runners stop jobs after 6 hours
+    timeout-minutes: 360
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Check out submodules
+      run: git submodule update --init --recursive
+    - name: Install bazelisk
+      # Bazelisk picks the Bazel version from tensorflow/.bazelversion
+      run: |
+        if [ "$(uname -m)" = "arm64" ]; then SUFFIX=arm64; else SUFFIX=amd64; fi
+        sudo curl -fsSL -o /usr/local/bin/bazel https://github.com/bazelbuild/bazelisk/releases/latest/download/bazelisk-darwin-$SUFFIX
+        sudo chmod +x /usr/local/bin/bazel
+    - name: Install Python 3.12
+      # bazel_build_tf_macos looks for the Homebrew python3.12
+      run: brew install python@3.12
+    - name: Build Emgu TF native binary
+      # TF_CONFIGURE_IOS: the TensorFlow ./configure script would otherwise ask this question interactively
+      env:
+        TF_CONFIGURE_IOS: '0'
+      run: ./bazel_build_tf_macos
+      working-directory: ${{ github.workspace }}/platforms/macos
+    - name: Build Emgu TF package
+      run: ./build_emgutf
+      working-directory: ${{ github.workspace }}/platforms/macos
