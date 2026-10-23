@@ -78,15 +78,27 @@ IF (DOTNET_FOUND AND (TARGET Emgu.TF))
       MESSAGE(STATUS "FOUND PROTOC_EXE: ${PROTOC_EXE}")
     endif()
   ELSEIF(APPLE)
-    ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
-      PRE_BUILD
-      COMMAND wget ${PROTOBUF_TOOLS_NUGET_URL} -O protobuf.tools.zip
-      COMMAND unzip -u protobuf.tools.zip -d protobuf.tools
-      COMMENT "Downloading and extracting protobuf from ${PROTOBUF_TOOLS_NUGET_URL} to 'protobuf.tools' folder under ${CMAKE_CURRENT_SOURCE_DIR};"
-      WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
     SET(PROTOBUF_TOOLS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/protobuf.tools)
     SET(PROTOC_EXE "${PROTOBUF_TOOLS_PATH}/tools/macosx_x64/protoc")
     SET(PROTOBUF_INCLUDE_PATH ${PROTOBUF_TOOLS_PATH}/tools)
+    # Download protobuf tools. CMake does the download and extraction itself, so wget and unzip are not required.
+    IF(NOT EXISTS "${PROTOC_EXE}")
+      MESSAGE(STATUS "Downloading protobuf tools from ${PROTOBUF_TOOLS_NUGET_URL}")
+      FILE(DOWNLOAD "${PROTOBUF_TOOLS_NUGET_URL}" "${CMAKE_CURRENT_SOURCE_DIR}/protobuf.tools.zip"
+        STATUS PROTOBUF_TOOLS_DOWNLOAD_STATUS)
+      LIST(GET PROTOBUF_TOOLS_DOWNLOAD_STATUS 0 PROTOBUF_TOOLS_DOWNLOAD_CODE)
+      IF(NOT PROTOBUF_TOOLS_DOWNLOAD_CODE EQUAL 0)
+        MESSAGE(FATAL_ERROR "Failed to download ${PROTOBUF_TOOLS_NUGET_URL}: ${PROTOBUF_TOOLS_DOWNLOAD_STATUS}")
+      ENDIF()
+      FILE(MAKE_DIRECTORY "${PROTOBUF_TOOLS_PATH}")
+      EXECUTE_PROCESS(
+        COMMAND "${CMAKE_COMMAND}" -E tar xf "${CMAKE_CURRENT_SOURCE_DIR}/protobuf.tools.zip"
+        WORKING_DIRECTORY "${PROTOBUF_TOOLS_PATH}"
+        RESULT_VARIABLE PROTOBUF_TOOLS_EXTRACT_RESULT)
+      IF(NOT PROTOBUF_TOOLS_EXTRACT_RESULT EQUAL 0)
+        MESSAGE(FATAL_ERROR "Failed to extract protobuf.tools.zip: ${PROTOBUF_TOOLS_EXTRACT_RESULT}")
+      ENDIF()
+    ENDIF()
     ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} 
       PRE_BUILD
       COMMAND chmod u+rx ${PROTOC_EXE}
