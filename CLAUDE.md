@@ -58,7 +58,9 @@ This calls `bazel_build_tf.ps1`, which:
 
 **Optional switches of `bazel_build_tf.ps1`:**
 - `-Avx2` — add `/arch:AVX2` to compiler flags for better CPU performance
-- `-Fast` — low optimization, no debug info, no warnings: much faster to compile, but the binary is slower. For CI and development checks, not for binaries you ship. `-FastOptLevel Od|O1` selects the optimization level (default `Od`, about 25x faster to compile than the normal `/O2` on the slowest kernels; the DLL is much larger).
+- `-Fast` — low optimization (`/Od`; the TensorFlow kernels except `cwise_op*` use `/O1`), no debug info, no warnings: much faster to compile, but the binary is slower. For CI and development checks, not for binaries you ship. `-FastOptLevel Od|O1` selects the optimization level. Windows cannot load a DLL whose image is larger than about 1.85 GiB, and an unoptimized build with XLA is 2.1 GiB, so use `-Fast` together with `-NoXla`; the script checks the size.
+- `-NoXla` — build without XLA/MLIR/LLVM (`--define=with_xla_support=false`): about half the actions and a smaller DLL, but without the XLA/JIT features of TensorFlow. For CI and development checks.
+- `-Jobs <n>`, `-Retries <n>` — limit the parallel Bazel jobs (`-Fast` limits them to about 1 per 5 GB of RAM) and rerun Bazel when it fails (it resumes from its cache)
 - `-Docker` — build inside a docker container
 - `-DiskCache <dir>` — use Bazel's disk cache
 - `-OutputRoot <dir>` — put the Bazel output folders (25-40 GB) under `<dir>` instead of `platforms/windows`

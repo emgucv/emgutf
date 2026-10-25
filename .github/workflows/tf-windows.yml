@@ -26,8 +26,10 @@ jobs:
       shell: pwsh
     - name: Build Emgu TF native binary
       # -Fast: low optimization, so the build fits in the 6 hour limit of hosted runners.
+      # -NoXla: no XLA/MLIR/LLVM; without it the unoptimized dll is too large (> 1.85 GiB) to be loaded by Windows.
+      # -Retries: clang-cl can run out of memory on the 16 GB runner; a retry resumes from the Bazel cache.
       # -OutputRoot: the Bazel output is larger than the free space on the workspace drive (D:)
-      run: ./bazel_build_tf_x86_64.ps1 -Fast -OutputRoot C:\bazel
+      run: ./bazel_build_tf_x86_64.ps1 -Fast -NoXla -Retries 2 -OutputRoot C:\bazel
       shell: pwsh
       working-directory: ${{ github.workspace }}\platforms\windows
     - name: Build Emgu TF

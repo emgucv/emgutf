@@ -2,13 +2,21 @@
 #
 #   -Avx2         add /arch:AVX2 to the compiler flags
 #   -Docker       build inside a docker container (uses c:\bazel_output_* and remote/docker sandbox flags)
-#   -Fast         low optimization / reduced debug info build. Much faster to compile, but the binary is slower
-#                 and bigger. Use for CI and development checks, not for binaries you ship.
+#   -Fast         low optimization, reduced debug info build. Much faster to compile, but the binary
+#                 is slower and bigger. Use for CI and development checks, not for binaries you ship.
+#                 Note: Windows cannot load a dll whose image is larger than about 1.85 GiB; the script checks this.
 #   -FastOptLevel optimization level used by -Fast: Od (default, no optimization) or O1.
-#                 Measured on cwise_op_select.cc: /O2 107 min, /O1 65 min, /Od 4 min.
+#                 Measured on cwise_op_select.cc: /O2 107 min, /O1 65 min, /Od 4 min. With Od, the TensorFlow
+#                 kernels (except the very slow cwise_op_*.cc) are still compiled with /O1, because a dll built
+#                 entirely without optimization is too large to be loaded by Windows.
 #   -DiskCache    directory for Bazel's --disk_cache
 #   -OutputRoot   put the Bazel output_base and output_user_root under this folder instead of next to the script
 #                 (the output of a full build is 25-40 GB; useful when the repository drive is small)
+#   -NoXla        build without XLA/MLIR/LLVM (--define=with_xla_support=false). Only about a fifth of the
+#                 actions and a much smaller dll, but the XLA/JIT features of TensorFlow are missing.
+#   -Jobs         maximum number of parallel Bazel jobs. -Fast limits it by default to the memory of the machine
+#                 (about 5 GB per job), because clang-cl can run out of memory on small machines
+#   -Retries      run Bazel again (up to this many times) when it fails; Bazel resumes from its cache
 #   -DryRun       print the Bazel command and environment without running it
 #
 # Requirements: Bazel (bazelisk) on PATH or at C:\msys64\usr\bin\bazel.exe, Python 3.12,
@@ -18,10 +26,13 @@ param(
     [switch]$Avx2,
     [switch]$Docker,
     [switch]$Fast,
+    [switch]$NoXla,
     [ValidateSet('O1', 'Od')]
     [string]$FastOptLevel = 'Od',
     [string]$DiskCache,
     [string]$OutputRoot,
+    [int]$Jobs,
+    [int]$Retries = 0,
     [switch]$DryRun
 )
 
@@ -91,15 +102,34 @@ if ($Avx2) { $bazelArgs += '--copt=/arch:AVX2' }
 if ($Fast) {
     Write-Warning '-Fast: building with reduced optimization. Do not ship the resulting tfextern.dll.'
     $bazelArgs += @(
-        '--platform_suffix=fast',                 # separate output tree, keeps the normal build cache intact
         "--copt=/$FastOptLevel",                  # overrides the /O2 of the opt compilation mode
         '--copt=/clang:-w',                       # win_clang enables -Weverything; skip the diagnostics work
         '--linkopt=/DEBUG:NONE',
-        '--linkopt=/OPT:NOICF',
         '--local_ram_resources=HOST_RAM*.75',     # parallel clang-cl jobs of heavy kernels can run out of memory
         '--show_progress_rate_limit=30'
     )
+    if ($FastOptLevel -eq 'Od') {
+        # +regex,-regex@option: kernels in tensorflow/core/kernels except cwise_op*; later options override /Od
+        $bazelArgs += '--per_file_copt=tensorflow/core/kernels/.*,-tensorflow/core/kernels/cwise_op.*@/O1'
+    }
 }
+
+if ($NoXla) { $bazelArgs += '--define=with_xla_support=false' }
+
+# Separate output trees, so that the cache of the normal build is not overwritten by these variants
+$suffix = @()
+if ($Fast) { $suffix += 'fast' }
+if ($NoXla) { $suffix += 'noxla' }
+if ($suffix.Count -gt 0) { $bazelArgs += "--platform_suffix=$($suffix -join '-')" }
+
+if ($Fast -and -not $Jobs) {
+    # Unoptimized compiles of the big kernels use 3-5 GB each
+    $ramGb = (Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory / 1GB
+    $limit = [int][math]::Floor($ramGb / 5)
+    if ($limit -lt 1) { $limit = 1 }
+    if ($limit -lt [Environment]::ProcessorCount) { $Jobs = $limit }
+}
+if ($Jobs) { $bazelArgs += "--jobs=$Jobs" }
 
 if ($DiskCache) { $bazelArgs += "--disk_cache=$DiskCache" }
 
@@ -120,8 +150,14 @@ New-Item -ItemType Directory -Force -Path $outputUserRoot, $outputBase | Out-Nul
 # ---- Build -------------------------------------------------------------------------------------------------------
 Push-Location (Join-Path $root 'tensorflow')
 try {
-    & $bazel @bazelArgs
-    if ($LASTEXITCODE -ne 0) { throw "Bazel failed with exit code $LASTEXITCODE" }
+    $attempt = 0
+    while ($true) {
+        & $bazel @bazelArgs
+        if ($LASTEXITCODE -eq 0) { break }
+        $attempt++
+        if ($attempt -gt $Retries) { throw "Bazel failed with exit code $LASTEXITCODE" }
+        Write-Warning "Bazel failed with exit code $LASTEXITCODE, running it again (retry $attempt of $Retries)"
+    }
 } finally {
     Pop-Location
 }
@@ -129,6 +165,25 @@ try {
 # ---- Deploy ---------------------------------------------------------------------------------------------------------
 $built = Join-Path $root 'tensorflow\bazel-bin\tensorflow\tfextern\libtfextern.so'
 if (-not (Test-Path $built)) { throw "Bazel reported success but $built does not exist" }
+
+# Windows cannot load a dll whose image is too large: LoadLibrary fails with 0x8007000B / error 193 (bad image format).
+# Measured with padded test dlls: an image of 1.84 GiB loads, 1.88 GiB does not.
+$maxImageSize = 1.85GB
+$stream = [IO.File]::OpenRead($built)
+try {
+    $reader = New-Object IO.BinaryReader($stream)
+    $stream.Position = 0x3C
+    $peOffset = $reader.ReadInt32()
+    $stream.Position = $peOffset + 24 + 56      # PE signature + COFF header + offset of SizeOfImage in the optional header
+    $imageSize = [uint64]$reader.ReadUInt32()
+} finally {
+    $stream.Close()
+}
+Write-Host ("tfextern image size: {0:N2} GiB" -f ($imageSize / 1GB))
+if ($imageSize -ge $maxImageSize) {
+    throw ("The built dll is {0:N2} GiB, which is above the limit (about 1.85 GiB) of a loadable Windows dll. " -f ($imageSize / 1GB)) +
+        "Use more optimization (for example -FastOptLevel O1) or build without -Fast."
+}
 
 New-Item -ItemType Directory -Force -Path $nativeRuntimeDir | Out-Null
 # Copy to a temporary file first, so a failed copy (for example a full disk) does not destroy the previous dll.
