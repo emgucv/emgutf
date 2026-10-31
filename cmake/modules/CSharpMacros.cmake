@@ -298,7 +298,14 @@ MACRO(BUILD_DOTNET_PROJ target csproj_file extra_flags)
 ENDMACRO()
 
 MACRO(BUILD_NUGET_PACKAGE target csproj_file nuspec_file output_dir working_dir)
-  IF(NUGET_FOUND AND (WIN32 OR APPLE))
+  # On Windows, NUGET_EXECUTABLE is always directly executable (nuget.exe).
+  # On Apple, it is only directly executable when it resolved to a native
+  # "nuget" command (e.g. the Mono-provided wrapper script). When Mono isn't
+  # installed, FindCSharp.cmake falls back to the repo's bundled Windows
+  # nuget.exe, which cannot be executed directly on macOS/Linux and must
+  # instead be run through Mono (or we fall back to "dotnet pack" below).
+  GET_FILENAME_COMPONENT(NUGET_EXECUTABLE_EXT "${NUGET_EXECUTABLE}" EXT)
+  IF(NUGET_FOUND AND (WIN32 OR (APPLE AND NOT NUGET_EXECUTABLE_EXT STREQUAL ".exe")))
 	ADD_CUSTOM_TARGET(
 	  ${target} ALL
 	  COMMAND "${NUGET_EXECUTABLE}" pack "${nuspec_file}" -OutputDirectory "${output_dir}"
