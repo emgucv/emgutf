@@ -4,6 +4,10 @@
 # going on to copy a binary that does not exist.
 set -e
 
+# TensorFlow only ships Python requirement locks for 3.10-3.13, and Bazel picks
+# the newest Python (3.14) when this is not set. Override by exporting it first.
+export HERMETIC_PYTHON_VERSION=${HERMETIC_PYTHON_VERSION:-3.12}
+
 if [ \( -n "$1" \) ]; then
     if [ "$1" = "x86" ]; then
 	arch="x86"
