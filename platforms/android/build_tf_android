@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Stop at the first failing command (e.g. a failed Bazel build) instead of
+# going on to copy a binary that does not exist.
+set -e
+
 if [ \( -n "$1" \) ]; then
     if [ "$1" = "x86" ]; then
 	arch="x86"
