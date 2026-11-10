@@ -1,5 +1,16 @@
 #!/bin/bash -v
 
+# The MAUI Android runtime project (built when the android dotnet workload is installed) needs the Android SDK
+# and a JDK. Default to the SDK installed by the android-sdk apt package and to JDK 21, as the default java
+# may be newer than the Android workload supports. Export ANDROID_HOME / JAVA_HOME first to use others.
+export ANDROID_HOME="${ANDROID_HOME:-/usr/lib/android-sdk}"
+if [ -z "$JAVA_HOME" ]; then
+  JDK21=$(ls -d /usr/lib/jvm/java-21-openjdk-* 2>/dev/null | head -1)
+  if [ -n "$JDK21" ]; then
+    export JAVA_HOME="$JDK21"
+  fi
+fi
+
 cd "$(dirname "$0")"
 cd ../../..
 mkdir -p build
