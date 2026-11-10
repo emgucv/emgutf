@@ -2,7 +2,21 @@
 #  Copyright (C) 2004-2026 by EMGU Corporation. All rights reserved.
 # --------------------------------------------------------
 
-IF(HAVE_ANDROID AND (WIN32 OR APPLE))
+# On Windows and macOS the Android project is always built. On other hosts (e.g. Ubuntu) it is only built when the
+# "android" dotnet workload is installed (e.g. "sudo dotnet workload install maui-android"), because the build fails without it.
+SET(MAUI_ANDROID_BUILD_HOST OFF)
+IF(WIN32 OR APPLE)
+  SET(MAUI_ANDROID_BUILD_HOST ON)
+ELSEIF(DOTNET_FOUND)
+  EXECUTE_PROCESS(COMMAND "${DOTNET_EXECUTABLE}" workload list OUTPUT_VARIABLE DOTNET_WORKLOAD_LIST ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+  IF("${DOTNET_WORKLOAD_LIST}" MATCHES "(^|\n)android[ \t]")
+    SET(MAUI_ANDROID_BUILD_HOST ON)
+  ELSEIF(HAVE_ANDROID)
+    MESSAGE(STATUS "The android dotnet workload is not installed, skipping Emgu.TF.runtime.maui.android. To build it, run: sudo dotnet workload install maui-android")
+  ENDIF()
+ENDIF()
+
+IF(HAVE_ANDROID AND MAUI_ANDROID_BUILD_HOST)
   PROJECT(Emgu.TF.runtime.maui.android)
   INSTALL(
     DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
