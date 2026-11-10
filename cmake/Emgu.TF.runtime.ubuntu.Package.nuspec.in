@@ -10,6 +10,7 @@
     <projectUrl>${EMGUTF_MAIN_WEB_URL}</projectUrl>
     <repository type="git" url="https://github.com/emgucv/emgutf" />
 	<icon>icon.png</icon>
+    <readme>README.md</readme>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
 	<summary>Runtime package of Emgu TF for Ubuntu</summary>
     <description>This package contains the native runtime of Emgu TF for Ubuntu</description>

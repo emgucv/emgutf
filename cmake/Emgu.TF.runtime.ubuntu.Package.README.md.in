@@ -1,0 +1,16 @@
+## About this package
+
+This package contains the native TensorFlow runtime (`libtfextern.so`) of Emgu TF for Ubuntu. It is part of the ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH} release of Emgu TF.
+
+For online documentation please visit
+<${NUGET_EMGU_URL}/wiki/files/emgutf/${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}/document/index.html>
+
+Release note can be found at
+<${NUGET_EMGU_URL}/wiki/index.php/Emgu_TF_Version_History#Emgu.TF-${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}>
+
+## Setup
+
+This package only contains the native library. Add it to your executable project together with the managed [Emgu.TF](https://www.nuget.org/packages/Emgu.TF) package. The native library is copied to the `runtimes/ubuntu-x64/native` or `runtimes/ubuntu-arm64/native` folder of your application, depending on the platforms this package was built for.
+
+This package was built on ${NUGET_NATIVE_PLATFORM_ID_UBUNTU}. To use Emgu TF on other platforms, add one of the other Emgu.TF.runtime.{platform} nuget packages instead:
+<https://www.nuget.org/packages?q=Emgu.TF.runtime>
