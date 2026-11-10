@@ -31,7 +31,10 @@ cd ..
 
 mkdir -p lib/$OUT_FOLDER
 cp -f tensorflow/bazel-bin/tensorflow/tfextern/*.so lib/$OUT_FOLDER
-cp -f tensorflow/bazel-bin/tensorflow/libtensorflow_framework.so lib/$OUT_FOLDER/libtensorflow_framework.so.2
+# The monolithic libtfextern.so no longer depends on libtensorflow_framework.so, so only copy it if it was built.
+if [ -f tensorflow/bazel-bin/tensorflow/libtensorflow_framework.so ]; then
+    cp -f tensorflow/bazel-bin/tensorflow/libtensorflow_framework.so lib/$OUT_FOLDER/libtensorflow_framework.so.2
+fi
 
 echo Files copied to lib/$OUT_FOLDER
 
