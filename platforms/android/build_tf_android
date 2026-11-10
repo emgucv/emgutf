@@ -8,6 +8,16 @@ set -e
 # the newest Python (3.14) when this is not set. Override by exporting it first.
 export HERMETIC_PYTHON_VERSION=${HERMETIC_PYTHON_VERSION:-3.12}
 
+# Use the newest NDK installed under $ANDROID_HOME/ndk, unless ANDROID_NDK_HOME is
+# already set (export it to pin a version). Exported so that Bazel's repository
+# rules see it too; --action_env below only reaches build actions.
+export ANDROID_HOME="${ANDROID_HOME:-/usr/lib/android-sdk}"
+if [ -z "$ANDROID_NDK_HOME" ]; then
+    export ANDROID_NDK_HOME="$ANDROID_HOME/ndk/$(ls "$ANDROID_HOME/ndk" | sort -V | tail -1)"
+fi
+ANDROID_NDK_VERSION=$(basename "$ANDROID_NDK_HOME" | cut -d. -f1)
+echo "Using ANDROID_HOME=$ANDROID_HOME ANDROID_NDK_HOME=$ANDROID_NDK_HOME"
+
 if [ \( -n "$1" \) ]; then
     if [ "$1" = "x86" ]; then
 	arch="x86"
@@ -38,12 +48,12 @@ bazel --output_user_root=$OUTPUT_USER_ROOT \
       build -c opt \
       --config=android_$1 \
       --define=with_xla_support=false \
-      --action_env ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/28.2.13676358 \
-      --action_env ANDROID_NDK_VERSION=28 \
+      --action_env ANDROID_NDK_HOME=$ANDROID_NDK_HOME \
+      --action_env ANDROID_NDK_VERSION=$ANDROID_NDK_VERSION \
       --action_env ANDROID_NDK_API_LEVEL=28 \
       --action_env ANDROID_SDK_API_LEVEL=36 \
       --action_env ANDROID_BUILD_TOOLS_VERSION=36.0.0 \
-      --action_env ANDROID_SDK_HOME=/usr/lib/android-sdk \
+      --action_env ANDROID_SDK_HOME=$ANDROID_HOME \
       --cxxopt='-fpic' \
       --copt='-fpic' \
       --config monolithic \
