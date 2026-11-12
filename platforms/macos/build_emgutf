@@ -1,8 +1,20 @@
 #!/bin/bash
 
+# The MAUI Android runtime project (built when the android dotnet workload is installed) needs
+# a JDK. Default to JDK 21, as the default java may be newer than the Android workload
+# supports. Export JAVA_HOME first to use another one. (ANDROID_HOME itself must already be
+# exported to point at the Android SDK; there is no macOS-specific default for it, matching
+# platforms/android/build_tf_android's own convention.)
+if [ -z "$JAVA_HOME" ]; then
+  JDK21=$(/usr/libexec/java_home -v 21 2>/dev/null)
+  if [ -n "$JDK21" ]; then
+    export JAVA_HOME="$JDK21"
+  fi
+fi
+
 cd "$(dirname "$0")"
 cd ../../
 mkdir -p build
 cd build
-cmake .. -DCMAKE_BUILD_TYPE=Release 
-make package
+cmake .. -DCMAKE_BUILD_TYPE=Release
+make package "$@"
