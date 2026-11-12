@@ -22,6 +22,18 @@ set -e
 
 cd "$(dirname "$0")"
 
+# Known limitation: on macOS, this Android NDK cross-compile step can fail with "absolute
+# path inclusion(s) found in rule ... SDKSettings.json" while compiling a host-side ("[for
+# tool]") dependency such as upb/protobuf. Cause: Apple clang's driver unconditionally reads
+# the SDK's SDKSettings.json when -isysroot points into it (confirmed independent of
+# -mmacosx-version-min or an explicit -target triple), and Bazel 7.7.0 (pinned by
+# tensorflow/.bazelversion) has no flag that disables its undeclared-absolute-path-dependency
+# check for this transitive (non-top-level) target - incompatible_validate_top_level_header_
+# inclusions only covers top-level requested targets. Not hit on Ubuntu, whose host toolchain
+# has no Xcode SDK bundle to probe. A real fix needs either a toolchain-config change (making
+# the auto-generated local C++ toolchain declare the Xcode SDK path as a builtin include
+# directory) or a newer pinned Bazel version - both out of scope here; not fixed as of this
+# writing.
 for arch in arm64 arm x86 x86_64; do
     echo "===== Building TensorFlow for Android $arch ====="
     ./build_tf_android $arch
